@@ -2,7 +2,7 @@ import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
-import { AbstractGoGeneratorContext, FileLocation } from "@fern-api/go-base";
+import { AbstractGoGeneratorContext, AsIsFiles, FileLocation } from "@fern-api/go-base";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
@@ -57,6 +57,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
 
     public getInternalAsIsFiles(): string[] {
         return [];
+    }
+
+    public getTestAsIsFiles(): string[] {
+        return [AsIsFiles.MainTest];
     }
 
     public getClientClassName(subpackage?: Subpackage): string {
@@ -122,15 +126,15 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
 
     public getDefaultBaseUrl(endpoint: HttpEndpoint): EnvironmentUrl | undefined {
         if (endpoint.baseUrl != null) {
-            return this.getEnvironmnetUrlFromId(endpoint.baseUrl);
+            return this.getEnvironmentUrlFromId(endpoint.baseUrl);
         }
         if (this.ir.environments?.defaultEnvironment != null) {
-            return this.getEnvironmnetUrlFromId(this.ir.environments.defaultEnvironment);
+            return this.getEnvironmentUrlFromId(this.ir.environments.defaultEnvironment);
         }
         return undefined;
     }
 
-    public getEnvironmnetUrlFromId(id: EnvironmentId): EnvironmentUrl | undefined {
+    public getEnvironmentUrlFromId(id: EnvironmentId): EnvironmentUrl | undefined {
         if (this.ir.environments == null) {
             return undefined;
         }
@@ -682,8 +686,21 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     }
 
     private getLocationForWrappedRequest(serviceId: ServiceId): FileLocation {
-        const httpService = this.getHttpServiceOrThrow(serviceId);
-        return this.getPackageLocation(httpService.name.fernFilepath);
+        if (this.customConfig.exportAllRequestsAtRoot) {
+            // All inlined request types are generated in the root package's requests.go
+            return this.getRootPackageLocation();
+        } else {
+            // Otherwise, generate in subpackage based on service filepath
+            const httpService = this.getHttpServiceOrThrow(serviceId);
+            return this.getPackageLocation(httpService.name.fernFilepath);
+        }
+    }
+
+    private getRootPackageLocation(): FileLocation {
+        return {
+            importPath: this.getRootImportPath(),
+            directory: RelativeFilePath.of("")
+        };
     }
 
     public maybeGetExampleEndpointCall(endpoint: HttpEndpoint): ExampleEndpointCall | null {

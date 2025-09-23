@@ -10,7 +10,7 @@
           "base-path": "",
           "endpoints": {
             "patchSettings": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -91,7 +91,6 @@
     patchSettings:
       path: /settings
       method: PATCH
-      auth: false
       source:
         openapi: ../openapi.yml
       request:

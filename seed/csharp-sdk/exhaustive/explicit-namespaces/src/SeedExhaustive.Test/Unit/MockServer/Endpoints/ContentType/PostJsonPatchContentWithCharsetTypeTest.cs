@@ -8,7 +8,7 @@ namespace SeedExhaustive.Test.Unit.MockServer.Endpoints.ContentType;
 [TestFixture]
 public class PostJsonPatchContentWithCharsetTypeTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         const string requestJson = """

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema";
 
 export const BaseCsharpCustomConfigSchema = z.object({
     // Influence dynamic snippets.
@@ -25,6 +26,7 @@ export const BaseCsharpCustomConfigSchema = z.object({
     "package-id": z.string().optional(),
     "generate-mock-server-tests": z.boolean().optional(),
     "include-exception-handler": z.boolean().optional(),
+    "custom-readme-sections": z.array(CustomReadmeSectionSchema).optional(),
 
     // Deprecated.
     "extra-dependencies": z

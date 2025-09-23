@@ -672,7 +672,7 @@ public record VariableValue
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator IntegerValue(int value) => new(value);
+        public static implicit operator VariableValue.IntegerValue(int value) => new(value);
     }
 
     /// <summary>
@@ -690,7 +690,7 @@ public record VariableValue
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator BooleanValue(bool value) => new(value);
+        public static implicit operator VariableValue.BooleanValue(bool value) => new(value);
     }
 
     /// <summary>
@@ -708,7 +708,7 @@ public record VariableValue
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator DoubleValue(double value) => new(value);
+        public static implicit operator VariableValue.DoubleValue(double value) => new(value);
     }
 
     /// <summary>
@@ -726,7 +726,7 @@ public record VariableValue
 
         public override string ToString() => Value;
 
-        public static implicit operator StringValue(string value) => new(value);
+        public static implicit operator VariableValue.StringValue(string value) => new(value);
     }
 
     /// <summary>
@@ -744,7 +744,7 @@ public record VariableValue
 
         public override string ToString() => Value;
 
-        public static implicit operator CharValue(string value) => new(value);
+        public static implicit operator VariableValue.CharValue(string value) => new(value);
     }
 
     /// <summary>
@@ -762,7 +762,8 @@ public record VariableValue
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator MapValue(SeedTrace.MapValue value) => new(value);
+        public static implicit operator VariableValue.MapValue(SeedTrace.MapValue value) =>
+            new(value);
     }
 
     /// <summary>
@@ -796,8 +797,9 @@ public record VariableValue
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator BinaryTreeValue(SeedTrace.BinaryTreeValue value) =>
-            new(value);
+        public static implicit operator VariableValue.BinaryTreeValue(
+            SeedTrace.BinaryTreeValue value
+        ) => new(value);
     }
 
     /// <summary>
@@ -815,7 +817,7 @@ public record VariableValue
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator SinglyLinkedListValue(
+        public static implicit operator VariableValue.SinglyLinkedListValue(
             SeedTrace.SinglyLinkedListValue value
         ) => new(value);
     }
@@ -835,7 +837,7 @@ public record VariableValue
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator DoublyLinkedListValue(
+        public static implicit operator VariableValue.DoublyLinkedListValue(
             SeedTrace.DoublyLinkedListValue value
         ) => new(value);
     }

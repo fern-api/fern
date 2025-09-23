@@ -89,6 +89,17 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         });
     }
 
+    public async writeSharedTestFiles(): Promise<AbsoluteFilePath> {
+        const sharedTestFiles = await Promise.all(
+            this.context.getTestAsIsFiles().map(async (filename) => await this.createAsIsFile({ filename }))
+        );
+
+        return await this.createGoDirectory({
+            absolutePathToDirectory: join(this.absolutePathToOutputDirectory),
+            files: sharedTestFiles
+        });
+    }
+
     private async createGoDirectory({
         absolutePathToDirectory,
         files

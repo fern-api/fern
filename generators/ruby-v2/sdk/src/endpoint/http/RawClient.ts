@@ -30,6 +30,16 @@ export class RawClient {
         this.context = context;
     }
 
+    private writeBaseUrlDeclaration(writer: ruby.Writer): void {
+        // Write base URL declaration, including default environment if specified
+        writer.write("base_url: request_options[:base_url]");
+        const defaultEnvironmentReference = this.context.getDefaultEnvironmentClassReference();
+        if (defaultEnvironmentReference != null) {
+            writer.write(" || ");
+            writer.writeNode(defaultEnvironmentReference);
+        }
+    }
+
     public sendRequest({
         baseUrl,
         endpoint,
@@ -46,9 +56,8 @@ export class RawClient {
                         `${RAW_CLIENT_REQUEST_VARIABLE_NAME} = ${this.context.getReferenceToInternalJSONRequest()}.new(`
                     );
                     writer.indent();
-                    writer.writeLine(
-                        `base_url: request_options[:base_url] || ${this.context.getEnvironmentsClassReference().toString()}::SANDBOX,`
-                    );
+                    this.writeBaseUrlDeclaration(writer);
+                    writer.writeLine(",");
                     writer.writeLine(`method: "${endpoint.method.toUpperCase()}",`);
                     writer.write(`path: `);
                     this.writePathString({ writer, endpoint, pathParameterReferences });
@@ -95,9 +104,8 @@ export class RawClient {
                 `${RAW_CLIENT_REQUEST_VARIABLE_NAME} = ${this.context.getReferenceToInternalJSONRequest()}.new(`
             );
             writer.indent();
-            writer.writeLine(
-                `base_url: request_options[:base_url] || ${this.context.getEnvironmentsClassReference().toString()}::SANDBOX,`
-            );
+            this.writeBaseUrlDeclaration(writer);
+            writer.writeLine(",");
             writer.writeLine(`method: "${endpoint.method.toUpperCase()}",`);
             writer.write(`path: `);
             this.writePathString({ writer, endpoint, pathParameterReferences });
@@ -128,7 +136,7 @@ export class RawClient {
             if (part.pathParameter != null) {
                 const reference = pathParameterReferences[part.pathParameter];
                 if (reference == null) {
-                    rubyPath += `#{${part.tail}`;
+                    rubyPath += `#{${part.tail}}`;
                 } else {
                     // Insert Ruby interpolation for the path parameter
                     rubyPath += `#{${reference}}${part.tail}`;

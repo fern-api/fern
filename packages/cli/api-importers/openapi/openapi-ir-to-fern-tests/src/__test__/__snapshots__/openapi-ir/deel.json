@@ -284,6 +284,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/hris/direct-employees",
       "examples": [
@@ -798,6 +799,16 @@
       "servers": [],
       "description": "Retrieve the hiring guide data for a country. This data can be used to create Employee of Record (EOR) contract quotes.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/eor/validations/{country_code}",
       "examples": [
@@ -1230,6 +1241,17 @@
       "servers": [],
       "description": "Create an Employee of Record (EOR) contract quote. The endpoints creates a contract quote request. Deel will process the information and get back with a quote for this contract.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:read",
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/eor",
       "examples": [
@@ -1722,6 +1744,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/time-based",
       "examples": [
@@ -2615,6 +2647,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/task-based",
       "examples": [
@@ -3497,6 +3539,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/milestone-based",
       "examples": [
@@ -4379,6 +4431,16 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/fixed-rate",
       "examples": [
@@ -5487,6 +5549,17 @@
       "servers": [],
       "description": "Retrieve a list of contracts.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write",
+            "contracts:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/contracts",
       "examples": [
@@ -5552,24 +5625,10 @@
                         },
                         "signatures": {
                           "properties": {
-                            "client_signed_at": {
-                              "value": {
-                                "value": "2022-05-24T09:38:46.235Z",
-                                "type": "datetime"
-                              },
-                              "type": "primitive"
-                            },
                             "worker_signature": {
                               "value": {
                                 "value": "Jane Doe",
                                 "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "worker_signed_at": {
-                              "value": {
-                                "value": "2022-05-24T09:38:46.235Z",
-                                "type": "datetime"
                               },
                               "type": "primitive"
                             }
@@ -5890,6 +5949,16 @@
       "servers": [],
       "description": "Create a new Deel contract.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts",
       "examples": [
@@ -6782,6 +6851,17 @@
       "servers": [],
       "description": "Retrieve a single contract.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write",
+            "contracts:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/contracts/{contract_id}",
       "examples": [
@@ -7586,6 +7666,16 @@
       "servers": [],
       "description": "Add an external Id to a Deel contract. You can use this to add a Deel contract's refernece Id in your platform. External Id can be passed as a query parameter in List contract endpoint to find this conract later.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "PATCH",
       "path": "/contracts/{contract_id}",
       "examples": [
@@ -7899,6 +7989,17 @@
       "servers": [],
       "description": "Attach document to a contract. You can only add one document at a time. If you need to attach more documents please attach a Zip file.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write",
+            "contracts:read"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/{contract_id}/documents",
       "examples": [
@@ -8206,6 +8307,17 @@
       "servers": [],
       "description": "Overwrite the file currently attached to contract document.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write",
+            "contracts:read"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/contracts/{contract_id}/documents",
       "examples": [
@@ -8495,6 +8607,17 @@
       "servers": [],
       "description": "Retrieve an IC contract agreement content in HTML. If no template is specified, the default or currently assigned template will be used. This endpoint does not support EOR and Global Payroll contract types.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write",
+            "contracts:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/contracts/{contract_id}/preview",
       "examples": [
@@ -8750,6 +8873,17 @@
       "servers": [],
       "description": "Retrieve a list of tasks for a given contract.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write",
+            "contracts:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/contracts/{contract_id}/tasks",
       "examples": [
@@ -8804,11 +8938,8 @@
                           "type": "primitive"
                         },
                         "status": {
-                          "value": {
-                            "value": "approved",
-                            "type": "string"
-                          },
-                          "type": "primitive"
+                          "value": "approved",
+                          "type": "enum"
                         },
                         "attachment": {
                           "properties": {
@@ -9096,6 +9227,16 @@
       "servers": [],
       "description": "Create a new task for the contractor.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/{contract_id}/tasks",
       "examples": [
@@ -9345,6 +9486,17 @@
       "servers": [],
       "description": "Returns an array of alternate email objects",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write",
+            "contracts:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/contracts/{contract_id}/alternate_emails",
       "examples": [
@@ -9646,6 +9798,16 @@
       "servers": [],
       "description": "Review multiple tasks to approve or decline the submitted work.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/{contract_id}/tasks/many/reviews",
       "examples": [
@@ -9733,11 +9895,8 @@
                           "type": "primitive"
                         },
                         "status": {
-                          "value": {
-                            "value": "approved",
-                            "type": "string"
-                          },
-                          "type": "primitive"
+                          "value": "approved",
+                          "type": "enum"
                         },
                         "attachment": {
                           "properties": {
@@ -10041,6 +10200,16 @@
       "servers": [],
       "description": "Review a single task to approve or decline the submitted work.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/{contract_id}/tasks/{task_id}/reviews",
       "examples": [
@@ -10119,11 +10288,8 @@
                           "type": "primitive"
                         },
                         "status": {
-                          "value": {
-                            "value": "approved",
-                            "type": "string"
-                          },
-                          "type": "primitive"
+                          "value": "approved",
+                          "type": "enum"
                         },
                         "attachment": {
                           "properties": {
@@ -10430,6 +10596,16 @@
       "servers": [],
       "description": "Delete task from the contract.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/contracts/{contract_id}/tasks/{task_id}",
       "examples": [
@@ -10734,6 +10910,16 @@
       "servers": [],
       "description": "Amend payment details of a contract.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/{contract_id}/amendments",
       "examples": [
@@ -11037,6 +11223,16 @@
       "servers": [],
       "description": "Terminate an active contract.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/{contract_id}/terminations",
       "examples": [
@@ -11347,6 +11543,16 @@
       "servers": [],
       "description": "Sign a contract as a client.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/{contract_id}/signatures",
       "examples": [
@@ -11589,6 +11795,16 @@
       "servers": [],
       "description": "Archive a terminated, cancelled or completed contract.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "PATCH",
       "path": "/contracts/{contract_id}/archive",
       "examples": [
@@ -11883,6 +12099,16 @@
       "servers": [],
       "description": "Invite a worker to sign the contract. Worker will be notified via email.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/{contract_id}/invitations",
       "examples": [
@@ -12182,6 +12408,16 @@
       "servers": [],
       "description": "Remove invite in order to re-invite a worker to sign the contract.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/contracts/{contract_id}/invitations",
       "examples": [
@@ -12607,6 +12843,17 @@
       "servers": [],
       "description": "Retrieve a list of timesheets found for a contract.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "timesheets:write",
+            "timesheets:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/contracts/{contract_id}/timesheets",
       "examples": [
@@ -12654,11 +12901,8 @@
                           "type": "primitive"
                         },
                         "status": {
-                          "value": {
-                            "value": "approved",
-                            "type": "string"
-                          },
-                          "type": "primitive"
+                          "value": "approved",
+                          "type": "enum"
                         },
                         "description": {
                           "value": {
@@ -13103,6 +13347,17 @@
       "servers": [],
       "description": "Retrieve a list of milestones found for a contract.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "milestones:write",
+            "milestones:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/contracts/{contract_id}/milestones",
       "examples": [
@@ -13482,6 +13737,16 @@
       "servers": [],
       "description": "Add a new milestone to contract.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "milestones:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/{contract_id}/milestones",
       "examples": [
@@ -13804,6 +14069,17 @@
       "servers": [],
       "description": "Retrieve a single milestone.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "milestones:write",
+            "milestones:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/contracts/{contract_id}/milestones/{milestone_id}",
       "examples": [
@@ -14185,6 +14461,16 @@
       "servers": [],
       "description": "Delete a single milestone from a contract.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "milestones:write"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/contracts/{contract_id}/milestones/{milestone_id}",
       "examples": [
@@ -14505,6 +14791,16 @@
       "servers": [],
       "description": "Review a milestone to approve or decline submitted work.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "milestones:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/{contract_id}/milestones/{milestone_id}/reviews",
       "examples": [
@@ -14823,6 +15119,16 @@
       "servers": [],
       "description": "Review a batch of milestones to approve or reject submitted work.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "timesheets:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/{contract_id}/milestones/many/reviews",
       "examples": [
@@ -15124,6 +15430,17 @@
       "servers": [],
       "description": "Retrieve a list of off-cycle payments for the given contract id.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "off-cycle-payments:write",
+            "off-cycle-payments:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/contracts/{contract_id}/off-cycle-payments",
       "examples": [
@@ -15164,11 +15481,8 @@
                           "type": "primitive"
                         },
                         "status": {
-                          "value": {
-                            "value": "status",
-                            "type": "string"
-                          },
-                          "type": "primitive"
+                          "value": "approved",
+                          "type": "enum"
                         },
                         "description": {
                           "value": {
@@ -15524,6 +15838,16 @@
       "servers": [],
       "description": "Add a new invoice line-item for the purpose of off-cycle payment for a given contract.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "off-cycle-payments:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/{contract_id}/off-cycle-payments",
       "examples": [
@@ -15839,6 +16163,17 @@
       "servers": [],
       "description": "Retrieve a single off-cycle payment.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "off-cycle-payments:write",
+            "off-cycle-payments:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/contracts/{contract_id}/off-cycle-payments/{offcycle_payment_id}",
       "examples": [
@@ -15887,11 +16222,8 @@
                       "type": "primitive"
                     },
                     "status": {
-                      "value": {
-                        "value": "status",
-                        "type": "string"
-                      },
-                      "type": "primitive"
+                      "value": "approved",
+                      "type": "enum"
                     },
                     "description": {
                       "value": {
@@ -16169,6 +16501,16 @@
       "servers": [],
       "description": "Add additional protection against misclassification by upgrading to Deel Premium.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/{contract_id}/premium",
       "examples": [
@@ -16554,6 +16896,16 @@
       "servers": [],
       "description": "Remove Deel Premium from an existing contract.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/contracts/{contract_id}/premium",
       "examples": [
@@ -16863,6 +17215,17 @@
       "servers": [],
       "description": "Calculate the final payment due to the contractor when ending the contract.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write",
+            "contracts:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/contracts/{contract_id}/final-payments",
       "examples": [
@@ -17122,6 +17485,16 @@
       "servers": [],
       "description": "First payment is calculated from the number of working/calendar days between their start date and the start of the payment cycle.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/estimate",
       "examples": [
@@ -17412,6 +17785,17 @@
       "servers": [],
       "description": "Retrieve the list of time off requests by an employee.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:read",
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/contracts/{contract_id}/time-offs",
       "examples": [
@@ -17653,13 +18037,6 @@
                               "value": "VACATION",
                               "type": "enum"
                             },
-                            "requested_at": {
-                              "value": {
-                                "value": "2022-05-24T09:38:46.235Z",
-                                "type": "datetime"
-                              },
-                              "type": "primitive"
-                            },
                             "status": {
                               "value": "REQUESTED",
                               "type": "enum"
@@ -17695,13 +18072,6 @@
                                 "type": {
                                   "value": "VACATION",
                                   "type": "enum"
-                                },
-                                "requested_at": {
-                                  "value": {
-                                    "value": "2022-05-24T09:38:46.235Z",
-                                    "type": "datetime"
-                                  },
-                                  "type": "primitive"
                                 },
                                 "status": {
                                   "value": "REQUESTED",
@@ -17926,6 +18296,16 @@
       "servers": [],
       "description": "Add a time off request for a full-time employee.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/contracts/{contract_id}/time-offs",
       "examples": [
@@ -18375,13 +18755,6 @@
                               "value": "VACATION",
                               "type": "enum"
                             },
-                            "requested_at": {
-                              "value": {
-                                "value": "2022-05-24T09:38:46.235Z",
-                                "type": "datetime"
-                              },
-                              "type": "primitive"
-                            },
                             "status": {
                               "value": "REQUESTED",
                               "type": "enum"
@@ -18619,6 +18992,16 @@
       "servers": [],
       "description": "Edit a time off request for a full-time employee.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/contracts/{contract_id}/time-offs/{timeoff_id}",
       "examples": [
@@ -19078,13 +19461,6 @@
                               "value": "VACATION",
                               "type": "enum"
                             },
-                            "requested_at": {
-                              "value": {
-                                "value": "2022-05-24T09:38:46.235Z",
-                                "type": "datetime"
-                              },
-                              "type": "primitive"
-                            },
                             "status": {
                               "value": "REQUESTED",
                               "type": "enum"
@@ -19303,6 +19679,16 @@
       "servers": [],
       "description": "Cancel a time off request for an employee.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/contracts/{contract_id}/time-offs/{timeoff_id}",
       "examples": [
@@ -19741,6 +20127,17 @@
       "servers": [],
       "description": "Retrieve a list of timesheets in your Deel account. You can filter the list by providing additional paramters e.g. contract_id, contract_type etc.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "timesheets:write",
+            "timesheets:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/timesheets",
       "examples": [
@@ -19777,11 +20174,8 @@
                           "type": "primitive"
                         },
                         "status": {
-                          "value": {
-                            "value": "approved",
-                            "type": "string"
-                          },
-                          "type": "primitive"
+                          "value": "approved",
+                          "type": "enum"
                         },
                         "description": {
                           "value": {
@@ -20227,6 +20621,16 @@
       "servers": [],
       "description": "Submit work for a contractor.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "timesheets:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/timesheets",
       "examples": [
@@ -20299,11 +20703,8 @@
                       "type": "primitive"
                     },
                     "status": {
-                      "value": {
-                        "value": "status",
-                        "type": "string"
-                      },
-                      "type": "primitive"
+                      "value": "approved",
+                      "type": "enum"
                     },
                     "created_at": {
                       "value": {
@@ -20556,6 +20957,17 @@
       "servers": [],
       "description": "Retrieve a single timesheet entry by Id.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "timesheets:write",
+            "timesheets:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/timesheets/{timesheet_id}",
       "examples": [
@@ -20632,11 +21044,8 @@
                       "type": "primitive"
                     },
                     "status": {
-                      "value": {
-                        "value": "approved",
-                        "type": "string"
-                      },
-                      "type": "primitive"
+                      "value": "approved",
+                      "type": "enum"
                     },
                     "description": {
                       "value": {
@@ -21106,6 +21515,16 @@
       "servers": [],
       "description": "Delete a single timesheet entry.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "timesheets:write"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/timesheets/{timesheet_id}",
       "examples": [
@@ -21399,6 +21818,16 @@
       "servers": [],
       "description": "Update a single timesheet entry.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "timesheets:write"
+          ]
+        }
+      ],
       "method": "PATCH",
       "path": "/timesheets/{timesheet_id}",
       "examples": [
@@ -21716,6 +22145,16 @@
       "servers": [],
       "description": "Review a timesheet to approve or decline submitted work.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "timesheets:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/timesheets/{timesheet_id}/reviews",
       "examples": [
@@ -22006,6 +22445,16 @@
       "servers": [],
       "description": "Review a batch of timesheets to approve or reject submitted work.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "timesheets:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/timesheets/many/reviews",
       "examples": [
@@ -22490,6 +22939,17 @@
       "servers": [],
       "description": "Retrieve a list of invoice details for the given contract id.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "invoice-adjustments:write",
+            "invoice-adjustments:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/contracts/{contract_id}/invoice-adjustments",
       "examples": [
@@ -22534,11 +22994,8 @@
                           "type": "enum"
                         },
                         "status": {
-                          "value": {
-                            "value": "status",
-                            "type": "string"
-                          },
-                          "type": "primitive"
+                          "value": "approved",
+                          "type": "enum"
                         },
                         "description": {
                           "value": {
@@ -22705,22 +23162,7 @@
                           "type": "object"
                         },
                         "payment_cycle": {
-                          "properties": {
-                            "start_date": {
-                              "value": {
-                                "value": "2022-05-24T09:38:46.235Z",
-                                "type": "datetime"
-                              },
-                              "type": "primitive"
-                            },
-                            "end_date": {
-                              "value": {
-                                "value": "2022-05-24T09:38:46.235Z",
-                                "type": "datetime"
-                              },
-                              "type": "primitive"
-                            }
-                          },
+                          "properties": {},
                           "type": "object"
                         },
                         "reported_by": {
@@ -23213,6 +23655,17 @@
       "servers": [],
       "description": "Retrieve a list of invoice details. You can filter the list by providing additional paramters e.g. contract_id, contract_type etc.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "invoice-adjustments:write",
+            "invoice-adjustments:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/invoice-adjustments",
       "examples": [
@@ -23246,11 +23699,8 @@
                           "type": "enum"
                         },
                         "status": {
-                          "value": {
-                            "value": "status",
-                            "type": "string"
-                          },
-                          "type": "primitive"
+                          "value": "approved",
+                          "type": "enum"
                         },
                         "description": {
                           "value": {
@@ -23417,22 +23867,7 @@
                           "type": "object"
                         },
                         "payment_cycle": {
-                          "properties": {
-                            "start_date": {
-                              "value": {
-                                "value": "2022-05-24T09:38:46.235Z",
-                                "type": "datetime"
-                              },
-                              "type": "primitive"
-                            },
-                            "end_date": {
-                              "value": {
-                                "value": "2022-05-24T09:38:46.235Z",
-                                "type": "datetime"
-                              },
-                              "type": "primitive"
-                            }
-                          },
+                          "properties": {},
                           "type": "object"
                         },
                         "reported_by": {
@@ -23729,6 +24164,16 @@
       "servers": [],
       "description": "Create an invoice adjustment using this endpoint. For example, you can add a bonus, commission, VAT %, deduction etc. to an invoice.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "invoice-adjustments:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/invoice-adjustments",
       "examples": [
@@ -23798,11 +24243,8 @@
                       "type": "primitive"
                     },
                     "status": {
-                      "value": {
-                        "value": "status",
-                        "type": "string"
-                      },
-                      "type": "primitive"
+                      "value": "approved",
+                      "type": "enum"
                     },
                     "created_at": {
                       "value": {
@@ -24077,6 +24519,16 @@
       "servers": [],
       "description": "Update an existing invoice adjustment.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "invoice-adjustments:write"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/invoice-adjustments/{invoice_adjustment_id}",
       "examples": [
@@ -24370,6 +24822,16 @@
       "servers": [],
       "description": "Update an existing invoice adjustment. It is not possible to update VAT adjustments, we recommend you to delete the existing VAT adjust and create a new one.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "invoice-adjustments:write"
+          ]
+        }
+      ],
       "method": "PATCH",
       "path": "/invoice-adjustments/{invoice_adjustment_id}",
       "examples": [
@@ -24680,6 +25142,16 @@
       "servers": [],
       "description": "Review an invoice adjustment to approve or decline it.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "invoice-adjustments:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/invoice-adjustments/{invoice_adjustment_id}/reviews",
       "examples": [
@@ -24970,6 +25442,16 @@
       "servers": [],
       "description": "Review multiple invoice adjustments to approve or decline a batch.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "invoice-adjustments:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/invoice-adjustments/many/reviews",
       "examples": [
@@ -25242,6 +25724,17 @@
       "servers": [],
       "description": "Retrieve a list of legal entities in your account.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "organizations:read",
+            "accounting:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/legal-entities",
       "examples": [
@@ -25511,6 +26004,14 @@
       "servers": [],
       "description": "Retrieve a list of countries supported by Deel.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": []
+        }
+      ],
       "method": "GET",
       "path": "/lookups/countries",
       "examples": [
@@ -25814,6 +26315,14 @@
       "servers": [],
       "description": "Retrieve the list of currencies used by Deel.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": []
+        }
+      ],
       "method": "GET",
       "path": "/lookups/currencies",
       "examples": [
@@ -26116,6 +26625,14 @@
       "servers": [],
       "description": "Retrieve a list of pre-defined job titles in Deel platform.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": []
+        }
+      ],
       "method": "GET",
       "path": "/lookups/job-titles",
       "examples": [
@@ -26409,6 +26926,14 @@
       "servers": [],
       "description": "Retrieve a list of pre-defined seniority level for roles in Deel platform.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": []
+        }
+      ],
       "method": "GET",
       "path": "/lookups/seniorities",
       "examples": [
@@ -26675,6 +27200,14 @@
       "servers": [],
       "description": "Retrieve a list of pre-defined time off types to register in Deel platform.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": []
+        }
+      ],
       "method": "GET",
       "path": "/lookups/time-off-types",
       "examples": [
@@ -26935,6 +27468,16 @@
       "servers": [],
       "description": "Retrieve the current organization details. Organization is automatically detected from the auth token.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "organizations:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/organizations",
       "examples": [
@@ -27193,6 +27736,16 @@
       "servers": [],
       "description": "Retrieve a list of teams in your organization.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "organizations:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/teams",
       "examples": [
@@ -27446,6 +27999,21 @@
       "servers": [],
       "description": "Upload file to Deel storage to use the file attachment feature for other endpoints.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write",
+            "invoice-adjustments:write",
+            "milestones:write",
+            "off-cycle-payments:write",
+            "tasks:write",
+            "timesheets:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/attachments",
       "examples": [
@@ -27754,6 +28322,16 @@
       "servers": [],
       "description": "This end-point returns a list of your agreements with Deel.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "organizations:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/agreements",
       "examples": [
@@ -28075,6 +28653,17 @@
       "servers": [],
       "description": "Retrieve a list of contract templates in your organization.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write",
+            "contracts:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/contract-templates",
       "examples": [
@@ -28276,6 +28865,17 @@
       "servers": [],
       "description": "Retrieve a list of time off entitlements for a full-time employee.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:read",
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/contracts/{contract_id}/entitlements",
       "examples": [
@@ -28573,6 +29173,7 @@
       "servers": [],
       "description": "List of time offs for all employees in your organization.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/time-offs/",
       "examples": [
@@ -28636,13 +29237,6 @@
                                               "value": "VACATION",
                                               "type": "enum"
                                             },
-                                            "requested_at": {
-                                              "value": {
-                                                "value": "2022-05-24T09:38:46.235Z",
-                                                "type": "datetime"
-                                              },
-                                              "type": "primitive"
-                                            },
                                             "status": {
                                               "value": "REQUESTED",
                                               "type": "enum"
@@ -28679,13 +29273,6 @@
                                               "value": {
                                                 "value": "abc123",
                                                 "type": "string"
-                                              },
-                                              "type": "primitive"
-                                            },
-                                            "created_at": {
-                                              "value": {
-                                                "value": "2022-05-24T09:38:46.235Z",
-                                                "type": "datetime"
                                               },
                                               "type": "primitive"
                                             }
@@ -28720,13 +29307,6 @@
                                               "value": "VACATION",
                                               "type": "enum"
                                             },
-                                            "requested_at": {
-                                              "value": {
-                                                "value": "2022-05-24T09:38:46.235Z",
-                                                "type": "datetime"
-                                              },
-                                              "type": "primitive"
-                                            },
                                             "status": {
                                               "value": "REQUESTED",
                                               "type": "enum"
@@ -28763,13 +29343,6 @@
                                               "value": {
                                                 "value": "abc123",
                                                 "type": "string"
-                                              },
-                                              "type": "primitive"
-                                            },
-                                            "created_at": {
-                                              "value": {
-                                                "value": "2022-05-24T09:38:46.235Z",
-                                                "type": "datetime"
                                               },
                                               "type": "primitive"
                                             }
@@ -28804,13 +29377,6 @@
                                               "value": "VACATION",
                                               "type": "enum"
                                             },
-                                            "requested_at": {
-                                              "value": {
-                                                "value": "2022-05-24T09:38:46.235Z",
-                                                "type": "datetime"
-                                              },
-                                              "type": "primitive"
-                                            },
                                             "status": {
                                               "value": "REQUESTED",
                                               "type": "enum"
@@ -28847,13 +29413,6 @@
                                               "value": {
                                                 "value": "abc123",
                                                 "type": "string"
-                                              },
-                                              "type": "primitive"
-                                            },
-                                            "created_at": {
-                                              "value": {
-                                                "value": "2022-05-24T09:38:46.235Z",
-                                                "type": "datetime"
                                               },
                                               "type": "primitive"
                                             }
@@ -29153,6 +29712,16 @@
       "servers": [],
       "description": "Approve or decline an employee's time off request.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "contracts:write"
+          ]
+        }
+      ],
       "method": "PATCH",
       "path": "/time-offs/{timeoff_id}/review",
       "examples": [
@@ -29462,6 +30031,16 @@
       "servers": [],
       "description": "Retrieve a list of paid invoices for your workforce.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "accounting:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/invoices",
       "examples": [
@@ -29535,13 +30114,6 @@
                                 }
                               },
                               "type": "object"
-                            },
-                            "created_at": {
-                              "value": {
-                                "value": "2022-05-24T09:38:46.235Z",
-                                "type": "datetime"
-                              },
-                              "type": "primitive"
                             },
                             "total": {
                               "value": {
@@ -29807,6 +30379,16 @@
       "servers": [],
       "description": "Get link to download the invoice PDF.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "accounting:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/invoices/{invoice_id}/download",
       "examples": [
@@ -30095,6 +30677,16 @@
       "servers": [],
       "description": "Get a link to download the Deel billing invoice PDF.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "accounting:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/billing/{invoice_id}/download",
       "examples": [
@@ -30422,6 +31014,16 @@
       "servers": [],
       "description": "Retrieve a list of payments made to Deel.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "accounting:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/payments",
       "examples": [
@@ -30469,20 +31071,6 @@
                               "value": {
                                 "value": "label",
                                 "type": "string"
-                              },
-                              "type": "primitive"
-                            },
-                            "paid_at": {
-                              "value": {
-                                "value": "2022-05-24T09:38:46.235Z",
-                                "type": "datetime"
-                              },
-                              "type": "primitive"
-                            },
-                            "created_at": {
-                              "value": {
-                                "value": "2022-05-24T09:38:46.235Z",
-                                "type": "datetime"
                               },
                               "type": "primitive"
                             },
@@ -30795,6 +31383,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "profile:read",
+            "people:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/people",
       "examples": [
@@ -30921,20 +31520,6 @@
                                   "value": {
                                     "value": "label",
                                     "type": "string"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "paid_at": {
-                                  "value": {
-                                    "value": "2022-05-24T09:38:46.235Z",
-                                    "type": "datetime"
-                                  },
-                                  "type": "primitive"
-                                },
-                                "created_at": {
-                                  "value": {
-                                    "value": "2022-05-24T09:38:46.235Z",
-                                    "type": "datetime"
                                   },
                                   "type": "primitive"
                                 },
@@ -31337,6 +31922,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "profile:read",
+            "people:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/people/me",
       "examples": [
@@ -31680,6 +32276,16 @@
       "servers": [],
       "description": "Retrieve a list of webhook subscriptions.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "webhooks:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/webhooks",
       "examples": [
@@ -32022,6 +32628,16 @@
       "servers": [],
       "description": "Create a new webhooks subscription.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "webhooks:write"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/webhooks",
       "examples": [
@@ -32391,6 +33007,16 @@
       "servers": [],
       "description": "Retrieve a single webhook subscription.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "webhooks:read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/webhooks/{id}",
       "examples": [
@@ -32717,6 +33343,16 @@
       "servers": [],
       "description": "Delete a webhook subscription.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "webhooks:write"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/webhooks/{id}",
       "examples": [
@@ -32989,6 +33625,16 @@
       "servers": [],
       "description": "Edit a webhook subscription.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "webhooks:write"
+          ]
+        }
+      ],
       "method": "PATCH",
       "path": "/webhooks/{id}",
       "examples": [
@@ -33362,6 +34008,17 @@
       "servers": [],
       "description": "Get a full breakdown of a payment made to Deel. Breakdown will include individual invoices and Deel fee as line items.",
       "authed": true,
+      "security": [
+        {
+          "deelToken": []
+        },
+        {
+          "oauth2": [
+            "accounting:read",
+            "accounting:write"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/payments/{payment_id}/breakdown",
       "examples": [
@@ -33684,12 +34341,16 @@
             "key": "email",
             "schema": {
               "generatedName": "AlternateEmailItemEmail",
-              "schema": "EmailType",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "AlternateEmailItemEmail",
+                "schema": "EmailType",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -34557,12 +35218,16 @@
             "key": "worker",
             "schema": {
               "generatedName": "BasicContractWorker",
-              "schema": "WorkerOfBasicContract",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "BasicContractWorker",
+                "schema": "WorkerOfBasicContract",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -34636,12 +35301,16 @@
             "key": "created_at",
             "schema": {
               "generatedName": "BasicContractCreatedAt",
-              "schema": "DateTimeString",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "BasicContractCreatedAt",
+                "schema": "DateTimeString",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -34653,12 +35322,16 @@
             "key": "termination_date",
             "schema": {
               "generatedName": "BasicContractTerminationDate",
-              "schema": "DateTimeString",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "BasicContractTerminationDate",
+                "schema": "DateTimeString",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -35065,12 +35738,16 @@
             "key": "created_at",
             "schema": {
               "generatedName": "ContractCreatedAt",
-              "schema": "DateTimeString",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "ContractCreatedAt",
+                "schema": "DateTimeString",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -35096,12 +35773,16 @@
             "key": "seniority",
             "schema": {
               "generatedName": "ContractSeniority",
-              "schema": "Seniority",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "ContractSeniority",
+                "schema": "Seniority",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -35159,12 +35840,16 @@
             "key": "start_date",
             "schema": {
               "generatedName": "ContractStartDate",
-              "schema": "DateTimeString",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "ContractStartDate",
+                "schema": "DateTimeString",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -35176,12 +35861,16 @@
             "key": "termination_date",
             "schema": {
               "generatedName": "ContractTerminationDate",
-              "schema": "DateTimeString",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "ContractTerminationDate",
+                "schema": "DateTimeString",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -35221,12 +35910,16 @@
             "key": "client",
             "schema": {
               "generatedName": "ContractClient",
-              "schema": "ClientOfContract",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "ContractClient",
+                "schema": "ClientOfContract",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -35238,12 +35931,16 @@
             "key": "worker",
             "schema": {
               "generatedName": "ContractWorker",
-              "schema": "WorkerOfContract",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "ContractWorker",
+                "schema": "WorkerOfContract",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -35476,12 +36173,16 @@
               "key": "email",
               "schema": {
                 "generatedName": "ClientOfContractEmail",
-                "schema": "EmailType",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ClientOfContractEmail",
+                  "schema": "EmailType",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "audiences": [],
               "readonly": false,
@@ -35510,12 +36211,16 @@
               "key": "legal_entity",
               "schema": {
                 "generatedName": "ClientOfContractLegalEntity",
-                "schema": "ClientLegalEntity",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ClientOfContractLegalEntity",
+                  "schema": "ClientLegalEntity",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "audiences": [],
               "readonly": false,
@@ -35574,12 +36279,16 @@
               "key": "email",
               "schema": {
                 "generatedName": "ClientLegalEntityEmail",
-                "schema": "EmailType",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ClientLegalEntityEmail",
+                  "schema": "EmailType",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "audiences": [],
               "readonly": false,
@@ -35773,12 +36482,16 @@
               "key": "email",
               "schema": {
                 "generatedName": "WorkerOfBasicContractEmail",
-                "schema": "EmailType",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "WorkerOfBasicContractEmail",
+                  "schema": "EmailType",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "audiences": [],
               "readonly": false,
@@ -35814,12 +36527,16 @@
                 "generatedName": "workerOfBasicContractImage",
                 "value": {
                   "generatedName": "WorkerOfBasicContractImage",
-                  "schema": "UrlType",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "WorkerOfBasicContractImage",
+                    "schema": "UrlType",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -35895,12 +36612,16 @@
                 "generatedName": "workerOfContractEmail",
                 "value": {
                   "generatedName": "WorkerOfContractEmail",
-                  "schema": "EmailType",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "WorkerOfContractEmail",
+                    "schema": "EmailType",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -36008,12 +36729,16 @@
                 "generatedName": "workerOfContractDateOfBirth",
                 "value": {
                   "generatedName": "WorkerOfContractDateOfBirth",
-                  "schema": "DateTimeString",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "WorkerOfContractDateOfBirth",
+                    "schema": "DateTimeString",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -36030,12 +36755,16 @@
                 "generatedName": "workerOfContractExpectedEmail",
                 "value": {
                   "generatedName": "WorkerOfContractExpectedEmail",
-                  "schema": "WorkerEmailType",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "WorkerOfContractExpectedEmail",
+                    "schema": "WorkerEmailType",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -36284,12 +37013,16 @@
               "generatedName": "invitationsOfBasicContractClientEmail",
               "value": {
                 "generatedName": "InvitationsOfBasicContractClientEmail",
-                "schema": "EmailType",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "InvitationsOfBasicContractClientEmail",
+                  "schema": "EmailType",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -36306,12 +37039,16 @@
               "generatedName": "invitationsOfBasicContractWorkerEmail",
               "value": {
                 "generatedName": "InvitationsOfBasicContractWorkerEmail",
-                "schema": "EmailType",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "InvitationsOfBasicContractWorkerEmail",
+                  "schema": "EmailType",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -36340,12 +37077,16 @@
             "key": "client_signed_at",
             "schema": {
               "generatedName": "SignaturesOfBasicContractClientSignedAt",
-              "schema": "DateTimeString",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "SignaturesOfBasicContractClientSignedAt",
+                "schema": "DateTimeString",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -36373,12 +37114,16 @@
             "key": "worker_signed_at",
             "schema": {
               "generatedName": "SignaturesOfBasicContractWorkerSignedAt",
-              "schema": "DateTimeString",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "SignaturesOfBasicContractWorkerSignedAt",
+                "schema": "DateTimeString",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -36419,12 +37164,16 @@
             "key": "client_signed_at",
             "schema": {
               "generatedName": "SignaturesOfContractClientSignedAt",
-              "schema": "DateTimeString",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "SignaturesOfContractClientSignedAt",
+                "schema": "DateTimeString",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -36451,12 +37200,16 @@
             "key": "worker_signed_at",
             "schema": {
               "generatedName": "SignaturesOfContractWorkerSignedAt",
-              "schema": "DateTimeString",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "SignaturesOfContractWorkerSignedAt",
+                "schema": "DateTimeString",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -36468,12 +37221,16 @@
             "key": "signed_at",
             "schema": {
               "generatedName": "SignaturesOfContractSignedAt",
-              "schema": "DateTimeString",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "SignaturesOfContractSignedAt",
+                "schema": "DateTimeString",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -36572,12 +37329,16 @@
             "key": "first_payment_date",
             "schema": {
               "generatedName": "CompensationDetailsOfContractFirstPaymentDate",
-              "schema": "DateTimeString",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "CompensationDetailsOfContractFirstPaymentDate",
+                "schema": "DateTimeString",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -37823,12 +38584,16 @@
               "generatedName": "contractToCreateSharedTerminationDate",
               "value": {
                 "generatedName": "ContractToCreateSharedTerminationDate",
-                "schema": "DateString",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ContractToCreateSharedTerminationDate",
+                  "schema": "DateString",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -38164,12 +38929,16 @@
                         "generatedName": "contractToCreateSharedWorkerExpectedEmail",
                         "value": {
                           "generatedName": "ContractToCreateSharedWorkerExpectedEmail",
-                          "schema": "WorkerEmailType",
-                          "source": {
-                            "file": "../openapi.yml",
-                            "type": "openapi"
+                          "value": {
+                            "generatedName": "ContractToCreateSharedWorkerExpectedEmail",
+                            "schema": "WorkerEmailType",
+                            "source": {
+                              "file": "../openapi.yml",
+                              "type": "openapi"
+                            },
+                            "type": "reference"
                           },
-                          "type": "reference"
+                          "type": "nullable"
                         },
                         "groupName": [],
                         "type": "optional"
@@ -38561,12 +39330,16 @@
               "generatedName": "compensationDetailsOfContractToCreateSharedFirstPaymentDate",
               "value": {
                 "generatedName": "CompensationDetailsOfContractToCreateSharedFirstPaymentDate",
-                "schema": "DateString",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "CompensationDetailsOfContractToCreateSharedFirstPaymentDate",
+                  "schema": "DateString",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -39426,12 +40199,16 @@
               "generatedName": "basicTimesheetPublicId",
               "value": {
                 "generatedName": "BasicTimesheetPublicId",
-                "schema": "PublicId",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "BasicTimesheetPublicId",
+                  "schema": "PublicId",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -39461,12 +40238,16 @@
             "key": "status",
             "schema": {
               "generatedName": "BasicTimesheetStatus",
-              "schema": "TimesheetStatusEnum",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "BasicTimesheetStatus",
+                "schema": "TimesheetStatusEnum",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -39492,12 +40273,16 @@
             "key": "date_submitted",
             "schema": {
               "generatedName": "BasicTimesheetDateSubmitted",
-              "schema": "DateTimeStringRequired",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "BasicTimesheetDateSubmitted",
+                "schema": "DateTimeStringRequired",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -39626,12 +40411,16 @@
             "key": "attachment",
             "schema": {
               "generatedName": "BasicTimesheetAttachment",
-              "schema": "FileAttachmentInfo",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "BasicTimesheetAttachment",
+                "schema": "FileAttachmentInfo",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -39892,12 +40681,16 @@
                       "generatedName": "basicTimesheetPaymentCycleStartDate",
                       "value": {
                         "generatedName": "BasicTimesheetPaymentCycleStartDate",
-                        "schema": "DateTimeString",
-                        "source": {
-                          "file": "../openapi.yml",
-                          "type": "openapi"
+                        "value": {
+                          "generatedName": "BasicTimesheetPaymentCycleStartDate",
+                          "schema": "DateTimeString",
+                          "source": {
+                            "file": "../openapi.yml",
+                            "type": "openapi"
+                          },
+                          "type": "reference"
                         },
-                        "type": "reference"
+                        "type": "nullable"
                       },
                       "groupName": [],
                       "type": "optional"
@@ -39914,12 +40707,16 @@
                       "generatedName": "basicTimesheetPaymentCycleEndDate",
                       "value": {
                         "generatedName": "BasicTimesheetPaymentCycleEndDate",
-                        "schema": "DateTimeString",
-                        "source": {
-                          "file": "../openapi.yml",
-                          "type": "openapi"
+                        "value": {
+                          "generatedName": "BasicTimesheetPaymentCycleEndDate",
+                          "schema": "DateTimeString",
+                          "source": {
+                            "file": "../openapi.yml",
+                            "type": "openapi"
+                          },
+                          "type": "reference"
                         },
-                        "type": "reference"
+                        "type": "nullable"
                       },
                       "groupName": [],
                       "type": "optional"
@@ -40632,12 +41429,16 @@
             "key": "status",
             "schema": {
               "generatedName": "GenericReportReviewCreatedStatus",
-              "schema": "InvoiceAdjustmentStatusEnum",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "GenericReportReviewCreatedStatus",
+                "schema": "InvoiceAdjustmentStatusEnum",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -40668,12 +41469,16 @@
               "generatedName": "genericReportReviewCreatedPublicId",
               "value": {
                 "generatedName": "GenericReportReviewCreatedPublicId",
-                "schema": "PublicId",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "GenericReportReviewCreatedPublicId",
+                  "schema": "PublicId",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -41185,12 +41990,16 @@
                     },
                     {
                       "generatedName": "TimesheetSearchContainerStatusesOne",
-                      "schema": "TimesheetStatusEnum",
-                      "source": {
-                        "file": "../openapi.yml",
-                        "type": "openapi"
+                      "value": {
+                        "generatedName": "TimesheetSearchContainerStatusesOne",
+                        "schema": "TimesheetStatusEnum",
+                        "source": {
+                          "file": "../openapi.yml",
+                          "type": "openapi"
+                        },
+                        "type": "reference"
                       },
-                      "type": "reference"
+                      "type": "nullable"
                     }
                   ],
                   "groupName": [],
@@ -41215,12 +42024,16 @@
               "generatedName": "timesheetSearchContainerDateFrom",
               "value": {
                 "generatedName": "TimesheetSearchContainerDateFrom",
-                "schema": "DateString",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "TimesheetSearchContainerDateFrom",
+                  "schema": "DateString",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -41237,12 +42050,16 @@
               "generatedName": "timesheetSearchContainerDateTo",
               "value": {
                 "generatedName": "TimesheetSearchContainerDateTo",
-                "schema": "DateString",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "TimesheetSearchContainerDateTo",
+                  "schema": "DateString",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -41592,12 +42409,16 @@
                     },
                     {
                       "generatedName": "InvoiceAdjustmentSearchContainerStatusesOne",
-                      "schema": "InvoiceAdjustmentStatusEnum",
-                      "source": {
-                        "file": "../openapi.yml",
-                        "type": "openapi"
+                      "value": {
+                        "generatedName": "InvoiceAdjustmentSearchContainerStatusesOne",
+                        "schema": "InvoiceAdjustmentStatusEnum",
+                        "source": {
+                          "file": "../openapi.yml",
+                          "type": "openapi"
+                        },
+                        "type": "reference"
                       },
-                      "type": "reference"
+                      "type": "nullable"
                     }
                   ],
                   "groupName": [],
@@ -41622,12 +42443,16 @@
               "generatedName": "invoiceAdjustmentSearchContainerDateFrom",
               "value": {
                 "generatedName": "InvoiceAdjustmentSearchContainerDateFrom",
-                "schema": "DateString",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "InvoiceAdjustmentSearchContainerDateFrom",
+                  "schema": "DateString",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -41644,12 +42469,16 @@
               "generatedName": "invoiceAdjustmentSearchContainerDateTo",
               "value": {
                 "generatedName": "InvoiceAdjustmentSearchContainerDateTo",
-                "schema": "DateString",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "InvoiceAdjustmentSearchContainerDateTo",
+                  "schema": "DateString",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -41760,12 +42589,16 @@
               "generatedName": "basicInvoiceAdjustmentPublicId",
               "value": {
                 "generatedName": "BasicInvoiceAdjustmentPublicId",
-                "schema": "PublicId",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "BasicInvoiceAdjustmentPublicId",
+                  "schema": "PublicId",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -41797,12 +42630,16 @@
             "key": "status",
             "schema": {
               "generatedName": "BasicInvoiceAdjustmentStatus",
-              "schema": "InvoiceAdjustmentStatusEnum",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "BasicInvoiceAdjustmentStatus",
+                "schema": "InvoiceAdjustmentStatusEnum",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -41828,12 +42665,16 @@
             "key": "date_submitted",
             "schema": {
               "generatedName": "BasicInvoiceAdjustmentDateSubmitted",
-              "schema": "DateTimeStringRequired",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "BasicInvoiceAdjustmentDateSubmitted",
+                "schema": "DateTimeStringRequired",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -41897,12 +42738,16 @@
             "key": "created_at",
             "schema": {
               "generatedName": "BasicInvoiceAdjustmentCreatedAt",
-              "schema": "DateTimeStringRequired",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "BasicInvoiceAdjustmentCreatedAt",
+                "schema": "DateTimeStringRequired",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -41963,12 +42808,16 @@
             "key": "attachment",
             "schema": {
               "generatedName": "BasicInvoiceAdjustmentAttachment",
-              "schema": "FileAttachmentInfo",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "BasicInvoiceAdjustmentAttachment",
+                "schema": "FileAttachmentInfo",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -42225,12 +43074,16 @@
                   "key": "start_date",
                   "schema": {
                     "generatedName": "BasicInvoiceAdjustmentPaymentCycleStartDate",
-                    "schema": "DateTimeStringRequired",
-                    "source": {
-                      "file": "../openapi.yml",
-                      "type": "openapi"
+                    "value": {
+                      "generatedName": "BasicInvoiceAdjustmentPaymentCycleStartDate",
+                      "schema": "DateTimeStringRequired",
+                      "source": {
+                        "file": "../openapi.yml",
+                        "type": "openapi"
+                      },
+                      "type": "reference"
                     },
-                    "type": "reference"
+                    "type": "nullable"
                   },
                   "audiences": [],
                   "readonly": false,
@@ -42242,12 +43095,16 @@
                   "key": "end_date",
                   "schema": {
                     "generatedName": "BasicInvoiceAdjustmentPaymentCycleEndDate",
-                    "schema": "DateTimeStringRequired",
-                    "source": {
-                      "file": "../openapi.yml",
-                      "type": "openapi"
+                    "value": {
+                      "generatedName": "BasicInvoiceAdjustmentPaymentCycleEndDate",
+                      "schema": "DateTimeStringRequired",
+                      "source": {
+                        "file": "../openapi.yml",
+                        "type": "openapi"
+                      },
+                      "type": "reference"
                     },
-                    "type": "reference"
+                    "type": "nullable"
                   },
                   "audiences": [],
                   "readonly": false,
@@ -42760,12 +43617,16 @@
               "generatedName": "invoiceAdjustmentCreatedPublicId",
               "value": {
                 "generatedName": "InvoiceAdjustmentCreatedPublicId",
-                "schema": "PublicId",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "InvoiceAdjustmentCreatedPublicId",
+                  "schema": "PublicId",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -42782,12 +43643,16 @@
               "generatedName": "invoiceAdjustmentCreatedStatus",
               "value": {
                 "generatedName": "InvoiceAdjustmentCreatedStatus",
-                "schema": "InvoiceAdjustmentStatusEnum",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "InvoiceAdjustmentCreatedStatus",
+                  "schema": "InvoiceAdjustmentStatusEnum",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -42804,12 +43669,16 @@
               "generatedName": "invoiceAdjustmentCreatedCreatedAt",
               "value": {
                 "generatedName": "InvoiceAdjustmentCreatedCreatedAt",
-                "schema": "DateTimeStringRequired",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "InvoiceAdjustmentCreatedCreatedAt",
+                  "schema": "DateTimeStringRequired",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -44742,12 +45611,16 @@
       "TimesheetStatusEnumList": {
         "value": {
           "generatedName": "TimesheetStatusEnumListItem",
-          "schema": "TimesheetStatusEnum",
-          "source": {
-            "file": "../openapi.yml",
-            "type": "openapi"
+          "value": {
+            "generatedName": "TimesheetStatusEnumListItem",
+            "schema": "TimesheetStatusEnum",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
           },
-          "type": "reference"
+          "type": "nullable"
         },
         "generatedName": "TimesheetStatusEnumList",
         "groupName": [],
@@ -44758,13 +45631,45 @@
         "description": "Status of this entry.",
         "value": {
           "description": "Status of this entry.",
-          "schema": {
-            "example": "approved",
-            "type": "string"
-          },
           "generatedName": "TimesheetStatusEnum",
+          "values": [
+            {
+              "generatedName": "approved",
+              "value": "approved",
+              "casing": {}
+            },
+            {
+              "generatedName": "declined",
+              "value": "declined",
+              "casing": {}
+            },
+            {
+              "generatedName": "not_payable",
+              "value": "not_payable",
+              "casing": {}
+            },
+            {
+              "generatedName": "paid",
+              "value": "paid",
+              "casing": {}
+            },
+            {
+              "generatedName": "pending",
+              "value": "pending",
+              "casing": {}
+            },
+            {
+              "generatedName": "processing",
+              "value": "processing",
+              "casing": {}
+            }
+          ],
           "groupName": [],
-          "type": "primitive"
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "enum"
         },
         "groupName": [],
         "type": "nullable"
@@ -45010,12 +45915,16 @@
       "InvoiceAdjustmentStatusEnumList": {
         "value": {
           "generatedName": "InvoiceAdjustmentStatusEnumListItem",
-          "schema": "InvoiceAdjustmentStatusEnum",
-          "source": {
-            "file": "../openapi.yml",
-            "type": "openapi"
+          "value": {
+            "generatedName": "InvoiceAdjustmentStatusEnumListItem",
+            "schema": "InvoiceAdjustmentStatusEnum",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
           },
-          "type": "reference"
+          "type": "nullable"
         },
         "generatedName": "InvoiceAdjustmentStatusEnumList",
         "groupName": [],
@@ -45026,12 +45935,45 @@
         "description": "status of invoice adjustment",
         "value": {
           "description": "status of invoice adjustment",
-          "schema": {
-            "type": "string"
-          },
           "generatedName": "InvoiceAdjustmentStatusEnum",
+          "values": [
+            {
+              "generatedName": "approved",
+              "value": "approved",
+              "casing": {}
+            },
+            {
+              "generatedName": "declined",
+              "value": "declined",
+              "casing": {}
+            },
+            {
+              "generatedName": "not_payable",
+              "value": "not_payable",
+              "casing": {}
+            },
+            {
+              "generatedName": "paid",
+              "value": "paid",
+              "casing": {}
+            },
+            {
+              "generatedName": "pending",
+              "value": "pending",
+              "casing": {}
+            },
+            {
+              "generatedName": "processing",
+              "value": "processing",
+              "casing": {}
+            }
+          ],
           "groupName": [],
-          "type": "primitive"
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "enum"
         },
         "groupName": [],
         "type": "nullable"
@@ -45685,12 +46627,16 @@
             "key": "created_at",
             "schema": {
               "generatedName": "MilestoneCreatedAt",
-              "schema": "DateTimeString",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "MilestoneCreatedAt",
+                "schema": "DateTimeString",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -46751,12 +47697,16 @@
               "generatedName": "offCyclePaymentPublicId",
               "value": {
                 "generatedName": "OffCyclePaymentPublicId",
-                "schema": "PublicId",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "OffCyclePaymentPublicId",
+                  "schema": "PublicId",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -46771,12 +47721,16 @@
             "key": "status",
             "schema": {
               "generatedName": "OffCyclePaymentStatus",
-              "schema": "InvoiceAdjustmentStatusEnum",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "OffCyclePaymentStatus",
+                "schema": "InvoiceAdjustmentStatusEnum",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -46804,12 +47758,16 @@
             "key": "date_submitted",
             "schema": {
               "generatedName": "OffCyclePaymentDateSubmitted",
-              "schema": "DateTimeStringRequired",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "OffCyclePaymentDateSubmitted",
+                "schema": "DateTimeStringRequired",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -46854,12 +47812,16 @@
             "key": "created_at",
             "schema": {
               "generatedName": "OffCyclePaymentCreatedAt",
-              "schema": "DateTimeStringRequired",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "OffCyclePaymentCreatedAt",
+                "schema": "DateTimeStringRequired",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -47454,12 +48416,16 @@
               "generatedName": "pgoTaskToCreateAttachment",
               "value": {
                 "generatedName": "PgoTaskToCreateAttachment",
-                "schema": "FileAttachmentInfo",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "PgoTaskToCreateAttachment",
+                  "schema": "FileAttachmentInfo",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -47553,12 +48519,16 @@
             "key": "status",
             "schema": {
               "generatedName": "PgoTaskStatus",
-              "schema": "TimesheetStatusEnum",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "PgoTaskStatus",
+                "schema": "TimesheetStatusEnum",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -47572,12 +48542,16 @@
               "generatedName": "pgoTaskAttachment",
               "value": {
                 "generatedName": "PgoTaskAttachment",
-                "schema": "FileAttachmentInfo",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "PgoTaskAttachment",
+                  "schema": "FileAttachmentInfo",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -48453,12 +49427,16 @@
                     "generatedName": "finalPaymentCalculatedLastCycleStart",
                     "value": {
                       "generatedName": "FinalPaymentCalculatedLastCycleStart",
-                      "schema": "DateTimeStringRequired",
-                      "source": {
-                        "file": "../openapi.yml",
-                        "type": "openapi"
+                      "value": {
+                        "generatedName": "FinalPaymentCalculatedLastCycleStart",
+                        "schema": "DateTimeStringRequired",
+                        "source": {
+                          "file": "../openapi.yml",
+                          "type": "openapi"
+                        },
+                        "type": "reference"
                       },
-                      "type": "reference"
+                      "type": "nullable"
                     },
                     "groupName": [],
                     "type": "optional"
@@ -48475,12 +49453,16 @@
                     "generatedName": "finalPaymentCalculatedLastCycleEnd",
                     "value": {
                       "generatedName": "FinalPaymentCalculatedLastCycleEnd",
-                      "schema": "DateTimeStringRequired",
-                      "source": {
-                        "file": "../openapi.yml",
-                        "type": "openapi"
+                      "value": {
+                        "generatedName": "FinalPaymentCalculatedLastCycleEnd",
+                        "schema": "DateTimeStringRequired",
+                        "source": {
+                          "file": "../openapi.yml",
+                          "type": "openapi"
+                        },
+                        "type": "reference"
                       },
-                      "type": "reference"
+                      "type": "nullable"
                     },
                     "groupName": [],
                     "type": "optional"
@@ -48497,12 +49479,16 @@
                     "generatedName": "finalPaymentCalculatedLastCycleCompletionDate",
                     "value": {
                       "generatedName": "FinalPaymentCalculatedLastCycleCompletionDate",
-                      "schema": "DateTimeStringRequired",
-                      "source": {
-                        "file": "../openapi.yml",
-                        "type": "openapi"
+                      "value": {
+                        "generatedName": "FinalPaymentCalculatedLastCycleCompletionDate",
+                        "schema": "DateTimeStringRequired",
+                        "source": {
+                          "file": "../openapi.yml",
+                          "type": "openapi"
+                        },
+                        "type": "reference"
                       },
-                      "type": "reference"
+                      "type": "nullable"
                     },
                     "groupName": [],
                     "type": "optional"
@@ -49317,12 +50303,16 @@
               "generatedName": "contractToTerminateCompletionDate",
               "value": {
                 "generatedName": "ContractToTerminateCompletionDate",
-                "schema": "DateString",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ContractToTerminateCompletionDate",
+                  "schema": "DateString",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -49442,15 +50432,19 @@
             "schema": {
               "generatedName": "contractTerminationResultCompletionDate",
               "value": {
-                "description": "Date the contract is marked for completion",
                 "generatedName": "ContractTerminationResultCompletionDate",
-                "schema": "DateString",
-                "groupName": [],
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "description": "Date the contract is marked for completion",
+                "value": {
+                  "generatedName": "ContractTerminationResultCompletionDate",
+                  "schema": "DateString",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "groupName": [],
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -50082,12 +51076,16 @@
                     "generatedName": "eorContractToCreateEmploymentStartDate",
                     "value": {
                       "generatedName": "EorContractToCreateEmploymentStartDate",
-                      "schema": "DateString",
-                      "source": {
-                        "file": "../openapi.yml",
-                        "type": "openapi"
+                      "value": {
+                        "generatedName": "EorContractToCreateEmploymentStartDate",
+                        "schema": "DateString",
+                        "source": {
+                          "file": "../openapi.yml",
+                          "type": "openapi"
+                        },
+                        "type": "reference"
                       },
-                      "type": "reference"
+                      "type": "nullable"
                     },
                     "groupName": [],
                     "type": "optional"
@@ -50104,12 +51102,16 @@
                     "generatedName": "eorContractToCreateEmploymentEndDate",
                     "value": {
                       "generatedName": "EorContractToCreateEmploymentEndDate",
-                      "schema": "DateString",
-                      "source": {
-                        "file": "../openapi.yml",
-                        "type": "openapi"
+                      "value": {
+                        "generatedName": "EorContractToCreateEmploymentEndDate",
+                        "schema": "DateString",
+                        "source": {
+                          "file": "../openapi.yml",
+                          "type": "openapi"
+                        },
+                        "type": "reference"
                       },
-                      "type": "reference"
+                      "type": "nullable"
                     },
                     "groupName": [],
                     "type": "optional"
@@ -50497,12 +51499,25 @@
                       "description": "Should be set only if variable_compensation is set. It can be PERCENTAGE or FIXED.",
                       "value": {
                         "description": "Should be set only if variable_compensation is set. It can be PERCENTAGE or FIXED.",
-                        "schema": {
-                          "type": "string"
-                        },
                         "generatedName": "EorContractToCreateCompensationDetailsVariableCompensationType",
+                        "values": [
+                          {
+                            "generatedName": "PERCENTAGE",
+                            "value": "PERCENTAGE",
+                            "casing": {}
+                          },
+                          {
+                            "generatedName": "FIXED",
+                            "value": "FIXED",
+                            "casing": {}
+                          }
+                        ],
                         "groupName": [],
-                        "type": "primitive"
+                        "source": {
+                          "file": "../openapi.yml",
+                          "type": "openapi"
+                        },
+                        "type": "enum"
                       },
                       "groupName": [],
                       "type": "nullable"
@@ -50714,12 +51729,16 @@
               "generatedName": "eorContractCreatedCreatedAt",
               "value": {
                 "generatedName": "EorContractCreatedCreatedAt",
-                "schema": "DateTimeString",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "EorContractCreatedCreatedAt",
+                  "schema": "DateTimeString",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -50809,12 +51828,16 @@
                       "generatedName": "eorContractCreatedEmploymentStartDate",
                       "value": {
                         "generatedName": "EorContractCreatedEmploymentStartDate",
-                        "schema": "DateString",
-                        "source": {
-                          "file": "../openapi.yml",
-                          "type": "openapi"
+                        "value": {
+                          "generatedName": "EorContractCreatedEmploymentStartDate",
+                          "schema": "DateString",
+                          "source": {
+                            "file": "../openapi.yml",
+                            "type": "openapi"
+                          },
+                          "type": "reference"
                         },
-                        "type": "reference"
+                        "type": "nullable"
                       },
                       "groupName": [],
                       "type": "optional"
@@ -50831,12 +51854,16 @@
                       "generatedName": "eorContractCreatedEmploymentEndDate",
                       "value": {
                         "generatedName": "EorContractCreatedEmploymentEndDate",
-                        "schema": "DateString",
-                        "source": {
-                          "file": "../openapi.yml",
-                          "type": "openapi"
+                        "value": {
+                          "generatedName": "EorContractCreatedEmploymentEndDate",
+                          "schema": "DateString",
+                          "source": {
+                            "file": "../openapi.yml",
+                            "type": "openapi"
+                          },
+                          "type": "reference"
                         },
-                        "type": "reference"
+                        "type": "nullable"
                       },
                       "groupName": [],
                       "type": "optional"
@@ -51357,12 +52384,16 @@
               "generatedName": "eorContractCreatedSeniority",
               "value": {
                 "generatedName": "EorContractCreatedSeniority",
-                "schema": "Seniority",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "EorContractCreatedSeniority",
+                  "schema": "Seniority",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -53054,13 +54085,17 @@
             "key": "created_at",
             "schema": {
               "generatedName": "EorTimeoffsItemCreatedAt",
-              "schema": "DateTimeString",
-              "groupName": [],
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "EorTimeoffsItemCreatedAt",
+                "schema": "DateTimeString",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "groupName": [],
+              "type": "nullable"
             },
             "audiences": []
           },
@@ -53301,15 +54336,19 @@
             "generatedName": "eorTimeoffsBaseItemRequestedAt",
             "key": "requested_at",
             "schema": {
-              "description": "Timestamp when time off was requested.",
               "generatedName": "EorTimeoffsBaseItemRequestedAt",
-              "schema": "DateTimeString",
-              "groupName": [],
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "description": "Timestamp when time off was requested.",
+              "value": {
+                "generatedName": "EorTimeoffsBaseItemRequestedAt",
+                "schema": "DateTimeString",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "groupName": [],
+              "type": "nullable"
             },
             "audiences": []
           },
@@ -55992,15 +57031,19 @@
             "generatedName": "paymentPaidAt",
             "key": "paid_at",
             "schema": {
-              "description": "Timestamp when payment was paid.",
               "generatedName": "PaymentPaidAt",
-              "schema": "DateTimeString",
-              "groupName": [],
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "description": "Timestamp when payment was paid.",
+              "value": {
+                "generatedName": "PaymentPaidAt",
+                "schema": "DateTimeString",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "groupName": [],
+              "type": "nullable"
             },
             "audiences": []
           },
@@ -56009,15 +57052,19 @@
             "generatedName": "paymentCreatedAt",
             "key": "created_at",
             "schema": {
-              "description": "Timestamp when the record was created.",
               "generatedName": "PaymentCreatedAt",
-              "schema": "DateTimeString",
-              "groupName": [],
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "description": "Timestamp when the record was created.",
+              "value": {
+                "generatedName": "PaymentCreatedAt",
+                "schema": "DateTimeString",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "groupName": [],
+              "type": "nullable"
             },
             "audiences": []
           },
@@ -56151,12 +57198,16 @@
             "key": "data",
             "schema": {
               "generatedName": "ContractDocumentContainerData",
-              "schema": "FileAttachmentInfo",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "ContractDocumentContainerData",
+                "schema": "FileAttachmentInfo",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -57132,12 +58183,16 @@
             "key": "created_at",
             "schema": {
               "generatedName": "InvoiceCreatedAt",
-              "schema": "DateTimeString",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "InvoiceCreatedAt",
+                "schema": "DateTimeString",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -57216,12 +58271,16 @@
               "generatedName": "invoicePaidAt",
               "value": {
                 "generatedName": "InvoicePaidAt",
-                "schema": "DateTimeString",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "InvoicePaidAt",
+                  "schema": "DateTimeString",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -57238,12 +58297,16 @@
               "generatedName": "invoiceMoneyReceivedAt",
               "value": {
                 "generatedName": "InvoiceMoneyReceivedAt",
-                "schema": "DateTimeString",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "InvoiceMoneyReceivedAt",
+                  "schema": "DateTimeString",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -57260,12 +58323,16 @@
               "generatedName": "invoicePaymentProcessedAt",
               "value": {
                 "generatedName": "InvoicePaymentProcessedAt",
-                "schema": "DateTimeString",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "InvoicePaymentProcessedAt",
+                  "schema": "DateTimeString",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -57895,12 +58962,16 @@
               "generatedName": "hrisContractBaseEndDate",
               "value": {
                 "generatedName": "HrisContractBaseEndDate",
-                "schema": "DateString",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "HrisContractBaseEndDate",
+                  "schema": "DateString",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -59964,12 +61035,16 @@
               "generatedName": "peopleMeClientCountry",
               "value": {
                 "generatedName": "PeopleMeClientCountry",
-                "schema": "CountryCodeNulleable",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "PeopleMeClientCountry",
+                  "schema": "CountryCodeNulleable",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -59986,12 +61061,16 @@
               "generatedName": "peopleMeContractorCountry",
               "value": {
                 "generatedName": "PeopleMeContractorCountry",
-                "schema": "CountryCodeNulleable",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "PeopleMeContractorCountry",
+                  "schema": "CountryCodeNulleable",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"

@@ -280,8 +280,9 @@ public record SubmissionStatusForTestCase
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Graded(SeedTrace.TestCaseResultWithStdout value) =>
-            new(value);
+        public static implicit operator SubmissionStatusForTestCase.Graded(
+            SeedTrace.TestCaseResultWithStdout value
+        ) => new(value);
     }
 
     /// <summary>
@@ -299,7 +300,9 @@ public record SubmissionStatusForTestCase
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator GradedV2(SeedTrace.TestCaseGrade value) => new(value);
+        public static implicit operator SubmissionStatusForTestCase.GradedV2(
+            SeedTrace.TestCaseGrade value
+        ) => new(value);
     }
 
     /// <summary>
@@ -317,6 +320,8 @@ public record SubmissionStatusForTestCase
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Traced(SeedTrace.TracedTestCase value) => new(value);
+        public static implicit operator SubmissionStatusForTestCase.Traced(
+            SeedTrace.TracedTestCase value
+        ) => new(value);
     }
 }

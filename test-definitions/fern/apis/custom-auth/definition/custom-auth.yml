@@ -13,6 +13,9 @@ service:
       path: /custom-auth
       method: GET
       response: boolean
+      examples:
+        - response:
+            body: true
       errors:
         - errors.UnauthorizedRequest
 
@@ -25,6 +28,11 @@ service:
         name: PostWithCustomAuth
         body: unknown
       response: boolean
+      examples:
+        - request:
+            key: "value"
+          response:
+            body: true
       errors:
         - errors.UnauthorizedRequest
         - errors.BadRequest

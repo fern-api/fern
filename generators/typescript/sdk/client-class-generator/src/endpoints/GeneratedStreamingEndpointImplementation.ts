@@ -83,12 +83,12 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         const imports = this.request.getExampleEndpointImports({
             context: args.context,
             example: args.example,
-            opts: args.opts
+            opts: { ...args.opts, isForRequest: true }
         });
         const exampleParameters = this.request.getExampleEndpointParameters({
             context: args.context,
             example: args.example,
-            opts: args.opts
+            opts: { ...args.opts, isForRequest: true }
         });
         if (exampleParameters == null) {
             return undefined;

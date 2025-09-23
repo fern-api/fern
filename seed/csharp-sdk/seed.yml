@@ -1,5 +1,5 @@
 displayName: C# SDK
-irVersion: v58
+irVersion: v59
 image: fernapi/fern-csharp-sdk
 changelogLocation: ../../generators/csharp/sdk/versions.yml
 
@@ -58,7 +58,12 @@ fixtures:
   examples:
     - customConfig: null
       outputFolder: no-custom-config
-    - customConfig: null
+    - customConfig:
+        custom-readme-sections:
+          - title: "Override Section"
+            content: "Override Content"
+          - title: "Generator Invocation Custom Section"
+            content: "Generator Invocation Custom Content for {{ packageName }}"
       readmeConfig:
         apiName: "CustomName"
         disabledSections:
@@ -66,6 +71,13 @@ fixtures:
         bannerLink: https://www.fernapi.com
         apiReferenceLink: https://www.docs.fernapi.com
         defaultEndpoint: POST /movie
+        customSections:
+          - title: "Base Readme Custom Section"
+            language: csharp
+            content: "Base Readme Custom Content for {{ packageName }}"
+          - title: "Override Section"
+            language: csharp
+            content: "Base Content"
         features:
           timeouts:
             - GET /movie/{movieId}
@@ -179,7 +191,6 @@ fixtures:
         client-class-name: System
       outputFolder: system-client
 allowedFailures:
-  - errors
   - imdb:exported-client-class-name
   - oauth-client-credentials-custom
   - pagination:no-custom-config
@@ -188,10 +199,6 @@ allowedFailures:
 
   ## COMPILE FAILURES
   - any-auth
-  - examples:no-custom-config
-  - examples:readme-config
-  - objects-with-imports
-  - mixed-file-directory
 
   # deserialization/?? issues for public readonly record struct
   - circular-references

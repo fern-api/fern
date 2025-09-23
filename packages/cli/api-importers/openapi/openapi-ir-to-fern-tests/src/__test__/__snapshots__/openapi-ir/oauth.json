@@ -306,6 +306,7 @@
       "servers": [],
       "description": "Exchange credentials or refresh token for an access token",
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/oauth/token",
       "examples": [

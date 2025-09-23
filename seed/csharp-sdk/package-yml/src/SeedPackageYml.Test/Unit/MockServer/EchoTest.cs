@@ -1,4 +1,4 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using SeedPackageYml;
 using SeedPackageYml.Core;
@@ -8,8 +8,8 @@ namespace SeedPackageYml.Test.Unit.MockServer;
 [TestFixture]
 public class EchoTest : BaseMockServerTest
 {
-    [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest_1()
+    [NUnit.Framework.Test]
+    public async Task MockServerTest_1()
     {
         const string requestJson = """
             {
@@ -41,8 +41,8 @@ public class EchoTest : BaseMockServerTest
         Assert.That(response, Is.EqualTo(JsonUtils.Deserialize<string>(mockResponse)));
     }
 
-    [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest_2()
+    [NUnit.Framework.Test]
+    public async Task MockServerTest_2()
     {
         const string requestJson = """
             {

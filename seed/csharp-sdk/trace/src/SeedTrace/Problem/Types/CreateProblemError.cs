@@ -175,7 +175,8 @@ public record CreateProblemError
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Generic(SeedTrace.GenericCreateProblemError value) =>
-            new(value);
+        public static implicit operator CreateProblemError.Generic(
+            SeedTrace.GenericCreateProblemError value
+        ) => new(value);
     }
 }

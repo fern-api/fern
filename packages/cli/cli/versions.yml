@@ -1,5 +1,125 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: |
+        You can now specify security schemes and scopes on the HTTP endpoint `auth` property in Fern Definition.
+        ```yml
+        service:
+          ...
+          endpoints:
+            getAdmins:
+              ...
+              auth:
+                - OAuth: ["admin"] # OAuth is the given name of the auth scheme in api.yml
+        ```
+      type: feat
+    - summary: The OpenAPI parser will now configure the `auth` property on HTTP endpoints based on the security schemes defined in the OpenAPI spec.
+      type: feat
+  irVersion: 60
+  createdAt: "2025-09-23"
+  version: 0.79.0
+
+- changelogEntry:
+    - summary: |
+        Users can now enable dynamic snippets using the `dynamic-snippets` flag in the `docs.yml` file.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-23"
+  version: 0.78.7
+
+- changelogEntry:
+    - summary: |
+        Support `null` in an `enum` (functionality is delegated to `nullable<>`).
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-22"
+  version: 0.78.6
+
+- changelogEntry:
+    - summary: |
+        Correct `nullable<>` wrapping of nullable schemas referenced via `$ref`.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-22"
+  version: 0.78.5
+
+- changelogEntry:
+    - summary: Collapse any combination of optional and nullable to optional<nullable<T>>.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-22"
+  version: 0.78.4
+
+- changelogEntry:
+    - summary: Support IR v59 in the Rust SDK generator.
+      type: chore
+  irVersion: 59
+  createdAt: "2025-09-22"
+  version: 0.78.3
+
+- changelogEntry:
+    - summary: Update ir migration config to support v59 for latest ruby sdk generator version.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-21"
+  version: 0.78.2
+
+- changelogEntry:
+    - summary: Update ir migration config to support v59 for latest php sdk generator version.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-21"
+  version: 0.78.1
+
+- changelogEntry:
+    - summary: added `x-fern-retries` OpenAPI extension flag support in the OpenAPI-IR, Fern Definition, and IR.
+      type: feat
+  irVersion: 59
+  createdAt: "2025-09-18"
+  version: 0.78.0
+
+- changelogEntry:
+    - summary: Apply max cache control for S3 uploads in documentation generation to improve lighthouse scores.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-18"
+  version: 0.77.8
+
+- changelogEntry:
+    - summary: Update dynamic snippets generation to not fail on empty PHP configuration
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-18"
+  version: 0.77.7
+
+- changelogEntry:
+    - summary: Update ir migration config to support v59 for latest csharp sdk generator version.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-17"
+  version: 0.77.6
+
+- changelogEntry:
+    - summary: Support running the Rust SDK generator using IR v58.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-17"
+  version: 0.77.5
+
+- changelogEntry:
+    - summary: Respect the `x-fern-server-name`` flag at the endpoint level in the V3 OpenAPI parser
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-16"
+  version: 0.77.4
+
+- changelogEntry:
+    - summary: Support nested folders with x-fern-sdk-group-name in AsyncAPI parsing
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-15"
+  version: 0.77.3
+
+- changelogEntry:
     - summary: Support for PHP dynamic SDK snippets in the docs.
       type: fix
   irVersion: 59
@@ -118,8 +238,8 @@
 
 - changelogEntry:
     - summary: |
-        Introduces `group-multi-api-environments` flag for multi-API environment support. SDKs can now handle 
-        multiple API products with per-environment base URLs, featuring automatic environment grouping and 
+        Introduces `group-multi-api-environments` flag for multi-API environment support. SDKs can now handle
+        multiple API products with per-environment base URLs, featuring automatic environment grouping and
         service-aware URL routing.
       type: feat
   irVersion: 59

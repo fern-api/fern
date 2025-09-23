@@ -1784,7 +1784,7 @@ client.endpoints().primitive().getAndReturnInt(1);
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.getAndReturnLong(request) -> Integer</code></summary>
+<details><summary><code>client.endpoints.primitive.getAndReturnLong(request) -> Long</code></summary>
 <dl>
 <dd>
 
@@ -1812,7 +1812,7 @@ client.endpoints().primitive().getAndReturnLong(1000000L);
 <dl>
 <dd>
 
-**request:** `Integer` 
+**request:** `Long` 
     
 </dd>
 </dl>
@@ -1824,7 +1824,7 @@ client.endpoints().primitive().getAndReturnLong(1000000L);
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.getAndReturnDouble(request) -> Float</code></summary>
+<details><summary><code>client.endpoints.primitive.getAndReturnDouble(request) -> Double</code></summary>
 <dl>
 <dd>
 
@@ -1852,7 +1852,7 @@ client.endpoints().primitive().getAndReturnDouble(1.1);
 <dl>
 <dd>
 
-**request:** `Float` 
+**request:** `Double` 
     
 </dd>
 </dl>
@@ -1984,7 +1984,7 @@ client.endpoints().primitive().getAndReturnDate("2023-01-15");
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.getAndReturnUuid(request) -> String</code></summary>
+<details><summary><code>client.endpoints.primitive.getAndReturnUuid(request) -> UUID</code></summary>
 <dl>
 <dd>
 
@@ -2012,7 +2012,7 @@ client.endpoints().primitive().getAndReturnUuid(UUID.fromString("d5e9c84f-c2b2-4
 <dl>
 <dd>
 
-**request:** `String` 
+**request:** `UUID` 
     
 </dd>
 </dl>
@@ -2024,7 +2024,7 @@ client.endpoints().primitive().getAndReturnUuid(UUID.fromString("d5e9c84f-c2b2-4
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.getAndReturnBase64(request) -> String</code></summary>
+<details><summary><code>client.endpoints.primitive.getAndReturnBase64(request) -> byte[]</code></summary>
 <dl>
 <dd>
 
@@ -2052,7 +2052,7 @@ client.endpoints().primitive().getAndReturnBase64("SGVsbG8gd29ybGQh".getBytes())
 <dl>
 <dd>
 
-**request:** `String` 
+**request:** `byte[]` 
     
 </dd>
 </dl>

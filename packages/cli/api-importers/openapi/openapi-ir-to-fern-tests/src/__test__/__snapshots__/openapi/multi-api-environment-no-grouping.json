@@ -10,7 +10,7 @@
           "base-path": "",
           "endpoints": {
             "createPayment": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Create a payment",
               "docs": undefined,
               "examples": [
@@ -57,7 +57,7 @@
               },
             },
             "getTransaction": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Get transaction by ID",
               "docs": undefined,
               "examples": [
@@ -92,7 +92,7 @@
               },
             },
             "getWallet": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Get wallet by ID",
               "docs": undefined,
               "examples": [
@@ -126,7 +126,7 @@
               },
             },
             "getWalletBalance": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Get wallet balance",
               "docs": undefined,
               "examples": [
@@ -159,7 +159,7 @@
               },
             },
             "listAccounts": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List accounts",
               "docs": undefined,
               "examples": [
@@ -188,7 +188,7 @@
               },
             },
             "listRefunds": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List all refunds",
               "docs": undefined,
               "examples": [
@@ -219,7 +219,7 @@
               },
             },
             "listTransactions": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List transactions",
               "docs": undefined,
               "examples": [
@@ -250,7 +250,7 @@
               },
             },
             "listWallets": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List wallets",
               "docs": undefined,
               "examples": [
@@ -280,7 +280,7 @@
               },
             },
             "refundPayment": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Refund a payment",
               "docs": undefined,
               "examples": [
@@ -486,7 +486,6 @@
     listWallets:
       path: /wallets
       method: GET
-      auth: false
       source:
         openapi: ../fintech-api.yml
       display-name: List wallets
@@ -504,7 +503,6 @@
     getWallet:
       path: /wallets/{walletId}
       method: GET
-      auth: false
       source:
         openapi: ../fintech-api.yml
       path-parameters:
@@ -526,7 +524,6 @@
     getWalletBalance:
       path: /wallets/{walletId}/balance
       method: GET
-      auth: false
       source:
         openapi: ../fintech-api.yml
       path-parameters:
@@ -547,7 +544,6 @@
     listAccounts:
       path: /accounts
       method: GET
-      auth: false
       source:
         openapi: ../fintech-api.yml
       display-name: List accounts
@@ -564,7 +560,6 @@
     listTransactions:
       path: /transactions
       method: GET
-      auth: false
       source:
         openapi: ../payments-api.yml
       display-name: List transactions
@@ -583,7 +578,6 @@
     getTransaction:
       path: /transactions/{transactionId}
       method: GET
-      auth: false
       source:
         openapi: ../payments-api.yml
       path-parameters:
@@ -606,7 +600,6 @@
     createPayment:
       path: /payments
       method: POST
-      auth: false
       source:
         openapi: ../payments-api.yml
       display-name: Create a payment
@@ -636,7 +629,6 @@
     refundPayment:
       path: /payments/{paymentId}/refund
       method: POST
-      auth: false
       source:
         openapi: ../payments-api.yml
       path-parameters:
@@ -666,7 +658,6 @@
     listRefunds:
       path: /refunds
       method: GET
-      auth: false
       source:
         openapi: ../payments-api.yml
       display-name: List all refunds

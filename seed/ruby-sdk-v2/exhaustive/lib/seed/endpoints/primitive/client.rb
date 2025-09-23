@@ -12,127 +12,181 @@ module Seed
         # @return [String]
         def get_and_return_string(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "POST",
             path: "/primitive/string",
             body: params
           )
-          _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          return if code.between?(200, 299)
 
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
 
         # @return [Integer]
         def get_and_return_int(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "POST",
             path: "/primitive/integer",
             body: params
           )
-          _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          return if code.between?(200, 299)
 
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
 
         # @return [Integer]
         def get_and_return_long(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "POST",
             path: "/primitive/long",
             body: params
           )
-          _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          return if code.between?(200, 299)
 
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
 
         # @return [Integer]
         def get_and_return_double(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "POST",
             path: "/primitive/double",
             body: params
           )
-          _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          return if code.between?(200, 299)
 
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
 
         # @return [bool]
         def get_and_return_bool(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "POST",
             path: "/primitive/boolean",
             body: params
           )
-          _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          return if code.between?(200, 299)
 
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
 
         # @return [String]
         def get_and_return_datetime(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "POST",
             path: "/primitive/datetime",
             body: params
           )
-          _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          return if code.between?(200, 299)
 
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
 
         # @return [String]
         def get_and_return_date(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "POST",
             path: "/primitive/date",
             body: params
           )
-          _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          return if code.between?(200, 299)
 
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
 
         # @return [String]
         def get_and_return_uuid(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "POST",
             path: "/primitive/uuid",
             body: params
           )
-          _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          return if code.between?(200, 299)
 
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
 
         # @return [String]
         def get_and_return_base_64(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "POST",
             path: "/primitive/base64",
             body: params
           )
-          _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          return if code.between?(200, 299)
 
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
       end
     end

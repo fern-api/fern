@@ -110,3 +110,31 @@ client.User.Get(
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.User.GetAdmins() -> []*fern.User</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.User.GetAdmins(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>

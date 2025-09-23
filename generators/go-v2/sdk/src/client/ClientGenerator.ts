@@ -246,13 +246,13 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         for (const scheme of this.context.ir.auth.schemes) {
             switch (scheme.type) {
                 case "basic":
-                    this.writeBasicAuthEnvironmmentVariables({ writer, scheme });
+                    this.writeBasicAuthEnvironmentVariables({ writer, scheme });
                     break;
                 case "bearer":
-                    this.writeBearerAuthEnvironmmentVariables({ writer, scheme });
+                    this.writeBearerAuthEnvironmentVariables({ writer, scheme });
                     break;
                 case "header":
-                    this.writeHeaderAuthEnvironmmentVariables({ writer, scheme });
+                    this.writeHeaderAuthEnvironmentVariables({ writer, scheme });
                     break;
                 case "oauth":
                     // TODO: OAuth is not supported yet.
@@ -261,7 +261,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         }
     }
 
-    private writeBasicAuthEnvironmmentVariables({
+    private writeBasicAuthEnvironmentVariables({
         writer,
         scheme
     }: {
@@ -284,7 +284,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         }
     }
 
-    private writeBearerAuthEnvironmmentVariables({
+    private writeBearerAuthEnvironmentVariables({
         writer,
         scheme
     }: {
@@ -300,7 +300,7 @@ export class ClientGenerator extends FileGenerator<GoFile, SdkCustomConfigSchema
         }
     }
 
-    private writeHeaderAuthEnvironmmentVariables({
+    private writeHeaderAuthEnvironmentVariables({
         writer,
         scheme
     }: {

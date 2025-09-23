@@ -13,7 +13,16 @@ on:
       - "test-definitions-openapi/**"
       - "generators/**"
       - "seed/**"
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+    branches:
+      - main
   workflow_dispatch:
+
+# Cancel previous workflows on previous push
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 permissions:
   pull-requests: write
@@ -23,6 +32,28 @@ env:
   DOCKER_BUILDKIT: 1
 
 jobs:
+  setup:
+    if: github.repository == 'fern-api/fern'
+    runs-on: ubuntu-latest
+    outputs:
+      skip-scripts: ${{ steps.set-update-options.outputs.skip-scripts }}
+      create-artifacts: ${{ steps.set-update-options.outputs.create-artifacts }}
+      create-pr: ${{ steps.set-update-options.outputs.create-pr }}
+    steps:
+      # Apply by commit for PR to main, apply by PR for push to main or workflow_dispatch
+      - name: Set update options
+        id: set-update-options
+        shell: bash
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            echo "skip-scripts=true" >> $GITHUB_OUTPUT
+            echo "create-artifacts=true" >> $GITHUB_OUTPUT
+            echo "create-pr=false" >> $GITHUB_OUTPUT
+          else
+            echo "skip-scripts=false" >> $GITHUB_OUTPUT
+            echo "create-artifacts=false" >> $GITHUB_OUTPUT
+            echo "create-pr=true" >> $GITHUB_OUTPUT
+          fi
   changes:
     if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
@@ -40,6 +71,7 @@ jobs:
       php: ${{ steps.get-generator-changes.outputs.php }}
       swift: ${{ steps.get-generator-changes.outputs.swift }}
       rust: ${{ steps.get-generator-changes.outputs.rust }}
+
     steps:
       - if: github.event_name != 'workflow_dispatch'
         name: Checkout repo
@@ -47,14 +79,13 @@ jobs:
         with:
           # Get sufficient history to check for changes
           fetch-depth: 200
-
       - if: github.event_name != 'workflow_dispatch'
         name: Get generator changes
         id: get-generator-changes
         uses: ./.github/actions/get-generator-changes
 
   ruby-model-seed-update:
-    needs: changes
+    needs: [changes, setup]
     if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
@@ -70,11 +101,14 @@ jobs:
           generator-path: generators/ruby
           language-name: ruby
           allow-unexpected-failures: true
+          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
+          create-pr: ${{ needs.setup.outputs.create-pr }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   ruby-sdk-seed-update:
-    needs: changes
+    needs: [changes, setup]
     if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
@@ -83,18 +117,21 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
-      - name: Run seed
-        uses: ./.github/actions/cached-seed
+      - name: Update seed
+        uses: ./.github/actions/auto-update-seed
         with:
           generator-name: ruby-sdk
           generator-path: generators/ruby
           language-name: ruby
           allow-unexpected-failures: true
+          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
+          create-pr: ${{ needs.setup.outputs.create-pr }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   ruby-sdk-v2-seed-update:
-    needs: changes
+    needs: [changes, setup]
     if: ${{ needs.changes.outputs.ruby-v2 == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
@@ -110,11 +147,14 @@ jobs:
           generator-path: generators/ruby-v2
           language-name: ruby
           allow-unexpected-failures: true
+          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
+          create-pr: ${{ needs.setup.outputs.create-pr }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   pydantic-model-seed-update:
-    needs: changes
+    needs: [changes, setup]
     if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
@@ -130,11 +170,14 @@ jobs:
           generator-path: generators/python
           language-name: python
           allow-unexpected-failures: true
+          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
+          create-pr: ${{ needs.setup.outputs.create-pr }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   python-sdk-seed-update:
-    needs: changes
+    needs: [changes, setup]
     if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
@@ -150,11 +193,14 @@ jobs:
           generator-path: generators/python
           language-name: python
           allow-unexpected-failures: true
+          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
+          create-pr: ${{ needs.setup.outputs.create-pr }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   fastapi-seed-update:
-    needs: changes
+    needs: [changes, setup]
     if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
@@ -170,11 +216,14 @@ jobs:
           generator-path: generators/python
           language-name: python
           allow-unexpected-failures: true
+          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
+          create-pr: ${{ needs.setup.outputs.create-pr }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   openapi-seed-update:
-    needs: changes
+    needs: [changes, setup]
     if: ${{ needs.changes.outputs.openapi == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
@@ -190,11 +239,14 @@ jobs:
           generator-path: generators/openapi
           language-name: openapi
           allow-unexpected-failures: true
+          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
+          create-pr: ${{ needs.setup.outputs.create-pr }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   postman-seed-update:
-    needs: changes
+    needs: [changes, setup]
     if: ${{ needs.changes.outputs.postman == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
@@ -210,11 +262,14 @@ jobs:
           generator-path: generators/postman
           language-name: postman
           allow-unexpected-failures: true
+          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
+          create-pr: ${{ needs.setup.outputs.create-pr }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   java-sdk-seed-update:
-    needs: changes
+    needs: [changes, setup]
     if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
@@ -230,11 +285,14 @@ jobs:
           generator-path: generators/java
           language-name: java
           allow-unexpected-failures: true
+          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
+          create-pr: ${{ needs.setup.outputs.create-pr }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   java-model-seed-update:
-    needs: changes
+    needs: [changes, setup]
     if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
@@ -250,11 +308,14 @@ jobs:
           generator-path: generators/java
           language-name: java
           allow-unexpected-failures: true
+          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
+          create-pr: ${{ needs.setup.outputs.create-pr }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   java-spring-seed-update:
-    needs: changes
+    needs: [changes, setup]
     if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
@@ -270,11 +331,14 @@ jobs:
           generator-path: generators/java
           language-name: java
           allow-unexpected-failures: true
+          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
+          create-pr: ${{ needs.setup.outputs.create-pr }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   typescript-sdk-seed-update:
-    needs: changes
+    needs: [changes, setup]
     if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
@@ -290,11 +354,14 @@ jobs:
           generator-path: generators/typescript
           language-name: typescript
           allow-unexpected-failures: true
+          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
+          create-pr: ${{ needs.setup.outputs.create-pr }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   typescript-express-seed-update:
-    needs: changes
+    needs: [changes, setup]
     if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
@@ -310,11 +377,14 @@ jobs:
           generator-path: generators/typescript
           language-name: typescript
           allow-unexpected-failures: true
+          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
+          create-pr: ${{ needs.setup.outputs.create-pr }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   go-fiber-seed-update:
-    needs: changes
+    needs: [changes, setup]
     if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
@@ -323,18 +393,21 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
-      - name: Run seed
-        uses: ./.github/actions/cached-seed
+      - name: Update seed
+        uses: ./.github/actions/auto-update-seed
         with:
           generator-name: go-fiber
           generator-path: generators/go
           language-name: go
           allow-unexpected-failures: true
+          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
+          create-pr: ${{ needs.setup.outputs.create-pr }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   go-model-seed-update:
-    needs: changes
+    needs: [changes, setup]
     if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
@@ -350,11 +423,14 @@ jobs:
           generator-path: generators/go
           language-name: go
           allow-unexpected-failures: true
+          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
+          create-pr: ${{ needs.setup.outputs.create-pr }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   go-sdk-seed-update:
-    needs: changes
+    needs: [changes, setup]
     if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
@@ -362,6 +438,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
+
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
@@ -369,11 +446,14 @@ jobs:
           generator-path: generators/go
           language-name: go
           allow-unexpected-failures: true
+          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
+          create-pr: ${{ needs.setup.outputs.create-pr }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   csharp-model-seed-update:
-    needs: changes
+    needs: [changes, setup]
     if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
@@ -389,11 +469,14 @@ jobs:
           generator-path: generators/csharp
           language-name: csharp
           allow-unexpected-failures: true
+          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
+          create-pr: ${{ needs.setup.outputs.create-pr }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   csharp-sdk-seed-update:
-    needs: changes
+    needs: [changes, setup]
     if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
@@ -409,11 +492,14 @@ jobs:
           generator-path: generators/csharp
           language-name: csharp
           allow-unexpected-failures: true
+          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
+          create-pr: ${{ needs.setup.outputs.create-pr }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   php-model-seed-update:
-    needs: changes
+    needs: [changes, setup]
     if: ${{ needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
@@ -429,11 +515,14 @@ jobs:
           generator-path: generators/php
           language-name: php
           allow-unexpected-failures: true
+          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
+          create-pr: ${{ needs.setup.outputs.create-pr }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   php-sdk-seed-update:
-    needs: changes
+    needs: [changes, setup]
     if: ${{ needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
@@ -441,6 +530,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
+
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
@@ -448,11 +538,14 @@ jobs:
           generator-path: generators/php
           language-name: php
           allow-unexpected-failures: true
+          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
+          create-pr: ${{ needs.setup.outputs.create-pr }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   swift-sdk-seed-update:
-    needs: changes
+    needs: [changes, setup]
     if: ${{ needs.changes.outputs.swift == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
@@ -468,11 +561,14 @@ jobs:
           generator-path: generators/swift
           language-name: swift
           allow-unexpected-failures: true
+          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
+          create-pr: ${{ needs.setup.outputs.create-pr }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   rust-model-seed-update:
-    needs: changes
+    needs: [changes, setup]
     if: ${{ needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
@@ -488,11 +584,14 @@ jobs:
           generator-path: generators/rust
           language-name: rust
           allow-unexpected-failures: true
+          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
+          create-pr: ${{ needs.setup.outputs.create-pr }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   rust-sdk-seed-update:
-    needs: changes
+    needs: [changes, setup]
     if: ${{ needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: Seed
     steps:
@@ -508,5 +607,135 @@ jobs:
           generator-path: generators/rust
           language-name: rust
           allow-unexpected-failures: true
+          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
+          create-pr: ${{ needs.setup.outputs.create-pr }}
           secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
           secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
+
+  # Use always() to ensure this runs even if stages from needs are skipped.
+  # Add check back to make sure it doesn't run for failures or cancellations.
+  commit-seed-changes:
+    outputs:
+      has-patches: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES }}
+    if: >-
+      ${{ 
+        always() && needs.setup.outputs.create-artifacts == 'true' &&
+        !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
+      }}
+    needs:
+      [
+        changes,
+        setup,
+        ruby-model-seed-update,
+        ruby-sdk-seed-update,
+        ruby-sdk-v2-seed-update,
+        pydantic-model-seed-update,
+        python-sdk-seed-update,
+        fastapi-seed-update,
+        openapi-seed-update,
+        postman-seed-update,
+        java-sdk-seed-update,
+        java-model-seed-update,
+        java-spring-seed-update,
+        typescript-sdk-seed-update,
+        typescript-express-seed-update,
+        go-fiber-seed-update,
+        go-model-seed-update,
+        go-sdk-seed-update,
+        csharp-model-seed-update,
+        csharp-sdk-seed-update,
+        php-model-seed-update,
+        php-sdk-seed-update,
+        swift-sdk-seed-update,
+        rust-model-seed-update,
+        rust-sdk-seed-update
+      ]
+    runs-on: Seed
+    steps:
+      - name: Extract branch name
+        id: extract_branch
+        shell: bash
+        run: |
+          echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+          echo $branch
+
+      # Checkout the branch directly to avoid detaching the head so we can commit back changes
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.extract_branch.outputs.branch }}
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      - name: Create artifacts downloads directory
+        shell: bash
+        run: |
+          DIRECTORY=artifacts
+          if [ ! -d "$DIRECTORY" ]; then
+            echo "'$DIRECTORY' does NOT exist, creating it now."
+            mkdir $DIRECTORY
+          else
+            echo "WARNING: Directory '$DIRECTORY' already exists. Not an immediate error but could cause a problem downstream."
+          fi
+
+      # Merge-multiple is set so all patches are downloaded into the same folder. Otherwise
+      # they are subfoldered into folders that match *.patch pattern and cause errors downstream
+      - name: Download patches
+        uses: actions/download-artifact@v5
+        with:
+          path: ./artifacts
+          merge-multiple: true
+
+      - name: Get number of patches
+        shell: bash
+        id: get-number-of-patches
+        run: |
+          file_count=$(find ./artifacts -type f -name "*.patch" | wc -l)
+          echo "Number of patches downloaded: $file_count"
+          if [ "$file_count" -gt 0 ]; then
+            echo "HAS_PATCHES=true" >> $GITHUB_OUTPUT
+          else
+            echo "HAS_PATCHES=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Display content of a folder
+        run: |
+          echo "Content of 'artifacts' folder:"
+          ls -R artifacts/
+
+      - name: Apply patches
+        shell: bash
+        if: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES == 'true' }}
+        run: |
+          git apply artifacts/*.patch
+
+      - name: Add and Commit Changes
+        id: commit-changes
+        uses: EndBug/add-and-commit@v9
+        if: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES == 'true' }}
+        with:
+          add: "seed/*"
+          push: true
+          fetch: false
+          message: "Automated update of seed files"
+
+  # Use always() to ensure this runs even if stages from needs are skipped.
+  # Add check back to make sure it doesn't run for failures or cancellations.
+  # Only trigger if there are no new patches (seed is up to date)
+  trigger-seed-snapshot-tests:
+    needs: [commit-seed-changes, changes, setup]
+    if: >-
+      ${{ 
+        always() && needs.setup.outputs.create-artifacts == 'true' &&
+        needs.commit-seed-changes.outputs.has-patches == 'false' &&
+        !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
+      }}
+    runs-on: Seed
+    steps:
+      # Note: this will trigger to the default branch of the repo, not the PR branch
+      - name: Trigger seed tests
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+          event-type: seed-tests
+          client-payload: '{"ref": "${{ github.ref }}"}'

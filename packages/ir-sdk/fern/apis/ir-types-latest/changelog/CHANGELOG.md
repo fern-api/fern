@@ -5,7 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v60.0.0] - 2025-09-11
+## [v60.2.0] - 2025-09-19
+
+- Feature: Add `security` property to `HttpEndpoint` which mirrors OpenAPI's security requirement object.
+
+## [v60.1.0] - 2025-09-18
+
+- Feature: added `x-fern-retries` OpenAPI extension flag 
+
+## [v60.0.1] - 2025-09-15
+
+- Chore: Bump version to 60.0.1 to trigger a release
+
+## [v60.0.0] - 2025-09-15
 
 - Feature: Add type reference to property paths
 

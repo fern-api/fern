@@ -7,10 +7,12 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .types import (
+        AnyNumberUnionWithSameNumberTypes,
         Bar,
         BarUnion,
         BarUnionWithDiscriminant,
         BarUnionWithoutKey,
+        CustomFormatUnionWithSameStringTypes,
         DateUnionWithOptionalTime,
         DateUnionWithTime,
         DatetimeUnionWithOptionalTime,
@@ -36,6 +38,10 @@ if typing.TYPE_CHECKING:
         Integer2UnionWithDuplicatePrimitive,
         IntegerUnionWithBaseProperties,
         IntegerUnionWithPrimitive,
+        NegativeIntUnionWithSameNumberTypes,
+        PatternStringUnionWithSameStringTypes,
+        PositiveIntUnionWithSameNumberTypes,
+        RegularStringUnionWithSameStringTypes,
         String1UnionWithDuplicatePrimitive,
         String2UnionWithDuplicatePrimitive,
         StringUnionWithBaseProperties,
@@ -50,6 +56,8 @@ if typing.TYPE_CHECKING:
         UnionWithNoProperties,
         UnionWithOptionalTime,
         UnionWithPrimitive,
+        UnionWithSameNumberTypes,
+        UnionWithSameStringTypes,
         UnionWithSingleElement,
         UnionWithSubTypes,
         UnionWithTime,
@@ -119,11 +127,12 @@ if typing.TYPE_CHECKING:
         VibrantExcitementBigUnion,
     )
     from .client import AsyncSeedUnions, SeedUnions
-    from .union import Circle, CircleShape, GetShapeRequest, Shape, Square, SquareShape
+    from .union import Circle, CircleShape, GetShapeRequest, Shape, Square, SquareShape, WithName
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "ActiveDiamond": ".bigunion",
     "ActiveDiamondBigUnion": ".bigunion",
+    "AnyNumberUnionWithSameNumberTypes": ".types",
     "AsyncSeedUnions": ".client",
     "AttractiveScript": ".bigunion",
     "AttractiveScriptBigUnion": ".bigunion",
@@ -138,6 +147,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "CircularCardBigUnion": ".bigunion",
     "ColorfulCover": ".bigunion",
     "ColorfulCoverBigUnion": ".bigunion",
+    "CustomFormatUnionWithSameStringTypes": ".types",
     "DateUnionWithOptionalTime": ".types",
     "DateUnionWithTime": ".types",
     "DatetimeUnionWithOptionalTime": ".types",
@@ -190,16 +200,20 @@ _dynamic_imports: typing.Dict[str, str] = {
     "LimpingStepBigUnion": ".bigunion",
     "MistySnow": ".bigunion",
     "MistySnowBigUnion": ".bigunion",
+    "NegativeIntUnionWithSameNumberTypes": ".types",
     "NormalSweet": ".bigunion",
     "NormalSweetBigUnion": ".bigunion",
+    "PatternStringUnionWithSameStringTypes": ".types",
     "PopularLimit": ".bigunion",
     "PopularLimitBigUnion": ".bigunion",
+    "PositiveIntUnionWithSameNumberTypes": ".types",
     "PotableBad": ".bigunion",
     "PotableBadBigUnion": ".bigunion",
     "PracticalPrinciple": ".bigunion",
     "PracticalPrincipleBigUnion": ".bigunion",
     "PrimaryBlock": ".bigunion",
     "PrimaryBlockBigUnion": ".bigunion",
+    "RegularStringUnionWithSameStringTypes": ".types",
     "RotatingRatio": ".bigunion",
     "RotatingRatioBigUnion": ".bigunion",
     "SeedUnions": ".client",
@@ -226,6 +240,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UnionWithNoProperties": ".types",
     "UnionWithOptionalTime": ".types",
     "UnionWithPrimitive": ".types",
+    "UnionWithSameNumberTypes": ".types",
+    "UnionWithSameStringTypes": ".types",
     "UnionWithSingleElement": ".types",
     "UnionWithSubTypes": ".types",
     "UnionWithTime": ".types",
@@ -237,10 +253,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ValueUnionWithTime": ".types",
     "VibrantExcitement": ".bigunion",
     "VibrantExcitementBigUnion": ".bigunion",
+    "WithName": ".union",
     "__version__": ".version",
-    "bigunion": ".",
-    "types": ".",
-    "union": ".",
+    "bigunion": ".bigunion",
+    "types": ".types",
+    "union": ".union",
 }
 
 
@@ -250,8 +267,10 @@ def __getattr__(attr_name: str) -> typing.Any:
         raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
     try:
         module = import_module(module_name, __package__)
-        result = getattr(module, attr_name)
-        return result
+        if module_name == f".{attr_name}":
+            return module
+        else:
+            return getattr(module, attr_name)
     except ImportError as e:
         raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
     except AttributeError as e:
@@ -266,6 +285,7 @@ def __dir__():
 __all__ = [
     "ActiveDiamond",
     "ActiveDiamondBigUnion",
+    "AnyNumberUnionWithSameNumberTypes",
     "AsyncSeedUnions",
     "AttractiveScript",
     "AttractiveScriptBigUnion",
@@ -280,6 +300,7 @@ __all__ = [
     "CircularCardBigUnion",
     "ColorfulCover",
     "ColorfulCoverBigUnion",
+    "CustomFormatUnionWithSameStringTypes",
     "DateUnionWithOptionalTime",
     "DateUnionWithTime",
     "DatetimeUnionWithOptionalTime",
@@ -332,16 +353,20 @@ __all__ = [
     "LimpingStepBigUnion",
     "MistySnow",
     "MistySnowBigUnion",
+    "NegativeIntUnionWithSameNumberTypes",
     "NormalSweet",
     "NormalSweetBigUnion",
+    "PatternStringUnionWithSameStringTypes",
     "PopularLimit",
     "PopularLimitBigUnion",
+    "PositiveIntUnionWithSameNumberTypes",
     "PotableBad",
     "PotableBadBigUnion",
     "PracticalPrinciple",
     "PracticalPrincipleBigUnion",
     "PrimaryBlock",
     "PrimaryBlockBigUnion",
+    "RegularStringUnionWithSameStringTypes",
     "RotatingRatio",
     "RotatingRatioBigUnion",
     "SeedUnions",
@@ -368,6 +393,8 @@ __all__ = [
     "UnionWithNoProperties",
     "UnionWithOptionalTime",
     "UnionWithPrimitive",
+    "UnionWithSameNumberTypes",
+    "UnionWithSameStringTypes",
     "UnionWithSingleElement",
     "UnionWithSubTypes",
     "UnionWithTime",
@@ -379,6 +406,7 @@ __all__ = [
     "ValueUnionWithTime",
     "VibrantExcitement",
     "VibrantExcitementBigUnion",
+    "WithName",
     "__version__",
     "bigunion",
     "types",

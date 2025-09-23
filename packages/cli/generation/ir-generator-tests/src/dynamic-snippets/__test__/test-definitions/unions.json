@@ -9005,6 +9005,368 @@
             ],
             "additionalProperties": false
         },
+        "type_types:UnionWithSameStringTypes": {
+            "type": "discriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "UnionWithSameStringTypes",
+                    "camelCase": {
+                        "unsafeName": "unionWithSameStringTypes",
+                        "safeName": "unionWithSameStringTypes"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "union_with_same_string_types",
+                        "safeName": "union_with_same_string_types"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UNION_WITH_SAME_STRING_TYPES",
+                        "safeName": "UNION_WITH_SAME_STRING_TYPES"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UnionWithSameStringTypes",
+                        "safeName": "UnionWithSameStringTypes"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "types",
+                            "camelCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TYPES",
+                                "safeName": "TYPES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Types",
+                                "safeName": "Types"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "types",
+                        "camelCase": {
+                            "unsafeName": "types",
+                            "safeName": "types"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "types",
+                            "safeName": "types"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TYPES",
+                            "safeName": "TYPES"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Types",
+                            "safeName": "Types"
+                        }
+                    }
+                }
+            },
+            "discriminant": {
+                "name": {
+                    "originalName": "type",
+                    "camelCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TYPE",
+                        "safeName": "TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Type",
+                        "safeName": "Type"
+                    }
+                },
+                "wireValue": "type"
+            },
+            "types": {
+                "customFormat": {
+                    "type": "singleProperty",
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "customFormat",
+                            "camelCase": {
+                                "unsafeName": "customFormat",
+                                "safeName": "customFormat"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "custom_format",
+                                "safeName": "custom_format"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "CUSTOM_FORMAT",
+                                "safeName": "CUSTOM_FORMAT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "CustomFormat",
+                                "safeName": "CustomFormat"
+                            }
+                        },
+                        "wireValue": "customFormat"
+                    },
+                    "properties": null
+                },
+                "regularString": {
+                    "type": "singleProperty",
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "regularString",
+                            "camelCase": {
+                                "unsafeName": "regularString",
+                                "safeName": "regularString"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "regular_string",
+                                "safeName": "regular_string"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REGULAR_STRING",
+                                "safeName": "REGULAR_STRING"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "RegularString",
+                                "safeName": "RegularString"
+                            }
+                        },
+                        "wireValue": "regularString"
+                    },
+                    "properties": null
+                },
+                "patternString": {
+                    "type": "singleProperty",
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "patternString",
+                            "camelCase": {
+                                "unsafeName": "patternString",
+                                "safeName": "patternString"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "pattern_string",
+                                "safeName": "pattern_string"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PATTERN_STRING",
+                                "safeName": "PATTERN_STRING"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "PatternString",
+                                "safeName": "PatternString"
+                            }
+                        },
+                        "wireValue": "patternString"
+                    },
+                    "properties": null
+                }
+            }
+        },
+        "type_types:UnionWithSameNumberTypes": {
+            "type": "discriminatedUnion",
+            "declaration": {
+                "name": {
+                    "originalName": "UnionWithSameNumberTypes",
+                    "camelCase": {
+                        "unsafeName": "unionWithSameNumberTypes",
+                        "safeName": "unionWithSameNumberTypes"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "union_with_same_number_types",
+                        "safeName": "union_with_same_number_types"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UNION_WITH_SAME_NUMBER_TYPES",
+                        "safeName": "UNION_WITH_SAME_NUMBER_TYPES"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UnionWithSameNumberTypes",
+                        "safeName": "UnionWithSameNumberTypes"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "types",
+                            "camelCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TYPES",
+                                "safeName": "TYPES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Types",
+                                "safeName": "Types"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "types",
+                        "camelCase": {
+                            "unsafeName": "types",
+                            "safeName": "types"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "types",
+                            "safeName": "types"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TYPES",
+                            "safeName": "TYPES"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Types",
+                            "safeName": "Types"
+                        }
+                    }
+                }
+            },
+            "discriminant": {
+                "name": {
+                    "originalName": "type",
+                    "camelCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "type",
+                        "safeName": "type"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TYPE",
+                        "safeName": "TYPE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Type",
+                        "safeName": "Type"
+                    }
+                },
+                "wireValue": "type"
+            },
+            "types": {
+                "positiveInt": {
+                    "type": "singleProperty",
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "INTEGER"
+                    },
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "positiveInt",
+                            "camelCase": {
+                                "unsafeName": "positiveInt",
+                                "safeName": "positiveInt"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "positive_int",
+                                "safeName": "positive_int"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "POSITIVE_INT",
+                                "safeName": "POSITIVE_INT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "PositiveInt",
+                                "safeName": "PositiveInt"
+                            }
+                        },
+                        "wireValue": "positiveInt"
+                    },
+                    "properties": null
+                },
+                "negativeInt": {
+                    "type": "singleProperty",
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "INTEGER"
+                    },
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "negativeInt",
+                            "camelCase": {
+                                "unsafeName": "negativeInt",
+                                "safeName": "negativeInt"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "negative_int",
+                                "safeName": "negative_int"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NEGATIVE_INT",
+                                "safeName": "NEGATIVE_INT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "NegativeInt",
+                                "safeName": "NegativeInt"
+                            }
+                        },
+                        "wireValue": "negativeInt"
+                    },
+                    "properties": null
+                },
+                "anyNumber": {
+                    "type": "singleProperty",
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "DOUBLE"
+                    },
+                    "discriminantValue": {
+                        "name": {
+                            "originalName": "anyNumber",
+                            "camelCase": {
+                                "unsafeName": "anyNumber",
+                                "safeName": "anyNumber"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "any_number",
+                                "safeName": "any_number"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ANY_NUMBER",
+                                "safeName": "ANY_NUMBER"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "AnyNumber",
+                                "safeName": "AnyNumber"
+                            }
+                        },
+                        "wireValue": "anyNumber"
+                    },
+                    "properties": null
+                }
+            }
+        },
         "type_union:GetShapeRequest": {
             "type": "object",
             "declaration": {
@@ -9094,6 +9456,105 @@
                             }
                         },
                         "wireValue": "id"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null
+                }
+            ],
+            "additionalProperties": false
+        },
+        "type_union:WithName": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "WithName",
+                    "camelCase": {
+                        "unsafeName": "withName",
+                        "safeName": "withName"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "with_name",
+                        "safeName": "with_name"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "WITH_NAME",
+                        "safeName": "WITH_NAME"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "WithName",
+                        "safeName": "WithName"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "union",
+                            "camelCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "union",
+                                "safeName": "union"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "UNION",
+                                "safeName": "UNION"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Union",
+                                "safeName": "Union"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "union",
+                        "camelCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "union",
+                            "safeName": "union"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UNION",
+                            "safeName": "UNION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Union",
+                            "safeName": "Union"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "name",
+                            "camelCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "name",
+                                "safeName": "name"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "NAME",
+                                "safeName": "NAME"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Name",
+                                "safeName": "Name"
+                            }
+                        },
+                        "wireValue": "name"
                     },
                     "typeReference": {
                         "type": "primitive",
@@ -9222,6 +9683,35 @@
                         {
                             "name": {
                                 "name": {
+                                    "originalName": "name",
+                                    "camelCase": {
+                                        "unsafeName": "name",
+                                        "safeName": "name"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "name",
+                                        "safeName": "name"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "NAME",
+                                        "safeName": "NAME"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Name",
+                                        "safeName": "Name"
+                                    }
+                                },
+                                "wireValue": "name"
+                            },
+                            "typeReference": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "propertyAccess": null
+                        },
+                        {
+                            "name": {
+                                "name": {
                                     "originalName": "id",
                                     "camelCase": {
                                         "unsafeName": "id",
@@ -9276,6 +9766,35 @@
                         "wireValue": "square"
                     },
                     "properties": [
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "name",
+                                    "camelCase": {
+                                        "unsafeName": "name",
+                                        "safeName": "name"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "name",
+                                        "safeName": "name"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "NAME",
+                                        "safeName": "NAME"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Name",
+                                        "safeName": "Name"
+                                    }
+                                },
+                                "wireValue": "name"
+                            },
+                            "typeReference": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "propertyAccess": null
+                        },
                         {
                             "name": {
                                 "name": {

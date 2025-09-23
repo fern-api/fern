@@ -35,6 +35,12 @@ var (
 	//go:embed sdk/internal/error_decoder_test.go
 	errorDecoderTestFile string
 
+	//go:embed sdk/internal/explicit_fields.go
+	explicitFieldsFile string
+
+	//go:embed sdk/internal/explicit_fields_test.go
+	explicitFieldsTestFile string
+
 	//go:embed sdk/internal/extra_properties.go
 	extraPropertiesFile string
 
@@ -2017,7 +2023,7 @@ func getEndpointParameters(
 			&ast.StructType{
 				Name: &ast.ImportedReference{
 					Name:       endpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName,
-					ImportPath: fernFilepathToImportPath(f.baseImportPath, fernFilepath),
+					ImportPath: getImportPathForRequestType(f, fernFilepath),
 				},
 				Fields: fields,
 			},
@@ -2394,8 +2400,14 @@ func (f *fileWriter) endpointFromIR(
 				}
 			}
 			if irEndpoint.SdkRequest.Shape.Wrapper != nil {
-				requestImportPath := fernFilepathToImportPath(f.baseImportPath, fernFilepath)
-				requestType = fmt.Sprintf("*%s.%s", scope.AddImport(requestImportPath), irEndpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName)
+				// All inlined request types are now generated in the root package
+				rootImportPath := f.baseImportPath
+				if rootImportPath == "" {
+					// If no base import path, reference without package qualifier
+					requestType = fmt.Sprintf("*%s", irEndpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName)
+				} else {
+					requestType = fmt.Sprintf("*%s.%s", scope.AddImport(rootImportPath), irEndpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName)
+				}
 				if irEndpoint.RequestBody != nil && irEndpoint.RequestBody.Bytes != nil {
 					requestValueName = "requestBuffer"
 					if f.useReaderForBytesRequest {
@@ -2729,6 +2741,18 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 	return nil
 }
 
+// getImportPathForRequestType returns the appropriate import path for request types
+// based on the exportAllRequestsAtRoot configuration.
+func getImportPathForRequestType(f *fileWriter, fernFilepath *ir.FernFilepath) string {
+	// Use the root package import path when exportAllRequestsAtRoot is enabled,
+	// otherwise use the service's filepath
+	if f.exportAllRequestsAtRoot && f.filename == inlinedRequestsFilename {
+		return f.baseImportPath
+	} else {
+		return fernFilepathToImportPath(f.baseImportPath, fernFilepath)
+	}
+}
+
 // WriteRequestType writes a type dedicated to the in-lined request (if any).
 func (f *fileWriter) WriteRequestType(
 	fernFilepath *ir.FernFilepath,
@@ -2741,11 +2765,64 @@ func (f *fileWriter) WriteRequestType(
 	var (
 		// At this point, we've already verified that the given endpoint's request
 		// is a wrapper, so we can safely access it without any nil-checks.
-		bodyField  = endpoint.SdkRequest.Shape.Wrapper.BodyKey.PascalCase.UnsafeName
-		typeName   = endpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName
-		receiver   = typeNameToReceiver(typeName)
-		importPath = fernFilepathToImportPath(f.baseImportPath, fernFilepath)
+		bodyField = endpoint.SdkRequest.Shape.Wrapper.BodyKey.PascalCase.UnsafeName
+		typeName  = endpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName
+		receiver  = typeNameToReceiver(typeName)
 	)
+	importPath := getImportPathForRequestType(f, fernFilepath)
+
+	// Collect all property names and types for bigint constants and setters
+	var propertyNames []string
+	var propertyTypes []string
+	var propertySafeNames []string
+
+	// Collect from headers (exclude literals as they don't need setters)
+	for _, header := range append(serviceHeaders, endpoint.Headers...) {
+		if header.ValueType.Container == nil || header.ValueType.Container.Literal == nil {
+			propertyNames = append(propertyNames, header.Name.Name.PascalCase.UnsafeName)
+			propertySafeNames = append(propertySafeNames, header.Name.Name.CamelCase.SafeName)
+			goType := typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+			propertyTypes = append(propertyTypes, goType)
+		}
+	}
+
+	// Collect from path parameters (always include these)
+	if includePathParametersInWrappedRequest(endpoint, f.inlinePathParameters) {
+		for _, pathParameter := range endpoint.AllPathParameters {
+			propertyNames = append(propertyNames, pathParameter.Name.PascalCase.UnsafeName)
+			propertySafeNames = append(propertySafeNames, pathParameter.Name.CamelCase.SafeName)
+			goType := typeReferenceToGoType(pathParameter.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+			propertyTypes = append(propertyTypes, goType)
+		}
+	}
+
+	// Collect from query parameters (always include these, exclude literals)
+	for _, queryParam := range endpoint.QueryParameters {
+		if queryParam.ValueType.Container == nil || queryParam.ValueType.Container.Literal == nil {
+			propertyNames = append(propertyNames, queryParam.Name.Name.PascalCase.UnsafeName)
+			propertySafeNames = append(propertySafeNames, queryParam.Name.Name.CamelCase.SafeName)
+			goType := typeReferenceToGoType(queryParam.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+			if queryParam.AllowMultiple {
+				goType = fmt.Sprintf("[]%s", goType)
+			}
+			propertyTypes = append(propertyTypes, goType)
+		}
+	}
+
+	// Collect from request body properties if it's an inlined request body
+	if endpoint.RequestBody != nil && endpoint.RequestBody.InlinedRequestBody != nil {
+		for _, property := range endpoint.RequestBody.InlinedRequestBody.Properties {
+			if property.ValueType.Container == nil || property.ValueType.Container.Literal == nil {
+				propertyNames = append(propertyNames, property.Name.Name.PascalCase.UnsafeName)
+				propertySafeNames = append(propertySafeNames, property.Name.Name.CamelCase.SafeName)
+				goType := typeReferenceToGoType(property.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
+				propertyTypes = append(propertyTypes, goType)
+			}
+		}
+	}
+
+	// Write bigint constants for request type properties
+	f.WriteStructPropertyBitConstants(typeName, propertyNames)
 
 	var literals []*literal
 	f.P("type ", typeName, " struct {")
@@ -2794,6 +2871,7 @@ func (f *fileWriter) WriteRequestType(
 		for _, literal := range literals {
 			f.P(literal.Name.Name.CamelCase.SafeName, " ", literalToGoType(literal.Value))
 		}
+		f.WriteExplicitFields()
 		f.P("}")
 		f.P()
 		for _, literal := range literals {
@@ -2802,6 +2880,13 @@ func (f *fileWriter) WriteRequestType(
 			f.P("}")
 			f.P()
 		}
+
+		// Write the require helper method
+		f.WriteRequireMethod(typeName)
+
+		// Write setter methods for all properties
+		f.WriteSetterMethods(typeName, propertyNames, propertyTypes, propertySafeNames)
+
 		return nil
 	}
 	requestBody, err := requestBodyToFieldDeclaration(endpoint.RequestBody, f, importPath, bodyField, includeGenericOptionals, inlineFileProperties)
@@ -2816,6 +2901,7 @@ func (f *fileWriter) WriteRequestType(
 		f.P()
 		f.P("ExtraProperties map[string]interface{} `json:\"-\" url:\"-\"`")
 	}
+	f.WriteExplicitFields()
 	f.P("}")
 	f.P()
 	// Implement the getter methods.
@@ -2825,6 +2911,12 @@ func (f *fileWriter) WriteRequestType(
 		f.P("}")
 		f.P()
 	}
+
+	// Write the require helper method
+	f.WriteRequireMethod(typeName)
+
+	// Write setter methods for all properties
+	f.WriteSetterMethods(typeName, propertyNames, propertyTypes, propertySafeNames)
 
 	var (
 		referenceType      string
@@ -2912,10 +3004,11 @@ func (f *fileWriter) WriteRequestType(
 			f.P(literal.Name.Name.PascalCase.UnsafeName, ": ", literalToValue(literal.Value), ",")
 		}
 		f.P("}")
+		f.P("explicitMarshaler := internal.HandleExplicitFields(marshaler, ", receiver, ".explicitFields)")
 		if requestBody.extraProperties {
-			f.P("return internal.MarshalJSONWithExtraProperties(marshaler, ", receiver, ".ExtraProperties)")
+			f.P("return internal.MarshalJSONWithExtraProperties(explicitMarshaler, ", receiver, ".ExtraProperties)")
 		} else {
-			f.P("return json.Marshal(marshaler)")
+			f.P("return json.Marshal(explicitMarshaler)")
 		}
 	}
 	f.P("}")

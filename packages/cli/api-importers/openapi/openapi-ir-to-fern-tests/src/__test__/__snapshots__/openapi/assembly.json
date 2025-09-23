@@ -3518,7 +3518,7 @@ types:
           "base-path": "",
           "endpoints": {
             "upload": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Upload an audio or video file which can be transcribed.",
               "docs": "Upload your audio or video file directly to the AssemblyAI API if it isn't accessible via a URL already.",
               "errors": [
@@ -3562,7 +3562,6 @@ service:
     upload:
       path: /v2/upload
       method: POST
-      auth: true
       docs: >-
         Upload your audio or video file directly to the AssemblyAI API if it
         isn't accessible via a URL already.
@@ -3601,7 +3600,7 @@ service:
           "display-name": "LeMUR",
           "endpoints": {
             "actionItems": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Extract action items from one or more meeting transcripts.",
               "docs": "Use LeMUR to generate a list of Action Items from a transcript",
               "errors": [
@@ -3645,7 +3644,7 @@ service:
               },
             },
             "purgeRequestData": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete the data for a previously submitted LeMUR request.",
               "docs": "Delete the data for a previously submitted LeMUR request.
 The LLM response data, as well as any context provided in the original request will be removed.
@@ -3692,7 +3691,7 @@ The LLM response data, as well as any context provided in the original request w
               },
             },
             "questionAnswer": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create answers to one or more questions about one or more transcripts.",
               "docs": "Question & Answer allows you to ask free-form questions about a single transcript or a group of transcripts. The questions can be any whose answers you find useful, such as judging whether a caller is likely to become a customer or whether all items on a meeting's agenda were covered.",
               "errors": [
@@ -3760,7 +3759,7 @@ The LLM response data, as well as any context provided in the original request w
               },
             },
             "summary": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Generate a custom summary from one or more transcripts.",
               "docs": "Custom Summary allows you to distill a piece of audio into a few impactful sentences. You can give the model context to obtain more targeted results while outputting the results in a variety of formats described in human language.",
               "errors": [
@@ -3819,7 +3818,7 @@ The LLM response data, as well as any context provided in the original request w
               },
             },
             "task": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Ask LeMUR to use one or more transcripts with a Custom Task to handle your specialized task.",
               "docs": "Use LeMUR to ask anything with Custom Task",
               "errors": [
@@ -3892,7 +3891,6 @@ service:
     summary:
       path: /lemur/v3/generate/summary
       method: POST
-      auth: true
       docs: >-
         Custom Summary allows you to distill a piece of audio into a few
         impactful sentences. You can give the model context to obtain more
@@ -3936,7 +3934,6 @@ service:
     questionAnswer:
       path: /lemur/v3/generate/question-answer
       method: POST
-      auth: true
       docs: >-
         Question & Answer allows you to ask free-form questions about a single
         transcript or a group of transcripts. The questions can be any whose
@@ -3983,7 +3980,6 @@ service:
     actionItems:
       path: /lemur/v3/generate/action-items
       method: POST
-      auth: true
       docs: Use LeMUR to generate a list of Action Items from a transcript
       source:
         openapi: ../openapi.yml
@@ -4014,7 +4010,6 @@ service:
     task:
       path: /lemur/v3/generate/task
       method: POST
-      auth: true
       docs: Use LeMUR to ask anything with Custom Task
       source:
         openapi: ../openapi.yml
@@ -4057,7 +4052,6 @@ service:
     purgeRequestData:
       path: /lemur/v3/{request_id}
       method: DELETE
-      auth: true
       docs: >
         Delete the data for a previously submitted LeMUR request.
 
@@ -4111,7 +4105,7 @@ docs: LeMUR related operations
           "display-name": "realtime",
           "endpoints": {
             "createTemporaryToken": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create a temporary authentication token for real-time transcription",
               "docs": "Create a temporary authentication token for real-time transcription",
               "errors": [
@@ -4184,7 +4178,6 @@ service:
     createTemporaryToken:
       path: /v2/realtime/token
       method: POST
-      auth: true
       docs: Create a temporary authentication token for real-time transcription
       source:
         openapi: ../openapi.yml
@@ -4236,7 +4229,7 @@ docs: Real-time transcription
           "display-name": "transcript",
           "endpoints": {
             "create": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create a transcript from an audio file",
               "docs": "Create a transcript from an audio or video file that is accessible via a URL.",
               "errors": [
@@ -4459,7 +4452,7 @@ docs: Real-time transcription
               },
             },
             "delete": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete the transcript",
               "docs": "Delete the transcript",
               "errors": [
@@ -4670,7 +4663,7 @@ docs: Real-time transcription
               },
             },
             "get": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get the transcript",
               "docs": "Get the transcript resource. The transcript is ready when the "status" is "completed".",
               "errors": [
@@ -4881,7 +4874,7 @@ docs: Real-time transcription
               },
             },
             "getParagraphs": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get the transcript split by paragraphs",
               "docs": "Get the transcript split by paragraphs. The API will attempt to semantically segment your transcript into paragraphs to create more reader-friendly transcripts.",
               "errors": [
@@ -4942,7 +4935,7 @@ docs: Real-time transcription
               },
             },
             "getRedactedAudio": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieves the redacted audio object containing the status and URL to the redacted audio.",
               "docs": "Retrieves the redacted audio object containing the status and URL to the redacted audio.",
               "errors": [
@@ -4986,7 +4979,7 @@ docs: Real-time transcription
               },
             },
             "getSentences": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get the transcript split by sentences",
               "docs": "Get the transcript split by sentences. The API will attempt to semantically segment the transcript into sentences to create more reader-friendly transcripts.",
               "errors": [
@@ -5047,7 +5040,7 @@ docs: Real-time transcription
               },
             },
             "getSubtitles": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Export transcript as SRT or VTT captions.",
               "docs": "Export your transcript in SRT or VTT format, to be plugged into a video player for subtitles and closed captions.",
               "errors": [
@@ -5091,7 +5084,7 @@ docs: Real-time transcription
               },
             },
             "list": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List transcripts",
               "docs": "Retrieve a list of transcripts you have created.",
               "errors": [
@@ -5177,7 +5170,7 @@ docs: Real-time transcription
               },
             },
             "wordSearch": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Search the given transcript for words, numbers, or phrases",
               "docs": "Search through the transcript for a specific set of keywords. You can search for individual words, numbers, or phrases containing up to five words or numbers.",
               "errors": [
@@ -5275,7 +5268,6 @@ service:
     list:
       path: /v2/transcript
       method: GET
-      auth: true
       docs: Retrieve a list of transcripts you have created.
       source:
         openapi: ../openapi.yml
@@ -5335,7 +5327,6 @@ service:
     create:
       path: /v2/transcript
       method: POST
-      auth: true
       docs: >-
         Create a transcript from an audio or video file that is accessible via a
         URL.
@@ -5493,7 +5484,6 @@ service:
     get:
       path: /v2/transcript/{transcript_id}
       method: GET
-      auth: true
       docs: >-
         Get the transcript resource. The transcript is ready when the "status"
         is "completed".
@@ -5645,7 +5635,6 @@ service:
     delete:
       path: /v2/transcript/{transcript_id}
       method: DELETE
-      auth: true
       docs: Delete the transcript
       source:
         openapi: ../openapi.yml
@@ -5795,7 +5784,6 @@ service:
     getSubtitles:
       path: /v2/transcript/{transcript_id}/{subtitle_format}
       method: GET
-      auth: true
       docs: >-
         Export your transcript in SRT or VTT format, to be plugged into a video
         player for subtitles and closed captions.
@@ -5830,7 +5818,6 @@ service:
     getSentences:
       path: /v2/transcript/{transcript_id}/sentences
       method: GET
-      auth: true
       docs: >-
         Get the transcript split by sentences. The API will attempt to
         semantically segment the transcript into sentences to create more
@@ -5875,7 +5862,6 @@ service:
     getParagraphs:
       path: /v2/transcript/{transcript_id}/paragraphs
       method: GET
-      auth: true
       docs: >-
         Get the transcript split by paragraphs. The API will attempt to
         semantically segment your transcript into paragraphs to create more
@@ -5920,7 +5906,6 @@ service:
     wordSearch:
       path: /v2/transcript/{transcript_id}/word-search
       method: GET
-      auth: true
       docs: >-
         Search through the transcript for a specific set of keywords. You can
         search for individual words, numbers, or phrases containing up to five
@@ -5954,7 +5939,6 @@ service:
     getRedactedAudio:
       path: /v2/transcript/{transcript_id}/redacted-audio
       method: GET
-      auth: true
       docs: >-
         Retrieves the redacted audio object containing the status and URL to the
         redacted audio.

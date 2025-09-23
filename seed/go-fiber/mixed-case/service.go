@@ -6,6 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/mixed-case/fern/internal"
+	big "math/big"
 	time "time"
 )
 
@@ -14,9 +15,17 @@ type ListResourcesRequest struct {
 	BeforeDate time.Time `query:"beforeDate"`
 }
 
+var (
+	nestedUserFieldName       = big.NewInt(1 << 0)
+	nestedUserFieldNestedUser = big.NewInt(1 << 1)
+)
+
 type NestedUser struct {
 	Name       string `json:"Name" url:"Name"`
 	NestedUser *User  `json:"NestedUser" url:"NestedUser"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -39,6 +48,27 @@ func (n *NestedUser) GetExtraProperties() map[string]interface{} {
 	return n.extraProperties
 }
 
+func (n *NestedUser) require(field *big.Int) {
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
+	}
+	n.explicitFields.Or(n.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NestedUser) SetName(name string) {
+	n.Name = name
+	n.require(nestedUserFieldName)
+}
+
+// SetNestedUser sets the NestedUser field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NestedUser) SetNestedUser(nestedUser *User) {
+	n.NestedUser = nestedUser
+	n.require(nestedUserFieldNestedUser)
+}
+
 func (n *NestedUser) UnmarshalJSON(data []byte) error {
 	type unmarshaler NestedUser
 	var value unmarshaler
@@ -54,6 +84,17 @@ func (n *NestedUser) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (n *NestedUser) MarshalJSON() ([]byte, error) {
+	type embed NestedUser
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*n),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, n.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (n *NestedUser) String() string {
 	if value, err := internal.StringifyJSON(n); err == nil {
 		return value
@@ -61,8 +102,15 @@ func (n *NestedUser) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
+var (
+	organizationFieldName = big.NewInt(1 << 0)
+)
+
 type Organization struct {
 	Name string `json:"name" url:"name"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -78,6 +126,20 @@ func (o *Organization) GetExtraProperties() map[string]interface{} {
 	return o.extraProperties
 }
 
+func (o *Organization) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *Organization) SetName(name string) {
+	o.Name = name
+	o.require(organizationFieldName)
+}
+
 func (o *Organization) UnmarshalJSON(data []byte) error {
 	type unmarshaler Organization
 	var value unmarshaler
@@ -91,6 +153,17 @@ func (o *Organization) UnmarshalJSON(data []byte) error {
 	}
 	o.extraProperties = extraProperties
 	return nil
+}
+
+func (o *Organization) MarshalJSON() ([]byte, error) {
+	type embed Organization
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (o *Organization) String() string {
@@ -249,10 +322,19 @@ func (r ResourceStatus) Ptr() *ResourceStatus {
 	return &r
 }
 
+var (
+	userFieldUserName        = big.NewInt(1 << 0)
+	userFieldMetadataTags    = big.NewInt(1 << 1)
+	userFieldExtraProperties = big.NewInt(1 << 2)
+)
+
 type User struct {
 	UserName        string            `json:"userName" url:"userName"`
 	MetadataTags    []string          `json:"metadata_tags" url:"metadata_tags"`
 	ExtraProperties map[string]string `json:"EXTRA_PROPERTIES" url:"EXTRA_PROPERTIES"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -282,6 +364,34 @@ func (u *User) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
 
+func (u *User) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetUserName sets the UserName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *User) SetUserName(userName string) {
+	u.UserName = userName
+	u.require(userFieldUserName)
+}
+
+// SetMetadataTags sets the MetadataTags field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *User) SetMetadataTags(metadataTags []string) {
+	u.MetadataTags = metadataTags
+	u.require(userFieldMetadataTags)
+}
+
+// SetExtraProperties sets the ExtraProperties field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *User) SetExtraProperties(extraProperties map[string]string) {
+	u.ExtraProperties = extraProperties
+	u.require(userFieldExtraProperties)
+}
+
 func (u *User) UnmarshalJSON(data []byte) error {
 	type unmarshaler User
 	var value unmarshaler
@@ -295,6 +405,17 @@ func (u *User) UnmarshalJSON(data []byte) error {
 	}
 	u.extraProperties = extraProperties
 	return nil
+}
+
+func (u *User) MarshalJSON() ([]byte, error) {
+	type embed User
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (u *User) String() string {

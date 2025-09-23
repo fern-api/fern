@@ -4,7 +4,6 @@ require "json"
 require "net/http"
 require "securerandom"
 
-# Internal Types
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
 require_relative "seed/internal/types/utils"
@@ -25,13 +24,20 @@ require_relative "seed/internal/types/boolean"
 require_relative "seed/internal/types/enum"
 require_relative "seed/internal/types/hash"
 require_relative "seed/internal/types/unknown"
-
-# API Types
+require_relative "seed/errors/api_error"
+require_relative "seed/errors/response_error"
+require_relative "seed/errors/client_error"
+require_relative "seed/errors/redirect_error"
+require_relative "seed/errors/server_error"
+require_relative "seed/errors/timeout_error"
+require_relative "seed/internal/iterators/item_iterator"
+require_relative "seed/internal/iterators/cursor_item_iterator"
+require_relative "seed/internal/iterators/offset_item_iterator"
+require_relative "seed/internal/iterators/cursor_page_iterator"
+require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/commons/metadata/types/metadata"
 require_relative "seed/types/node"
 require_relative "seed/types/tree"
 require_relative "seed/file/types/file_info"
 require_relative "seed/file/types/file"
 require_relative "seed/file/directory/types/directory"
-
-# Client Types

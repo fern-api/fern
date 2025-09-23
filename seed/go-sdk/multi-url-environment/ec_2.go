@@ -2,6 +2,31 @@
 
 package multiurlenvironment
 
+import (
+	big "math/big"
+)
+
+var (
+	bootInstanceRequestFieldSize = big.NewInt(1 << 0)
+)
+
 type BootInstanceRequest struct {
 	Size string `json:"size" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (b *BootInstanceRequest) require(field *big.Int) {
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
+	}
+	b.explicitFields.Or(b.explicitFields, field)
+}
+
+// SetSize sets the Size field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BootInstanceRequest) SetSize(size string) {
+	b.Size = size
+	b.require(bootInstanceRequestFieldSize)
 }

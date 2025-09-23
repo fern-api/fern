@@ -1,5 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.16.0
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for custom sections in the README.md via `customSections` config option.
+  createdAt: "2025-09-18"
+  irVersion: 59
+
+- version: 0.15.0
+  createdAt: "2025-09-17"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Added `reference.md` generation with endpoint method details and usage examples.
+  irVersion: 59
+
 - version: 0.14.0
   createdAt: "2025-09-14"
   changelogEntry:
@@ -13,7 +29,7 @@
   changelogEntry:
     - type: feat
       summary: |
-        Introduced Nullable container type and related extensions to support explicit nulls.
+        Introduced `Nullable` container type and related extensions to support explicit nulls.
   irVersion: 59
 
 - version: 0.12.4

@@ -1,4 +1,4 @@
-import { makeRequest } from "../../../../../src/test-packagePath/core/fetcher/makeRequest.js";
+import { makeRequest } from "../../../../../src/test-packagePath/core/fetcher/makeRequest";
 
 describe("Test makeRequest", () => {
     const mockPostUrl = "https://httpbin.org/post";
@@ -6,10 +6,10 @@ describe("Test makeRequest", () => {
     const mockHeaders = { "Content-Type": "application/json" };
     const mockBody = JSON.stringify({ key: "value" });
 
-    let mockFetch: jest.Mock;
+    let mockFetch: import("vitest").Mock;
 
     beforeEach(() => {
-        mockFetch = jest.fn();
+        mockFetch = vi.fn();
         mockFetch.mockResolvedValue(new Response(JSON.stringify({ test: "successful" }), { status: 200 }));
     });
 

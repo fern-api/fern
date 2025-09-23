@@ -1,11 +1,11 @@
-using global::System.Threading.Tasks;
 using SeedTrace;
+using System.Threading.Tasks;
 
 namespace Usage;
 
 public class Example7
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do() {
         var client = new SeedTraceClient(
             token: "<token>",
             clientOptions: new ClientOptions{
@@ -36,7 +36,7 @@ public class Example7
                         SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                         LineNumber = 1,
                         ReturnValue = new DebugVariableValue(
-
+                            new DebugVariableValue.IntegerValue()
                         ),
                         ExpressionLocation = new ExpressionLocation{
                             Start = 1,
@@ -51,14 +51,14 @@ public class Example7
                                     new Scope{
                                         Variables = new Dictionary<string, DebugVariableValue>(){
                                             ["variables"] = new DebugVariableValue(
-
+                                                new DebugVariableValue.IntegerValue()
                                             ),
                                         }
                                     },
                                     new Scope{
                                         Variables = new Dictionary<string, DebugVariableValue>(){
                                             ["variables"] = new DebugVariableValue(
-
+                                                new DebugVariableValue.IntegerValue()
                                             ),
                                         }
                                     },
@@ -71,7 +71,7 @@ public class Example7
                         SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                         LineNumber = 1,
                         ReturnValue = new DebugVariableValue(
-
+                            new DebugVariableValue.IntegerValue()
                         ),
                         ExpressionLocation = new ExpressionLocation{
                             Start = 1,
@@ -86,14 +86,14 @@ public class Example7
                                     new Scope{
                                         Variables = new Dictionary<string, DebugVariableValue>(){
                                             ["variables"] = new DebugVariableValue(
-
+                                                new DebugVariableValue.IntegerValue()
                                             ),
                                         }
                                     },
                                     new Scope{
                                         Variables = new Dictionary<string, DebugVariableValue>(){
                                             ["variables"] = new DebugVariableValue(
-
+                                                new DebugVariableValue.IntegerValue()
                                             ),
                                         }
                                     },

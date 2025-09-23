@@ -1,6 +1,5 @@
 using System.Text.Json;
 using NUnit.Framework;
-using SeedAlias;
 using SeedAlias.Core;
 
 namespace SeedAlias.Test;
@@ -8,7 +7,7 @@ namespace SeedAlias.Test;
 [TestFixture]
 public class TypeTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void TestDeserialization()
     {
         var json = """
@@ -17,12 +16,12 @@ public class TypeTest
               "name": "foo"
             }
             """;
-        var expectedObject = new Type { Id = "type-df89sdg1", Name = "foo" };
-        var deserializedObject = JsonUtils.Deserialize<Type>(json);
+        var expectedObject = new SeedAlias.Type { Id = "type-df89sdg1", Name = "foo" };
+        var deserializedObject = JsonUtils.Deserialize<SeedAlias.Type>(json);
         Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
     }
 
-    [Test]
+    [NUnit.Framework.Test]
     public void TestSerialization()
     {
         var expectedJson = """
@@ -31,7 +30,7 @@ public class TypeTest
               "name": "foo"
             }
             """;
-        var actualObj = new Type { Id = "type-df89sdg1", Name = "foo" };
+        var actualObj = new SeedAlias.Type { Id = "type-df89sdg1", Name = "foo" };
         var actualElement = JsonUtils.SerializeToElement(actualObj);
         var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
         Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());

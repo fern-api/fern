@@ -4,20 +4,20 @@ pub mod user;
 pub mod admin;
 pub struct TestClient {
     pub config: ClientConfig,
-    pub user: UserClient,
-    pub admin: AdminClient,
+    pub user: Client,
+    pub admin: Client,
 }
 
 impl TestClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
             config: config.clone(),
-            user: UserClient::new(config.clone())?,
-            admin: AdminClient::new(config.clone())?
+            user: Client::new(config.clone())?,
+            admin: Client::new(config.clone())?
         })
     }
 
 }
 
-pub use user::UserClient;
-pub use admin::AdminClient;
+pub use user::*;
+pub use admin::*;

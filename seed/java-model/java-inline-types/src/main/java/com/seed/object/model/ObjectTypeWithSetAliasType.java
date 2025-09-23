@@ -66,7 +66,9 @@ public final class ObjectTypeWithSetAliasType {
         @JsonSetter(value = "prop", nulls = Nulls.SKIP)
         public Builder prop(Set<AliasPropertyType> prop) {
             this.prop.clear();
-            this.prop.addAll(prop);
+            if (prop != null) {
+                this.prop.addAll(prop);
+            }
             return this;
         }
 

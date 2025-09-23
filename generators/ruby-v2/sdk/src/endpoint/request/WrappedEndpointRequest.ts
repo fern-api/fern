@@ -21,7 +21,6 @@ export declare namespace WrappedEndpointRequest {
     }
 }
 
-const QUERY_PARAMETER_BAG_NAME = "_query";
 const BODY_BAG_NAME = "_body";
 const QUERY_PARAM_NAMES_VN = "_query_param_names";
 const PATH_PARAM_NAMES_VN = "_path_param_names";
@@ -40,7 +39,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         return ruby.Type.void();
     }
 
-    public getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined {
+    public getQueryParameterCodeBlock(queryParameterBagName: string): QueryParameterCodeBlock | undefined {
         if (this.endpoint.queryParameters.length === 0) {
             return undefined;
         }
@@ -53,10 +52,10 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 writer.writeLine(`${toRubySymbolArray(this.getQueryParameterNames())}`);
                 writer.dedent();
                 writer.writeLine(`].flatten`);
-                writer.writeLine(`${QUERY_PARAMETER_BAG_NAME} = params.slice(*${QUERY_PARAM_NAMES_VN})`);
+                writer.writeLine(`${queryParameterBagName} = params.slice(*${QUERY_PARAM_NAMES_VN})`);
                 writer.writeLine(`params = params.except(*${QUERY_PARAM_NAMES_VN})`);
             }),
-            queryParameterBagReference: QUERY_PARAMETER_BAG_NAME
+            queryParameterBagReference: queryParameterBagName
         };
     }
 

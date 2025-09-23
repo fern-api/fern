@@ -6,10 +6,18 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/circular-references-advanced/fern/internal"
+	big "math/big"
+)
+
+var (
+	acaiFieldAnimal = big.NewInt(1 << 0)
 )
 
 type Acai struct {
 	Animal *Animal `json:"animal" url:"animal"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -26,6 +34,20 @@ func (a *Acai) GetExtraProperties() map[string]interface{} {
 	return a.extraProperties
 }
 
+func (a *Acai) require(field *big.Int) {
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
+	}
+	a.explicitFields.Or(a.explicitFields, field)
+}
+
+// SetAnimal sets the Animal field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *Acai) SetAnimal(animal *Animal) {
+	a.Animal = animal
+	a.require(acaiFieldAnimal)
+}
+
 func (a *Acai) UnmarshalJSON(data []byte) error {
 	type unmarshaler Acai
 	var value unmarshaler
@@ -40,6 +62,17 @@ func (a *Acai) UnmarshalJSON(data []byte) error {
 	a.extraProperties = extraProperties
 	a.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (a *Acai) MarshalJSON() ([]byte, error) {
+	type embed Acai
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (a *Acai) String() string {
@@ -116,8 +149,15 @@ func (a *Animal) Accept(visitor AnimalVisitor) error {
 	return fmt.Errorf("type %T does not include a non-empty union type", a)
 }
 
+var (
+	berryFieldAnimal = big.NewInt(1 << 0)
+)
+
 type Berry struct {
 	Animal *Animal `json:"animal" url:"animal"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -132,6 +172,20 @@ func (b *Berry) GetAnimal() *Animal {
 
 func (b *Berry) GetExtraProperties() map[string]interface{} {
 	return b.extraProperties
+}
+
+func (b *Berry) require(field *big.Int) {
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
+	}
+	b.explicitFields.Or(b.explicitFields, field)
+}
+
+// SetAnimal sets the Animal field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *Berry) SetAnimal(animal *Animal) {
+	b.Animal = animal
+	b.require(berryFieldAnimal)
 }
 
 func (b *Berry) UnmarshalJSON(data []byte) error {
@@ -150,6 +204,17 @@ func (b *Berry) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (b *Berry) MarshalJSON() ([]byte, error) {
+	type embed Berry
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*b),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (b *Berry) String() string {
 	if len(b.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
@@ -162,8 +227,15 @@ func (b *Berry) String() string {
 	return fmt.Sprintf("%#v", b)
 }
 
+var (
+	branchNodeFieldChildren = big.NewInt(1 << 0)
+)
+
 type BranchNode struct {
 	Children []*Node `json:"children" url:"children"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -178,6 +250,20 @@ func (b *BranchNode) GetChildren() []*Node {
 
 func (b *BranchNode) GetExtraProperties() map[string]interface{} {
 	return b.extraProperties
+}
+
+func (b *BranchNode) require(field *big.Int) {
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
+	}
+	b.explicitFields.Or(b.explicitFields, field)
+}
+
+// SetChildren sets the Children field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BranchNode) SetChildren(children []*Node) {
+	b.Children = children
+	b.require(branchNodeFieldChildren)
 }
 
 func (b *BranchNode) UnmarshalJSON(data []byte) error {
@@ -196,6 +282,17 @@ func (b *BranchNode) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (b *BranchNode) MarshalJSON() ([]byte, error) {
+	type embed BranchNode
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*b),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (b *BranchNode) String() string {
 	if len(b.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
@@ -208,8 +305,15 @@ func (b *BranchNode) String() string {
 	return fmt.Sprintf("%#v", b)
 }
 
+var (
+	catFieldFruit = big.NewInt(1 << 0)
+)
+
 type Cat struct {
 	Fruit *Fruit `json:"fruit" url:"fruit"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -226,6 +330,20 @@ func (c *Cat) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
 }
 
+func (c *Cat) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetFruit sets the Fruit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Cat) SetFruit(fruit *Fruit) {
+	c.Fruit = fruit
+	c.require(catFieldFruit)
+}
+
 func (c *Cat) UnmarshalJSON(data []byte) error {
 	type unmarshaler Cat
 	var value unmarshaler
@@ -240,6 +358,17 @@ func (c *Cat) UnmarshalJSON(data []byte) error {
 	c.extraProperties = extraProperties
 	c.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (c *Cat) MarshalJSON() ([]byte, error) {
+	type embed Cat
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (c *Cat) String() string {
@@ -389,8 +518,15 @@ func (c *ContainerValue) validate() error {
 	return nil
 }
 
+var (
+	dogFieldFruit = big.NewInt(1 << 0)
+)
+
 type Dog struct {
 	Fruit *Fruit `json:"fruit" url:"fruit"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -407,6 +543,20 @@ func (d *Dog) GetExtraProperties() map[string]interface{} {
 	return d.extraProperties
 }
 
+func (d *Dog) require(field *big.Int) {
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
+	}
+	d.explicitFields.Or(d.explicitFields, field)
+}
+
+// SetFruit sets the Fruit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *Dog) SetFruit(fruit *Fruit) {
+	d.Fruit = fruit
+	d.require(dogFieldFruit)
+}
+
 func (d *Dog) UnmarshalJSON(data []byte) error {
 	type unmarshaler Dog
 	var value unmarshaler
@@ -421,6 +571,17 @@ func (d *Dog) UnmarshalJSON(data []byte) error {
 	d.extraProperties = extraProperties
 	d.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (d *Dog) MarshalJSON() ([]byte, error) {
+	type embed Dog
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*d),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (d *Dog) String() string {
@@ -596,8 +757,15 @@ func (f *FieldValue) validate() error {
 	return nil
 }
 
+var (
+	figFieldAnimal = big.NewInt(1 << 0)
+)
+
 type Fig struct {
 	Animal *Animal `json:"animal" url:"animal"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -614,6 +782,20 @@ func (f *Fig) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }
 
+func (f *Fig) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetAnimal sets the Animal field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *Fig) SetAnimal(animal *Animal) {
+	f.Animal = animal
+	f.require(figFieldAnimal)
+}
+
 func (f *Fig) UnmarshalJSON(data []byte) error {
 	type unmarshaler Fig
 	var value unmarshaler
@@ -628,6 +810,17 @@ func (f *Fig) UnmarshalJSON(data []byte) error {
 	f.extraProperties = extraProperties
 	f.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (f *Fig) MarshalJSON() ([]byte, error) {
+	type embed Fig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (f *Fig) String() string {
@@ -705,12 +898,23 @@ func (f *Fruit) Accept(visitor FruitVisitor) error {
 }
 
 type LeafNode struct {
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
 func (l *LeafNode) GetExtraProperties() map[string]interface{} {
 	return l.extraProperties
+}
+
+func (l *LeafNode) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 func (l *LeafNode) UnmarshalJSON(data []byte) error {
@@ -727,6 +931,17 @@ func (l *LeafNode) UnmarshalJSON(data []byte) error {
 	l.extraProperties = extraProperties
 	l.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (l *LeafNode) MarshalJSON() ([]byte, error) {
+	type embed LeafNode
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (l *LeafNode) String() string {
@@ -803,8 +1018,15 @@ func (n *Node) Accept(visitor NodeVisitor) error {
 	return fmt.Errorf("type %T does not include a non-empty union type", n)
 }
 
+var (
+	nodesWrapperFieldNodes = big.NewInt(1 << 0)
+)
+
 type NodesWrapper struct {
 	Nodes [][]*Node `json:"nodes" url:"nodes"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -819,6 +1041,20 @@ func (n *NodesWrapper) GetNodes() [][]*Node {
 
 func (n *NodesWrapper) GetExtraProperties() map[string]interface{} {
 	return n.extraProperties
+}
+
+func (n *NodesWrapper) require(field *big.Int) {
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
+	}
+	n.explicitFields.Or(n.explicitFields, field)
+}
+
+// SetNodes sets the Nodes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NodesWrapper) SetNodes(nodes [][]*Node) {
+	n.Nodes = nodes
+	n.require(nodesWrapperFieldNodes)
 }
 
 func (n *NodesWrapper) UnmarshalJSON(data []byte) error {
@@ -837,6 +1073,17 @@ func (n *NodesWrapper) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (n *NodesWrapper) MarshalJSON() ([]byte, error) {
+	type embed NodesWrapper
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*n),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, n.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (n *NodesWrapper) String() string {
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
@@ -850,9 +1097,17 @@ func (n *NodesWrapper) String() string {
 }
 
 // This type allows us to test a circular reference with a union type (see FieldValue).
+var (
+	objectFieldValueFieldName  = big.NewInt(1 << 0)
+	objectFieldValueFieldValue = big.NewInt(1 << 1)
+)
+
 type ObjectFieldValue struct {
 	Name  FieldName   `json:"name" url:"name"`
 	Value *FieldValue `json:"value" url:"value"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -876,6 +1131,27 @@ func (o *ObjectFieldValue) GetExtraProperties() map[string]interface{} {
 	return o.extraProperties
 }
 
+func (o *ObjectFieldValue) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectFieldValue) SetName(name FieldName) {
+	o.Name = name
+	o.require(objectFieldValueFieldName)
+}
+
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (o *ObjectFieldValue) SetValue(value *FieldValue) {
+	o.Value = value
+	o.require(objectFieldValueFieldValue)
+}
+
 func (o *ObjectFieldValue) UnmarshalJSON(data []byte) error {
 	type unmarshaler ObjectFieldValue
 	var value unmarshaler
@@ -892,6 +1168,17 @@ func (o *ObjectFieldValue) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (o *ObjectFieldValue) MarshalJSON() ([]byte, error) {
+	type embed ObjectFieldValue
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (o *ObjectFieldValue) String() string {
 	if len(o.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(o.rawJSON); err == nil {
@@ -905,12 +1192,23 @@ func (o *ObjectFieldValue) String() string {
 }
 
 type ObjectValue struct {
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
 }
 
 func (o *ObjectValue) GetExtraProperties() map[string]interface{} {
 	return o.extraProperties
+}
+
+func (o *ObjectValue) require(field *big.Int) {
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
+	}
+	o.explicitFields.Or(o.explicitFields, field)
 }
 
 func (o *ObjectValue) UnmarshalJSON(data []byte) error {
@@ -927,6 +1225,17 @@ func (o *ObjectValue) UnmarshalJSON(data []byte) error {
 	o.extraProperties = extraProperties
 	o.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (o *ObjectValue) MarshalJSON() ([]byte, error) {
+	type embed ObjectValue
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, o.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (o *ObjectValue) String() string {

@@ -1,7 +1,7 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 import { rust, UseStatement } from "@fern-api/rust-codegen";
-import { generateRustTypeForTypeReference, isDateTimeType } from "@fern-api/rust-model";
+import { generateRustTypeForTypeReference } from "@fern-api/rust-model";
 
 import {
     CursorPagination,
@@ -17,6 +17,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { ClientGeneratorContext } from "./ClientGeneratorContext";
 
 interface EndpointParameter {
     name: string;
@@ -29,11 +30,16 @@ export class SubClientGenerator {
     private readonly context: SdkGeneratorContext;
     private readonly subpackage: Subpackage;
     private readonly service?: HttpService;
+    private readonly clientGeneratorContext: ClientGeneratorContext;
 
     constructor(context: SdkGeneratorContext, subpackage: Subpackage) {
         this.context = context;
         this.subpackage = subpackage;
         this.service = subpackage.service ? this.context.getHttpServiceOrThrow(subpackage.service) : undefined;
+        this.clientGeneratorContext = new ClientGeneratorContext({
+            packageOrSubpackage: subpackage,
+            sdkGeneratorContext: context
+        });
     }
 
     // =============================================================================
@@ -56,9 +62,36 @@ export class SubClientGenerator {
             useStatements: this.generateImports(),
             rawDeclarations: [rustClient.toString()]
         });
+        // Create nested directory structure like Swift SDK
+        const fernFilepathDir = this.context.getDirectoryForFernFilepath(this.subpackage.fernFilepath);
+        const directory = fernFilepathDir ? `src/api/resources/${fernFilepathDir}` : "src/api/resources";
+
         return new RustFile({
             filename,
-            directory: RelativeFilePath.of("src/client"),
+            directory: RelativeFilePath.of(directory),
+            fileContents: module.toString()
+        });
+    }
+
+    public generateModFile(): RustFile | null {
+        const fernFilepathDir = this.context.getDirectoryForFernFilepath(this.subpackage.fernFilepath);
+        if (!fernFilepathDir) {
+            return null; // No nested directory, mod.rs not needed
+        }
+
+        const filename = this.context.getUniqueFilenameForSubpackage(this.subpackage);
+        const moduleName = filename.replace(".rs", "");
+
+        const module = rust.module({
+            useStatements: [],
+            rawDeclarations: [`pub mod ${moduleName};`, `pub use ${moduleName}::*;`]
+        });
+
+        const directory = `src/api/resources/${fernFilepathDir}`;
+
+        return new RustFile({
+            filename: "mod.rs",
+            directory: RelativeFilePath.of(directory),
             fileContents: module.toString()
         });
     }
@@ -79,7 +112,7 @@ export class SubClientGenerator {
         const imports = [
             new UseStatement({
                 path: "crate",
-                items: ["ClientConfig", "ApiError", "HttpClient", "RequestOptions"]
+                items: ["ClientConfig", "ApiError", "HttpClient", "QueryBuilder", "RequestOptions"]
             }),
             new UseStatement({
                 path: "reqwest",
@@ -99,8 +132,8 @@ export class SubClientGenerator {
         if (hasTypes) {
             imports.push(
                 new UseStatement({
-                    path: "crate",
-                    items: ["types::*"]
+                    path: "crate::api::types",
+                    items: ["*"]
                 })
             );
         }
@@ -121,11 +154,22 @@ export class SubClientGenerator {
     private generateFields(): rust.Client.Field[] {
         const fields: rust.Client.Field[] = [
             {
-                name: "http_client",
-                type: rust.Type.reference(rust.reference({ name: "HttpClient" })).toString(),
+                name: this.clientGeneratorContext.httpClient.fieldName,
+                type: rust.Type.reference(
+                    rust.reference({ name: this.clientGeneratorContext.httpClient.clientName })
+                ).toString(),
                 visibility: "pub"
             }
         ];
+
+        // Add sub-client fields
+        this.clientGeneratorContext.subClients.forEach(({ fieldName, clientName }) => {
+            fields.push({
+                name: fieldName,
+                type: rust.Type.reference(rust.reference({ name: clientName })).toString(),
+                visibility: "pub"
+            });
+        });
 
         return fields;
     }
@@ -138,15 +182,47 @@ export class SubClientGenerator {
         // Use simple parameter signature with just config
         const parameters = ["config: ClientConfig"];
 
-        const constructorBody = `let http_client = HttpClient::new(config)?;
-        Ok(Self { http_client })`;
+        // Build field assignments using AST
+        const fieldAssignments: rust.Expression.FieldAssignment[] = [];
+
+        // Add HTTP client field
+        fieldAssignments.push({
+            name: this.clientGeneratorContext.httpClient.fieldName,
+            value: rust.Expression.try(
+                rust.Expression.functionCall(`${this.clientGeneratorContext.httpClient.clientName}::new`, [
+                    rust.Expression.reference("config")
+                ])
+            )
+        });
+
+        // Add sub-client fields
+        this.clientGeneratorContext.subClients.forEach(({ fieldName, clientName }) => {
+            fieldAssignments.push({
+                name: fieldName,
+                value: rust.Expression.try(
+                    rust.Expression.functionCall(`${clientName}::new`, [
+                        rust.Expression.methodCall({
+                            target: rust.Expression.reference("config"),
+                            method: "clone",
+                            args: []
+                        })
+                    ])
+                )
+            });
+        });
+
+        // Create struct construction expression
+        const structConstruction = rust.Expression.structConstruction("Self", fieldAssignments);
+
+        // Wrap in Ok()
+        const constructorBody = rust.Expression.ok(structConstruction);
 
         return {
             name: "new",
             parameters,
             returnType: returnType.toString(),
             isAsync: false,
-            body: constructorBody
+            body: constructorBody.toString()
         };
     }
 
@@ -309,17 +385,82 @@ export class SubClientGenerator {
     // QUERY PARAMETER BUILDING
     // =============================================================================
 
+    private getQueryBuilderMethod(queryParam: QueryParameter): string {
+        const valueType = queryParam.valueType;
+
+        // Check for structured query parameter by name
+        if (queryParam.name.wireValue === "query" && this.isStringType(valueType)) {
+            return "structured_query";
+        }
+
+        // Map types to appropriate QueryBuilder methods
+        return TypeReference._visit(valueType, {
+            primitive: (primitive) => {
+                return PrimitiveTypeV1._visit(primitive.v1, {
+                    string: () => "string",
+                    boolean: () => "bool",
+                    integer: () => "int",
+                    uint: () => "int",
+                    uint64: () => "int",
+                    long: () => "int",
+                    float: () => "float",
+                    double: () => "float",
+                    bigInteger: () => "string", // Serialize as string
+                    date: () => "date",
+                    dateTime: () => "datetime",
+                    base64: () => "string",
+                    uuid: () => "uuid",
+                    _other: () => "serialize"
+                });
+            },
+            named: () => "serialize", // User-defined types need serialization
+            container: (container) => {
+                return container._visit({
+                    optional: (innerType) => this.getQueryBuilderMethodForType(innerType),
+                    nullable: (innerType) => this.getQueryBuilderMethodForType(innerType),
+                    map: () => "serialize",
+                    set: () => "serialize",
+                    list: () => "serialize",
+                    literal: () => "string",
+                    _other: () => "serialize"
+                });
+            },
+            unknown: () => "serialize",
+            _other: () => "serialize"
+        });
+    }
+
+    private getQueryBuilderMethodForType(typeRef: TypeReference): string {
+        return TypeReference._visit(typeRef, {
+            primitive: (primitive) => {
+                return PrimitiveTypeV1._visit(primitive.v1, {
+                    string: () => "string",
+                    boolean: () => "bool",
+                    integer: () => "int",
+                    uint: () => "int",
+                    uint64: () => "int",
+                    long: () => "int",
+                    float: () => "float",
+                    double: () => "float",
+                    bigInteger: () => "string",
+                    date: () => "date",
+                    dateTime: () => "datetime",
+                    base64: () => "string",
+                    uuid: () => "uuid",
+                    _other: () => "serialize"
+                });
+            },
+            named: () => "serialize",
+            container: () => "serialize",
+            unknown: () => "serialize",
+            _other: () => "serialize"
+        });
+    }
+
     private buildQueryParameters(endpoint: HttpEndpoint): string {
         const queryParams = endpoint.queryParameters;
         if (queryParams.length === 0) {
             return "None";
-        }
-
-        // Check if this endpoint would benefit from enhanced query parameter handling
-        const shouldUseEnhancedBuilder = this.shouldUseEnhancedQueryBuilder(endpoint);
-
-        if (shouldUseEnhancedBuilder) {
-            return this.buildEnhancedQueryParameters(endpoint);
         }
 
         return this.buildQueryParameterStatements(queryParams);
@@ -345,33 +486,16 @@ export class SubClientGenerator {
     }
 
     private buildQueryParameterStatements(queryParams: QueryParameter[]): string {
-        const queryParamStatements = queryParams.map((queryParam) => {
+        const builderChain = queryParams.map((queryParam) => {
             const paramName = queryParam.name.name.snakeCase.safeName;
             const wireValue = queryParam.name.wireValue;
-            const pattern = `Some(value)`;
+            const method = this.getQueryBuilderMethod(queryParam);
 
-            // Handle different types properly for query parameters
-            let valueExpression: string;
-            if (this.isStringType(queryParam.valueType)) {
-                valueExpression = "value.clone()";
-            } else if (this.isDateTimeTypeRecursive(queryParam.valueType)) {
-                valueExpression = "value.to_rfc3339()";
-            } else if (this.isComplexType(queryParam.valueType)) {
-                valueExpression = "serde_json::to_string(&value).unwrap_or_default()";
-            } else {
-                valueExpression = "value.to_string()";
-            }
-
-            return `if let ${pattern} = ${paramName} {
-                query_params.push(("${wireValue}".to_string(), ${valueExpression}));
-            }`;
+            return `.${method}("${wireValue}", ${paramName})`;
         });
 
-        return `{
-            let mut query_params = Vec::new();
-            ${queryParamStatements.join("\n            ")}
-            Some(query_params)
-        }`;
+        return `QueryBuilder::new()${builderChain.join("")}
+            .build()`;
     }
 
     private extractPaginationParameterNames(paginationConfig: Pagination): Set<string> {
@@ -426,68 +550,6 @@ export class SubClientGenerator {
             });
         }
         return paginationParamNames;
-    }
-
-    private shouldUseEnhancedQueryBuilder(endpoint: HttpEndpoint): boolean {
-        const queryParams = endpoint.queryParameters;
-
-        // Use enhanced builder if:
-        // 1. There's a parameter named "query" (structured query string)
-        // 2. There are many query parameters (>5) suggesting complex filtering
-        // 3. There's a mix of sort parameters (sortBy, sortOrder) indicating advanced querying
-        return (
-            queryParams.some(
-                (param) =>
-                    param.name.wireValue === "query" || // Structured query parameter
-                    param.name.wireValue === "filter" || // Generic filter parameter
-                    param.name.wireValue.includes("sort") // Sort-related parameters
-            ) || queryParams.length > 5
-        ); // Many parameters suggest complex usage
-    }
-
-    private buildEnhancedQueryParameters(endpoint: HttpEndpoint): string {
-        const queryParams = endpoint.queryParameters;
-        const statements: string[] = [];
-
-        queryParams.forEach((param) => {
-            const paramName = param.name.name.snakeCase.safeName;
-            const wireValue = param.name.wireValue;
-            const pattern = `Some(value)`;
-
-            if (wireValue === "query" && this.isStringType(param.valueType)) {
-                // Handle structured query strings with fallback
-                statements.push(`
-            if let ${pattern} = ${paramName} {
-                // Try to parse as structured query, fall back to simple if it fails
-                if let Err(_) = query_builder.add_structured_query(&value) {
-                    query_builder.add_simple("${wireValue}", &value);
-                }
-            }`);
-            } else {
-                // Handle regular parameters
-                let valueExpression: string;
-                if (this.isStringType(param.valueType)) {
-                    valueExpression = "&value";
-                } else if (this.isDateTimeTypeRecursive(param.valueType)) {
-                    valueExpression = "&value.to_rfc3339()";
-                } else if (this.isComplexType(param.valueType)) {
-                    valueExpression = "&serde_json::to_string(&value).unwrap_or_default()";
-                } else {
-                    valueExpression = "&value.to_string()";
-                }
-
-                statements.push(`
-            if let ${pattern} = ${paramName} {
-                query_builder.add_simple("${wireValue}", ${valueExpression});
-            }`);
-            }
-        });
-
-        return `{
-            let mut query_builder = crate::QueryParameterBuilder::new();${statements.join("")}
-            let params = query_builder.build();
-            if params.is_empty() { None } else { Some(params) }
-        }`;
     }
 
     // =============================================================================
@@ -633,16 +695,6 @@ export class SubClientGenerator {
         });
     }
 
-    private isComplexType(typeRef: TypeReference): boolean {
-        return TypeReference._visit(typeRef, {
-            primitive: () => false,
-            named: () => true,
-            container: () => true,
-            unknown: () => true,
-            _other: () => true
-        });
-    }
-
     private isStringType(typeRef: TypeReference): boolean {
         return TypeReference._visit(typeRef, {
             primitive: (primitive) => {
@@ -654,29 +706,6 @@ export class SubClientGenerator {
                 return container._visit({
                     optional: (innerType) => this.isStringType(innerType),
                     nullable: (innerType) => this.isStringType(innerType),
-                    list: () => false,
-                    set: () => false,
-                    map: () => false,
-                    literal: () => false,
-                    _other: () => false
-                });
-            },
-            unknown: () => false,
-            _other: () => false
-        });
-    }
-
-    private isDateTimeTypeRecursive(typeRef: TypeReference): boolean {
-        return TypeReference._visit(typeRef, {
-            primitive: (primitive) => {
-                return isDateTimeType(typeRef);
-            },
-            named: () => false,
-            container: (container) => {
-                // Check if it's an optional DateTime
-                return container._visit({
-                    optional: (innerType) => this.isDateTimeTypeRecursive(innerType),
-                    nullable: (innerType) => this.isDateTimeTypeRecursive(innerType),
                     list: () => false,
                     set: () => false,
                     map: () => false,

@@ -43,7 +43,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 ? this.context.ir.readmeConfig.defaultEndpoint
                 : this.getDefaultEndpointId();
         this.rootPackageName = this.context.getRootFolderName();
-        this.rootPackageClientName = this.context.getRootModule().name;
+        this.rootPackageClientName = this.context.getRootModuleName();
     }
 
     public buildReadmeSnippetsByFeatureId(): Record<FernGeneratorCli.FeatureId, string[]> {
@@ -172,12 +172,22 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private renderErrorsSnippet(endpoint: EndpointWithFilepath): string {
         return this.writeCode(dedent`require "${this.rootPackageName}"
 
-            response = ${this.getMethodCall(endpoint)}(...)
-            rescue => error
-            if error.is_a?(Core::APIError)
-                # Do something with the API error ...
-            end
-            raise error
+            ${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME} = ${this.rootPackageClientName}::Client.new(
+                base_url: ${this.getEnvironmentURLExample()}
+            )
+
+            begin
+                result = ${this.getMethodCall(endpoint)}
+            rescue ${this.rootPackageClientName}::Errors::TimeoutError
+                puts "API didn't respond before our timeout elapsed"
+            rescue ${this.rootPackageClientName}::Errors::ServiceUnavailableError
+                puts "API returned status 503, is probably overloaded, try again later"
+            rescue ${this.rootPackageClientName}::Errors::ServerError
+                puts "API returned some other 5xx status, this is probably a bug"
+            rescue ${this.rootPackageClientName}::Errors::ResponseError => e
+                puts "API returned an unexpected status other than 5xx: #{e.code} {e.message}"
+            rescue ${this.rootPackageClientName}::Errors::ApiError => e
+                puts "Some other error occurred when calling the API: {e.message}"
             end
         `);
     }
@@ -272,6 +282,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             if (endpointSnippet.snippet.type !== "ruby") {
                 throw new Error(`Internal error; expected ruby snippet but got: ${endpointSnippet.snippet.type}`);
             }
+            if (snippets[endpointSnippet.id.identifierOverride] != null) {
+                continue;
+            }
             snippets[endpointSnippet.id.identifierOverride] = endpointSnippet.snippet.client;
         }
         return snippets;
@@ -313,14 +326,14 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private getAccessFromRootClient(fernFilepath: FernFilepath): string {
-        const clientAccessParts = fernFilepath.allParts.map((part) => part.pascalCase.unsafeName);
+        const clientAccessParts = fernFilepath.allParts.map((part) => part.snakeCase.safeName);
         return clientAccessParts.length > 0
             ? `${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME}.${clientAccessParts.join(".")}`
             : ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME;
     }
 
     private getEndpointMethodName(endpoint: HttpEndpoint): string {
-        return endpoint.name.pascalCase.unsafeName;
+        return endpoint.name.snakeCase.safeName;
     }
 
     private getDefaultEnvironmentId(): FernIr.EnvironmentId | undefined {

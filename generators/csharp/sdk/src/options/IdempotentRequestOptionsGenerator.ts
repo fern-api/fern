@@ -1,5 +1,5 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { csharp } from "@fern-api/csharp-codegen";
+import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
@@ -22,23 +22,23 @@ export class IdempotentRequestOptionsGenerator extends FileGenerator<
     }
 
     public doGenerate(): CSharpFile {
-        const class_ = csharp.class_({
+        const class_ = this.csharp.class_({
             ...this.context.getIdempotentRequestOptionsClassReference(),
             partial: true,
-            access: csharp.Access.Public,
+            access: ast.Access.Public,
             interfaceReferences: [this.context.getIdempotentRequestOptionsInterfaceClassReference()],
             annotations: [this.context.getSerializableAttribute()]
         });
         class_.addFields(this.baseOptionsGenerator.getRequestOptionFields());
         class_.addFields(this.baseOptionsGenerator.getIdempotentRequestOptionFields());
         class_.addMethod(
-            csharp.method({
+            this.csharp.method({
                 name: "GetIdempotencyHeaders",
                 parameters: [],
-                return_: csharp.Type.reference(this.context.getHeadersClassReference()),
+                return_: this.csharp.Type.reference(this.context.getHeadersClassReference()),
                 interfaceReference: this.context.getIdempotentRequestOptionsInterfaceClassReference(),
-                type: csharp.MethodType.INSTANCE,
-                body: csharp.codeblock((writer) => {
+                type: ast.MethodType.INSTANCE,
+                body: this.csharp.codeblock((writer) => {
                     writer.writeLine("return new Headers(new Dictionary<string, string>");
                     writer.writeLine("{");
                     writer.indent();

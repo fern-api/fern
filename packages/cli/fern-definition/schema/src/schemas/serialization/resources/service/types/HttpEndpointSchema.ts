@@ -7,6 +7,7 @@ import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { HttpMethodSchema } from "./HttpMethodSchema";
 import { HttpPathParameterSchema } from "./HttpPathParameterSchema";
+import { HttpEndpointAuth } from "./HttpEndpointAuth";
 import { HttpRequest } from "./HttpRequest";
 import { HttpResponseSchema } from "./HttpResponseSchema";
 import { HttpResponseStreamSchema } from "./HttpResponseStreamSchema";
@@ -15,6 +16,7 @@ import { ExampleEndpointCallSchema } from "../../examples/types/ExampleEndpointC
 import { Pagination } from "./Pagination";
 import { ServiceTransport } from "./ServiceTransport";
 import { SourceSchema } from "../../source/types/SourceSchema";
+import { RetriesConfiguration } from "./RetriesConfiguration";
 import { WithDisplayName } from "../../commons/types/WithDisplayName";
 import { DeclarationSchema } from "../../commons/types/DeclarationSchema";
 import { ResponseError } from "./ResponseError";
@@ -29,7 +31,7 @@ export const HttpEndpointSchema: core.serialization.ObjectSchema<
         path: core.serialization.string(),
         url: core.serialization.string().optional(),
         "path-parameters": core.serialization.record(core.serialization.string(), HttpPathParameterSchema).optional(),
-        auth: core.serialization.boolean().optional(),
+        auth: HttpEndpointAuth.optional(),
         idempotent: core.serialization.boolean().optional(),
         "stream-condition": core.serialization.string().optional(),
         request: HttpRequest.optional(),
@@ -40,6 +42,7 @@ export const HttpEndpointSchema: core.serialization.ObjectSchema<
         pagination: Pagination.optional(),
         transport: ServiceTransport.optional(),
         source: SourceSchema.optional(),
+        retries: RetriesConfiguration.optional(),
     })
     .extend(WithDisplayName)
     .extend(DeclarationSchema);
@@ -51,7 +54,7 @@ export declare namespace HttpEndpointSchema {
         path: string;
         url?: string | null;
         "path-parameters"?: Record<string, HttpPathParameterSchema.Raw> | null;
-        auth?: boolean | null;
+        auth?: HttpEndpointAuth.Raw | null;
         idempotent?: boolean | null;
         "stream-condition"?: string | null;
         request?: HttpRequest.Raw | null;
@@ -62,5 +65,6 @@ export declare namespace HttpEndpointSchema {
         pagination?: Pagination.Raw | null;
         transport?: ServiceTransport.Raw | null;
         source?: SourceSchema.Raw | null;
+        retries?: RetriesConfiguration.Raw | null;
     }
 }

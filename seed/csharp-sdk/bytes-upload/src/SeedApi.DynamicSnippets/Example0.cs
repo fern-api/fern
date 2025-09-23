@@ -1,5 +1,5 @@
-using global::System.Threading.Tasks;
 using SeedBytesUpload;
+using System.Threading.Tasks;
 using System.IO;
 using System.Text;
 
@@ -7,7 +7,7 @@ namespace Usage;
 
 public class Example0
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do() {
         var client = new SeedBytesUploadClient(
             clientOptions: new ClientOptions{
                 BaseUrl = "https://api.fern.com"

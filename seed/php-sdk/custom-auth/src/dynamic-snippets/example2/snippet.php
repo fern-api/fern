@@ -10,8 +10,4 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->customAuth->postWithCustomAuth(
-    [
-        'key' => "value",
-    ],
-);
+$client->customAuth->getWithCustomAuth();

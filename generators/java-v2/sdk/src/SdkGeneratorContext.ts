@@ -9,8 +9,10 @@ import {
     HttpEndpoint,
     IntermediateRepresentation,
     Name,
+    Pagination,
     TypeDeclaration,
-    TypeId
+    TypeId,
+    TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { camelCase } from "lodash-es";
 import { TYPES_DIRECTORY } from "./constants";
@@ -23,6 +25,7 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
     public readonly generatorAgent: JavaGeneratorAgent;
     public readonly project: JavaProject;
     public readonly snippetGenerator: EndpointSnippetsGenerator;
+    private paginationPackageCache?: string;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -42,6 +45,20 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
     }
 
     public getReturnTypeForEndpoint(httpEndpoint: HttpEndpoint): java.Type {
+        if (httpEndpoint.pagination != null) {
+            const itemType = this.getPaginationItemType(httpEndpoint.pagination);
+
+            if (itemType) {
+                return java.Type.generic(
+                    java.classReference({
+                        name: this.getPaginationClassName(),
+                        packageName: this.getPaginationPackageName()
+                    }),
+                    [itemType]
+                );
+            }
+        }
+
         const responseBody = httpEndpoint.response?.body;
 
         if (responseBody == null) {
@@ -69,8 +86,8 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
                         );
                     default:
                         assertNever(responseBody.value);
+                        throw new Error("Unknown streaming type");
                 }
-                break;
             case "fileDownload":
                 return java.Type.inputStream();
             case "streamParameter":
@@ -108,14 +125,81 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
     }
 
     public getPaginationPackageName(): string {
-        if (this.getPackageLayout() === "flat") {
-            return this.getCorePackageName();
+        if (this.paginationPackageCache != null) {
+            return this.paginationPackageCache;
         }
-        return this.getCorePackageName() + ".pagination";
+
+        if (this.getPackageLayout() === "flat") {
+            this.paginationPackageCache = this.getCorePackageName();
+            return this.paginationPackageCache;
+        }
+
+        const corePackage = this.getCorePackageName();
+
+        const hasPaginatedEndpoints = this.hasPaginatedEndpoints();
+
+        if (!hasPaginatedEndpoints) {
+            // No pagination needed, default to core package
+            this.paginationPackageCache = corePackage;
+            return this.paginationPackageCache;
+        }
+
+        if (this.shouldUseCorePackageForPagination()) {
+            this.paginationPackageCache = corePackage;
+            return this.paginationPackageCache;
+        }
+
+        this.paginationPackageCache = corePackage + ".pagination";
+        return this.paginationPackageCache;
     }
 
     public getPackageLayout(): string {
         return this.customConfig?.["package-layout"] ?? "nested";
+    }
+
+    /**
+     * Checks if the IR contains any paginated endpoints.
+     */
+    private hasPaginatedEndpoints(): boolean {
+        for (const service of Object.values(this.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.pagination != null) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Determines if pagination classes should be placed in the core package
+     * rather than a dedicated pagination subpackage. This handles cases like Auth0
+     * where the SDK structure expects pagination classes in the core package.
+     */
+    private shouldUseCorePackageForPagination(): boolean {
+        const packageName = this.getRootPackageName();
+
+        const coreFirstPatterns = [/\.auth0\./i, /\.core\./i, /\.client\./i, /management/i, /authentication/i];
+
+        if (coreFirstPatterns.some((pattern) => pattern.test(packageName))) {
+            return true;
+        }
+
+        const serviceCount = Object.keys(this.ir.services).length;
+        const serviceNames = Object.values(this.ir.services).map(
+            (service) => service.name?.fernFilepath?.allParts?.map((part) => part.originalName).join("") || ""
+        );
+
+        if (
+            serviceCount <= 2 ||
+            serviceNames.every((name) =>
+                ["management", "auth", "api", "client", "core"].some((generic) => name.toLowerCase().includes(generic))
+            )
+        ) {
+            return true;
+        }
+
+        return false;
     }
 
     public getPaginationClassName(): string {
@@ -270,5 +354,51 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
             throw new Error(`No example found for endpoint ${endpoint.id}`);
         }
         return exampleEndpointCall;
+    }
+
+    private getPaginationItemType(pagination: Pagination): java.Type | undefined {
+        if (pagination.type === "cursor") {
+            const resultsProperty = pagination.results;
+            if (resultsProperty?.property?.valueType) {
+                return this.extractPaginationItemType(resultsProperty.property.valueType);
+            }
+        } else if (pagination.type === "offset") {
+            const resultsProperty = pagination.results;
+            if (resultsProperty?.property?.valueType) {
+                return this.extractPaginationItemType(resultsProperty.property.valueType);
+            }
+        }
+        return undefined;
+    }
+
+    private extractPaginationItemType(valueType: TypeReference): java.Type | undefined {
+        if (!valueType) {
+            return undefined;
+        }
+
+        // If it's a list container, extract the item type
+        if (valueType.type === "container" && valueType.container) {
+            if (valueType.container.type === "list" && valueType.container.list) {
+                const innerType = valueType.container.list;
+                return this.javaTypeMapper.convert({ reference: innerType });
+            } else if (valueType.container.type === "optional" && valueType.container.optional) {
+                return this.extractPaginationItemType(valueType.container.optional);
+            }
+        }
+
+        if (valueType.type === "named" && valueType.typeId) {
+            const typeDecl = this.ir.types[valueType.typeId];
+            if (typeDecl?.shape.type === "object") {
+                // Look for the first list property in the object
+                for (const prop of typeDecl.shape.properties) {
+                    const itemType = this.extractPaginationItemType(prop.valueType);
+                    if (itemType) {
+                        return itemType;
+                    }
+                }
+            }
+        }
+
+        return undefined;
     }
 }

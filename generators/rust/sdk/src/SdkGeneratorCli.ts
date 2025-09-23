@@ -1,6 +1,6 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { AbstractRustGeneratorCli, RustFile } from "@fern-api/rust-base";
+import { AbstractRustGeneratorCli, formatRustCode, RustFile } from "@fern-api/rust-base";
 import { Module, ModuleDeclaration, UseStatement } from "@fern-api/rust-codegen";
 import { DynamicSnippetsGenerator } from "@fern-api/rust-dynamic-snippets";
 import { generateModels } from "@fern-api/rust-model";
@@ -8,6 +8,8 @@ import { generateModels } from "@fern-api/rust-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { mkdir, writeFile } from "fs/promises";
+import { join } from "path";
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
 import { ErrorGenerator } from "./error/ErrorGenerator";
 import { ClientConfigGenerator } from "./generators/ClientConfigGenerator";
@@ -69,6 +71,17 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         context.logger.info("=== CALLING persist ===");
         await context.project.persist();
         context.logger.info("=== PERSIST COMPLETE ===");
+
+        // Generate dynamic-snippets directory with individual .rs files
+        await this.generateDynamicSnippetFiles(context);
+        context.logger.info("=== dynamic-snippets COMPLETE ===");
+
+        context.logger.info("=== RUNNING rustfmt ===");
+        await formatRustCode({
+            outputDir: context.project.absolutePathToOutputDirectory,
+            logger: context.logger
+        });
+        context.logger.info("=== RUSTFMT COMPLETE ===");
     }
 
     private async generateProjectFiles(context: SdkGeneratorContext): Promise<RustFile[]> {
@@ -77,6 +90,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         // Core files
         files.push(this.generateLibFile(context));
         files.push(this.generateErrorFile(context));
+        files.push(this.generateApiModFile(context));
 
         // Environment.rs (if environments are defined)
         const environmentFile = await this.generateEnvironmentFile(context);
@@ -88,9 +102,9 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         const clientConfigGenerator = new ClientConfigGenerator(context);
         files.push(clientConfigGenerator.generate());
 
-        // Client.rs
+        // Client.rs and nested mod.rs files
         const rootClientGenerator = new RootClientGenerator(context);
-        files.push(rootClientGenerator.generate());
+        files.push(...rootClientGenerator.generateAllFiles());
 
         // Services/**/*.rs
         this.generateSubClientFiles(context, files);
@@ -129,6 +143,35 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         });
     }
 
+    private generateApiModFile(context: SdkGeneratorContext): RustFile {
+        const hasTypes = this.hasTypes(context);
+        const moduleDeclarations: ModuleDeclaration[] = [];
+        const useStatements: UseStatement[] = [];
+
+        // Add module declarations
+        moduleDeclarations.push(new ModuleDeclaration({ name: "resources", isPublic: true }));
+        if (hasTypes) {
+            moduleDeclarations.push(new ModuleDeclaration({ name: "types", isPublic: true }));
+        }
+
+        // Add re-exports
+        useStatements.push(new UseStatement({ path: "resources", items: ["*"], isPublic: true }));
+        if (hasTypes) {
+            useStatements.push(new UseStatement({ path: "types", items: ["*"], isPublic: true }));
+        }
+
+        const apiModule = new Module({
+            moduleDeclarations,
+            useStatements
+        });
+
+        return new RustFile({
+            filename: "mod.rs",
+            directory: RelativeFilePath.of("src/api"),
+            fileContents: apiModule.toString()
+        });
+    }
+
     private async generateEnvironmentFile(context: SdkGeneratorContext): Promise<RustFile | null> {
         const environmentGenerator = new EnvironmentGenerator({ context });
         return environmentGenerator.generate();
@@ -138,6 +181,8 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         Object.values(context.ir.subpackages).forEach((subpackage) => {
             if (subpackage.service != null || subpackage.hasEndpointsInTree) {
                 const subClientGenerator = new SubClientGenerator(context, subpackage);
+
+                // Generate the client file
                 files.push(subClientGenerator.generate());
             }
         });
@@ -166,7 +211,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             (file) =>
                 new RustFile({
                     filename: file.filename,
-                    directory: RelativeFilePath.of("src/types"),
+                    directory: RelativeFilePath.of("src/api/types"),
                     fileContents: this.getFileContents(file)
                 })
         );
@@ -176,7 +221,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         const typesModule = this.buildTypesModule(context);
         return new RustFile({
             filename: "mod.rs",
-            directory: RelativeFilePath.of("src/types"),
+            directory: RelativeFilePath.of("src/api/types"),
             fileContents: typesModule.toString()
         });
     }
@@ -191,21 +236,14 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         const rawDeclarations: string[] = [];
 
         // Add module declarations
-        moduleDeclarations.push(new ModuleDeclaration({ name: "client", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "api", isPublic: true }));
         moduleDeclarations.push(new ModuleDeclaration({ name: "error", isPublic: true }));
-        moduleDeclarations.push(new ModuleDeclaration({ name: "client_config", isPublic: true }));
-        moduleDeclarations.push(new ModuleDeclaration({ name: "api_client_builder", isPublic: true }));
-        moduleDeclarations.push(new ModuleDeclaration({ name: "http_client", isPublic: true }));
-        moduleDeclarations.push(new ModuleDeclaration({ name: "request_options", isPublic: true }));
-        moduleDeclarations.push(new ModuleDeclaration({ name: "pagination", isPublic: true }));
-        moduleDeclarations.push(new ModuleDeclaration({ name: "query_parameter_builder", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "core", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "config", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "client", isPublic: true }));
 
         if (this.hasEnvironments(context)) {
             moduleDeclarations.push(new ModuleDeclaration({ name: "environment", isPublic: true }));
-        }
-
-        if (hasTypes) {
-            moduleDeclarations.push(new ModuleDeclaration({ name: "types", isPublic: true }));
         }
 
         // Add re-exports
@@ -225,13 +263,6 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             clientExports.push(subClientName);
         });
 
-        useStatements.push(
-            new UseStatement({
-                path: "client",
-                items: ["*"],
-                isPublic: true
-            })
-        );
         useStatements.push(new UseStatement({ path: "error", items: ["ApiError"], isPublic: true }));
 
         if (this.hasEnvironments(context)) {
@@ -239,28 +270,14 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         }
 
         if (hasTypes) {
-            useStatements.push(new UseStatement({ path: "types", items: ["*"], isPublic: true }));
+            useStatements.push(new UseStatement({ path: "api::types", items: ["*"], isPublic: true }));
         }
 
         // Add re-exports
-        useStatements.push(new UseStatement({ path: "client_config", items: ["*"], isPublic: true }));
-        useStatements.push(
-            new UseStatement({
-                path: "api_client_builder",
-                items: ["*"],
-                isPublic: true
-            })
-        );
-        useStatements.push(new UseStatement({ path: "http_client", items: ["*"], isPublic: true }));
-        useStatements.push(
-            new UseStatement({
-                path: "request_options",
-                items: ["*"],
-                isPublic: true
-            })
-        );
-        useStatements.push(new UseStatement({ path: "pagination", items: ["*"], isPublic: true }));
-        useStatements.push(new UseStatement({ path: "query_parameter_builder", items: ["*"], isPublic: true }));
+
+        useStatements.push(new UseStatement({ path: "core", items: ["*"], isPublic: true }));
+        useStatements.push(new UseStatement({ path: "config", items: ["*"], isPublic: true }));
+        useStatements.push(new UseStatement({ path: "client", items: ["*"], isPublic: true }));
 
         return new Module({
             moduleDeclarations,
@@ -358,7 +375,8 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             context.logger.info("Using DynamicSnippetsGenerator for Rust snippet generation");
 
             const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
-                ir: convertIr(dynamicIr),
+                // biome-ignore lint/suspicious/noExplicitAny: allow
+                ir: convertIr(dynamicIr) as any,
                 config: context.config
             });
 
@@ -387,6 +405,68 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             context.logger.error(`Failed to generate dynamic snippets: ${error}`);
             return endpointSnippets;
         }
+    }
+
+    // ===========================
+    // DYNAMIC SNIPPETS GENERATION
+    // ===========================
+
+    private async generateDynamicSnippetFiles(context: SdkGeneratorContext): Promise<void> {
+        context.logger.info("=== GENERATING DYNAMIC SNIPPETS ===");
+
+        // Check if we have output directory configured
+        if (!context.config.output.path) {
+            context.logger.info("No output path configured, skipping dynamic snippets");
+            return;
+        }
+
+        // Check if we have dynamic IR
+        const dynamicIr = context.ir.dynamic;
+        if (dynamicIr == null) {
+            context.logger.info("No dynamic IR available, skipping dynamic snippets");
+            return;
+        }
+
+        // Create dynamic snippets generator
+        const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
+            ir: convertIr(dynamicIr),
+            config: context.config
+        });
+
+        let exampleIndex = 0;
+
+        // Process each endpoint from dynamic IR
+        for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
+            // Get examples for this endpoint
+            const examples = endpoint.examples ?? [];
+
+            for (const example of examples) {
+                try {
+                    // Convert example to dynamic snippet request
+                    const snippetRequest = convertDynamicEndpointSnippetRequest(example);
+
+                    // Generate the snippet
+                    const snippetResponse = await dynamicSnippetsGenerator.generate(snippetRequest);
+
+                    if (snippetResponse.snippet) {
+                        // Create dynamic-snippets directory if it doesn't exist
+                        const dynamicSnippetsDir = join(context.config.output.path, "dynamic-snippets");
+                        await mkdir(dynamicSnippetsDir, { recursive: true });
+
+                        // Write the Rust snippet file directly
+                        const snippetPath = join(dynamicSnippetsDir, `example${exampleIndex}.rs`);
+                        await writeFile(snippetPath, snippetResponse.snippet);
+
+                        context.logger.info(`Generated dynamic snippet: ${snippetPath}`);
+                        exampleIndex++;
+                    }
+                } catch (error) {
+                    context.logger.warn(`Failed to generate dynamic snippet for ${endpointId}: ${error}`);
+                }
+            }
+        }
+
+        context.logger.info(`=== DYNAMIC SNIPPETS COMPLETE (${exampleIndex} files) ===`);
     }
 
     // ===========================

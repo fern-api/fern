@@ -6,6 +6,8 @@ imports:
   commons: commons.yml
 types:
   EnvironmentVariable: string
+  AuthSchemeKey: string
+  AuthScope: string
 
   ApiAuth:
     extends: commons.WithDocs
@@ -29,8 +31,17 @@ types:
       oauth: OAuthScheme
       inferred: InferredAuthScheme
 
-  InferredAuthScheme:
+  BaseAuthScheme:
     extends: commons.WithDocs
+    properties:
+      key:
+        type: AuthSchemeKey
+        docs: |
+          The unique key for this auth scheme. This will be used to reference the scheme in endpoint auth requirements.
+          Defaults to the type of the auth scheme if not provided.
+
+  InferredAuthScheme:
+    extends: BaseAuthScheme
     properties:
       tokenEndpoint: InferredAuthSchemeTokenEndpoint
       # refreshEndpoint: optional<InferredAuthSchemeRefreshEndpoint>
@@ -68,7 +79,7 @@ types:
           For `Authorization` header, the default will be `Bearer `, but `undefined` for other headers.
 
   BearerAuthScheme:
-    extends: commons.WithDocs
+    extends: BaseAuthScheme
     properties:
       token: commons.Name
       tokenEnvVar:
@@ -76,7 +87,7 @@ types:
         docs: The environment variable the SDK should use to read the token.
 
   OAuthScheme:
-    extends: commons.WithDocs
+    extends: BaseAuthScheme
     docs: |
       We currently assume the resultant token is leveraged as a bearer token, e.g. "Authorization Bearer"
     properties:
@@ -129,7 +140,7 @@ types:
       refreshToken: http.RequestProperty
 
   BasicAuthScheme:
-    extends: commons.WithDocs
+    extends: BaseAuthScheme
     properties:
       username: commons.Name
       usernameEnvVar:
@@ -141,7 +152,7 @@ types:
         docs: The environment variable the SDK should use to read the password.
 
   HeaderAuthScheme:
-    extends: commons.WithDocs
+    extends: BaseAuthScheme
     properties:
       name: commons.NameAndWireValue
       valueType: types.TypeReference

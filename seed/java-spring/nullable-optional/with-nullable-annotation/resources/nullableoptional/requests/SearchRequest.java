@@ -159,7 +159,9 @@ public final class SearchRequest {
     )
     public _FinalStage includeTypes(List<String> includeTypes) {
       this.includeTypes.clear();
-      this.includeTypes.addAll(includeTypes);
+      if (includeTypes != null) {
+        this.includeTypes.addAll(includeTypes);
+      }
       return this;
     }
 

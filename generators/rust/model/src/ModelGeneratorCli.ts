@@ -1,9 +1,9 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { AbstractRustGeneratorCli, RustFile } from "@fern-api/rust-base";
+import { AbstractRustGeneratorCli, formatRustCode, RustFile } from "@fern-api/rust-base";
 import { Writer } from "@fern-api/rust-codegen";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { generateModels } from "./generateModels";
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
@@ -31,7 +31,7 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
         return ModelCustomConfigSchema.parse({});
     }
 
-    protected publishPackage(context: ModelGeneratorContext): Promise<void> {
+    protected publishPackage(_context: ModelGeneratorContext): Promise<void> {
         throw new Error("Publishing is not supported for model generator");
     }
 
@@ -65,6 +65,13 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
 
         context.project.addSourceFiles(...files);
         await context.project.persist();
+
+        context.logger.info("=== RUNNING rustfmt ===");
+        await formatRustCode({
+            outputDir: context.project.absolutePathToOutputDirectory,
+            logger: context.logger
+        });
+        context.logger.info("=== RUSTFMT COMPLETE ===");
     }
 
     private generateLibRs(context: ModelGeneratorContext): string {
@@ -124,52 +131,5 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
             directory: RelativeFilePath.of("src"),
             fileContents: writer.toString()
         });
-    }
-
-    private generateModels(context: ModelGeneratorContext): RustFile[] {
-        if (!context.ir.types) {
-            return [];
-        }
-
-        return Object.values(context.ir.types).map((typeDeclaration) => {
-            const moduleName = this.getTypeModuleName(typeDeclaration);
-            const content = this.generateTypeDeclaration(context, typeDeclaration);
-            return new RustFile({
-                filename: `${moduleName}.rs`,
-                directory: RelativeFilePath.of("src"),
-                fileContents: content
-            });
-        });
-    }
-
-    private generateTypeDeclaration(context: ModelGeneratorContext, typeDeclaration: TypeDeclaration): string {
-        const writer = new Writer();
-
-        // Add derives
-        const derives = ["Serialize", "Deserialize"];
-        if (context.customConfig.deriveDebug) {
-            derives.push("Debug");
-        }
-        if (context.customConfig.deriveClone) {
-            derives.push("Clone");
-        }
-
-        writer.writeLine("use serde::{Serialize, Deserialize};");
-        writer.newLine();
-        writer.writeLine(`#[derive(${derives.join(", ")})]`);
-
-        const typeName = typeDeclaration.name.name.pascalCase.safeName;
-
-        // For now, generate a simple struct
-        writer.writeBlock(`pub struct ${typeName}`, () => {
-            writer.writeLine("// TODO: Add fields based on type shape");
-        });
-
-        return writer.toString();
-    }
-
-    private getTypeModuleName(typeDeclaration: TypeDeclaration): string {
-        // Use the proper snake_case name from the IR
-        return typeDeclaration.name.name.snakeCase.safeName;
     }
 }

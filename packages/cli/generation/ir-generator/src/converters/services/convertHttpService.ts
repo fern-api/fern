@@ -2,6 +2,8 @@ import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { assertNever } from "@fern-api/core-utils";
 import { isVariablePathParameter, RawSchemas } from "@fern-api/fern-definition-schema";
 import {
+    ApiAuth,
+    AuthSchemesRequirement,
     Encoding,
     HttpEndpoint,
     HttpHeader,
@@ -33,6 +35,7 @@ import { convertHttpSdkRequest } from "./convertHttpSdkRequest";
 import { convertPagination } from "./convertPagination";
 import { convertQueryParameter } from "./convertQueryParameter";
 import { convertResponseErrors } from "./convertResponseErrors";
+import { convertRetries } from "./convertRetries";
 import { getTransportForEndpoint, getTransportForService } from "./convertTransport";
 
 export function convertHttpService({
@@ -47,7 +50,8 @@ export function convertHttpService({
     variableResolver,
     sourceResolver,
     globalErrors,
-    workspace
+    workspace,
+    auth
 }: {
     rootDefaultUrl: string | undefined;
     rootPathParameters: PathParameter[];
@@ -61,6 +65,7 @@ export function convertHttpService({
     sourceResolver: SourceResolver;
     globalErrors: ResponseErrors;
     workspace: FernWorkspace;
+    auth: ApiAuth;
 }): HttpService {
     const servicePathParameters = convertPathParameters({
         pathParameters: serviceDefinition["path-parameters"],
@@ -102,7 +107,23 @@ export function convertHttpService({
                 id: "",
                 name: file.casingsGenerator.generateName(endpointKey),
                 displayName: endpoint["display-name"],
-                auth: endpoint.auth ?? serviceDefinition.auth,
+                auth:
+                    typeof endpoint.auth === "boolean"
+                        ? endpoint.auth
+                        : endpoint.auth != null
+                          ? endpoint.auth.length > 0
+                          : serviceDefinition.auth,
+                security:
+                    typeof endpoint.auth === "undefined" || typeof endpoint.auth === "boolean"
+                        ? (endpoint.auth ?? serviceDefinition.auth === true)
+                            ? AuthSchemesRequirement._visit<Record<string, string[]>[] | undefined>(auth.requirement, {
+                                  any: () => auth.schemes.map((scheme) => ({ [scheme.key]: [] })),
+                                  all: () => [auth.schemes.reduce((acc, scheme) => ({ ...acc, [scheme.key]: [] }), {})],
+                                  _other: () => undefined
+                              })
+                            : undefined
+                        : endpoint.auth,
+                docs: endpoint.docs,
                 idempotent: endpoint.idempotent ?? serviceDefinition.idempotent ?? false,
                 baseUrl: endpoint.url ?? serviceDefinition.url ?? rootDefaultUrl,
                 v2BaseUrls: undefined,
@@ -200,7 +221,10 @@ export function convertHttpService({
                 }),
                 v2Examples: undefined,
                 source: undefined,
-                audiences: endpoint.audiences
+                audiences: endpoint.audiences,
+                retries: convertRetries({
+                    endpointSchema: endpoint
+                })
             };
             httpEndpoint.id = IdGenerator.generateEndpointId(serviceName, httpEndpoint);
             return httpEndpoint;

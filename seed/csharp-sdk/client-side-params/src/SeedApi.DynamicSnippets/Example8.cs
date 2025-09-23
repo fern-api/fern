@@ -1,11 +1,11 @@
-using global::System.Threading.Tasks;
 using SeedClientSideParams;
+using System.Threading.Tasks;
 
 namespace Usage;
 
 public class Example8
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do() {
         var client = new SeedClientSideParamsClient(
             token: "<token>",
             clientOptions: new ClientOptions{

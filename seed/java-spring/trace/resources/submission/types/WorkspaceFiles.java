@@ -129,7 +129,9 @@ public final class WorkspaceFiles {
     )
     public _FinalStage readOnlyFiles(List<FileInfo> readOnlyFiles) {
       this.readOnlyFiles.clear();
-      this.readOnlyFiles.addAll(readOnlyFiles);
+      if (readOnlyFiles != null) {
+        this.readOnlyFiles.addAll(readOnlyFiles);
+      }
       return this;
     }
 

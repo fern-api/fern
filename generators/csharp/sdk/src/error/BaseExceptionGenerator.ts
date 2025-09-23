@@ -1,5 +1,5 @@
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { csharp } from "@fern-api/csharp-codegen";
+import { ast } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
@@ -7,22 +7,20 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export class BaseExceptionGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     public doGenerate(): CSharpFile {
-        const class_ = csharp.class_({
+        const class_ = this.csharp.class_({
             ...this.context.getBaseExceptionClassReference(),
-            access: csharp.Access.Public,
-            parentClassReference: csharp.classReference({ name: "Exception", namespace: "System" }),
+            access: ast.Access.Public,
+            parentClassReference: this.csharp.System.Exception,
             primaryConstructor: {
                 parameters: [
-                    csharp.parameter({ name: "message", type: csharp.Type.string() }),
-                    csharp.parameter({
+                    this.csharp.parameter({ name: "message", type: this.csharp.Type.string() }),
+                    this.csharp.parameter({
                         name: "innerException",
-                        type: csharp.Type.optional(
-                            csharp.Type.reference(csharp.classReference({ name: "Exception", namespace: "System" }))
-                        ),
+                        type: this.csharp.Type.optional(this.csharp.Type.reference(this.csharp.System.Exception)),
                         initializer: "null"
                     })
                 ],
-                superClassArguments: [csharp.codeblock("message"), csharp.codeblock("innerException")]
+                superClassArguments: [this.csharp.codeblock("message"), this.csharp.codeblock("innerException")]
             },
             summary: "Base exception class for all exceptions thrown by the SDK."
         });

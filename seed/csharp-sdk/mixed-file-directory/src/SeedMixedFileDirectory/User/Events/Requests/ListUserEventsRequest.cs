@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using SeedMixedFileDirectory.Core;
 
-namespace SeedMixedFileDirectory.User;
+namespace SeedMixedFileDirectory.User_;
 
 [Serializable]
 public record ListUserEventsRequest

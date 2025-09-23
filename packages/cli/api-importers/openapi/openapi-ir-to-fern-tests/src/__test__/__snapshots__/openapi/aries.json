@@ -10,7 +10,7 @@
           "base-path": "",
           "endpoints": {
             "endorse-transaction": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "For Endorser to endorse a particular transaction record",
               "docs": undefined,
               "examples": [
@@ -7227,7 +7227,6 @@
     endorse-transaction:
       path: /transactions/{tran_id}/endorse
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -11767,7 +11766,7 @@ types:
           "display-name": "action-menu",
           "endpoints": {
             "close_menu_by_conn_id": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Close the active menu associated with a connection",
               "docs": undefined,
               "examples": [
@@ -11801,7 +11800,7 @@ types:
               },
             },
             "fetch_menu_by_conn_id": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Fetch the active menu",
               "docs": undefined,
               "examples": [
@@ -11833,7 +11832,7 @@ types:
               },
             },
             "perform_action_by_conn_id": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Perform an action associated with the active menu",
               "docs": undefined,
               "examples": [
@@ -11892,7 +11891,7 @@ types:
               },
             },
             "request_menu_by_conn_id": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Request the active menu",
               "docs": undefined,
               "examples": [
@@ -11926,7 +11925,7 @@ types:
               },
             },
             "send_menu_to_conn_id": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Send an action menu to a connection",
               "docs": undefined,
               "examples": [
@@ -11996,7 +11995,6 @@ service:
     close_menu_by_conn_id:
       path: /action-menu/{conn_id}/close
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -12017,7 +12015,6 @@ service:
     fetch_menu_by_conn_id:
       path: /action-menu/{conn_id}/fetch
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -12037,7 +12034,6 @@ service:
     perform_action_by_conn_id:
       path: /action-menu/{conn_id}/perform
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -12073,7 +12069,6 @@ service:
     request_menu_by_conn_id:
       path: /action-menu/{conn_id}/request
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -12094,7 +12089,6 @@ service:
     send_menu_to_conn_id:
       path: /action-menu/{conn_id}/send-menu
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -12142,7 +12136,7 @@ docs: Menu interaction over connection
           "display-name": "basicmessage",
           "endpoints": {
             "send_message": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Send a basic message to a connection",
               "docs": undefined,
               "examples": [
@@ -12208,7 +12202,6 @@ service:
     send_message:
       path: /connections/{conn_id}/send-message
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -12255,7 +12248,7 @@ docs: Simple messaging
           "display-name": "connection",
           "endpoints": {
             "accept_connection_invitation": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Accept a stored connection invitation",
               "docs": undefined,
               "examples": [
@@ -12337,7 +12330,7 @@ docs: Simple messaging
               },
             },
             "accept_connection_request": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Accept a stored connection request",
               "docs": undefined,
               "examples": [
@@ -12405,7 +12398,7 @@ docs: Simple messaging
               },
             },
             "create_connection_invitation": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create a new connection invitation",
               "docs": undefined,
               "examples": [
@@ -12518,7 +12511,7 @@ docs: Simple messaging
               },
             },
             "create_static_connection": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create a new static connection",
               "docs": undefined,
               "examples": [
@@ -12640,7 +12633,7 @@ docs: Simple messaging
               },
             },
             "delete_connection_record": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Remove an existing connection record",
               "docs": undefined,
               "examples": [
@@ -12674,7 +12667,7 @@ docs: Simple messaging
               },
             },
             "get_connection_endpoint": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Fetch connection remote endpoint",
               "docs": undefined,
               "examples": [
@@ -12709,7 +12702,7 @@ docs: Simple messaging
               },
             },
             "get_connection_metadata": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Fetch connection metadata",
               "docs": undefined,
               "examples": [
@@ -12750,7 +12743,7 @@ docs: Simple messaging
               },
             },
             "get_connection_record": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Fetch a single connection record",
               "docs": undefined,
               "examples": [
@@ -12803,7 +12796,7 @@ docs: Simple messaging
               },
             },
             "get_matching_connections": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Query agent-to-agent connections",
               "docs": undefined,
               "examples": [
@@ -12944,7 +12937,7 @@ docs: Simple messaging
               },
             },
             "receive_connection_invitation": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Receive a new connection invitation",
               "docs": undefined,
               "examples": [
@@ -13067,7 +13060,7 @@ docs: Simple messaging
               },
             },
             "set_connection_metadata": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Set connection metadata",
               "docs": undefined,
               "examples": [
@@ -13117,7 +13110,7 @@ docs: Simple messaging
               },
             },
             "set_inbound_connection": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Assign another connection as the inbound connection",
               "docs": undefined,
               "examples": [
@@ -13275,7 +13268,6 @@ service:
     get_matching_connections:
       path: /connections
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Query agent-to-agent connections
@@ -13374,7 +13366,6 @@ service:
     create_connection_invitation:
       path: /connections/create-invitation
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Create a new connection invitation
@@ -13454,7 +13445,6 @@ service:
     create_static_connection:
       path: /connections/create-static
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Create a new static connection
@@ -13541,7 +13531,6 @@ service:
     receive_connection_invitation:
       path: /connections/receive-invitation
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Receive a new connection invitation
@@ -13629,7 +13618,6 @@ service:
     get_connection_record:
       path: /connections/{conn_id}
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -13669,7 +13657,6 @@ service:
     delete_connection_record:
       path: /connections/{conn_id}
       method: DELETE
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -13690,7 +13677,6 @@ service:
     accept_connection_invitation:
       path: /connections/{conn_id}/accept-invitation
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -13748,7 +13734,6 @@ service:
     accept_connection_request:
       path: /connections/{conn_id}/accept-request
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -13797,7 +13782,6 @@ service:
     get_connection_endpoint:
       path: /connections/{conn_id}/endpoints
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -13819,7 +13803,6 @@ service:
     set_inbound_connection:
       path: /connections/{conn_id}/establish-inbound/{ref_id}
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -13844,7 +13827,6 @@ service:
     get_connection_metadata:
       path: /connections/{conn_id}/metadata
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -13870,7 +13852,6 @@ service:
     set_connection_metadata:
       path: /connections/{conn_id}/metadata
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -13916,7 +13897,7 @@ docs: Connection management
           "display-name": "credential-definition",
           "endpoints": {
             "get_created_cred_defs": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Search for matching credential definitions that agent originated",
               "docs": undefined,
               "examples": [
@@ -14003,7 +13984,7 @@ docs: Connection management
               },
             },
             "get_credential_definition": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Gets a credential definition from the ledger",
               "docs": undefined,
               "examples": [
@@ -14045,7 +14026,7 @@ docs: Connection management
               },
             },
             "publish_credential_definition": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Sends a credential definition to the ledger",
               "docs": undefined,
               "examples": [
@@ -14127,7 +14108,7 @@ docs: Connection management
               },
             },
             "write_credential_definition": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Writes a credential definition non-secret record to the wallet",
               "docs": undefined,
               "examples": [
@@ -14183,7 +14164,6 @@ service:
     publish_credential_definition:
       path: /credential-definitions
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Sends a credential definition to the ledger
@@ -14234,7 +14214,6 @@ service:
     get_created_cred_defs:
       path: /credential-definitions/created
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Search for matching credential definitions that agent originated
@@ -14286,7 +14265,6 @@ service:
     get_credential_definition:
       path: /credential-definitions/{cred_def_id}
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -14313,7 +14291,6 @@ service:
     write_credential_definition:
       path: /credential-definitions/{cred_def_id}/write_record
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -14356,7 +14333,7 @@ docs: Credential definition operations
           "display-name": "credentials",
           "endpoints": {
             "delete_credential_record": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Remove credential from wallet by id",
               "docs": undefined,
               "examples": [
@@ -14390,7 +14367,7 @@ docs: Credential definition operations
               },
             },
             "delete_w3c_credential": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Remove W3C credential from wallet by id",
               "docs": undefined,
               "examples": [
@@ -14424,7 +14401,7 @@ docs: Credential definition operations
               },
             },
             "get_credential_mime_types": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get attribute MIME types from wallet",
               "docs": undefined,
               "examples": [
@@ -14460,7 +14437,7 @@ docs: Credential definition operations
               },
             },
             "get_credential_record": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Fetch credential from wallet by id",
               "docs": undefined,
               "examples": [
@@ -14501,7 +14478,7 @@ docs: Credential definition operations
               },
             },
             "get_credentials": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Fetch credentials from wallet",
               "docs": undefined,
               "examples": [
@@ -14582,7 +14559,7 @@ docs: Credential definition operations
               },
             },
             "get_revocation_status": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Query credential revocation status by id",
               "docs": undefined,
               "examples": [
@@ -14641,7 +14618,7 @@ docs: Credential definition operations
               },
             },
             "get_w3c_credential": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Fetch W3C credential from wallet by id",
               "docs": undefined,
               "examples": [
@@ -14700,7 +14677,7 @@ docs: Credential definition operations
               },
             },
             "get_w3c_credentials": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Fetch W3C credentials from wallet",
               "docs": undefined,
               "examples": [
@@ -14899,7 +14876,6 @@ service:
     get_credential_mime_types:
       path: /credential/mime-types/{credential_id}
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -14921,7 +14897,6 @@ service:
     get_revocation_status:
       path: /credential/revoked/{credential_id}
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -14955,7 +14930,6 @@ service:
     get_w3c_credential:
       path: /credential/w3c/{credential_id}
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -14995,7 +14969,6 @@ service:
     delete_w3c_credential:
       path: /credential/w3c/{credential_id}
       method: DELETE
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -15016,7 +14989,6 @@ service:
     get_credential_record:
       path: /credential/{credential_id}
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -15044,7 +15016,6 @@ service:
     delete_credential_record:
       path: /credential/{credential_id}
       method: DELETE
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -15065,7 +15036,6 @@ service:
     get_credentials:
       path: /credentials
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Fetch credentials from wallet
@@ -15114,7 +15084,6 @@ service:
     get_w3c_credentials:
       path: /credentials/w3c
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Fetch W3C credentials from wallet
@@ -15251,7 +15220,7 @@ docs: Holder credential management
           "display-name": "did-exchange",
           "endpoints": {
             "accept_didex_invitation": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Accept a stored connection invitation",
               "docs": undefined,
               "examples": [
@@ -15323,7 +15292,7 @@ docs: Holder credential management
               },
             },
             "accept_didex_request": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Accept a stored connection request",
               "docs": undefined,
               "examples": [
@@ -15401,7 +15370,7 @@ docs: Holder credential management
               },
             },
             "create_didex_request": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create and send a request against public DID's implicit invitation",
               "docs": undefined,
               "examples": [
@@ -15495,7 +15464,7 @@ docs: Holder credential management
               },
             },
             "receive_didex_request": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Receive request against public DID's implicit invitation",
               "docs": undefined,
               "examples": [
@@ -15619,7 +15588,6 @@ service:
     create_didex_request:
       path: /didexchange/create-request
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Create and send a request against public DID's implicit invitation
@@ -15685,7 +15653,6 @@ service:
     receive_didex_request:
       path: /didexchange/receive-request
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Receive request against public DID's implicit invitation
@@ -15761,7 +15728,6 @@ service:
     accept_didex_invitation:
       path: /didexchange/{conn_id}/accept-invitation
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -15813,7 +15779,6 @@ service:
     accept_didex_request:
       path: /didexchange/{conn_id}/accept-request
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -15884,7 +15849,7 @@ docs: Connection management via DID exchange
           "display-name": "discover-features",
           "endpoints": {
             "get_v10_feature_records": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Discover Features records",
               "docs": undefined,
               "examples": [
@@ -15937,7 +15902,7 @@ docs: Connection management via DID exchange
               },
             },
             "get_v10_features_query": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Query supported features",
               "docs": undefined,
               "examples": [
@@ -15999,7 +15964,6 @@ service:
     get_v10_features_query:
       path: /discover-features/query
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Query supported features
@@ -16034,7 +15998,6 @@ service:
     get_v10_feature_records:
       path: /discover-features/records
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Discover Features records
@@ -16085,7 +16048,7 @@ docs: Feature discovery
           "display-name": "discover-features v2.0",
           "endpoints": {
             "get_v20_feature_records": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Discover Features v2.0 records",
               "docs": undefined,
               "examples": [
@@ -16164,7 +16127,7 @@ docs: Feature discovery
               },
             },
             "get_v20_features_queries": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Query supported features",
               "docs": undefined,
               "examples": [
@@ -16218,7 +16181,6 @@ service:
     get_v20_features_queries:
       path: /discover-features-2.0/queries
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Query supported features
@@ -16246,7 +16208,6 @@ service:
     get_v20_feature_records:
       path: /discover-features-2.0/records
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Discover Features v2.0 records
@@ -16313,7 +16274,7 @@ docs: Feature discovery v2
           "display-name": "endorse-transaction",
           "endpoints": {
             "cancel_transaction_request": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "For Author to cancel a particular transaction request",
               "docs": undefined,
               "examples": [
@@ -16377,7 +16338,7 @@ docs: Feature discovery v2
               },
             },
             "create_transaction_request": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "For author to send a transaction request",
               "docs": undefined,
               "examples": [
@@ -16462,7 +16423,7 @@ docs: Feature discovery v2
               },
             },
             "get_transaction_list": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Query transactions",
               "docs": undefined,
               "examples": [
@@ -16554,7 +16515,7 @@ docs: Feature discovery v2
               },
             },
             "get_transaction_record": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Fetch a single transaction record",
               "docs": undefined,
               "examples": [
@@ -16618,7 +16579,7 @@ docs: Feature discovery v2
               },
             },
             "publish_endorsed_transaction": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "For Author / Endorser to write an endorsed transaction to the ledger",
               "docs": undefined,
               "examples": [
@@ -16682,7 +16643,7 @@ docs: Feature discovery v2
               },
             },
             "refuse_transaction": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "For Endorser to refuse a particular transaction record",
               "docs": undefined,
               "examples": [
@@ -16746,7 +16707,7 @@ docs: Feature discovery v2
               },
             },
             "resend_transaction_request": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "For Author to resend a particular transaction request",
               "docs": undefined,
               "examples": [
@@ -16810,7 +16771,7 @@ docs: Feature discovery v2
               },
             },
             "set_endorser_info_for_conn_id": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Set Endorser Info",
               "docs": undefined,
               "examples": [
@@ -16861,7 +16822,7 @@ docs: Feature discovery v2
               },
             },
             "set_endorser_role_for_conn_id": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Set transaction jobs",
               "docs": undefined,
               "examples": [
@@ -16932,7 +16893,6 @@ service:
     resend_transaction_request:
       path: /transaction/{tran_id}/resend
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -16975,7 +16935,6 @@ service:
     get_transaction_list:
       path: /transactions
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Query transactions
@@ -17036,7 +16995,6 @@ service:
     create_transaction_request:
       path: /transactions/create-request
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: For author to send a transaction request
@@ -17092,7 +17050,6 @@ service:
     set_endorser_info_for_conn_id:
       path: /transactions/{conn_id}/set-endorser-info
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -17125,7 +17082,6 @@ service:
     set_endorser_role_for_conn_id:
       path: /transactions/{conn_id}/set-endorser-role
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -17153,7 +17109,6 @@ service:
     get_transaction_record:
       path: /transactions/{tran_id}
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -17196,7 +17151,6 @@ service:
     cancel_transaction_request:
       path: /transactions/{tran_id}/cancel
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -17239,7 +17193,6 @@ service:
     refuse_transaction:
       path: /transactions/{tran_id}/refuse
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -17282,7 +17235,6 @@ service:
     publish_endorsed_transaction:
       path: /transactions/{tran_id}/write
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -17349,7 +17301,7 @@ types:
           "display-name": "introduction",
           "endpoints": {
             "start_connection_introduction": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Start an introduction between two connections",
               "docs": undefined,
               "examples": [
@@ -17413,7 +17365,6 @@ service:
     start_connection_introduction:
       path: /connections/{conn_id}/start-introduction
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -17461,7 +17412,7 @@ docs: Introduction of known parties
           "display-name": "issue-credential v1.0",
           "endpoints": {
             "create_credential_record": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create a credential record without sending (generally for use with Out-Of-Band)",
               "docs": undefined,
               "examples": [
@@ -17610,7 +17561,7 @@ docs: Introduction of known parties
               },
             },
             "create_free_credential_offer": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create a credential offer, independent of any proposal or connection",
               "docs": undefined,
               "examples": [
@@ -17715,7 +17666,7 @@ docs: Introduction of known parties
               },
             },
             "delete_cred_ex_record": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Remove an existing credential exchange record",
               "docs": undefined,
               "examples": [
@@ -17749,7 +17700,7 @@ docs: Introduction of known parties
               },
             },
             "get_cred_ex_record": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Fetch a single credential exchange record",
               "docs": undefined,
               "examples": [
@@ -17801,7 +17752,7 @@ docs: Introduction of known parties
               },
             },
             "get_matching_cred_ex_records": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Fetch all credential exchange records",
               "docs": undefined,
               "examples": [
@@ -17902,7 +17853,7 @@ docs: Introduction of known parties
               },
             },
             "issue_credential_to_holder": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Send holder a credential",
               "docs": undefined,
               "examples": [
@@ -17972,7 +17923,7 @@ docs: Introduction of known parties
               },
             },
             "report_cred_ex_problem": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Send a problem report for credential exchange",
               "docs": undefined,
               "examples": [
@@ -18021,7 +17972,7 @@ docs: Introduction of known parties
               },
             },
             "send_credential_offer": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Send holder a credential offer in reference to a proposal with preview",
               "docs": undefined,
               "examples": [
@@ -18088,7 +18039,7 @@ docs: Introduction of known parties
               },
             },
             "send_credential_request": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Send issuer a credential request",
               "docs": undefined,
               "examples": [
@@ -18140,7 +18091,7 @@ docs: Introduction of known parties
               },
             },
             "send_free_credential": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Send holder a credential, automating entire flow",
               "docs": undefined,
               "examples": [
@@ -18300,7 +18251,7 @@ docs: Introduction of known parties
               },
             },
             "send_free_credential_offer": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Send holder a credential offer, independent of any proposal",
               "docs": undefined,
               "examples": [
@@ -18416,7 +18367,7 @@ docs: Introduction of known parties
               },
             },
             "send_free_credential_proposal": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Send issuer a credential proposal",
               "docs": undefined,
               "examples": [
@@ -18576,7 +18527,7 @@ docs: Introduction of known parties
               },
             },
             "store_received_credential": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Store a received credential",
               "docs": undefined,
               "examples": [
@@ -18690,7 +18641,6 @@ service:
     create_credential_record:
       path: /issue-credential/create
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: >-
@@ -18794,7 +18744,6 @@ service:
     create_free_credential_offer:
       path: /issue-credential/create-offer
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Create a credential offer, independent of any proposal or connection
@@ -18871,7 +18820,6 @@ service:
     get_matching_cred_ex_records:
       path: /issue-credential/records
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Fetch all credential exchange records
@@ -18943,7 +18891,6 @@ service:
     get_cred_ex_record:
       path: /issue-credential/records/{cred_ex_id}
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -18982,7 +18929,6 @@ service:
     delete_cred_ex_record:
       path: /issue-credential/records/{cred_ex_id}
       method: DELETE
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -19003,7 +18949,6 @@ service:
     issue_credential_to_holder:
       path: /issue-credential/records/{cred_ex_id}/issue
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -19052,7 +18997,6 @@ service:
     report_cred_ex_problem:
       path: /issue-credential/records/{cred_ex_id}/problem-report
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -19081,7 +19025,6 @@ service:
     send_credential_offer:
       path: /issue-credential/records/{cred_ex_id}/send-offer
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -19128,7 +19071,6 @@ service:
     send_credential_request:
       path: /issue-credential/records/{cred_ex_id}/send-request
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -19167,7 +19109,6 @@ service:
     store_received_credential:
       path: /issue-credential/records/{cred_ex_id}/store
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -19215,7 +19156,6 @@ service:
     send_free_credential:
       path: /issue-credential/send
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Send holder a credential, automating entire flow
@@ -19323,7 +19263,6 @@ service:
     send_free_credential_offer:
       path: /issue-credential/send-offer
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Send holder a credential offer, independent of any proposal
@@ -19406,7 +19345,6 @@ service:
     send_free_credential_proposal:
       path: /issue-credential/send-proposal
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Send issuer a credential proposal
@@ -19552,7 +19490,7 @@ types:
           "display-name": "issue-credential v2.0",
           "endpoints": {
             "create_credential_record": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create a credential record without sending (generally for use with Out-Of-Band)",
               "docs": undefined,
               "examples": [
@@ -19638,7 +19576,7 @@ types:
               },
             },
             "create_free_credential_offer": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create a credential offer, independent of any proposal or connection",
               "docs": undefined,
               "examples": [
@@ -19729,7 +19667,7 @@ types:
               },
             },
             "delete_cred_ex_record": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Remove an existing credential exchange record",
               "docs": undefined,
               "examples": [
@@ -19763,7 +19701,7 @@ types:
               },
             },
             "get_cred_ex_record": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Fetch a single credential exchange record",
               "docs": undefined,
               "examples": [
@@ -19814,7 +19752,7 @@ types:
               },
             },
             "get_matching_cred_ex_records-v2": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Fetch all credential exchange records",
               "docs": undefined,
               "examples": [
@@ -19913,7 +19851,7 @@ types:
               },
             },
             "issue_credential_to_holder": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Send holder a credential",
               "docs": undefined,
               "examples": [
@@ -19982,7 +19920,7 @@ types:
               },
             },
             "report_cred_ex_problem": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Send a problem report for credential exchange",
               "docs": undefined,
               "examples": [
@@ -20031,7 +19969,7 @@ types:
               },
             },
             "send_credential_offer": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Send holder a credential offer in reference to a proposal with preview",
               "docs": undefined,
               "examples": [
@@ -20096,7 +20034,7 @@ types:
               },
             },
             "send_credential_request": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Send issuer a credential request",
               "docs": undefined,
               "examples": [
@@ -20161,7 +20099,7 @@ types:
               },
             },
             "send_free_credential": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Send holder a credential, automating entire flow",
               "docs": undefined,
               "examples": [
@@ -20228,7 +20166,7 @@ types:
               },
             },
             "send_free_credential_offer": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Send holder a credential offer, independent of any proposal",
               "docs": undefined,
               "examples": [
@@ -20330,7 +20268,7 @@ types:
               },
             },
             "send_free_credential_proposal": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Send issuer a credential proposal",
               "docs": undefined,
               "examples": [
@@ -20397,7 +20335,7 @@ types:
               },
             },
             "send_free_credential_request": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Send issuer a credential request not bound to an existing thread. Indy credentials cannot start at a request",
               "docs": undefined,
               "examples": [
@@ -20508,7 +20446,7 @@ types:
               },
             },
             "store_received_credential": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Store a received credential",
               "docs": undefined,
               "examples": [
@@ -20648,7 +20586,6 @@ service:
     create_credential_record:
       path: /issue-credential-2.0/create
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: >-
@@ -20711,7 +20648,6 @@ service:
     create_free_credential_offer:
       path: /issue-credential-2.0/create-offer
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Create a credential offer, independent of any proposal or connection
@@ -20778,7 +20714,6 @@ service:
     get_matching_cred_ex_records-v2:
       path: /issue-credential-2.0/records
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Fetch all credential exchange records
@@ -20846,7 +20781,6 @@ service:
     get_cred_ex_record:
       path: /issue-credential-2.0/records/{cred_ex_id}
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -20883,7 +20817,6 @@ service:
     delete_cred_ex_record:
       path: /issue-credential-2.0/records/{cred_ex_id}
       method: DELETE
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -20904,7 +20837,6 @@ service:
     issue_credential_to_holder:
       path: /issue-credential-2.0/records/{cred_ex_id}/issue
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -20951,7 +20883,6 @@ service:
     report_cred_ex_problem:
       path: /issue-credential-2.0/records/{cred_ex_id}/problem-report
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -20980,7 +20911,6 @@ service:
     send_credential_offer:
       path: /issue-credential-2.0/records/{cred_ex_id}/send-offer
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -21024,7 +20954,6 @@ service:
     send_credential_request:
       path: /issue-credential-2.0/records/{cred_ex_id}/send-request
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -21068,7 +20997,6 @@ service:
     store_received_credential:
       path: /issue-credential-2.0/records/{cred_ex_id}/store
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -21114,7 +21042,6 @@ service:
     send_free_credential:
       path: /issue-credential-2.0/send
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Send holder a credential, automating entire flow
@@ -21162,7 +21089,6 @@ service:
     send_free_credential_offer:
       path: /issue-credential-2.0/send-offer
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Send holder a credential offer, independent of any proposal
@@ -21235,7 +21161,6 @@ service:
     send_free_credential_proposal:
       path: /issue-credential-2.0/send-proposal
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Send issuer a credential proposal
@@ -21283,7 +21208,6 @@ service:
     send_free_credential_request:
       path: /issue-credential-2.0/send-request
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: >-
@@ -21407,7 +21331,7 @@ types:
           "display-name": "jsonld",
           "endpoints": {
             "sign": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Sign a JSON-LD structure and return it",
               "docs": undefined,
               "examples": [
@@ -21460,7 +21384,7 @@ types:
               },
             },
             "verify": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Verify a JSON-LD structure.",
               "docs": undefined,
               "examples": [
@@ -21525,7 +21449,6 @@ service:
     sign:
       path: /jsonld/sign
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Sign a JSON-LD structure and return it
@@ -21557,7 +21480,6 @@ service:
     verify:
       path: /jsonld/verify
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Verify a JSON-LD structure.
@@ -21604,7 +21526,7 @@ docs: Sign and verify json-ld data
           "display-name": "ledger",
           "endpoints": {
             "accept_taa": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Accept the transaction author agreement",
               "docs": undefined,
               "examples": [
@@ -21654,7 +21576,7 @@ docs: Sign and verify json-ld data
               },
             },
             "get_did_nym_role": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get the role from the NYM registration of a public DID.",
               "docs": undefined,
               "examples": [
@@ -21697,7 +21619,7 @@ docs: Sign and verify json-ld data
               },
             },
             "get_did_verkey": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get the verkey for a DID from the ledger.",
               "docs": undefined,
               "examples": [
@@ -21740,7 +21662,7 @@ docs: Sign and verify json-ld data
               },
             },
             "get_multiple_ledger_config": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Fetch the multiple ledger configuration currently in use",
               "docs": undefined,
               "examples": [
@@ -21780,7 +21702,7 @@ docs: Sign and verify json-ld data
               },
             },
             "get_published_did_endpoint": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get the endpoint for a DID from the ledger.",
               "docs": undefined,
               "examples": [
@@ -21827,7 +21749,7 @@ docs: Sign and verify json-ld data
               },
             },
             "get_taa": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Fetch the current transaction author agreement, if any",
               "docs": undefined,
               "examples": [
@@ -21870,7 +21792,7 @@ docs: Sign and verify json-ld data
               },
             },
             "get_write_ledger": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Fetch the current write ledger",
               "docs": undefined,
               "examples": [
@@ -21895,7 +21817,7 @@ docs: Sign and verify json-ld data
               },
             },
             "register_nym": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Send a NYM registration to the ledger.",
               "docs": undefined,
               "examples": [
@@ -21965,7 +21887,7 @@ docs: Sign and verify json-ld data
               },
             },
             "rotate_public_did_keypair": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Rotate key pair for public DID.",
               "docs": undefined,
               "examples": [
@@ -22047,7 +21969,6 @@ service:
     get_published_did_endpoint:
       path: /ledger/did-endpoint
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Get the endpoint for a DID from the ledger.
@@ -22076,7 +21997,6 @@ service:
     get_did_verkey:
       path: /ledger/did-verkey
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Get the verkey for a DID from the ledger.
@@ -22102,7 +22022,6 @@ service:
     get_did_nym_role:
       path: /ledger/get-nym-role
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Get the role from the NYM registration of a public DID.
@@ -22128,7 +22047,6 @@ service:
     get_multiple_ledger_config:
       path: /ledger/multiple/config
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Fetch the multiple ledger configuration currently in use
@@ -22153,7 +22071,6 @@ service:
     get_write_ledger:
       path: /ledger/multiple/get-write-ledger
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Fetch the current write ledger
@@ -22168,7 +22085,6 @@ service:
     register_nym:
       path: /ledger/register-nym
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Send a NYM registration to the ledger.
@@ -22213,7 +22129,6 @@ service:
     rotate_public_did_keypair:
       path: /ledger/rotate-public-did-keypair
       method: PATCH
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Rotate key pair for public DID.
@@ -22228,7 +22143,6 @@ service:
     get_taa:
       path: /ledger/taa
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Fetch the current transaction author agreement, if any
@@ -22256,7 +22170,6 @@ service:
     accept_taa:
       path: /ledger/taa/accept
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Accept the transaction author agreement
@@ -22302,7 +22215,7 @@ docs: Interaction with ledger
           "display-name": "mediation",
           "endpoints": {
             "clear_default_mediator": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Clear default mediator",
               "docs": undefined,
               "examples": [
@@ -22345,7 +22258,7 @@ docs: Interaction with ledger
               },
             },
             "delete_mediation_record": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete mediation request by ID",
               "docs": undefined,
               "examples": [
@@ -22397,7 +22310,7 @@ docs: Interaction with ledger
               },
             },
             "deny_mediation_request": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Deny a stored mediation request",
               "docs": undefined,
               "examples": [
@@ -22469,7 +22382,7 @@ docs: Interaction with ledger
               },
             },
             "get_default_mediator": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get default mediator",
               "docs": undefined,
               "examples": [
@@ -22512,7 +22425,7 @@ docs: Interaction with ledger
               },
             },
             "get_keylists": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve keylists by connection or role",
               "docs": undefined,
               "examples": [
@@ -22578,7 +22491,7 @@ docs: Interaction with ledger
               },
             },
             "get_matching_mediation_records": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Query mediation requests, returns list of all mediation records",
               "docs": undefined,
               "examples": [
@@ -22675,7 +22588,7 @@ docs: Interaction with ledger
               },
             },
             "get_mediation_record": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve mediation request record",
               "docs": undefined,
               "examples": [
@@ -22727,7 +22640,7 @@ docs: Interaction with ledger
               },
             },
             "grant_mediation_request": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Grant received mediation",
               "docs": undefined,
               "examples": [
@@ -22767,7 +22680,7 @@ docs: Interaction with ledger
               },
             },
             "request_mediation_for_connection": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Request mediation from connection",
               "docs": undefined,
               "examples": [
@@ -22848,7 +22761,7 @@ docs: Interaction with ledger
               },
             },
             "send_keylist_query_to_mediator": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Send keylist query to mediator",
               "docs": undefined,
               "examples": [
@@ -22910,7 +22823,7 @@ docs: Interaction with ledger
               },
             },
             "send_keylist_update_to_mediator": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Send keylist update to mediator",
               "docs": undefined,
               "examples": [
@@ -22981,7 +22894,7 @@ docs: Interaction with ledger
               },
             },
             "set_default_mediator": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Set default mediator",
               "docs": undefined,
               "examples": [
@@ -23033,7 +22946,7 @@ docs: Interaction with ledger
               },
             },
             "update_keylist_for_conn_id": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Update keylist for a connection",
               "docs": undefined,
               "examples": [
@@ -23148,7 +23061,6 @@ service:
     get_default_mediator:
       path: /mediation/default-mediator
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Get default mediator
@@ -23178,7 +23090,6 @@ service:
     clear_default_mediator:
       path: /mediation/default-mediator
       method: DELETE
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Clear default mediator
@@ -23208,7 +23119,6 @@ service:
     get_keylists:
       path: /mediation/keylists
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Retrieve keylists by connection or role
@@ -23253,7 +23163,6 @@ service:
     send_keylist_query_to_mediator:
       path: /mediation/keylists/{mediation_id}/send-keylist-query
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -23293,7 +23202,6 @@ service:
     send_keylist_update_to_mediator:
       path: /mediation/keylists/{mediation_id}/send-keylist-update
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -23333,7 +23241,6 @@ service:
     request_mediation_for_connection:
       path: /mediation/request/{conn_id}
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -23387,7 +23294,6 @@ service:
     get_matching_mediation_records:
       path: /mediation/requests
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Query mediation requests, returns list of all mediation records
@@ -23453,7 +23359,6 @@ service:
     get_mediation_record:
       path: /mediation/requests/{mediation_id}
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -23489,7 +23394,6 @@ service:
     delete_mediation_record:
       path: /mediation/requests/{mediation_id}
       method: DELETE
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -23525,7 +23429,6 @@ service:
     deny_mediation_request:
       path: /mediation/requests/{mediation_id}/deny
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -23571,7 +23474,6 @@ service:
     grant_mediation_request:
       path: /mediation/requests/{mediation_id}/grant
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -23597,7 +23499,6 @@ service:
     update_keylist_for_conn_id:
       path: /mediation/update-keylist/{conn_id}
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -23636,7 +23537,6 @@ service:
     set_default_mediator:
       path: /mediation/{mediation_id}/default-mediator
       method: PUT
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -23709,7 +23609,7 @@ types:
           "display-name": "multitenancy",
           "endpoints": {
             "create_wallet": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create a subwallet",
               "docs": undefined,
               "examples": [
@@ -23800,7 +23700,7 @@ types:
               },
             },
             "delete_wallet": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Remove a subwallet",
               "docs": undefined,
               "examples": [
@@ -23852,7 +23752,7 @@ types:
               },
             },
             "get_auth_token": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get auth token for a subwallet",
               "docs": undefined,
               "examples": [
@@ -23901,7 +23801,7 @@ types:
               },
             },
             "get_matching_wallets": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Query subwallets",
               "docs": undefined,
               "examples": [
@@ -23950,7 +23850,7 @@ types:
               },
             },
             "get_wallet_record": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get a single subwallet",
               "docs": undefined,
               "examples": [
@@ -23988,7 +23888,7 @@ types:
               },
             },
             "update_wallet": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Update a subwallet",
               "docs": undefined,
               "examples": [
@@ -24171,7 +24071,6 @@ service:
     create_wallet:
       path: /multitenancy/wallet
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Create a subwallet
@@ -24246,7 +24145,6 @@ service:
     get_wallet_record:
       path: /multitenancy/wallet/{wallet_id}
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -24271,7 +24169,6 @@ service:
     update_wallet:
       path: /multitenancy/wallet/{wallet_id}
       method: PUT
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -24330,7 +24227,6 @@ service:
     delete_wallet:
       path: /multitenancy/wallet/{wallet_id}/remove
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -24363,7 +24259,6 @@ service:
     get_auth_token:
       path: /multitenancy/wallet/{wallet_id}/token
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -24395,7 +24290,6 @@ service:
     get_matching_wallets:
       path: /multitenancy/wallets
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Query subwallets
@@ -24442,7 +24336,7 @@ docs: Multitenant wallet management
           "display-name": "out-of-band",
           "endpoints": {
             "create_oob_invitation": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create a new connection invitation",
               "docs": undefined,
               "examples": [
@@ -24560,7 +24454,7 @@ docs: Multitenant wallet management
               },
             },
             "receive_oob_invitation": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Receive a new connection invitation",
               "docs": undefined,
               "examples": [
@@ -24809,7 +24703,6 @@ service:
     create_oob_invitation:
       path: /out-of-band/create-invitation
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Create a new connection invitation
@@ -24894,7 +24787,6 @@ service:
     receive_oob_invitation:
       path: /out-of-band/receive-invitation
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Receive a new connection invitation
@@ -25067,7 +24959,7 @@ docs: Out-of-band connections
           "display-name": "present-proof v1.0",
           "endpoints": {
             "create_free_proof_request": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Creates a presentation request not bound to any proposal or connection",
               "docs": undefined,
               "examples": [
@@ -25175,7 +25067,7 @@ docs: Out-of-band connections
               },
             },
             "delete_pres_ex_record": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Remove an existing presentation exchange record",
               "docs": undefined,
               "examples": [
@@ -25209,7 +25101,7 @@ docs: Out-of-band connections
               },
             },
             "get_matching_pres_ex_records": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Fetch all present-proof exchange records",
               "docs": undefined,
               "examples": [
@@ -25306,7 +25198,7 @@ docs: Out-of-band connections
               },
             },
             "get_pres_ex_credentials": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Fetch credentials for a presentation request from wallet",
               "docs": undefined,
               "examples": [
@@ -25384,7 +25276,7 @@ docs: Out-of-band connections
               },
             },
             "get_pres_ex_record": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Fetch a single presentation exchange record",
               "docs": undefined,
               "examples": [
@@ -25434,7 +25326,7 @@ docs: Out-of-band connections
               },
             },
             "report_pres_ex_problem": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Send a problem report for presentation exchange",
               "docs": undefined,
               "examples": [
@@ -25483,7 +25375,7 @@ docs: Out-of-band connections
               },
             },
             "send_free_presentation_request": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Sends a free presentation request not bound to any proposal",
               "docs": undefined,
               "examples": [
@@ -25602,7 +25494,7 @@ docs: Out-of-band connections
               },
             },
             "send_presentation_proposal": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Sends a presentation proposal",
               "docs": undefined,
               "examples": [
@@ -25718,7 +25610,7 @@ docs: Out-of-band connections
               },
             },
             "send_proof_presentation": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Sends a proof presentation",
               "docs": undefined,
               "examples": [
@@ -25792,7 +25684,7 @@ docs: Out-of-band connections
               },
             },
             "send_proof_presentation_request": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Sends a presentation request in reference to a proposal",
               "docs": undefined,
               "examples": [
@@ -25865,7 +25757,7 @@ docs: Out-of-band connections
               },
             },
             "verify_received_presentation": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Verify a received presentation",
               "docs": undefined,
               "examples": [
@@ -25958,7 +25850,6 @@ service:
     create_free_proof_request:
       path: /present-proof/create-request
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Creates a presentation request not bound to any proposal or connection
@@ -26028,7 +25919,6 @@ service:
     get_matching_pres_ex_records:
       path: /present-proof/records
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Fetch all present-proof exchange records
@@ -26094,7 +25984,6 @@ service:
     get_pres_ex_record:
       path: /present-proof/records/{pres_ex_id}
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -26130,7 +26019,6 @@ service:
     delete_pres_ex_record:
       path: /present-proof/records/{pres_ex_id}
       method: DELETE
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -26151,7 +26039,6 @@ service:
     get_pres_ex_credentials:
       path: /present-proof/records/{pres_ex_id}/credentials
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -26195,7 +26082,6 @@ service:
     report_pres_ex_problem:
       path: /present-proof/records/{pres_ex_id}/problem-report
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -26224,7 +26110,6 @@ service:
     send_proof_presentation:
       path: /present-proof/records/{pres_ex_id}/send-presentation
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -26276,7 +26161,6 @@ service:
     send_proof_presentation_request:
       path: /present-proof/records/{pres_ex_id}/send-request
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -26326,7 +26210,6 @@ service:
     verify_received_presentation:
       path: /present-proof/records/{pres_ex_id}/verify-presentation
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -26362,7 +26245,6 @@ service:
     send_presentation_proposal:
       path: /present-proof/send-proposal
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Sends a presentation proposal
@@ -26443,7 +26325,6 @@ service:
     send_free_presentation_request:
       path: /present-proof/send-request
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Sends a free presentation request not bound to any proposal
@@ -26555,7 +26436,7 @@ types:
           "display-name": "present-proof v2.0",
           "endpoints": {
             "create_proof_request": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Creates a presentation request not bound to any proposal or connection",
               "docs": undefined,
               "examples": [
@@ -26627,7 +26508,7 @@ types:
               },
             },
             "delete_pres_ex_record": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Remove an existing presentation exchange record",
               "docs": undefined,
               "examples": [
@@ -26661,7 +26542,7 @@ types:
               },
             },
             "get_matching_pres_ex_records-v2": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Fetch all present-proof exchange records",
               "docs": undefined,
               "examples": [
@@ -26758,7 +26639,7 @@ types:
               },
             },
             "get_pres_ex_credentials-v2": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Fetch credentials from wallet for presentation request",
               "docs": undefined,
               "examples": [
@@ -26836,7 +26717,7 @@ types:
               },
             },
             "get_pres_ex_record": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Fetch a single presentation exchange record",
               "docs": undefined,
               "examples": [
@@ -26886,7 +26767,7 @@ types:
               },
             },
             "report_pres_ex_problem": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Send a problem report for presentation exchange",
               "docs": undefined,
               "examples": [
@@ -26935,7 +26816,7 @@ types:
               },
             },
             "send_free_presentation_request": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Sends a free presentation request not bound to any proposal",
               "docs": undefined,
               "examples": [
@@ -27018,7 +26899,7 @@ types:
               },
             },
             "send_presentation_proposal": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Sends a presentation proposal",
               "docs": undefined,
               "examples": [
@@ -27102,7 +26983,7 @@ types:
               },
             },
             "send_proof_presentation": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Sends a proof presentation",
               "docs": undefined,
               "examples": [
@@ -27176,7 +27057,7 @@ types:
               },
             },
             "send_proof_presentation_request": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Sends a presentation request in reference to a proposal",
               "docs": undefined,
               "examples": [
@@ -27249,7 +27130,7 @@ types:
               },
             },
             "verify_received_presentation": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Verify a received presentation",
               "docs": undefined,
               "examples": [
@@ -27359,7 +27240,6 @@ service:
     create_proof_request:
       path: /present-proof-2.0/create-request
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Creates a presentation request not bound to any proposal or connection
@@ -27409,7 +27289,6 @@ service:
     get_matching_pres_ex_records-v2:
       path: /present-proof-2.0/records
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Fetch all present-proof exchange records
@@ -27475,7 +27354,6 @@ service:
     get_pres_ex_record:
       path: /present-proof-2.0/records/{pres_ex_id}
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -27511,7 +27389,6 @@ service:
     delete_pres_ex_record:
       path: /present-proof-2.0/records/{pres_ex_id}
       method: DELETE
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -27532,7 +27409,6 @@ service:
     get_pres_ex_credentials-v2:
       path: /present-proof-2.0/records/{pres_ex_id}/credentials
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -27576,7 +27452,6 @@ service:
     report_pres_ex_problem:
       path: /present-proof-2.0/records/{pres_ex_id}/problem-report
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -27605,7 +27480,6 @@ service:
     send_proof_presentation:
       path: /present-proof-2.0/records/{pres_ex_id}/send-presentation
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -27655,7 +27529,6 @@ service:
     send_proof_presentation_request:
       path: /present-proof-2.0/records/{pres_ex_id}/send-request
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -27705,7 +27578,6 @@ service:
     verify_received_presentation:
       path: /present-proof-2.0/records/{pres_ex_id}/verify-presentation
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -27741,7 +27613,6 @@ service:
     send_presentation_proposal:
       path: /present-proof-2.0/send-proposal
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Sends a presentation proposal
@@ -27800,7 +27671,6 @@ service:
     send_free_presentation_request:
       path: /present-proof-2.0/send-request
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Sends a free presentation request not bound to any proposal
@@ -27897,7 +27767,7 @@ types:
           "display-name": "resolver",
           "endpoints": {
             "get_did_document": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve doc for requested did",
               "docs": undefined,
               "examples": [
@@ -27946,7 +27816,6 @@ service:
     get_did_document:
       path: /resolver/resolve/{did}
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -27984,7 +27853,7 @@ docs: did resolver interface.
           "display-name": "revocation",
           "endpoints": {
             "clear_pending_revocations": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Clear pending revocations",
               "docs": undefined,
               "examples": [
@@ -28037,7 +27906,7 @@ docs: did resolver interface.
               },
             },
             "create_revocation_registry": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Creates a new revocation registry",
               "docs": undefined,
               "examples": [
@@ -28117,7 +27986,7 @@ docs: did resolver interface.
               },
             },
             "delete_tails_file": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete the tail files",
               "docs": undefined,
               "examples": [
@@ -28167,7 +28036,7 @@ docs: did resolver interface.
               },
             },
             "download_tails_file": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Download tails file",
               "docs": undefined,
               "method": "GET",
@@ -28189,7 +28058,7 @@ docs: did resolver interface.
               },
             },
             "download_tails_file_sparse": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Download tails file",
               "docs": undefined,
               "method": "GET",
@@ -28211,7 +28080,7 @@ docs: did resolver interface.
               },
             },
             "get_active_registry_for_cred_def_id": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get current active revocation registry by credential definition id",
               "docs": undefined,
               "examples": [
@@ -28264,7 +28133,7 @@ docs: did resolver interface.
               },
             },
             "get_created_registries": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Search for matching revocation registries that current agent created",
               "docs": undefined,
               "examples": [
@@ -28311,7 +28180,7 @@ docs: did resolver interface.
               },
             },
             "get_credential_revocation_record": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get credential revocation status",
               "docs": undefined,
               "examples": [
@@ -28381,7 +28250,7 @@ docs: did resolver interface.
               },
             },
             "get_issued_credential_details": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get details of credentials issued against revocation registry",
               "docs": undefined,
               "examples": [
@@ -28438,7 +28307,7 @@ docs: did resolver interface.
               },
             },
             "get_issued_credentials_count": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get number of credentials issued against revocation registry",
               "docs": undefined,
               "examples": [
@@ -28472,7 +28341,7 @@ docs: did resolver interface.
               },
             },
             "get_published_credential_details": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get details of revoked credentials from ledger",
               "docs": undefined,
               "examples": [
@@ -28504,7 +28373,7 @@ docs: did resolver interface.
               },
             },
             "get_revocation_registry": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get revocation registry by revocation registry id",
               "docs": undefined,
               "examples": [
@@ -28557,7 +28426,7 @@ docs: did resolver interface.
               },
             },
             "publish_revocation_registry_definition": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Send revocation registry definition to ledger",
               "docs": undefined,
               "examples": [
@@ -28625,7 +28494,7 @@ docs: did resolver interface.
               },
             },
             "publish_revocation_registry_entry": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Send revocation registry entry to ledger",
               "docs": undefined,
               "examples": [
@@ -28691,7 +28560,7 @@ docs: did resolver interface.
               },
             },
             "publish_revocations": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Publish pending revocations to ledger",
               "docs": undefined,
               "examples": [
@@ -28737,7 +28606,7 @@ docs: did resolver interface.
               },
             },
             "revoke_issued_credential": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Revoke an issued credential",
               "docs": undefined,
               "examples": [
@@ -28844,7 +28713,7 @@ docs: did resolver interface.
               },
             },
             "set_revocation_registry_state": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Set revocation registry state manually",
               "docs": undefined,
               "examples": [
@@ -28909,7 +28778,7 @@ docs: did resolver interface.
               },
             },
             "update_revocation_entry_state": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Fix revocation state in wallet and return number of updated entries",
               "docs": undefined,
               "examples": [
@@ -28953,7 +28822,7 @@ docs: did resolver interface.
               },
             },
             "update_revocation_registry": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Update revocation registry with new public URI to its tails file",
               "docs": undefined,
               "examples": [
@@ -29024,7 +28893,7 @@ docs: did resolver interface.
               },
             },
             "upload_tails_file": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Upload local tails file to server",
               "docs": undefined,
               "examples": [
@@ -29111,7 +28980,6 @@ service:
     get_active_registry_for_cred_def_id:
       path: /revocation/active-registry/{cred_def_id}
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -29150,7 +29018,6 @@ service:
     clear_pending_revocations:
       path: /revocation/clear-pending-revocations
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Clear pending revocations
@@ -29184,7 +29051,6 @@ service:
     create_revocation_registry:
       path: /revocation/create-registry
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Creates a new revocation registry
@@ -29237,7 +29103,6 @@ service:
     get_credential_revocation_record:
       path: /revocation/credential-record
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Get credential revocation status
@@ -29282,7 +29147,6 @@ service:
     publish_revocations:
       path: /revocation/publish-revocations
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Publish pending revocations to ledger
@@ -29310,7 +29174,6 @@ service:
     get_created_registries:
       path: /revocation/registries/created
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Search for matching revocation registries that current agent created
@@ -29341,7 +29204,6 @@ service:
     delete_tails_file:
       path: /revocation/registry/delete-tails-file
       method: DELETE
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Delete the tail files
@@ -29371,7 +29233,6 @@ service:
     get_revocation_registry:
       path: /revocation/registry/{rev_reg_id}
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -29410,7 +29271,6 @@ service:
     update_revocation_registry:
       path: /revocation/registry/{rev_reg_id}
       method: PATCH
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -29460,7 +29320,6 @@ service:
     publish_revocation_registry_definition:
       path: /revocation/registry/{rev_reg_id}/definition
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -29509,7 +29368,6 @@ service:
     publish_revocation_registry_entry:
       path: /revocation/registry/{rev_reg_id}/entry
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -29557,7 +29415,6 @@ service:
     update_revocation_entry_state:
       path: /revocation/registry/{rev_reg_id}/fix-revocation-entry-state
       method: PUT
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -29585,7 +29442,6 @@ service:
     get_issued_credentials_count:
       path: /revocation/registry/{rev_reg_id}/issued
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -29606,7 +29462,6 @@ service:
     get_issued_credential_details:
       path: /revocation/registry/{rev_reg_id}/issued/details
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -29647,7 +29502,6 @@ service:
     get_published_credential_details:
       path: /revocation/registry/{rev_reg_id}/issued/indy_recs
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -29667,7 +29521,6 @@ service:
     set_revocation_registry_state:
       path: /revocation/registry/{rev_reg_id}/set-state
       method: PATCH
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -29714,7 +29567,6 @@ service:
     download_tails_file_sparse:
       path: /revocation/registry/{rev_reg_id}/tails-file-less-deets
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -29729,7 +29581,6 @@ service:
     download_tails_file:
       path: /revocation/registry/{rev_reg_id}/tails-file
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -29744,7 +29595,6 @@ service:
     upload_tails_file:
       path: /revocation/registry/{rev_reg_id}/tails-file
       method: PUT
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -29765,7 +29615,6 @@ service:
     revoke_issued_credential:
       path: /revocation/revoke
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Revoke an issued credential
@@ -29885,7 +29734,7 @@ types:
           "display-name": "schema",
           "endpoints": {
             "get_matching_created_schemas": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Search for matching schema that agent originated",
               "docs": undefined,
               "examples": [
@@ -29952,7 +29801,7 @@ types:
               },
             },
             "get_schema": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Gets a schema from the ledger",
               "docs": undefined,
               "examples": [
@@ -29996,7 +29845,7 @@ types:
               },
             },
             "publish_schema": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Sends a schema to the ledger",
               "docs": undefined,
               "examples": [
@@ -30065,7 +29914,7 @@ types:
               },
             },
             "write_schema_record_to_wallet": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Writes a schema non-secret record to the wallet",
               "docs": undefined,
               "examples": [
@@ -30123,7 +29972,6 @@ service:
     publish_schema:
       path: /schemas
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Sends a schema to the ledger
@@ -30166,7 +30014,6 @@ service:
     get_matching_created_schemas:
       path: /schemas/created
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Search for matching schema that agent originated
@@ -30206,7 +30053,6 @@ service:
     get_schema:
       path: /schemas/{schema_id}
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -30235,7 +30081,6 @@ service:
     write_schema_record_to_wallet:
       path: /schemas/{schema_id}/write_record
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -30278,7 +30123,7 @@ docs: Schema operations
           "base-path": "",
           "endpoints": {
             "get_config": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Fetch the server configuration",
               "docs": undefined,
               "examples": [
@@ -30301,7 +30146,7 @@ docs: Schema operations
               },
             },
             "get_liveliness": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Liveliness check",
               "docs": undefined,
               "examples": [
@@ -30326,7 +30171,7 @@ docs: Schema operations
               },
             },
             "get_loaded_plugins": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Fetch the list of loaded plugins",
               "docs": undefined,
               "examples": [
@@ -30354,7 +30199,7 @@ docs: Schema operations
               },
             },
             "get_readiness": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Readiness check",
               "docs": undefined,
               "examples": [
@@ -30379,7 +30224,7 @@ docs: Schema operations
               },
             },
             "get_status": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Fetch the server status",
               "docs": undefined,
               "examples": [
@@ -30405,7 +30250,7 @@ docs: Schema operations
               },
             },
             "reset_statistics": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Reset statistics",
               "docs": undefined,
               "examples": [
@@ -30430,7 +30275,7 @@ docs: Schema operations
               },
             },
             "shutdown_server": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Shut down server",
               "docs": undefined,
               "examples": [
@@ -30469,7 +30314,6 @@ service:
     get_loaded_plugins:
       path: /plugins
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Fetch the list of loaded plugins
@@ -30486,7 +30330,6 @@ service:
     shutdown_server:
       path: /shutdown
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Shut down server
@@ -30501,7 +30344,6 @@ service:
     get_status:
       path: /status
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Fetch the server status
@@ -30517,7 +30359,6 @@ service:
     get_config:
       path: /status/config
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Fetch the server configuration
@@ -30531,7 +30372,6 @@ service:
     get_liveliness:
       path: /status/live
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Liveliness check
@@ -30546,7 +30386,6 @@ service:
     get_readiness:
       path: /status/ready
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Readiness check
@@ -30561,7 +30400,6 @@ service:
     reset_statistics:
       path: /status/reset
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Reset statistics
@@ -30590,7 +30428,7 @@ service:
           "display-name": "trustping",
           "endpoints": {
             "send_ping": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Send a trust ping to a connection",
               "docs": undefined,
               "examples": [
@@ -30656,7 +30494,6 @@ service:
     send_ping:
       path: /connections/{conn_id}/send-ping
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -30703,7 +30540,7 @@ docs: Trust-ping over connection
           "display-name": "wallet",
           "endpoints": {
             "create_local_did": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create a local DID",
               "docs": undefined,
               "examples": [
@@ -30760,7 +30597,7 @@ docs: Trust-ping over connection
               },
             },
             "get_did_endpoint": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Query DID endpoint in wallet",
               "docs": undefined,
               "examples": [
@@ -30804,7 +30641,7 @@ docs: Trust-ping over connection
               },
             },
             "get_dids": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List wallet DIDs",
               "docs": undefined,
               "examples": [
@@ -30881,7 +30718,7 @@ docs: Trust-ping over connection
               },
             },
             "get_public_did": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Fetch the current public DID",
               "docs": undefined,
               "examples": [
@@ -30912,7 +30749,7 @@ docs: Trust-ping over connection
               },
             },
             "rotate_keypair": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Rotate keypair for a DID not posted to the ledger",
               "docs": undefined,
               "examples": [
@@ -30955,7 +30792,7 @@ docs: Trust-ping over connection
               },
             },
             "set_did_endpoint": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Update endpoint in wallet and on ledger if posted to it",
               "docs": undefined,
               "examples": [
@@ -31029,7 +30866,7 @@ docs: Trust-ping over connection
               },
             },
             "set_public_did": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Assign the current public DID",
               "docs": undefined,
               "examples": [
@@ -31180,7 +31017,6 @@ service:
     get_dids:
       path: /wallet/did
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: List wallet DIDs
@@ -31231,7 +31067,6 @@ service:
     create_local_did:
       path: /wallet/did/create
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Create a local DID
@@ -31271,7 +31106,6 @@ service:
     rotate_keypair:
       path: /wallet/did/local/rotate-keypair
       method: PATCH
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Rotate keypair for a DID not posted to the ledger
@@ -31297,7 +31131,6 @@ service:
     get_public_did:
       path: /wallet/did/public
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Fetch the current public DID
@@ -31317,7 +31150,6 @@ service:
     set_public_did:
       path: /wallet/did/public
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Assign the current public DID
@@ -31357,7 +31189,6 @@ service:
     get_did_endpoint:
       path: /wallet/get-did-endpoint
       method: GET
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Query DID endpoint in wallet
@@ -31384,7 +31215,6 @@ service:
     set_did_endpoint:
       path: /wallet/set-did-endpoint
       method: POST
-      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Update endpoint in wallet and on ledger if posted to it

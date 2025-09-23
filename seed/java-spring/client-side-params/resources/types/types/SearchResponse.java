@@ -102,7 +102,9 @@ public final class SearchResponse {
     )
     public Builder results(List<Resource> results) {
       this.results.clear();
-      this.results.addAll(results);
+      if (results != null) {
+        this.results.addAll(results);
+      }
       return this;
     }
 

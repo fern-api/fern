@@ -4,7 +4,7 @@
 
 import * as FernIr from "../../../index";
 
-export interface BasicAuthScheme extends FernIr.WithDocs {
+export interface BasicAuthScheme extends FernIr.BaseAuthScheme {
     username: FernIr.Name;
     /** The environment variable the SDK should use to read the username. */
     usernameEnvVar: FernIr.EnvironmentVariable | undefined;

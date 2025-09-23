@@ -1,14 +1,13 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using NUnit.Framework;
-using SeedPagination;
 
 namespace SeedPagination.Test.Unit.MockServer;
 
 [TestFixture]
 public class ListWithBodyOffsetPaginationTest : BaseMockServerTest
 {
-    [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    [NUnit.Framework.Test]
+    public async Task MockServerTest()
     {
         const string requestJson = """
             {
@@ -60,7 +59,10 @@ public class ListWithBodyOffsetPaginationTest : BaseMockServerTest
             );
 
         var items = await Client.Users.ListWithBodyOffsetPaginationAsync(
-            new ListUsersBodyOffsetPaginationRequest { Pagination = new WithPage { Page = 1 } }
+            new SeedPagination.ListUsersBodyOffsetPaginationRequest
+            {
+                Pagination = new SeedPagination.WithPage { Page = 1 },
+            }
         );
         await foreach (var item in items)
         {

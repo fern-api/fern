@@ -7,7 +7,25 @@ import (
 	fmt "fmt"
 	uuid "github.com/google/uuid"
 	internal "github.com/query-parameters/fern/internal"
+	big "math/big"
 	time "time"
+)
+
+var (
+	getUsersRequestFieldLimit            = big.NewInt(1 << 0)
+	getUsersRequestFieldId               = big.NewInt(1 << 1)
+	getUsersRequestFieldDate             = big.NewInt(1 << 2)
+	getUsersRequestFieldDeadline         = big.NewInt(1 << 3)
+	getUsersRequestFieldBytes            = big.NewInt(1 << 4)
+	getUsersRequestFieldUser             = big.NewInt(1 << 5)
+	getUsersRequestFieldUserList         = big.NewInt(1 << 6)
+	getUsersRequestFieldOptionalDeadline = big.NewInt(1 << 7)
+	getUsersRequestFieldKeyValue         = big.NewInt(1 << 8)
+	getUsersRequestFieldOptionalString   = big.NewInt(1 << 9)
+	getUsersRequestFieldNestedUser       = big.NewInt(1 << 10)
+	getUsersRequestFieldOptionalUser     = big.NewInt(1 << 11)
+	getUsersRequestFieldExcludeUser      = big.NewInt(1 << 12)
+	getUsersRequestFieldFilter           = big.NewInt(1 << 13)
 )
 
 type GetUsersRequest struct {
@@ -25,11 +43,127 @@ type GetUsersRequest struct {
 	OptionalUser     *User             `json:"-" url:"optionalUser,omitempty"`
 	ExcludeUser      []*User           `json:"-" url:"excludeUser"`
 	Filter           []string          `json:"-" url:"filter"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 }
+
+func (g *GetUsersRequest) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUsersRequest) SetLimit(limit int) {
+	g.Limit = limit
+	g.require(getUsersRequestFieldLimit)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUsersRequest) SetId(id uuid.UUID) {
+	g.Id = id
+	g.require(getUsersRequestFieldId)
+}
+
+// SetDate sets the Date field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUsersRequest) SetDate(date time.Time) {
+	g.Date = date
+	g.require(getUsersRequestFieldDate)
+}
+
+// SetDeadline sets the Deadline field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUsersRequest) SetDeadline(deadline time.Time) {
+	g.Deadline = deadline
+	g.require(getUsersRequestFieldDeadline)
+}
+
+// SetBytes sets the Bytes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUsersRequest) SetBytes(bytes []byte) {
+	g.Bytes = bytes
+	g.require(getUsersRequestFieldBytes)
+}
+
+// SetUser sets the User field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUsersRequest) SetUser(user *User) {
+	g.User = user
+	g.require(getUsersRequestFieldUser)
+}
+
+// SetUserList sets the UserList field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUsersRequest) SetUserList(userList []*User) {
+	g.UserList = userList
+	g.require(getUsersRequestFieldUserList)
+}
+
+// SetOptionalDeadline sets the OptionalDeadline field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUsersRequest) SetOptionalDeadline(optionalDeadline *time.Time) {
+	g.OptionalDeadline = optionalDeadline
+	g.require(getUsersRequestFieldOptionalDeadline)
+}
+
+// SetKeyValue sets the KeyValue field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUsersRequest) SetKeyValue(keyValue map[string]string) {
+	g.KeyValue = keyValue
+	g.require(getUsersRequestFieldKeyValue)
+}
+
+// SetOptionalString sets the OptionalString field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUsersRequest) SetOptionalString(optionalString *string) {
+	g.OptionalString = optionalString
+	g.require(getUsersRequestFieldOptionalString)
+}
+
+// SetNestedUser sets the NestedUser field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUsersRequest) SetNestedUser(nestedUser *NestedUser) {
+	g.NestedUser = nestedUser
+	g.require(getUsersRequestFieldNestedUser)
+}
+
+// SetOptionalUser sets the OptionalUser field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUsersRequest) SetOptionalUser(optionalUser *User) {
+	g.OptionalUser = optionalUser
+	g.require(getUsersRequestFieldOptionalUser)
+}
+
+// SetExcludeUser sets the ExcludeUser field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUsersRequest) SetExcludeUser(excludeUser []*User) {
+	g.ExcludeUser = excludeUser
+	g.require(getUsersRequestFieldExcludeUser)
+}
+
+// SetFilter sets the Filter field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUsersRequest) SetFilter(filter []string) {
+	g.Filter = filter
+	g.require(getUsersRequestFieldFilter)
+}
+
+var (
+	nestedUserFieldName = big.NewInt(1 << 0)
+	nestedUserFieldUser = big.NewInt(1 << 1)
+)
 
 type NestedUser struct {
 	Name string `json:"name" url:"name"`
 	User *User  `json:"user" url:"user"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -53,6 +187,27 @@ func (n *NestedUser) GetExtraProperties() map[string]interface{} {
 	return n.extraProperties
 }
 
+func (n *NestedUser) require(field *big.Int) {
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
+	}
+	n.explicitFields.Or(n.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NestedUser) SetName(name string) {
+	n.Name = name
+	n.require(nestedUserFieldName)
+}
+
+// SetUser sets the User field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (n *NestedUser) SetUser(user *User) {
+	n.User = user
+	n.require(nestedUserFieldUser)
+}
+
 func (n *NestedUser) UnmarshalJSON(data []byte) error {
 	type unmarshaler NestedUser
 	var value unmarshaler
@@ -69,6 +224,17 @@ func (n *NestedUser) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (n *NestedUser) MarshalJSON() ([]byte, error) {
+	type embed NestedUser
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*n),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, n.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (n *NestedUser) String() string {
 	if len(n.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(n.rawJSON); err == nil {
@@ -81,9 +247,17 @@ func (n *NestedUser) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
+var (
+	userFieldName = big.NewInt(1 << 0)
+	userFieldTags = big.NewInt(1 << 1)
+)
+
 type User struct {
 	Name string   `json:"name" url:"name"`
 	Tags []string `json:"tags" url:"tags"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -107,6 +281,27 @@ func (u *User) GetExtraProperties() map[string]interface{} {
 	return u.extraProperties
 }
 
+func (u *User) require(field *big.Int) {
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
+	}
+	u.explicitFields.Or(u.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *User) SetName(name string) {
+	u.Name = name
+	u.require(userFieldName)
+}
+
+// SetTags sets the Tags field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *User) SetTags(tags []string) {
+	u.Tags = tags
+	u.require(userFieldTags)
+}
+
 func (u *User) UnmarshalJSON(data []byte) error {
 	type unmarshaler User
 	var value unmarshaler
@@ -121,6 +316,17 @@ func (u *User) UnmarshalJSON(data []byte) error {
 	u.extraProperties = extraProperties
 	u.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (u *User) MarshalJSON() ([]byte, error) {
+	type embed User
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (u *User) String() string {

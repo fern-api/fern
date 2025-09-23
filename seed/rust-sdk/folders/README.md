@@ -25,12 +25,13 @@ cargo add seed_api
 Instantiate and use the client with the following:
 
 ```rust
-use seed_api::{ClientConfig, ApiClient};
+use seed_api::{ApiClient, ClientConfig};
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {};
     let client = ApiClient::new(config).expect("Failed to build client");
+    client.foo().await;
 }
 ```
 

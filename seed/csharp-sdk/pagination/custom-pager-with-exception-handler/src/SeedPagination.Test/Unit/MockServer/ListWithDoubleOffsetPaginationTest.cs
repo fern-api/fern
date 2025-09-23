@@ -1,14 +1,13 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using NUnit.Framework;
-using SeedPagination;
 
 namespace SeedPagination.Test.Unit.MockServer;
 
 [TestFixture]
 public class ListWithDoubleOffsetPaginationTest : BaseMockServerTest
 {
-    [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    [NUnit.Framework.Test]
+    public async Task MockServerTest()
     {
         const string mockResponse = """
             {
@@ -55,11 +54,11 @@ public class ListWithDoubleOffsetPaginationTest : BaseMockServerTest
             );
 
         var items = await Client.Users.ListWithDoubleOffsetPaginationAsync(
-            new ListUsersDoubleOffsetPaginationRequest
+            new SeedPagination.ListUsersDoubleOffsetPaginationRequest
             {
                 Page = 1.1,
                 PerPage = 1.1,
-                Order = Order.Asc,
+                Order = SeedPagination.Order.Asc,
                 StartingAfter = "starting_after",
             }
         );

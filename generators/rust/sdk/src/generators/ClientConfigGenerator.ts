@@ -20,7 +20,7 @@ export class ClientConfigGenerator {
         });
 
         return new RustFile({
-            filename: "client_config.rs",
+            filename: "config.rs",
             directory: RelativeFilePath.of("src"),
             fileContents: module.toString()
         });
@@ -52,7 +52,7 @@ export class ClientConfigGenerator {
                 visibility: PUBLIC
             }),
             rust.field({
-                name: "bearer_token",
+                name: "token",
                 type: rust.Type.option(rust.Type.string()),
                 visibility: PUBLIC
             }),
@@ -124,7 +124,7 @@ export class ClientConfigGenerator {
                         value: Expression.none()
                     },
                     {
-                        name: "bearer_token",
+                        name: "token",
                         value: Expression.none()
                     },
                     {

@@ -184,6 +184,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/action-menu/{conn_id}/close",
       "examples": [
@@ -285,6 +286,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/action-menu/{conn_id}/fetch",
       "examples": [
@@ -388,6 +390,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/action-menu/{conn_id}/perform",
       "examples": [
@@ -519,6 +522,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/action-menu/{conn_id}/request",
       "examples": [
@@ -639,6 +643,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/action-menu/{conn_id}/send-menu",
       "examples": [
@@ -1036,6 +1041,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/connections",
       "examples": [
@@ -1462,6 +1468,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/connections/create-invitation",
       "examples": [
@@ -1701,6 +1708,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/connections/create-static",
       "examples": [
@@ -2068,6 +2076,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/connections/receive-invitation",
       "examples": [
@@ -2345,6 +2354,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/connections/{conn_id}",
       "examples": [
@@ -2555,6 +2565,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/connections/{conn_id}",
       "examples": [
@@ -2722,6 +2733,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/connections/{conn_id}/accept-invitation",
       "examples": [
@@ -2955,6 +2967,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/connections/{conn_id}/accept-request",
       "examples": [
@@ -3165,6 +3178,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/connections/{conn_id}/endpoints",
       "examples": [
@@ -3280,6 +3294,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/connections/{conn_id}/establish-inbound/{ref_id}",
       "examples": [
@@ -3413,6 +3428,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/connections/{conn_id}/metadata",
       "examples": [
@@ -3516,6 +3532,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/connections/{conn_id}/metadata",
       "examples": [
@@ -3628,6 +3645,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/connections/{conn_id}/send-message",
       "examples": [
@@ -3760,6 +3778,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/connections/{conn_id}/send-ping",
       "examples": [
@@ -3902,6 +3921,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/connections/{conn_id}/start-introduction",
       "examples": [
@@ -4059,6 +4079,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/credential-definitions",
       "examples": [
@@ -4293,6 +4314,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/credential-definitions/created",
       "examples": [
@@ -4387,6 +4409,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/credential-definitions/{cred_def_id}",
       "examples": [
@@ -4527,6 +4550,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/credential-definitions/{cred_def_id}/write_record",
       "examples": [
@@ -4666,6 +4690,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/credential/mime-types/{credential_id}",
       "examples": [
@@ -4814,6 +4839,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/credential/revoked/{credential_id}",
       "examples": [
@@ -4906,6 +4932,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/credential/w3c/{credential_id}",
       "examples": [
@@ -5125,6 +5152,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/credential/w3c/{credential_id}",
       "examples": [
@@ -5226,6 +5254,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/credential/{credential_id}",
       "examples": [
@@ -5364,6 +5393,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/credential/{credential_id}",
       "examples": [
@@ -5515,6 +5545,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/credentials",
       "examples": [
@@ -5779,6 +5810,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/credentials/w3c",
       "examples": [
@@ -6383,6 +6415,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/didexchange/create-request",
       "examples": [
@@ -6682,6 +6715,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/didexchange/receive-request",
       "examples": [
@@ -6951,6 +6985,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/didexchange/{conn_id}/accept-invitation",
       "examples": [
@@ -7206,6 +7241,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/didexchange/{conn_id}/accept-request",
       "examples": [
@@ -7463,6 +7499,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/discover-features-2.0/queries",
       "examples": [
@@ -7541,6 +7578,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/discover-features-2.0/records",
       "examples": [
@@ -7903,6 +7941,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/discover-features/query",
       "examples": [
@@ -8031,6 +8070,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/discover-features/records",
       "examples": [
@@ -8220,6 +8260,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/create",
       "examples": [
@@ -8484,6 +8525,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/create-offer",
       "examples": [
@@ -8894,6 +8936,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/issue-credential-2.0/records",
       "examples": [
@@ -9200,6 +9243,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/issue-credential-2.0/records/{cred_ex_id}",
       "examples": [
@@ -9394,6 +9438,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/issue-credential-2.0/records/{cred_ex_id}",
       "examples": [
@@ -9515,6 +9560,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/records/{cred_ex_id}/issue",
       "examples": [
@@ -9740,6 +9786,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/records/{cred_ex_id}/problem-report",
       "examples": [
@@ -9873,6 +9920,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/records/{cred_ex_id}/send-offer",
       "examples": [
@@ -10071,6 +10119,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/records/{cred_ex_id}/send-request",
       "examples": [
@@ -10277,6 +10326,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/records/{cred_ex_id}/store",
       "examples": [
@@ -10484,6 +10534,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/send",
       "examples": [
@@ -10762,6 +10813,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/send-offer",
       "examples": [
@@ -11040,6 +11092,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/send-proposal",
       "examples": [
@@ -11318,6 +11371,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/send-request",
       "examples": [
@@ -11665,6 +11719,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential/create",
       "examples": [
@@ -12005,6 +12060,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential/create-offer",
       "examples": [
@@ -12456,6 +12512,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/issue-credential/records",
       "examples": [
@@ -12800,6 +12857,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/issue-credential/records/{cred_ex_id}",
       "examples": [
@@ -13013,6 +13071,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/issue-credential/records/{cred_ex_id}",
       "examples": [
@@ -13134,6 +13193,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential/records/{cred_ex_id}/issue",
       "examples": [
@@ -13378,6 +13438,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential/records/{cred_ex_id}/problem-report",
       "examples": [
@@ -13511,6 +13572,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential/records/{cred_ex_id}/send-offer",
       "examples": [
@@ -13728,6 +13790,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential/records/{cred_ex_id}/send-request",
       "examples": [
@@ -13960,6 +14023,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential/records/{cred_ex_id}/store",
       "examples": [
@@ -14186,6 +14250,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential/send",
       "examples": [
@@ -14533,6 +14598,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential/send-offer",
       "examples": [
@@ -14852,6 +14918,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential/send-proposal",
       "examples": [
@@ -15199,6 +15266,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/jsonld/sign",
       "examples": [
@@ -15322,6 +15390,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/jsonld/verify",
       "examples": [
@@ -15486,6 +15555,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/ledger/did-endpoint",
       "examples": [
@@ -15579,6 +15649,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/ledger/did-verkey",
       "examples": [
@@ -15672,6 +15743,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/ledger/get-nym-role",
       "examples": [
@@ -15744,6 +15816,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/ledger/multiple/config",
       "examples": [
@@ -15886,6 +15959,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/ledger/multiple/get-write-ledger",
       "examples": [
@@ -16097,6 +16171,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/ledger/register-nym",
       "examples": [
@@ -16182,6 +16257,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "PATCH",
       "path": "/ledger/rotate-public-did-keypair",
       "examples": [
@@ -16255,6 +16331,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/ledger/taa",
       "examples": [
@@ -16425,6 +16502,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/ledger/taa/accept",
       "examples": [
@@ -16524,6 +16602,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/mediation/default-mediator",
       "examples": [
@@ -16687,6 +16766,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/mediation/default-mediator",
       "examples": [
@@ -16912,6 +16992,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/mediation/keylists",
       "examples": [
@@ -17178,6 +17259,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/mediation/keylists/{mediation_id}/send-keylist-query",
       "examples": [
@@ -17301,6 +17383,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/mediation/keylists/{mediation_id}/send-keylist-update",
       "examples": [
@@ -17498,6 +17581,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/mediation/request/{conn_id}",
       "examples": [
@@ -17831,6 +17915,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/mediation/requests",
       "examples": [
@@ -18133,6 +18218,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/mediation/requests/{mediation_id}",
       "examples": [
@@ -18325,6 +18411,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/mediation/requests/{mediation_id}",
       "examples": [
@@ -18536,6 +18623,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/mediation/requests/{mediation_id}/deny",
       "examples": [
@@ -18717,6 +18805,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/mediation/requests/{mediation_id}/grant",
       "examples": [
@@ -18861,6 +18950,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/mediation/update-keylist/{conn_id}",
       "examples": [
@@ -19010,6 +19100,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/mediation/{mediation_id}/default-mediator",
       "examples": [
@@ -19203,6 +19294,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/multitenancy/wallet",
       "examples": [
@@ -19387,6 +19479,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/multitenancy/wallet/{wallet_id}",
       "examples": [
@@ -19523,6 +19616,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/multitenancy/wallet/{wallet_id}",
       "examples": [
@@ -19701,6 +19795,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/multitenancy/wallet/{wallet_id}/remove",
       "examples": [
@@ -19832,6 +19927,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/multitenancy/wallet/{wallet_id}/token",
       "examples": [
@@ -19941,6 +20037,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/multitenancy/wallets",
       "examples": [
@@ -20139,6 +20236,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/out-of-band/create-invitation",
       "examples": [
@@ -20472,6 +20570,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/out-of-band/receive-invitation",
       "examples": [
@@ -21493,6 +21592,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/plugins",
       "examples": [
@@ -21588,6 +21688,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof-2.0/create-request",
       "examples": [
@@ -21916,6 +22017,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/present-proof-2.0/records",
       "examples": [
@@ -22202,6 +22304,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/present-proof-2.0/records/{pres_ex_id}",
       "examples": [
@@ -22386,6 +22489,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/present-proof-2.0/records/{pres_ex_id}",
       "examples": [
@@ -22581,6 +22685,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/present-proof-2.0/records/{pres_ex_id}/credentials",
       "examples": [
@@ -22710,6 +22815,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof-2.0/records/{pres_ex_id}/problem-report",
       "examples": [
@@ -22843,6 +22949,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof-2.0/records/{pres_ex_id}/send-presentation",
       "examples": [
@@ -23058,6 +23165,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof-2.0/records/{pres_ex_id}/send-request",
       "examples": [
@@ -23261,6 +23369,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof-2.0/records/{pres_ex_id}/verify-presentation",
       "examples": [
@@ -23446,6 +23555,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof-2.0/send-proposal",
       "examples": [
@@ -23657,6 +23767,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof-2.0/send-request",
       "examples": [
@@ -23868,6 +23979,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof/create-request",
       "examples": [
@@ -24384,6 +24496,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/present-proof/records",
       "examples": [
@@ -24676,6 +24789,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/present-proof/records/{pres_ex_id}",
       "examples": [
@@ -24863,6 +24977,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/present-proof/records/{pres_ex_id}",
       "examples": [
@@ -25058,6 +25173,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/present-proof/records/{pres_ex_id}/credentials",
       "examples": [
@@ -25187,6 +25303,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof/records/{pres_ex_id}/problem-report",
       "examples": [
@@ -25320,6 +25437,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof/records/{pres_ex_id}/send-presentation",
       "examples": [
@@ -25616,6 +25734,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof/records/{pres_ex_id}/send-request",
       "examples": [
@@ -25822,6 +25941,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof/records/{pres_ex_id}/verify-presentation",
       "examples": [
@@ -26010,6 +26130,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof/send-proposal",
       "examples": [
@@ -26382,6 +26503,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof/send-request",
       "examples": [
@@ -26775,6 +26897,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/resolver/resolve/{did}",
       "examples": [
@@ -26869,6 +26992,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/revocation/active-registry/{cred_def_id}",
       "examples": [
@@ -27078,6 +27202,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/revocation/clear-pending-revocations",
       "examples": [
@@ -27219,6 +27344,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/revocation/create-registry",
       "examples": [
@@ -27484,6 +27610,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/revocation/credential-record",
       "examples": [
@@ -27628,6 +27755,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/revocation/publish-revocations",
       "examples": [
@@ -27827,6 +27955,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/revocation/registries/created",
       "examples": [
@@ -27948,6 +28077,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/revocation/registry/delete-tails-file",
       "examples": [
@@ -28030,6 +28160,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/revocation/registry/{rev_reg_id}",
       "examples": [
@@ -28257,6 +28388,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "PATCH",
       "path": "/revocation/registry/{rev_reg_id}",
       "examples": [
@@ -28520,6 +28652,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/revocation/registry/{rev_reg_id}/definition",
       "examples": [
@@ -28776,6 +28909,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/revocation/registry/{rev_reg_id}/entry",
       "examples": [
@@ -29001,6 +29135,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/revocation/registry/{rev_reg_id}/fix-revocation-entry-state",
       "examples": [
@@ -29097,6 +29232,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/revocation/registry/{rev_reg_id}/issued",
       "examples": [
@@ -29190,6 +29326,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/revocation/registry/{rev_reg_id}/issued/details",
       "examples": [
@@ -29417,6 +29554,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/revocation/registry/{rev_reg_id}/issued/indy_recs",
       "examples": [
@@ -29547,6 +29685,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "PATCH",
       "path": "/revocation/registry/{rev_reg_id}/set-state",
       "examples": [
@@ -29753,6 +29892,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/revocation/registry/{rev_reg_id}/tails-file-less-deets",
       "examples": [],
@@ -29802,6 +29942,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/revocation/registry/{rev_reg_id}/tails-file",
       "examples": [],
@@ -29861,6 +30002,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/revocation/registry/{rev_reg_id}/tails-file",
       "examples": [
@@ -29964,6 +30106,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/revocation/revoke",
       "examples": [
@@ -30164,6 +30307,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/schemas",
       "examples": [
@@ -30346,6 +30490,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/schemas/created",
       "examples": [
@@ -30440,6 +30585,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/schemas/{schema_id}",
       "examples": [
@@ -30585,6 +30731,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/schemas/{schema_id}/write_record",
       "examples": [
@@ -30712,6 +30859,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/shutdown",
       "examples": [
@@ -30785,6 +30933,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/status",
       "examples": [
@@ -30856,6 +31005,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/status/config",
       "examples": [
@@ -30912,6 +31062,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/status/live",
       "examples": [
@@ -30976,6 +31127,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/status/ready",
       "examples": [
@@ -31040,6 +31192,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/status/reset",
       "examples": [
@@ -31130,6 +31283,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/transaction/{tran_id}/resend",
       "examples": [
@@ -31367,6 +31521,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/transactions",
       "examples": [
@@ -31834,6 +31989,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/transactions/create-request",
       "examples": [
@@ -32138,6 +32294,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/transactions/{conn_id}/set-endorser-info",
       "examples": [
@@ -32288,6 +32445,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/transactions/{conn_id}/set-endorser-role",
       "examples": [
@@ -32381,6 +32539,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/transactions/{tran_id}",
       "examples": [
@@ -32635,6 +32794,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/transactions/{tran_id}/cancel",
       "examples": [
@@ -32911,6 +33071,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/transactions/{tran_id}/endorse",
       "examples": [
@@ -33165,6 +33326,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/transactions/{tran_id}/refuse",
       "examples": [
@@ -33419,6 +33581,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/transactions/{tran_id}/write",
       "examples": [
@@ -33808,6 +33971,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/wallet/did",
       "examples": [
@@ -33957,6 +34121,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/wallet/did/create",
       "examples": [
@@ -34085,6 +34250,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "PATCH",
       "path": "/wallet/did/local/rotate-keypair",
       "examples": [
@@ -34169,6 +34335,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/wallet/did/public",
       "examples": [
@@ -34341,6 +34508,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/wallet/did/public",
       "examples": [
@@ -34461,6 +34629,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/wallet/get-did-endpoint",
       "examples": [
@@ -34605,6 +34774,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/wallet/set-did-endpoint",
       "examples": [
@@ -44453,12 +44623,16 @@
               "title": "IndyPrimaryProof",
               "value": {
                 "generatedName": "IndyPrimaryProofEqProof",
-                "schema": "IndyPrimaryProof_eq_proof",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "IndyPrimaryProofEqProof",
+                  "schema": "IndyPrimaryProof_eq_proof",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -44898,12 +45072,16 @@
               "title": "IndyProofProofProofsProof",
               "value": {
                 "generatedName": "IndyProofProofProofsProofNonRevocProof",
-                "schema": "IndyProofProofProofsProof_non_revoc_proof",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "IndyProofProofProofsProofNonRevocProof",
+                  "schema": "IndyProofProofProofsProof_non_revoc_proof",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -45013,12 +45191,16 @@
               "title": "IndyProofReqAttrSpec",
               "value": {
                 "generatedName": "IndyProofReqAttrSpecNonRevoked",
-                "schema": "IndyProofReqAttrSpec_non_revoked",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "IndyProofReqAttrSpecNonRevoked",
+                  "schema": "IndyProofReqAttrSpec_non_revoked",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -45180,12 +45362,16 @@
               "title": "IndyProofReqPredSpec",
               "value": {
                 "generatedName": "IndyProofReqPredSpecNonRevoked",
-                "schema": "IndyProofReqPredSpec_non_revoked",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "IndyProofReqPredSpecNonRevoked",
+                  "schema": "IndyProofReqPredSpec_non_revoked",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -45411,12 +45597,16 @@
               "title": "IndyProofRequest",
               "value": {
                 "generatedName": "IndyProofRequestNonRevoked",
-                "schema": "IndyProofRequest_non_revoked",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "IndyProofRequestNonRevoked",
+                  "schema": "IndyProofRequest_non_revoked",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"

@@ -11,6 +11,7 @@ from .node_writer_impl import NodeWriterImpl
 from .reference_resolver_impl import ReferenceResolverImpl
 from .top_level_statement import TopLevelStatement
 from fern_python.codegen.dependency_manager import DependencyManager
+from fern_python.codegen.reference_resolver import ReferenceResolver
 from ordered_set import OrderedSet
 
 T_AstNode = TypeVar("T_AstNode", bound=AST.AstNode)
@@ -37,6 +38,9 @@ class SourceFile(ClassParent):
 
     @abstractmethod
     def get_imports_manager(self) -> ImportsManager: ...
+
+    @abstractmethod
+    def get_reference_resolver(self) -> ReferenceResolver: ...
 
     @abstractmethod
     def get_dummy_class_declaration(self, declaration: AST.ClassDeclaration) -> LocalClassReference: ...
@@ -70,6 +74,9 @@ class SourceFileImpl(SourceFile):
 
     def get_imports_manager(self) -> ImportsManager:
         return self._imports_manager
+
+    def get_reference_resolver(self) -> ReferenceResolver:
+        return self._reference_resolver
 
     def add_declaration(
         self,

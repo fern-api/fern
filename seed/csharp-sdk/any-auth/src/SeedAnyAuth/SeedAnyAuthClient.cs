@@ -9,6 +9,8 @@ public partial class SeedAnyAuthClient
     public SeedAnyAuthClient(
         string? token = null,
         string? apiKey = null,
+        string? clientId = null,
+        string? clientSecret = null,
         ClientOptions? clientOptions = null
     )
     {
@@ -19,6 +21,14 @@ public partial class SeedAnyAuthClient
         apiKey ??= GetFromEnvironmentOrThrow(
             "MY_API_KEY",
             "Please pass in apiKey or set the environment variable MY_API_KEY."
+        );
+        clientId ??= GetFromEnvironmentOrThrow(
+            "MY_CLIENT_ID",
+            "Please pass in clientId or set the environment variable MY_CLIENT_ID."
+        );
+        clientSecret ??= GetFromEnvironmentOrThrow(
+            "MY_CLIENT_SECRET",
+            "Please pass in clientSecret or set the environment variable MY_CLIENT_SECRET."
         );
         var defaultHeaders = new Headers(
             new Dictionary<string, string>()

@@ -9721,7 +9721,11 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
           "base-path": "",
           "endpoints": {
             "retrieve": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Get details for a linked account.",
               "examples": [
                 {
@@ -9771,7 +9775,8 @@ service:
     retrieve:
       path: /account-details
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Get details for a linked account.
       source:
         openapi: ../openapi.yml
@@ -9810,7 +9815,11 @@ service:
           "base-path": "",
           "endpoints": {
             "retrieve": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Returns the account token for the end user with the provided public token.",
               "examples": [
                 {
@@ -9871,7 +9880,8 @@ service:
     retrieve:
       path: /account-token/{public_token}
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: >-
         Returns the account token for the end user with the provided public
         token.
@@ -9917,7 +9927,11 @@ service:
           "base-path": "",
           "endpoints": {
             "retrieve": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Returns a list of models and actions available for an account.",
               "examples": [
                 {
@@ -9990,7 +10004,8 @@ service:
     retrieve:
       path: /available-actions
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Returns a list of models and actions available for an account.
       source:
         openapi: ../openapi.yml
@@ -10042,7 +10057,11 @@ service:
           "base-path": "",
           "endpoints": {
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Returns a list of `BankInfo` objects.",
               "examples": [
                 {
@@ -10175,7 +10194,11 @@ service:
               },
             },
             "retrieve": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Returns a `BankInfo` object with the given `id`.",
               "examples": [
                 {
@@ -10311,7 +10334,8 @@ service:
     list:
       path: /bank-info
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Returns a list of `BankInfo` objects.
       source:
         openapi: ../openapi.yml
@@ -10421,7 +10445,8 @@ service:
     retrieve:
       path: /bank-info/{id}
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Returns a `BankInfo` object with the given `id`.
       source:
         openapi: ../openapi.yml
@@ -10491,7 +10516,11 @@ service:
           "base-path": "",
           "endpoints": {
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Returns a list of `Benefit` objects.",
               "examples": [
                 {
@@ -10602,7 +10631,11 @@ service:
               },
             },
             "retrieve": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Returns a `Benefit` object with the given `id`.",
               "examples": [
                 {
@@ -10688,7 +10721,8 @@ service:
     list:
       path: /benefits
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Returns a list of `Benefit` objects.
       source:
         openapi: ../openapi.yml
@@ -10779,7 +10813,8 @@ service:
     retrieve:
       path: /benefits/{id}
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Returns a `Benefit` object with the given `id`.
       source:
         openapi: ../openapi.yml
@@ -10844,7 +10879,11 @@ service:
           "base-path": "",
           "endpoints": {
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Returns a list of `Company` objects.",
               "examples": [
                 {
@@ -10947,7 +10986,11 @@ service:
               },
             },
             "retrieve": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Returns a `Company` object with the given `id`.",
               "examples": [
                 {
@@ -11029,7 +11072,8 @@ service:
     list:
       path: /companies
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Returns a list of `Company` objects.
       source:
         openapi: ../openapi.yml
@@ -11109,7 +11153,8 @@ service:
     retrieve:
       path: /companies/{id}
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Returns a `Company` object with the given `id`.
       source:
         openapi: ../openapi.yml
@@ -11165,7 +11210,11 @@ service:
           "base-path": "",
           "endpoints": {
             "create": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Delete a linked account.",
               "examples": [
                 {
@@ -11194,7 +11243,8 @@ service:
     create:
       path: /delete-account
       method: POST
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Delete a linked account.
       source:
         openapi: ../openapi.yml
@@ -11216,7 +11266,11 @@ service:
           "base-path": "",
           "endpoints": {
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Returns a list of `EmployeePayrollRun` objects.",
               "examples": [
                 {
@@ -11383,7 +11437,11 @@ service:
               },
             },
             "retrieve": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Returns an `EmployeePayrollRun` object with the given `id`.",
               "examples": [
                 {
@@ -11615,7 +11673,8 @@ service:
     list:
       path: /employee-payroll-runs
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Returns a list of `EmployeePayrollRun` objects.
       source:
         openapi: ../openapi.yml
@@ -11756,7 +11815,8 @@ service:
     retrieve:
       path: /employee-payroll-runs/{id}
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Returns an `EmployeePayrollRun` object with the given `id`.
       source:
         openapi: ../openapi.yml
@@ -11884,7 +11944,11 @@ service:
           "base-path": "",
           "endpoints": {
             "create": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Creates an `Employee` object with the given values.",
               "examples": [
                 {
@@ -12020,7 +12084,11 @@ service:
               },
             },
             "ignoreCreate": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Ignores a specific row based on the `model_id` in the url. These records will have their properties set to null, and will not be updated in future syncs. The "reason" and "message" fields in the request body will be stored for audit purposes.",
               "examples": [
                 {
@@ -12067,7 +12135,11 @@ service:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Returns a list of `Employee` objects.",
               "examples": [
                 {
@@ -12292,7 +12364,11 @@ service:
               },
             },
             "metaPostRetrieve": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Returns metadata for `Employee` POSTs.",
               "examples": [
                 {
@@ -12330,7 +12406,11 @@ service:
               },
             },
             "retrieve": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Returns an `Employee` object with the given `id`.",
               "examples": [
                 {
@@ -15843,7 +15923,8 @@ service:
     list:
       path: /employees
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Returns a list of `Employee` objects.
       source:
         openapi: ../openapi.yml
@@ -16034,7 +16115,8 @@ service:
     create:
       path: /employees
       method: POST
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Creates an `Employee` object with the given values.
       source:
         openapi: ../openapi.yml
@@ -16131,7 +16213,8 @@ service:
     retrieve:
       path: /employees/{id}
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Returns an `Employee` object with the given `id`.
       source:
         openapi: ../openapi.yml
@@ -16218,7 +16301,8 @@ service:
     ignoreCreate:
       path: /employees/ignore/{model_id}
       method: POST
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: >-
         Ignores a specific row based on the `model_id` in the url. These records
         will have their properties set to null, and will not be updated in
@@ -16249,7 +16333,8 @@ service:
     metaPostRetrieve:
       path: /employees/meta/post
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Returns metadata for `Employee` POSTs.
       source:
         openapi: ../openapi.yml
@@ -16286,7 +16371,11 @@ service:
           "base-path": "",
           "endpoints": {
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Returns a list of `Employment` objects.",
               "examples": [
                 {
@@ -16412,7 +16501,11 @@ service:
               },
             },
             "retrieve": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Returns an `Employment` object with the given `id`.",
               "examples": [
                 {
@@ -16924,7 +17017,8 @@ service:
     list:
       path: /employments
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Returns a list of `Employment` objects.
       source:
         openapi: ../openapi.yml
@@ -17025,7 +17119,8 @@ service:
     retrieve:
       path: /employments/{id}
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Returns an `Employment` object with the given `id`.
       source:
         openapi: ../openapi.yml
@@ -17099,7 +17194,11 @@ service:
           "base-path": "",
           "endpoints": {
             "sync_status_resync_create": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Force re-sync of all models. This is available for all organizations via the dashboard. Force re-sync is also available programmatically via API for monthly, quarterly, and highest sync frequency customers on the Core, Professional, or Enterprise plans. Doing so will consume a sync credit for the relevant linked account.",
               "examples": [
                 {
@@ -17148,7 +17247,8 @@ service:
     sync_status_resync_create:
       path: /sync-status/resync
       method: POST
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: >-
         Force re-sync of all models. This is available for all organizations via
         the dashboard. Force re-sync is also available programmatically via API
@@ -17188,7 +17288,11 @@ service:
           "base-path": "",
           "endpoints": {
             "create": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Create a remote key.",
               "examples": [
                 {
@@ -17253,7 +17357,8 @@ service:
     create:
       path: /generate-key
       method: POST
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Create a remote key.
       source:
         openapi: ../openapi.yml
@@ -17294,7 +17399,11 @@ service:
           "base-path": "",
           "endpoints": {
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Returns a list of `Group` objects.",
               "examples": [
                 {
@@ -17405,7 +17514,11 @@ service:
               },
             },
             "retrieve": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Returns a `Group` object with the given `id`.",
               "examples": [
                 {
@@ -17491,7 +17604,8 @@ service:
     list:
       path: /groups
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Returns a list of `Group` objects.
       source:
         openapi: ../openapi.yml
@@ -17579,7 +17693,8 @@ service:
     retrieve:
       path: /groups/{id}
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Returns a `Group` object with the given `id`.
       source:
         openapi: ../openapi.yml
@@ -17641,7 +17756,11 @@ service:
           "base-path": "",
           "endpoints": {
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Gets issues.",
               "examples": [
                 {
@@ -17740,7 +17859,11 @@ service:
               },
             },
             "retrieve": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Get a specific issue.",
               "examples": [
                 {
@@ -17818,7 +17941,8 @@ service:
     list:
       path: /issues
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Gets issues.
       source:
         openapi: ../openapi.yml
@@ -17902,7 +18026,8 @@ service:
     retrieve:
       path: /issues/{id}
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Get a specific issue.
       source:
         openapi: ../openapi.yml
@@ -17945,7 +18070,11 @@ service:
           "base-path": "",
           "endpoints": {
             "create": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Creates a link token to be used when linking a new end user.",
               "examples": [
                 {
@@ -18072,7 +18201,8 @@ service:
     create:
       path: /link-token
       method: POST
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Creates a link token to be used when linking a new end user.
       source:
         openapi: ../openapi.yml
@@ -18174,7 +18304,11 @@ service:
           "base-path": "",
           "endpoints": {
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "List linked accounts for your organization.",
               "examples": [
                 {
@@ -18358,7 +18492,8 @@ service:
     list:
       path: /linked-accounts
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: List linked accounts for your organization.
       source:
         openapi: ../openapi.yml
@@ -18499,7 +18634,11 @@ service:
           "base-path": "",
           "endpoints": {
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Returns a list of `Location` objects.",
               "examples": [
                 {
@@ -18612,7 +18751,11 @@ service:
               },
             },
             "retrieve": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Returns a `Location` object with the given `id`.",
               "examples": [
                 {
@@ -18704,7 +18847,8 @@ service:
     list:
       path: /locations
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Returns a list of `Location` objects.
       source:
         openapi: ../openapi.yml
@@ -18793,7 +18937,8 @@ service:
     retrieve:
       path: /locations/{id}
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Returns a `Location` object with the given `id`.
       source:
         openapi: ../openapi.yml
@@ -18861,7 +19006,11 @@ service:
           "base-path": "",
           "endpoints": {
             "create": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Pull data from an endpoint not currently supported by Merge.",
               "examples": [
                 {
@@ -18971,7 +19120,8 @@ service:
     create:
       path: /passthrough
       method: POST
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Pull data from an endpoint not currently supported by Merge.
       source:
         openapi: ../openapi.yml
@@ -19051,7 +19201,11 @@ service:
           "base-path": "",
           "endpoints": {
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Returns a list of `PayGroup` objects.",
               "examples": [
                 {
@@ -19148,7 +19302,11 @@ service:
               },
             },
             "retrieve": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Returns a `PayGroup` object with the given `id`.",
               "examples": [
                 {
@@ -19224,7 +19382,8 @@ service:
     list:
       path: /pay-groups
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Returns a list of `PayGroup` objects.
       source:
         openapi: ../openapi.yml
@@ -19299,7 +19458,8 @@ service:
     retrieve:
       path: /pay-groups/{id}
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Returns a `PayGroup` object with the given `id`.
       source:
         openapi: ../openapi.yml
@@ -19353,7 +19513,11 @@ service:
           "base-path": "",
           "endpoints": {
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Returns a list of `PayrollRun` objects.",
               "examples": [
                 {
@@ -19488,7 +19652,11 @@ service:
               },
             },
             "retrieve": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Returns a `PayrollRun` object with the given `id`.",
               "examples": [
                 {
@@ -19689,7 +19857,8 @@ service:
     list:
       path: /payroll-runs
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Returns a list of `PayrollRun` objects.
       source:
         openapi: ../openapi.yml
@@ -19811,7 +19980,8 @@ service:
     retrieve:
       path: /payroll-runs/{id}
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Returns a `PayrollRun` object with the given `id`.
       source:
         openapi: ../openapi.yml
@@ -19875,7 +20045,11 @@ service:
           "base-path": "",
           "endpoints": {
             "create": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Exchange remote keys.",
               "examples": [
                 {
@@ -19940,7 +20114,8 @@ service:
     create:
       path: /regenerate-key
       method: POST
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Exchange remote keys.
       source:
         openapi: ../openapi.yml
@@ -19981,7 +20156,11 @@ service:
           "base-path": "",
           "endpoints": {
             "configurationsList": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Get a linked account's selective syncs.",
               "examples": [
                 {
@@ -20020,7 +20199,11 @@ service:
               },
             },
             "configurationsUpdate": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Replace a linked account's selective syncs.",
               "examples": [
                 {
@@ -20081,7 +20264,11 @@ service:
               },
             },
             "metaList": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Get metadata for the conditions available to a linked account.",
               "examples": [
                 {
@@ -20161,7 +20348,8 @@ service:
     configurationsList:
       path: /selective-sync/configurations
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Get a linked account's selective syncs.
       source:
         openapi: ../openapi.yml
@@ -20185,7 +20373,8 @@ service:
     configurationsUpdate:
       path: /selective-sync/configurations
       method: PUT
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Replace a linked account's selective syncs.
       source:
         openapi: ../openapi.yml
@@ -20220,7 +20409,8 @@ service:
     metaList:
       path: /selective-sync/meta
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Get metadata for the conditions available to a linked account.
       source:
         openapi: ../openapi.yml
@@ -20275,7 +20465,11 @@ service:
           "base-path": "",
           "endpoints": {
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Get syncing status. Possible values: `DISABLED`, `DONE`, `FAILED`, `PARTIALLY_SYNCED`, `PAUSED`, `SYNCING`",
               "examples": [
                 {
@@ -20344,7 +20538,8 @@ service:
     list:
       path: /sync-status
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: >-
         Get syncing status. Possible values: `DISABLED`, `DONE`, `FAILED`,
         `PARTIALLY_SYNCED`, `PAUSED`, `SYNCING`
@@ -20395,7 +20590,11 @@ service:
           "base-path": "",
           "endpoints": {
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Returns a list of `Team` objects.",
               "examples": [
                 {
@@ -20501,7 +20700,11 @@ service:
               },
             },
             "retrieve": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Returns a `Team` object with the given `id`.",
               "examples": [
                 {
@@ -20582,7 +20785,8 @@ service:
     list:
       path: /teams
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Returns a list of `Team` objects.
       source:
         openapi: ../openapi.yml
@@ -20666,7 +20870,8 @@ service:
     retrieve:
       path: /teams/{id}
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Returns a `Team` object with the given `id`.
       source:
         openapi: ../openapi.yml
@@ -20726,7 +20931,11 @@ service:
           "base-path": "",
           "endpoints": {
             "create": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Creates a `TimeOff` object with the given values.",
               "examples": [
                 {
@@ -20838,7 +21047,11 @@ service:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Returns a list of `TimeOff` objects.",
               "examples": [
                 {
@@ -20984,7 +21197,11 @@ service:
               },
             },
             "metaPostRetrieve": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Returns metadata for `TimeOff` POSTs.",
               "examples": [
                 {
@@ -21022,7 +21239,11 @@ service:
               },
             },
             "retrieve": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Returns a `TimeOff` object with the given `id`.",
               "examples": [
                 {
@@ -21379,7 +21600,8 @@ service:
     list:
       path: /time-off
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Returns a list of `TimeOff` objects.
       source:
         openapi: ../openapi.yml
@@ -21514,7 +21736,8 @@ service:
     create:
       path: /time-off
       method: POST
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Creates a `TimeOff` object with the given values.
       source:
         openapi: ../openapi.yml
@@ -21590,7 +21813,8 @@ service:
     retrieve:
       path: /time-off/{id}
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Returns a `TimeOff` object with the given `id`.
       source:
         openapi: ../openapi.yml
@@ -21651,7 +21875,8 @@ service:
     metaPostRetrieve:
       path: /time-off/meta/post
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Returns metadata for `TimeOff` POSTs.
       source:
         openapi: ../openapi.yml
@@ -21688,7 +21913,11 @@ service:
           "base-path": "",
           "endpoints": {
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Returns a list of `TimeOffBalance` objects.",
               "examples": [
                 {
@@ -21815,7 +22044,11 @@ service:
               },
             },
             "retrieve": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Returns a `TimeOffBalance` object with the given `id`.",
               "examples": [
                 {
@@ -21933,7 +22166,8 @@ service:
     list:
       path: /time-off-balances
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Returns a list of `TimeOffBalance` objects.
       source:
         openapi: ../openapi.yml
@@ -22044,7 +22278,8 @@ service:
     retrieve:
       path: /time-off-balances/{id}
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Returns a `TimeOffBalance` object with the given `id`.
       source:
         openapi: ../openapi.yml
@@ -22112,7 +22347,11 @@ service:
           "base-path": "",
           "endpoints": {
             "create": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Creates a `WebhookReceiver` object with the given values.",
               "examples": [
                 {
@@ -22175,7 +22414,11 @@ service:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "tokenAuth": [],
+                },
+              ],
               "docs": "Returns a list of `WebhookReceiver` objects.",
               "examples": [
                 {
@@ -22220,7 +22463,8 @@ service:
     list:
       path: /webhook-receivers
       method: GET
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Returns a list of `WebhookReceiver` objects.
       source:
         openapi: ../openapi.yml
@@ -22239,7 +22483,8 @@ service:
     create:
       path: /webhook-receivers
       method: POST
-      auth: true
+      auth:
+        - tokenAuth: []
       docs: Creates a `WebhookReceiver` object with the given values.
       source:
         openapi: ../openapi.yml

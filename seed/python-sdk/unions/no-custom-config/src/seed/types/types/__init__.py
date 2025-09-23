@@ -43,6 +43,18 @@ if typing.TYPE_CHECKING:
         UnionWithOptionalTime_Datetime,
     )
     from .union_with_primitive import UnionWithPrimitive, UnionWithPrimitive_Integer, UnionWithPrimitive_String
+    from .union_with_same_number_types import (
+        UnionWithSameNumberTypes,
+        UnionWithSameNumberTypes_AnyNumber,
+        UnionWithSameNumberTypes_NegativeInt,
+        UnionWithSameNumberTypes_PositiveInt,
+    )
+    from .union_with_same_string_types import (
+        UnionWithSameStringTypes,
+        UnionWithSameStringTypes_CustomFormat,
+        UnionWithSameStringTypes_PatternString,
+        UnionWithSameStringTypes_RegularString,
+    )
     from .union_with_single_element import UnionWithSingleElement, UnionWithSingleElement_Foo
     from .union_with_sub_types import UnionWithSubTypes, UnionWithSubTypes_Foo, UnionWithSubTypes_FooExtended
     from .union_with_time import UnionWithTime, UnionWithTime_Date, UnionWithTime_Datetime, UnionWithTime_Value
@@ -82,6 +94,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UnionWithPrimitive": ".union_with_primitive",
     "UnionWithPrimitive_Integer": ".union_with_primitive",
     "UnionWithPrimitive_String": ".union_with_primitive",
+    "UnionWithSameNumberTypes": ".union_with_same_number_types",
+    "UnionWithSameNumberTypes_AnyNumber": ".union_with_same_number_types",
+    "UnionWithSameNumberTypes_NegativeInt": ".union_with_same_number_types",
+    "UnionWithSameNumberTypes_PositiveInt": ".union_with_same_number_types",
+    "UnionWithSameStringTypes": ".union_with_same_string_types",
+    "UnionWithSameStringTypes_CustomFormat": ".union_with_same_string_types",
+    "UnionWithSameStringTypes_PatternString": ".union_with_same_string_types",
+    "UnionWithSameStringTypes_RegularString": ".union_with_same_string_types",
     "UnionWithSingleElement": ".union_with_single_element",
     "UnionWithSingleElement_Foo": ".union_with_single_element",
     "UnionWithSubTypes": ".union_with_sub_types",
@@ -105,8 +125,10 @@ def __getattr__(attr_name: str) -> typing.Any:
         raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
     try:
         module = import_module(module_name, __package__)
-        result = getattr(module, attr_name)
-        return result
+        if module_name == f".{attr_name}":
+            return module
+        else:
+            return getattr(module, attr_name)
     except ImportError as e:
         raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
     except AttributeError as e:
@@ -153,6 +175,14 @@ __all__ = [
     "UnionWithPrimitive",
     "UnionWithPrimitive_Integer",
     "UnionWithPrimitive_String",
+    "UnionWithSameNumberTypes",
+    "UnionWithSameNumberTypes_AnyNumber",
+    "UnionWithSameNumberTypes_NegativeInt",
+    "UnionWithSameNumberTypes_PositiveInt",
+    "UnionWithSameStringTypes",
+    "UnionWithSameStringTypes_CustomFormat",
+    "UnionWithSameStringTypes_PatternString",
+    "UnionWithSameStringTypes_RegularString",
     "UnionWithSingleElement",
     "UnionWithSingleElement_Foo",
     "UnionWithSubTypes",

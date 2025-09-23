@@ -20,6 +20,8 @@ if typing.TYPE_CHECKING:
         UnionWithNoProperties,
         UnionWithOptionalTime,
         UnionWithPrimitive,
+        UnionWithSameNumberTypes,
+        UnionWithSameStringTypes,
         UnionWithSingleElement,
         UnionWithSubTypes,
         UnionWithTime,
@@ -59,7 +61,7 @@ if typing.TYPE_CHECKING:
         VibrantExcitement,
     )
     from .client import AsyncSeedUnions, SeedUnions
-    from .union import Circle, GetShapeRequest, Shape, Square
+    from .union import Circle, GetShapeRequest, Shape, Square, WithName
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "ActiveDiamond": ".bigunion",
@@ -108,6 +110,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UnionWithNoProperties": ".types",
     "UnionWithOptionalTime": ".types",
     "UnionWithPrimitive": ".types",
+    "UnionWithSameNumberTypes": ".types",
+    "UnionWithSameStringTypes": ".types",
     "UnionWithSingleElement": ".types",
     "UnionWithSubTypes": ".types",
     "UnionWithTime": ".types",
@@ -115,10 +119,11 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UniqueStress": ".bigunion",
     "UnwillingSmoke": ".bigunion",
     "VibrantExcitement": ".bigunion",
+    "WithName": ".union",
     "__version__": ".version",
-    "bigunion": ".",
-    "types": ".",
-    "union": ".",
+    "bigunion": ".bigunion",
+    "types": ".types",
+    "union": ".union",
 }
 
 
@@ -128,8 +133,10 @@ def __getattr__(attr_name: str) -> typing.Any:
         raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
     try:
         module = import_module(module_name, __package__)
-        result = getattr(module, attr_name)
-        return result
+        if module_name == f".{attr_name}":
+            return module
+        else:
+            return getattr(module, attr_name)
     except ImportError as e:
         raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
     except AttributeError as e:
@@ -188,6 +195,8 @@ __all__ = [
     "UnionWithNoProperties",
     "UnionWithOptionalTime",
     "UnionWithPrimitive",
+    "UnionWithSameNumberTypes",
+    "UnionWithSameStringTypes",
     "UnionWithSingleElement",
     "UnionWithSubTypes",
     "UnionWithTime",
@@ -195,6 +204,7 @@ __all__ = [
     "UniqueStress",
     "UnwillingSmoke",
     "VibrantExcitement",
+    "WithName",
     "__version__",
     "bigunion",
     "types",

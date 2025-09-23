@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { csharp } from "@fern-api/csharp-codegen";
+import { ast, Writer } from "@fern-api/csharp-codegen";
 
 import {
     HttpEndpoint,
@@ -45,8 +45,14 @@ export class WrappedEndpointRequest extends EndpointRequest {
         this.wrapper = wrapper;
     }
 
-    public getParameterType(): csharp.Type {
-        return csharp.Type.reference(this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName));
+    private get csharp() {
+        return this.context.csharp;
+    }
+
+    public getParameterType(): ast.Type {
+        return this.csharp.Type.reference(
+            this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName)
+        );
     }
 
     public getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined {
@@ -64,12 +70,12 @@ export class WrappedEndpointRequest extends EndpointRequest {
         }
 
         return {
-            code: csharp.codeblock((writer) => {
+            code: this.csharp.codeblock((writer) => {
                 writer.write(`var ${QUERY_PARAMETER_BAG_NAME} = `);
                 writer.writeNodeStatement(
-                    csharp.dictionary({
-                        keyType: csharp.Type.string(),
-                        valueType: csharp.Type.object(),
+                    this.csharp.dictionary({
+                        keyType: this.csharp.Type.string(),
+                        valueType: this.csharp.Type.object(),
                         values: undefined
                     })
                 );
@@ -78,7 +84,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 }
                 for (const query of optionalQueryParameters) {
                     const queryParameterReference = `${this.getParameterName()}.${query.name.name.pascalCase.safeName}`;
-                    writer.controlFlow("if", csharp.codeblock(`${queryParameterReference} != null`));
+                    writer.controlFlow("if", this.csharp.codeblock(`${queryParameterReference} != null`));
                     this.writeQueryParameter(writer, query);
                     writer.endControlFlow();
                 }
@@ -87,7 +93,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         };
     }
 
-    private writeQueryParameter(writer: csharp.Writer, query: QueryParameter): void {
+    private writeQueryParameter(writer: Writer, query: QueryParameter): void {
         writer.write(`${QUERY_PARAMETER_BAG_NAME}["${query.name.wireValue}"] = `);
         if (!query.allowMultiple) {
             writer.writeNodeStatement(this.stringify({ reference: query.valueType, name: query.name.name }));
@@ -127,20 +133,22 @@ export class WrappedEndpointRequest extends EndpointRequest {
         }
 
         return {
-            code: csharp.codeblock((writer) => {
+            code: this.csharp.codeblock((writer) => {
                 writer.write(`var ${HEADER_BAG_NAME} = `);
                 writer.writeNodeStatement(
-                    csharp.instantiateClass({
+                    this.csharp.instantiateClass({
                         classReference: this.context.getHeadersClassReference(),
                         arguments_: [
-                            csharp.dictionary({
-                                keyType: csharp.Type.string(),
-                                valueType: csharp.Type.string(),
+                            this.csharp.dictionary({
+                                keyType: this.csharp.Type.string(),
+                                valueType: this.csharp.Type.string(),
                                 values: {
                                     type: "entries",
                                     entries: requiredHeaders.map((header) => {
                                         return {
-                                            key: csharp.codeblock(csharp.string_({ string: header.name.wireValue })),
+                                            key: this.csharp.codeblock(
+                                                this.csharp.string_({ string: header.name.wireValue })
+                                            ),
                                             value: this.stringify({
                                                 reference: header.valueType,
                                                 name: header.name.name
@@ -154,7 +162,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 );
                 for (const header of optionalHeaders) {
                     const headerReference = `${this.getParameterName()}.${header.name.name.pascalCase.safeName}`;
-                    writer.controlFlow("if", csharp.codeblock(`${headerReference} != null`));
+                    writer.controlFlow("if", this.csharp.codeblock(`${headerReference} != null`));
                     writer.write(`${HEADER_BAG_NAME}["${header.name.wireValue}"] = `);
                     writer.writeNodeStatement(this.stringify({ reference: header.valueType, name: header.name.name }));
                     writer.endControlFlow();
@@ -191,10 +199,10 @@ export class WrappedEndpointRequest extends EndpointRequest {
         name: Name;
         parameterOverride?: string;
         allowOptionals?: boolean;
-    }): csharp.CodeBlock {
+    }): ast.CodeBlock {
         const parameter = parameterOverride ?? `${this.getParameterName()}.${name.pascalCase.safeName}`;
         if (this.isString(reference)) {
-            return csharp.codeblock(`${parameter}`);
+            return this.csharp.codeblock(`${parameter}`);
         }
         const maybeDotValue =
             (this.isOptional({ typeReference: reference }) || this.isNullable({ typeReference: reference })) &&
@@ -204,35 +212,35 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 : "";
 
         if (this.isDateOrDateTime({ type: "datetime", typeReference: reference })) {
-            return csharp.codeblock((writer) => {
+            return this.csharp.codeblock((writer) => {
                 writer.write(`${parameter}${maybeDotValue}.ToString(`);
                 writer.writeNode(this.context.getConstantsClassReference());
                 writer.write(".DateTimeFormat)");
             });
         } else if (this.isDateOrDateTime({ type: "date", typeReference: reference })) {
-            return csharp.codeblock((writer) => {
+            return this.csharp.codeblock((writer) => {
                 writer.write(`${parameter}${maybeDotValue}.ToString(`);
                 writer.writeNode(this.context.getConstantsClassReference());
                 writer.write(".DateFormat)");
             });
         } else if (this.isEnum({ typeReference: reference })) {
-            return csharp.codeblock((writer) => {
+            return this.csharp.codeblock((writer) => {
                 // Stringify is an extension method that we wrote in the core namespace, so need to add here
                 writer.addNamespace(this.context.getCoreNamespace());
                 writer.write(`${parameter}${maybeDotValue}.Stringify()`);
             });
         } else if (this.shouldJsonSerialize({ typeReference: reference })) {
-            return csharp.codeblock((writer) => {
+            return this.csharp.codeblock((writer) => {
                 writer.writeNode(
-                    csharp.invokeMethod({
+                    this.csharp.invokeMethod({
                         on: this.context.getJsonUtilsClassReference(),
                         method: "Serialize",
-                        arguments_: [csharp.codeblock(`${parameter}${maybeDotValue}`)]
+                        arguments_: [this.csharp.codeblock(`${parameter}${maybeDotValue}`)]
                     })
                 );
             });
         } else {
-            return csharp.codeblock(`${parameter}${maybeDotValue}.ToString()`);
+            return this.csharp.codeblock(`${parameter}${maybeDotValue}.ToString()`);
         }
     }
 

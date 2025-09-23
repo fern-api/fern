@@ -410,6 +410,415 @@
         ]
       }
     },
+    "type_inline-users/inline-users:Order": {
+      "name": "Order",
+      "shape": {
+        "type": "enum",
+        "values": [
+          {
+            "value": "asc"
+          },
+          {
+            "value": "desc"
+          }
+        ]
+      }
+    },
+    "type_inline-users/inline-users:WithPage": {
+      "name": "WithPage",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "page",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_inline-users/inline-users:WithCursor": {
+      "name": "WithCursor",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "cursor",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_inline-users/inline-users:UserListContainer": {
+      "name": "UserListContainer",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "users",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "type_inline-users/inline-users:User"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_inline-users/inline-users:UserPage": {
+      "name": "UserPage",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "data",
+            "valueType": {
+              "type": "id",
+              "value": "type_inline-users/inline-users:UserListContainer"
+            }
+          },
+          {
+            "key": "next",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "uuid"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_inline-users/inline-users:UserOptionalListContainer": {
+      "name": "UserOptionalListContainer",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "users",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_inline-users/inline-users:User"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_inline-users/inline-users:UserOptionalListPage": {
+      "name": "UserOptionalListPage",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "data",
+            "valueType": {
+              "type": "id",
+              "value": "type_inline-users/inline-users:UserOptionalListContainer"
+            }
+          },
+          {
+            "key": "next",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "uuid"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_inline-users/inline-users:UsernameContainer": {
+      "name": "UsernameContainer",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "results",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_inline-users/inline-users:ListUsersExtendedResponse": {
+      "name": "ListUsersExtendedResponse",
+      "shape": {
+        "type": "object",
+        "extends": [
+          "type_inline-users/inline-users:UserPage"
+        ],
+        "properties": [
+          {
+            "description": "The totall number of /users",
+            "key": "total_count",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_inline-users/inline-users:ListUsersExtendedOptionalListResponse": {
+      "name": "ListUsersExtendedOptionalListResponse",
+      "shape": {
+        "type": "object",
+        "extends": [
+          "type_inline-users/inline-users:UserOptionalListPage"
+        ],
+        "properties": [
+          {
+            "description": "The totall number of /users",
+            "key": "total_count",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_inline-users/inline-users:ListUsersPaginationResponse": {
+      "name": "ListUsersPaginationResponse",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "hasNextPage",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "key": "page",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_inline-users/inline-users:Page"
+              }
+            }
+          },
+          {
+            "description": "The totall number of /users",
+            "key": "total_count",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "id",
+              "value": "type_inline-users/inline-users:Users"
+            }
+          }
+        ]
+      }
+    },
+    "type_inline-users/inline-users:ListUsersMixedTypePaginationResponse": {
+      "name": "ListUsersMixedTypePaginationResponse",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "next",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "data",
+            "valueType": {
+              "type": "id",
+              "value": "type_inline-users/inline-users:Users"
+            }
+          }
+        ]
+      }
+    },
+    "type_inline-users/inline-users:Page": {
+      "name": "Page",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The current page",
+            "key": "page",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          },
+          {
+            "key": "next",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "type_inline-users/inline-users:NextPage"
+              }
+            }
+          },
+          {
+            "key": "per_page",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          },
+          {
+            "key": "total_page",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_inline-users/inline-users:NextPage": {
+      "name": "NextPage",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "page",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          },
+          {
+            "key": "starting_after",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_inline-users/inline-users:Users": {
+      "name": "Users",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "users",
+            "valueType": {
+              "type": "list",
+              "itemType": {
+                "type": "id",
+                "value": "type_inline-users/inline-users:User"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_inline-users/inline-users:User": {
+      "name": "User",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          }
+        ]
+      }
+    },
     "type_users:Order": {
       "name": "Order",
       "shape": {
@@ -961,6 +1370,1430 @@
         "type_complex:CursorPages",
         "type_complex:StartingAfterPaging",
         "type_complex:Conversation"
+      ],
+      "subpackages": []
+    },
+    "subpackage_inline-users": {
+      "subpackageId": "subpackage_inline-users",
+      "name": "inline-users",
+      "endpoints": [],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": [
+        "subpackage_inline-users/inline-users"
+      ]
+    },
+    "subpackage_inline-users/inline-users": {
+      "subpackageId": "subpackage_inline-users/inline-users",
+      "name": "inline-users",
+      "endpoints": [
+        {
+          "auth": false,
+          "method": "GET",
+          "id": "listWithCursorPagination",
+          "originalEndpointId": "endpoint_inline-users/inline-users.listWithCursorPagination",
+          "name": "List With Cursor Pagination",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/inline-users"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "description": "Defaults to first page",
+              "key": "page",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            {
+              "description": "Defaults to per page",
+              "key": "per_page",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            {
+              "key": "order",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_inline-users/inline-users:Order"
+                }
+              }
+            },
+            {
+              "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
+              "key": "starting_after",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_inline-users/inline-users:ListUsersPaginationResponse"
+              }
+            }
+          },
+          "responsesV2": {},
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/inline-users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "hasNextPage": true,
+                "page": {
+                  "page": 1,
+                  "next": {
+                    "page": 1,
+                    "starting_after": "starting_after"
+                  },
+                  "per_page": 1,
+                  "total_page": 1
+                },
+                "total_count": 1,
+                "data": {
+                  "users": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "hasNextPage": true,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 1,
+                      "starting_after": "starting_after"
+                    },
+                    "per_page": 1,
+                    "total_page": 1
+                  },
+                  "total_count": 1,
+                  "data": {
+                    "users": [
+                      {
+                        "name": "name",
+                        "id": 1
+                      },
+                      {
+                        "name": "name",
+                        "id": 1
+                      }
+                    ]
+                  }
+                }
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "POST",
+          "id": "listWithMixedTypeCursorPagination",
+          "originalEndpointId": "endpoint_inline-users/inline-users.listWithMixedTypeCursorPagination",
+          "name": "List With Mixed Type Cursor Pagination",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/inline-users"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "key": "cursor",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_inline-users/inline-users:ListUsersMixedTypePaginationResponse"
+              }
+            }
+          },
+          "responsesV2": {},
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/inline-users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "next": "next",
+                "data": {
+                  "users": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "next": "next",
+                  "data": {
+                    "users": [
+                      {
+                        "name": "name",
+                        "id": 1
+                      },
+                      {
+                        "name": "name",
+                        "id": 1
+                      }
+                    ]
+                  }
+                }
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "POST",
+          "id": "listWithBodyCursorPagination",
+          "originalEndpointId": "endpoint_inline-users/inline-users.listWithBodyCursorPagination",
+          "name": "List With Body Cursor Pagination",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/inline-users"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "object",
+                "extends": [],
+                "properties": [
+                  {
+                    "description": "The object that contains the cursor used for pagination\nin order to fetch the next page of results.",
+                    "key": "pagination",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "id",
+                        "value": "type_inline-users/inline-users:WithCursor"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_inline-users/inline-users:ListUsersPaginationResponse"
+              }
+            }
+          },
+          "responsesV2": {},
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/inline-users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {},
+              "requestBodyV3": {
+                "type": "json",
+                "value": {}
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "hasNextPage": true,
+                "page": {
+                  "page": 1,
+                  "next": {
+                    "page": 1,
+                    "starting_after": "starting_after"
+                  },
+                  "per_page": 1,
+                  "total_page": 1
+                },
+                "total_count": 1,
+                "data": {
+                  "users": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "hasNextPage": true,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 1,
+                      "starting_after": "starting_after"
+                    },
+                    "per_page": 1,
+                    "total_page": 1
+                  },
+                  "total_count": 1,
+                  "data": {
+                    "users": [
+                      {
+                        "name": "name",
+                        "id": 1
+                      },
+                      {
+                        "name": "name",
+                        "id": 1
+                      }
+                    ]
+                  }
+                }
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "GET",
+          "id": "listWithOffsetPagination",
+          "originalEndpointId": "endpoint_inline-users/inline-users.listWithOffsetPagination",
+          "name": "List With Offset Pagination",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/inline-users"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "description": "Defaults to first page",
+              "key": "page",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer",
+                    "default": 0
+                  }
+                }
+              }
+            },
+            {
+              "description": "Defaults to per page",
+              "key": "per_page",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            {
+              "key": "order",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_inline-users/inline-users:Order"
+                }
+              }
+            },
+            {
+              "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
+              "key": "starting_after",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_inline-users/inline-users:ListUsersPaginationResponse"
+              }
+            }
+          },
+          "responsesV2": {},
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/inline-users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "hasNextPage": true,
+                "page": {
+                  "page": 1,
+                  "next": {
+                    "page": 1,
+                    "starting_after": "starting_after"
+                  },
+                  "per_page": 1,
+                  "total_page": 1
+                },
+                "total_count": 1,
+                "data": {
+                  "users": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "hasNextPage": true,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 1,
+                      "starting_after": "starting_after"
+                    },
+                    "per_page": 1,
+                    "total_page": 1
+                  },
+                  "total_count": 1,
+                  "data": {
+                    "users": [
+                      {
+                        "name": "name",
+                        "id": 1
+                      },
+                      {
+                        "name": "name",
+                        "id": 1
+                      }
+                    ]
+                  }
+                }
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "GET",
+          "id": "listWithDoubleOffsetPagination",
+          "originalEndpointId": "endpoint_inline-users/inline-users.listWithDoubleOffsetPagination",
+          "name": "List With Double Offset Pagination",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/inline-users"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "description": "Defaults to first page",
+              "key": "page",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "double",
+                    "default": 0
+                  }
+                }
+              }
+            },
+            {
+              "description": "Defaults to per page",
+              "key": "per_page",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "double"
+                  }
+                }
+              }
+            },
+            {
+              "key": "order",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_inline-users/inline-users:Order"
+                }
+              }
+            },
+            {
+              "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
+              "key": "starting_after",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_inline-users/inline-users:ListUsersPaginationResponse"
+              }
+            }
+          },
+          "responsesV2": {},
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/inline-users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "hasNextPage": true,
+                "page": {
+                  "page": 1,
+                  "next": {
+                    "page": 1,
+                    "starting_after": "starting_after"
+                  },
+                  "per_page": 1,
+                  "total_page": 1
+                },
+                "total_count": 1,
+                "data": {
+                  "users": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "hasNextPage": true,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 1,
+                      "starting_after": "starting_after"
+                    },
+                    "per_page": 1,
+                    "total_page": 1
+                  },
+                  "total_count": 1,
+                  "data": {
+                    "users": [
+                      {
+                        "name": "name",
+                        "id": 1
+                      },
+                      {
+                        "name": "name",
+                        "id": 1
+                      }
+                    ]
+                  }
+                }
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "POST",
+          "id": "listWithBodyOffsetPagination",
+          "originalEndpointId": "endpoint_inline-users/inline-users.listWithBodyOffsetPagination",
+          "name": "List With Body Offset Pagination",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/inline-users"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "object",
+                "extends": [],
+                "properties": [
+                  {
+                    "description": "The object that contains the offset used for pagination\nin order to fetch the next page of results.",
+                    "key": "pagination",
+                    "valueType": {
+                      "type": "optional",
+                      "itemType": {
+                        "type": "id",
+                        "value": "type_inline-users/inline-users:WithPage"
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_inline-users/inline-users:ListUsersPaginationResponse"
+              }
+            }
+          },
+          "responsesV2": {},
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/inline-users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {},
+              "requestBodyV3": {
+                "type": "json",
+                "value": {}
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "hasNextPage": true,
+                "page": {
+                  "page": 1,
+                  "next": {
+                    "page": 1,
+                    "starting_after": "starting_after"
+                  },
+                  "per_page": 1,
+                  "total_page": 1
+                },
+                "total_count": 1,
+                "data": {
+                  "users": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "hasNextPage": true,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 1,
+                      "starting_after": "starting_after"
+                    },
+                    "per_page": 1,
+                    "total_page": 1
+                  },
+                  "total_count": 1,
+                  "data": {
+                    "users": [
+                      {
+                        "name": "name",
+                        "id": 1
+                      },
+                      {
+                        "name": "name",
+                        "id": 1
+                      }
+                    ]
+                  }
+                }
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "GET",
+          "id": "listWithOffsetStepPagination",
+          "originalEndpointId": "endpoint_inline-users/inline-users.listWithOffsetStepPagination",
+          "name": "List With Offset Step Pagination",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/inline-users"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "description": "Defaults to first page",
+              "key": "page",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            {
+              "description": "The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
+              "key": "limit",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            {
+              "key": "order",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_inline-users/inline-users:Order"
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_inline-users/inline-users:ListUsersPaginationResponse"
+              }
+            }
+          },
+          "responsesV2": {},
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/inline-users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "hasNextPage": true,
+                "page": {
+                  "page": 1,
+                  "next": {
+                    "page": 1,
+                    "starting_after": "starting_after"
+                  },
+                  "per_page": 1,
+                  "total_page": 1
+                },
+                "total_count": 1,
+                "data": {
+                  "users": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "hasNextPage": true,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 1,
+                      "starting_after": "starting_after"
+                    },
+                    "per_page": 1,
+                    "total_page": 1
+                  },
+                  "total_count": 1,
+                  "data": {
+                    "users": [
+                      {
+                        "name": "name",
+                        "id": 1
+                      },
+                      {
+                        "name": "name",
+                        "id": 1
+                      }
+                    ]
+                  }
+                }
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "GET",
+          "id": "listWithOffsetPaginationHasNextPage",
+          "originalEndpointId": "endpoint_inline-users/inline-users.listWithOffsetPaginationHasNextPage",
+          "name": "List With Offset Pagination Has Next Page",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/inline-users"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "description": "Defaults to first page",
+              "key": "page",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            {
+              "description": "The maximum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint.",
+              "key": "limit",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            },
+            {
+              "key": "order",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_inline-users/inline-users:Order"
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_inline-users/inline-users:ListUsersPaginationResponse"
+              }
+            }
+          },
+          "responsesV2": {},
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/inline-users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "hasNextPage": true,
+                "page": {
+                  "page": 1,
+                  "next": {
+                    "page": 1,
+                    "starting_after": "starting_after"
+                  },
+                  "per_page": 1,
+                  "total_page": 1
+                },
+                "total_count": 1,
+                "data": {
+                  "users": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "hasNextPage": true,
+                  "page": {
+                    "page": 1,
+                    "next": {
+                      "page": 1,
+                      "starting_after": "starting_after"
+                    },
+                    "per_page": 1,
+                    "total_page": 1
+                  },
+                  "total_count": 1,
+                  "data": {
+                    "users": [
+                      {
+                        "name": "name",
+                        "id": 1
+                      },
+                      {
+                        "name": "name",
+                        "id": 1
+                      }
+                    ]
+                  }
+                }
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "GET",
+          "id": "listWithExtendedResults",
+          "originalEndpointId": "endpoint_inline-users/inline-users.listWithExtendedResults",
+          "name": "List With Extended Results",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/inline-users"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "key": "cursor",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "uuid"
+                  }
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_inline-users/inline-users:ListUsersExtendedResponse"
+              }
+            }
+          },
+          "responsesV2": {},
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/inline-users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "total_count": 1,
+                "data": {
+                  "users": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                },
+                "next": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "total_count": 1,
+                  "data": {
+                    "users": [
+                      {
+                        "name": "name",
+                        "id": 1
+                      },
+                      {
+                        "name": "name",
+                        "id": 1
+                      }
+                    ]
+                  },
+                  "next": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                }
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "GET",
+          "id": "listWithExtendedResultsAndOptionalData",
+          "originalEndpointId": "endpoint_inline-users/inline-users.listWithExtendedResultsAndOptionalData",
+          "name": "List With Extended Results And Optional Data",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/inline-users"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "key": "cursor",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "uuid"
+                  }
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_inline-users/inline-users:ListUsersExtendedOptionalListResponse"
+              }
+            }
+          },
+          "responsesV2": {},
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/inline-users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "total_count": 1,
+                "data": {
+                  "users": [
+                    {
+                      "name": "name",
+                      "id": 1
+                    },
+                    {
+                      "name": "name",
+                      "id": 1
+                    }
+                  ]
+                },
+                "next": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "total_count": 1,
+                  "data": {
+                    "users": [
+                      {
+                        "name": "name",
+                        "id": 1
+                      },
+                      {
+                        "name": "name",
+                        "id": 1
+                      }
+                    ]
+                  },
+                  "next": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                }
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "GET",
+          "id": "listUsernames",
+          "originalEndpointId": "endpoint_inline-users/inline-users.listUsernames",
+          "name": "List Usernames",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/inline-users"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
+              "key": "starting_after",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_:UsernameCursor"
+              }
+            }
+          },
+          "responsesV2": {},
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/inline-users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "cursor": {
+                  "after": "after",
+                  "data": [
+                    "data",
+                    "data"
+                  ]
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "cursor": {
+                    "after": "after",
+                    "data": [
+                      "data",
+                      "data"
+                    ]
+                  }
+                }
+              },
+              "codeSamples": []
+            }
+          ]
+        },
+        {
+          "auth": false,
+          "method": "GET",
+          "id": "listWithGlobalConfig",
+          "originalEndpointId": "endpoint_inline-users/inline-users.listWithGlobalConfig",
+          "name": "List With Global Config",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/inline-users"
+              },
+              {
+                "type": "literal",
+                "value": ""
+              }
+            ]
+          },
+          "queryParameters": [
+            {
+              "key": "offset",
+              "type": {
+                "type": "optional",
+                "itemType": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          ],
+          "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_inline-users/inline-users:UsernameContainer"
+              }
+            }
+          },
+          "responsesV2": {},
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/inline-users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": {
+                "results": [
+                  "results",
+                  "results"
+                ]
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "results": [
+                    "results",
+                    "results"
+                  ]
+                }
+              },
+              "codeSamples": []
+            }
+          ]
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [
+        "type_inline-users/inline-users:Order",
+        "type_inline-users/inline-users:WithPage",
+        "type_inline-users/inline-users:WithCursor",
+        "type_inline-users/inline-users:UserListContainer",
+        "type_inline-users/inline-users:UserPage",
+        "type_inline-users/inline-users:UserOptionalListContainer",
+        "type_inline-users/inline-users:UserOptionalListPage",
+        "type_inline-users/inline-users:UsernameContainer",
+        "type_inline-users/inline-users:ListUsersExtendedResponse",
+        "type_inline-users/inline-users:ListUsersExtendedOptionalListResponse",
+        "type_inline-users/inline-users:ListUsersPaginationResponse",
+        "type_inline-users/inline-users:ListUsersMixedTypePaginationResponse",
+        "type_inline-users/inline-users:Page",
+        "type_inline-users/inline-users:NextPage",
+        "type_inline-users/inline-users:Users",
+        "type_inline-users/inline-users:User"
       ],
       "subpackages": []
     },
@@ -2355,6 +4188,7 @@
     ],
     "subpackages": [
       "subpackage_complex",
+      "subpackage_inline-users",
       "subpackage_users"
     ]
   },

@@ -261,7 +261,7 @@ types:
           "display-name": "Companies",
           "endpoints": {
             "createOrUpdateCompany": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create or Update a company",
               "docs": "You can create or update a company.
 
@@ -340,9 +340,7 @@ Companies are looked up via `company_id` in a `POST` request, if not found via `
               "pagination": undefined,
               "path": "/companies",
               "request": {
-                "body": {
-                  "type": "optional<root.CreateOrUpdateCompanyRequest>",
-                },
+                "body": "optional<root.CreateOrUpdateCompanyRequest>",
                 "content-type": "application/json",
               },
               "response": {
@@ -505,7 +503,6 @@ service:
     createOrUpdateCompany:
       path: /companies
       method: POST
-      auth: true
       docs: >
         You can create or update a company.
 
@@ -526,8 +523,7 @@ service:
         openapi: ../openapi.yml
       display-name: Create or Update a company
       request:
-        body:
-          type: optional<root.CreateOrUpdateCompanyRequest>
+        body: optional<root.CreateOrUpdateCompanyRequest>
         content-type: application/json
       response:
         docs: Successful

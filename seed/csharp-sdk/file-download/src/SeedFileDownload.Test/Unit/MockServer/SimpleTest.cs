@@ -5,7 +5,7 @@ namespace SeedFileDownload.Test.Unit.MockServer;
 [TestFixture]
 public class SimpleTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         Server

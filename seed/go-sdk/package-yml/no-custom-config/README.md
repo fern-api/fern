@@ -25,10 +25,10 @@ func do() {
     client := client.NewClient()
     client.Echo(
         context.TODO(),
-        "id",
+        "id-ksfd9c1",
         &fern.EchoRequest{
-            Name: "name",
-            Size: 1,
+            Name: "Hello world!",
+            Size: 20,
         },
     )
 }

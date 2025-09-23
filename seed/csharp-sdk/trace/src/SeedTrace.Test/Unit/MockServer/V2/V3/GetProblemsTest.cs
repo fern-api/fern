@@ -1,16 +1,15 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using SeedTrace.Core;
-using SeedTrace.Test.Unit.MockServer;
-using SeedTrace.V2.V3;
+using SeedTrace.Test_.Unit.MockServer;
 
-namespace SeedTrace.Test.Unit.MockServer.V2.V3;
+namespace SeedTrace.Test_.Unit.MockServer.V2.V3;
 
 [TestFixture]
 public class GetProblemsTest : BaseMockServerTest
 {
     [NUnit.Framework.Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    public async Task MockServerTest()
     {
         const string mockResponse = """
             [
@@ -616,7 +615,9 @@ public class GetProblemsTest : BaseMockServerTest
         var response = await Client.V2.V3.Problem.GetProblemsAsync();
         Assert.That(
             response,
-            Is.EqualTo(JsonUtils.Deserialize<IEnumerable<ProblemInfoV2>>(mockResponse))
+            Is.EqualTo(
+                    JsonUtils.Deserialize<IEnumerable<SeedTrace.V2.V3.ProblemInfoV2>>(mockResponse)
+                )
                 .UsingDefaults()
         );
     }

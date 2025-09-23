@@ -6,6 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/audiences/fern/internal"
+	big "math/big"
 )
 
 type FindRequest struct {
@@ -14,9 +15,17 @@ type FindRequest struct {
 	PrivateProperty *int           `json:"privateProperty,omitempty" url:"-"`
 }
 
+var (
+	filteredTypeFieldPublicProperty  = big.NewInt(1 << 0)
+	filteredTypeFieldPrivateProperty = big.NewInt(1 << 1)
+)
+
 type FilteredType struct {
 	PublicProperty  *string `json:"public_property,omitempty" url:"public_property,omitempty"`
 	PrivateProperty int     `json:"private_property" url:"private_property"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -39,6 +48,27 @@ func (f *FilteredType) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }
 
+func (f *FilteredType) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetPublicProperty sets the PublicProperty field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FilteredType) SetPublicProperty(publicProperty *string) {
+	f.PublicProperty = publicProperty
+	f.require(filteredTypeFieldPublicProperty)
+}
+
+// SetPrivateProperty sets the PrivateProperty field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FilteredType) SetPrivateProperty(privateProperty int) {
+	f.PrivateProperty = privateProperty
+	f.require(filteredTypeFieldPrivateProperty)
+}
+
 func (f *FilteredType) UnmarshalJSON(data []byte) error {
 	type unmarshaler FilteredType
 	var value unmarshaler
@@ -54,6 +84,17 @@ func (f *FilteredType) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *FilteredType) MarshalJSON() ([]byte, error) {
+	type embed FilteredType
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *FilteredType) String() string {
 	if value, err := internal.StringifyJSON(f); err == nil {
 		return value
@@ -61,8 +102,15 @@ func (f *FilteredType) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	importingTypeFieldImported = big.NewInt(1 << 0)
+)
+
 type ImportingType struct {
 	Imported Imported `json:"imported" url:"imported"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -78,6 +126,20 @@ func (i *ImportingType) GetExtraProperties() map[string]interface{} {
 	return i.extraProperties
 }
 
+func (i *ImportingType) require(field *big.Int) {
+	if i.explicitFields == nil {
+		i.explicitFields = big.NewInt(0)
+	}
+	i.explicitFields.Or(i.explicitFields, field)
+}
+
+// SetImported sets the Imported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *ImportingType) SetImported(imported Imported) {
+	i.Imported = imported
+	i.require(importingTypeFieldImported)
+}
+
 func (i *ImportingType) UnmarshalJSON(data []byte) error {
 	type unmarshaler ImportingType
 	var value unmarshaler
@@ -91,6 +153,17 @@ func (i *ImportingType) UnmarshalJSON(data []byte) error {
 	}
 	i.extraProperties = extraProperties
 	return nil
+}
+
+func (i *ImportingType) MarshalJSON() ([]byte, error) {
+	type embed ImportingType
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*i),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, i.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (i *ImportingType) String() string {

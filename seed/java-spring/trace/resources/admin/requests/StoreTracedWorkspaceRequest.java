@@ -131,7 +131,9 @@ public final class StoreTracedWorkspaceRequest {
     )
     public _FinalStage traceResponses(List<TraceResponse> traceResponses) {
       this.traceResponses.clear();
-      this.traceResponses.addAll(traceResponses);
+      if (traceResponses != null) {
+        this.traceResponses.addAll(traceResponses);
+      }
       return this;
     }
 

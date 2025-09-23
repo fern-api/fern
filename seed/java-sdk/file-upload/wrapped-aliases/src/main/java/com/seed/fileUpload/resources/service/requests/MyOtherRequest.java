@@ -343,7 +343,9 @@ public final class MyOtherRequest {
         @JsonSetter(value = "list_of_alias_object", nulls = Nulls.SKIP)
         public _FinalStage listOfAliasObject(List<MyAliasObject> listOfAliasObject) {
             this.listOfAliasObject.clear();
-            this.listOfAliasObject.addAll(listOfAliasObject);
+            if (listOfAliasObject != null) {
+                this.listOfAliasObject.addAll(listOfAliasObject);
+            }
             return this;
         }
 
@@ -365,7 +367,9 @@ public final class MyOtherRequest {
         @JsonSetter(value = "list_of_objects_with_optionals", nulls = Nulls.SKIP)
         public _FinalStage listOfObjectsWithOptionals(List<MyObjectWithOptional> listOfObjectsWithOptionals) {
             this.listOfObjectsWithOptionals.clear();
-            this.listOfObjectsWithOptionals.addAll(listOfObjectsWithOptionals);
+            if (listOfObjectsWithOptionals != null) {
+                this.listOfObjectsWithOptionals.addAll(listOfObjectsWithOptionals);
+            }
             return this;
         }
 
@@ -426,7 +430,9 @@ public final class MyOtherRequest {
         @JsonSetter(value = "list_of_objects", nulls = Nulls.SKIP)
         public _FinalStage listOfObjects(List<MyObject> listOfObjects) {
             this.listOfObjects.clear();
-            this.listOfObjects.addAll(listOfObjects);
+            if (listOfObjects != null) {
+                this.listOfObjects.addAll(listOfObjects);
+            }
             return this;
         }
 

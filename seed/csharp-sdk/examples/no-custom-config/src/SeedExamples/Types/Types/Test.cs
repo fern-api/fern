@@ -61,13 +61,14 @@ public record Test
     /// Returns the value as a <see cref="bool"/> if <see cref="Type"/> is 'and', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'and'.</exception>
-    public bool AsAnd() => IsAnd ? (bool)Value! : throw new Exception("Test.Type is not 'and'");
+    public bool AsAnd() =>
+        IsAnd ? (bool)Value! : throw new System.Exception("Test.Type is not 'and'");
 
     /// <summary>
     /// Returns the value as a <see cref="bool"/> if <see cref="Type"/> is 'or', otherwise throws an exception.
     /// </summary>
     /// <exception cref="Exception">Thrown when <see cref="Type"/> is not 'or'.</exception>
-    public bool AsOr() => IsOr ? (bool)Value! : throw new Exception("Test.Type is not 'or'");
+    public bool AsOr() => IsOr ? (bool)Value! : throw new System.Exception("Test.Type is not 'or'");
 
     public T Match<T>(Func<bool, T> onAnd, Func<bool, T> onOr, Func<string, object?, T> onUnknown_)
     {
@@ -206,7 +207,7 @@ public record Test
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator And(bool value) => new(value);
+        public static implicit operator Test.And(bool value) => new(value);
     }
 
     /// <summary>
@@ -224,6 +225,6 @@ public record Test
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Or(bool value) => new(value);
+        public static implicit operator Test.Or(bool value) => new(value);
     }
 }

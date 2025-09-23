@@ -9,6 +9,7 @@ imports:
   proto: proto.yml
   types: types.yml
   variables: variables.yml
+  auth: auth.yml
 
 types:
   HttpService:
@@ -62,6 +63,11 @@ types:
       v2Responses: optional<V2HttpResponses>
       errors: ResponseErrors
       auth: boolean
+      security:
+        type: optional<list<HttpEndpointSecurityItem>>
+        docs: |
+          A list of auth scheme collections. 
+          To satisfy the security requirements, the caller must satisfy at least one collection of schemes.
       idempotent: boolean
       pagination: optional<Pagination>
       userSpecifiedExamples: list<UserSpecifiedEndpointExample>
@@ -70,6 +76,20 @@ types:
       transport: optional<Transport>
       source: optional<HttpEndpointSource>
       audiences: optional<list<audience.AudienceReference>>
+      retries: optional<RetriesConfiguration>
+
+  HttpEndpointSecurityItem:
+    type: map<auth.AuthSchemeKey, list<auth.AuthScope>>
+    docs: A collection of auth schemes that all need to be satisfied for the endpoint.
+
+  RetriesConfiguration:
+    discriminated: false
+    union:
+      - RetriesDisabledSchema
+
+  RetriesDisabledSchema:
+    properties:
+      disabled: optional<boolean>
 
   HttpEndpointSource:
     union:

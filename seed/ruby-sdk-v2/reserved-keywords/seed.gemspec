@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.version = Seed::VERSION
   spec.summary = "Ruby client library for the Seed API"
   spec.description = "The Seed Ruby library provides convenient access to the Seed API from Ruby."
-  spec.required_ruby_version = ">= 3.1.0"
+  spec.required_ruby_version = ">= 3.3.0"
   spec.metadata["rubygems_mfa_required"] = "true"
 
   # Specify which files should be added to the gem when it is released.

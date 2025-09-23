@@ -255,6 +255,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             if (endpointSnippet.snippet.type !== "go") {
                 throw new Error(`Internal error; expected go snippet but got: ${endpointSnippet.snippet.type}`);
             }
+            if (snippets[endpointSnippet.id.identifierOverride] != null) {
+                continue;
+            }
             snippets[endpointSnippet.id.identifierOverride] = endpointSnippet.snippet.client;
         }
         return snippets;

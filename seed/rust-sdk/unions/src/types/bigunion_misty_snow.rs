@@ -1,6 +1,0 @@
-use serde::{Deserialize, Serialize};
-
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct MistySnow {
-    pub value: String,
-}

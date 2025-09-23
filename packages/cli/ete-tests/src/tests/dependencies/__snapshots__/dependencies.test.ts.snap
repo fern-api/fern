@@ -480,6 +480,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -536,6 +537,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 }
@@ -1242,4 +1244,4 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies > file dependencies 1`] = `4803910`;
+exports[`dependencies > file dependencies 1`] = `4804632`;

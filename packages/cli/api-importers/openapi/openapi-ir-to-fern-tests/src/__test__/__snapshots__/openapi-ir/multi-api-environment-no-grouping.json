@@ -104,6 +104,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/wallets",
       "examples": [
@@ -208,6 +209,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/wallets/{walletId}",
       "examples": [
@@ -318,6 +320,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/wallets/{walletId}/balance",
       "examples": [
@@ -410,6 +413,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/accounts",
       "examples": [
@@ -493,6 +497,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/transactions",
       "examples": [
@@ -601,6 +606,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/transactions/{transactionId}",
       "examples": [
@@ -718,6 +724,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/payments",
       "examples": [
@@ -852,6 +859,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/payments/{paymentId}/refund",
       "examples": [
@@ -953,6 +961,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/refunds",
       "examples": [

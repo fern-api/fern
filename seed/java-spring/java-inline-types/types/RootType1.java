@@ -273,7 +273,9 @@ public final class RootType1 {
     )
     public _FinalStage fooSet(Set<RootType1FooSetItem> fooSet) {
       this.fooSet.clear();
-      this.fooSet.addAll(fooSet);
+      if (fooSet != null) {
+        this.fooSet.addAll(fooSet);
+      }
       return this;
     }
 
@@ -309,7 +311,9 @@ public final class RootType1 {
     )
     public _FinalStage fooList(List<RootType1FooListItem> fooList) {
       this.fooList.clear();
-      this.fooList.addAll(fooList);
+      if (fooList != null) {
+        this.fooList.addAll(fooList);
+      }
       return this;
     }
 
@@ -345,7 +349,9 @@ public final class RootType1 {
     )
     public _FinalStage fooMap(Map<String, RootType1FooMapValue> fooMap) {
       this.fooMap.clear();
-      this.fooMap.putAll(fooMap);
+      if (fooMap != null) {
+        this.fooMap.putAll(fooMap);
+      }
       return this;
     }
 

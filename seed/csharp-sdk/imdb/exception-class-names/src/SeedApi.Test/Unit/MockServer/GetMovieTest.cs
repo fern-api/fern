@@ -1,4 +1,4 @@
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using SeedApi;
 using SeedApi.Core;
@@ -8,8 +8,8 @@ namespace SeedApi.Test.Unit.MockServer;
 [TestFixture]
 public class GetMovieTest : BaseMockServerTest
 {
-    [Test]
-    public async global::System.Threading.Tasks.Task MockServerTest()
+    [NUnit.Framework.Test]
+    public async Task MockServerTest()
     {
         const string mockResponse = """
             {

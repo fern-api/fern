@@ -14,6 +14,18 @@ API reference documentation is available [here](https://www.docs.fernapi.com).
 
 A full reference for this library is available [here](./reference.md).
 
+## Base Readme Custom Section
+
+Base Readme Custom Content for {{ owner }}:{{ repo }}:{{ version }}
+
+## Generator Invocation Custom Section
+
+Generator Invocation Custom Content for {{ owner }}:{{ repo }}:{{ version }}
+
+## Override Section
+
+Override Content
+
 ## Usage
 
 Instantiate and use the client with the following:

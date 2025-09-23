@@ -1,28 +1,43 @@
 import { requestWithRetries } from "../../../src/core/fetcher/requestWithRetries";
 
 describe("requestWithRetries", () => {
-    let mockFetch: jest.Mock;
+    let mockFetch: import("vitest").Mock;
     let originalMathRandom: typeof Math.random;
-    let setTimeoutSpy: jest.SpyInstance;
+    let setTimeoutSpy: import("vitest").MockInstance;
 
     beforeEach(() => {
-        mockFetch = jest.fn();
+        mockFetch = vi.fn();
         originalMathRandom = Math.random;
 
         // Mock Math.random for consistent jitter
-        Math.random = jest.fn(() => 0.5);
+        Math.random = vi.fn(() => 0.5);
 
-        jest.useFakeTimers({ doNotFake: ["nextTick"] });
+        vi.useFakeTimers({
+            toFake: [
+                "setTimeout",
+                "clearTimeout",
+                "setInterval",
+                "clearInterval",
+                "setImmediate",
+                "clearImmediate",
+                "Date",
+                "performance",
+                "requestAnimationFrame",
+                "cancelAnimationFrame",
+                "requestIdleCallback",
+                "cancelIdleCallback",
+            ],
+        });
     });
 
     afterEach(() => {
         Math.random = originalMathRandom;
-        jest.clearAllMocks();
-        jest.clearAllTimers();
+        vi.clearAllMocks();
+        vi.clearAllTimers();
     });
 
     it("should retry on retryable status codes", async () => {
-        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
             process.nextTick(callback);
             return null as any;
         });
@@ -38,7 +53,7 @@ describe("requestWithRetries", () => {
         });
 
         const responsePromise = requestWithRetries(() => mockFetch(), retryableStatuses.length);
-        await jest.runAllTimersAsync();
+        await vi.runAllTimersAsync();
         const response = await responsePromise;
 
         expect(mockFetch).toHaveBeenCalledTimes(retryableStatuses.length + 1);
@@ -46,7 +61,7 @@ describe("requestWithRetries", () => {
     });
 
     it("should respect maxRetries limit", async () => {
-        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
             process.nextTick(callback);
             return null as any;
         });
@@ -55,7 +70,7 @@ describe("requestWithRetries", () => {
         mockFetch.mockResolvedValue(new Response("", { status: 500 }));
 
         const responsePromise = requestWithRetries(() => mockFetch(), maxRetries);
-        await jest.runAllTimersAsync();
+        await vi.runAllTimersAsync();
         const response = await responsePromise;
 
         expect(mockFetch).toHaveBeenCalledTimes(maxRetries + 1);
@@ -63,7 +78,7 @@ describe("requestWithRetries", () => {
     });
 
     it("should not retry on success status codes", async () => {
-        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
             process.nextTick(callback);
             return null as any;
         });
@@ -76,7 +91,7 @@ describe("requestWithRetries", () => {
             mockFetch.mockResolvedValueOnce(new Response("", { status }));
 
             const responsePromise = requestWithRetries(() => mockFetch(), 3);
-            await jest.runAllTimersAsync();
+            await vi.runAllTimersAsync();
             await responsePromise;
 
             expect(mockFetch).toHaveBeenCalledTimes(1);
@@ -85,7 +100,7 @@ describe("requestWithRetries", () => {
     });
 
     it("should apply correct exponential backoff with jitter", async () => {
-        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
             process.nextTick(callback);
             return null as any;
         });
@@ -95,7 +110,7 @@ describe("requestWithRetries", () => {
         const expectedDelays = [1000, 2000, 4000];
 
         const responsePromise = requestWithRetries(() => mockFetch(), maxRetries);
-        await jest.runAllTimersAsync();
+        await vi.runAllTimersAsync();
         await responsePromise;
 
         // Verify setTimeout calls
@@ -109,7 +124,7 @@ describe("requestWithRetries", () => {
     });
 
     it("should handle concurrent retries independently", async () => {
-        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
             process.nextTick(callback);
             return null as any;
         });
@@ -123,7 +138,7 @@ describe("requestWithRetries", () => {
         const promise1 = requestWithRetries(() => mockFetch(), 1);
         const promise2 = requestWithRetries(() => mockFetch(), 1);
 
-        await jest.runAllTimersAsync();
+        await vi.runAllTimersAsync();
         const [response1, response2] = await Promise.all([promise1, promise2]);
 
         expect(response1.status).toBe(200);
@@ -131,7 +146,7 @@ describe("requestWithRetries", () => {
     });
 
     it("should respect retry-after header with seconds value", async () => {
-        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
             process.nextTick(callback);
             return null as any;
         });
@@ -146,7 +161,7 @@ describe("requestWithRetries", () => {
             .mockResolvedValueOnce(new Response("", { status: 200 }));
 
         const responsePromise = requestWithRetries(() => mockFetch(), 1);
-        await jest.runAllTimersAsync();
+        await vi.runAllTimersAsync();
         const response = await responsePromise;
 
         expect(setTimeoutSpy).toHaveBeenCalledWith(expect.any(Function), 5000); // 5 seconds = 5000ms
@@ -154,7 +169,7 @@ describe("requestWithRetries", () => {
     });
 
     it("should respect retry-after header with HTTP date value", async () => {
-        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
             process.nextTick(callback);
             return null as any;
         });
@@ -170,7 +185,7 @@ describe("requestWithRetries", () => {
             .mockResolvedValueOnce(new Response("", { status: 200 }));
 
         const responsePromise = requestWithRetries(() => mockFetch(), 1);
-        await jest.runAllTimersAsync();
+        await vi.runAllTimersAsync();
         const response = await responsePromise;
 
         // Should use the date-based delay (approximately 3000ms, but with jitter)
@@ -182,7 +197,7 @@ describe("requestWithRetries", () => {
     });
 
     it("should respect x-ratelimit-reset header", async () => {
-        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
             process.nextTick(callback);
             return null as any;
         });
@@ -198,19 +213,19 @@ describe("requestWithRetries", () => {
             .mockResolvedValueOnce(new Response("", { status: 200 }));
 
         const responsePromise = requestWithRetries(() => mockFetch(), 1);
-        await jest.runAllTimersAsync();
+        await vi.runAllTimersAsync();
         const response = await responsePromise;
 
-        // Should use the x-ratelimit-reset delay (approximately 4000ms, but with jitter)
+        // Should use the x-ratelimit-reset delay (approximately 4000ms, but with positive jitter)
         expect(setTimeoutSpy).toHaveBeenCalledWith(expect.any(Function), expect.any(Number));
         const actualDelay = setTimeoutSpy.mock.calls[0][1];
         expect(actualDelay).toBeGreaterThan(3000);
-        expect(actualDelay).toBeLessThan(5000);
+        expect(actualDelay).toBeLessThan(6000);
         expect(response.status).toBe(200);
     });
 
     it("should cap delay at MAX_RETRY_DELAY for large header values", async () => {
-        setTimeoutSpy = jest.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
+        setTimeoutSpy = vi.spyOn(global, "setTimeout").mockImplementation((callback: (args: void) => void) => {
             process.nextTick(callback);
             return null as any;
         });
@@ -225,7 +240,7 @@ describe("requestWithRetries", () => {
             .mockResolvedValueOnce(new Response("", { status: 200 }));
 
         const responsePromise = requestWithRetries(() => mockFetch(), 1);
-        await jest.runAllTimersAsync();
+        await vi.runAllTimersAsync();
         const response = await responsePromise;
 
         // Should be capped at MAX_RETRY_DELAY (60000ms) with jitter applied

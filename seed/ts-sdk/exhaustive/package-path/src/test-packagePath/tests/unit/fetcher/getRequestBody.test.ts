@@ -1,5 +1,5 @@
-import { getRequestBody } from "../../../../../src/test-packagePath/core/fetcher/getRequestBody.js";
-import { RUNTIME } from "../../../../../src/test-packagePath/core/runtime/index.js";
+import { getRequestBody } from "../../../../../src/test-packagePath/core/fetcher/getRequestBody";
+import { RUNTIME } from "../../../../../src/test-packagePath/core/runtime";
 
 describe("Test getRequestBody", () => {
     it("should stringify body if not FormData in Node environment", async () => {

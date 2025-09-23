@@ -10,7 +10,7 @@
           "base-path": "",
           "endpoints": {
             "testEndpoint": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Test endpoint",
               "docs": undefined,
               "examples": [
@@ -133,7 +133,6 @@ service:
     testEndpoint:
       path: /test
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: Test endpoint

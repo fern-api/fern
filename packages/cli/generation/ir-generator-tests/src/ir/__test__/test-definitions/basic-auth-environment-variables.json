@@ -68,6 +68,7 @@
                     }
                 },
                 "passwordEnvVar": "PASSWORD",
+                "key": "Basic",
                 "docs": null
             }
         ],
@@ -553,6 +554,11 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "security": [
+                        {
+                            "Basic": []
+                        }
+                    ],
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -969,6 +975,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": "GET request with basic auth scheme"
                 },
@@ -995,6 +1002,11 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "security": [
+                        {
+                            "Basic": []
+                        }
+                    ],
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -1637,6 +1649,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": "POST request with basic auth scheme"
                 }

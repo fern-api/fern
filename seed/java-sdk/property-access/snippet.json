@@ -1,0 +1,18 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "527e5167",
+            "id": {
+                "method": "POST",
+                "path": "/users",
+                "identifier_override": "endpoint_.createUser"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.propertyAccess.SeedPropertyAccessClient;\nimport com.seed.propertyAccess.types.User;\nimport com.seed.propertyAccess.types.UserProfile;\nimport com.seed.propertyAccess.types.UserProfileVerification;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPropertyAccessClient client = SeedPropertyAccessClient\n            .builder()\n            .build();\n\n        client.createUser(\n            User\n                .builder()\n                .id(\"id\")\n                .email(\"email\")\n                .password(\"password\")\n                .profile(\n                    UserProfile\n                        .builder()\n                        .name(\"name\")\n                        .verification(\n                            UserProfileVerification\n                                .builder()\n                                .verified(\"verified\")\n                                .build()\n                        )\n                        .ssn(\"ssn\")\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.propertyAccess.SeedPropertyAccessClient;\nimport com.seed.propertyAccess.types.User;\nimport com.seed.propertyAccess.types.UserProfile;\nimport com.seed.propertyAccess.types.UserProfileVerification;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPropertyAccessClient client = SeedPropertyAccessClient\n            .builder()\n            .build();\n\n        client.createUser(\n            User\n                .builder()\n                .id(\"id\")\n                .email(\"email\")\n                .password(\"password\")\n                .profile(\n                    UserProfile\n                        .builder()\n                        .name(\"name\")\n                        .verification(\n                            UserProfileVerification\n                                .builder()\n                                .verified(\"verified\")\n                                .build()\n                        )\n                        .ssn(\"ssn\")\n                        .build()\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}
