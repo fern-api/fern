@@ -173,31 +173,36 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        # sdk-name:
+        #   [
+        #     ruby-model,
+        #     ruby-sdk,
+        #     ruby-sdk-v2,
+        #     pydantic,
+        #     python-sdk,
+        #     fastapi,
+        #     openapi,
+        #     postman,
+        #     java-sdk,
+        #     java-model,
+        #     java-spring,
+        #     ts-sdk,
+        #     ts-express,
+        #     go-fiber,
+        #     go-model,
+        #     go-sdk,
+        #     csharp-model,
+        #     csharp-sdk,
+        #     php-model,
+        #     php-sdk,
+        #     swift-sdk,
+        #     rust-model,
+        #     rust-sdk
+        #   ]
         sdk-name:
           [
-            ruby-model,
             ruby-sdk,
-            ruby-sdk-v2,
-            pydantic,
-            python-sdk,
-            fastapi,
-            openapi,
-            postman,
-            java-sdk,
-            java-model,
-            java-spring,
-            ts-sdk,
-            ts-express,
-            go-fiber,
-            go-model,
-            go-sdk,
-            csharp-model,
-            csharp-sdk,
-            php-model,
-            php-sdk,
-            swift-sdk,
-            rust-model,
-            rust-sdk
+            ruby-sdk-v2
           ]
     outputs:
       ruby-model: ${{ steps.set-test-matrix.outputs.ruby-model-test-matrix }}
@@ -302,7 +307,8 @@ jobs:
       - name: Test debug
         shell: bash
         run: |
-          echo "Test debug 1: ${{ toJson(matrix.fixtures) }}"
+          echo "Test debug 1: "
+          echo '${{ toJson(matrix.fixtures) }}' | jq .
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
@@ -334,6 +340,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      - name: Test debug
+        shell: bash
+        run: |
+          echo "Test debug 1: "
+          echo '${{ toJson(matrix.fixtures) }}' | jq .
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
