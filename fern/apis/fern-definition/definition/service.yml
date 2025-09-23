@@ -5,6 +5,7 @@ imports:
   pagination: pagination.yml
   source: source.yml
   variables: variables.yml
+  auth: auth.yml
 
 types:
   HttpServiceSchema:
@@ -59,7 +60,17 @@ types:
     discriminated: false
     union:
       - boolean
-      - list<map<string, list<string>>>
+      - HttpEndpointSecurity
+
+  HttpEndpointSecurity:
+    type: list<HttpEndpointSecurityItem>
+    docs: |
+      A list of auth scheme collections. 
+      To satisfy the security requirements, the caller must satisfy at least one collection of schemes.
+
+  HttpEndpointSecurityItem:
+    type: map<auth.AuthSchemeKey, list<auth.AuthScope>>
+    docs: A collection of auth schemes that all need to be satisfied for the endpoint.
 
   RetriesConfiguration:
     discriminated: false

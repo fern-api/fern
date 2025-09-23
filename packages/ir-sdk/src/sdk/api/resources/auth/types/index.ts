@@ -1,5 +1,6 @@
 export * from "./EnvironmentVariable";
 export * from "./AuthSchemeKey";
+export * from "./AuthScope";
 export * from "./ApiAuth";
 export * from "./AuthSchemesRequirement";
 export * from "./AuthScheme";
