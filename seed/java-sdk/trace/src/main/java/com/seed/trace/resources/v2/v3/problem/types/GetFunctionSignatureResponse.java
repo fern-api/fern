@@ -82,7 +82,9 @@ public final class GetFunctionSignatureResponse {
         @JsonSetter(value = "functionByLanguage", nulls = Nulls.SKIP)
         public Builder functionByLanguage(Map<Language, String> functionByLanguage) {
             this.functionByLanguage.clear();
-            this.functionByLanguage.putAll(functionByLanguage);
+            if (functionByLanguage != null) {
+                this.functionByLanguage.putAll(functionByLanguage);
+            }
             return this;
         }
 

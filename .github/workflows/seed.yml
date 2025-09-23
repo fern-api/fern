@@ -655,6 +655,7 @@ jobs:
           generator-name: ts-sdk
           generator-path: generators/typescript
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          validation-exclude-paths: "seed/*/.mock/*,seed/ts-sdk/**/pnpm-lock.yaml"
 
   typescript-express:
     runs-on: ubuntu-latest
@@ -800,7 +801,6 @@ jobs:
         with:
           generator-name: go-sdk
           generator-path: generators/go generators/go-v2
-          validation-exclude-paths: "seed/*/.mock/*"
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
   csharp-model:

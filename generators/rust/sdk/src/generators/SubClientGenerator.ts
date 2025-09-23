@@ -17,6 +17,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { ClientGeneratorContext } from "./ClientGeneratorContext";
 
 interface EndpointParameter {
     name: string;
@@ -29,11 +30,16 @@ export class SubClientGenerator {
     private readonly context: SdkGeneratorContext;
     private readonly subpackage: Subpackage;
     private readonly service?: HttpService;
+    private readonly clientGeneratorContext: ClientGeneratorContext;
 
     constructor(context: SdkGeneratorContext, subpackage: Subpackage) {
         this.context = context;
         this.subpackage = subpackage;
         this.service = subpackage.service ? this.context.getHttpServiceOrThrow(subpackage.service) : undefined;
+        this.clientGeneratorContext = new ClientGeneratorContext({
+            packageOrSubpackage: subpackage,
+            sdkGeneratorContext: context
+        });
     }
 
     // =============================================================================
@@ -56,9 +62,36 @@ export class SubClientGenerator {
             useStatements: this.generateImports(),
             rawDeclarations: [rustClient.toString()]
         });
+        // Create nested directory structure like Swift SDK
+        const fernFilepathDir = this.context.getDirectoryForFernFilepath(this.subpackage.fernFilepath);
+        const directory = fernFilepathDir ? `src/api/resources/${fernFilepathDir}` : "src/api/resources";
+
         return new RustFile({
             filename,
-            directory: RelativeFilePath.of("src/client"),
+            directory: RelativeFilePath.of(directory),
+            fileContents: module.toString()
+        });
+    }
+
+    public generateModFile(): RustFile | null {
+        const fernFilepathDir = this.context.getDirectoryForFernFilepath(this.subpackage.fernFilepath);
+        if (!fernFilepathDir) {
+            return null; // No nested directory, mod.rs not needed
+        }
+
+        const filename = this.context.getUniqueFilenameForSubpackage(this.subpackage);
+        const moduleName = filename.replace(".rs", "");
+
+        const module = rust.module({
+            useStatements: [],
+            rawDeclarations: [`pub mod ${moduleName};`, `pub use ${moduleName}::*;`]
+        });
+
+        const directory = `src/api/resources/${fernFilepathDir}`;
+
+        return new RustFile({
+            filename: "mod.rs",
+            directory: RelativeFilePath.of(directory),
             fileContents: module.toString()
         });
     }
@@ -99,8 +132,8 @@ export class SubClientGenerator {
         if (hasTypes) {
             imports.push(
                 new UseStatement({
-                    path: "crate",
-                    items: ["types::*"]
+                    path: "crate::api::types",
+                    items: ["*"]
                 })
             );
         }
@@ -121,11 +154,22 @@ export class SubClientGenerator {
     private generateFields(): rust.Client.Field[] {
         const fields: rust.Client.Field[] = [
             {
-                name: "http_client",
-                type: rust.Type.reference(rust.reference({ name: "HttpClient" })).toString(),
+                name: this.clientGeneratorContext.httpClient.fieldName,
+                type: rust.Type.reference(
+                    rust.reference({ name: this.clientGeneratorContext.httpClient.clientName })
+                ).toString(),
                 visibility: "pub"
             }
         ];
+
+        // Add sub-client fields
+        this.clientGeneratorContext.subClients.forEach(({ fieldName, clientName }) => {
+            fields.push({
+                name: fieldName,
+                type: rust.Type.reference(rust.reference({ name: clientName })).toString(),
+                visibility: "pub"
+            });
+        });
 
         return fields;
     }
@@ -138,15 +182,47 @@ export class SubClientGenerator {
         // Use simple parameter signature with just config
         const parameters = ["config: ClientConfig"];
 
-        const constructorBody = `let http_client = HttpClient::new(config)?;
-        Ok(Self { http_client })`;
+        // Build field assignments using AST
+        const fieldAssignments: rust.Expression.FieldAssignment[] = [];
+
+        // Add HTTP client field
+        fieldAssignments.push({
+            name: this.clientGeneratorContext.httpClient.fieldName,
+            value: rust.Expression.try(
+                rust.Expression.functionCall(`${this.clientGeneratorContext.httpClient.clientName}::new`, [
+                    rust.Expression.reference("config")
+                ])
+            )
+        });
+
+        // Add sub-client fields
+        this.clientGeneratorContext.subClients.forEach(({ fieldName, clientName }) => {
+            fieldAssignments.push({
+                name: fieldName,
+                value: rust.Expression.try(
+                    rust.Expression.functionCall(`${clientName}::new`, [
+                        rust.Expression.methodCall({
+                            target: rust.Expression.reference("config"),
+                            method: "clone",
+                            args: []
+                        })
+                    ])
+                )
+            });
+        });
+
+        // Create struct construction expression
+        const structConstruction = rust.Expression.structConstruction("Self", fieldAssignments);
+
+        // Wrap in Ok()
+        const constructorBody = rust.Expression.ok(structConstruction);
 
         return {
             name: "new",
             parameters,
             returnType: returnType.toString(),
             isAsync: false,
-            body: constructorBody
+            body: constructorBody.toString()
         };
     }
 

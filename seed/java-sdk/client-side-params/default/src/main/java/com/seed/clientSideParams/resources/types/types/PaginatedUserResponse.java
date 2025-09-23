@@ -214,7 +214,9 @@ public final class PaginatedUserResponse {
         @JsonSetter(value = "users", nulls = Nulls.SKIP)
         public _FinalStage users(List<User> users) {
             this.users.clear();
-            this.users.addAll(users);
+            if (users != null) {
+                this.users.addAll(users);
+            }
             return this;
         }
 

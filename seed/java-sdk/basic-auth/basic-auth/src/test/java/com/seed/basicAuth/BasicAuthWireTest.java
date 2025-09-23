@@ -22,7 +22,7 @@ public class BasicAuthWireTest {
         server.start();
         client = SeedBasicAuthClient.builder()
             .url(server.url("/").toString())
-            .username("testuser").password("testpass")
+            .credentials("testuser", "testpass")
             .build();
     }
     @AfterEach

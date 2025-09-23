@@ -5,7 +5,7 @@ use std::time::{Duration};
 pub struct ClientConfig {
     pub base_url: String,
     pub api_key: Option<String>,
-    pub bearer_token: Option<String>,
+    pub token: Option<String>,
     pub username: Option<String>,
     pub password: Option<String>,
     pub timeout: Duration,
@@ -18,7 +18,7 @@ impl Default for ClientConfig {
     Self {
         base_url: String::new(),
         api_key: None,
-        bearer_token: None,
+        token: None,
         username: None,
         password: None,
         timeout: Duration::from_secs(60),

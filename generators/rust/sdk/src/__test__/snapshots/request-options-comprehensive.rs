@@ -4,7 +4,7 @@ use std::collections::HashMap;
 #[derive(Debug, Clone, Default)]
 pub struct RequestOptions {
     pub api_key: Option<String>,
-    pub bearer_token: Option<String>,
+    pub token: Option<String>,
     pub max_retries: Option<u32>,
     pub additional_headers: HashMap<String, String>,
 }
@@ -19,8 +19,8 @@ impl RequestOptions {
         self
     }
 
-    pub fn bearer_token(mut self, token: impl Into<String>) -> Self {
-        self.bearer_token = Some(token.into());
+    pub fn token(mut self, token: impl Into<String>) -> Self {
+        self.token = Some(token.into());
         self
     }
 

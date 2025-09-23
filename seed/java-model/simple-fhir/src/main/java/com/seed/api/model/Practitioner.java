@@ -171,7 +171,9 @@ public final class Practitioner implements IBaseResource {
         @JsonSetter(value = "related_resources", nulls = Nulls.SKIP)
         public _FinalStage relatedResources(List<ResourceList> relatedResources) {
             this.relatedResources.clear();
-            this.relatedResources.addAll(relatedResources);
+            if (relatedResources != null) {
+                this.relatedResources.addAll(relatedResources);
+            }
             return this;
         }
 

@@ -696,7 +696,9 @@ public final class Type {
         @JsonSetter(value = "seventeen", nulls = Nulls.SKIP)
         public _FinalStage seventeen(List<Optional<UUID>> seventeen) {
             this.seventeen.clear();
-            this.seventeen.addAll(seventeen);
+            if (seventeen != null) {
+                this.seventeen.addAll(seventeen);
+            }
             return this;
         }
 
@@ -718,7 +720,9 @@ public final class Type {
         @JsonSetter(value = "sixteen", nulls = Nulls.SKIP)
         public _FinalStage sixteen(List<Map<String, Integer>> sixteen) {
             this.sixteen.clear();
-            this.sixteen.addAll(sixteen);
+            if (sixteen != null) {
+                this.sixteen.addAll(sixteen);
+            }
             return this;
         }
 
@@ -740,7 +744,9 @@ public final class Type {
         @JsonSetter(value = "fifteen", nulls = Nulls.SKIP)
         public _FinalStage fifteen(List<List<Integer>> fifteen) {
             this.fifteen.clear();
-            this.fifteen.addAll(fifteen);
+            if (fifteen != null) {
+                this.fifteen.addAll(fifteen);
+            }
             return this;
         }
 
@@ -775,7 +781,9 @@ public final class Type {
         @JsonSetter(value = "twelve", nulls = Nulls.SKIP)
         public _FinalStage twelve(Map<String, Boolean> twelve) {
             this.twelve.clear();
-            this.twelve.putAll(twelve);
+            if (twelve != null) {
+                this.twelve.putAll(twelve);
+            }
             return this;
         }
 
@@ -797,7 +805,9 @@ public final class Type {
         @JsonSetter(value = "eleven", nulls = Nulls.SKIP)
         public _FinalStage eleven(Set<Double> eleven) {
             this.eleven.clear();
-            this.eleven.addAll(eleven);
+            if (eleven != null) {
+                this.eleven.addAll(eleven);
+            }
             return this;
         }
 
@@ -819,7 +829,9 @@ public final class Type {
         @JsonSetter(value = "ten", nulls = Nulls.SKIP)
         public _FinalStage ten(List<Integer> ten) {
             this.ten.clear();
-            this.ten.addAll(ten);
+            if (ten != null) {
+                this.ten.addAll(ten);
+            }
             return this;
         }
 

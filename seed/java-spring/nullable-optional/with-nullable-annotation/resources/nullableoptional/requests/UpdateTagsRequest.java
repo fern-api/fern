@@ -114,7 +114,9 @@ public final class UpdateTagsRequest {
     )
     public Builder tags(List<String> tags) {
       this.tags.clear();
-      this.tags.addAll(tags);
+      if (tags != null) {
+        this.tags.addAll(tags);
+      }
       return this;
     }
 

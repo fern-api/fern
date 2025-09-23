@@ -81,7 +81,9 @@ public final class ProblemDescription {
         @JsonSetter(value = "boards", nulls = Nulls.SKIP)
         public Builder boards(List<ProblemDescriptionBoard> boards) {
             this.boards.clear();
-            this.boards.addAll(boards);
+            if (boards != null) {
+                this.boards.addAll(boards);
+            }
             return this;
         }
 

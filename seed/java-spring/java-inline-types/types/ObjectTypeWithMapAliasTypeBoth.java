@@ -77,7 +77,9 @@ public final class ObjectTypeWithMapAliasTypeBoth {
     )
     public Builder prop(Map<AliasProperty, OtherAliasProperty> prop) {
       this.prop.clear();
-      this.prop.putAll(prop);
+      if (prop != null) {
+        this.prop.putAll(prop);
+      }
       return this;
     }
 

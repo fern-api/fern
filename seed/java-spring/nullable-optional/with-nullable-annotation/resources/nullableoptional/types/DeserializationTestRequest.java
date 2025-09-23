@@ -367,7 +367,9 @@ public final class DeserializationTestRequest {
     )
     public _FinalStage nullableMap(Map<String, Integer> nullableMap) {
       this.nullableMap.clear();
-      this.nullableMap.putAll(nullableMap);
+      if (nullableMap != null) {
+        this.nullableMap.putAll(nullableMap);
+      }
       return this;
     }
 
@@ -392,7 +394,9 @@ public final class DeserializationTestRequest {
     )
     public _FinalStage nullableList(List<String> nullableList) {
       this.nullableList.clear();
-      this.nullableList.addAll(nullableList);
+      if (nullableList != null) {
+        this.nullableList.addAll(nullableList);
+      }
       return this;
     }
 

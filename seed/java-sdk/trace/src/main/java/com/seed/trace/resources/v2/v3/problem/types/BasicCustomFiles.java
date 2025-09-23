@@ -186,7 +186,9 @@ public final class BasicCustomFiles {
         @JsonSetter(value = "additionalFiles", nulls = Nulls.SKIP)
         public _FinalStage additionalFiles(Map<Language, Files> additionalFiles) {
             this.additionalFiles.clear();
-            this.additionalFiles.putAll(additionalFiles);
+            if (additionalFiles != null) {
+                this.additionalFiles.putAll(additionalFiles);
+            }
             return this;
         }
 

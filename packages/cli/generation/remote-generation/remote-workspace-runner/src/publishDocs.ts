@@ -46,8 +46,7 @@ export async function publishDocs({
     preview,
     editThisPage,
     isPrivate = false,
-    disableTemplates = false,
-    disableDynamicSnippets = false
+    disableTemplates = false
 }: {
     token: FernToken;
     organization: string;
@@ -61,7 +60,6 @@ export async function publishDocs({
     editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined;
     isPrivate: boolean | undefined;
     disableTemplates: boolean | undefined;
-    disableDynamicSnippets: boolean | undefined;
 }): Promise<void> {
     const fdr = createFdrService({ token: token.value });
     const authConfig: CjsFdrSdk.docs.v2.write.AuthConfig = isPrivate
@@ -71,6 +69,8 @@ export async function publishDocs({
     let docsRegistrationId: string | undefined;
     let urlToOutput = customDomains[0] ?? domain;
     const basePath = parseBasePath(domain);
+    const useDynamicSnippets = docsWorkspace.config.experimental?.dynamicSnippets;
+    const disableSnippetGen = preview || useDynamicSnippets;
     const resolver = new DocsDefinitionResolver(
         domain,
         docsWorkspace,
@@ -172,7 +172,7 @@ export async function publishDocs({
 
             // create dynamic IR + metadata for each generator language
             let dynamicIRsByLanguage: Record<string, DynamicIr> | undefined;
-            if (!disableDynamicSnippets) {
+            if (useDynamicSnippets) {
                 dynamicIRsByLanguage = await generateLanguageSpecificDynamicIRs({
                     workspace,
                     organization,
@@ -184,10 +184,7 @@ export async function publishDocs({
             const response = await fdr.api.v1.register.registerApiDefinition({
                 orgId: CjsFdrSdk.OrgId(organization),
                 apiId: CjsFdrSdk.ApiId(ir.apiName.originalName),
-                definition: {
-                    ...apiDefinition,
-                    snippetsConfiguration: preview ? undefined : apiDefinition.snippetsConfiguration
-                },
+                definition: apiDefinition,
                 definitionV2: undefined,
                 dynamicIRs: dynamicIRsByLanguage
             });

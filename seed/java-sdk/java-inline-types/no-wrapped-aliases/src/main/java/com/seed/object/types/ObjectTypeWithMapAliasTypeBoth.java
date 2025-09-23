@@ -81,7 +81,9 @@ public final class ObjectTypeWithMapAliasTypeBoth {
         @JsonSetter(value = "prop", nulls = Nulls.SKIP)
         public Builder prop(Map<PropKey, PropValue> prop) {
             this.prop.clear();
-            this.prop.putAll(prop);
+            if (prop != null) {
+                this.prop.putAll(prop);
+            }
             return this;
         }
 

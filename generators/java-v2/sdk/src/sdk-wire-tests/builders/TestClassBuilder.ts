@@ -170,10 +170,13 @@ export class TestClassBuilder {
             case "bearer":
                 return '.token("test-token")';
             case "basic":
-                return '.username("testuser").password("testpass")';
+                return '.credentials("testuser", "testpass")';
             case "header": {
-                const headerName = scheme.name?.name?.originalName || "X-API-Key";
-                return `.apiKey("test-api-key") // For header: ${headerName}`;
+                if (scheme.name?.name?.camelCase?.unsafeName) {
+                    const methodName = scheme.name.name.camelCase.unsafeName;
+                    return `.${methodName}("test-api-key")`;
+                }
+                return '.apiKey("test-api-key")';
             }
             case "oauth":
                 return '.token("oauth-test-token")';

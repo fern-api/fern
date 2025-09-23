@@ -137,7 +137,9 @@ public final class User {
         @JsonSetter(value = "EXTRA_PROPERTIES", nulls = Nulls.SKIP)
         public _FinalStage extraProperties(Map<String, String> extraProperties) {
             this.extraProperties.clear();
-            this.extraProperties.putAll(extraProperties);
+            if (extraProperties != null) {
+                this.extraProperties.putAll(extraProperties);
+            }
             return this;
         }
 
@@ -159,7 +161,9 @@ public final class User {
         @JsonSetter(value = "metadata_tags", nulls = Nulls.SKIP)
         public _FinalStage metadataTags(List<String> metadataTags) {
             this.metadataTags.clear();
-            this.metadataTags.addAll(metadataTags);
+            if (metadataTags != null) {
+                this.metadataTags.addAll(metadataTags);
+            }
             return this;
         }
 

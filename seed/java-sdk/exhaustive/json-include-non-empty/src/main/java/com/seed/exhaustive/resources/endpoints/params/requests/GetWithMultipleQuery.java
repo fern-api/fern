@@ -93,7 +93,9 @@ public final class GetWithMultipleQuery {
         @JsonSetter(value = "query", nulls = Nulls.SKIP)
         public Builder query(List<String> query) {
             this.query.clear();
-            this.query.addAll(query);
+            if (query != null) {
+                this.query.addAll(query);
+            }
             return this;
         }
 
@@ -117,7 +119,9 @@ public final class GetWithMultipleQuery {
         @JsonSetter(value = "number", nulls = Nulls.SKIP)
         public Builder number(List<Integer> number) {
             this.number.clear();
-            this.number.addAll(number);
+            if (number != null) {
+                this.number.addAll(number);
+            }
             return this;
         }
 
