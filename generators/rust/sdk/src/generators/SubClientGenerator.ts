@@ -345,14 +345,19 @@ export class SubClientGenerator {
         // Always add path parameters individually (needed for URL building)
         this.addPathParameters(endpoint, params);
 
-        // If there's a request body, include query params in the request struct
-        // Otherwise, add query parameters as individual method parameters
-        if (endpoint.requestBody) {
+        // NEW: Handle all three scenarios properly
+        if (endpoint.requestBody && endpoint.queryParameters.length > 0) {
+            // MIXED: Request body contains both body + query fields
             this.addRequestBodyParameter(endpoint, params);
-        } else {
-            // For endpoints without request body, add query params as individual parameters
-            this.addQueryParameters(endpoint, params);
+            // Query params are now included in the request body struct
+        } else if (endpoint.requestBody) {
+            // BODY-ONLY: Traditional request body
+            this.addRequestBodyParameter(endpoint, params);
+        } else if (endpoint.queryParameters.length > 0) {
+            // QUERY-ONLY: Separate query request struct
+            this.addQueryRequestParameter(endpoint, params);
         }
+        // ELSE: No parameters beyond path params
 
         return params;
     }
@@ -384,6 +389,17 @@ export class SubClientGenerator {
                 optional: !isAlreadyOptional, // Only wrap in Option if not already optional
                 isRef: false
             });
+        });
+    }
+
+    // NEW: Add query request parameter for query-only endpoints
+    private addQueryRequestParameter(endpoint: HttpEndpoint, params: EndpointParameter[]): void {
+        const requestTypeName = this.getQueryRequestTypeName(endpoint);
+        params.push({
+            name: "request",
+            type: rust.Type.reference(rust.reference({ name: requestTypeName })),
+            isRef: true,
+            optional: false
         });
     }
 
@@ -428,6 +444,12 @@ export class SubClientGenerator {
         // Generate TypeScript-style request type name: GetTokenRequest, CreateMovieRequest, etc.
         const methodName = endpoint.name.pascalCase.safeName;
         return `${methodName}Request`;
+    }
+
+    private getQueryRequestTypeName(endpoint: HttpEndpoint): string {
+        // Generate query-specific request type name: GetUsersQueryRequest, SearchItemsQueryRequest, etc.
+        const methodName = endpoint.name.pascalCase.safeName;
+        return `${methodName}QueryRequest`;
     }
 
     // =============================================================================
@@ -512,7 +534,8 @@ export class SubClientGenerator {
             return "None";
         }
 
-        return this.buildQueryParameterStatements(queryParams);
+        // NEW: Pass endpoint context for smart parameter resolution
+        return this.buildQueryParameterStatements(queryParams, endpoint);
     }
 
     private buildQueryParametersWithoutPagination(endpoint: HttpEndpoint, paginationConfig: Pagination): string {
@@ -531,20 +554,38 @@ export class SubClientGenerator {
             return "None";
         }
 
-        return this.buildQueryParameterStatements(filteredParams);
+        return this.buildQueryParameterStatements(filteredParams, endpoint);
     }
 
-    private buildQueryParameterStatements(queryParams: QueryParameter[]): string {
+    private buildQueryParameterStatements(queryParams: QueryParameter[], endpoint?: HttpEndpoint): string {
         const builderChain = queryParams.map((queryParam) => {
-            const paramName = queryParam.name.name.snakeCase.safeName;
             const wireValue = queryParam.name.wireValue;
             const method = this.getQueryBuilderMethod(queryParam);
+
+            // NEW: Determine parameter source based on endpoint type
+            const paramName = this.getQueryParameterSource(queryParam, endpoint);
 
             return `.${method}("${wireValue}", ${paramName})`;
         });
 
         return `QueryBuilder::new()${builderChain.join("")}
             .build()`;
+    }
+
+    // NEW: Smart parameter source detection
+    private getQueryParameterSource(queryParam: QueryParameter, endpoint?: HttpEndpoint): string {
+        const fieldName = queryParam.name.name.snakeCase.safeName;
+
+        if (endpoint?.requestBody) {
+            // MIXED or BODY-ONLY: Query params are in request struct
+            return `request.${fieldName}.clone()`;
+        } else if (endpoint && endpoint.queryParameters.length > 0 && !endpoint.requestBody) {
+            // QUERY-ONLY: Query params are in dedicated request struct
+            return `request.${fieldName}.clone()`;
+        } else {
+            // FALLBACK: Individual parameter (legacy behavior)
+            return fieldName;
+        }
     }
 
     private extractPaginationParameterNames(paginationConfig: Pagination): Set<string> {

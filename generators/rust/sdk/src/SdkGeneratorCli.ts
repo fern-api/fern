@@ -337,6 +337,31 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             }
         }
 
+        // NEW: Add query parameter request structs for query-only endpoints
+        for (const service of Object.values(context.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                // Add query request structs for endpoints without request body but with query parameters
+                if (endpoint.queryParameters.length > 0 && !endpoint.requestBody) {
+                    const queryRequestTypeName = `${endpoint.name.pascalCase.safeName}QueryRequest`;
+                    const rawModuleName = context.getModuleNameForQueryRequest(queryRequestTypeName);
+                    const escapedModuleName = context.configManager.escapeRustKeyword(rawModuleName);
+
+                    // Only add if we haven't seen this module name before
+                    if (!uniqueModuleNames.has(escapedModuleName)) {
+                        uniqueModuleNames.add(escapedModuleName);
+                        moduleDeclarations.push(new ModuleDeclaration({ name: escapedModuleName, isPublic: true }));
+                        useStatements.push(
+                            new UseStatement({
+                                path: escapedModuleName,
+                                items: ["*"],
+                                isPublic: true
+                            })
+                        );
+                    }
+                }
+            }
+        }
+
         return new Module({
             moduleDeclarations,
             useStatements,

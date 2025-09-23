@@ -1,7 +1,13 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 
-import { HttpRequestBody, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import {
+    HttpEndpoint,
+    HttpRequestBody,
+    IntermediateRepresentation,
+    ObjectProperty,
+    QueryParameter
+} from "@fern-fern/ir-sdk/api";
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import { ObjectGenerator } from "./ObjectGenerator";
@@ -22,7 +28,7 @@ export class InlinedRequestBodyGenerator {
         for (const service of Object.values(this.ir.services)) {
             for (const endpoint of service.endpoints) {
                 if (this.isInlinedRequestBody(endpoint.requestBody)) {
-                    const file = this.generateInlinedRequestBodyFile(endpoint.requestBody);
+                    const file = this.generateInlinedRequestBodyFile(endpoint.requestBody, endpoint);
                     if (file) {
                         files.push(file);
                     }
@@ -39,15 +45,27 @@ export class InlinedRequestBodyGenerator {
         return requestBody?.type === "inlinedRequestBody";
     }
 
-    private generateInlinedRequestBodyFile(requestBody: HttpRequestBody.InlinedRequestBody): RustFile | null {
+    private generateInlinedRequestBodyFile(
+        requestBody: HttpRequestBody.InlinedRequestBody,
+        endpoint: HttpEndpoint
+    ): RustFile | null {
         try {
             const requestName = requestBody.name.pascalCase.safeName;
             const filename = this.context.getFilenameForInlinedRequestBody(requestName);
 
+            // NEW: Combine body properties with query parameters for mixed endpoints
+            const allProperties = [...(requestBody.properties || []), ...(requestBody.extendedProperties || [])];
+
+            // NEW: Add query parameters as properties for mixed endpoints
+            if (endpoint.queryParameters?.length > 0) {
+                const queryProperties = this.convertQueryParametersToProperties(endpoint.queryParameters);
+                allProperties.push(...queryProperties);
+            }
+
             // Create ObjectGenerator to generate the struct
             const objectGenerator = new ObjectGenerator({
                 name: requestName,
-                properties: [...(requestBody.properties || []), ...(requestBody.extendedProperties || [])],
+                properties: allProperties, // Now includes query params
                 extendedProperties: [],
                 docsContent: requestBody.docs,
                 context: this.context
@@ -66,5 +84,17 @@ export class InlinedRequestBodyGenerator {
             this.context.logger?.warn(`Failed to generate inlined request body file: ${error}`);
             return null;
         }
+    }
+
+    // NEW: Helper method to convert query parameters to object properties
+    private convertQueryParametersToProperties(queryParams: QueryParameter[]): ObjectProperty[] {
+        return queryParams.map((queryParam) => ({
+            name: queryParam.name,
+            valueType: queryParam.valueType,
+            docs: queryParam.docs,
+            availability: queryParam.availability,
+            propertyAccess: undefined,
+            v2Examples: undefined
+        }));
     }
 }

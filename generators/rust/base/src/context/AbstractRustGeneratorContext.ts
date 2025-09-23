@@ -110,6 +110,22 @@ export abstract class AbstractRustGeneratorContext<
     }
 
     /**
+     * Converts query request type names to consistent snake_case filenames
+     * This should be used for all query request type naming to ensure consistency
+     */
+    public getFilenameForQueryRequest(queryRequestTypeName: string): string {
+        return this.convertPascalToSnakeCase(queryRequestTypeName) + ".rs";
+    }
+
+    /**
+     * Converts query request type names to consistent snake_case module names
+     * This should be used for module declarations and imports
+     */
+    public getModuleNameForQueryRequest(queryRequestTypeName: string): string {
+        return this.convertPascalToSnakeCase(queryRequestTypeName);
+    }
+
+    /**
      * Converts PascalCase to snake_case consistently across the generator
      */
     private convertPascalToSnakeCase(pascalCase: string): string {

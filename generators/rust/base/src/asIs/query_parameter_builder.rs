@@ -14,9 +14,9 @@ impl QueryBuilder {
         Self::default()
     }
 
-    /// Add a string parameter
-    pub fn string(mut self, key: &str, value: Option<String>) -> Self {
-        if let Some(v) = value {
+    /// Add a string parameter (accept both required/optional)
+    pub fn string(mut self, key: &str, value: impl Into<Option<String>>) -> Self {
+        if let Some(v) = value.into() {
             self.params.push((key.to_string(), v));
         }
         self
