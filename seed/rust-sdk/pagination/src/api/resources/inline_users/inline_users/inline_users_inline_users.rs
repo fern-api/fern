@@ -1,6 +1,6 @@
 use crate::{ClientConfig, ApiError, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::{Method};
-use crate::api::types::{*};
+use crate::api::{*};
 use crate::{AsyncPaginator, PaginationResult};
 
 pub struct InlineUsersInlineUsersClient {
@@ -10,16 +10,16 @@ pub struct InlineUsersInlineUsersClient {
 impl InlineUsersInlineUsersClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-    http_client: HttpClient::new(config)?
+    http_client: HttpClient::new(config.clone())?
 })
     }
 
-    pub async fn list_with_cursor_pagination(&self, page: Option<i32>, per_page: Option<i32>, order: Option<Order>, starting_after: Option<String>, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
+    pub async fn list_with_cursor_pagination(&self, request: &ListWithCursorPaginationQueryRequest, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
-            let base_query_params = QueryBuilder::new().int("page", page).int("per_page", per_page).serialize("order", order)
+            let base_query_params = QueryBuilder::new().int("page", request.page.clone()).int("per_page", request.per_page.clone()).serialize("order", request.order.clone())
             .build();
             let options_clone = options.clone();
-            
+            let request_clone = request.clone();
             
             AsyncPaginator::new(
                 http_client,
@@ -32,7 +32,7 @@ impl InlineUsersInlineUsersClient {
                     let options_for_request = options_clone.clone();
                     
                     // Clone captured variables to move into the async block
-                    
+                    let request_for_async = request_clone.clone();
                     
                     Box::pin(async move {
                         let response: serde_json::Value = client.execute_request(
@@ -65,11 +65,11 @@ impl InlineUsersInlineUsersClient {
             )
     }
 
-    pub async fn list_with_mixed_type_cursor_pagination(&self, cursor: Option<String>, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
+    pub async fn list_with_mixed_type_cursor_pagination(&self, request: &ListWithMixedTypeCursorPaginationQueryRequest, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
             let base_query_params = None;
             let options_clone = options.clone();
-            
+            let request_clone = request.clone();
             
             AsyncPaginator::new(
                 http_client,
@@ -82,7 +82,7 @@ impl InlineUsersInlineUsersClient {
                     let options_for_request = options_clone.clone();
                     
                     // Clone captured variables to move into the async block
-                    
+                    let request_for_async = request_clone.clone();
                     
                     Box::pin(async move {
                         let response: serde_json::Value = client.execute_request(
@@ -115,7 +115,7 @@ impl InlineUsersInlineUsersClient {
             )
     }
 
-    pub async fn list_with_body_cursor_pagination(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
+    pub async fn list_with_body_cursor_pagination(&self, request: &ListUsersBodyCursorPaginationRequest, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
             let base_query_params = None;
             let options_clone = options.clone();
@@ -165,12 +165,12 @@ impl InlineUsersInlineUsersClient {
             )
     }
 
-    pub async fn list_with_offset_pagination(&self, page: Option<i32>, per_page: Option<i32>, order: Option<Order>, starting_after: Option<String>, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
+    pub async fn list_with_offset_pagination(&self, request: &ListWithOffsetPaginationQueryRequest, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
-            let base_query_params = QueryBuilder::new().int("per_page", per_page).serialize("order", order).string("starting_after", starting_after)
+            let base_query_params = QueryBuilder::new().int("per_page", request.per_page.clone()).serialize("order", request.order.clone()).string("starting_after", request.starting_after.clone())
             .build();
             let options_clone = options.clone();
-            
+            let request_clone = request.clone();
             
             AsyncPaginator::new(
                 http_client,
@@ -184,7 +184,7 @@ impl InlineUsersInlineUsersClient {
                     let options_for_request = options_clone.clone();
                     
                     // Clone captured variables to move into the async block
-                    
+                    let request_for_async = request_clone.clone();
                     
                     Box::pin(async move {
                         let response: serde_json::Value = client.execute_request(
@@ -228,12 +228,12 @@ impl InlineUsersInlineUsersClient {
             )
     }
 
-    pub async fn list_with_double_offset_pagination(&self, page: Option<f64>, per_page: Option<f64>, order: Option<Order>, starting_after: Option<String>, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
+    pub async fn list_with_double_offset_pagination(&self, request: &ListWithDoubleOffsetPaginationQueryRequest, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
-            let base_query_params = QueryBuilder::new().float("per_page", per_page).serialize("order", order).string("starting_after", starting_after)
+            let base_query_params = QueryBuilder::new().float("per_page", request.per_page.clone()).serialize("order", request.order.clone()).string("starting_after", request.starting_after.clone())
             .build();
             let options_clone = options.clone();
-            
+            let request_clone = request.clone();
             
             AsyncPaginator::new(
                 http_client,
@@ -247,7 +247,7 @@ impl InlineUsersInlineUsersClient {
                     let options_for_request = options_clone.clone();
                     
                     // Clone captured variables to move into the async block
-                    
+                    let request_for_async = request_clone.clone();
                     
                     Box::pin(async move {
                         let response: serde_json::Value = client.execute_request(
@@ -291,7 +291,7 @@ impl InlineUsersInlineUsersClient {
             )
     }
 
-    pub async fn list_with_body_offset_pagination(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
+    pub async fn list_with_body_offset_pagination(&self, request: &ListUsersBodyOffsetPaginationRequest, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
             let base_query_params = None;
             let options_clone = options.clone();
@@ -353,12 +353,12 @@ impl InlineUsersInlineUsersClient {
             )
     }
 
-    pub async fn list_with_offset_step_pagination(&self, page: Option<i32>, limit: Option<i32>, order: Option<Order>, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
+    pub async fn list_with_offset_step_pagination(&self, request: &ListWithOffsetStepPaginationQueryRequest, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
-            let base_query_params = QueryBuilder::new().serialize("order", order)
+            let base_query_params = QueryBuilder::new().serialize("order", request.order.clone())
             .build();
             let options_clone = options.clone();
-            
+            let request_clone = request.clone();
             
             AsyncPaginator::new(
                 http_client,
@@ -372,7 +372,7 @@ impl InlineUsersInlineUsersClient {
                     let options_for_request = options_clone.clone();
                     
                     // Clone captured variables to move into the async block
-                    
+                    let request_for_async = request_clone.clone();
                     
                     Box::pin(async move {
                         let response: serde_json::Value = client.execute_request(
@@ -416,12 +416,12 @@ impl InlineUsersInlineUsersClient {
             )
     }
 
-    pub async fn list_with_offset_pagination_has_next_page(&self, page: Option<i32>, limit: Option<i32>, order: Option<Order>, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
+    pub async fn list_with_offset_pagination_has_next_page(&self, request: &ListWithOffsetPaginationHasNextPageQueryRequest, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
-            let base_query_params = QueryBuilder::new().serialize("order", order)
+            let base_query_params = QueryBuilder::new().serialize("order", request.order.clone())
             .build();
             let options_clone = options.clone();
-            
+            let request_clone = request.clone();
             
             AsyncPaginator::new(
                 http_client,
@@ -435,7 +435,7 @@ impl InlineUsersInlineUsersClient {
                     let options_for_request = options_clone.clone();
                     
                     // Clone captured variables to move into the async block
-                    
+                    let request_for_async = request_clone.clone();
                     
                     Box::pin(async move {
                         let response: serde_json::Value = client.execute_request(
@@ -479,11 +479,11 @@ impl InlineUsersInlineUsersClient {
             )
     }
 
-    pub async fn list_with_extended_results(&self, cursor: Option<uuid::Uuid>, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
+    pub async fn list_with_extended_results(&self, request: &ListWithExtendedResultsQueryRequest, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
             let base_query_params = None;
             let options_clone = options.clone();
-            
+            let request_clone = request.clone();
             
             AsyncPaginator::new(
                 http_client,
@@ -496,7 +496,7 @@ impl InlineUsersInlineUsersClient {
                     let options_for_request = options_clone.clone();
                     
                     // Clone captured variables to move into the async block
-                    
+                    let request_for_async = request_clone.clone();
                     
                     Box::pin(async move {
                         let response: serde_json::Value = client.execute_request(
@@ -529,11 +529,11 @@ impl InlineUsersInlineUsersClient {
             )
     }
 
-    pub async fn list_with_extended_results_and_optional_data(&self, cursor: Option<uuid::Uuid>, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
+    pub async fn list_with_extended_results_and_optional_data(&self, request: &ListWithExtendedResultsAndOptionalDataQueryRequest, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
             let base_query_params = None;
             let options_clone = options.clone();
-            
+            let request_clone = request.clone();
             
             AsyncPaginator::new(
                 http_client,
@@ -546,7 +546,7 @@ impl InlineUsersInlineUsersClient {
                     let options_for_request = options_clone.clone();
                     
                     // Clone captured variables to move into the async block
-                    
+                    let request_for_async = request_clone.clone();
                     
                     Box::pin(async move {
                         let response: serde_json::Value = client.execute_request(
@@ -579,11 +579,11 @@ impl InlineUsersInlineUsersClient {
             )
     }
 
-    pub async fn list_usernames(&self, starting_after: Option<String>, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
+    pub async fn list_usernames(&self, request: &ListUsernamesQueryRequest, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
             let base_query_params = None;
             let options_clone = options.clone();
-            
+            let request_clone = request.clone();
             
             AsyncPaginator::new(
                 http_client,
@@ -596,7 +596,7 @@ impl InlineUsersInlineUsersClient {
                     let options_for_request = options_clone.clone();
                     
                     // Clone captured variables to move into the async block
-                    
+                    let request_for_async = request_clone.clone();
                     
                     Box::pin(async move {
                         let response: serde_json::Value = client.execute_request(
@@ -629,11 +629,11 @@ impl InlineUsersInlineUsersClient {
             )
     }
 
-    pub async fn list_with_global_config(&self, offset: Option<i32>, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
+    pub async fn list_with_global_config(&self, request: &ListWithGlobalConfigQueryRequest, options: Option<RequestOptions>) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
             let base_query_params = None;
             let options_clone = options.clone();
-            
+            let request_clone = request.clone();
             
             AsyncPaginator::new(
                 http_client,
@@ -647,7 +647,7 @@ impl InlineUsersInlineUsersClient {
                     let options_for_request = options_clone.clone();
                     
                     // Clone captured variables to move into the async block
-                    
+                    let request_for_async = request_clone.clone();
                     
                     Box::pin(async move {
                         let response: serde_json::Value = client.execute_request(

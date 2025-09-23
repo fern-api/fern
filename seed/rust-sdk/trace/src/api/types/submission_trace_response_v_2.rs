@@ -5,7 +5,7 @@ use crate::submission_submission_id::SubmissionId;
 use crate::submission_traced_file::TracedFile;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct TraceResponseV2 {
     #[serde(rename = "submissionId")]
     pub submission_id: SubmissionId,
