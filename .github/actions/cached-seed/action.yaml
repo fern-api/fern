@@ -84,7 +84,7 @@ runs:
       run: |
 
         # Debug
-        echo "${{ inputs.fixtures-to-run }}" | jq .
+        echo "${{ inputs.fixtures-to-run }}"
         FORMATTED_FIXTURES=""
 
         if echo "${{ inputs.fixtures-to-run }}" | jq -e . >/dev/null 2>&1; then
