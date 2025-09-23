@@ -216,12 +216,13 @@ jobs:
           echo "${ruby_matrix}" | jq .
           echo "${python_matrix}" | jq .
 
-          # combined=$(echo "$ruby_matrix $python_matrix" | jq -s -c 'add')
-          # echo "${combined}" | jq . 
-          # matrix=$(echo '$combined' | jq '[.]')
-          # echo "built-matrix=$matrix" >> $GITHUB_OUTPUT
+          combined=$(echo "$ruby_matrix $python_matrix" | jq -s -c 'add')
+          echo "${combined}" | jq . 
+
+          matrix=$(echo '$combined' | jq '[.]')
+          echo "built-matrix=$matrix" >> $GITHUB_OUTPUT
           
-          # # Output for debug
+          # Output for debug
           # echo "${matrix}" | jq .
 
 # bash-3.2$ GEN_PATH="folder/file"
