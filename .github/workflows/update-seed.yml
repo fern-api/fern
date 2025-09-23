@@ -233,7 +233,7 @@ jobs:
         id: get-test-matrix
         uses: ./.github/actions/get-test-matrix
         with:
-          generator-name: ${{ matrix.sdk-name }}
+          sdk-name: ${{ matrix.sdk-name }}
           package-amount: 10
 
       - name: Set test matrix for ${{ matrix.sdk-name }}
