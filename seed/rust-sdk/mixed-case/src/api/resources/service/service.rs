@@ -1,4 +1,4 @@
-use crate::api::types::*;
+use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
@@ -9,7 +9,7 @@ pub struct ServiceClient {
 impl ServiceClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config)?,
+            http_client: HttpClient::new(config.clone())?,
         })
     }
 
@@ -31,8 +31,7 @@ impl ServiceClient {
 
     pub async fn list_resources(
         &self,
-        page_limit: Option<i32>,
-        before_date: Option<chrono::NaiveDate>,
+        request: &ListResourcesQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<Vec<Resource>, ApiError> {
         self.http_client
@@ -41,8 +40,8 @@ impl ServiceClient {
                 "/resource",
                 None,
                 QueryBuilder::new()
-                    .int("page_limit", page_limit)
-                    .date("beforeDate", before_date)
+                    .int("page_limit", request.page_limit.clone())
+                    .date("beforeDate", request.before_date.clone())
                     .build(),
                 options,
             )

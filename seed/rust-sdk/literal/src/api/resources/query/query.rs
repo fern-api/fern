@@ -1,4 +1,4 @@
-use crate::api::types::*;
+use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
@@ -9,21 +9,13 @@ pub struct QueryClient {
 impl QueryClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config)?,
+            http_client: HttpClient::new(config.clone())?,
         })
     }
 
     pub async fn send(
         &self,
-        prompt: Option<String>,
-        optional_prompt: Option<String>,
-        alias_prompt: Option<AliasToPrompt>,
-        alias_optional_prompt: Option<AliasToPrompt>,
-        query: Option<String>,
-        stream: Option<bool>,
-        optional_stream: Option<bool>,
-        alias_stream: Option<AliasToStream>,
-        alias_optional_stream: Option<AliasToStream>,
+        request: &SendQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<SendResponse, ApiError> {
         self.http_client
@@ -32,15 +24,21 @@ impl QueryClient {
                 "query",
                 None,
                 QueryBuilder::new()
-                    .string("prompt", prompt)
-                    .serialize("optional_prompt", optional_prompt)
-                    .serialize("alias_prompt", alias_prompt)
-                    .serialize("alias_optional_prompt", alias_optional_prompt)
-                    .structured_query("query", query)
-                    .string("stream", stream)
-                    .serialize("optional_stream", optional_stream)
-                    .serialize("alias_stream", alias_stream)
-                    .serialize("alias_optional_stream", alias_optional_stream)
+                    .string("prompt", request.prompt.clone())
+                    .serialize("optional_prompt", request.optional_prompt.clone())
+                    .serialize("alias_prompt", request.alias_prompt.clone())
+                    .serialize(
+                        "alias_optional_prompt",
+                        request.alias_optional_prompt.clone(),
+                    )
+                    .structured_query("query", request.query.clone())
+                    .string("stream", request.stream.clone())
+                    .serialize("optional_stream", request.optional_stream.clone())
+                    .serialize("alias_stream", request.alias_stream.clone())
+                    .serialize(
+                        "alias_optional_stream",
+                        request.alias_optional_stream.clone(),
+                    )
                     .build(),
                 options,
             )

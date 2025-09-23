@@ -1,4 +1,4 @@
-use crate::api::types::*;
+use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
@@ -9,13 +9,13 @@ pub struct ServiceClient {
 impl ServiceClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config)?,
+            http_client: HttpClient::new(config.clone())?,
         })
     }
 
     pub async fn post(
         &self,
-        request: &serde_json::Value,
+        request: &PostRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -31,7 +31,7 @@ impl ServiceClient {
 
     pub async fn just_file(
         &self,
-        request: &serde_json::Value,
+        request: &JustFileRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -47,12 +47,7 @@ impl ServiceClient {
 
     pub async fn just_file_with_query_params(
         &self,
-        maybe_string: Option<String>,
-        integer: Option<i32>,
-        maybe_integer: Option<i32>,
-        list_of_strings: Option<String>,
-        optional_list_of_strings: Option<String>,
-        request: &serde_json::Value,
+        request: &JustFileWithQueryParamsRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -61,11 +56,14 @@ impl ServiceClient {
                 "/just-file-with-query-params",
                 Some(serde_json::to_value(request).unwrap_or_default()),
                 QueryBuilder::new()
-                    .string("maybeString", maybe_string)
-                    .int("integer", integer)
-                    .int("maybeInteger", maybe_integer)
-                    .string("listOfStrings", list_of_strings)
-                    .string("optionalListOfStrings", optional_list_of_strings)
+                    .string("maybeString", request.maybe_string.clone())
+                    .int("integer", request.integer.clone())
+                    .int("maybeInteger", request.maybe_integer.clone())
+                    .string("listOfStrings", request.list_of_strings.clone())
+                    .string(
+                        "optionalListOfStrings",
+                        request.optional_list_of_strings.clone(),
+                    )
                     .build(),
                 options,
             )
@@ -74,7 +72,7 @@ impl ServiceClient {
 
     pub async fn with_content_type(
         &self,
-        request: &serde_json::Value,
+        request: &WithContentTypeRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -90,7 +88,7 @@ impl ServiceClient {
 
     pub async fn with_form_encoding(
         &self,
-        request: &serde_json::Value,
+        request: &WithFormEncodingRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -106,7 +104,7 @@ impl ServiceClient {
 
     pub async fn with_form_encoded_containers(
         &self,
-        request: &serde_json::Value,
+        request: &WithFormEncodedContainersRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -122,7 +120,7 @@ impl ServiceClient {
 
     pub async fn optional_args(
         &self,
-        request: &serde_json::Value,
+        request: &OptionalArgsRequest,
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {
         self.http_client
@@ -138,7 +136,7 @@ impl ServiceClient {
 
     pub async fn with_inline_type(
         &self,
-        request: &serde_json::Value,
+        request: &WithInlineTypeRequest,
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {
         self.http_client

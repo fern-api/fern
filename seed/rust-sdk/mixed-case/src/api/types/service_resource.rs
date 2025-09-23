@@ -2,7 +2,7 @@ use crate::service_organization::Organization;
 use crate::service_user::User;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "resource_type")]
 pub enum Resource {
     User {

@@ -9,6 +9,9 @@ pub mod reference_container_object;
 pub mod reference_nested_object_with_literals;
 pub mod reference_send_request;
 pub mod reference_some_literal;
+pub mod send_literals_in_headers_request;
+pub mod send_literals_inlined_request;
+pub mod send_query_request;
 pub mod send_response;
 
 pub use inlined_a_nested_literal::*;
@@ -22,4 +25,7 @@ pub use reference_container_object::*;
 pub use reference_nested_object_with_literals::*;
 pub use reference_send_request::*;
 pub use reference_some_literal::*;
+pub use send_literals_in_headers_request::*;
+pub use send_literals_inlined_request::*;
+pub use send_query_request::*;
 pub use send_response::*;

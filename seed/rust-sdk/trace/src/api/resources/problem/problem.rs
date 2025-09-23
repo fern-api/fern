@@ -1,4 +1,4 @@
-use crate::api::types::*;
+use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
@@ -9,7 +9,7 @@ pub struct ProblemClient {
 impl ProblemClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config)?,
+            http_client: HttpClient::new(config.clone())?,
         })
     }
 
@@ -64,7 +64,7 @@ impl ProblemClient {
 
     pub async fn get_default_starter_files(
         &self,
-        request: &serde_json::Value,
+        request: &GetDefaultStarterFilesRequest,
         options: Option<RequestOptions>,
     ) -> Result<GetDefaultStarterFilesResponse, ApiError> {
         self.http_client

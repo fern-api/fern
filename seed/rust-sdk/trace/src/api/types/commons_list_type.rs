@@ -1,7 +1,7 @@
 use crate::commons_variable_type::VariableType;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ListType {
     #[serde(rename = "valueType")]
     pub value_type: VariableType,

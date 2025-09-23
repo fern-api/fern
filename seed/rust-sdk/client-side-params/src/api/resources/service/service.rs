@@ -1,4 +1,4 @@
-use crate::api::types::*;
+use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
@@ -9,19 +9,13 @@ pub struct ServiceClient {
 impl ServiceClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config)?,
+            http_client: HttpClient::new(config.clone())?,
         })
     }
 
     pub async fn list_resources(
         &self,
-        page: Option<i32>,
-        per_page: Option<i32>,
-        sort: Option<String>,
-        order: Option<String>,
-        include_totals: Option<bool>,
-        fields: Option<String>,
-        search: Option<String>,
+        request: &ListResourcesQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<Vec<Resource>, ApiError> {
         self.http_client
@@ -30,13 +24,13 @@ impl ServiceClient {
                 "/api/resources",
                 None,
                 QueryBuilder::new()
-                    .int("page", page)
-                    .int("per_page", per_page)
-                    .string("sort", sort)
-                    .string("order", order)
-                    .bool("include_totals", include_totals)
-                    .string("fields", fields)
-                    .string("search", search)
+                    .int("page", request.page.clone())
+                    .int("per_page", request.per_page.clone())
+                    .string("sort", request.sort.clone())
+                    .string("order", request.order.clone())
+                    .bool("include_totals", request.include_totals.clone())
+                    .string("fields", request.fields.clone())
+                    .string("search", request.search.clone())
                     .build(),
                 options,
             )
@@ -46,8 +40,7 @@ impl ServiceClient {
     pub async fn get_resource(
         &self,
         resource_id: &String,
-        include_metadata: Option<bool>,
-        format: Option<String>,
+        request: &GetResourceQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<Resource, ApiError> {
         self.http_client
@@ -56,8 +49,8 @@ impl ServiceClient {
                 &format!("/api/resources/{}", resource_id),
                 None,
                 QueryBuilder::new()
-                    .bool("include_metadata", include_metadata)
-                    .string("format", format)
+                    .bool("include_metadata", request.include_metadata.clone())
+                    .string("format", request.format.clone())
                     .build(),
                 options,
             )
@@ -66,9 +59,7 @@ impl ServiceClient {
 
     pub async fn search_resources(
         &self,
-        limit: Option<i32>,
-        offset: Option<i32>,
-        request: &serde_json::Value,
+        request: &SearchResourcesRequest,
         options: Option<RequestOptions>,
     ) -> Result<SearchResponse, ApiError> {
         self.http_client
@@ -77,8 +68,8 @@ impl ServiceClient {
                 "/api/resources/search",
                 Some(serde_json::to_value(request).unwrap_or_default()),
                 QueryBuilder::new()
-                    .int("limit", limit)
-                    .int("offset", offset)
+                    .int("limit", request.limit.clone())
+                    .int("offset", request.offset.clone())
                     .build(),
                 options,
             )
@@ -87,14 +78,7 @@ impl ServiceClient {
 
     pub async fn list_users(
         &self,
-        page: Option<i32>,
-        per_page: Option<i32>,
-        include_totals: Option<bool>,
-        sort: Option<String>,
-        connection: Option<String>,
-        q: Option<String>,
-        search_engine: Option<String>,
-        fields: Option<String>,
+        request: &ListUsersQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<PaginatedUserResponse, ApiError> {
         self.http_client
@@ -103,14 +87,14 @@ impl ServiceClient {
                 "/api/users",
                 None,
                 QueryBuilder::new()
-                    .int("page", page)
-                    .int("per_page", per_page)
-                    .bool("include_totals", include_totals)
-                    .string("sort", sort)
-                    .string("connection", connection)
-                    .string("q", q)
-                    .string("search_engine", search_engine)
-                    .string("fields", fields)
+                    .int("page", request.page.clone())
+                    .int("per_page", request.per_page.clone())
+                    .bool("include_totals", request.include_totals.clone())
+                    .string("sort", request.sort.clone())
+                    .string("connection", request.connection.clone())
+                    .string("q", request.q.clone())
+                    .string("search_engine", request.search_engine.clone())
+                    .string("fields", request.fields.clone())
                     .build(),
                 options,
             )
@@ -120,8 +104,7 @@ impl ServiceClient {
     pub async fn get_user_by_id(
         &self,
         user_id: &String,
-        fields: Option<String>,
-        include_fields: Option<bool>,
+        request: &GetUserByIdQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<User, ApiError> {
         self.http_client
@@ -130,8 +113,8 @@ impl ServiceClient {
                 &format!("/api/users/{}", user_id),
                 None,
                 QueryBuilder::new()
-                    .string("fields", fields)
-                    .bool("include_fields", include_fields)
+                    .string("fields", request.fields.clone())
+                    .bool("include_fields", request.include_fields.clone())
                     .build(),
                 options,
             )
@@ -189,9 +172,7 @@ impl ServiceClient {
 
     pub async fn list_connections(
         &self,
-        strategy: Option<String>,
-        name: Option<String>,
-        fields: Option<String>,
+        request: &ListConnectionsQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<Vec<Connection>, ApiError> {
         self.http_client
@@ -200,9 +181,9 @@ impl ServiceClient {
                 "/api/connections",
                 None,
                 QueryBuilder::new()
-                    .string("strategy", strategy)
-                    .string("name", name)
-                    .string("fields", fields)
+                    .string("strategy", request.strategy.clone())
+                    .string("name", request.name.clone())
+                    .string("fields", request.fields.clone())
                     .build(),
                 options,
             )
@@ -212,7 +193,7 @@ impl ServiceClient {
     pub async fn get_connection(
         &self,
         connection_id: &String,
-        fields: Option<String>,
+        request: &GetConnectionQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<Connection, ApiError> {
         self.http_client
@@ -220,7 +201,9 @@ impl ServiceClient {
                 Method::GET,
                 &format!("/api/connections/{}", connection_id),
                 None,
-                QueryBuilder::new().string("fields", fields).build(),
+                QueryBuilder::new()
+                    .string("fields", request.fields.clone())
+                    .build(),
                 options,
             )
             .await
@@ -228,14 +211,7 @@ impl ServiceClient {
 
     pub async fn list_clients(
         &self,
-        fields: Option<String>,
-        include_fields: Option<bool>,
-        page: Option<i32>,
-        per_page: Option<i32>,
-        include_totals: Option<bool>,
-        is_global: Option<bool>,
-        is_first_party: Option<bool>,
-        app_type: Option<Vec<String>>,
+        request: &ListClientsQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<PaginatedClientResponse, ApiError> {
         self.http_client
@@ -244,14 +220,14 @@ impl ServiceClient {
                 "/api/clients",
                 None,
                 QueryBuilder::new()
-                    .string("fields", fields)
-                    .bool("include_fields", include_fields)
-                    .int("page", page)
-                    .int("per_page", per_page)
-                    .bool("include_totals", include_totals)
-                    .bool("is_global", is_global)
-                    .bool("is_first_party", is_first_party)
-                    .serialize("app_type", app_type)
+                    .string("fields", request.fields.clone())
+                    .bool("include_fields", request.include_fields.clone())
+                    .int("page", request.page.clone())
+                    .int("per_page", request.per_page.clone())
+                    .bool("include_totals", request.include_totals.clone())
+                    .bool("is_global", request.is_global.clone())
+                    .bool("is_first_party", request.is_first_party.clone())
+                    .serialize("app_type", request.app_type.clone())
                     .build(),
                 options,
             )
@@ -261,8 +237,7 @@ impl ServiceClient {
     pub async fn get_client(
         &self,
         client_id: &String,
-        fields: Option<String>,
-        include_fields: Option<bool>,
+        request: &GetClientQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<Client, ApiError> {
         self.http_client
@@ -271,8 +246,8 @@ impl ServiceClient {
                 &format!("/api/clients/{}", client_id),
                 None,
                 QueryBuilder::new()
-                    .string("fields", fields)
-                    .bool("include_fields", include_fields)
+                    .string("fields", request.fields.clone())
+                    .bool("include_fields", request.include_fields.clone())
                     .build(),
                 options,
             )

@@ -3,7 +3,7 @@ use crate::service_with_docs::WithDocs;
 use crate::with_metadata::WithMetadata;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Response {
     #[serde(flatten)]
     pub with_metadata_fields: WithMetadata,

@@ -2,7 +2,7 @@ use crate::commons_doubly_linked_list_value::DoublyLinkedListValue;
 use crate::commons_node_id::NodeId;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct DoublyLinkedListNodeAndListValue {
     #[serde(rename = "nodeId")]
     pub node_id: NodeId,

@@ -6,7 +6,7 @@ use crate::nullable_optional_user_status::UserStatus;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ComplexProfile {
     pub id: String,
     #[serde(rename = "nullableRole")]

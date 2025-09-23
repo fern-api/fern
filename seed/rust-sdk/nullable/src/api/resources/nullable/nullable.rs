@@ -1,4 +1,4 @@
-use crate::api::types::*;
+use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
@@ -9,17 +9,13 @@ pub struct NullableClient {
 impl NullableClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config)?,
+            http_client: HttpClient::new(config.clone())?,
         })
     }
 
     pub async fn get_users(
         &self,
-        usernames: Option<String>,
-        avatar: Option<String>,
-        activated: Option<bool>,
-        tags: Option<Option<String>>,
-        extra: Option<Option<bool>>,
+        request: &GetUsersQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {
         self.http_client
@@ -28,11 +24,11 @@ impl NullableClient {
                 "/users",
                 None,
                 QueryBuilder::new()
-                    .string("usernames", usernames)
-                    .string("avatar", avatar)
-                    .bool("activated", activated)
-                    .serialize("tags", tags)
-                    .serialize("extra", extra)
+                    .string("usernames", request.usernames.clone())
+                    .string("avatar", request.avatar.clone())
+                    .bool("activated", request.activated.clone())
+                    .serialize("tags", request.tags.clone())
+                    .serialize("extra", request.extra.clone())
                     .build(),
                 options,
             )
@@ -41,7 +37,7 @@ impl NullableClient {
 
     pub async fn create_user(
         &self,
-        request: &serde_json::Value,
+        request: &CreateUserRequest,
         options: Option<RequestOptions>,
     ) -> Result<User, ApiError> {
         self.http_client
@@ -57,7 +53,7 @@ impl NullableClient {
 
     pub async fn delete_user(
         &self,
-        request: &serde_json::Value,
+        request: &DeleteUserRequest,
         options: Option<RequestOptions>,
     ) -> Result<bool, ApiError> {
         self.http_client

@@ -1,6 +1,9 @@
 use crate::{ApiError, ClientConfig};
 
+pub mod commons;
 pub mod folder_a;
+pub mod folder_b;
+pub mod folder_c;
 pub mod folder_d;
 pub mod foo;
 pub struct CrossPackageTypeNamesClient {
@@ -21,6 +24,9 @@ impl CrossPackageTypeNamesClient {
     }
 }
 
+pub use commons::*;
 pub use folder_a::*;
+pub use folder_b::*;
+pub use folder_c::*;
 pub use folder_d::*;
 pub use foo::*;

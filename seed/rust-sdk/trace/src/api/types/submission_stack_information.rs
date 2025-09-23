@@ -1,7 +1,7 @@
 use crate::submission_stack_frame::StackFrame;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct StackInformation {
     #[serde(rename = "numStackFrames")]
     pub num_stack_frames: i32,
