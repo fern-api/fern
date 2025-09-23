@@ -562,7 +562,9 @@ public final class ComplexProfile {
         @JsonSetter(value = "nullableListOfUnions", nulls = Nulls.SKIP)
         public _FinalStage nullableListOfUnions(List<NotificationMethod> nullableListOfUnions) {
             this.nullableListOfUnions.clear();
-            this.nullableListOfUnions.addAll(nullableListOfUnions);
+            if (nullableListOfUnions != null) {
+                this.nullableListOfUnions.addAll(nullableListOfUnions);
+            }
             return this;
         }
 
@@ -584,7 +586,9 @@ public final class ComplexProfile {
         @JsonSetter(value = "nullableMapOfNullables", nulls = Nulls.SKIP)
         public _FinalStage nullableMapOfNullables(Map<String, Address> nullableMapOfNullables) {
             this.nullableMapOfNullables.clear();
-            this.nullableMapOfNullables.putAll(nullableMapOfNullables);
+            if (nullableMapOfNullables != null) {
+                this.nullableMapOfNullables.putAll(nullableMapOfNullables);
+            }
             return this;
         }
 
@@ -606,7 +610,9 @@ public final class ComplexProfile {
         @JsonSetter(value = "nullableListOfNullables", nulls = Nulls.SKIP)
         public _FinalStage nullableListOfNullables(List<String> nullableListOfNullables) {
             this.nullableListOfNullables.clear();
-            this.nullableListOfNullables.addAll(nullableListOfNullables);
+            if (nullableListOfNullables != null) {
+                this.nullableListOfNullables.addAll(nullableListOfNullables);
+            }
             return this;
         }
 
@@ -667,7 +673,9 @@ public final class ComplexProfile {
         @JsonSetter(value = "nullableArray", nulls = Nulls.SKIP)
         public _FinalStage nullableArray(List<String> nullableArray) {
             this.nullableArray.clear();
-            this.nullableArray.addAll(nullableArray);
+            if (nullableArray != null) {
+                this.nullableArray.addAll(nullableArray);
+            }
             return this;
         }
 

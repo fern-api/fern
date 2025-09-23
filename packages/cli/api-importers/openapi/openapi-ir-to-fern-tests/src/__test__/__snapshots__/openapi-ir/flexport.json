@@ -38135,12 +38135,16 @@
                         "value": {
                           "value": {
                             "generatedName": "PortsIndexResponseDataDataItem",
-                            "schema": "Place",
-                            "source": {
-                              "file": "../openapi.yml",
-                              "type": "openapi"
+                            "value": {
+                              "generatedName": "PortsIndexResponseDataDataItem",
+                              "schema": "Place",
+                              "source": {
+                                "file": "../openapi.yml",
+                                "type": "openapi"
+                              },
+                              "type": "reference"
                             },
-                            "type": "reference"
+                            "type": "nullable"
                           },
                           "generatedName": "PortsIndexResponseDataData",
                           "groupName": [],
@@ -65854,12 +65858,16 @@
                 "generatedName": "oceanBookingDetailOriginPort",
                 "value": {
                   "generatedName": "OceanBookingDetailOriginPort",
-                  "schema": "Place",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "OceanBookingDetailOriginPort",
+                    "schema": "Place",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -65876,12 +65884,16 @@
                 "generatedName": "oceanBookingDetailDestinationPort",
                 "value": {
                   "generatedName": "OceanBookingDetailDestinationPort",
-                  "schema": "Place",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "OceanBookingDetailDestinationPort",
+                    "schema": "Place",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -66085,12 +66097,16 @@
                 "generatedName": "airBookingDetailOriginPort",
                 "value": {
                   "generatedName": "AirBookingDetailOriginPort",
-                  "schema": "Place",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "AirBookingDetailOriginPort",
+                    "schema": "Place",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -66107,12 +66123,16 @@
                 "generatedName": "airBookingDetailDestinationPort",
                 "value": {
                   "generatedName": "AirBookingDetailDestinationPort",
-                  "schema": "Place",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "AirBookingDetailDestinationPort",
+                    "schema": "Place",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -66661,12 +66681,16 @@
               "generatedName": "bookingOceanBooking",
               "value": {
                 "generatedName": "BookingOceanBooking",
-                "schema": "OceanBookingDetail",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "BookingOceanBooking",
+                  "schema": "OceanBookingDetail",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -66683,12 +66707,16 @@
               "generatedName": "bookingAirBooking",
               "value": {
                 "generatedName": "BookingAirBooking",
-                "schema": "AirBookingDetail",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "BookingAirBooking",
+                  "schema": "AirBookingDetail",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -66705,12 +66733,16 @@
               "generatedName": "bookingTruckingBooking",
               "value": {
                 "generatedName": "BookingTruckingBooking",
-                "schema": "TruckingBookingDetail",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "BookingTruckingBooking",
+                  "schema": "TruckingBookingDetail",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -74230,12 +74262,16 @@
               "generatedName": "shipmentOceanShipment",
               "value": {
                 "generatedName": "ShipmentOceanShipment",
-                "schema": "OceanShipmentDetail",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ShipmentOceanShipment",
+                  "schema": "OceanShipmentDetail",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -74252,12 +74288,16 @@
               "generatedName": "shipmentAirShipment",
               "value": {
                 "generatedName": "ShipmentAirShipment",
-                "schema": "AirShipmentDetail",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ShipmentAirShipment",
+                  "schema": "AirShipmentDetail",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -74935,12 +74975,16 @@
               "generatedName": "shipmentNodePlace",
               "value": {
                 "generatedName": "ShipmentNodePlace",
-                "schema": "Place",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ShipmentNodePlace",
+                  "schema": "Place",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -74957,12 +75001,16 @@
               "generatedName": "shipmentNodeTerminal",
               "value": {
                 "generatedName": "ShipmentNodeTerminal",
-                "schema": "Terminal",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ShipmentNodeTerminal",
+                  "schema": "Terminal",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -75818,12 +75866,16 @@
               "generatedName": "shipmentLegAirLeg",
               "value": {
                 "generatedName": "ShipmentLegAirLeg",
-                "schema": "AirShipmentLeg",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ShipmentLegAirLeg",
+                  "schema": "AirShipmentLeg",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -75862,12 +75914,16 @@
               "generatedName": "shipmentLegTruckingLeg",
               "value": {
                 "generatedName": "ShipmentLegTruckingLeg",
-                "schema": "TruckingShipmentLeg",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ShipmentLegTruckingLeg",
+                  "schema": "TruckingShipmentLeg",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -75884,12 +75940,16 @@
               "generatedName": "shipmentLegRailLeg",
               "value": {
                 "generatedName": "ShipmentLegRailLeg",
-                "schema": "RailShipmentLeg",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ShipmentLegRailLeg",
+                  "schema": "RailShipmentLeg",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -81669,12 +81729,16 @@
               "generatedName": "purchaseOrderLineItemOriginPort",
               "value": {
                 "generatedName": "PurchaseOrderLineItemOriginPort",
-                "schema": "Place",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "PurchaseOrderLineItemOriginPort",
+                  "schema": "Place",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -81713,12 +81777,16 @@
               "generatedName": "purchaseOrderLineItemDestinationPort",
               "value": {
                 "generatedName": "PurchaseOrderLineItemDestinationPort",
-                "schema": "Place",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "PurchaseOrderLineItemDestinationPort",
+                  "schema": "Place",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -82645,12 +82713,16 @@
               "generatedName": "purchaseOrderOriginPort",
               "value": {
                 "generatedName": "PurchaseOrderOriginPort",
-                "schema": "Place",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "PurchaseOrderOriginPort",
+                  "schema": "Place",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -82689,12 +82761,16 @@
               "generatedName": "purchaseOrderDestinationPort",
               "value": {
                 "generatedName": "PurchaseOrderDestinationPort",
-                "schema": "Place",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "PurchaseOrderDestinationPort",
+                  "schema": "Place",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"

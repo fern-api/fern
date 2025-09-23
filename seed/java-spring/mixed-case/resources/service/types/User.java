@@ -147,7 +147,9 @@ public final class User {
     )
     public _FinalStage extraProperties(Map<String, String> extraProperties) {
       this.extraProperties.clear();
-      this.extraProperties.putAll(extraProperties);
+      if (extraProperties != null) {
+        this.extraProperties.putAll(extraProperties);
+      }
       return this;
     }
 
@@ -172,7 +174,9 @@ public final class User {
     )
     public _FinalStage metadataTags(List<String> metadataTags) {
       this.metadataTags.clear();
-      this.metadataTags.addAll(metadataTags);
+      if (metadataTags != null) {
+        this.metadataTags.addAll(metadataTags);
+      }
       return this;
     }
 

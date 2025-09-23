@@ -103,7 +103,9 @@ public final class Response {
     )
     public Builder results(List<String> results) {
       this.results.clear();
-      this.results.addAll(results);
+      if (results != null) {
+        this.results.addAll(results);
+      }
       return this;
     }
 

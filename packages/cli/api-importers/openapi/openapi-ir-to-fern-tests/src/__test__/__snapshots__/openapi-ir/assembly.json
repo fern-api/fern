@@ -8374,14 +8374,18 @@
             "schema": {
               "generatedName": "createTranscriptOptionalParametersLanguageCode",
               "value": {
-                "description": "The language of your audio file. Possible values are found in [Supported Languages](https://www.assemblyai.com/docs/Concepts/supported_languages).\nThe default value is 'en_us'.\n",
                 "generatedName": "CreateTranscriptOptionalParametersLanguageCode",
-                "schema": "TranscriptLanguageCode",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "description": "The language of your audio file. Possible values are found in [Supported Languages](https://www.assemblyai.com/docs/Concepts/supported_languages).\nThe default value is 'en_us'.\n",
+                  "generatedName": "CreateTranscriptOptionalParametersLanguageCode",
+                  "schema": "TranscriptLanguageCode",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -8744,14 +8748,18 @@
             "schema": {
               "generatedName": "createTranscriptOptionalParametersRedactPiiSub",
               "value": {
-                "description": "The replacement logic for detected PII, can be \"entity_type\" or \"hash\". See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
                 "generatedName": "CreateTranscriptOptionalParametersRedactPiiSub",
-                "schema": "SubstitutionPolicy",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "description": "The replacement logic for detected PII, can be \"entity_type\" or \"hash\". See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
+                  "generatedName": "CreateTranscriptOptionalParametersRedactPiiSub",
+                  "schema": "SubstitutionPolicy",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -9830,14 +9838,18 @@
             "schema": {
               "generatedName": "transcriptLanguageCode",
               "value": {
-                "description": "The language of your audio file.\nPossible values are found in [Supported Languages](https://www.assemblyai.com/docs/Concepts/supported_languages).\nThe default value is 'en_us'.\n",
                 "generatedName": "TranscriptLanguageCode",
-                "schema": "TranscriptLanguageCode",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "description": "The language of your audio file.\nPossible values are found in [Supported Languages](https://www.assemblyai.com/docs/Concepts/supported_languages).\nThe default value is 'en_us'.\n",
+                  "generatedName": "TranscriptLanguageCode",
+                  "schema": "TranscriptLanguageCode",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -10228,14 +10240,18 @@
             "schema": {
               "generatedName": "transcriptAutoHighlightsResult",
               "value": {
-                "description": "An array of results for the Key Phrases model, if it was enabled during the transcription request.\nSee [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more information.\n",
                 "generatedName": "TranscriptAutoHighlightsResult",
-                "schema": "AutoHighlightsResult",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "description": "An array of results for the Key Phrases model, if it was enabled during the transcription request.\nSee [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more information.\n",
+                  "generatedName": "TranscriptAutoHighlightsResult",
+                  "schema": "AutoHighlightsResult",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -10479,14 +10495,18 @@
             "schema": {
               "generatedName": "transcriptRedactPiiSub",
               "value": {
-                "description": "The replacement logic for detected PII, can be \"entity_type\" or \"hash\". See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
                 "generatedName": "TranscriptRedactPiiSub",
-                "schema": "SubstitutionPolicy",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "description": "The replacement logic for detected PII, can be \"entity_type\" or \"hash\". See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
+                  "generatedName": "TranscriptRedactPiiSub",
+                  "schema": "SubstitutionPolicy",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"

@@ -393,9 +393,7 @@ Companies are looked up via `company_id` in a `POST` request, if not found via `
               "pagination": undefined,
               "path": "/companies",
               "request": {
-                "body": {
-                  "type": "optional<root.CreateOrUpdateCompanyRequest>",
-                },
+                "body": "optional<root.CreateOrUpdateCompanyRequest>",
                 "content-type": "application/json",
               },
               "response": {
@@ -579,8 +577,7 @@ service:
         openapi: ../openapi.yml
       display-name: Create or Update a company
       request:
-        body:
-          type: optional<root.CreateOrUpdateCompanyRequest>
+        body: optional<root.CreateOrUpdateCompanyRequest>
         content-type: application/json
       response:
         docs: Successful

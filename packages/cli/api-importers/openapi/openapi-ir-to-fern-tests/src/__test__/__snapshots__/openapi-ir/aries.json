@@ -45747,12 +45747,16 @@
               "title": "IndyPrimaryProof",
               "value": {
                 "generatedName": "IndyPrimaryProofEqProof",
-                "schema": "IndyPrimaryProof_eq_proof",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "IndyPrimaryProofEqProof",
+                  "schema": "IndyPrimaryProof_eq_proof",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -46192,12 +46196,16 @@
               "title": "IndyProofProofProofsProof",
               "value": {
                 "generatedName": "IndyProofProofProofsProofNonRevocProof",
-                "schema": "IndyProofProofProofsProof_non_revoc_proof",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "IndyProofProofProofsProofNonRevocProof",
+                  "schema": "IndyProofProofProofsProof_non_revoc_proof",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -46307,12 +46315,16 @@
               "title": "IndyProofReqAttrSpec",
               "value": {
                 "generatedName": "IndyProofReqAttrSpecNonRevoked",
-                "schema": "IndyProofReqAttrSpec_non_revoked",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "IndyProofReqAttrSpecNonRevoked",
+                  "schema": "IndyProofReqAttrSpec_non_revoked",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -46474,12 +46486,16 @@
               "title": "IndyProofReqPredSpec",
               "value": {
                 "generatedName": "IndyProofReqPredSpecNonRevoked",
-                "schema": "IndyProofReqPredSpec_non_revoked",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "IndyProofReqPredSpecNonRevoked",
+                  "schema": "IndyProofReqPredSpec_non_revoked",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -46705,12 +46721,16 @@
               "title": "IndyProofRequest",
               "value": {
                 "generatedName": "IndyProofRequestNonRevoked",
-                "schema": "IndyProofRequest_non_revoked",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "IndyProofRequestNonRevoked",
+                  "schema": "IndyProofRequest_non_revoked",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"

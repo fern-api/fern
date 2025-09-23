@@ -117,7 +117,9 @@ public final class Response {
         @JsonSetter(value = "identifiers", nulls = Nulls.SKIP)
         public _FinalStage identifiers(List<Identifier> identifiers) {
             this.identifiers.clear();
-            this.identifiers.addAll(identifiers);
+            if (identifiers != null) {
+                this.identifiers.addAll(identifiers);
+            }
             return this;
         }
 

@@ -22,7 +22,7 @@ public class CustomAuthWireTest {
         server.start();
         client = SeedCustomAuthClient.builder()
             .url(server.url("/").toString())
-            .apiKey("test-api-key") // For header: CustomAuthScheme
+            .customAuthScheme("test-api-key")
             .build();
     }
     @AfterEach

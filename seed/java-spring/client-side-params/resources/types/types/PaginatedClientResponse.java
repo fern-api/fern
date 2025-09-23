@@ -245,7 +245,9 @@ public final class PaginatedClientResponse {
     )
     public _FinalStage clients(List<Client> clients) {
       this.clients.clear();
-      this.clients.addAll(clients);
+      if (clients != null) {
+        this.clients.addAll(clients);
+      }
       return this;
     }
 

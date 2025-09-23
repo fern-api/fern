@@ -106,7 +106,9 @@ public final class SinglyLinkedListValue {
         @JsonSetter(value = "nodes", nulls = Nulls.SKIP)
         public Builder nodes(Map<String, SinglyLinkedListNodeValue> nodes) {
             this.nodes.clear();
-            this.nodes.putAll(nodes);
+            if (nodes != null) {
+                this.nodes.putAll(nodes);
+            }
             return this;
         }
 

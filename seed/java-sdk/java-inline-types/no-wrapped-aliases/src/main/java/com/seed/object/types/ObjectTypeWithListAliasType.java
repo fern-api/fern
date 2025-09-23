@@ -82,7 +82,9 @@ public final class ObjectTypeWithListAliasType {
         @JsonSetter(value = "prop", nulls = Nulls.SKIP)
         public Builder prop(List<PropItem> prop) {
             this.prop.clear();
-            this.prop.addAll(prop);
+            if (prop != null) {
+                this.prop.addAll(prop);
+            }
             return this;
         }
 

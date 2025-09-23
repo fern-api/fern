@@ -77,7 +77,9 @@ public final class ObjectWithMapOfMap {
     )
     public Builder map(Map<String, Map<String, String>> map) {
       this.map.clear();
-      this.map.putAll(map);
+      if (map != null) {
+        this.map.putAll(map);
+      }
       return this;
     }
 

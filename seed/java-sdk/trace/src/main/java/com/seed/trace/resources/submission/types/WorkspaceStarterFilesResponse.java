@@ -82,7 +82,9 @@ public final class WorkspaceStarterFilesResponse {
         @JsonSetter(value = "files", nulls = Nulls.SKIP)
         public Builder files(Map<Language, WorkspaceFiles> files) {
             this.files.clear();
-            this.files.putAll(files);
+            if (files != null) {
+                this.files.putAll(files);
+            }
             return this;
         }
 

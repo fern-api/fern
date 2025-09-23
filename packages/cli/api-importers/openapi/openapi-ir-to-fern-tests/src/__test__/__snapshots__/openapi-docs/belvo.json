@@ -7774,7 +7774,20 @@ We return one of the following enum values:
   - `UNCATEGORIZED`
   - `null`
 ",
-            "type": "optional<string>",
+            "enum": [
+              "CHECKING_ACCOUNT",
+              "CREDIT_CARD",
+              "INVESTMENT_ACCOUNT",
+              "LOAN_ACCOUNT",
+              "PENSION_FUND_ACCOUNT",
+              "RECEIVABLES_ACCOUNT",
+              "SAVINGS_ACCOUNT",
+              "UNCATEGORIZED",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "EnumBankAccountHolderTypeOfpi": {
             "docs": "The type of bank account. Can be either `INDIVIDUAL` or `BUSINESS`.",
@@ -7863,7 +7876,61 @@ We return one of the following enum values:
   - `Withdrawal & ATM`
   - `null`
 ",
-            "type": "optional<string>",
+            "enum": [
+              {
+                "name": "BillsUtilities",
+                "value": "Bills & Utilities",
+              },
+              {
+                "name": "CreditsLoans",
+                "value": "Credits & Loans",
+              },
+              "Deposits",
+              {
+                "name": "FeesCharges",
+                "value": "Fees & Charges",
+              },
+              {
+                "name": "FoodGroceries",
+                "value": "Food & Groceries",
+              },
+              {
+                "name": "HomeLife",
+                "value": "Home & Life",
+              },
+              {
+                "name": "IncomePayments",
+                "value": "Income & Payments",
+              },
+              "Insurance",
+              {
+                "name": "InvestmentsSavings",
+                "value": "Investments & Savings",
+              },
+              {
+                "name": "OnlinePlatformsLeisure",
+                "value": "Online Platforms & Leisure",
+              },
+              {
+                "name": "PersonalShopping",
+                "value": "Personal Shopping",
+              },
+              "Taxes",
+              "Transfers",
+              {
+                "name": "TransportTravel",
+                "value": "Transport & Travel",
+              },
+              "Unknown",
+              {
+                "name": "WithdrawalAtm",
+                "value": "Withdrawal & ATM",
+              },
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "EnumCategorizationTransactionSubcategory": {
             "docs": "The transactions subcategory. For more info about this feature, check our [Transaction categorization](https://developers.belvo.com/docs/banking#categorizing-transactions) article. 
@@ -7948,7 +8015,212 @@ We return one of the following enum values:
   - `Taxis & Rideshares`
   - `Other`
   - `null`",
-            "type": "optional<string>",
+            "enum": [
+              {
+                "name": "ElectricityEnergy",
+                "value": "Electricity & Energy",
+              },
+              "Rent",
+              "Telecommunications",
+              "Water",
+              "Auto",
+              {
+                "name": "CreditCard",
+                "value": "Credit Card",
+              },
+              "Instalment",
+              {
+                "name": "InterestCharges",
+                "value": "Interest & Charges",
+              },
+              "Mortgage",
+              {
+                "name": "PayAdvance",
+                "value": "Pay Advance",
+              },
+              "Personal",
+              "Adjustments",
+              {
+                "name": "BankFees",
+                "value": "Bank Fees",
+              },
+              "Chargeback",
+              "Refund",
+              {
+                "name": "BlockedBalances",
+                "value": "Blocked Balances",
+              },
+              "Alimony",
+              {
+                "name": "AlcoholTobacco",
+                "value": "Alcohol & Tobacco",
+              },
+              {
+                "name": "BakeryCoffee",
+                "value": "Bakery & Coffee",
+              },
+              {
+                "name": "BarsNightclubs",
+                "value": "Bars & Nightclubs",
+              },
+              {
+                "name": "ConvenienceStore",
+                "value": "Convenience Store",
+              },
+              "Delivery",
+              "Groceries",
+              "Restaurants",
+              "Education",
+              {
+                "name": "GymsFitness",
+                "value": "Gyms & Fitness",
+              },
+              {
+                "name": "HairBeauty",
+                "value": "Hair & Beauty",
+              },
+              "Health",
+              {
+                "name": "HomeDecorAppliances",
+                "value": "Home Decor & Appliances",
+              },
+              {
+                "name": "LaundryDryCleaning",
+                "value": "Laundry & Dry Cleaning",
+              },
+              "Pharmacies",
+              {
+                "name": "ProfessionalServices",
+                "value": "Professional Services",
+              },
+              {
+                "name": "VeterinaryServices",
+                "value": "Veterinary Services",
+              },
+              "Freelance",
+              "Interest",
+              "Retirement",
+              "Salary",
+              "Government",
+              {
+                "name": "HomeInsurance",
+                "value": "Home Insurance",
+              },
+              {
+                "name": "AutoInsurance",
+                "value": "Auto Insurance",
+              },
+              {
+                "name": "HealthLifeInsurance",
+                "value": "Health & Life Insurance",
+              },
+              "Savings",
+              {
+                "name": "FixedIncome",
+                "value": "Fixed income",
+              },
+              "Equity",
+              {
+                "name": "InvestmentFunds",
+                "value": "Investment Funds",
+              },
+              "Derivatives",
+              "Cryptocurrencies",
+              {
+                "name": "AppsSoftwareAndCloudServices",
+                "value": "Apps, Software and Cloud Services",
+              },
+              {
+                "name": "EventsParksAndMuseums",
+                "value": "Events, Parks and Museums",
+              },
+              "Gambling",
+              "Gaming",
+              "Lottery",
+              {
+                "name": "MovieAudio",
+                "value": "Movie & Audio",
+              },
+              {
+                "name": "BooksNews",
+                "value": "Books & News",
+              },
+              {
+                "name": "ClothingAccessories",
+                "value": "Clothing & Accessories",
+              },
+              {
+                "name": "DepartmentStore",
+                "value": "Department Store",
+              },
+              "Electronics",
+              {
+                "name": "ECommerce",
+                "value": "E-commerce",
+              },
+              "Gifts",
+              {
+                "name": "OfficeSupplies",
+                "value": "Office Supplies",
+              },
+              {
+                "name": "PetSupplies",
+                "value": "Pet Supplies",
+              },
+              {
+                "name": "AutoTaxFees",
+                "value": "Auto Tax & Fees",
+              },
+              "Donation",
+              {
+                "name": "GovernmentFees",
+                "value": "Government Fees",
+              },
+              {
+                "name": "IncomeTax",
+                "value": "Income Tax",
+              },
+              {
+                "name": "RealEstateTaxFees",
+                "value": "Real Estate Tax & Fees",
+              },
+              {
+                "name": "TaxReturn",
+                "value": "Tax Return",
+              },
+              "Accommodation",
+              {
+                "name": "AutoExpenses",
+                "value": "Auto Expenses",
+              },
+              {
+                "name": "AutoRental",
+                "value": "Auto Rental",
+              },
+              "Flights",
+              "Gas",
+              {
+                "name": "MileagePrograms",
+                "value": "Mileage Programs",
+              },
+              {
+                "name": "ParkingTolls",
+                "value": "Parking & Tolls",
+              },
+              {
+                "name": "PublicTransit",
+                "value": "Public Transit",
+              },
+              {
+                "name": "TaxisRideshares",
+                "value": "Taxis & Rideshares",
+              },
+              "Other",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "EnumCategorizationTransactionType": {
             "docs": "The direction of the transaction.
@@ -8333,7 +8605,17 @@ For DIAN Colombia, we return one of the following values:
   - `Crédito`
   - `null`
 ",
-            "type": "optional<string>",
+            "enum": [
+              "Contado",
+              {
+                "name": "Credito",
+                "value": "Crédito",
+              },
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "EnumInvoiceSatInvoiceType": {
             "docs": "The fiscal institution's classification of the invoice.
@@ -8366,13 +8648,28 @@ For Mexico's SAT, we return one of the following values:
 
 - 🇲🇽 Mexico [SAT catalog reference article](https://developers.belvo.com/docs/sat-catalogs#payment-method). For Mexico, we return `PUE`, `PIP`, `PPD`, or `null`.
 ",
-            "type": "optional<string>",
+            "enum": [
+              "PUE",
+              "PIP",
+              "PPD",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "EnumInvoiceType": {
             "docs": "The direction of the invoice (from the perspective of the Link owner).
 - `OUTFLOW` indicates a sent invoice. - `INFLOW` indicates a received invoice.
 ",
-            "type": "optional<string>",
+            "enum": [
+              "OUTFLOW",
+              "INFLOW",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "EnumLinkAccessModeRequest": {
             "default": "recurrent",
@@ -8400,7 +8697,14 @@ We return one of the following enum values:
   - `recurrent`
   - `null`
 ",
-            "type": "optional<string>",
+            "enum": [
+              "single",
+              "recurrent",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "EnumLinkRefreshRate": {
             "default": "7d",
@@ -8413,7 +8717,32 @@ We return one of the following enum values:
   - `30d` (once a month)
   - `null` (for single links)
 ",
-            "type": "optional<string>",
+            "enum": [
+              {
+                "name": "SixH",
+                "value": "6h",
+              },
+              {
+                "name": "TwelveH",
+                "value": "12h",
+              },
+              {
+                "name": "TwentyFourH",
+                "value": "24h",
+              },
+              {
+                "name": "SevenD",
+                "value": "7d",
+              },
+              {
+                "name": "ThirtyD",
+                "value": "30d",
+              },
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "EnumLinkStatus": {
             "docs": "The current status of the link. For more information, see our [Link](https://developers.belvo.com/docs/links-and-institutions#links) article in the devportal.
@@ -8620,7 +8949,18 @@ We return one of the following values:
   - `ELO_DEBIT`
   - `null`
 ",
-            "type": "optional<string>",
+            "enum": [
+              "VISA_CREDIT",
+              "VISA_DEBIT",
+              "MASTERCARD_CREDIT",
+              "MASTERCARD_DEBIT",
+              "ELO_CREDIT",
+              "ELO_DEBIT",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "EnumRecurringExpenseCategory": {
             "docs": "The transaction category for the recurring expense. For more information on the available categories, please see our [Transaction categorization documentation](https://developers.belvo.com/docs/banking#categorizing-transactions).
@@ -8745,7 +9085,16 @@ We return one of the following values:
   - `null`: No bill status was identified.
   
 ℹ️ Note: Some banks consider CLOSED as PAID.",
-            "type": "optional<string>",
+            "enum": [
+              "PAID",
+              "CLOSED",
+              "OPEN",
+              "FUTURE",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "EnumTransactionCategory": {
             "docs": "The name of the category to which this transaction belongs.
@@ -8776,7 +9125,61 @@ We return one of the following enum values:
 
   \* For clients not using our Transaction Categorization product, we return `null` instead.
 ",
-            "type": "optional<string>",
+            "enum": [
+              {
+                "name": "BillsUtilities",
+                "value": "Bills & Utilities",
+              },
+              {
+                "name": "CreditsLoans",
+                "value": "Credits & Loans",
+              },
+              "Deposits",
+              {
+                "name": "FeesCharges",
+                "value": "Fees & Charges",
+              },
+              {
+                "name": "FoodGroceries",
+                "value": "Food & Groceries",
+              },
+              {
+                "name": "HomeLife",
+                "value": "Home & Life",
+              },
+              {
+                "name": "IncomePayments",
+                "value": "Income & Payments",
+              },
+              "Insurance",
+              {
+                "name": "InvestmentsSavings",
+                "value": "Investments & Savings",
+              },
+              {
+                "name": "OnlinePlatformsLeisure",
+                "value": "Online Platforms & Leisure",
+              },
+              {
+                "name": "PersonalShopping",
+                "value": "Personal Shopping",
+              },
+              "Taxes",
+              "Transfers",
+              {
+                "name": "TransportTravel",
+                "value": "Transport & Travel",
+              },
+              "Unknown",
+              {
+                "name": "WithdrawalAtm",
+                "value": "Withdrawal & ATM",
+              },
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "EnumTransactionStatus": {
             "docs": "The status of the transaction. We return one of the following values:
@@ -8786,7 +9189,15 @@ We return one of the following enum values:
   - `UNCATEGORIZED`
   - `null`
 ",
-            "type": "optional<string>",
+            "enum": [
+              "PENDING",
+              "PROCESSED",
+              "UNCATEGORIZED",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "EnumTransactionSubcategory": {
             "docs": "The transactions subcategory.
@@ -8875,7 +9286,212 @@ We return one of the following enum values:
   - `Taxis & Rideshares`
   - `Other`
   - `null`",
-            "type": "optional<string>",
+            "enum": [
+              {
+                "name": "ElectricityEnergy",
+                "value": "Electricity & Energy",
+              },
+              "Rent",
+              "Telecommunications",
+              "Water",
+              "Auto",
+              {
+                "name": "CreditCard",
+                "value": "Credit Card",
+              },
+              "Instalment",
+              {
+                "name": "InterestCharges",
+                "value": "Interest & Charges",
+              },
+              "Mortgage",
+              {
+                "name": "PayAdvance",
+                "value": "Pay Advance",
+              },
+              "Personal",
+              "Adjustments",
+              {
+                "name": "BankFees",
+                "value": "Bank Fees",
+              },
+              "Chargeback",
+              "Refund",
+              {
+                "name": "BlockedBalances",
+                "value": "Blocked Balances",
+              },
+              "Alimony",
+              {
+                "name": "AlcoholTobacco",
+                "value": "Alcohol & Tobacco",
+              },
+              {
+                "name": "BakeryCoffee",
+                "value": "Bakery & Coffee",
+              },
+              {
+                "name": "BarsNightclubs",
+                "value": "Bars & Nightclubs",
+              },
+              {
+                "name": "ConvenienceStore",
+                "value": "Convenience Store",
+              },
+              "Delivery",
+              "Groceries",
+              "Restaurants",
+              "Education",
+              {
+                "name": "GymsFitness",
+                "value": "Gyms & Fitness",
+              },
+              {
+                "name": "HairBeauty",
+                "value": "Hair & Beauty",
+              },
+              "Health",
+              {
+                "name": "HomeDecorAppliances",
+                "value": "Home Decor & Appliances",
+              },
+              {
+                "name": "LaundryDryCleaning",
+                "value": "Laundry & Dry Cleaning",
+              },
+              "Pharmacies",
+              {
+                "name": "ProfessionalServices",
+                "value": "Professional Services",
+              },
+              {
+                "name": "VeterinaryServices",
+                "value": "Veterinary Services",
+              },
+              "Freelance",
+              "Interest",
+              "Retirement",
+              "Salary",
+              "Government",
+              {
+                "name": "HomeInsurance",
+                "value": "Home Insurance",
+              },
+              {
+                "name": "AutoInsurance",
+                "value": "Auto Insurance",
+              },
+              {
+                "name": "HealthLifeInsurance",
+                "value": "Health & Life Insurance",
+              },
+              "Savings",
+              {
+                "name": "FixedIncome",
+                "value": "Fixed income",
+              },
+              "Equity",
+              {
+                "name": "InvestmentFunds",
+                "value": "Investment Funds",
+              },
+              "Derivatives",
+              "Cryptocurrencies",
+              {
+                "name": "AppsSoftwareAndCloudServices",
+                "value": "Apps, Software and Cloud Services",
+              },
+              {
+                "name": "EventsParksAndMuseums",
+                "value": "Events, Parks and Museums",
+              },
+              "Gambling",
+              "Gaming",
+              "Lottery",
+              {
+                "name": "MovieAudio",
+                "value": "Movie & Audio",
+              },
+              {
+                "name": "BooksNews",
+                "value": "Books & News",
+              },
+              {
+                "name": "ClothingAccessories",
+                "value": "Clothing & Accessories",
+              },
+              {
+                "name": "DepartmentStore",
+                "value": "Department Store",
+              },
+              "Electronics",
+              {
+                "name": "ECommerce",
+                "value": "E-commerce",
+              },
+              "Gifts",
+              {
+                "name": "OfficeSupplies",
+                "value": "Office Supplies",
+              },
+              {
+                "name": "PetSupplies",
+                "value": "Pet Supplies",
+              },
+              {
+                "name": "AutoTaxFees",
+                "value": "Auto Tax & Fees",
+              },
+              "Donation",
+              {
+                "name": "GovernmentFees",
+                "value": "Government Fees",
+              },
+              {
+                "name": "IncomeTax",
+                "value": "Income Tax",
+              },
+              {
+                "name": "RealEstateTaxFees",
+                "value": "Real Estate Tax & Fees",
+              },
+              {
+                "name": "TaxReturn",
+                "value": "Tax Return",
+              },
+              "Accommodation",
+              {
+                "name": "AutoExpenses",
+                "value": "Auto Expenses",
+              },
+              {
+                "name": "AutoRental",
+                "value": "Auto Rental",
+              },
+              "Flights",
+              "Gas",
+              {
+                "name": "MileagePrograms",
+                "value": "Mileage Programs",
+              },
+              {
+                "name": "ParkingTolls",
+                "value": "Parking & Tolls",
+              },
+              {
+                "name": "PublicTransit",
+                "value": "Public Transit",
+              },
+              {
+                "name": "TaxisRideshares",
+                "value": "Taxis & Rideshares",
+              },
+              "Other",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "EnumTransactionType": {
             "docs": "The direction of the transaction:
@@ -8883,7 +9499,14 @@ We return one of the following enum values:
 - `OUTFLOW` indicates money going out of the account.
 - `null` when no information was present regarding the direction of the transaction.
 ",
-            "type": "optional<string>",
+            "enum": [
+              "OUTFLOW",
+              "INFLOW",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
           },
           "EquityStatementBusiness": {
             "docs": "Object containing the general fiscal situation of the taxpayer.",
@@ -19593,7 +20216,9 @@ types:
     source:
       openapi: ../openapi.yml
   EnumLinkAccessModeResponse:
-    type: optional<string>
+    enum:
+      - single
+      - recurrent
     docs: >
       The link type.
 
@@ -19605,6 +20230,8 @@ types:
         - `single`
         - `recurrent`
         - `null`
+    source:
+      openapi: ../openapi.yml
   EnumLinkStatus:
     enum:
       - valid
@@ -19624,7 +20251,17 @@ types:
     source:
       openapi: ../openapi.yml
   EnumLinkRefreshRate:
-    type: optional<string>
+    enum:
+      - value: 6h
+        name: SixH
+      - value: 12h
+        name: TwelveH
+      - value: 24h
+        name: TwentyFourH
+      - value: 7d
+        name: SevenD
+      - value: 30d
+        name: ThirtyD
     docs: >
       The update refresh rate for the recurrent link. For more information,
       check out our [recurrent link
@@ -19639,6 +20276,8 @@ types:
         - `30d` (once a month)
         - `null` (for single links)
     default: 7d
+    source:
+      openapi: ../openapi.yml
   Link:
     properties:
       id:
@@ -20361,7 +21000,15 @@ types:
     source:
       openapi: ../openapi.yml
   EnumAccountCategory:
-    type: optional<string>
+    enum:
+      - CHECKING_ACCOUNT
+      - CREDIT_CARD
+      - INVESTMENT_ACCOUNT
+      - LOAN_ACCOUNT
+      - PENSION_FUND_ACCOUNT
+      - RECEIVABLES_ACCOUNT
+      - SAVINGS_ACCOUNT
+      - UNCATEGORIZED
     docs: |
       The type of account.
       We return one of the following enum values:
@@ -20374,6 +21021,8 @@ types:
         - `SAVINGS_ACCOUNT`
         - `UNCATEGORIZED`
         - `null`
+    source:
+      openapi: ../openapi.yml
   AccountsBalance:
     docs: |
       Details regarding the current and available balances for the account.
@@ -20934,7 +21583,34 @@ types:
     source:
       openapi: ../openapi.yml
   EnumTransactionCategory:
-    type: optional<string>
+    enum:
+      - value: Bills & Utilities
+        name: BillsUtilities
+      - value: Credits & Loans
+        name: CreditsLoans
+      - Deposits
+      - value: Fees & Charges
+        name: FeesCharges
+      - value: Food & Groceries
+        name: FoodGroceries
+      - value: Home & Life
+        name: HomeLife
+      - value: Income & Payments
+        name: IncomePayments
+      - Insurance
+      - value: Investments & Savings
+        name: InvestmentsSavings
+      - value: Online Platforms & Leisure
+        name: OnlinePlatformsLeisure
+      - value: Personal Shopping
+        name: PersonalShopping
+      - Taxes
+      - Transfers
+      - value: Transport & Travel
+        name: TransportTravel
+      - Unknown
+      - value: Withdrawal & ATM
+        name: WithdrawalAtm
     docs: >
       The name of the category to which this transaction belongs.
 
@@ -20971,8 +21647,128 @@ types:
 
 
         \* For clients not using our Transaction Categorization product, we return `null` instead.
+    source:
+      openapi: ../openapi.yml
   EnumTransactionSubcategory:
-    type: optional<string>
+    enum:
+      - value: Electricity & Energy
+        name: ElectricityEnergy
+      - Rent
+      - Telecommunications
+      - Water
+      - Auto
+      - value: Credit Card
+        name: CreditCard
+      - Instalment
+      - value: Interest & Charges
+        name: InterestCharges
+      - Mortgage
+      - value: Pay Advance
+        name: PayAdvance
+      - Personal
+      - Adjustments
+      - value: Bank Fees
+        name: BankFees
+      - Chargeback
+      - Refund
+      - value: Blocked Balances
+        name: BlockedBalances
+      - Alimony
+      - value: Alcohol & Tobacco
+        name: AlcoholTobacco
+      - value: Bakery & Coffee
+        name: BakeryCoffee
+      - value: Bars & Nightclubs
+        name: BarsNightclubs
+      - value: Convenience Store
+        name: ConvenienceStore
+      - Delivery
+      - Groceries
+      - Restaurants
+      - Education
+      - value: Gyms & Fitness
+        name: GymsFitness
+      - value: Hair & Beauty
+        name: HairBeauty
+      - Health
+      - value: Home Decor & Appliances
+        name: HomeDecorAppliances
+      - value: Laundry & Dry Cleaning
+        name: LaundryDryCleaning
+      - Pharmacies
+      - value: Professional Services
+        name: ProfessionalServices
+      - value: Veterinary Services
+        name: VeterinaryServices
+      - Freelance
+      - Interest
+      - Retirement
+      - Salary
+      - Government
+      - value: Home Insurance
+        name: HomeInsurance
+      - value: Auto Insurance
+        name: AutoInsurance
+      - value: Health & Life Insurance
+        name: HealthLifeInsurance
+      - Savings
+      - value: Fixed income
+        name: FixedIncome
+      - Equity
+      - value: Investment Funds
+        name: InvestmentFunds
+      - Derivatives
+      - Cryptocurrencies
+      - value: Apps, Software and Cloud Services
+        name: AppsSoftwareAndCloudServices
+      - value: Events, Parks and Museums
+        name: EventsParksAndMuseums
+      - Gambling
+      - Gaming
+      - Lottery
+      - value: Movie & Audio
+        name: MovieAudio
+      - value: Books & News
+        name: BooksNews
+      - value: Clothing & Accessories
+        name: ClothingAccessories
+      - value: Department Store
+        name: DepartmentStore
+      - Electronics
+      - value: E-commerce
+        name: ECommerce
+      - Gifts
+      - value: Office Supplies
+        name: OfficeSupplies
+      - value: Pet Supplies
+        name: PetSupplies
+      - value: Auto Tax & Fees
+        name: AutoTaxFees
+      - Donation
+      - value: Government Fees
+        name: GovernmentFees
+      - value: Income Tax
+        name: IncomeTax
+      - value: Real Estate Tax & Fees
+        name: RealEstateTaxFees
+      - value: Tax Return
+        name: TaxReturn
+      - Accommodation
+      - value: Auto Expenses
+        name: AutoExpenses
+      - value: Auto Rental
+        name: AutoRental
+      - Flights
+      - Gas
+      - value: Mileage Programs
+        name: MileagePrograms
+      - value: Parking & Tolls
+        name: ParkingTolls
+      - value: Public Transit
+        name: PublicTransit
+      - value: Taxis & Rideshares
+        name: TaxisRideshares
+      - Other
     docs: |-
       The transactions subcategory.
 
@@ -21060,8 +21856,12 @@ types:
         - `Taxis & Rideshares`
         - `Other`
         - `null`
+    source:
+      openapi: ../openapi.yml
   EnumTransactionType:
-    type: optional<string>
+    enum:
+      - OUTFLOW
+      - INFLOW
     docs: >
       The direction of the transaction:
 
@@ -21071,8 +21871,13 @@ types:
 
       - `null` when no information was present regarding the direction of the
       transaction.
+    source:
+      openapi: ../openapi.yml
   EnumTransactionStatus:
-    type: optional<string>
+    enum:
+      - PENDING
+      - PROCESSED
+      - UNCATEGORIZED
     docs: |
       The status of the transaction. We return one of the following values:
 
@@ -21080,8 +21885,14 @@ types:
         - `PROCESSED`
         - `UNCATEGORIZED`
         - `null`
+    source:
+      openapi: ../openapi.yml
   EnumTransactionBillStatus:
-    type: optional<string>
+    enum:
+      - PAID
+      - CLOSED
+      - OPEN
+      - FUTURE
     docs: |-
       The status of the bill that the transaction appears on. Can be one of:
 
@@ -21092,6 +21903,8 @@ types:
         - `null`: No bill status was identified.
         
       ℹ️ Note: Some banks consider CLOSED as PAID.
+    source:
+      openapi: ../openapi.yml
   TransactionCreditCardData:
     docs: Additional data provided by the institution for credit card transactions.
     properties:
@@ -21684,14 +22497,21 @@ types:
     source:
       openapi: ../openapi.yml
   EnumInvoiceType:
-    type: optional<string>
+    enum:
+      - OUTFLOW
+      - INFLOW
     docs: >
       The direction of the invoice (from the perspective of the Link owner).
 
       - `OUTFLOW` indicates a sent invoice. - `INFLOW` indicates a received
       invoice.
+    source:
+      openapi: ../openapi.yml
   EnumInvoiceSatPaymentMethod:
-    type: optional<string>
+    enum:
+      - PUE
+      - PIP
+      - PPD
     docs: >
       The payment method code used for this invoice, as defined by the legal
       entity of the country.
@@ -21700,6 +22520,8 @@ types:
       - 🇲🇽 Mexico [SAT catalog reference
       article](https://developers.belvo.com/docs/sat-catalogs#payment-method).
       For Mexico, we return `PUE`, `PIP`, `PPD`, or `null`.
+    source:
+      openapi: ../openapi.yml
   InvoiceDetailRetainedTaxSat:
     properties:
       collected_at:
@@ -22296,7 +23118,10 @@ types:
     source:
       openapi: ../openapi.yml
   EnumInvoiceDianPaymentMethod:
-    type: optional<string>
+    enum:
+      - Contado
+      - value: Crédito
+        name: Credito
     docs: >
       The payment method used for this invoice, as defined by the legal entity
       of the country.
@@ -22307,6 +23132,8 @@ types:
         - `Contado`
         - `Crédito`
         - `null`
+    source:
+      openapi: ../openapi.yml
   InvoiceDetailDian:
     properties:
       description:
@@ -24620,7 +25447,13 @@ types:
     source:
       openapi: ../openapi.yml
   EnumReceivableTransactionType:
-    type: optional<string>
+    enum:
+      - VISA_CREDIT
+      - VISA_DEBIT
+      - MASTERCARD_CREDIT
+      - MASTERCARD_DEBIT
+      - ELO_CREDIT
+      - ELO_DEBIT
     docs: >
       The type of transaction. For example, whether the transaction was a
       `VISA_DEBIT` or a `MASTERCARD_CREDIT`.
@@ -24635,6 +25468,8 @@ types:
         - `ELO_CREDIT`
         - `ELO_DEBIT`
         - `null`
+    source:
+      openapi: ../openapi.yml
   EnumReceivableTransactionFeeType:
     type: optional<literal<"TRANSACTION_FEE">>
     docs: >-
@@ -26406,7 +27241,34 @@ types:
     source:
       openapi: ../openapi.yml
   EnumCategorizationTransactionCategory:
-    type: optional<string>
+    enum:
+      - value: Bills & Utilities
+        name: BillsUtilities
+      - value: Credits & Loans
+        name: CreditsLoans
+      - Deposits
+      - value: Fees & Charges
+        name: FeesCharges
+      - value: Food & Groceries
+        name: FoodGroceries
+      - value: Home & Life
+        name: HomeLife
+      - value: Income & Payments
+        name: IncomePayments
+      - Insurance
+      - value: Investments & Savings
+        name: InvestmentsSavings
+      - value: Online Platforms & Leisure
+        name: OnlinePlatformsLeisure
+      - value: Personal Shopping
+        name: PersonalShopping
+      - Taxes
+      - Transfers
+      - value: Transport & Travel
+        name: TransportTravel
+      - Unknown
+      - value: Withdrawal & ATM
+        name: WithdrawalAtm
     docs: >
       The name of the category to which this transaction belongs. For more info
       about this feature, check our [Transaction
@@ -26433,8 +27295,128 @@ types:
         - `Unknown`
         - `Withdrawal & ATM`
         - `null`
+    source:
+      openapi: ../openapi.yml
   EnumCategorizationTransactionSubcategory:
-    type: optional<string>
+    enum:
+      - value: Electricity & Energy
+        name: ElectricityEnergy
+      - Rent
+      - Telecommunications
+      - Water
+      - Auto
+      - value: Credit Card
+        name: CreditCard
+      - Instalment
+      - value: Interest & Charges
+        name: InterestCharges
+      - Mortgage
+      - value: Pay Advance
+        name: PayAdvance
+      - Personal
+      - Adjustments
+      - value: Bank Fees
+        name: BankFees
+      - Chargeback
+      - Refund
+      - value: Blocked Balances
+        name: BlockedBalances
+      - Alimony
+      - value: Alcohol & Tobacco
+        name: AlcoholTobacco
+      - value: Bakery & Coffee
+        name: BakeryCoffee
+      - value: Bars & Nightclubs
+        name: BarsNightclubs
+      - value: Convenience Store
+        name: ConvenienceStore
+      - Delivery
+      - Groceries
+      - Restaurants
+      - Education
+      - value: Gyms & Fitness
+        name: GymsFitness
+      - value: Hair & Beauty
+        name: HairBeauty
+      - Health
+      - value: Home Decor & Appliances
+        name: HomeDecorAppliances
+      - value: Laundry & Dry Cleaning
+        name: LaundryDryCleaning
+      - Pharmacies
+      - value: Professional Services
+        name: ProfessionalServices
+      - value: Veterinary Services
+        name: VeterinaryServices
+      - Freelance
+      - Interest
+      - Retirement
+      - Salary
+      - Government
+      - value: Home Insurance
+        name: HomeInsurance
+      - value: Auto Insurance
+        name: AutoInsurance
+      - value: Health & Life Insurance
+        name: HealthLifeInsurance
+      - Savings
+      - value: Fixed income
+        name: FixedIncome
+      - Equity
+      - value: Investment Funds
+        name: InvestmentFunds
+      - Derivatives
+      - Cryptocurrencies
+      - value: Apps, Software and Cloud Services
+        name: AppsSoftwareAndCloudServices
+      - value: Events, Parks and Museums
+        name: EventsParksAndMuseums
+      - Gambling
+      - Gaming
+      - Lottery
+      - value: Movie & Audio
+        name: MovieAudio
+      - value: Books & News
+        name: BooksNews
+      - value: Clothing & Accessories
+        name: ClothingAccessories
+      - value: Department Store
+        name: DepartmentStore
+      - Electronics
+      - value: E-commerce
+        name: ECommerce
+      - Gifts
+      - value: Office Supplies
+        name: OfficeSupplies
+      - value: Pet Supplies
+        name: PetSupplies
+      - value: Auto Tax & Fees
+        name: AutoTaxFees
+      - Donation
+      - value: Government Fees
+        name: GovernmentFees
+      - value: Income Tax
+        name: IncomeTax
+      - value: Real Estate Tax & Fees
+        name: RealEstateTaxFees
+      - value: Tax Return
+        name: TaxReturn
+      - Accommodation
+      - value: Auto Expenses
+        name: AutoExpenses
+      - value: Auto Rental
+        name: AutoRental
+      - Flights
+      - Gas
+      - value: Mileage Programs
+        name: MileagePrograms
+      - value: Parking & Tolls
+        name: ParkingTolls
+      - value: Public Transit
+        name: PublicTransit
+      - value: Taxis & Rideshares
+        name: TaxisRideshares
+      - Other
     docs: >-
       The transactions subcategory. For more info about this feature, check our
       [Transaction
@@ -26522,6 +27504,8 @@ types:
         - `Taxis & Rideshares`
         - `Other`
         - `null`
+    source:
+      openapi: ../openapi.yml
   CategorizationMerchantData:
     docs: |
       Additional data regarding the merchant involved in the transaction.
@@ -30715,10 +31699,7 @@ client.connect()
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
                           "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
+                            null,
                           ],
                           "interest_rates": [
                             {
@@ -30886,10 +31867,7 @@ client.connect()
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
                           "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
+                            null,
                           ],
                           "interest_rates": [
                             {
@@ -31264,10 +32242,7 @@ client.connect()
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
                           "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
+                            null,
                           ],
                           "interest_rates": [
                             {
@@ -31435,10 +32410,7 @@ client.connect()
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
                           "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
+                            null,
                           ],
                           "interest_rates": [
                             {
@@ -31651,10 +32623,7 @@ client.connect()
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
                           "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
+                            null,
                           ],
                           "interest_rates": [
                             {
@@ -31813,10 +32782,7 @@ client.connect()
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
                           "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
+                            null,
                           ],
                           "interest_rates": [
                             {
@@ -32173,10 +33139,7 @@ client.connect()
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
                           "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
+                            null,
                           ],
                           "interest_rates": [
                             {
@@ -32335,10 +33298,7 @@ client.connect()
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
                           "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
+                            null,
                           ],
                           "interest_rates": [
                             {
@@ -32885,8 +33845,7 @@ service:
                       type: null
                       value: 7.85
                   fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
+                    - null
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -33017,8 +33976,7 @@ service:
                       type: null
                       value: 7.85
                   fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
+                    - null
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -33281,8 +34239,7 @@ service:
                       type: null
                       value: 7.85
                   fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
+                    - null
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -33434,8 +34391,7 @@ service:
                       type: null
                       value: 7.85
                   fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
+                    - null
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -33621,8 +34577,7 @@ service:
                       type: null
                       value: 7.85
                   fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
+                    - null
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -33762,8 +34717,7 @@ service:
                       type: null
                       value: 7.85
                   fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
+                    - null
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -34044,8 +34998,7 @@ service:
                       type: null
                       value: 7.85
                   fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
+                    - null
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -34206,8 +35159,7 @@ service:
                       type: null
                       value: 7.85
                   fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
+                    - null
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -35542,10 +36494,7 @@ client.connect()
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
                           "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
+                            null,
                           ],
                           "interest_rates": [
                             {
@@ -35752,14 +36701,7 @@ client.connect()
                             },
                             "last_accessed_at": "2021-03-09T10:28:40Z",
                             "link": "b834e69b-1aa4-465d-969c-07c886a4fbed",
-                            "loan_data": {
-                              "collected_at": "2022-02-09T08:45:50Z",
-                              "contract_end_date": "2027-10-01",
-                              "interest_rates": null,
-                              "monthly_payment": 1000,
-                              "outstanding_balance": 182000,
-                              "principal": 192000,
-                            },
+                            "loan_data": null,
                             "name": "Erebor Gold",
                             "number": "7889044-1",
                             "public_identification_name": "AGENCY/ACCOUNT",
@@ -36626,13 +37568,7 @@ service:
                     public_identification_value: 0009/7889044-1
                     last_accessed_at: '2021-03-09T10:28:40Z'
                     credit_data: null
-                    loan_data:
-                      collected_at: '2022-02-09T08:45:50Z'
-                      principal: 192000
-                      outstanding_balance: 182000
-                      monthly_payment: 1000
-                      interest_rates: null
-                      contract_end_date: '2027-10-01'
+                    loan_data: null
                   value_date: '2022-04-04'
                   balance: 4.25
           code-samples:
@@ -37183,8 +38119,7 @@ service:
                       type: null
                       value: 7.85
                   fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
+                    - null
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -43476,18 +44411,11 @@ client.connect()
                           "balance_net": 99.09,
                           "currency": "USD",
                           "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 123.09,
-                            },
+                            null,
                           ],
                           "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                           "interest_rates": [
-                            {
-                              "index": "CDI",
-                              "type": "yearly",
-                              "value": 11.31,
-                            },
+                            null,
                           ],
                           "name": "CBD DIGITAL ESPECIAL",
                           "open_date": "2021-08-10",
@@ -43501,10 +44429,7 @@ client.connect()
                           ],
                           "quantity": 27.46,
                           "redemption_conditions": [
-                            {
-                              "type": "due_date",
-                              "value": "12-02-2023",
-                            },
+                            null,
                           ],
                           "subtype": "CBD",
                           "type": "BOND",
@@ -43649,29 +44574,7 @@ client.connect()
                           "currency": "BRL",
                           "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                           "instruments": [
-                            {
-                              "average_acquisition_price": 10.01,
-                              "balance_gross": 100.09,
-                              "balance_net": 99.09,
-                              "currency": "USD",
-                              "fees": null,
-                              "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                              "interest_rates": null,
-                              "name": "CBD DIGITAL ESPECIAL",
-                              "open_date": "2021-08-10",
-                              "price": 10.41,
-                              "profit": 3.08,
-                              "public_id": [
-                                {
-                                  "type": "isin",
-                                  "value": "435-3354.3333",
-                                },
-                              ],
-                              "quantity": 27.46,
-                              "redemption_conditions": null,
-                              "subtype": "CBD",
-                              "type": "BOND",
-                            },
+                            null,
                           ],
                           "name": "Investimento",
                           "type": "FIXED_INCOME",
@@ -43852,18 +44755,11 @@ client.connect()
                           "balance_net": 99.09,
                           "currency": "USD",
                           "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 123.09,
-                            },
+                            null,
                           ],
                           "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                           "interest_rates": [
-                            {
-                              "index": "CDI",
-                              "type": "yearly",
-                              "value": 11.31,
-                            },
+                            null,
                           ],
                           "name": "CBD DIGITAL ESPECIAL",
                           "open_date": "2021-08-10",
@@ -43877,10 +44773,7 @@ client.connect()
                           ],
                           "quantity": 27.46,
                           "redemption_conditions": [
-                            {
-                              "type": "due_date",
-                              "value": "12-02-2023",
-                            },
+                            null,
                           ],
                           "subtype": "CBD",
                           "type": "BOND",
@@ -44020,18 +44913,11 @@ client.connect()
                           "balance_net": 99.09,
                           "currency": "USD",
                           "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 123.09,
-                            },
+                            null,
                           ],
                           "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                           "interest_rates": [
-                            {
-                              "index": "CDI",
-                              "type": "yearly",
-                              "value": 11.31,
-                            },
+                            null,
                           ],
                           "name": "CBD DIGITAL ESPECIAL",
                           "open_date": "2021-08-10",
@@ -44045,10 +44931,7 @@ client.connect()
                           ],
                           "quantity": 27.46,
                           "redemption_conditions": [
-                            {
-                              "type": "due_date",
-                              "value": "12-02-2023",
-                            },
+                            null,
                           ],
                           "subtype": "CBD",
                           "type": "BOND",
@@ -44193,24 +45076,7 @@ service:
                   balance_net: 77370.69
                   currency: BRL
                   instruments:
-                    - id: 30cb4806-6e00-48a4-91c9-ca55968576c8
-                      public_id:
-                        - type: isin
-                          value: 435-3354.3333
-                      type: BOND
-                      subtype: CBD
-                      name: CBD DIGITAL ESPECIAL
-                      currency: USD
-                      price: 10.41
-                      quantity: 27.46
-                      balance_gross: 100.09
-                      balance_net: 99.09
-                      average_acquisition_price: 10.01
-                      profit: 3.08
-                      open_date: '2021-08-10'
-                      redemption_conditions: null
-                      fees: null
-                      interest_rates: null
+                    - null
           code-samples:
             - name: Belvo Python SDK
               language: python
@@ -44341,15 +45207,11 @@ service:
                   profit: 3.08
                   open_date: '2021-08-10'
                   redemption_conditions:
-                    - type: due_date
-                      value: 12-02-2023
+                    - null
                   fees:
-                    - type: OPERATION_FEE
-                      value: 123.09
+                    - null
                   interest_rates:
-                    - type: yearly
-                      value: 11.31
-                      index: CDI
+                    - null
           code-samples:
             - name: Belvo Python SDK
               language: python
@@ -44483,15 +45345,11 @@ service:
                   profit: 3.08
                   open_date: '2021-08-10'
                   redemption_conditions:
-                    - type: due_date
-                      value: 12-02-2023
+                    - null
                   fees:
-                    - type: OPERATION_FEE
-                      value: 123.09
+                    - null
                   interest_rates:
-                    - type: yearly
-                      value: 11.31
-                      index: CDI
+                    - null
           code-samples:
             - name: Belvo Python SDK
               language: python
@@ -44628,15 +45486,11 @@ service:
                   profit: 3.08
                   open_date: '2021-08-10'
                   redemption_conditions:
-                    - type: due_date
-                      value: 12-02-2023
+                    - null
                   fees:
-                    - type: OPERATION_FEE
-                      value: 123.09
+                    - null
                   interest_rates:
-                    - type: yearly
-                      value: 11.31
-                      index: CDI
+                    - null
           code-samples:
             - name: Belvo Python SDK
               language: python
@@ -47455,7 +48309,7 @@ client.connect()
                         "subtotal_amount": 400,
                         "tax_amount": 64,
                         "total_amount": 454,
-                        "type": "INFLOW",
+                        "type": "OUTFLOW",
                         "usage": "P01",
                         "version": "3.3",
                         "warnings": {
@@ -50754,7 +51608,7 @@ service:
                 invoice_date: '2019-12-01'
                 status: Vigente
                 invoice_type: Egreso
-                type: INFLOW
+                type: OUTFLOW
                 sender_id: AAA111111AA11
                 sender_name: ACME CORP
                 sender_tax_fraud_status: NO_TAX_FRAUD_STATUS
@@ -52001,7 +52855,7 @@ For single links, you have to perform POST calls to an institution **every time*
                   },
                   "response": {
                     "body": {
-                      "access_mode": "recurrent",
+                      "access_mode": "single",
                       "created_at": "2022-02-09T08:45:50Z",
                       "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
                       "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
@@ -52009,7 +52863,7 @@ For single links, you have to perform POST calls to an institution **every time*
                       "institution": "erebor_mx_retail",
                       "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                       "last_accessed_at": "2019-09-27T13:02:03Z",
-                      "refresh_rate": "7d",
+                      "refresh_rate": "6h",
                       "status": "valid",
                     },
                   },
@@ -52256,7 +53110,7 @@ client.connect()
                   },
                   "response": {
                     "body": {
-                      "access_mode": "recurrent",
+                      "access_mode": "single",
                       "created_at": "2022-02-09T08:45:50Z",
                       "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
                       "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
@@ -52264,7 +53118,7 @@ client.connect()
                       "institution": "erebor_mx_retail",
                       "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                       "last_accessed_at": "2019-09-27T13:02:03Z",
-                      "refresh_rate": "7d",
+                      "refresh_rate": "6h",
                       "status": "valid",
                     },
                   },
@@ -52417,7 +53271,7 @@ client.connect()
                       "previous": "previous",
                       "results": [
                         {
-                          "access_mode": "recurrent",
+                          "access_mode": "single",
                           "created_at": "2022-02-09T08:45:50Z",
                           "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
                           "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
@@ -52425,7 +53279,7 @@ client.connect()
                           "institution": "erebor_mx_retail",
                           "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                           "last_accessed_at": "2019-09-27T13:02:03Z",
-                          "refresh_rate": "7d",
+                          "refresh_rate": "6h",
                           "status": "valid",
                         },
                       ],
@@ -52665,7 +53519,7 @@ client.connect()
                   },
                   "response": {
                     "body": {
-                      "access_mode": "recurrent",
+                      "access_mode": "single",
                       "created_at": "2022-02-09T08:45:50Z",
                       "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
                       "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
@@ -52673,7 +53527,7 @@ client.connect()
                       "institution": "erebor_mx_retail",
                       "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                       "last_accessed_at": "2019-09-27T13:02:03Z",
-                      "refresh_rate": "7d",
+                      "refresh_rate": "6h",
                       "status": "valid",
                     },
                   },
@@ -52823,7 +53677,7 @@ client.connect()
                   },
                   "response": {
                     "body": {
-                      "access_mode": "recurrent",
+                      "access_mode": "single",
                       "created_at": "2022-02-09T08:45:50Z",
                       "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
                       "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
@@ -52831,7 +53685,7 @@ client.connect()
                       "institution": "erebor_mx_retail",
                       "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                       "last_accessed_at": "2019-09-27T13:02:03Z",
-                      "refresh_rate": "7d",
+                      "refresh_rate": "6h",
                       "status": "valid",
                     },
                   },
@@ -53111,7 +53965,7 @@ client.connect()
                   },
                   "response": {
                     "body": {
-                      "access_mode": "recurrent",
+                      "access_mode": "single",
                       "created_at": "2022-02-09T08:45:50Z",
                       "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
                       "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
@@ -53119,7 +53973,7 @@ client.connect()
                       "institution": "erebor_mx_retail",
                       "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                       "last_accessed_at": "2019-09-27T13:02:03Z",
-                      "refresh_rate": "7d",
+                      "refresh_rate": "6h",
                       "status": "valid",
                     },
                   },
@@ -53418,14 +54272,14 @@ service:
               results:
                 - id: 30cb4806-6e00-48a4-91c9-ca55968576c8
                   institution: erebor_mx_retail
-                  access_mode: recurrent
+                  access_mode: single
                   last_accessed_at: '2019-09-27T13:02:03Z'
                   created_at: '2022-02-09T08:45:50Z'
                   external_id: 56ab5706-6e00-48a4-91c9-ca55968678d9
                   institution_user_id: sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=
                   status: valid
                   created_by: bcef7f35-67f2-4b19-b009-cb38795faf09
-                  refresh_rate: 7d
+                  refresh_rate: 6h
           code-samples:
             - language: cURL
               code: |
@@ -53759,14 +54613,14 @@ service:
             body:
               id: 30cb4806-6e00-48a4-91c9-ca55968576c8
               institution: erebor_mx_retail
-              access_mode: recurrent
+              access_mode: single
               last_accessed_at: '2019-09-27T13:02:03Z'
               created_at: '2022-02-09T08:45:50Z'
               external_id: 56ab5706-6e00-48a4-91c9-ca55968678d9
               institution_user_id: sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=
               status: valid
               created_by: bcef7f35-67f2-4b19-b009-cb38795faf09
-              refresh_rate: 7d
+              refresh_rate: 6h
           code-samples:
             - language: cURL
               code: |
@@ -53895,14 +54749,14 @@ service:
             body:
               id: 30cb4806-6e00-48a4-91c9-ca55968576c8
               institution: erebor_mx_retail
-              access_mode: recurrent
+              access_mode: single
               last_accessed_at: '2019-09-27T13:02:03Z'
               created_at: '2022-02-09T08:45:50Z'
               external_id: 56ab5706-6e00-48a4-91c9-ca55968678d9
               institution_user_id: sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=
               status: valid
               created_by: bcef7f35-67f2-4b19-b009-cb38795faf09
-              refresh_rate: 7d
+              refresh_rate: 6h
           code-samples:
             - language: cURL
               code: |
@@ -54028,14 +54882,14 @@ service:
             body:
               id: 30cb4806-6e00-48a4-91c9-ca55968576c8
               institution: erebor_mx_retail
-              access_mode: recurrent
+              access_mode: single
               last_accessed_at: '2019-09-27T13:02:03Z'
               created_at: '2022-02-09T08:45:50Z'
               external_id: 56ab5706-6e00-48a4-91c9-ca55968678d9
               institution_user_id: sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=
               status: valid
               created_by: bcef7f35-67f2-4b19-b009-cb38795faf09
-              refresh_rate: 7d
+              refresh_rate: 6h
           code-samples:
             - language: cURL
               code: |
@@ -54248,14 +55102,14 @@ service:
             body:
               id: 30cb4806-6e00-48a4-91c9-ca55968576c8
               institution: erebor_mx_retail
-              access_mode: recurrent
+              access_mode: single
               last_accessed_at: '2019-09-27T13:02:03Z'
               created_at: '2022-02-09T08:45:50Z'
               external_id: 56ab5706-6e00-48a4-91c9-ca55968678d9
               institution_user_id: sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=
               status: valid
               created_by: bcef7f35-67f2-4b19-b009-cb38795faf09
-              refresh_rate: 7d
+              refresh_rate: 6h
           code-samples:
             - language: cURL
               code: |
@@ -54477,14 +55331,14 @@ service:
             body:
               id: 30cb4806-6e00-48a4-91c9-ca55968576c8
               institution: erebor_mx_retail
-              access_mode: recurrent
+              access_mode: single
               last_accessed_at: '2019-09-27T13:02:03Z'
               created_at: '2022-02-09T08:45:50Z'
               external_id: 56ab5706-6e00-48a4-91c9-ca55968678d9
               institution_user_id: sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=
               status: valid
               created_by: bcef7f35-67f2-4b19-b009-cb38795faf09
-              refresh_rate: 7d
+              refresh_rate: 6h
   source:
     openapi: ../openapi.yml
   display-name: Links
@@ -59267,7 +60121,7 @@ docs: >+
                         "total": 2,
                       },
                       "status": "APPROVED",
-                      "type": "MASTERCARD_CREDIT",
+                      "type": "VISA_CREDIT",
                       "value_date": "2022-01-16",
                       "value_hour": "19:47",
                     },
@@ -59366,7 +60220,7 @@ docs: >+
                             "total": 2,
                           },
                           "status": "APPROVED",
-                          "type": "MASTERCARD_CREDIT",
+                          "type": "VISA_CREDIT",
                           "value_date": "2022-01-16",
                           "value_hour": "19:47",
                         },
@@ -59545,7 +60399,7 @@ docs: >+
                         "total": 2,
                       },
                       "status": "APPROVED",
-                      "type": "MASTERCARD_CREDIT",
+                      "type": "VISA_CREDIT",
                       "value_date": "2022-01-16",
                       "value_hour": "19:47",
                     },
@@ -59816,7 +60670,7 @@ service:
                   value_date: '2022-01-16'
                   institution_transaction_id: '134532345'
                   currency: BRL
-                  type: MASTERCARD_CREDIT
+                  type: VISA_CREDIT
                   gross_amount: 106.7
                   net_amount: 104.58
                   fees:
@@ -59924,7 +60778,7 @@ service:
               value_date: '2022-01-16'
               institution_transaction_id: '134532345'
               currency: BRL
-              type: MASTERCARD_CREDIT
+              type: VISA_CREDIT
               gross_amount: 106.7
               net_amount: 104.58
               fees:
@@ -59990,7 +60844,7 @@ service:
               value_date: '2022-01-16'
               institution_transaction_id: '134532345'
               currency: BRL
-              type: MASTERCARD_CREDIT
+              type: VISA_CREDIT
               gross_amount: 106.7
               net_amount: 104.58
               fees:
@@ -60468,21 +61322,14 @@ client.connect()
                               "current": 5874.13,
                             },
                             "balance_type": "ASSET",
-                            "category": "CHECKING_ACCOUNT",
+                            "category": null,
                             "collected_at": "2019-09-27T13:01:41Z",
                             "created_at": "2022-02-09T08:45:50Z",
                             "credit_data": null,
                             "currency": "MXN",
                             "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
                             "last_accessed_at": "2021-03-09T10:28:40Z",
-                            "loan_data": {
-                              "collected_at": "2022-02-09T08:45:50Z",
-                              "contract_end_date": "2027-10-01",
-                              "interest_rates": null,
-                              "monthly_payment": 1000,
-                              "outstanding_balance": 182000,
-                              "principal": 192000,
-                            },
+                            "loan_data": null,
                             "name": "Cuenta Perfiles- M.N. - MXN-666",
                             "number": "4057068115181",
                             "public_identification_name": "CLABE",
@@ -60498,11 +61345,7 @@ client.connect()
                           "name": "Netflix",
                           "payment_type": "SUBSCRIPTION",
                           "transactions": [
-                            {
-                              "amount": 2145.45,
-                              "description": "Netflix.com/march",
-                              "value_date": "2019-10-23",
-                            },
+                            null,
                           ],
                         },
                       ],
@@ -61150,7 +61993,7 @@ service:
                     id: 0d3ffb69-f83b-456e-ad8e-208d0998d71d
                     collected_at: '2019-09-27T13:01:41Z'
                     created_at: '2022-02-09T08:45:50Z'
-                    category: CHECKING_ACCOUNT
+                    category: null
                     balance_type: ASSET
                     type: Cuentas de efectivo
                     name: Cuenta Perfiles- M.N. - MXN-666
@@ -61162,18 +62005,10 @@ service:
                     public_identification_value: '150194683119900273'
                     last_accessed_at: '2021-03-09T10:28:40Z'
                     credit_data: null
-                    loan_data:
-                      collected_at: '2022-02-09T08:45:50Z'
-                      principal: 192000
-                      outstanding_balance: 182000
-                      monthly_payment: 1000
-                      interest_rates: null
-                      contract_end_date: '2027-10-01'
+                    loan_data: null
                   name: Netflix
                   transactions:
-                    - amount: 2145.45
-                      description: Netflix.com/march
-                      value_date: '2019-10-23'
+                    - null
                   frequency: MONTHLY
                   average_transaction_amount: 32.9
                   median_transaction_amount: 32.9
@@ -79655,10 +80490,7 @@ client.connect()
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
                           "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
+                            null,
                           ],
                           "interest_rates": [
                             {
@@ -79841,10 +80673,7 @@ client.connect()
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
                           "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
+                            null,
                           ],
                           "interest_rates": [
                             {
@@ -80022,10 +80851,7 @@ client.connect()
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
                           "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
+                            null,
                           ],
                           "interest_rates": [
                             {
@@ -80287,14 +81113,7 @@ client.connect()
                             },
                             "last_accessed_at": "2021-03-09T10:28:40Z",
                             "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                            "loan_data": {
-                              "collected_at": "2022-02-09T08:45:50Z",
-                              "contract_end_date": "2027-10-01",
-                              "interest_rates": null,
-                              "monthly_payment": 1000,
-                              "outstanding_balance": 182000,
-                              "principal": 192000,
-                            },
+                            "loan_data": null,
                             "name": "CUENTA NARANJA LITE +",
                             "number": "996685090015",
                             "public_identification_name": "CLABE",
@@ -80488,14 +81307,7 @@ client.connect()
                             },
                             "last_accessed_at": "2021-03-09T10:28:40Z",
                             "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                            "loan_data": {
-                              "collected_at": "2022-02-09T08:45:50Z",
-                              "contract_end_date": "2027-10-01",
-                              "interest_rates": null,
-                              "monthly_payment": 1000,
-                              "outstanding_balance": 182000,
-                              "principal": 192000,
-                            },
+                            "loan_data": null,
                             "name": "Mi ahorro Erebor",
                             "number": "997468860036",
                             "public_identification_name": "CLABE",
@@ -80697,14 +81509,7 @@ client.connect()
                             },
                             "last_accessed_at": "2021-03-09T10:28:40Z",
                             "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                            "loan_data": {
-                              "collected_at": "2022-02-09T08:45:50Z",
-                              "contract_end_date": "2027-10-01",
-                              "interest_rates": null,
-                              "monthly_payment": 1000,
-                              "outstanding_balance": 182000,
-                              "principal": 192000,
-                            },
+                            "loan_data": null,
                             "name": "Erebor Gold",
                             "number": "4057068115181",
                             "public_identification_name": "CLABE",
@@ -82801,13 +83606,7 @@ service:
                     public_identification_value: '058597000010485108'
                     last_accessed_at: '2021-03-09T10:28:40Z'
                     credit_data: null
-                    loan_data:
-                      collected_at: '2022-02-09T08:45:50Z'
-                      principal: 192000
-                      outstanding_balance: 182000
-                      monthly_payment: 1000
-                      interest_rates: null
-                      contract_end_date: '2027-10-01'
+                    loan_data: null
                   collected_at: '2022-07-20T22:09:33Z'
                   created_at: '2022-07-20T22:09:35Z'
                   value_date: '2022-07-11'
@@ -82980,13 +83779,7 @@ service:
                     public_identification_value: '058597000011543422'
                     last_accessed_at: '2021-03-09T10:28:40Z'
                     credit_data: null
-                    loan_data:
-                      collected_at: '2022-02-09T08:45:50Z'
-                      principal: 192000
-                      outstanding_balance: 182000
-                      monthly_payment: 1000
-                      interest_rates: null
-                      contract_end_date: '2027-10-01'
+                    loan_data: null
                   collected_at: '2022-07-20T22:09:33Z'
                   created_at: '2022-07-20T22:09:35Z'
                   value_date: '2022-07-11'
@@ -83166,13 +83959,7 @@ service:
                       minimum_payment: 2400
                       no_interest_payment: 37390.83
                       interest_rate: 4
-                    loan_data:
-                      collected_at: '2022-02-09T08:45:50Z'
-                      principal: 192000
-                      outstanding_balance: 182000
-                      monthly_payment: 1000
-                      interest_rates: null
-                      contract_end_date: '2027-10-01'
+                    loan_data: null
                   collected_at: '2022-02-09T08:45:50Z'
                   created_at: '2022-02-09T08:45:50Z'
                   value_date: '2019-10-23'
@@ -84537,8 +85324,7 @@ service:
                       type: null
                       value: 7.85
                   fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
+                    - null
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -84689,8 +85475,7 @@ service:
                       type: null
                       value: 7.85
                   fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
+                    - null
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -84841,8 +85626,7 @@ service:
                       type: null
                       value: 7.85
                   fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
+                    - null
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'

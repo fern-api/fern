@@ -486,35 +486,41 @@
                             "container": {
                                 "_type": "optional",
                                 "optional": {
-                                    "_type": "named",
-                                    "name": {
-                                        "originalName": "NullableObject",
-                                        "camelCase": {
-                                            "unsafeName": "nullableObject",
-                                            "safeName": "nullableObject"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "nullable_object",
-                                            "safeName": "nullable_object"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "NULLABLE_OBJECT",
-                                            "safeName": "NULLABLE_OBJECT"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "NullableObject",
-                                            "safeName": "NullableObject"
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "nullable",
+                                        "nullable": {
+                                            "_type": "named",
+                                            "name": {
+                                                "originalName": "NullableObject",
+                                                "camelCase": {
+                                                    "unsafeName": "nullableObject",
+                                                    "safeName": "nullableObject"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "nullable_object",
+                                                    "safeName": "nullable_object"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "NULLABLE_OBJECT",
+                                                    "safeName": "NULLABLE_OBJECT"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "NullableObject",
+                                                    "safeName": "NullableObject"
+                                                }
+                                            },
+                                            "fernFilepath": {
+                                                "allParts": [],
+                                                "packagePath": [],
+                                                "file": null
+                                            },
+                                            "displayName": null,
+                                            "typeId": "type_:NullableObject",
+                                            "default": null,
+                                            "inline": null
                                         }
-                                    },
-                                    "fernFilepath": {
-                                        "allParts": [],
-                                        "packagePath": [],
-                                        "file": null
-                                    },
-                                    "displayName": null,
-                                    "typeId": "type_:NullableObject",
-                                    "default": null,
-                                    "inline": null
+                                    }
                                 }
                             }
                         },
@@ -635,7 +641,11 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
+<<<<<<< HEAD
                                 "id": "8a8806b8",
+=======
+                                "id": "d789ff35",
+>>>>>>> 7174c130bc5c32ca53c5092967ae735fa7c365d3
                                 "name": null,
                                 "url": "/postWithNullableNamedRequestBodyType/id",
                                 "rootPathParameters": [],
@@ -684,6 +694,7 @@
                                         "type": "container",
                                         "container": {
                                             "type": "optional",
+<<<<<<< HEAD
                                             "optional": {
                                                 "shape": {
                                                     "type": "named",
@@ -694,6 +705,15 @@
                                                             "packagePath": [],
                                                             "file": null
                                                         },
+=======
+                                            "optional": null,
+                                            "valueType": {
+                                                "_type": "container",
+                                                "container": {
+                                                    "_type": "nullable",
+                                                    "nullable": {
+                                                        "_type": "named",
+>>>>>>> 7174c130bc5c32ca53c5092967ae735fa7c365d3
                                                         "name": {
                                                             "originalName": "NullableObject",
                                                             "camelCase": {
@@ -713,6 +733,7 @@
                                                                 "safeName": "NullableObject"
                                                             }
                                                         },
+<<<<<<< HEAD
                                                         "displayName": null
                                                     },
                                                     "shape": {
@@ -756,6 +777,22 @@
                                         }
                                     },
                                     "jsonExample": {}
+=======
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "displayName": null,
+                                                        "typeId": "type_:NullableObject",
+                                                        "default": null,
+                                                        "inline": null
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+>>>>>>> 7174c130bc5c32ca53c5092967ae735fa7c365d3
                                 },
                                 "response": {
                                     "type": "ok",
@@ -894,7 +931,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "32ad5d1a",
+                                "id": "d7818b7a",
                                 "url": "/postWithNullableNamedRequestBodyType/id",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -945,35 +982,41 @@
                                             "type": "optional",
                                             "optional": null,
                                             "valueType": {
-                                                "_type": "named",
-                                                "name": {
-                                                    "originalName": "NullableObject",
-                                                    "camelCase": {
-                                                        "unsafeName": "nullableObject",
-                                                        "safeName": "nullableObject"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "nullable_object",
-                                                        "safeName": "nullable_object"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "NULLABLE_OBJECT",
-                                                        "safeName": "NULLABLE_OBJECT"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "NullableObject",
-                                                        "safeName": "NullableObject"
+                                                "_type": "container",
+                                                "container": {
+                                                    "_type": "nullable",
+                                                    "nullable": {
+                                                        "_type": "named",
+                                                        "name": {
+                                                            "originalName": "NullableObject",
+                                                            "camelCase": {
+                                                                "unsafeName": "nullableObject",
+                                                                "safeName": "nullableObject"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "nullable_object",
+                                                                "safeName": "nullable_object"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "NULLABLE_OBJECT",
+                                                                "safeName": "NULLABLE_OBJECT"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "NullableObject",
+                                                                "safeName": "NullableObject"
+                                                            }
+                                                        },
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "displayName": null,
+                                                        "typeId": "type_:NullableObject",
+                                                        "default": null,
+                                                        "inline": null
                                                     }
-                                                },
-                                                "fernFilepath": {
-                                                    "allParts": [],
-                                                    "packagePath": [],
-                                                    "file": null
-                                                },
-                                                "displayName": null,
-                                                "typeId": "type_:NullableObject",
-                                                "default": null,
-                                                "inline": null
+                                                }
                                             }
                                         }
                                     }
@@ -2414,8 +2457,11 @@
                             "value": {
                                 "type": "optional",
                                 "value": {
-                                    "type": "named",
-                                    "value": "type_:NullableObject"
+                                    "type": "nullable",
+                                    "value": {
+                                        "type": "named",
+                                        "value": "type_:NullableObject"
+                                    }
                                 }
                             }
                         }

@@ -152,7 +152,9 @@ public final class Organization {
     )
     public _FinalStage users(List<User> users) {
       this.users.clear();
-      this.users.addAll(users);
+      if (users != null) {
+        this.users.addAll(users);
+      }
       return this;
     }
 
