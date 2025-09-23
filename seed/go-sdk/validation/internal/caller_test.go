@@ -13,9 +13,9 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/validation/fern/core"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"github.com/validation/fern/core"
 )
 
 // TestCase represents a single test case.

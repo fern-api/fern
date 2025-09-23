@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/unknown/fern/core"
 	"github.com/stretchr/testify/assert"
+	"github.com/unknown/fern/core"
 )
 
 func TestErrorDecoder(t *testing.T) {

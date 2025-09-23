@@ -240,7 +240,7 @@ func TestRetryDelayTiming(t *testing.T) {
 			name:       "x-ratelimit-reset with future timestamp",
 			headerName: "x-ratelimit-reset",
 			headerValueFunc: func() string {
-				return fmt.Sprintf("%d", time.Now().Add(3 * time.Second).Unix())
+				return fmt.Sprintf("%d", time.Now().Add(3*time.Second).Unix())
 			},
 			expectedMinMs: 1500,
 			expectedMaxMs: 4500,

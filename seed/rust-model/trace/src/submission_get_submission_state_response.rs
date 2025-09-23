@@ -3,7 +3,7 @@ use crate::submission_submission_type_state::SubmissionTypeState;
 use chrono::{DateTime, NaiveDate, Utc};
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct GetSubmissionStateResponse {
     #[serde(rename = "timeSubmitted")]
     #[serde(skip_serializing_if = "Option::is_none")]

@@ -6,7 +6,7 @@ use crate::nullable_optional_address::Address;
 use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ComplexProfile {
     pub id: String,
     #[serde(rename = "nullableRole")]
