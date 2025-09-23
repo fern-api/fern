@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Users can now enable dynamic snippets using the `dynamic-snippets` flag in the `docs.yml` file.
+      type: fix
+  irVersion: 59
+  createdAt: "2025-09-23"
+  version: 0.78.7
+
+- changelogEntry:
+    - summary: |
         Support `null` in an `enum` (functionality is delegated to `nullable<>`).
       type: fix
   irVersion: 59
