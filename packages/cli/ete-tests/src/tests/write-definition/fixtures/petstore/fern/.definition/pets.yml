@@ -17,7 +17,9 @@ service:
       auth: false
       display-name: List all pets
       examples:
-        - response:
+        - query-parameters:
+            limit: 1
+          response:
             body:
               - id: 1000000
                 name: name
