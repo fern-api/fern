@@ -33,7 +33,7 @@ export const V60_TO_V59_MIGRATION: IrMigration<
         [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_FIBER]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.GO_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.GO_SDK]: "1.13.0",
         [GeneratorName.RUBY_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.RUBY_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.CSHARP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,

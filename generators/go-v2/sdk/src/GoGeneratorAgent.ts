@@ -48,7 +48,7 @@ export class GoGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorContext
         args: AbstractGeneratorAgent.GitHubConfigArgs<SdkGeneratorContext>
     ): RawGithubConfig {
         return {
-            sourceDirectory: "fern/output",
+            sourceDirectory: "/fern/output",
             type: this.publishConfig?.type,
             uri: this.publishConfig?.type === "github" ? this.publishConfig.uri : undefined,
             token: this.publishConfig?.type === "github" ? this.publishConfig.token : undefined,
