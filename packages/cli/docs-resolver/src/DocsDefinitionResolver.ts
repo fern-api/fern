@@ -868,6 +868,10 @@ export class DocsDefinitionResolver {
             });
         }
 
+        this.taskContext.logger.debug(
+            "registering api with typescript config:",
+            snippetsConfig.typescriptSdk?.package ?? " PACKAGE IS UNDEFINED"
+        );
         const apiDefinitionId = await this.registerApi({
             ir,
             snippetsConfig,
