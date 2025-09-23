@@ -5,9 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v60.2.0] - 2025-09-20
+## [v60.3.0] - 2025-09-23
 
 - Feature: added mode to ir.GithubPublish to support pull-request mode for selfhosted sdk generation.
+
+## [v60.2.0] - 2025-09-19
+
+- Feature: Add `security` property to `HttpEndpoint` which mirrors OpenAPI's security requirement object.
 
 ## [v60.1.0] - 2025-09-18
 

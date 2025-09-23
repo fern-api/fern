@@ -24,6 +24,7 @@
     "requirement": "ALL",
     "schemes": [
       {
+        "key": "BearerAuthScheme",
         "token": {
           "originalName": "token",
           "camelCase": {
@@ -4379,7 +4380,7 @@
             }
           },
           "displayName": "Create or Update a company",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -6819,6 +6820,7 @@
     "endpoints": {
       "endpoint_companies.createOrUpdateCompany": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -7130,7 +7132,7 @@
     "hasEndpointsInTree": true
   },
   "sdkConfig": {
-    "isAuthMandatory": true,
+    "isAuthMandatory": false,
     "hasStreamingEndpoints": false,
     "hasPaginatedEndpoints": false,
     "hasFileDownloadEndpoints": false,

@@ -7839,7 +7839,13 @@ types:
           "base-path": "",
           "endpoints": {
             "deleteApp": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.delete",
+                  ],
+                },
+              ],
               "display-name": "Delete the app.",
               "docs": undefined,
               "errors": [
@@ -7868,7 +7874,13 @@ types:
               },
             },
             "deleteClient": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.clients.delete",
+                  ],
+                },
+              ],
               "display-name": "Revoke an app client.",
               "docs": "The application that uses this client credentials cannot access the API after it has been revoked.",
               "errors": [
@@ -7935,7 +7947,13 @@ types:
               },
             },
             "deleteContributor": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.contributors.revoke",
+                  ],
+                },
+              ],
               "display-name": "Remove contributor.",
               "docs": undefined,
               "errors": [
@@ -8003,7 +8021,13 @@ types:
               },
             },
             "deleteImage": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.image",
+                  ],
+                },
+              ],
               "display-name": "Remove the app image.",
               "docs": undefined,
               "errors": [
@@ -8065,7 +8089,13 @@ types:
               },
             },
             "deleteLanguage": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.languages.delete",
+                  ],
+                },
+              ],
               "display-name": "Deletes an app language.",
               "docs": undefined,
               "errors": [
@@ -8132,7 +8162,11 @@ types:
               },
             },
             "deleteMyself": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [],
+                },
+              ],
               "display-name": "Remove yourself.",
               "docs": undefined,
               "errors": [
@@ -8195,7 +8229,13 @@ types:
               },
             },
             "deleteRole": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.roles.delete",
+                  ],
+                },
+              ],
               "display-name": "Remove role from app.",
               "docs": undefined,
               "errors": [
@@ -8265,7 +8305,13 @@ types:
               },
             },
             "deleteWorkflow": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.workflows.update",
+                  ],
+                },
+              ],
               "display-name": "Delete a workflow.",
               "docs": undefined,
               "errors": [
@@ -8337,7 +8383,11 @@ types:
               },
             },
             "getApp": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [],
+                },
+              ],
               "display-name": "Get an app by name.",
               "docs": undefined,
               "errors": [
@@ -8398,7 +8448,11 @@ types:
               },
             },
             "getApps": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [],
+                },
+              ],
               "display-name": "Get your apps.",
               "docs": "You can only retrieve the list of apps when you are authenticated as a user (OpenID implicit flow).
 You will retrieve all apps, where you are assigned as a contributor.",
@@ -8451,7 +8505,13 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
             },
             "getAssetScripts": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.asset-scripts.read",
+                  ],
+                },
+              ],
               "display-name": "Get the app asset scripts.",
               "docs": undefined,
               "errors": [
@@ -8503,7 +8563,13 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
             },
             "getClients": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.clients.read",
+                  ],
+                },
+              ],
               "display-name": "Get app clients.",
               "docs": "Gets all configured clients for the app with the specified name.",
               "errors": [
@@ -8564,7 +8630,13 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
             },
             "getContributors": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.contributors.read",
+                  ],
+                },
+              ],
               "display-name": "Get app contributors.",
               "docs": undefined,
               "errors": [
@@ -8626,7 +8698,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
             },
             "getImage": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get the app image.",
               "docs": undefined,
               "errors": [
@@ -8652,7 +8724,13 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
             },
             "getLanguages": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.languages.read",
+                  ],
+                },
+              ],
               "display-name": "Get app languages.",
               "docs": undefined,
               "errors": [
@@ -8713,7 +8791,13 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
             },
             "getPermissions": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.roles.read",
+                  ],
+                },
+              ],
               "display-name": "Get app permissions.",
               "docs": undefined,
               "errors": [
@@ -8751,7 +8835,13 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
             },
             "getRoles": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.roles.read",
+                  ],
+                },
+              ],
               "display-name": "Get app roles.",
               "docs": undefined,
               "errors": [
@@ -8815,7 +8905,11 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
             },
             "getSettings": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [],
+                },
+              ],
               "display-name": "Get the app settings.",
               "docs": undefined,
               "errors": [
@@ -8875,7 +8969,11 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
             },
             "getTeamApps": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [],
+                },
+              ],
               "display-name": "Get team apps.",
               "docs": "You can only retrieve the list of apps when you are authenticated as a user (OpenID implicit flow).
 You will retrieve all apps, where you are assigned as a contributor.",
@@ -8937,7 +9035,13 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
             },
             "getWorkflows": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.workflows.read",
+                  ],
+                },
+              ],
               "display-name": "Get app workflow.",
               "docs": undefined,
               "errors": [
@@ -9003,7 +9107,11 @@ You will retrieve all apps, where you are assigned as a contributor.",
               },
             },
             "postApp": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [],
+                },
+              ],
               "display-name": "Create a new app.",
               "docs": "You can only create an app when you are authenticated as a user (OpenID implicit flow).
 You will be assigned as owner of the new app automatically.",
@@ -9085,7 +9193,13 @@ You will be assigned as owner of the new app automatically.",
               },
             },
             "postClient": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.clients.create",
+                  ],
+                },
+              ],
               "display-name": "Create a new app client.",
               "docs": "Create a new client for the app with the specified name.
 The client secret is auto generated on the server and returned. The client does not expire, the access token is valid for 30 days.",
@@ -9172,7 +9286,13 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "postContributor": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.contributors.assign",
+                  ],
+                },
+              ],
               "display-name": "Assign contributor to app.",
               "docs": undefined,
               "errors": [
@@ -9242,7 +9362,13 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "postLanguage": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.languages.create",
+                  ],
+                },
+              ],
               "display-name": "Attaches an app language.",
               "docs": undefined,
               "errors": [
@@ -9328,7 +9454,13 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "postRole": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.roles.create",
+                  ],
+                },
+              ],
               "display-name": "Add role to app.",
               "docs": undefined,
               "errors": [
@@ -9417,7 +9549,13 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "postWorkflow": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.workflows.update",
+                  ],
+                },
+              ],
               "display-name": "Create a workflow.",
               "docs": undefined,
               "errors": [
@@ -9508,7 +9646,13 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "putApp": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.update",
+                  ],
+                },
+              ],
               "display-name": "Update the app.",
               "docs": undefined,
               "errors": [
@@ -9590,7 +9734,13 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "putAppTeam": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.transfer",
+                  ],
+                },
+              ],
               "display-name": "Transfer the app.",
               "docs": undefined,
               "errors": [
@@ -9668,7 +9818,13 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "putAssetScripts": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.asset-scripts.update",
+                  ],
+                },
+              ],
               "display-name": "Update the app asset scripts.",
               "docs": undefined,
               "errors": [
@@ -9761,7 +9917,13 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "putClient": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.clients.update",
+                  ],
+                },
+              ],
               "display-name": "Updates an app client.",
               "docs": "Only the display name can be changed, create a new client if necessary.",
               "errors": [
@@ -9866,7 +10028,13 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "putLanguage": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.languages.update",
+                  ],
+                },
+              ],
               "display-name": "Updates an app language.",
               "docs": undefined,
               "errors": [
@@ -9957,7 +10125,13 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "putRole": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.roles.update",
+                  ],
+                },
+              ],
               "display-name": "Update an app role.",
               "docs": undefined,
               "errors": [
@@ -10051,7 +10225,13 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "putSettings": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.settings",
+                  ],
+                },
+              ],
               "display-name": "Update the app settings.",
               "docs": undefined,
               "errors": [
@@ -10153,7 +10333,13 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "putWorkflow": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.workflows.update",
+                  ],
+                },
+              ],
               "display-name": "Update a workflow.",
               "docs": undefined,
               "errors": [
@@ -10264,7 +10450,13 @@ The client secret is auto generated on the server and returned. The client does 
               },
             },
             "uploadImage": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.image",
+                  ],
+                },
+              ],
               "display-name": "Upload the app image.",
               "docs": undefined,
               "errors": [
@@ -10353,7 +10545,9 @@ service:
     getAssetScripts:
       path: /api/apps/{app}/assets/scripts
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.asset-scripts.read
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -10389,7 +10583,9 @@ service:
     putAssetScripts:
       path: /api/apps/{app}/assets/scripts
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.asset-scripts.update
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -10453,7 +10649,9 @@ service:
     getClients:
       path: /api/apps/{app}/clients
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.clients.read
       docs: Gets all configured clients for the app with the specified name.
       source:
         openapi: ../openapi.json
@@ -10494,7 +10692,9 @@ service:
     postClient:
       path: /api/apps/{app}/clients
       method: POST
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.clients.create
       docs: >-
         Create a new client for the app with the specified name.
 
@@ -10553,7 +10753,9 @@ service:
     putClient:
       path: /api/apps/{app}/clients/{id}
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.clients.update
       docs: Only the display name can be changed, create a new client if necessary.
       source:
         openapi: ../openapi.json
@@ -10627,7 +10829,9 @@ service:
     deleteClient:
       path: /api/apps/{app}/clients/{id}
       method: DELETE
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.clients.delete
       docs: >-
         The application that uses this client credentials cannot access the API
         after it has been revoked.
@@ -10675,7 +10879,9 @@ service:
     getContributors:
       path: /api/apps/{app}/contributors
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.contributors.read
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -10715,7 +10921,9 @@ service:
     postContributor:
       path: /api/apps/{app}/contributors
       method: POST
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.contributors.assign
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -10761,7 +10969,8 @@ service:
     deleteMyself:
       path: /api/apps/{app}/contributors/me
       method: DELETE
-      auth: true
+      auth:
+        - squidex-oauth-auth: []
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -10802,7 +11011,9 @@ service:
     deleteContributor:
       path: /api/apps/{app}/contributors/{id}
       method: DELETE
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.contributors.revoke
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -10847,7 +11058,6 @@ service:
     getImage:
       path: /api/apps/{app}/image
       method: GET
-      auth: true
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -10865,7 +11075,9 @@ service:
     uploadImage:
       path: /api/apps/{app}/image
       method: POST
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.image
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -10916,7 +11128,9 @@ service:
     deleteImage:
       path: /api/apps/{app}/image
       method: DELETE
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.image
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -10960,7 +11174,9 @@ service:
     getLanguages:
       path: /api/apps/{app}/languages
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.languages.read
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -10999,7 +11215,9 @@ service:
     postLanguage:
       path: /api/apps/{app}/languages
       method: POST
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.languages.create
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -11051,7 +11269,9 @@ service:
     putLanguage:
       path: /api/apps/{app}/languages/{language}
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.languages.update
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -11110,7 +11330,9 @@ service:
     deleteLanguage:
       path: /api/apps/{app}/languages/{language}
       method: DELETE
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.languages.delete
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -11154,7 +11376,9 @@ service:
     getRoles:
       path: /api/apps/{app}/roles
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.roles.read
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -11195,7 +11419,9 @@ service:
     postRole:
       path: /api/apps/{app}/roles
       method: POST
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.roles.create
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -11249,7 +11475,9 @@ service:
     getPermissions:
       path: /api/apps/{app}/roles/permissions
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.roles.read
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -11273,7 +11501,9 @@ service:
     putRole:
       path: /api/apps/{app}/roles/{roleName}
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.roles.update
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -11333,7 +11563,9 @@ service:
     deleteRole:
       path: /api/apps/{app}/roles/{roleName}
       method: DELETE
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.roles.delete
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -11379,7 +11611,8 @@ service:
     getApps:
       path: /api/apps
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth: []
       docs: >-
         You can only retrieve the list of apps when you are authenticated as a
         user (OpenID implicit flow).
@@ -11419,7 +11652,8 @@ service:
     postApp:
       path: /api/apps
       method: POST
-      auth: true
+      auth:
+        - squidex-oauth-auth: []
       docs: >-
         You can only create an app when you are authenticated as a user (OpenID
         implicit flow).
@@ -11478,7 +11712,8 @@ service:
     getTeamApps:
       path: /api/teams/{team}/apps
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth: []
       docs: >-
         You can only retrieve the list of apps when you are authenticated as a
         user (OpenID implicit flow).
@@ -11524,7 +11759,8 @@ service:
     getApp:
       path: /api/apps/{app}
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth: []
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -11567,7 +11803,9 @@ service:
     putApp:
       path: /api/apps/{app}
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.update
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -11623,7 +11861,9 @@ service:
     deleteApp:
       path: /api/apps/{app}
       method: DELETE
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.delete
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -11641,7 +11881,9 @@ service:
     putAppTeam:
       path: /api/apps/{app}/team
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.transfer
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -11694,7 +11936,8 @@ service:
     getSettings:
       path: /api/apps/{app}/settings
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth: []
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -11732,7 +11975,9 @@ service:
     putSettings:
       path: /api/apps/{app}/settings
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.settings
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -11795,7 +12040,9 @@ service:
     getWorkflows:
       path: /api/apps/{app}/workflows
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.workflows.read
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -11837,7 +12084,9 @@ service:
     postWorkflow:
       path: /api/apps/{app}/workflows
       method: POST
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.workflows.update
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -11892,7 +12141,9 @@ service:
     putWorkflow:
       path: /api/apps/{app}/workflows/{id}
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.workflows.update
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -11962,7 +12213,9 @@ service:
     deleteWorkflow:
       path: /api/apps/{app}/workflows/{id}
       method: DELETE
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.workflows.update
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -12021,7 +12274,13 @@ service:
           "base-path": "",
           "endpoints": {
             "bulkUpdateAssets": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.assets.read",
+                  ],
+                },
+              ],
               "display-name": "Bulk update assets.",
               "docs": undefined,
               "errors": [
@@ -12101,7 +12360,13 @@ service:
               },
             },
             "deleteAsset": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.assets.delete",
+                  ],
+                },
+              ],
               "display-name": "Delete an asset.",
               "docs": undefined,
               "errors": [
@@ -12148,7 +12413,13 @@ service:
               },
             },
             "deleteAssetFolder": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.assets.folders.delete",
+                  ],
+                },
+              ],
               "display-name": "Delete an asset folder.",
               "docs": undefined,
               "errors": [
@@ -12182,7 +12453,13 @@ service:
               },
             },
             "getAsset": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.assets.read",
+                  ],
+                },
+              ],
               "display-name": "Get an asset by id.",
               "docs": undefined,
               "errors": [
@@ -12259,7 +12536,11 @@ service:
               },
             },
             "getAssetContent": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [],
+                },
+              ],
               "availability": "deprecated",
               "display-name": "Get the asset content.",
               "docs": undefined,
@@ -12347,7 +12628,11 @@ service:
               },
             },
             "getAssetContentBySlug": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [],
+                },
+              ],
               "display-name": "Get the asset content.",
               "docs": undefined,
               "errors": [
@@ -12442,7 +12727,13 @@ service:
               },
             },
             "getAssetFolders": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.assets.read",
+                  ],
+                },
+              ],
               "display-name": "Get asset folders.",
               "docs": "Get all asset folders for the app.",
               "errors": [
@@ -12528,7 +12819,13 @@ service:
               },
             },
             "getAssets": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.assets.read",
+                  ],
+                },
+              ],
               "display-name": "Get assets.",
               "docs": "Get all assets for the app.",
               "errors": [
@@ -12644,7 +12941,13 @@ service:
               },
             },
             "getAssetsPost": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.assets.read",
+                  ],
+                },
+              ],
               "display-name": "Get assets.",
               "docs": "Get all assets for the app.",
               "errors": [
@@ -12733,7 +13036,13 @@ service:
               },
             },
             "getTags": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.assets.read",
+                  ],
+                },
+              ],
               "display-name": "Get assets tags.",
               "docs": "Get all tags for assets.",
               "errors": [
@@ -12771,7 +13080,13 @@ service:
               },
             },
             "postAsset": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.assets.create",
+                  ],
+                },
+              ],
               "display-name": "Upload a new asset.",
               "docs": "You can only upload one file at a time. The mime type of the file is not calculated by Squidex and is required correctly.",
               "errors": [
@@ -12871,7 +13186,13 @@ service:
               },
             },
             "postAssetFolder": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.assets.folders.create",
+                  ],
+                },
+              ],
               "display-name": "Create an asset folder.",
               "docs": undefined,
               "errors": [
@@ -12948,7 +13269,13 @@ service:
               },
             },
             "postUpsertAsset": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.assets.create",
+                  ],
+                },
+              ],
               "display-name": "Upsert an asset.",
               "docs": "You can only upload one file at a time. The mime type of the file is not calculated by Squidex and is required correctly.",
               "errors": [
@@ -13049,7 +13376,13 @@ service:
               },
             },
             "putAsset": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.assets.update",
+                  ],
+                },
+              ],
               "display-name": "Update an asset.",
               "docs": undefined,
               "errors": [
@@ -13159,7 +13492,13 @@ service:
               },
             },
             "putAssetContent": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.assets.upload",
+                  ],
+                },
+              ],
               "display-name": "Replace asset content.",
               "docs": "Use multipart request to upload an asset.",
               "errors": [
@@ -13251,7 +13590,13 @@ service:
               },
             },
             "putAssetFolder": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.assets.folders.update",
+                  ],
+                },
+              ],
               "display-name": "Update an asset folder.",
               "docs": undefined,
               "errors": [
@@ -13329,7 +13674,13 @@ service:
               },
             },
             "putAssetFolderParent": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.assets.folders.update",
+                  ],
+                },
+              ],
               "display-name": "Move an asset folder.",
               "docs": undefined,
               "errors": [
@@ -13399,7 +13750,13 @@ service:
               },
             },
             "putAssetParent": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.assets.update",
+                  ],
+                },
+              ],
               "display-name": "Moves the asset.",
               "docs": undefined,
               "errors": [
@@ -13493,7 +13850,13 @@ service:
               },
             },
             "putTag": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.assets.update",
+                  ],
+                },
+              ],
               "display-name": "Rename an asset tag.",
               "docs": undefined,
               "errors": [
@@ -13575,7 +13938,8 @@ service:
     getAssetContentBySlug:
       path: /api/assets/{app}/{idOrSlug}/{more}
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth: []
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -13646,7 +14010,8 @@ service:
     getAssetContent:
       path: /api/assets/{id}
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth: []
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -13710,7 +14075,9 @@ service:
     getAssetFolders:
       path: /api/apps/{app}/assets/folders
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.assets.read
       docs: Get all asset folders for the app.
       source:
         openapi: ../openapi.json
@@ -13767,7 +14134,9 @@ service:
     postAssetFolder:
       path: /api/apps/{app}/assets/folders
       method: POST
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.assets.folders.create
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -13815,7 +14184,9 @@ service:
     putAssetFolder:
       path: /api/apps/{app}/assets/folders/{id}
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.assets.folders.update
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -13864,7 +14235,9 @@ service:
     deleteAssetFolder:
       path: /api/apps/{app}/assets/folders/{id}
       method: DELETE
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.assets.folders.delete
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -13886,7 +14259,9 @@ service:
     putAssetFolderParent:
       path: /api/apps/{app}/assets/folders/{id}/parent
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.assets.folders.update
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -13932,7 +14307,9 @@ service:
     getTags:
       path: /api/apps/{app}/assets/tags
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.assets.read
       docs: Get all tags for assets.
       source:
         openapi: ../openapi.json
@@ -13957,7 +14334,9 @@ service:
     putTag:
       path: /api/apps/{app}/assets/tags/{name}
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.assets.update
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -13998,7 +14377,9 @@ service:
     getAssets:
       path: /api/apps/{app}/assets
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.assets.read
       docs: Get all assets for the app.
       source:
         openapi: ../openapi.json
@@ -14082,7 +14463,9 @@ service:
     postAsset:
       path: /api/apps/{app}/assets
       method: POST
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.assets.create
       docs: >-
         You can only upload one file at a time. The mime type of the file is not
         calculated by Squidex and is required correctly.
@@ -14157,7 +14540,9 @@ service:
     getAssetsPost:
       path: /api/apps/{app}/assets/query
       method: POST
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.assets.read
       docs: Get all assets for the app.
       source:
         openapi: ../openapi.json
@@ -14222,7 +14607,9 @@ service:
     getAsset:
       path: /api/apps/{app}/assets/{id}
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.assets.read
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -14279,7 +14666,9 @@ service:
     postUpsertAsset:
       path: /api/apps/{app}/assets/{id}
       method: POST
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.assets.create
       docs: >-
         You can only upload one file at a time. The mime type of the file is not
         calculated by Squidex and is required correctly.
@@ -14355,7 +14744,9 @@ service:
     putAsset:
       path: /api/apps/{app}/assets/{id}
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.assets.update
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -14434,7 +14825,9 @@ service:
     deleteAsset:
       path: /api/apps/{app}/assets/{id}
       method: DELETE
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.assets.delete
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -14465,7 +14858,9 @@ service:
     bulkUpdateAssets:
       path: /api/apps/{app}/assets/bulk
       method: POST
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.assets.read
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -14519,7 +14914,9 @@ service:
     putAssetContent:
       path: /api/apps/{app}/assets/{id}/content
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.assets.upload
       docs: Use multipart request to upload an asset.
       source:
         openapi: ../openapi.json
@@ -14586,7 +14983,9 @@ service:
     putAssetParent:
       path: /api/apps/{app}/assets/{id}/parent
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.assets.update
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -14665,7 +15064,13 @@ service:
           "base-path": "",
           "endpoints": {
             "deleteBackup": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.backups.delete",
+                  ],
+                },
+              ],
               "display-name": "Delete a backup.",
               "docs": undefined,
               "errors": [
@@ -14699,7 +15104,7 @@ service:
               },
             },
             "getBackupContent": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get the backup content.",
               "docs": undefined,
               "errors": [
@@ -14729,7 +15134,7 @@ service:
               },
             },
             "getBackupContentV2": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get the backup content.",
               "docs": undefined,
               "errors": [
@@ -14769,7 +15174,13 @@ service:
               },
             },
             "getBackups": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.backups.read",
+                  ],
+                },
+              ],
               "display-name": "Get all backup jobs.",
               "docs": undefined,
               "errors": [
@@ -14829,7 +15240,13 @@ service:
               },
             },
             "getRestoreJob": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.admin.restore",
+                  ],
+                },
+              ],
               "display-name": "Get current restore status.",
               "docs": undefined,
               "errors": [
@@ -14863,7 +15280,13 @@ service:
               },
             },
             "postBackup": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.backups.create",
+                  ],
+                },
+              ],
               "display-name": "Start a new backup.",
               "docs": undefined,
               "errors": [
@@ -14892,7 +15315,13 @@ service:
               },
             },
             "postRestoreJob": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.admin.restore",
+                  ],
+                },
+              ],
               "display-name": "Restore a backup.",
               "docs": undefined,
               "errors": [
@@ -14959,7 +15388,6 @@ service:
     getBackupContent:
       path: /api/apps/{app}/backups/{id}
       method: GET
-      auth: true
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -14980,7 +15408,9 @@ service:
     deleteBackup:
       path: /api/apps/{app}/backups/{id}
       method: DELETE
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.backups.delete
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -15002,7 +15432,6 @@ service:
     getBackupContentV2:
       path: /api/apps/backups/{id}
       method: GET
-      auth: true
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -15030,7 +15459,9 @@ service:
     getBackups:
       path: /api/apps/{app}/backups
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.backups.read
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -15069,7 +15500,9 @@ service:
     postBackup:
       path: /api/apps/{app}/backups
       method: POST
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.backups.create
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -15087,7 +15520,9 @@ service:
     getRestoreJob:
       path: /api/apps/restore
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.admin.restore
       source:
         openapi: ../openapi.json
       display-name: Get current restore status.
@@ -15109,7 +15544,9 @@ service:
     postRestoreJob:
       path: /api/apps/restore
       method: POST
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.admin.restore
       source:
         openapi: ../openapi.json
       display-name: Restore a backup.
@@ -15150,7 +15587,13 @@ service:
           "base-path": "",
           "endpoints": {
             "deleteComment": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.comments.delete",
+                  ],
+                },
+              ],
               "display-name": "Delete a comment.",
               "docs": undefined,
               "errors": [
@@ -15189,7 +15632,13 @@ service:
               },
             },
             "getComments": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.comments.read",
+                  ],
+                },
+              ],
               "display-name": "Get all comments.",
               "docs": "When passing in a version you can retrieve all updates since then.",
               "errors": [
@@ -15263,7 +15712,11 @@ service:
               },
             },
             "getWatchingUsers": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [],
+                },
+              ],
               "display-name": "Get all watching users..",
               "docs": undefined,
               "errors": [
@@ -15305,7 +15758,13 @@ service:
               },
             },
             "postComment": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.comments.create",
+                  ],
+                },
+              ],
               "display-name": "Create a new comment.",
               "docs": undefined,
               "errors": [
@@ -15360,7 +15819,13 @@ service:
               },
             },
             "putComment": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.comments.update",
+                  ],
+                },
+              ],
               "display-name": "Update a comment.",
               "docs": undefined,
               "errors": [
@@ -15420,7 +15885,8 @@ service:
     getWatchingUsers:
       path: /api/apps/{app}/watching/{resource}
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth: []
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -15447,7 +15913,9 @@ service:
     getComments:
       path: /api/apps/{app}/comments/{commentsId}
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.comments.read
       docs: When passing in a version you can retrieve all updates since then.
       source:
         openapi: ../openapi.json
@@ -15497,7 +15965,9 @@ service:
     postComment:
       path: /api/apps/{app}/comments/{commentsId}
       method: POST
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.comments.create
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -15535,7 +16005,9 @@ service:
     putComment:
       path: /api/apps/{app}/comments/{commentsId}/{commentId}
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.comments.update
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -15566,7 +16038,9 @@ service:
     deleteComment:
       path: /api/apps/{app}/comments/{commentsId}/{commentId}
       method: DELETE
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.comments.delete
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -15604,7 +16078,13 @@ service:
           "base-path": "",
           "endpoints": {
             "bulkUpdateContents": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.contents.{schema}.read.own",
+                  ],
+                },
+              ],
               "display-name": "Bulk update content items.",
               "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
               "errors": [
@@ -15706,7 +16186,13 @@ service:
               },
             },
             "createDraft": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.contents.{schema}.version.create.own",
+                  ],
+                },
+              ],
               "display-name": "Create a new draft version.",
               "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
               "errors": [
@@ -15830,7 +16316,13 @@ service:
               },
             },
             "deleteContent": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.contents.{schema}.delete.own",
+                  ],
+                },
+              ],
               "display-name": "Delete a content item.",
               "docs": "You can create an generated documentation for your app at /api/content/{appName}/docs.",
               "errors": [
@@ -15882,7 +16374,13 @@ service:
               },
             },
             "deleteContentStatus": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.contents.{schema}.changestatus.own",
+                  ],
+                },
+              ],
               "display-name": "Cancel status change of a content item.",
               "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
               "errors": [
@@ -16006,7 +16504,13 @@ service:
               },
             },
             "deleteVersion": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.contents.{schema}.version.delete.own",
+                  ],
+                },
+              ],
               "display-name": "Delete the draft version.",
               "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
               "errors": [
@@ -16130,7 +16634,11 @@ service:
               },
             },
             "getContent": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [],
+                },
+              ],
               "display-name": "Get a content item.",
               "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
               "errors": [
@@ -16267,7 +16775,11 @@ service:
               },
             },
             "getContentValidity": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [],
+                },
+              ],
               "display-name": "Get a content item validity.",
               "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
               "errors": [
@@ -16306,7 +16818,13 @@ service:
               },
             },
             "getContentVersion": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.contents.{schema}.read.own",
+                  ],
+                },
+              ],
               "availability": "deprecated",
               "display-name": "Get a content by version.",
               "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
@@ -16345,7 +16863,11 @@ service:
               },
             },
             "getContents": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [],
+                },
+              ],
               "display-name": "Queries contents.",
               "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
               "errors": [
@@ -16476,7 +16998,11 @@ service:
               },
             },
             "getContentsPost": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [],
+                },
+              ],
               "display-name": "Queries contents.",
               "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
               "errors": [
@@ -16600,7 +17126,11 @@ service:
               },
             },
             "getReferences": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [],
+                },
+              ],
               "display-name": "Get all references of a content.",
               "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
               "errors": [
@@ -16732,7 +17262,11 @@ service:
               },
             },
             "getReferencing": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [],
+                },
+              ],
               "display-name": "Get a referencing contents of a content item.",
               "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
               "errors": [
@@ -16864,7 +17398,13 @@ service:
               },
             },
             "patchContent": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.contents.{schema}.update.own",
+                  ],
+                },
+              ],
               "display-name": "Patchs a content item.",
               "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
               "errors": [
@@ -16997,7 +17537,13 @@ service:
               },
             },
             "postContent": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.contents.{schema}.create",
+                  ],
+                },
+              ],
               "display-name": "Create a content item.",
               "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
               "errors": [
@@ -17140,7 +17686,13 @@ service:
               },
             },
             "postContents": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.contents.{schema}.create",
+                  ],
+                },
+              ],
               "availability": "deprecated",
               "display-name": "Import content items.",
               "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
@@ -17235,7 +17787,13 @@ service:
               },
             },
             "postUpsertContent": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.contents.{schema}.upsert",
+                  ],
+                },
+              ],
               "display-name": "Upsert a content item.",
               "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
               "errors": [
@@ -17383,7 +17941,13 @@ service:
               },
             },
             "putContent": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.contents.{schema}.update.own",
+                  ],
+                },
+              ],
               "display-name": "Update a content item.",
               "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
               "errors": [
@@ -17516,7 +18080,13 @@ service:
               },
             },
             "putContentStatus": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.contents.{schema}.changestatus.own",
+                  ],
+                },
+              ],
               "display-name": "Change status of a content item.",
               "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
               "errors": [
@@ -17686,7 +18256,8 @@ service:
     getContents:
       path: /api/content/{app}/{schema}
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth: []
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
@@ -17781,7 +18352,9 @@ service:
     postContent:
       path: /api/content/{app}/{schema}
       method: POST
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.contents.{schema}.create
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
@@ -17885,7 +18458,8 @@ service:
     getContentsPost:
       path: /api/content/{app}/{schema}/query
       method: POST
-      auth: true
+      auth:
+        - squidex-oauth-auth: []
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
@@ -17976,7 +18550,8 @@ service:
     getContent:
       path: /api/content/{app}/{schema}/{id}
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth: []
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
@@ -18079,7 +18654,9 @@ service:
     postUpsertContent:
       path: /api/content/{app}/{schema}/{id}
       method: POST
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.contents.{schema}.upsert
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
@@ -18187,7 +18764,9 @@ service:
     putContent:
       path: /api/content/{app}/{schema}/{id}
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.contents.{schema}.update.own
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
@@ -18284,7 +18863,9 @@ service:
     deleteContent:
       path: /api/content/{app}/{schema}/{id}
       method: DELETE
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.contents.{schema}.delete.own
       docs: >-
         You can create an generated documentation for your app at
         /api/content/{appName}/docs.
@@ -18322,7 +18903,9 @@ service:
     patchContent:
       path: /api/content/{app}/{schema}/{id}
       method: PATCH
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.contents.{schema}.update.own
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
@@ -18419,7 +19002,8 @@ service:
     getContentValidity:
       path: /api/content/{app}/{schema}/{id}/validity
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth: []
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
@@ -18448,7 +19032,8 @@ service:
     getReferences:
       path: /api/content/{app}/{schema}/{id}/references
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth: []
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
@@ -18544,7 +19129,8 @@ service:
     getReferencing:
       path: /api/content/{app}/{schema}/{id}/referencing
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth: []
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
@@ -18640,7 +19226,9 @@ service:
     getContentVersion:
       path: /api/content/{app}/{schema}/{id}/{version}
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.contents.{schema}.read.own
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
@@ -18671,7 +19259,9 @@ service:
     postContents:
       path: /api/content/{app}/{schema}/import
       method: POST
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.contents.{schema}.create
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
@@ -18737,7 +19327,9 @@ service:
     bulkUpdateContents:
       path: /api/content/{app}/{schema}/bulk
       method: POST
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.contents.{schema}.read.own
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
@@ -18810,7 +19402,9 @@ service:
     putContentStatus:
       path: /api/content/{app}/{schema}/{id}/status
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.contents.{schema}.changestatus.own
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
@@ -18919,7 +19513,9 @@ service:
     deleteContentStatus:
       path: /api/content/{app}/{schema}/{id}/status
       method: DELETE
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.contents.{schema}.changestatus.own
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
@@ -19010,7 +19606,9 @@ service:
     createDraft:
       path: /api/content/{app}/{schema}/{id}/draft
       method: POST
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.contents.{schema}.version.create.own
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
@@ -19101,7 +19699,9 @@ service:
     deleteVersion:
       path: /api/content/{app}/{schema}/{id}/draft
       method: DELETE
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.contents.{schema}.version.delete.own
       docs: >-
         You can read the generated documentation for your app at
         /api/content/{appName}/docs.
@@ -19204,7 +19804,13 @@ service:
           "base-path": "",
           "endpoints": {
             "getDump": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.admin.*",
+                  ],
+                },
+              ],
               "display-name": "Creates a dump and writes it into storage..",
               "docs": undefined,
               "errors": [
@@ -19222,7 +19828,13 @@ service:
               },
             },
             "getGCDump": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.admin.*",
+                  ],
+                },
+              ],
               "display-name": "Creates a gc dump and writes it into storage.",
               "docs": undefined,
               "errors": [
@@ -19254,7 +19866,9 @@ service:
     getDump:
       path: /api/diagnostics/dump
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.admin.*
       source:
         openapi: ../openapi.json
       display-name: Creates a dump and writes it into storage..
@@ -19266,7 +19880,9 @@ service:
     getGCDump:
       path: /api/diagnostics/gcdump
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.admin.*
       source:
         openapi: ../openapi.json
       display-name: Creates a gc dump and writes it into storage.
@@ -19290,7 +19906,13 @@ service:
           "base-path": "",
           "endpoints": {
             "getEventConsumers": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.admin.events.read",
+                  ],
+                },
+              ],
               "display-name": "Get event consumers.",
               "docs": undefined,
               "errors": [
@@ -19340,7 +19962,13 @@ service:
               },
             },
             "resetEventConsumer": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.admin.events.manage",
+                  ],
+                },
+              ],
               "display-name": "Reset an event consumer.",
               "docs": undefined,
               "errors": [
@@ -19391,7 +20019,13 @@ service:
               },
             },
             "startEventConsumer": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.admin.events.manage",
+                  ],
+                },
+              ],
               "display-name": "Start an event consumer.",
               "docs": undefined,
               "errors": [
@@ -19442,7 +20076,13 @@ service:
               },
             },
             "stopEventConsumer": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.admin.events.manage",
+                  ],
+                },
+              ],
               "display-name": "Stop an event consumer.",
               "docs": undefined,
               "errors": [
@@ -19507,7 +20147,9 @@ service:
     getEventConsumers:
       path: /api/event-consumers
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.admin.events.read
       source:
         openapi: ../openapi.json
       display-name: Get event consumers.
@@ -19539,7 +20181,9 @@ service:
     startEventConsumer:
       path: /api/event-consumers/{consumerName}/start
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.admin.events.manage
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -19574,7 +20218,9 @@ service:
     stopEventConsumer:
       path: /api/event-consumers/{consumerName}/stop
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.admin.events.manage
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -19609,7 +20255,9 @@ service:
     resetEventConsumer:
       path: /api/event-consumers/{consumerName}/reset
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.admin.events.manage
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -19656,7 +20304,13 @@ service:
           "base-path": "",
           "endpoints": {
             "getAppHistory": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.history",
+                  ],
+                },
+              ],
               "display-name": "Get historical events.",
               "docs": undefined,
               "errors": [
@@ -19710,7 +20364,13 @@ service:
               },
             },
             "getTeamHistory": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.teams.{team}.history",
+                  ],
+                },
+              ],
               "display-name": "Get historical events for a team.",
               "docs": undefined,
               "errors": [
@@ -19778,7 +20438,9 @@ service:
     getAppHistory:
       path: /api/apps/{app}/history
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.history
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -19813,7 +20475,9 @@ service:
     getTeamHistory:
       path: /api/teams/{team}/history
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.teams.{team}.history
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -19860,7 +20524,11 @@ service:
           "base-path": "",
           "endpoints": {
             "getLanguages": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [],
+                },
+              ],
               "display-name": "Get supported languages.",
               "docs": "Provide a list of supported language codes, following the ISO2Code standard.",
               "errors": [
@@ -19906,7 +20574,8 @@ service:
     getLanguages:
       path: /api/languages
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth: []
       docs: >-
         Provide a list of supported language codes, following the ISO2Code
         standard.
@@ -19940,7 +20609,11 @@ service:
           "base-path": "",
           "endpoints": {
             "getNews": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [],
+                },
+              ],
               "display-name": "Get features since version.",
               "docs": undefined,
               "errors": [
@@ -19998,7 +20671,8 @@ service:
     getNews:
       path: /api/news/features
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth: []
       source:
         openapi: ../openapi.json
       display-name: Get features since version.
@@ -20037,7 +20711,11 @@ service:
           "base-path": "",
           "endpoints": {
             "deleteComment": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [],
+                },
+              ],
               "display-name": "Delete a notification.",
               "docs": undefined,
               "errors": [
@@ -20071,7 +20749,11 @@ service:
               },
             },
             "getNotifications": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [],
+                },
+              ],
               "display-name": "Get all notifications.",
               "docs": "When passing in a version you can retrieve all updates since then.",
               "errors": [
@@ -20153,7 +20835,8 @@ service:
     getNotifications:
       path: /api/users/{userId}/notifications
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth: []
       docs: When passing in a version you can retrieve all updates since then.
       source:
         openapi: ../openapi.json
@@ -20198,7 +20881,8 @@ service:
     deleteComment:
       path: /api/users/{userId}/notifications/{commentId}
       method: DELETE
-      auth: true
+      auth:
+        - squidex-oauth-auth: []
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -20232,7 +20916,13 @@ service:
           "base-path": "",
           "endpoints": {
             "getAppPing": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.ping",
+                  ],
+                },
+              ],
               "display-name": "Get ping status.",
               "docs": "Can be used to test, if the Squidex API is alive and responding.",
               "errors": [
@@ -20259,7 +20949,7 @@ service:
               },
             },
             "getInfo": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get API information.",
               "docs": undefined,
               "errors": [
@@ -20287,7 +20977,7 @@ service:
               },
             },
             "getPing": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get ping status of the API.",
               "docs": "Can be used to test, if the Squidex API is alive and responding.",
               "errors": [
@@ -20318,7 +21008,6 @@ service:
     getInfo:
       path: /api/info
       method: GET
-      auth: true
       source:
         openapi: ../openapi.json
       display-name: Get API information.
@@ -20335,7 +21024,6 @@ service:
     getPing:
       path: /api/ping
       method: GET
-      auth: true
       docs: Can be used to test, if the Squidex API is alive and responding.
       source:
         openapi: ../openapi.json
@@ -20347,7 +21035,9 @@ service:
     getAppPing:
       path: /api/ping/{app}
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.ping
       docs: Can be used to test, if the Squidex API is alive and responding.
       source:
         openapi: ../openapi.json
@@ -20376,7 +21066,13 @@ service:
           "base-path": "",
           "endpoints": {
             "getPlans": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.plans.read",
+                  ],
+                },
+              ],
               "display-name": "Get app plan information.",
               "docs": undefined,
               "errors": [
@@ -20437,7 +21133,13 @@ service:
               },
             },
             "getTeamPlans": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.teams.{team}.plans.read",
+                  ],
+                },
+              ],
               "display-name": "Get team plan information.",
               "docs": undefined,
               "errors": [
@@ -20498,7 +21200,13 @@ service:
               },
             },
             "putPlan": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.plans.change",
+                  ],
+                },
+              ],
               "display-name": "Change the app plan.",
               "docs": undefined,
               "errors": [
@@ -20544,7 +21252,13 @@ service:
               },
             },
             "putTeamPlan": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.teams.{team}.plans.change",
+                  ],
+                },
+              ],
               "display-name": "Change the team plan.",
               "docs": undefined,
               "errors": [
@@ -20604,7 +21318,9 @@ service:
     getPlans:
       path: /api/apps/{app}/plans
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.plans.read
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -20647,7 +21363,9 @@ service:
     putPlan:
       path: /api/apps/{app}/plan
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.plans.change
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -20677,7 +21395,9 @@ service:
     getTeamPlans:
       path: /api/teams/{team}/plans
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.teams.{team}.plans.read
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -20720,7 +21440,9 @@ service:
     putTeamPlan:
       path: /api/teams/{team}/plan
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.teams.{team}.plans.change
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -20762,7 +21484,13 @@ service:
           "base-path": "",
           "endpoints": {
             "deleteEvent": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.rules.events.delete",
+                  ],
+                },
+              ],
               "display-name": "Cancels an event.",
               "docs": undefined,
               "errors": [
@@ -20796,7 +21524,13 @@ service:
               },
             },
             "deleteEvents": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.rules.events.delete",
+                  ],
+                },
+              ],
               "display-name": "Cancels all events.",
               "docs": undefined,
               "errors": [
@@ -20824,7 +21558,13 @@ service:
               },
             },
             "deleteRule": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.rules.delete",
+                  ],
+                },
+              ],
               "display-name": "Delete a rule.",
               "docs": undefined,
               "errors": [
@@ -20858,7 +21598,13 @@ service:
               },
             },
             "deleteRuleEvents": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.rules.events.delete",
+                  ],
+                },
+              ],
               "display-name": "Cancels all rule events.",
               "docs": undefined,
               "errors": [
@@ -20891,7 +21637,13 @@ service:
               },
             },
             "deleteRuleRun": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.rules.events.update",
+                  ],
+                },
+              ],
               "display-name": "Cancel the current run.",
               "docs": undefined,
               "errors": [
@@ -20919,7 +21671,13 @@ service:
               },
             },
             "disableRule": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.rules.disable",
+                  ],
+                },
+              ],
               "display-name": "Disable a rule.",
               "docs": undefined,
               "errors": [
@@ -20991,7 +21749,13 @@ service:
               },
             },
             "enableRule": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.rules.disable",
+                  ],
+                },
+              ],
               "display-name": "Enable a rule.",
               "docs": undefined,
               "errors": [
@@ -21063,7 +21827,11 @@ service:
               },
             },
             "getActions": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [],
+                },
+              ],
               "display-name": "Get supported rule actions.",
               "docs": undefined,
               "errors": [
@@ -21107,7 +21875,7 @@ service:
               },
             },
             "getEventSchema": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Provide the json schema for the event with the specified name.",
               "docs": undefined,
               "errors": [
@@ -21145,7 +21913,7 @@ service:
               },
             },
             "getEventTypes": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Provide a list of all event types that are used in rules.",
               "docs": undefined,
               "errors": [
@@ -21173,7 +21941,13 @@ service:
               },
             },
             "getEvents": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.rules.events.read",
+                  ],
+                },
+              ],
               "display-name": "Get rule events.",
               "docs": undefined,
               "errors": [
@@ -21256,7 +22030,13 @@ service:
               },
             },
             "getRules": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.rules.read",
+                  ],
+                },
+              ],
               "display-name": "Get rules.",
               "docs": undefined,
               "errors": [
@@ -21332,7 +22112,13 @@ service:
               },
             },
             "postRule": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.rules.create",
+                  ],
+                },
+              ],
               "display-name": "Create a new rule.",
               "docs": undefined,
               "errors": [
@@ -21416,7 +22202,13 @@ service:
               },
             },
             "putEvent": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.rules.events.update",
+                  ],
+                },
+              ],
               "display-name": "Retry the event immediately.",
               "docs": undefined,
               "errors": [
@@ -21450,7 +22242,13 @@ service:
               },
             },
             "putRule": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.rules.update",
+                  ],
+                },
+              ],
               "display-name": "Update a rule.",
               "docs": undefined,
               "errors": [
@@ -21550,7 +22348,13 @@ service:
               },
             },
             "putRuleRun": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.rules.events.run",
+                  ],
+                },
+              ],
               "display-name": "Run a rule.",
               "docs": undefined,
               "errors": [
@@ -21593,7 +22397,13 @@ service:
               },
             },
             "simulateGET": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.rules.events.read",
+                  ],
+                },
+              ],
               "display-name": "Simulate a rule.",
               "docs": undefined,
               "errors": [
@@ -21662,7 +22472,13 @@ service:
               },
             },
             "simulatePOST": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.rules.events.read",
+                  ],
+                },
+              ],
               "display-name": "Simulate a rule.",
               "docs": undefined,
               "errors": [
@@ -21744,7 +22560,13 @@ service:
               },
             },
             "triggerRule": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.rules.events.run",
+                  ],
+                },
+              ],
               "display-name": "Trigger a rule.",
               "docs": undefined,
               "errors": [
@@ -21792,7 +22614,8 @@ service:
     getActions:
       path: /api/rules/actions
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth: []
       source:
         openapi: ../openapi.json
       display-name: Get supported rule actions.
@@ -21821,7 +22644,9 @@ service:
     getRules:
       path: /api/apps/{app}/rules
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.rules.read
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -21874,7 +22699,9 @@ service:
     postRule:
       path: /api/apps/{app}/rules
       method: POST
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.rules.create
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -21936,7 +22763,9 @@ service:
     deleteRuleRun:
       path: /api/apps/{app}/rules/run
       method: DELETE
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.rules.events.update
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -21953,7 +22782,9 @@ service:
     putRule:
       path: /api/apps/{app}/rules/{id}
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.rules.update
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -22024,7 +22855,9 @@ service:
     deleteRule:
       path: /api/apps/{app}/rules/{id}
       method: DELETE
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.rules.delete
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -22046,7 +22879,9 @@ service:
     enableRule:
       path: /api/apps/{app}/rules/{id}/enable
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.rules.disable
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -22099,7 +22934,9 @@ service:
     disableRule:
       path: /api/apps/{app}/rules/{id}/disable
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.rules.disable
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -22152,7 +22989,9 @@ service:
     triggerRule:
       path: /api/apps/{app}/rules/{id}/trigger
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.rules.events.run
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -22174,7 +23013,9 @@ service:
     putRuleRun:
       path: /api/apps/{app}/rules/{id}/run
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.rules.events.run
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -22202,7 +23043,9 @@ service:
     deleteRuleEvents:
       path: /api/apps/{app}/rules/{id}/events
       method: DELETE
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.rules.events.delete
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -22223,7 +23066,9 @@ service:
     simulatePOST:
       path: /api/apps/{app}/rules/simulate
       method: POST
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.rules.events.read
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -22279,7 +23124,9 @@ service:
     simulateGET:
       path: /api/apps/{app}/rules/{id}/simulate
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.rules.events.read
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -22325,7 +23172,9 @@ service:
     getEvents:
       path: /api/apps/{app}/rules/events
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.rules.events.read
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -22382,7 +23231,9 @@ service:
     deleteEvents:
       path: /api/apps/{app}/rules/events
       method: DELETE
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.rules.events.delete
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -22399,7 +23250,9 @@ service:
     putEvent:
       path: /api/apps/{app}/rules/events/{id}
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.rules.events.update
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -22421,7 +23274,9 @@ service:
     deleteEvent:
       path: /api/apps/{app}/rules/events/{id}
       method: DELETE
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.rules.events.delete
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -22443,7 +23298,6 @@ service:
     getEventTypes:
       path: /api/rules/eventtypes
       method: GET
-      auth: true
       source:
         openapi: ../openapi.json
       display-name: Provide a list of all event types that are used in rules.
@@ -22460,7 +23314,6 @@ service:
     getEventSchema:
       path: /api/rules/eventtypes/{type}
       method: GET
-      auth: true
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -22496,7 +23349,13 @@ service:
           "base-path": "",
           "endpoints": {
             "deleteField": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.schemas.{schema}.update",
+                  ],
+                },
+              ],
               "display-name": "Delete a schema field.",
               "docs": undefined,
               "errors": [
@@ -22640,7 +23499,13 @@ service:
               },
             },
             "deleteNestedField": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.schemas.{schema}.update",
+                  ],
+                },
+              ],
               "display-name": "Delete a nested field.",
               "docs": undefined,
               "errors": [
@@ -22789,7 +23654,13 @@ service:
               },
             },
             "deleteSchema": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.schemas.{schema}.delete",
+                  ],
+                },
+              ],
               "display-name": "Delete a schema.",
               "docs": undefined,
               "errors": [
@@ -22823,7 +23694,13 @@ service:
               },
             },
             "disableField": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.schemas.{schema}.update",
+                  ],
+                },
+              ],
               "display-name": "Disable a schema field.",
               "docs": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
               "errors": [
@@ -22967,7 +23844,13 @@ service:
               },
             },
             "disableNestedField": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.schemas.{schema}.update",
+                  ],
+                },
+              ],
               "display-name": "Disable a nested field.",
               "docs": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
               "errors": [
@@ -23116,7 +23999,13 @@ service:
               },
             },
             "enableField": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.schemas.{schema}.update",
+                  ],
+                },
+              ],
               "display-name": "Enable a schema field.",
               "docs": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
               "errors": [
@@ -23260,7 +24149,13 @@ service:
               },
             },
             "enableNestedField": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.schemas.{schema}.update",
+                  ],
+                },
+              ],
               "display-name": "Enable a nested field.",
               "docs": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
               "errors": [
@@ -23409,7 +24304,13 @@ service:
               },
             },
             "getSchema": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.schemas.read",
+                  ],
+                },
+              ],
               "display-name": "Get a schema by name.",
               "docs": undefined,
               "errors": [
@@ -23547,7 +24448,13 @@ service:
               },
             },
             "getSchemas": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.schemas.read",
+                  ],
+                },
+              ],
               "display-name": "Get schemas.",
               "docs": undefined,
               "errors": [
@@ -23653,7 +24560,13 @@ service:
               },
             },
             "hideField": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.schemas.{schema}.update",
+                  ],
+                },
+              ],
               "display-name": "Hide a schema field.",
               "docs": "A hidden field is not part of the API response, but can still be edited in the portal.",
               "errors": [
@@ -23797,7 +24710,13 @@ service:
               },
             },
             "hideNestedField": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.schemas.{schema}.update",
+                  ],
+                },
+              ],
               "display-name": "Hide a nested field.",
               "docs": "A hidden field is not part of the API response, but can still be edited in the portal.",
               "errors": [
@@ -23946,7 +24865,13 @@ service:
               },
             },
             "lockField": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.schemas.{schema}.update",
+                  ],
+                },
+              ],
               "display-name": "Lock a schema field.",
               "docs": "A locked field cannot be updated or deleted.",
               "errors": [
@@ -24090,7 +25015,13 @@ service:
               },
             },
             "lockNestedField": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.schemas.{schema}.update",
+                  ],
+                },
+              ],
               "display-name": "Lock a nested field.",
               "docs": "A locked field cannot be edited or deleted.",
               "errors": [
@@ -24239,7 +25170,13 @@ service:
               },
             },
             "postField": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.schemas.{schema}.update",
+                  ],
+                },
+              ],
               "display-name": "Add a schema field.",
               "docs": undefined,
               "errors": [
@@ -24392,7 +25329,13 @@ service:
               },
             },
             "postNestedField": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.schemas.{schema}.update",
+                  ],
+                },
+              ],
               "display-name": "Add a nested field.",
               "docs": undefined,
               "errors": [
@@ -24550,7 +25493,13 @@ service:
               },
             },
             "postSchema": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.schemas.create",
+                  ],
+                },
+              ],
               "display-name": "Create a new schema.",
               "docs": undefined,
               "errors": [
@@ -24723,7 +25672,13 @@ service:
               },
             },
             "publishSchema": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.schemas.{schema}.publish",
+                  ],
+                },
+              ],
               "display-name": "Publish a schema.",
               "docs": undefined,
               "errors": [
@@ -24862,7 +25817,13 @@ service:
               },
             },
             "putCategory": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.schemas.{schema}.update",
+                  ],
+                },
+              ],
               "display-name": "Update a schema category.",
               "docs": undefined,
               "errors": [
@@ -25017,7 +25978,13 @@ service:
               },
             },
             "putField": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.schemas.{schema}.update",
+                  ],
+                },
+              ],
               "display-name": "Update a schema field.",
               "docs": undefined,
               "errors": [
@@ -25173,7 +26140,13 @@ service:
               },
             },
             "putNestedField": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.schemas.{schema}.update",
+                  ],
+                },
+              ],
               "display-name": "Update a nested field.",
               "docs": undefined,
               "errors": [
@@ -25334,7 +26307,13 @@ service:
               },
             },
             "putNestedFieldOrdering": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.schemas.{schema}.update",
+                  ],
+                },
+              ],
               "display-name": "Reorder all nested fields.",
               "docs": undefined,
               "errors": [
@@ -25487,7 +26466,13 @@ service:
               },
             },
             "putPreviewUrls": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.schemas.{schema}.update",
+                  ],
+                },
+              ],
               "display-name": "Update the preview urls.",
               "docs": undefined,
               "errors": [
@@ -25633,7 +26618,13 @@ service:
               },
             },
             "putRules": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.schemas.{schema}.update",
+                  ],
+                },
+              ],
               "display-name": "Update the rules.",
               "docs": undefined,
               "errors": [
@@ -25788,7 +26779,13 @@ service:
               },
             },
             "putSchema": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.schemas.{schema}.update",
+                  ],
+                },
+              ],
               "display-name": "Update a schema.",
               "docs": undefined,
               "errors": [
@@ -25981,7 +26978,13 @@ service:
               },
             },
             "putSchemaFieldOrdering": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.schemas.{schema}.update",
+                  ],
+                },
+              ],
               "display-name": "Reorder all fields.",
               "docs": undefined,
               "errors": [
@@ -26129,7 +27132,13 @@ service:
               },
             },
             "putSchemaSync": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.schemas.{schema}.update",
+                  ],
+                },
+              ],
               "display-name": "Synchronize a schema.",
               "docs": undefined,
               "errors": [
@@ -26295,7 +27304,13 @@ service:
               },
             },
             "putSchemaUIFields": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.schemas.{schema}.update",
+                  ],
+                },
+              ],
               "display-name": "Configure UI fields.",
               "docs": undefined,
               "errors": [
@@ -26454,7 +27469,13 @@ service:
               },
             },
             "putScripts": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.schemas.{schema}.scripts",
+                  ],
+                },
+              ],
               "display-name": "Update the scripts.",
               "docs": undefined,
               "errors": [
@@ -26598,7 +27619,13 @@ service:
               },
             },
             "showField": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.schemas.{schema}.update",
+                  ],
+                },
+              ],
               "display-name": "Show a schema field.",
               "docs": "A hidden field is not part of the API response, but can still be edited in the portal.",
               "errors": [
@@ -26742,7 +27769,13 @@ service:
               },
             },
             "showNestedField": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.schemas.{schema}.update",
+                  ],
+                },
+              ],
               "display-name": "Show a nested field.",
               "docs": "A hidden field is not part of the API response, but can still be edited in the portal.",
               "errors": [
@@ -26891,7 +27924,13 @@ service:
               },
             },
             "unpublishSchema": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.schemas.{schema}.publish",
+                  ],
+                },
+              ],
               "display-name": "Unpublish a schema.",
               "docs": undefined,
               "errors": [
@@ -27044,7 +28083,9 @@ service:
     postField:
       path: /api/apps/{app}/schemas/{schema}/fields
       method: POST
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.schemas.{schema}.update
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -27156,7 +28197,9 @@ service:
     postNestedField:
       path: /api/apps/{app}/schemas/{schema}/fields/{parentId}/nested
       method: POST
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.schemas.{schema}.update
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -27272,7 +28315,9 @@ service:
     putSchemaUIFields:
       path: /api/apps/{app}/schemas/{schema}/fields/ui
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.schemas.{schema}.update
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -27385,7 +28430,9 @@ service:
     putSchemaFieldOrdering:
       path: /api/apps/{app}/schemas/{schema}/fields/ordering
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.schemas.{schema}.update
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -27492,7 +28539,9 @@ service:
     putNestedFieldOrdering:
       path: /api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/ordering
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.schemas.{schema}.update
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -27603,7 +28652,9 @@ service:
     putField:
       path: /api/apps/{app}/schemas/{schema}/fields/{id}
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.schemas.{schema}.update
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -27717,7 +28768,9 @@ service:
     deleteField:
       path: /api/apps/{app}/schemas/{schema}/fields/{id}
       method: DELETE
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.schemas.{schema}.update
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -27822,7 +28875,9 @@ service:
     putNestedField:
       path: /api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.schemas.{schema}.update
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -27940,7 +28995,9 @@ service:
     deleteNestedField:
       path: /api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}
       method: DELETE
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.schemas.{schema}.update
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -28049,7 +29106,9 @@ service:
     lockField:
       path: /api/apps/{app}/schemas/{schema}/fields/{id}/lock
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.schemas.{schema}.update
       docs: A locked field cannot be updated or deleted.
       source:
         openapi: ../openapi.json
@@ -28155,7 +29214,9 @@ service:
     lockNestedField:
       path: /api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/lock
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.schemas.{schema}.update
       docs: A locked field cannot be edited or deleted.
       source:
         openapi: ../openapi.json
@@ -28265,7 +29326,9 @@ service:
     hideField:
       path: /api/apps/{app}/schemas/{schema}/fields/{id}/hide
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.schemas.{schema}.update
       docs: >-
         A hidden field is not part of the API response, but can still be edited
         in the portal.
@@ -28373,7 +29436,9 @@ service:
     hideNestedField:
       path: /api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/hide
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.schemas.{schema}.update
       docs: >-
         A hidden field is not part of the API response, but can still be edited
         in the portal.
@@ -28485,7 +29550,9 @@ service:
     showField:
       path: /api/apps/{app}/schemas/{schema}/fields/{id}/show
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.schemas.{schema}.update
       docs: >-
         A hidden field is not part of the API response, but can still be edited
         in the portal.
@@ -28593,7 +29660,9 @@ service:
     showNestedField:
       path: /api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/show
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.schemas.{schema}.update
       docs: >-
         A hidden field is not part of the API response, but can still be edited
         in the portal.
@@ -28705,7 +29774,9 @@ service:
     enableField:
       path: /api/apps/{app}/schemas/{schema}/fields/{id}/enable
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.schemas.{schema}.update
       docs: >-
         A disabled field cannot not be edited in the squidex portal anymore, but
         will be part of the API response.
@@ -28813,7 +29884,9 @@ service:
     enableNestedField:
       path: /api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/enable
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.schemas.{schema}.update
       docs: >-
         A disabled field cannot not be edited in the squidex portal anymore, but
         will be part of the API response.
@@ -28925,7 +29998,9 @@ service:
     disableField:
       path: /api/apps/{app}/schemas/{schema}/fields/{id}/disable
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.schemas.{schema}.update
       docs: >-
         A disabled field cannot not be edited in the squidex portal anymore, but
         will be part of the API response.
@@ -29033,7 +30108,9 @@ service:
     disableNestedField:
       path: /api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/disable
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.schemas.{schema}.update
       docs: >-
         A disabled field cannot not be edited in the squidex portal anymore, but
         will be part of the API response.
@@ -29145,7 +30222,9 @@ service:
     getSchemas:
       path: /api/apps/{app}/schemas
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.schemas.read
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -29217,7 +30296,9 @@ service:
     postSchema:
       path: /api/apps/{app}/schemas
       method: POST
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.schemas.create
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -29339,7 +30420,9 @@ service:
     getSchema:
       path: /api/apps/{app}/schemas/{schema}
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.schemas.read
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -29439,7 +30522,9 @@ service:
     putSchema:
       path: /api/apps/{app}/schemas/{schema}
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.schemas.{schema}.update
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -29574,7 +30659,9 @@ service:
     deleteSchema:
       path: /api/apps/{app}/schemas/{schema}
       method: DELETE
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.schemas.{schema}.delete
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -29596,7 +30683,9 @@ service:
     putSchemaSync:
       path: /api/apps/{app}/schemas/{schema}/sync
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.schemas.{schema}.update
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -29714,7 +30803,9 @@ service:
     putCategory:
       path: /api/apps/{app}/schemas/{schema}/category
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.schemas.{schema}.update
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -29824,7 +30915,9 @@ service:
     putPreviewUrls:
       path: /api/apps/{app}/schemas/{schema}/preview-urls
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.schemas.{schema}.update
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -29930,7 +31023,9 @@ service:
     putScripts:
       path: /api/apps/{app}/schemas/{schema}/scripts
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.schemas.{schema}.scripts
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -30035,7 +31130,9 @@ service:
     putRules:
       path: /api/apps/{app}/schemas/{schema}/rules
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.schemas.{schema}.update
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -30145,7 +31242,9 @@ service:
     publishSchema:
       path: /api/apps/{app}/schemas/{schema}/publish
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.schemas.{schema}.publish
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -30246,7 +31345,9 @@ service:
     unpublishSchema:
       path: /api/apps/{app}/schemas/{schema}/unpublish
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.schemas.{schema}.publish
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -30359,7 +31460,13 @@ service:
           "base-path": "",
           "endpoints": {
             "getSearchResults": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.search",
+                  ],
+                },
+              ],
               "display-name": "Get search results.",
               "docs": undefined,
               "errors": [
@@ -30430,7 +31537,9 @@ service:
     getSearchResults:
       path: /api/apps/{app}/search
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.search
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -30478,7 +31587,13 @@ service:
           "base-path": "",
           "endpoints": {
             "getCurrentStorageSize": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.usage",
+                  ],
+                },
+              ],
               "display-name": "Get total asset size.",
               "docs": undefined,
               "errors": [
@@ -30517,7 +31632,13 @@ service:
               },
             },
             "getLog": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.usage",
+                  ],
+                },
+              ],
               "display-name": "Get api calls as log file.",
               "docs": undefined,
               "errors": [
@@ -30555,7 +31676,13 @@ service:
               },
             },
             "getStorageSizes": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.usage",
+                  ],
+                },
+              ],
               "display-name": "Get asset usage by date.",
               "docs": undefined,
               "errors": [
@@ -30607,7 +31734,13 @@ service:
               },
             },
             "getStorageSizesForTeam": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.teams.{team}.usage",
+                  ],
+                },
+              ],
               "display-name": "Get asset usage by date for team.",
               "docs": undefined,
               "errors": [
@@ -30659,7 +31792,13 @@ service:
               },
             },
             "getTeamCurrentStorageSizeForTeam": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.teams.{team}.usage",
+                  ],
+                },
+              ],
               "display-name": "Get total asset size by team.",
               "docs": undefined,
               "errors": [
@@ -30698,7 +31837,13 @@ service:
               },
             },
             "getUsages": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.usage",
+                  ],
+                },
+              ],
               "display-name": "Get api calls in date range.",
               "docs": undefined,
               "errors": [
@@ -30763,7 +31908,13 @@ service:
               },
             },
             "getUsagesForTeam": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.teams.{team}.usage",
+                  ],
+                },
+              ],
               "display-name": "Get api calls in date range for team.",
               "docs": undefined,
               "errors": [
@@ -30842,7 +31993,9 @@ service:
     getLog:
       path: /api/apps/{app}/usages/log
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.usage
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -30866,7 +32019,9 @@ service:
     getUsages:
       path: /api/apps/{app}/usages/calls/{fromDate}/{toDate}
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.usage
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -30911,7 +32066,9 @@ service:
     getUsagesForTeam:
       path: /api/teams/{team}/usages/calls/{fromDate}/{toDate}
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.teams.{team}.usage
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -30956,7 +32113,9 @@ service:
     getCurrentStorageSize:
       path: /api/apps/{app}/usages/storage/today
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.usage
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -30981,7 +32140,9 @@ service:
     getTeamCurrentStorageSizeForTeam:
       path: /api/teams/{team}/usages/storage/today
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.teams.{team}.usage
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -31006,7 +32167,9 @@ service:
     getStorageSizes:
       path: /api/apps/{app}/usages/storage/{fromDate}/{toDate}
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.usage
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -31040,7 +32203,9 @@ service:
     getStorageSizesForTeam:
       path: /api/teams/{team}/usages/storage/{fromDate}/{toDate}
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.teams.{team}.usage
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -31086,7 +32251,13 @@ service:
           "base-path": "",
           "endpoints": {
             "deleteContributor": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.teams.{team}.contributors.revoke",
+                  ],
+                },
+              ],
               "display-name": "Remove contributor.",
               "docs": undefined,
               "errors": [
@@ -31154,7 +32325,11 @@ service:
               },
             },
             "deleteMyself": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [],
+                },
+              ],
               "display-name": "Remove yourself.",
               "docs": undefined,
               "errors": [
@@ -31217,7 +32392,13 @@ service:
               },
             },
             "getContributors": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.teams.{team}.contributors.read",
+                  ],
+                },
+              ],
               "display-name": "Get team contributors.",
               "docs": undefined,
               "errors": [
@@ -31279,7 +32460,11 @@ service:
               },
             },
             "getTeam": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [],
+                },
+              ],
               "display-name": "Get an team by name.",
               "docs": undefined,
               "errors": [
@@ -31329,7 +32514,11 @@ service:
               },
             },
             "getTeams": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [],
+                },
+              ],
               "display-name": "Get your teams.",
               "docs": "You can only retrieve the list of teams when you are authenticated as a user (OpenID implicit flow).
 You will retrieve all teams, where you are assigned as a contributor.",
@@ -31371,7 +32560,13 @@ You will retrieve all teams, where you are assigned as a contributor.",
               },
             },
             "postContributor": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.teams.{team}.contributors.assign",
+                  ],
+                },
+              ],
               "display-name": "Assign contributor to team.",
               "docs": undefined,
               "errors": [
@@ -31441,7 +32636,11 @@ You will retrieve all teams, where you are assigned as a contributor.",
               },
             },
             "postTeam": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [],
+                },
+              ],
               "display-name": "Create a new team.",
               "docs": "You can only create an team when you are authenticated as a user (OpenID implicit flow).
 You will be assigned as owner of the new team automatically.",
@@ -31508,7 +32707,13 @@ You will be assigned as owner of the new team automatically.",
               },
             },
             "putTeam": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.teams.{team}.update",
+                  ],
+                },
+              ],
               "display-name": "Update the team.",
               "docs": undefined,
               "errors": [
@@ -31597,7 +32802,9 @@ service:
     getContributors:
       path: /api/teams/{team}/contributors
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.teams.{team}.contributors.read
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -31637,7 +32844,9 @@ service:
     postContributor:
       path: /api/teams/{team}/contributors
       method: POST
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.teams.{team}.contributors.assign
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -31683,7 +32892,8 @@ service:
     deleteMyself:
       path: /api/teams/{team}/contributors/me
       method: DELETE
-      auth: true
+      auth:
+        - squidex-oauth-auth: []
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -31724,7 +32934,9 @@ service:
     deleteContributor:
       path: /api/teams/{team}/contributors/{id}
       method: DELETE
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.teams.{team}.contributors.revoke
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -31769,7 +32981,8 @@ service:
     getTeams:
       path: /api/teams
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth: []
       docs: >-
         You can only retrieve the list of teams when you are authenticated as a
         user (OpenID implicit flow).
@@ -31800,7 +33013,8 @@ service:
     postTeam:
       path: /api/teams
       method: POST
-      auth: true
+      auth:
+        - squidex-oauth-auth: []
       docs: >-
         You can only create an team when you are authenticated as a user (OpenID
         implicit flow).
@@ -31846,7 +33060,8 @@ service:
     getTeam:
       path: /api/teams/{team}
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth: []
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -31880,7 +33095,9 @@ service:
     putTeam:
       path: /api/teams/{team}
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.teams.{team}.update
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -31939,7 +33156,11 @@ service:
           "base-path": "",
           "endpoints": {
             "getTemplate": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [],
+                },
+              ],
               "display-name": "Get template details.",
               "docs": undefined,
               "errors": [
@@ -31984,7 +33205,11 @@ service:
               },
             },
             "getTemplates": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [],
+                },
+              ],
               "display-name": "Get all templates.",
               "docs": undefined,
               "errors": [
@@ -32046,7 +33271,8 @@ service:
     getTemplates:
       path: /api/templates
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth: []
       source:
         openapi: ../openapi.json
       display-name: Get all templates.
@@ -32076,7 +33302,8 @@ service:
     getTemplate:
       path: /api/templates/{name}
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth: []
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -32117,7 +33344,13 @@ service:
           "base-path": "",
           "endpoints": {
             "postTranslation": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.apps.{app}.translate",
+                  ],
+                },
+              ],
               "display-name": "Translate a text.",
               "docs": undefined,
               "errors": [
@@ -32209,7 +33442,9 @@ service:
     postTranslation:
       path: /api/apps/{app}/translations
       method: POST
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.apps.{app}.translate
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -32267,7 +33502,13 @@ service:
           "base-path": "",
           "endpoints": {
             "deleteUser": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.admin.users.unlock",
+                  ],
+                },
+              ],
               "display-name": "Delete a User.",
               "docs": undefined,
               "errors": [
@@ -32297,7 +33538,13 @@ service:
               },
             },
             "getUser": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.admin.users.read",
+                  ],
+                },
+              ],
               "display-name": "Get a user by ID.",
               "docs": undefined,
               "errors": [
@@ -32348,7 +33595,13 @@ service:
               },
             },
             "getUsers": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.admin.users.read",
+                  ],
+                },
+              ],
               "display-name": "Get users by query.",
               "docs": undefined,
               "errors": [
@@ -32419,7 +33672,13 @@ service:
               },
             },
             "lockUser": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.admin.users.lock",
+                  ],
+                },
+              ],
               "display-name": "Lock a user.",
               "docs": undefined,
               "errors": [
@@ -32472,7 +33731,13 @@ service:
               },
             },
             "postUser": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.admin.users.create",
+                  ],
+                },
+              ],
               "display-name": "Create a new user.",
               "docs": undefined,
               "errors": [
@@ -32567,7 +33832,13 @@ service:
               },
             },
             "putUser": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.admin.users.update",
+                  ],
+                },
+              ],
               "display-name": "Update a user.",
               "docs": undefined,
               "errors": [
@@ -32665,7 +33936,13 @@ service:
               },
             },
             "unlockUser": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [
+                    "squidex.admin.users.unlock",
+                  ],
+                },
+              ],
               "display-name": "Unlock a user.",
               "docs": undefined,
               "errors": [
@@ -32732,7 +34009,9 @@ service:
     getUsers:
       path: /api/user-management
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.admin.users.read
       source:
         openapi: ../openapi.json
       display-name: Get users by query.
@@ -32779,7 +34058,9 @@ service:
     postUser:
       path: /api/user-management
       method: POST
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.admin.users.create
       source:
         openapi: ../openapi.json
       display-name: Create a new user.
@@ -32836,7 +34117,9 @@ service:
     getUser:
       path: /api/user-management/{id}
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.admin.users.read
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -32870,7 +34153,9 @@ service:
     putUser:
       path: /api/user-management/{id}
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.admin.users.update
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -32931,7 +34216,9 @@ service:
     deleteUser:
       path: /api/user-management/{id}
       method: DELETE
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.admin.users.unlock
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -32950,7 +34237,9 @@ service:
     lockUser:
       path: /api/user-management/{id}/lock
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.admin.users.lock
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -32986,7 +34275,9 @@ service:
     unlockUser:
       path: /api/user-management/{id}/unlock
       method: PUT
-      auth: true
+      auth:
+        - squidex-oauth-auth:
+            - squidex.admin.users.unlock
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -33034,7 +34325,11 @@ service:
           "base-path": "",
           "endpoints": {
             "getUser": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [],
+                },
+              ],
               "display-name": "Get user by id.",
               "docs": undefined,
               "errors": [
@@ -33085,7 +34380,7 @@ service:
               },
             },
             "getUserPicture": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get user picture by id.",
               "docs": undefined,
               "errors": [
@@ -33111,7 +34406,11 @@ service:
               },
             },
             "getUserResources": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [],
+                },
+              ],
               "display-name": "Get the user resources.",
               "docs": undefined,
               "errors": [
@@ -33145,7 +34444,11 @@ service:
               },
             },
             "getUsers": {
-              "auth": true,
+              "auth": [
+                {
+                  "squidex-oauth-auth": [],
+                },
+              ],
               "display-name": "Get users by query.",
               "docs": "Search the user by query that contains the email address or the part of the email address.",
               "errors": [
@@ -33210,7 +34513,8 @@ service:
     getUserResources:
       path: /api
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth: []
       source:
         openapi: ../openapi.json
       display-name: Get the user resources.
@@ -33231,7 +34535,8 @@ service:
     getUsers:
       path: /api/users
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth: []
       docs: >-
         Search the user by query that contains the email address or the part of
         the email address.
@@ -33266,7 +34571,8 @@ service:
     getUser:
       path: /api/users/{id}
       method: GET
-      auth: true
+      auth:
+        - squidex-oauth-auth: []
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -33300,7 +34606,6 @@ service:
     getUserPicture:
       path: /api/users/{id}/picture
       method: GET
-      auth: true
       source:
         openapi: ../openapi.json
       path-parameters:

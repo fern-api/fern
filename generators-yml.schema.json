@@ -140,6 +140,9 @@
   },
   "additionalProperties": false,
   "definitions": {
+    "fernDefinition.auth.AuthScope": {
+      "type": "string"
+    },
     "fernDefinition.auth.OAuthAccessTokenRequestPropertiesSchema": {
       "type": "object",
       "properties": {
@@ -348,7 +351,7 @@
             {
               "type": "array",
               "items": {
-                "type": "string"
+                "$ref": "#/definitions/fernDefinition.auth.AuthScope"
               }
             },
             {

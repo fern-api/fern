@@ -8038,7 +8038,20 @@ types:
           "base-path": "",
           "endpoints": {
             "create": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/access_codes/create",
               "docs": undefined,
               "errors": [
@@ -8162,7 +8175,20 @@ types:
               },
             },
             "create_multiple": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/access_codes/create_multiple",
               "docs": undefined,
               "errors": [
@@ -8275,7 +8301,20 @@ types:
               },
             },
             "delete": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/access_codes/delete",
               "docs": undefined,
               "errors": [
@@ -8352,7 +8391,20 @@ types:
               },
             },
             "generate_code": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/access_codes/generate_code",
               "docs": undefined,
               "errors": [
@@ -8437,7 +8489,20 @@ types:
               },
             },
             "get": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "access_token": [],
+                },
+                {
+                  "user_session": [],
+                },
+                {
+                  "client_session": [],
+                },
+              ],
               "display-name": "/access_codes/get",
               "docs": undefined,
               "errors": [
@@ -8530,7 +8595,20 @@ types:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/access_codes/list",
               "docs": undefined,
               "errors": [
@@ -8617,7 +8695,20 @@ types:
               },
             },
             "pull_backup_access_code": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/access_codes/pull_backup_access_code",
               "docs": undefined,
               "errors": [
@@ -8702,7 +8793,20 @@ types:
               },
             },
             "update": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/access_codes/update",
               "docs": undefined,
               "errors": [
@@ -9116,7 +9220,11 @@ service:
     create:
       path: /access_codes/create
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /access_codes/create
@@ -9206,7 +9314,11 @@ service:
     create_multiple:
       path: /access_codes/create_multiple
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /access_codes/create_multiple
@@ -9289,7 +9401,11 @@ service:
     delete:
       path: /access_codes/delete
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /access_codes/delete
@@ -9335,7 +9451,11 @@ service:
     generate_code:
       path: /access_codes/generate_code
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /access_codes/generate_code
@@ -9393,7 +9513,11 @@ service:
     get:
       path: /access_codes/get
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - access_token: []
+        - user_session: []
+        - client_session: []
       source:
         openapi: ../openapi.json
       display-name: /access_codes/get
@@ -9455,7 +9579,11 @@ service:
     list:
       path: /access_codes/list
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /access_codes/list
@@ -9514,7 +9642,11 @@ service:
     pull_backup_access_code:
       path: /access_codes/pull_backup_access_code
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /access_codes/pull_backup_access_code
@@ -9572,7 +9704,11 @@ service:
     update:
       path: /access_codes/update
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /access_codes/update
@@ -9654,7 +9790,20 @@ service:
           "base-path": "",
           "endpoints": {
             "create_unmanaged_access_code": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/access_codes/simulate/create_unmanaged_access_code",
               "docs": undefined,
               "errors": [
@@ -9776,7 +9925,11 @@ service:
     create_unmanaged_access_code:
       path: /access_codes/simulate/create_unmanaged_access_code
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /access_codes/simulate/create_unmanaged_access_code
@@ -9846,7 +9999,20 @@ service:
           "base-path": "",
           "endpoints": {
             "convert_to_managed": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/access_codes/unmanaged/convert_to_managed",
               "docs": undefined,
               "errors": [
@@ -9910,7 +10076,20 @@ service:
               },
             },
             "delete": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/access_codes/unmanaged/delete",
               "docs": undefined,
               "errors": [
@@ -9978,7 +10157,20 @@ service:
               },
             },
             "get": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/access_codes/unmanaged/get",
               "docs": undefined,
               "errors": [
@@ -10062,7 +10254,20 @@ service:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/access_codes/unmanaged/list",
               "docs": undefined,
               "errors": [
@@ -10141,7 +10346,20 @@ service:
               },
             },
             "update": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/access_codes/unmanaged/update",
               "docs": undefined,
               "errors": [
@@ -10301,7 +10519,11 @@ service:
     convert_to_managed:
       path: /access_codes/unmanaged/convert_to_managed
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /access_codes/unmanaged/convert_to_managed
@@ -10340,7 +10562,11 @@ service:
     delete:
       path: /access_codes/unmanaged/delete
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /access_codes/unmanaged/delete
@@ -10382,7 +10608,11 @@ service:
     get:
       path: /access_codes/unmanaged/get
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /access_codes/unmanaged/get
@@ -10435,7 +10665,11 @@ service:
     list:
       path: /access_codes/unmanaged/list
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /access_codes/unmanaged/list
@@ -10485,7 +10719,11 @@ service:
     update:
       path: /access_codes/unmanaged/update
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /access_codes/unmanaged/update
@@ -10535,7 +10773,17 @@ service:
           "base-path": "",
           "endpoints": {
             "add_user": {
-              "auth": true,
+              "auth": [
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/acs/access_groups/add_user",
               "docs": undefined,
               "errors": [
@@ -10602,7 +10850,17 @@ service:
               },
             },
             "get": {
-              "auth": true,
+              "auth": [
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/acs/access_groups/get",
               "docs": undefined,
               "errors": [
@@ -10672,7 +10930,17 @@ service:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/acs/access_groups/list",
               "docs": undefined,
               "errors": [
@@ -10751,7 +11019,17 @@ service:
               },
             },
             "list_users": {
-              "auth": true,
+              "auth": [
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/acs/access_groups/list_users",
               "docs": undefined,
               "errors": [
@@ -10834,7 +11112,17 @@ service:
               },
             },
             "remove_user": {
-              "auth": true,
+              "auth": [
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/acs/access_groups/remove_user",
               "docs": undefined,
               "errors": [
@@ -10999,7 +11287,10 @@ service:
     add_user:
       path: /acs/access_groups/add_user
       method: POST
-      auth: true
+      auth:
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /acs/access_groups/add_user
@@ -11037,7 +11328,10 @@ service:
     get:
       path: /acs/access_groups/get
       method: POST
-      auth: true
+      auth:
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /acs/access_groups/get
@@ -11082,7 +11376,10 @@ service:
     list:
       path: /acs/access_groups/list
       method: POST
-      auth: true
+      auth:
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /acs/access_groups/list
@@ -11130,7 +11427,10 @@ service:
     list_users:
       path: /acs/access_groups/list_users
       method: POST
-      auth: true
+      auth:
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /acs/access_groups/list_users
@@ -11185,7 +11485,10 @@ service:
     remove_user:
       path: /acs/access_groups/remove_user
       method: POST
-      auth: true
+      auth:
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /acs/access_groups/remove_user
@@ -11235,7 +11538,17 @@ service:
           "base-path": "",
           "endpoints": {
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/acs/credential_pools/list",
               "docs": undefined,
               "errors": [
@@ -11338,7 +11651,10 @@ service:
     list:
       path: /acs/credential_pools/list
       method: POST
-      auth: true
+      auth:
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /acs/credential_pools/list
@@ -11392,7 +11708,17 @@ service:
           "base-path": "",
           "endpoints": {
             "launch": {
-              "auth": true,
+              "auth": [
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/acs/credential_provisioning_automations/launch",
               "docs": undefined,
               "errors": [
@@ -11520,7 +11846,10 @@ service:
     launch:
       path: /acs/credential_provisioning_automations/launch
       method: POST
-      auth: true
+      auth:
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /acs/credential_provisioning_automations/launch
@@ -11586,7 +11915,17 @@ service:
           "base-path": "",
           "endpoints": {
             "assign": {
-              "auth": true,
+              "auth": [
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/acs/credentials/assign",
               "docs": undefined,
               "errors": [
@@ -11696,7 +12035,17 @@ service:
               },
             },
             "create": {
-              "auth": true,
+              "auth": [
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/acs/credentials/create",
               "docs": undefined,
               "errors": [
@@ -11825,7 +12174,17 @@ service:
               },
             },
             "delete": {
-              "auth": true,
+              "auth": [
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/acs/credentials/delete",
               "docs": undefined,
               "errors": [
@@ -11882,7 +12241,17 @@ service:
               },
             },
             "get": {
-              "auth": true,
+              "auth": [
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/acs/credentials/get",
               "docs": undefined,
               "errors": [
@@ -11983,7 +12352,20 @@ service:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/acs/credentials/list",
               "docs": undefined,
               "errors": [
@@ -12067,7 +12449,17 @@ service:
               },
             },
             "list_accessible_entrances": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/acs/credentials/list_accessible_entrances",
               "docs": undefined,
               "errors": [
@@ -12149,7 +12541,17 @@ service:
               },
             },
             "unassign": {
-              "auth": true,
+              "auth": [
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/acs/credentials/unassign",
               "docs": undefined,
               "errors": [
@@ -12259,7 +12661,17 @@ service:
               },
             },
             "update": {
-              "auth": true,
+              "auth": [
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/acs/credentials/update",
               "docs": undefined,
               "errors": [
@@ -12623,7 +13035,10 @@ service:
     assign:
       path: /acs/credentials/assign
       method: POST
-      auth: true
+      auth:
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /acs/credentials/assign
@@ -12693,7 +13108,10 @@ service:
     create:
       path: /acs/credentials/create
       method: POST
-      auth: true
+      auth:
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /acs/credentials/create
@@ -12776,7 +13194,10 @@ service:
     delete:
       path: /acs/credentials/delete
       method: POST
-      auth: true
+      auth:
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /acs/credentials/delete
@@ -12809,7 +13230,10 @@ service:
     get:
       path: /acs/credentials/get
       method: POST
-      auth: true
+      auth:
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /acs/credentials/get
@@ -12875,7 +13299,11 @@ service:
     list:
       path: /acs/credentials/list
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /acs/credentials/list
@@ -12931,7 +13359,10 @@ service:
     list_accessible_entrances:
       path: /acs/credentials/list_accessible_entrances
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /acs/credentials/list_accessible_entrances
@@ -12981,7 +13412,10 @@ service:
     unassign:
       path: /acs/credentials/unassign
       method: POST
-      auth: true
+      auth:
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /acs/credentials/unassign
@@ -13051,7 +13485,10 @@ service:
     update:
       path: /acs/credentials/update
       method: POST
-      auth: true
+      auth:
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /acs/credentials/update
@@ -13130,7 +13567,20 @@ service:
           "base-path": "",
           "endpoints": {
             "get": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "access_token": [],
+                },
+                {
+                  "user_session": [],
+                },
+                {
+                  "client_session": [],
+                },
+              ],
               "display-name": "/acs/entrances/get",
               "docs": undefined,
               "errors": [
@@ -13216,7 +13666,17 @@ service:
               },
             },
             "grant_access": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/acs/entrances/grant_access",
               "docs": undefined,
               "errors": [
@@ -13283,7 +13743,20 @@ service:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/acs/entrances/list",
               "docs": undefined,
               "errors": [
@@ -13372,7 +13845,20 @@ service:
               },
             },
             "list_credentials_with_access": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/acs/entrances/list_credentials_with_access",
               "docs": undefined,
               "errors": [
@@ -13550,7 +14036,11 @@ service:
     get:
       path: /acs/entrances/get
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - access_token: []
+        - user_session: []
+        - client_session: []
       source:
         openapi: ../openapi.json
       display-name: /acs/entrances/get
@@ -13603,7 +14093,10 @@ service:
     grant_access:
       path: /acs/entrances/grant_access
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /acs/entrances/grant_access
@@ -13641,7 +14134,11 @@ service:
     list:
       path: /acs/entrances/list
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /acs/entrances/list
@@ -13694,7 +14191,11 @@ service:
     list_credentials_with_access:
       path: /acs/entrances/list_credentials_with_access
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /acs/entrances/list_credentials_with_access
@@ -13767,7 +14268,17 @@ service:
           "base-path": "",
           "endpoints": {
             "get": {
-              "auth": true,
+              "auth": [
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/acs/systems/get",
               "docs": undefined,
               "errors": [
@@ -13854,7 +14365,20 @@ service:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/acs/systems/list",
               "docs": undefined,
               "errors": [
@@ -13941,7 +14465,17 @@ service:
               },
             },
             "list_compatible_credential_manager_acs_systems": {
-              "auth": true,
+              "auth": [
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/acs/systems/list_compatible_credential_manager_acs_systems",
               "docs": undefined,
               "errors": [
@@ -14098,7 +14632,10 @@ service:
     get:
       path: /acs/systems/get
       method: POST
-      auth: true
+      auth:
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /acs/systems/get
@@ -14155,7 +14692,11 @@ service:
     list:
       path: /acs/systems/list
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /acs/systems/list
@@ -14211,7 +14752,10 @@ service:
     list_compatible_credential_manager_acs_systems:
       path: /acs/systems/list_compatible_credential_manager_acs_systems
       method: POST
-      auth: true
+      auth:
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /acs/systems/list_compatible_credential_manager_acs_systems
@@ -14280,7 +14824,17 @@ service:
           "base-path": "",
           "endpoints": {
             "add_to_access_group": {
-              "auth": true,
+              "auth": [
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/acs/users/add_to_access_group",
               "docs": undefined,
               "errors": [
@@ -14347,7 +14901,17 @@ service:
               },
             },
             "create": {
-              "auth": true,
+              "auth": [
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/acs/users/create",
               "docs": undefined,
               "errors": [
@@ -14464,7 +15028,17 @@ service:
               },
             },
             "delete": {
-              "auth": true,
+              "auth": [
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/acs/users/delete",
               "docs": undefined,
               "errors": [
@@ -14521,7 +15095,17 @@ service:
               },
             },
             "get": {
-              "auth": true,
+              "auth": [
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/acs/users/get",
               "docs": undefined,
               "errors": [
@@ -14602,7 +15186,20 @@ service:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/acs/users/list",
               "docs": undefined,
               "errors": [
@@ -14694,7 +15291,20 @@ service:
               },
             },
             "list_accessible_entrances": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/acs/users/list_accessible_entrances",
               "docs": undefined,
               "errors": [
@@ -14776,7 +15386,17 @@ service:
               },
             },
             "remove_from_access_group": {
-              "auth": true,
+              "auth": [
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/acs/users/remove_from_access_group",
               "docs": undefined,
               "errors": [
@@ -14843,7 +15463,17 @@ service:
               },
             },
             "revoke_access_to_all_entrances": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/acs/users/revoke_access_to_all_entrances",
               "docs": undefined,
               "errors": [
@@ -14900,7 +15530,17 @@ service:
               },
             },
             "suspend": {
-              "auth": true,
+              "auth": [
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/acs/users/suspend",
               "docs": undefined,
               "errors": [
@@ -14957,7 +15597,17 @@ service:
               },
             },
             "unsuspend": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/acs/users/unsuspend",
               "docs": undefined,
               "errors": [
@@ -15014,7 +15664,17 @@ service:
               },
             },
             "update": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/acs/users/update",
               "docs": undefined,
               "errors": [
@@ -15332,7 +15992,10 @@ service:
     add_to_access_group:
       path: /acs/users/add_to_access_group
       method: POST
-      auth: true
+      auth:
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /acs/users/add_to_access_group
@@ -15370,7 +16033,10 @@ service:
     create:
       path: /acs/users/create
       method: POST
-      auth: true
+      auth:
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /acs/users/create
@@ -15447,7 +16113,10 @@ service:
     delete:
       path: /acs/users/delete
       method: POST
-      auth: true
+      auth:
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /acs/users/delete
@@ -15480,7 +16149,10 @@ service:
     get:
       path: /acs/users/get
       method: POST
-      auth: true
+      auth:
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /acs/users/get
@@ -15535,7 +16207,11 @@ service:
     list:
       path: /acs/users/list
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /acs/users/list
@@ -15595,7 +16271,11 @@ service:
     list_accessible_entrances:
       path: /acs/users/list_accessible_entrances
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /acs/users/list_accessible_entrances
@@ -15645,7 +16325,10 @@ service:
     remove_from_access_group:
       path: /acs/users/remove_from_access_group
       method: POST
-      auth: true
+      auth:
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /acs/users/remove_from_access_group
@@ -15683,7 +16366,10 @@ service:
     revoke_access_to_all_entrances:
       path: /acs/users/revoke_access_to_all_entrances
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /acs/users/revoke_access_to_all_entrances
@@ -15716,7 +16402,10 @@ service:
     suspend:
       path: /acs/users/suspend
       method: POST
-      auth: true
+      auth:
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /acs/users/suspend
@@ -15749,7 +16438,10 @@ service:
     unsuspend:
       path: /acs/users/unsuspend
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /acs/users/unsuspend
@@ -15782,7 +16474,10 @@ service:
     update:
       path: /acs/users/update
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /acs/users/update
@@ -15848,7 +16543,20 @@ service:
           "base-path": "",
           "endpoints": {
             "get": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/action_attempts/get",
               "docs": undefined,
               "errors": [
@@ -15913,7 +16621,17 @@ service:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/action_attempts/list",
               "docs": undefined,
               "errors": [
@@ -16025,7 +16743,11 @@ service:
     get:
       path: /action_attempts/get
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /action_attempts/get
@@ -16065,7 +16787,10 @@ service:
     list:
       path: /action_attempts/list
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /action_attempts/list
@@ -16115,7 +16840,7 @@ service:
           "base-path": "",
           "endpoints": {
             "create": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "/client_sessions/create",
               "docs": undefined,
               "errors": [
@@ -16192,7 +16917,17 @@ service:
               },
             },
             "delete": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/client_sessions/delete",
               "docs": undefined,
               "errors": [
@@ -16249,7 +16984,20 @@ service:
               },
             },
             "get": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/client_sessions/get",
               "docs": undefined,
               "errors": [
@@ -16315,7 +17063,7 @@ service:
               },
             },
             "get_or_create": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "/client_sessions/get_or_create",
               "docs": undefined,
               "errors": [
@@ -16392,7 +17140,17 @@ service:
               },
             },
             "grant_access": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/client_sessions/grant_access",
               "docs": undefined,
               "errors": [
@@ -16460,7 +17218,17 @@ service:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/client_sessions/list",
               "docs": undefined,
               "errors": [
@@ -16531,7 +17299,17 @@ service:
               },
             },
             "revoke": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/client_sessions/revoke",
               "docs": undefined,
               "errors": [
@@ -16720,7 +17498,6 @@ service:
     create:
       path: /client_sessions/create
       method: POST
-      auth: false
       source:
         openapi: ../openapi.json
       display-name: /client_sessions/create
@@ -16770,7 +17547,10 @@ service:
     delete:
       path: /client_sessions/delete
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /client_sessions/delete
@@ -16803,7 +17583,11 @@ service:
     get:
       path: /client_sessions/get
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /client_sessions/get
@@ -16847,7 +17631,6 @@ service:
     get_or_create:
       path: /client_sessions/get_or_create
       method: POST
-      auth: false
       source:
         openapi: ../openapi.json
       display-name: /client_sessions/get_or_create
@@ -16897,7 +17680,10 @@ service:
     grant_access:
       path: /client_sessions/grant_access
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /client_sessions/grant_access
@@ -16943,7 +17729,10 @@ service:
     list:
       path: /client_sessions/list
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /client_sessions/list
@@ -16990,7 +17779,10 @@ service:
     revoke:
       path: /client_sessions/revoke
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /client_sessions/revoke
@@ -17035,7 +17827,20 @@ service:
           "base-path": "",
           "endpoints": {
             "create": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/connect_webviews/create",
               "docs": undefined,
               "errors": [
@@ -17123,7 +17928,17 @@ service:
               },
             },
             "delete": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/connect_webviews/delete",
               "docs": undefined,
               "errors": [
@@ -17180,7 +17995,20 @@ service:
               },
             },
             "get": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/connect_webviews/get",
               "docs": undefined,
               "errors": [
@@ -17265,7 +18093,20 @@ service:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/connect_webviews/list",
               "docs": undefined,
               "errors": [
@@ -17624,7 +18465,11 @@ service:
     create:
       path: /connect_webviews/create
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /connect_webviews/create
@@ -17690,7 +18535,10 @@ service:
     delete:
       path: /connect_webviews/delete
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /connect_webviews/delete
@@ -17723,7 +18571,11 @@ service:
     get:
       path: /connect_webviews/get
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /connect_webviews/get
@@ -17780,7 +18632,11 @@ service:
     list:
       path: /connect_webviews/list
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /connect_webviews/list
@@ -17855,7 +18711,17 @@ service:
           "base-path": "",
           "endpoints": {
             "delete": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/connected_accounts/delete",
               "docs": undefined,
               "errors": [
@@ -17916,7 +18782,20 @@ service:
               },
             },
             "get": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/connected_accounts/get",
               "docs": undefined,
               "errors": [
@@ -17981,7 +18860,17 @@ service:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/connected_accounts/list",
               "docs": undefined,
               "errors": [
@@ -18050,7 +18939,17 @@ service:
               },
             },
             "update": {
-              "auth": true,
+              "auth": [
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/connected_accounts/update",
               "docs": undefined,
               "errors": [
@@ -18344,7 +19243,10 @@ service:
     delete:
       path: /connected_accounts/delete
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /connected_accounts/delete
@@ -18380,7 +19282,11 @@ service:
     get:
       path: /connected_accounts/get
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /connected_accounts/get
@@ -18426,7 +19332,10 @@ service:
     list:
       path: /connected_accounts/list
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /connected_accounts/list
@@ -18474,7 +19383,10 @@ service:
     update:
       path: /connected_accounts/update
       method: POST
-      auth: true
+      auth:
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /connected_accounts/update
@@ -18542,7 +19454,17 @@ service:
           "base-path": "",
           "endpoints": {
             "delete": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/devices/delete",
               "docs": undefined,
               "errors": [
@@ -18599,7 +19521,20 @@ service:
               },
             },
             "get": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/devices/get",
               "docs": undefined,
               "errors": [
@@ -18909,7 +19844,20 @@ service:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/devices/list",
               "docs": undefined,
               "errors": [
@@ -19037,7 +19985,20 @@ service:
               },
             },
             "list_device_providers": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/devices/list_device_providers",
               "docs": undefined,
               "errors": [
@@ -19095,7 +20056,17 @@ service:
               },
             },
             "update": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/devices/update",
               "docs": undefined,
               "errors": [
@@ -19643,7 +20614,10 @@ service:
     delete:
       path: /devices/delete
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /devices/delete
@@ -19676,7 +20650,11 @@ service:
     get:
       path: /devices/get
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /devices/get
@@ -19905,7 +20883,11 @@ service:
     list:
       path: /devices/list
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /devices/list
@@ -19990,7 +20972,11 @@ service:
     list_device_providers:
       path: /devices/list_device_providers
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /devices/list_device_providers
@@ -20026,7 +21012,10 @@ service:
     update:
       path: /devices/update
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /devices/update
@@ -20079,7 +21068,17 @@ service:
           "base-path": "",
           "endpoints": {
             "connect": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/devices/simulate/connect",
               "docs": undefined,
               "errors": [
@@ -20136,7 +21135,17 @@ service:
               },
             },
             "disconnect": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/devices/simulate/disconnect",
               "docs": undefined,
               "errors": [
@@ -20193,7 +21202,17 @@ service:
               },
             },
             "remove": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/devices/simulate/remove",
               "docs": undefined,
               "errors": [
@@ -20312,7 +21331,10 @@ service:
     connect:
       path: /devices/simulate/connect
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /devices/simulate/connect
@@ -20345,7 +21367,10 @@ service:
     disconnect:
       path: /devices/simulate/disconnect
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /devices/simulate/disconnect
@@ -20378,7 +21403,10 @@ service:
     remove:
       path: /devices/simulate/remove
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /devices/simulate/remove
@@ -20423,7 +21451,20 @@ service:
           "base-path": "",
           "endpoints": {
             "get": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/devices/unmanaged/get",
               "docs": undefined,
               "errors": [
@@ -20531,7 +21572,17 @@ service:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/devices/unmanaged/list",
               "docs": undefined,
               "errors": [
@@ -20651,7 +21702,17 @@ service:
               },
             },
             "update": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/devices/unmanaged/update",
               "docs": undefined,
               "errors": [
@@ -21090,7 +22151,11 @@ service:
     get:
       path: /devices/unmanaged/get
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /devices/unmanaged/get
@@ -21163,7 +22228,10 @@ service:
     list:
       path: /devices/unmanaged/list
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /devices/unmanaged/list
@@ -21242,7 +22310,10 @@ service:
     update:
       path: /devices/unmanaged/update
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /devices/unmanaged/update
@@ -21289,7 +22360,20 @@ service:
           "base-path": "",
           "endpoints": {
             "get": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/events/get",
               "docs": undefined,
               "errors": [
@@ -21370,7 +22454,20 @@ service:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/events/list",
               "docs": undefined,
               "errors": [
@@ -22266,7 +23363,11 @@ service:
     get:
       path: /events/get
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /events/get
@@ -22318,7 +23419,11 @@ service:
     list:
       path: /events/list
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /events/list
@@ -22393,7 +23498,20 @@ service:
           "base-path": "",
           "endpoints": {
             "get": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/locks/get",
               "docs": undefined,
               "errors": [
@@ -22956,7 +24074,20 @@ service:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/locks/list",
               "docs": undefined,
               "errors": [
@@ -23132,7 +24263,20 @@ service:
               },
             },
             "lock_door": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/locks/lock_door",
               "docs": undefined,
               "errors": [
@@ -23201,7 +24345,20 @@ service:
               },
             },
             "unlock_door": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/locks/unlock_door",
               "docs": undefined,
               "errors": [
@@ -23673,7 +24830,11 @@ service:
     get:
       path: /locks/get
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /locks/get
@@ -24097,7 +25258,11 @@ service:
     list:
       path: /locks/list
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /locks/list
@@ -24216,7 +25381,11 @@ service:
     lock_door:
       path: /locks/lock_door
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /locks/lock_door
@@ -24259,7 +25428,11 @@ service:
     unlock_door:
       path: /locks/unlock_door
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /locks/unlock_door
@@ -24314,7 +25487,17 @@ service:
           "base-path": "",
           "endpoints": {
             "get": {
-              "auth": true,
+              "auth": [
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/networks/get",
               "docs": undefined,
               "errors": [
@@ -24378,7 +25561,17 @@ service:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/networks/list",
               "docs": undefined,
               "errors": [
@@ -24483,7 +25676,10 @@ service:
     get:
       path: /networks/get
       method: POST
-      auth: true
+      auth:
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /networks/get
@@ -24522,7 +25718,10 @@ service:
     list:
       path: /networks/list
       method: POST
-      auth: true
+      auth:
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /networks/list
@@ -24568,7 +25767,17 @@ service:
           "base-path": "",
           "endpoints": {
             "create": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/noise_sensors/noise_thresholds/create",
               "docs": undefined,
               "errors": [
@@ -24653,7 +25862,17 @@ service:
               },
             },
             "delete": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/noise_sensors/noise_thresholds/delete",
               "docs": undefined,
               "errors": [
@@ -24731,7 +25950,17 @@ service:
               },
             },
             "get": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/noise_sensors/noise_thresholds/get",
               "docs": undefined,
               "errors": [
@@ -24798,7 +26027,20 @@ service:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/noise_sensors/noise_thresholds/list",
               "docs": undefined,
               "errors": [
@@ -24868,7 +26110,17 @@ service:
               },
             },
             "update": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/noise_sensors/noise_thresholds/update",
               "docs": undefined,
               "errors": [
@@ -25055,7 +26307,10 @@ service:
     create:
       path: /noise_sensors/noise_thresholds/create
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /noise_sensors/noise_thresholds/create
@@ -25113,7 +26368,10 @@ service:
     delete:
       path: /noise_sensors/noise_thresholds/delete
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /noise_sensors/noise_thresholds/delete
@@ -25160,7 +26418,10 @@ service:
     get:
       path: /noise_sensors/noise_thresholds/get
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /noise_sensors/noise_thresholds/get
@@ -25202,7 +26463,11 @@ service:
     list:
       path: /noise_sensors/noise_thresholds/list
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /noise_sensors/noise_thresholds/list
@@ -25245,7 +26510,10 @@ service:
     update:
       path: /noise_sensors/noise_thresholds/update
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /noise_sensors/noise_thresholds/update
@@ -25309,7 +26577,17 @@ service:
           "base-path": "",
           "endpoints": {
             "trigger_noise_threshold": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/noise_sensors/simulate/trigger_noise_threshold",
               "docs": undefined,
               "errors": [
@@ -25398,7 +26676,10 @@ service:
     trigger_noise_threshold:
       path: /noise_sensors/simulate/trigger_noise_threshold
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /noise_sensors/simulate/trigger_noise_threshold
@@ -25443,7 +26724,20 @@ service:
           "base-path": "",
           "endpoints": {
             "deactivate": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/phones/deactivate",
               "docs": undefined,
               "errors": [
@@ -25492,7 +26786,17 @@ service:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/phones/list",
               "docs": undefined,
               "errors": [
@@ -25634,7 +26938,11 @@ service:
     deactivate:
       path: /phones/deactivate
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /phones/deactivate
@@ -25664,7 +26972,10 @@ service:
     list:
       path: /phones/list
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /phones/list
@@ -25735,7 +27046,17 @@ service:
           "base-path": "",
           "endpoints": {
             "create_sandbox_phone": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/phones/simulate/create_sandbox_phone",
               "docs": undefined,
               "errors": [
@@ -25997,7 +27318,10 @@ service:
     create_sandbox_phone:
       path: /phones/simulate/create_sandbox_phone
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /phones/simulate/create_sandbox_phone
@@ -26080,7 +27404,20 @@ service:
           "base-path": "",
           "endpoints": {
             "cool": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/thermostats/cool",
               "docs": undefined,
               "errors": [
@@ -26151,7 +27488,20 @@ service:
               },
             },
             "get": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/thermostats/get",
               "docs": undefined,
               "errors": [
@@ -26461,7 +27811,20 @@ service:
               },
             },
             "heat": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/thermostats/heat",
               "docs": undefined,
               "errors": [
@@ -26532,7 +27895,20 @@ service:
               },
             },
             "heat_cool": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/thermostats/heat_cool",
               "docs": undefined,
               "errors": [
@@ -26605,7 +27981,20 @@ service:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "client_session": [],
+                },
+              ],
               "display-name": "/thermostats/list",
               "docs": undefined,
               "errors": [
@@ -26733,7 +28122,20 @@ service:
               },
             },
             "off": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/thermostats/off",
               "docs": undefined,
               "errors": [
@@ -26802,7 +28204,20 @@ service:
               },
             },
             "set_fan_mode": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/thermostats/set_fan_mode",
               "docs": undefined,
               "errors": [
@@ -26873,7 +28288,20 @@ service:
               },
             },
             "update": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "client_session": [],
+                },
+              ],
               "display-name": "/thermostats/update",
               "docs": undefined,
               "errors": [
@@ -27482,7 +28910,11 @@ service:
     cool:
       path: /thermostats/cool
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /thermostats/cool
@@ -27527,7 +28959,11 @@ service:
     get:
       path: /thermostats/get
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /thermostats/get
@@ -27756,7 +29192,11 @@ service:
     heat:
       path: /thermostats/heat
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /thermostats/heat
@@ -27801,7 +29241,11 @@ service:
     heat_cool:
       path: /thermostats/heat_cool
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /thermostats/heat_cool
@@ -27848,7 +29292,11 @@ service:
     list:
       path: /thermostats/list
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
+        - client_session: []
       source:
         openapi: ../openapi.json
       display-name: /thermostats/list
@@ -27935,7 +29383,11 @@ service:
     'off':
       path: /thermostats/off
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /thermostats/off
@@ -27978,7 +29430,11 @@ service:
     set_fan_mode:
       path: /thermostats/set_fan_mode
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /thermostats/set_fan_mode
@@ -28023,7 +29479,11 @@ service:
     update:
       path: /thermostats/update
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
+        - client_session: []
       source:
         openapi: ../openapi.json
       display-name: /thermostats/update
@@ -28070,7 +29530,20 @@ service:
           "base-path": "",
           "endpoints": {
             "create": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/thermostats/climate_setting_schedules/create",
               "docs": undefined,
               "errors": [
@@ -28154,7 +29627,20 @@ service:
               },
             },
             "delete": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/thermostats/climate_setting_schedules/delete",
               "docs": undefined,
               "errors": [
@@ -28211,7 +29697,20 @@ service:
               },
             },
             "get": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/thermostats/climate_setting_schedules/get",
               "docs": undefined,
               "errors": [
@@ -28296,7 +29795,20 @@ service:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/thermostats/climate_setting_schedules/list",
               "docs": undefined,
               "errors": [
@@ -28377,7 +29889,20 @@ service:
               },
             },
             "update": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/thermostats/climate_setting_schedules/update",
               "docs": undefined,
               "errors": [
@@ -28608,7 +30133,11 @@ service:
     create:
       path: /thermostats/climate_setting_schedules/create
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /thermostats/climate_setting_schedules/create
@@ -28671,7 +30200,11 @@ service:
     delete:
       path: /thermostats/climate_setting_schedules/delete
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /thermostats/climate_setting_schedules/delete
@@ -28704,7 +30237,11 @@ service:
     get:
       path: /thermostats/climate_setting_schedules/get
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /thermostats/climate_setting_schedules/get
@@ -28759,7 +30296,11 @@ service:
     list:
       path: /thermostats/climate_setting_schedules/list
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /thermostats/climate_setting_schedules/list
@@ -28812,7 +30353,11 @@ service:
     update:
       path: /thermostats/climate_setting_schedules/update
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /thermostats/climate_setting_schedules/update
@@ -28887,7 +30432,17 @@ service:
           "base-path": "",
           "endpoints": {
             "add_acs_user": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/user_identities/add_acs_user",
               "docs": undefined,
               "errors": [
@@ -28954,7 +30509,17 @@ service:
               },
             },
             "create": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/user_identities/create",
               "docs": undefined,
               "errors": [
@@ -29039,7 +30604,17 @@ service:
               },
             },
             "delete": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/user_identities/delete",
               "docs": undefined,
               "errors": [
@@ -29096,7 +30671,17 @@ service:
               },
             },
             "get": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/user_identities/get",
               "docs": undefined,
               "errors": [
@@ -29148,7 +30733,17 @@ service:
               },
             },
             "grant_access_to_device": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/user_identities/grant_access_to_device",
               "docs": undefined,
               "errors": [
@@ -29215,7 +30810,20 @@ service:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/user_identities/list",
               "docs": undefined,
               "errors": [
@@ -29283,7 +30891,17 @@ service:
               },
             },
             "list_accessible_devices": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/user_identities/list_accessible_devices",
               "docs": undefined,
               "errors": [
@@ -29437,7 +31055,20 @@ service:
               },
             },
             "list_acs_systems": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/user_identities/list_acs_systems",
               "docs": undefined,
               "errors": [
@@ -29526,7 +31157,17 @@ service:
               },
             },
             "list_acs_users": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/user_identities/list_acs_users",
               "docs": undefined,
               "errors": [
@@ -29609,7 +31250,17 @@ service:
               },
             },
             "remove_acs_user": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/user_identities/remove_acs_user",
               "docs": undefined,
               "errors": [
@@ -29676,7 +31327,17 @@ service:
               },
             },
             "revoke_access_to_device": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/user_identities/revoke_access_to_device",
               "docs": undefined,
               "errors": [
@@ -29743,7 +31404,17 @@ service:
               },
             },
             "update": {
-              "auth": true,
+              "auth": [
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/user_identities/update",
               "docs": undefined,
               "errors": [
@@ -30116,7 +31787,10 @@ service:
     add_acs_user:
       path: /user_identities/add_acs_user
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /user_identities/add_acs_user
@@ -30154,7 +31828,10 @@ service:
     create:
       path: /user_identities/create
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /user_identities/create
@@ -30205,7 +31882,10 @@ service:
     delete:
       path: /user_identities/delete
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /user_identities/delete
@@ -30238,7 +31918,10 @@ service:
     get:
       path: /user_identities/get
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /user_identities/get
@@ -30275,7 +31958,10 @@ service:
     grant_access_to_device:
       path: /user_identities/grant_access_to_device
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /user_identities/grant_access_to_device
@@ -30313,7 +31999,11 @@ service:
     list:
       path: /user_identities/list
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /user_identities/list
@@ -30355,7 +32045,10 @@ service:
     list_accessible_devices:
       path: /user_identities/list_accessible_devices
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /user_identities/list_accessible_devices
@@ -30457,7 +32150,11 @@ service:
     list_acs_systems:
       path: /user_identities/list_acs_systems
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /user_identities/list_acs_systems
@@ -30514,7 +32211,10 @@ service:
     list_acs_users:
       path: /user_identities/list_acs_users
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /user_identities/list_acs_users
@@ -30569,7 +32269,10 @@ service:
     remove_acs_user:
       path: /user_identities/remove_acs_user
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /user_identities/remove_acs_user
@@ -30607,7 +32310,10 @@ service:
     revoke_access_to_device:
       path: /user_identities/revoke_access_to_device
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /user_identities/revoke_access_to_device
@@ -30645,7 +32351,10 @@ service:
     update:
       path: /user_identities/update
       method: POST
-      auth: true
+      auth:
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /user_identities/update
@@ -30703,7 +32412,17 @@ service:
           "base-path": "",
           "endpoints": {
             "delete": {
-              "auth": true,
+              "auth": [
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/user_identities/enrollment_automations/delete",
               "docs": undefined,
               "errors": [
@@ -30760,7 +32479,20 @@ service:
               },
             },
             "get": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/user_identities/enrollment_automations/get",
               "docs": undefined,
               "errors": [
@@ -30825,7 +32557,17 @@ service:
               },
             },
             "launch": {
-              "auth": true,
+              "auth": [
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/user_identities/enrollment_automations/launch",
               "docs": undefined,
               "errors": [
@@ -30920,7 +32662,20 @@ service:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+                {
+                  "api_key": [],
+                },
+              ],
               "display-name": "/user_identities/enrollment_automations/list",
               "docs": undefined,
               "errors": [
@@ -31151,7 +32906,10 @@ service:
     delete:
       path: /user_identities/enrollment_automations/delete
       method: POST
-      auth: true
+      auth:
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /user_identities/enrollment_automations/delete
@@ -31184,7 +32942,11 @@ service:
     get:
       path: /user_identities/enrollment_automations/get
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /user_identities/enrollment_automations/get
@@ -31224,7 +32986,10 @@ service:
     launch:
       path: /user_identities/enrollment_automations/launch
       method: POST
-      auth: true
+      auth:
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /user_identities/enrollment_automations/launch
@@ -31279,7 +33044,11 @@ service:
     list:
       path: /user_identities/enrollment_automations/list
       method: POST
-      auth: true
+      auth:
+        - client_session: []
+        - pat_with_workspace: []
+        - console_session: []
+        - api_key: []
       source:
         openapi: ../openapi.json
       display-name: /user_identities/enrollment_automations/list
@@ -31331,7 +33100,17 @@ service:
           "base-path": "",
           "endpoints": {
             "create": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/webhooks/create",
               "docs": undefined,
               "errors": [
@@ -31398,7 +33177,17 @@ service:
               },
             },
             "delete": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/webhooks/delete",
               "docs": undefined,
               "errors": [
@@ -31447,7 +33236,17 @@ service:
               },
             },
             "get": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/webhooks/get",
               "docs": undefined,
               "errors": [
@@ -31505,7 +33304,17 @@ service:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/webhooks/list",
               "docs": undefined,
               "errors": [
@@ -31550,7 +33359,17 @@ service:
               },
             },
             "update": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/webhooks/update",
               "docs": undefined,
               "errors": [
@@ -31701,7 +33520,10 @@ service:
     create:
       path: /webhooks/create
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /webhooks/create
@@ -31742,7 +33564,10 @@ service:
     delete:
       path: /webhooks/delete
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /webhooks/delete
@@ -31772,7 +33597,10 @@ service:
     get:
       path: /webhooks/get
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /webhooks/get
@@ -31809,7 +33637,10 @@ service:
     list:
       path: /webhooks/list
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /webhooks/list
@@ -31838,7 +33669,10 @@ service:
     update:
       path: /webhooks/update
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /webhooks/update
@@ -31883,7 +33717,11 @@ service:
           "base-path": "",
           "endpoints": {
             "create": {
-              "auth": true,
+              "auth": [
+                {
+                  "pat_without_workspace": [],
+                },
+              ],
               "display-name": "/workspaces/create",
               "docs": undefined,
               "errors": [
@@ -31955,7 +33793,20 @@ service:
               },
             },
             "get": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "user_session": [],
+                },
+                {
+                  "client_session": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+              ],
               "display-name": "/workspaces/get",
               "docs": undefined,
               "errors": [
@@ -31997,7 +33848,26 @@ service:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "pat_without_workspace": [],
+                },
+                {
+                  "user_session": [],
+                },
+                {
+                  "user_session_without_workspace": [],
+                },
+                {
+                  "api_key": [],
+                },
+                {
+                  "client_session": [],
+                },
+              ],
               "display-name": "/workspaces/list",
               "docs": undefined,
               "errors": [
@@ -32041,7 +33911,17 @@ service:
               },
             },
             "reset_sandbox": {
-              "auth": true,
+              "auth": [
+                {
+                  "api_key": [],
+                },
+                {
+                  "pat_with_workspace": [],
+                },
+                {
+                  "console_session": [],
+                },
+              ],
               "display-name": "/workspaces/reset_sandbox",
               "docs": undefined,
               "errors": [
@@ -32185,7 +34065,8 @@ service:
     create:
       path: /workspaces/create
       method: POST
-      auth: true
+      auth:
+        - pat_without_workspace: []
       source:
         openapi: ../openapi.json
       display-name: /workspaces/create
@@ -32236,7 +34117,11 @@ service:
     get:
       path: /workspaces/get
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - user_session: []
+        - client_session: []
+        - pat_with_workspace: []
       source:
         openapi: ../openapi.json
       display-name: /workspaces/get
@@ -32265,7 +34150,13 @@ service:
     list:
       path: /workspaces/list
       method: POST
-      auth: true
+      auth:
+        - pat_with_workspace: []
+        - pat_without_workspace: []
+        - user_session: []
+        - user_session_without_workspace: []
+        - api_key: []
+        - client_session: []
       source:
         openapi: ../openapi.json
       display-name: /workspaces/list
@@ -32294,7 +34185,10 @@ service:
     reset_sandbox:
       path: /workspaces/reset_sandbox
       method: POST
-      auth: true
+      auth:
+        - api_key: []
+        - pat_with_workspace: []
+        - console_session: []
       source:
         openapi: ../openapi.json
       display-name: /workspaces/reset_sandbox

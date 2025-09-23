@@ -69,6 +69,11 @@
       "servers": [],
       "description": "Get details for a linked account.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/account-details",
       "examples": [
@@ -220,6 +225,11 @@
       "servers": [],
       "description": "Returns the account token for the end user with the provided public token.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/account-token/{public_token}",
       "examples": [
@@ -389,6 +399,11 @@
       "servers": [],
       "description": "Returns a list of models and actions available for an account.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/available-actions",
       "examples": [
@@ -1008,6 +1023,11 @@
       "servers": [],
       "description": "Returns a list of `BankInfo` objects.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/bank-info",
       "examples": [
@@ -1397,6 +1417,11 @@
       "servers": [],
       "description": "Returns a `BankInfo` object with the given `id`.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/bank-info/{id}",
       "examples": [
@@ -1891,6 +1916,11 @@
       "servers": [],
       "description": "Returns a list of `Benefit` objects.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/benefits",
       "examples": [
@@ -2246,6 +2276,11 @@
       "servers": [],
       "description": "Returns a `Benefit` object with the given `id`.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/benefits/{id}",
       "examples": [
@@ -2707,6 +2742,11 @@
       "servers": [],
       "description": "Returns a list of `Company` objects.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/companies",
       "examples": [
@@ -3031,6 +3071,11 @@
       "servers": [],
       "description": "Returns a `Company` object with the given `id`.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/companies/{id}",
       "examples": [
@@ -3273,6 +3318,11 @@
       "servers": [],
       "description": "Delete a linked account.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/delete-account",
       "examples": [
@@ -3706,6 +3756,11 @@
       "servers": [],
       "description": "Returns a list of `EmployeePayrollRun` objects.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/employee-payroll-runs",
       "examples": [
@@ -4261,6 +4316,11 @@
       "servers": [],
       "description": "Returns an `EmployeePayrollRun` object with the given `id`.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/employee-payroll-runs/{id}",
       "examples": [
@@ -7160,6 +7220,11 @@
       "servers": [],
       "description": "Returns a list of `Employee` objects.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/employees",
       "examples": [
@@ -7668,6 +7733,11 @@
       "servers": [],
       "description": "Creates an `Employee` object with the given values.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/employees",
       "examples": [
@@ -9786,6 +9856,11 @@
       "servers": [],
       "description": "Returns an `Employee` object with the given `id`.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/employees/{id}",
       "examples": [
@@ -10225,6 +10300,11 @@
       "servers": [],
       "description": "Ignores a specific row based on the `model_id` in the url. These records will have their properties set to null, and will not be updated in future syncs. The \"reason\" and \"message\" fields in the request body will be stored for audit purposes.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/employees/ignore/{model_id}",
       "examples": [
@@ -10322,6 +10402,11 @@
       "servers": [],
       "description": "Returns metadata for `Employee` POSTs.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/employees/meta/post",
       "examples": [
@@ -10967,6 +11052,11 @@
       "servers": [],
       "description": "Returns a list of `Employment` objects.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/employments",
       "examples": [
@@ -11543,6 +11633,11 @@
       "servers": [],
       "description": "Returns an `Employment` object with the given `id`.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/employments/{id}",
       "examples": [
@@ -11821,6 +11916,11 @@
       "servers": [],
       "description": "Create a remote key.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/generate-key",
       "examples": [
@@ -12177,6 +12277,11 @@
       "servers": [],
       "description": "Returns a list of `Group` objects.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/groups",
       "examples": [
@@ -12523,6 +12628,11 @@
       "servers": [],
       "description": "Returns a `Group` object with the given `id`.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/groups/{id}",
       "examples": [
@@ -13030,6 +13140,11 @@
       "servers": [],
       "description": "Gets issues.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/issues",
       "examples": [
@@ -13218,6 +13333,11 @@
       "servers": [],
       "description": "Get a specific issue.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/issues/{id}",
       "examples": [
@@ -13384,6 +13504,11 @@
       "servers": [],
       "description": "Creates a link token to be used when linking a new end user.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/link-token",
       "examples": [
@@ -13810,6 +13935,11 @@
       "servers": [],
       "description": "List linked accounts for your organization.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/linked-accounts",
       "examples": [
@@ -14334,6 +14464,11 @@
       "servers": [],
       "description": "Returns a list of `Location` objects.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/locations",
       "examples": [
@@ -14719,6 +14854,11 @@
       "servers": [],
       "description": "Returns a `Location` object with the given `id`.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/locations/{id}",
       "examples": [
@@ -15016,6 +15156,11 @@
       "servers": [],
       "description": "Pull data from an endpoint not currently supported by Merge.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/passthrough",
       "examples": [
@@ -15409,6 +15554,11 @@
       "servers": [],
       "description": "Returns a list of `PayGroup` objects.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/pay-groups",
       "examples": [
@@ -15700,6 +15850,11 @@
       "servers": [],
       "description": "Returns a `PayGroup` object with the given `id`.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/pay-groups/{id}",
       "examples": [
@@ -16330,6 +16485,11 @@
       "servers": [],
       "description": "Returns a list of `PayrollRun` objects.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/payroll-runs",
       "examples": [
@@ -16721,6 +16881,11 @@
       "servers": [],
       "description": "Returns a `PayrollRun` object with the given `id`.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/payroll-runs/{id}",
       "examples": [
@@ -16973,6 +17138,11 @@
       "servers": [],
       "description": "Exchange remote keys.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/regenerate-key",
       "examples": [
@@ -17096,6 +17266,11 @@
       "servers": [],
       "description": "Get a linked account's selective syncs.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/selective-sync/configurations",
       "examples": [
@@ -17297,6 +17472,11 @@
       "servers": [],
       "description": "Replace a linked account's selective syncs.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "PUT",
       "path": "/selective-sync/configurations",
       "examples": [
@@ -17554,6 +17734,11 @@
       "servers": [],
       "description": "Get metadata for the conditions available to a linked account.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/selective-sync/meta",
       "examples": [
@@ -17801,6 +17986,11 @@
       "servers": [],
       "description": "Get syncing status. Possible values: `DISABLED`, `DONE`, `FAILED`, `PARTIALLY_SYNCED`, `PAUSED`, `SYNCING`",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/sync-status",
       "examples": [
@@ -17969,6 +18159,11 @@
       "servers": [],
       "description": "Force re-sync of all models. This is available for all organizations via the dashboard. Force re-sync is also available programmatically via API for monthly, quarterly, and highest sync frequency customers on the Core, Professional, or Enterprise plans. Doing so will consume a sync credit for the relevant linked account.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/sync-status/resync",
       "examples": [
@@ -18336,6 +18531,11 @@
       "servers": [],
       "description": "Returns a list of `Team` objects.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/teams",
       "examples": [
@@ -18656,6 +18856,11 @@
       "servers": [],
       "description": "Returns a `Team` object with the given `id`.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/teams/{id}",
       "examples": [
@@ -19384,6 +19589,11 @@
       "servers": [],
       "description": "Returns a list of `TimeOff` objects.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/time-off",
       "examples": [
@@ -19745,6 +19955,11 @@
       "servers": [],
       "description": "Creates a `TimeOff` object with the given values.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/time-off",
       "examples": [
@@ -20491,6 +20706,11 @@
       "servers": [],
       "description": "Returns a list of `TimeOffBalance` objects.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/time-off-balances",
       "examples": [
@@ -20866,6 +21086,11 @@
       "servers": [],
       "description": "Returns a `TimeOffBalance` object with the given `id`.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/time-off-balances/{id}",
       "examples": [
@@ -21308,6 +21533,11 @@
       "servers": [],
       "description": "Returns a `TimeOff` object with the given `id`.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/time-off/{id}",
       "examples": [
@@ -21583,6 +21813,11 @@
       "servers": [],
       "description": "Returns metadata for `TimeOff` POSTs.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/time-off/meta/post",
       "examples": [
@@ -21748,6 +21983,11 @@
       "servers": [],
       "description": "Returns a list of `WebhookReceiver` objects.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/webhook-receivers",
       "examples": [
@@ -21878,6 +22118,11 @@
       "servers": [],
       "description": "Creates a `WebhookReceiver` object with the given values.",
       "authed": true,
+      "security": [
+        {
+          "tokenAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/webhook-receivers",
       "examples": [

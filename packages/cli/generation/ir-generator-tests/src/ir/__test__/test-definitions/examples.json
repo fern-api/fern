@@ -48,6 +48,7 @@
                     }
                 },
                 "tokenEnvVar": null,
+                "key": "bearer",
                 "docs": null
             }
         ],
@@ -22990,6 +22991,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -23218,6 +23220,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -24042,6 +24045,11 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "security": [
+                        {
+                            "bearer": []
+                        }
+                    ],
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -25369,6 +25377,11 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "security": [
+                        {
+                            "bearer": []
+                        }
+                    ],
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -26545,6 +26558,11 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "security": [
+                        {
+                            "bearer": []
+                        }
+                    ],
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -26903,6 +26921,11 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "security": [
+                        {
+                            "bearer": []
+                        }
+                    ],
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -27128,6 +27151,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -30725,6 +30749,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -34144,6 +34169,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -35006,6 +35032,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -38713,6 +38740,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,

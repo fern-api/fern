@@ -95,3 +95,43 @@ await client.user.get();
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getAdmins</a>() -> SeedAnyAuth.User[]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.user.getAdmins();
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `User.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>

@@ -1,6 +1,25 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        You can now specify security schemes and scopes on the HTTP endpoint `auth` property in Fern Definition.
+        ```yml
+        service:
+          ...
+          endpoints:
+            getAdmins:
+              ...
+              auth:
+                - OAuth: ["admin"] # OAuth is the given name of the auth scheme in api.yml
+        ```
+      type: feat
+    - summary: The OpenAPI parser will now configure the `auth` property on HTTP endpoints based on the security schemes defined in the OpenAPI spec.
+      type: feat
+  irVersion: 60
+  createdAt: "2025-09-23"
+  version: 0.79.0
+
+- changelogEntry:
+    - summary: |
         Users can now enable dynamic snippets using the `dynamic-snippets` flag in the `docs.yml` file.
       type: fix
   irVersion: 59

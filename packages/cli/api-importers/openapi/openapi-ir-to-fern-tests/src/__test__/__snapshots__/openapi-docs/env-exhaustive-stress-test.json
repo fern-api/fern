@@ -16,7 +16,7 @@
           "base-path": "",
           "endpoints": {
             "getAlpha": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -50,7 +50,6 @@
     getAlpha:
       path: /alpha
       method: GET
-      auth: false
       source:
         openapi: ../openapi1.yml
       response:
@@ -72,7 +71,7 @@
           "base-path": "",
           "endpoints": {
             "getBeta": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -106,7 +105,6 @@
     getBeta:
       path: /beta
       method: GET
-      auth: false
       source:
         openapi: ../openapi2.yml
       response:
@@ -128,7 +126,7 @@
           "base-path": "",
           "endpoints": {
             "getDelta": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -162,7 +160,6 @@
     getDelta:
       path: /delta
       method: GET
-      auth: false
       source:
         openapi: ../openapi4.yml
       response:
@@ -184,7 +181,7 @@
           "base-path": "",
           "endpoints": {
             "getEta": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -218,7 +215,6 @@
     getEta:
       path: /eta
       method: GET
-      auth: false
       source:
         openapi: ../openapi8.yml
       response:
@@ -240,7 +236,7 @@
           "base-path": "",
           "endpoints": {
             "getGamma": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -274,7 +270,6 @@
     getGamma:
       path: /gamma
       method: GET
-      auth: false
       source:
         openapi: ../openapi3.yml
       response:
@@ -296,7 +291,7 @@
           "base-path": "",
           "endpoints": {
             "getMu": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -330,7 +325,6 @@
     getMu:
       path: /mu
       method: GET
-      auth: false
       source:
         openapi: ../openapi5.yml
       response:
@@ -352,7 +346,7 @@
           "base-path": "",
           "endpoints": {
             "getOmega": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -386,7 +380,6 @@
     getOmega:
       path: /omega
       method: GET
-      auth: false
       source:
         openapi: ../openapi6.yml
       response:
@@ -408,7 +401,7 @@
           "base-path": "",
           "endpoints": {
             "getZeta": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -442,7 +435,6 @@
     getZeta:
       path: /zeta
       method: GET
-      auth: false
       source:
         openapi: ../openapi7.yml
       response:

@@ -33,4 +33,12 @@ public class AsyncUserClient {
     public CompletableFuture<List<User>> get(RequestOptions requestOptions) {
         return this.rawClient.get(requestOptions).thenApply(response -> response.body());
     }
+
+    public CompletableFuture<List<User>> getAdmins() {
+        return this.rawClient.getAdmins().thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<List<User>> getAdmins(RequestOptions requestOptions) {
+        return this.rawClient.getAdmins(requestOptions).thenApply(response -> response.body());
+    }
 }

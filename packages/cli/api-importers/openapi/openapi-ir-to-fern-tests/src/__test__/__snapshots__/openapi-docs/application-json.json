@@ -10,7 +10,7 @@
           "base-path": "",
           "endpoints": {
             "getApplicationJson": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -35,7 +35,7 @@
               },
             },
             "getVndFernUserJsonVersion1": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -85,7 +85,6 @@
     getVndFernUserJsonVersion1:
       path: /vnd.fern.user+json;version=1
       method: GET
-      auth: false
       source:
         openapi: ../openapi.yml
       response:
@@ -100,7 +99,6 @@
     getApplicationJson:
       path: /application-json
       method: GET
-      auth: false
       source:
         openapi: ../openapi.yml
       response:

@@ -60,6 +60,7 @@
       "servers": [],
       "description": "",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/list",
       "examples": [
@@ -212,6 +213,7 @@
       "servers": [],
       "description": "",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/list-with-step",
       "examples": [

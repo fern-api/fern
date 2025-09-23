@@ -1,3 +1,5 @@
+export * from "./AuthSchemeKey";
+export * from "./AuthScope";
 export * from "./WithAuthSchema";
 export * from "./ApiAuthSchema";
 export * from "./AuthSchemeReferenceSchema";
