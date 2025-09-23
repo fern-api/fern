@@ -299,6 +299,11 @@ jobs:
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
+      - name: Test debug
+        shell: bash
+        run: |
+          echo "Test debug 1: ${{ toJson(matrix.fixtures) }}"
+
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
