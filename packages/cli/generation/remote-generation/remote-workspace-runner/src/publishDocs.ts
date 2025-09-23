@@ -481,6 +481,9 @@ async function generateLanguageSpecificDynamicIRs({
             context.logger.warn(
                 `Unknown package name ${packageName} referenced for ${language} snippets in ${workspace.workspaceName} API`
             );
+            context.logger.warn(
+                `Did you define the package name in the generators.yml file for ${workspace.workspaceName}?`
+            );
         }
     }
 
