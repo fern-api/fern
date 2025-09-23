@@ -219,7 +219,7 @@ jobs:
           combined=$(echo "$ruby_matrix $python_matrix" | jq -s -c 'add')
           echo "${combined}" | jq . 
 
-          matrix=$(echo '$combined' | jq '[.]')
+          matrix=$(echo "${combined}" | jq '[.]')
           echo "built-matrix=$matrix" >> $GITHUB_OUTPUT
           
           # Output for debug
