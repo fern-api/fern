@@ -208,8 +208,8 @@ jobs:
 
           # Combine all built matrices into a single JSON object. Wrap in array for GitHub matrix
           # strategy format.
-          combined=$(echo '${{steps.build-ruby-model-matrix.outputs.ruby_model_matrix}} ${{steps.build-python-sdk-matrix.outputs.python_sdk_matrix}}' | jq -s -c 'add')
-          matrix=$(echo '$combined' | jq '[.]')
+          combined=$(echo "${{steps.build-ruby-model-matrix.outputs.ruby_model_matrix}} ${{steps.build-python-sdk-matrix.outputs.python_sdk_matrix}}" | jq -s -c 'add')
+          matrix=$(echo "$combined" | jq '[.]')
           echo "built-matrix=$matrix" >> $GITHUB_OUTPUT
           
           # Output for debug
