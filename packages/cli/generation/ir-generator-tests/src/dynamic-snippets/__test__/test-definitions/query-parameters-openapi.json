@@ -648,8 +648,11 @@
                                     "value": "STRING"
                                 },
                                 "value": {
-                                    "type": "primitive",
-                                    "value": "STRING"
+                                    "type": "optional",
+                                    "value": {
+                                        "type": "primitive",
+                                        "value": "STRING"
+                                    }
                                 }
                             }
                         },

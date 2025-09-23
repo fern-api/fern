@@ -53,8 +53,8 @@ export function convertAdditionalProperties({
     }
 
     const [isValueOptional, isValueNullable] = context.options.coerceOptionalSchemasToNullable
-        ? [false, context.options.optionalAdditionalProperties ? wrapAsOptional : false]
-        : [context.options.optionalAdditionalProperties ? wrapAsOptional : false, false];
+        ? [false, context.options.optionalAdditionalProperties ? true : wrapAsOptional]
+        : [context.options.optionalAdditionalProperties ? true : wrapAsOptional, false];
 
     return wrapMap({
         nameOverride,

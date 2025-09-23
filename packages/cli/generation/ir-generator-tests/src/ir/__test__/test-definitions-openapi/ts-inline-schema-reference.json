@@ -1233,35 +1233,41 @@
                                             }
                                         },
                                         "valueType": {
-                                            "_type": "named",
-                                            "name": {
-                                                "originalName": "Schema1InlineUnionMapValue",
-                                                "camelCase": {
-                                                    "unsafeName": "schema1InlineUnionMapValue",
-                                                    "safeName": "schema1InlineUnionMapValue"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "schema1inline_union_map_value",
-                                                    "safeName": "schema1inline_union_map_value"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "SCHEMA1INLINE_UNION_MAP_VALUE",
-                                                    "safeName": "SCHEMA1INLINE_UNION_MAP_VALUE"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Schema1InlineUnionMapValue",
-                                                    "safeName": "Schema1InlineUnionMapValue"
+                                            "_type": "container",
+                                            "container": {
+                                                "_type": "optional",
+                                                "optional": {
+                                                    "_type": "named",
+                                                    "name": {
+                                                        "originalName": "Schema1InlineUnionMapValue",
+                                                        "camelCase": {
+                                                            "unsafeName": "schema1InlineUnionMapValue",
+                                                            "safeName": "schema1InlineUnionMapValue"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "schema1inline_union_map_value",
+                                                            "safeName": "schema1inline_union_map_value"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "SCHEMA1INLINE_UNION_MAP_VALUE",
+                                                            "safeName": "SCHEMA1INLINE_UNION_MAP_VALUE"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Schema1InlineUnionMapValue",
+                                                            "safeName": "Schema1InlineUnionMapValue"
+                                                        }
+                                                    },
+                                                    "fernFilepath": {
+                                                        "allParts": [],
+                                                        "packagePath": [],
+                                                        "file": null
+                                                    },
+                                                    "displayName": null,
+                                                    "typeId": "type_:Schema1InlineUnionMapValue",
+                                                    "default": null,
+                                                    "inline": null
                                                 }
-                                            },
-                                            "fernFilepath": {
-                                                "allParts": [],
-                                                "packagePath": [],
-                                                "file": null
-                                            },
-                                            "displayName": null,
-                                            "typeId": "type_:Schema1InlineUnionMapValue",
-                                            "default": null,
-                                            "inline": null
+                                            }
                                         }
                                     }
                                 }
@@ -2559,35 +2565,41 @@
                             }
                         },
                         "valueType": {
-                            "_type": "named",
-                            "name": {
-                                "originalName": "RootUnionMapValue",
-                                "camelCase": {
-                                    "unsafeName": "rootUnionMapValue",
-                                    "safeName": "rootUnionMapValue"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "root_union_map_value",
-                                    "safeName": "root_union_map_value"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "ROOT_UNION_MAP_VALUE",
-                                    "safeName": "ROOT_UNION_MAP_VALUE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "RootUnionMapValue",
-                                    "safeName": "RootUnionMapValue"
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "RootUnionMapValue",
+                                        "camelCase": {
+                                            "unsafeName": "rootUnionMapValue",
+                                            "safeName": "rootUnionMapValue"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "root_union_map_value",
+                                            "safeName": "root_union_map_value"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "ROOT_UNION_MAP_VALUE",
+                                            "safeName": "ROOT_UNION_MAP_VALUE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "RootUnionMapValue",
+                                            "safeName": "RootUnionMapValue"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_:RootUnionMapValue",
+                                    "default": null,
+                                    "inline": null
                                 }
-                            },
-                            "fernFilepath": {
-                                "allParts": [],
-                                "packagePath": [],
-                                "file": null
-                            },
-                            "displayName": null,
-                            "typeId": "type_:RootUnionMapValue",
-                            "default": null,
-                            "inline": null
+                            }
                         }
                     }
                 },
@@ -2607,35 +2619,41 @@
                             }
                         },
                         "valueType": {
-                            "_type": "named",
-                            "name": {
-                                "originalName": "RootUnionMapValue",
-                                "camelCase": {
-                                    "unsafeName": "rootUnionMapValue",
-                                    "safeName": "rootUnionMapValue"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "root_union_map_value",
-                                    "safeName": "root_union_map_value"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "ROOT_UNION_MAP_VALUE",
-                                    "safeName": "ROOT_UNION_MAP_VALUE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "RootUnionMapValue",
-                                    "safeName": "RootUnionMapValue"
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "RootUnionMapValue",
+                                        "camelCase": {
+                                            "unsafeName": "rootUnionMapValue",
+                                            "safeName": "rootUnionMapValue"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "root_union_map_value",
+                                            "safeName": "root_union_map_value"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "ROOT_UNION_MAP_VALUE",
+                                            "safeName": "ROOT_UNION_MAP_VALUE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "RootUnionMapValue",
+                                            "safeName": "RootUnionMapValue"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_:RootUnionMapValue",
+                                    "default": null,
+                                    "inline": null
                                 }
-                            },
-                            "fernFilepath": {
-                                "allParts": [],
-                                "packagePath": [],
-                                "file": null
-                            },
-                            "displayName": null,
-                            "typeId": "type_:RootUnionMapValue",
-                            "default": null,
-                            "inline": null
+                            }
                         }
                     }
                 }
@@ -3070,69 +3088,109 @@
                                                                                                         },
                                                                                                         "value": {
                                                                                                             "shape": {
-                                                                                                                "type": "named",
-                                                                                                                "typeName": {
-                                                                                                                    "typeId": "type_:Schema1InlineUnionMapValue",
-                                                                                                                    "fernFilepath": {
-                                                                                                                        "allParts": [],
-                                                                                                                        "packagePath": [],
-                                                                                                                        "file": null
-                                                                                                                    },
-                                                                                                                    "name": {
-                                                                                                                        "originalName": "Schema1InlineUnionMapValue",
-                                                                                                                        "camelCase": {
-                                                                                                                            "unsafeName": "schema1InlineUnionMapValue",
-                                                                                                                            "safeName": "schema1InlineUnionMapValue"
-                                                                                                                        },
-                                                                                                                        "snakeCase": {
-                                                                                                                            "unsafeName": "schema1inline_union_map_value",
-                                                                                                                            "safeName": "schema1inline_union_map_value"
-                                                                                                                        },
-                                                                                                                        "screamingSnakeCase": {
-                                                                                                                            "unsafeName": "SCHEMA1INLINE_UNION_MAP_VALUE",
-                                                                                                                            "safeName": "SCHEMA1INLINE_UNION_MAP_VALUE"
-                                                                                                                        },
-                                                                                                                        "pascalCase": {
-                                                                                                                            "unsafeName": "Schema1InlineUnionMapValue",
-                                                                                                                            "safeName": "Schema1InlineUnionMapValue"
-                                                                                                                        }
-                                                                                                                    },
-                                                                                                                    "displayName": null
-                                                                                                                },
-                                                                                                                "shape": {
-                                                                                                                    "type": "undiscriminatedUnion",
-                                                                                                                    "index": 0,
-                                                                                                                    "singleUnionType": {
+                                                                                                                "type": "container",
+                                                                                                                "container": {
+                                                                                                                    "type": "optional",
+                                                                                                                    "optional": {
                                                                                                                         "shape": {
-                                                                                                                            "type": "container",
-                                                                                                                            "container": {
-                                                                                                                                "type": "optional",
-                                                                                                                                "optional": {
+                                                                                                                            "type": "named",
+                                                                                                                            "typeName": {
+                                                                                                                                "typeId": "type_:Schema1InlineUnionMapValue",
+                                                                                                                                "fernFilepath": {
+                                                                                                                                    "allParts": [],
+                                                                                                                                    "packagePath": [],
+                                                                                                                                    "file": null
+                                                                                                                                },
+                                                                                                                                "name": {
+                                                                                                                                    "originalName": "Schema1InlineUnionMapValue",
+                                                                                                                                    "camelCase": {
+                                                                                                                                        "unsafeName": "schema1InlineUnionMapValue",
+                                                                                                                                        "safeName": "schema1InlineUnionMapValue"
+                                                                                                                                    },
+                                                                                                                                    "snakeCase": {
+                                                                                                                                        "unsafeName": "schema1inline_union_map_value",
+                                                                                                                                        "safeName": "schema1inline_union_map_value"
+                                                                                                                                    },
+                                                                                                                                    "screamingSnakeCase": {
+                                                                                                                                        "unsafeName": "SCHEMA1INLINE_UNION_MAP_VALUE",
+                                                                                                                                        "safeName": "SCHEMA1INLINE_UNION_MAP_VALUE"
+                                                                                                                                    },
+                                                                                                                                    "pascalCase": {
+                                                                                                                                        "unsafeName": "Schema1InlineUnionMapValue",
+                                                                                                                                        "safeName": "Schema1InlineUnionMapValue"
+                                                                                                                                    }
+                                                                                                                                },
+                                                                                                                                "displayName": null
+                                                                                                                            },
+                                                                                                                            "shape": {
+                                                                                                                                "type": "undiscriminatedUnion",
+                                                                                                                                "index": 0,
+                                                                                                                                "singleUnionType": {
                                                                                                                                     "shape": {
-                                                                                                                                        "type": "primitive",
-                                                                                                                                        "primitive": {
-                                                                                                                                            "type": "string",
-                                                                                                                                            "string": {
-                                                                                                                                                "original": "value"
+                                                                                                                                        "type": "container",
+                                                                                                                                        "container": {
+                                                                                                                                            "type": "optional",
+                                                                                                                                            "optional": {
+                                                                                                                                                "shape": {
+                                                                                                                                                    "type": "primitive",
+                                                                                                                                                    "primitive": {
+                                                                                                                                                        "type": "string",
+                                                                                                                                                        "string": {
+                                                                                                                                                            "original": "value"
+                                                                                                                                                        }
+                                                                                                                                                    }
+                                                                                                                                                },
+                                                                                                                                                "jsonExample": "value"
+                                                                                                                                            },
+                                                                                                                                            "valueType": {
+                                                                                                                                                "_type": "primitive",
+                                                                                                                                                "primitive": {
+                                                                                                                                                    "v1": "STRING",
+                                                                                                                                                    "v2": {
+                                                                                                                                                        "type": "string",
+                                                                                                                                                        "default": null,
+                                                                                                                                                        "validation": null
+                                                                                                                                                    }
+                                                                                                                                                }
                                                                                                                                             }
                                                                                                                                         }
                                                                                                                                     },
                                                                                                                                     "jsonExample": "value"
-                                                                                                                                },
-                                                                                                                                "valueType": {
-                                                                                                                                    "_type": "primitive",
-                                                                                                                                    "primitive": {
-                                                                                                                                        "v1": "STRING",
-                                                                                                                                        "v2": {
-                                                                                                                                            "type": "string",
-                                                                                                                                            "default": null,
-                                                                                                                                            "validation": null
-                                                                                                                                        }
-                                                                                                                                    }
                                                                                                                                 }
                                                                                                                             }
                                                                                                                         },
                                                                                                                         "jsonExample": "value"
+                                                                                                                    },
+                                                                                                                    "valueType": {
+                                                                                                                        "_type": "named",
+                                                                                                                        "name": {
+                                                                                                                            "originalName": "Schema1InlineUnionMapValue",
+                                                                                                                            "camelCase": {
+                                                                                                                                "unsafeName": "schema1InlineUnionMapValue",
+                                                                                                                                "safeName": "schema1InlineUnionMapValue"
+                                                                                                                            },
+                                                                                                                            "snakeCase": {
+                                                                                                                                "unsafeName": "schema1inline_union_map_value",
+                                                                                                                                "safeName": "schema1inline_union_map_value"
+                                                                                                                            },
+                                                                                                                            "screamingSnakeCase": {
+                                                                                                                                "unsafeName": "SCHEMA1INLINE_UNION_MAP_VALUE",
+                                                                                                                                "safeName": "SCHEMA1INLINE_UNION_MAP_VALUE"
+                                                                                                                            },
+                                                                                                                            "pascalCase": {
+                                                                                                                                "unsafeName": "Schema1InlineUnionMapValue",
+                                                                                                                                "safeName": "Schema1InlineUnionMapValue"
+                                                                                                                            }
+                                                                                                                        },
+                                                                                                                        "fernFilepath": {
+                                                                                                                            "allParts": [],
+                                                                                                                            "packagePath": [],
+                                                                                                                            "file": null
+                                                                                                                        },
+                                                                                                                        "displayName": null,
+                                                                                                                        "typeId": "type_:Schema1InlineUnionMapValue",
+                                                                                                                        "default": null,
+                                                                                                                        "inline": null
                                                                                                                     }
                                                                                                                 }
                                                                                                             },
@@ -3152,35 +3210,41 @@
                                                                                                     }
                                                                                                 },
                                                                                                 "valueType": {
-                                                                                                    "_type": "named",
-                                                                                                    "name": {
-                                                                                                        "originalName": "Schema1InlineUnionMapValue",
-                                                                                                        "camelCase": {
-                                                                                                            "unsafeName": "schema1InlineUnionMapValue",
-                                                                                                            "safeName": "schema1InlineUnionMapValue"
-                                                                                                        },
-                                                                                                        "snakeCase": {
-                                                                                                            "unsafeName": "schema1inline_union_map_value",
-                                                                                                            "safeName": "schema1inline_union_map_value"
-                                                                                                        },
-                                                                                                        "screamingSnakeCase": {
-                                                                                                            "unsafeName": "SCHEMA1INLINE_UNION_MAP_VALUE",
-                                                                                                            "safeName": "SCHEMA1INLINE_UNION_MAP_VALUE"
-                                                                                                        },
-                                                                                                        "pascalCase": {
-                                                                                                            "unsafeName": "Schema1InlineUnionMapValue",
-                                                                                                            "safeName": "Schema1InlineUnionMapValue"
+                                                                                                    "_type": "container",
+                                                                                                    "container": {
+                                                                                                        "_type": "optional",
+                                                                                                        "optional": {
+                                                                                                            "_type": "named",
+                                                                                                            "name": {
+                                                                                                                "originalName": "Schema1InlineUnionMapValue",
+                                                                                                                "camelCase": {
+                                                                                                                    "unsafeName": "schema1InlineUnionMapValue",
+                                                                                                                    "safeName": "schema1InlineUnionMapValue"
+                                                                                                                },
+                                                                                                                "snakeCase": {
+                                                                                                                    "unsafeName": "schema1inline_union_map_value",
+                                                                                                                    "safeName": "schema1inline_union_map_value"
+                                                                                                                },
+                                                                                                                "screamingSnakeCase": {
+                                                                                                                    "unsafeName": "SCHEMA1INLINE_UNION_MAP_VALUE",
+                                                                                                                    "safeName": "SCHEMA1INLINE_UNION_MAP_VALUE"
+                                                                                                                },
+                                                                                                                "pascalCase": {
+                                                                                                                    "unsafeName": "Schema1InlineUnionMapValue",
+                                                                                                                    "safeName": "Schema1InlineUnionMapValue"
+                                                                                                                }
+                                                                                                            },
+                                                                                                            "fernFilepath": {
+                                                                                                                "allParts": [],
+                                                                                                                "packagePath": [],
+                                                                                                                "file": null
+                                                                                                            },
+                                                                                                            "displayName": null,
+                                                                                                            "typeId": "type_:Schema1InlineUnionMapValue",
+                                                                                                            "default": null,
+                                                                                                            "inline": null
                                                                                                         }
-                                                                                                    },
-                                                                                                    "fernFilepath": {
-                                                                                                        "allParts": [],
-                                                                                                        "packagePath": [],
-                                                                                                        "file": null
-                                                                                                    },
-                                                                                                    "displayName": null,
-                                                                                                    "typeId": "type_:Schema1InlineUnionMapValue",
-                                                                                                    "default": null,
-                                                                                                    "inline": null
+                                                                                                    }
                                                                                                 }
                                                                                             }
                                                                                         },
@@ -3204,35 +3268,41 @@
                                                                                                 }
                                                                                             },
                                                                                             "valueType": {
-                                                                                                "_type": "named",
-                                                                                                "name": {
-                                                                                                    "originalName": "Schema1InlineUnionMapValue",
-                                                                                                    "camelCase": {
-                                                                                                        "unsafeName": "schema1InlineUnionMapValue",
-                                                                                                        "safeName": "schema1InlineUnionMapValue"
-                                                                                                    },
-                                                                                                    "snakeCase": {
-                                                                                                        "unsafeName": "schema1inline_union_map_value",
-                                                                                                        "safeName": "schema1inline_union_map_value"
-                                                                                                    },
-                                                                                                    "screamingSnakeCase": {
-                                                                                                        "unsafeName": "SCHEMA1INLINE_UNION_MAP_VALUE",
-                                                                                                        "safeName": "SCHEMA1INLINE_UNION_MAP_VALUE"
-                                                                                                    },
-                                                                                                    "pascalCase": {
-                                                                                                        "unsafeName": "Schema1InlineUnionMapValue",
-                                                                                                        "safeName": "Schema1InlineUnionMapValue"
+                                                                                                "_type": "container",
+                                                                                                "container": {
+                                                                                                    "_type": "optional",
+                                                                                                    "optional": {
+                                                                                                        "_type": "named",
+                                                                                                        "name": {
+                                                                                                            "originalName": "Schema1InlineUnionMapValue",
+                                                                                                            "camelCase": {
+                                                                                                                "unsafeName": "schema1InlineUnionMapValue",
+                                                                                                                "safeName": "schema1InlineUnionMapValue"
+                                                                                                            },
+                                                                                                            "snakeCase": {
+                                                                                                                "unsafeName": "schema1inline_union_map_value",
+                                                                                                                "safeName": "schema1inline_union_map_value"
+                                                                                                            },
+                                                                                                            "screamingSnakeCase": {
+                                                                                                                "unsafeName": "SCHEMA1INLINE_UNION_MAP_VALUE",
+                                                                                                                "safeName": "SCHEMA1INLINE_UNION_MAP_VALUE"
+                                                                                                            },
+                                                                                                            "pascalCase": {
+                                                                                                                "unsafeName": "Schema1InlineUnionMapValue",
+                                                                                                                "safeName": "Schema1InlineUnionMapValue"
+                                                                                                            }
+                                                                                                        },
+                                                                                                        "fernFilepath": {
+                                                                                                            "allParts": [],
+                                                                                                            "packagePath": [],
+                                                                                                            "file": null
+                                                                                                        },
+                                                                                                        "displayName": null,
+                                                                                                        "typeId": "type_:Schema1InlineUnionMapValue",
+                                                                                                        "default": null,
+                                                                                                        "inline": null
                                                                                                     }
-                                                                                                },
-                                                                                                "fernFilepath": {
-                                                                                                    "allParts": [],
-                                                                                                    "packagePath": [],
-                                                                                                    "file": null
-                                                                                                },
-                                                                                                "displayName": null,
-                                                                                                "typeId": "type_:Schema1InlineUnionMapValue",
-                                                                                                "default": null,
-                                                                                                "inline": null
+                                                                                                }
                                                                                             }
                                                                                         }
                                                                                     }
@@ -3303,7 +3373,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "b817413",
+                                "id": "e7c6eaf6",
                                 "url": "/example",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -3574,70 +3644,110 @@
                                                                                                         },
                                                                                                         "value": {
                                                                                                             "shape": {
-                                                                                                                "type": "named",
-                                                                                                                "shape": {
-                                                                                                                    "type": "undiscriminatedUnion",
-                                                                                                                    "index": 0,
-                                                                                                                    "singleUnionType": {
+                                                                                                                "type": "container",
+                                                                                                                "container": {
+                                                                                                                    "type": "optional",
+                                                                                                                    "optional": {
                                                                                                                         "shape": {
-                                                                                                                            "type": "container",
-                                                                                                                            "container": {
-                                                                                                                                "type": "optional",
-                                                                                                                                "optional": {
+                                                                                                                            "type": "named",
+                                                                                                                            "shape": {
+                                                                                                                                "type": "undiscriminatedUnion",
+                                                                                                                                "index": 0,
+                                                                                                                                "singleUnionType": {
                                                                                                                                     "shape": {
-                                                                                                                                        "type": "primitive",
-                                                                                                                                        "primitive": {
-                                                                                                                                            "type": "string",
-                                                                                                                                            "string": {
-                                                                                                                                                "original": "inline_union_map"
+                                                                                                                                        "type": "container",
+                                                                                                                                        "container": {
+                                                                                                                                            "type": "optional",
+                                                                                                                                            "optional": {
+                                                                                                                                                "shape": {
+                                                                                                                                                    "type": "primitive",
+                                                                                                                                                    "primitive": {
+                                                                                                                                                        "type": "string",
+                                                                                                                                                        "string": {
+                                                                                                                                                            "original": "inline_union_map"
+                                                                                                                                                        }
+                                                                                                                                                    }
+                                                                                                                                                },
+                                                                                                                                                "jsonExample": "inline_union_map"
+                                                                                                                                            },
+                                                                                                                                            "valueType": {
+                                                                                                                                                "_type": "primitive",
+                                                                                                                                                "primitive": {
+                                                                                                                                                    "v1": "STRING",
+                                                                                                                                                    "v2": {
+                                                                                                                                                        "type": "string",
+                                                                                                                                                        "default": null,
+                                                                                                                                                        "validation": null
+                                                                                                                                                    }
+                                                                                                                                                }
                                                                                                                                             }
                                                                                                                                         }
                                                                                                                                     },
                                                                                                                                     "jsonExample": "inline_union_map"
-                                                                                                                                },
-                                                                                                                                "valueType": {
-                                                                                                                                    "_type": "primitive",
-                                                                                                                                    "primitive": {
-                                                                                                                                        "v1": "STRING",
-                                                                                                                                        "v2": {
-                                                                                                                                            "type": "string",
-                                                                                                                                            "default": null,
-                                                                                                                                            "validation": null
-                                                                                                                                        }
-                                                                                                                                    }
                                                                                                                                 }
+                                                                                                                            },
+                                                                                                                            "typeName": {
+                                                                                                                                "name": {
+                                                                                                                                    "originalName": "Schema1InlineUnionMapValue",
+                                                                                                                                    "camelCase": {
+                                                                                                                                        "unsafeName": "schema1InlineUnionMapValue",
+                                                                                                                                        "safeName": "schema1InlineUnionMapValue"
+                                                                                                                                    },
+                                                                                                                                    "snakeCase": {
+                                                                                                                                        "unsafeName": "schema1inline_union_map_value",
+                                                                                                                                        "safeName": "schema1inline_union_map_value"
+                                                                                                                                    },
+                                                                                                                                    "screamingSnakeCase": {
+                                                                                                                                        "unsafeName": "SCHEMA1INLINE_UNION_MAP_VALUE",
+                                                                                                                                        "safeName": "SCHEMA1INLINE_UNION_MAP_VALUE"
+                                                                                                                                    },
+                                                                                                                                    "pascalCase": {
+                                                                                                                                        "unsafeName": "Schema1InlineUnionMapValue",
+                                                                                                                                        "safeName": "Schema1InlineUnionMapValue"
+                                                                                                                                    }
+                                                                                                                                },
+                                                                                                                                "fernFilepath": {
+                                                                                                                                    "allParts": [],
+                                                                                                                                    "packagePath": [],
+                                                                                                                                    "file": null
+                                                                                                                                },
+                                                                                                                                "displayName": null,
+                                                                                                                                "typeId": "type_:Schema1InlineUnionMapValue"
                                                                                                                             }
                                                                                                                         },
                                                                                                                         "jsonExample": "inline_union_map"
+                                                                                                                    },
+                                                                                                                    "valueType": {
+                                                                                                                        "_type": "named",
+                                                                                                                        "name": {
+                                                                                                                            "originalName": "Schema1InlineUnionMapValue",
+                                                                                                                            "camelCase": {
+                                                                                                                                "unsafeName": "schema1InlineUnionMapValue",
+                                                                                                                                "safeName": "schema1InlineUnionMapValue"
+                                                                                                                            },
+                                                                                                                            "snakeCase": {
+                                                                                                                                "unsafeName": "schema1inline_union_map_value",
+                                                                                                                                "safeName": "schema1inline_union_map_value"
+                                                                                                                            },
+                                                                                                                            "screamingSnakeCase": {
+                                                                                                                                "unsafeName": "SCHEMA1INLINE_UNION_MAP_VALUE",
+                                                                                                                                "safeName": "SCHEMA1INLINE_UNION_MAP_VALUE"
+                                                                                                                            },
+                                                                                                                            "pascalCase": {
+                                                                                                                                "unsafeName": "Schema1InlineUnionMapValue",
+                                                                                                                                "safeName": "Schema1InlineUnionMapValue"
+                                                                                                                            }
+                                                                                                                        },
+                                                                                                                        "fernFilepath": {
+                                                                                                                            "allParts": [],
+                                                                                                                            "packagePath": [],
+                                                                                                                            "file": null
+                                                                                                                        },
+                                                                                                                        "displayName": null,
+                                                                                                                        "typeId": "type_:Schema1InlineUnionMapValue",
+                                                                                                                        "default": null,
+                                                                                                                        "inline": null
                                                                                                                     }
-                                                                                                                },
-                                                                                                                "typeName": {
-                                                                                                                    "name": {
-                                                                                                                        "originalName": "Schema1InlineUnionMapValue",
-                                                                                                                        "camelCase": {
-                                                                                                                            "unsafeName": "schema1InlineUnionMapValue",
-                                                                                                                            "safeName": "schema1InlineUnionMapValue"
-                                                                                                                        },
-                                                                                                                        "snakeCase": {
-                                                                                                                            "unsafeName": "schema1inline_union_map_value",
-                                                                                                                            "safeName": "schema1inline_union_map_value"
-                                                                                                                        },
-                                                                                                                        "screamingSnakeCase": {
-                                                                                                                            "unsafeName": "SCHEMA1INLINE_UNION_MAP_VALUE",
-                                                                                                                            "safeName": "SCHEMA1INLINE_UNION_MAP_VALUE"
-                                                                                                                        },
-                                                                                                                        "pascalCase": {
-                                                                                                                            "unsafeName": "Schema1InlineUnionMapValue",
-                                                                                                                            "safeName": "Schema1InlineUnionMapValue"
-                                                                                                                        }
-                                                                                                                    },
-                                                                                                                    "fernFilepath": {
-                                                                                                                        "allParts": [],
-                                                                                                                        "packagePath": [],
-                                                                                                                        "file": null
-                                                                                                                    },
-                                                                                                                    "displayName": null,
-                                                                                                                    "typeId": "type_:Schema1InlineUnionMapValue"
                                                                                                                 }
                                                                                                             },
                                                                                                             "jsonExample": "inline_union_map"
@@ -3656,35 +3766,41 @@
                                                                                                     }
                                                                                                 },
                                                                                                 "valueType": {
-                                                                                                    "_type": "named",
-                                                                                                    "name": {
-                                                                                                        "originalName": "Schema1InlineUnionMapValue",
-                                                                                                        "camelCase": {
-                                                                                                            "unsafeName": "schema1InlineUnionMapValue",
-                                                                                                            "safeName": "schema1InlineUnionMapValue"
-                                                                                                        },
-                                                                                                        "snakeCase": {
-                                                                                                            "unsafeName": "schema1inline_union_map_value",
-                                                                                                            "safeName": "schema1inline_union_map_value"
-                                                                                                        },
-                                                                                                        "screamingSnakeCase": {
-                                                                                                            "unsafeName": "SCHEMA1INLINE_UNION_MAP_VALUE",
-                                                                                                            "safeName": "SCHEMA1INLINE_UNION_MAP_VALUE"
-                                                                                                        },
-                                                                                                        "pascalCase": {
-                                                                                                            "unsafeName": "Schema1InlineUnionMapValue",
-                                                                                                            "safeName": "Schema1InlineUnionMapValue"
+                                                                                                    "_type": "container",
+                                                                                                    "container": {
+                                                                                                        "_type": "optional",
+                                                                                                        "optional": {
+                                                                                                            "_type": "named",
+                                                                                                            "name": {
+                                                                                                                "originalName": "Schema1InlineUnionMapValue",
+                                                                                                                "camelCase": {
+                                                                                                                    "unsafeName": "schema1InlineUnionMapValue",
+                                                                                                                    "safeName": "schema1InlineUnionMapValue"
+                                                                                                                },
+                                                                                                                "snakeCase": {
+                                                                                                                    "unsafeName": "schema1inline_union_map_value",
+                                                                                                                    "safeName": "schema1inline_union_map_value"
+                                                                                                                },
+                                                                                                                "screamingSnakeCase": {
+                                                                                                                    "unsafeName": "SCHEMA1INLINE_UNION_MAP_VALUE",
+                                                                                                                    "safeName": "SCHEMA1INLINE_UNION_MAP_VALUE"
+                                                                                                                },
+                                                                                                                "pascalCase": {
+                                                                                                                    "unsafeName": "Schema1InlineUnionMapValue",
+                                                                                                                    "safeName": "Schema1InlineUnionMapValue"
+                                                                                                                }
+                                                                                                            },
+                                                                                                            "fernFilepath": {
+                                                                                                                "allParts": [],
+                                                                                                                "packagePath": [],
+                                                                                                                "file": null
+                                                                                                            },
+                                                                                                            "displayName": null,
+                                                                                                            "typeId": "type_:Schema1InlineUnionMapValue",
+                                                                                                            "default": null,
+                                                                                                            "inline": null
                                                                                                         }
-                                                                                                    },
-                                                                                                    "fernFilepath": {
-                                                                                                        "allParts": [],
-                                                                                                        "packagePath": [],
-                                                                                                        "file": null
-                                                                                                    },
-                                                                                                    "displayName": null,
-                                                                                                    "typeId": "type_:Schema1InlineUnionMapValue",
-                                                                                                    "default": null,
-                                                                                                    "inline": null
+                                                                                                    }
                                                                                                 }
                                                                                             }
                                                                                         },
@@ -3708,35 +3824,41 @@
                                                                                                 }
                                                                                             },
                                                                                             "valueType": {
-                                                                                                "_type": "named",
-                                                                                                "name": {
-                                                                                                    "originalName": "Schema1InlineUnionMapValue",
-                                                                                                    "camelCase": {
-                                                                                                        "unsafeName": "schema1InlineUnionMapValue",
-                                                                                                        "safeName": "schema1InlineUnionMapValue"
-                                                                                                    },
-                                                                                                    "snakeCase": {
-                                                                                                        "unsafeName": "schema1inline_union_map_value",
-                                                                                                        "safeName": "schema1inline_union_map_value"
-                                                                                                    },
-                                                                                                    "screamingSnakeCase": {
-                                                                                                        "unsafeName": "SCHEMA1INLINE_UNION_MAP_VALUE",
-                                                                                                        "safeName": "SCHEMA1INLINE_UNION_MAP_VALUE"
-                                                                                                    },
-                                                                                                    "pascalCase": {
-                                                                                                        "unsafeName": "Schema1InlineUnionMapValue",
-                                                                                                        "safeName": "Schema1InlineUnionMapValue"
+                                                                                                "_type": "container",
+                                                                                                "container": {
+                                                                                                    "_type": "optional",
+                                                                                                    "optional": {
+                                                                                                        "_type": "named",
+                                                                                                        "name": {
+                                                                                                            "originalName": "Schema1InlineUnionMapValue",
+                                                                                                            "camelCase": {
+                                                                                                                "unsafeName": "schema1InlineUnionMapValue",
+                                                                                                                "safeName": "schema1InlineUnionMapValue"
+                                                                                                            },
+                                                                                                            "snakeCase": {
+                                                                                                                "unsafeName": "schema1inline_union_map_value",
+                                                                                                                "safeName": "schema1inline_union_map_value"
+                                                                                                            },
+                                                                                                            "screamingSnakeCase": {
+                                                                                                                "unsafeName": "SCHEMA1INLINE_UNION_MAP_VALUE",
+                                                                                                                "safeName": "SCHEMA1INLINE_UNION_MAP_VALUE"
+                                                                                                            },
+                                                                                                            "pascalCase": {
+                                                                                                                "unsafeName": "Schema1InlineUnionMapValue",
+                                                                                                                "safeName": "Schema1InlineUnionMapValue"
+                                                                                                            }
+                                                                                                        },
+                                                                                                        "fernFilepath": {
+                                                                                                            "allParts": [],
+                                                                                                            "packagePath": [],
+                                                                                                            "file": null
+                                                                                                        },
+                                                                                                        "displayName": null,
+                                                                                                        "typeId": "type_:Schema1InlineUnionMapValue",
+                                                                                                        "default": null,
+                                                                                                        "inline": null
                                                                                                     }
-                                                                                                },
-                                                                                                "fernFilepath": {
-                                                                                                    "allParts": [],
-                                                                                                    "packagePath": [],
-                                                                                                    "file": null
-                                                                                                },
-                                                                                                "displayName": null,
-                                                                                                "typeId": "type_:Schema1InlineUnionMapValue",
-                                                                                                "default": null,
-                                                                                                "inline": null
+                                                                                                }
                                                                                             }
                                                                                         }
                                                                                     }
@@ -6416,8 +6538,11 @@
                                     "value": "STRING"
                                 },
                                 "value": {
-                                    "type": "named",
-                                    "value": "type_:Schema1InlineUnionMapValue"
+                                    "type": "optional",
+                                    "value": {
+                                        "type": "named",
+                                        "value": "type_:Schema1InlineUnionMapValue"
+                                    }
                                 }
                             }
                         },
@@ -7136,8 +7261,11 @@
                         "value": "STRING"
                     },
                     "value": {
-                        "type": "named",
-                        "value": "type_:RootUnionMapValue"
+                        "type": "optional",
+                        "value": {
+                            "type": "named",
+                            "value": "type_:RootUnionMapValue"
+                        }
                     }
                 }
             }
