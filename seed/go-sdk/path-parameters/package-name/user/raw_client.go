@@ -13,7 +13,7 @@ import (
 
 type RawClient struct {
 	baseURL string
-	caller  *internal.Caller
+	caller  *pathparametersgo.Caller
 	options *core.RequestOptions
 }
 
@@ -21,8 +21,8 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
 		options: options,
 		baseURL: options.BaseURL,
-		caller: internal.NewCaller(
-			&internal.CallerParams{
+		caller: pathparametersgo.NewCaller(
+			&pathparametersgo.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -53,7 +53,7 @@ func (r *RawClient) GetUser(
 	var response *pathparametersgo.User
 	raw, err := r.caller.Call(
 		ctx,
-		&internal.CallParams{
+		&pathparametersgo.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			Headers:         headers,
@@ -97,7 +97,7 @@ func (r *RawClient) CreateUser(
 	var response *pathparametersgo.User
 	raw, err := r.caller.Call(
 		ctx,
-		&internal.CallParams{
+		&pathparametersgo.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -142,7 +142,7 @@ func (r *RawClient) UpdateUser(
 	var response *pathparametersgo.User
 	raw, err := r.caller.Call(
 		ctx,
-		&internal.CallParams{
+		&pathparametersgo.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPatch,
 			Headers:         headers,
@@ -194,7 +194,7 @@ func (r *RawClient) SearchUsers(
 	var response []*pathparametersgo.User
 	raw, err := r.caller.Call(
 		ctx,
-		&internal.CallParams{
+		&pathparametersgo.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			Headers:         headers,

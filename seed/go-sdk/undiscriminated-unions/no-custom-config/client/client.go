@@ -3,8 +3,8 @@
 package client
 
 import (
+	undiscriminatedgo "github.com/fern-api/undiscriminated-go"
 	core "github.com/fern-api/undiscriminated-go/core"
-	internal "github.com/fern-api/undiscriminated-go/internal"
 	option "github.com/fern-api/undiscriminated-go/option"
 	union "github.com/fern-api/undiscriminated-go/union"
 )
@@ -14,7 +14,7 @@ type Client struct {
 
 	options *core.RequestOptions
 	baseURL string
-	caller  *internal.Caller
+	caller  *undiscriminatedgo.Caller
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -23,8 +23,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 		Union:   union.NewClient(options),
 		options: options,
 		baseURL: options.BaseURL,
-		caller: internal.NewCaller(
-			&internal.CallerParams{
+		caller: undiscriminatedgo.NewCaller(
+			&undiscriminatedgo.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

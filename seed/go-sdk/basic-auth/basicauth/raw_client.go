@@ -13,7 +13,7 @@ import (
 
 type RawClient struct {
 	baseURL string
-	caller  *internal.Caller
+	caller  *fern.Caller
 	options *core.RequestOptions
 }
 
@@ -21,8 +21,8 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
 		options: options,
 		baseURL: options.BaseURL,
-		caller: internal.NewCaller(
-			&internal.CallerParams{
+		caller: fern.NewCaller(
+			&fern.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -45,17 +45,10 @@ func (r *RawClient) GetWithBasicAuth(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		401: func(apiError *core.APIError) error {
-			return &fern.UnauthorizedRequest{
-				APIError: apiError,
-			}
-		},
-	}
 	var response bool
 	raw, err := r.caller.Call(
 		ctx,
-		&internal.CallParams{
+		&fern.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			Headers:         headers,
@@ -64,7 +57,7 @@ func (r *RawClient) GetWithBasicAuth(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    fern.NewErrorDecoder(),
 		},
 	)
 	if err != nil {
@@ -93,22 +86,10 @@ func (r *RawClient) PostWithBasicAuth(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		401: func(apiError *core.APIError) error {
-			return &fern.UnauthorizedRequest{
-				APIError: apiError,
-			}
-		},
-		400: func(apiError *core.APIError) error {
-			return &fern.BadRequest{
-				APIError: apiError,
-			}
-		},
-	}
 	var response bool
 	raw, err := r.caller.Call(
 		ctx,
-		&internal.CallParams{
+		&fern.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -118,7 +99,7 @@ func (r *RawClient) PostWithBasicAuth(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    fern.NewErrorDecoder(),
 		},
 	)
 	if err != nil {

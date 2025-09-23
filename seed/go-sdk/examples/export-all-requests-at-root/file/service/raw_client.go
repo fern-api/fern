@@ -13,7 +13,7 @@ import (
 
 type RawClient struct {
 	baseURL string
-	caller  *internal.Caller
+	caller  *fern.Caller
 	options *core.RequestOptions
 }
 
@@ -21,8 +21,8 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
 		options: options,
 		baseURL: options.BaseURL,
-		caller: internal.NewCaller(
-			&internal.CallerParams{
+		caller: fern.NewCaller(
+			&fern.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -51,17 +51,10 @@ func (r *RawClient) GetFile(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		404: func(apiError *core.APIError) error {
-			return &fern.NotFoundError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *fern.File
 	raw, err := r.caller.Call(
 		ctx,
-		&internal.CallParams{
+		&fern.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			Headers:         headers,
@@ -70,7 +63,7 @@ func (r *RawClient) GetFile(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    fern.NewErrorDecoder(),
 		},
 	)
 	if err != nil {

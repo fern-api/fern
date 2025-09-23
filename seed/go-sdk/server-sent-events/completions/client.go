@@ -16,7 +16,7 @@ type Client struct {
 
 	options *core.RequestOptions
 	baseURL string
-	caller  *internal.Caller
+	caller  *fern.Caller
 }
 
 func NewClient(options *core.RequestOptions) *Client {
@@ -24,8 +24,8 @@ func NewClient(options *core.RequestOptions) *Client {
 		WithRawResponse: NewRawClient(options),
 		options:         options,
 		baseURL:         options.BaseURL,
-		caller: internal.NewCaller(
-			&internal.CallerParams{
+		caller: fern.NewCaller(
+			&fern.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -50,10 +50,10 @@ func (c *Client) Stream(
 		options.ToHeader(),
 	)
 	headers.Add("Accept", "text/event-stream")
-	streamer := internal.NewStreamer[fern.StreamedCompletion](c.caller)
+	streamer := fern.NewStreamer[fern.StreamedCompletion](c.caller)
 	return streamer.Stream(
 		ctx,
-		&internal.StreamParams{
+		&fern.StreamParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -65,6 +65,7 @@ func (c *Client) Stream(
 			Terminator:      "[[DONE]]",
 			Format:          core.StreamFormatSSE,
 			Request:         request,
+			ErrorDecoder:    fern.NewErrorDecoder(),
 		},
 	)
 }

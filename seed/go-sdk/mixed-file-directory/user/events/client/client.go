@@ -4,8 +4,8 @@ package client
 
 import (
 	context "context"
+	fern "github.com/mixed-file-directory/fern"
 	core "github.com/mixed-file-directory/fern/core"
-	internal "github.com/mixed-file-directory/fern/internal"
 	option "github.com/mixed-file-directory/fern/option"
 	user "github.com/mixed-file-directory/fern/user"
 	metadata "github.com/mixed-file-directory/fern/user/events/metadata"
@@ -17,7 +17,7 @@ type Client struct {
 
 	options *core.RequestOptions
 	baseURL string
-	caller  *internal.Caller
+	caller  *fern.Caller
 }
 
 func NewClient(options *core.RequestOptions) *Client {
@@ -26,8 +26,8 @@ func NewClient(options *core.RequestOptions) *Client {
 		WithRawResponse: NewRawClient(options),
 		options:         options,
 		baseURL:         options.BaseURL,
-		caller: internal.NewCaller(
-			&internal.CallerParams{
+		caller: fern.NewCaller(
+			&fern.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

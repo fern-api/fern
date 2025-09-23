@@ -3,8 +3,8 @@
 package client
 
 import (
+	fern "github.com/inferred-auth-implicit/fern"
 	core "github.com/inferred-auth-implicit/fern/core"
-	internal "github.com/inferred-auth-implicit/fern/internal"
 	api "github.com/inferred-auth-implicit/fern/nested/api"
 )
 
@@ -13,7 +13,7 @@ type Client struct {
 
 	options *core.RequestOptions
 	baseURL string
-	caller  *internal.Caller
+	caller  *fern.Caller
 }
 
 func NewClient(options *core.RequestOptions) *Client {
@@ -21,8 +21,8 @@ func NewClient(options *core.RequestOptions) *Client {
 		Api:     api.NewClient(options),
 		options: options,
 		baseURL: options.BaseURL,
-		caller: internal.NewCaller(
-			&internal.CallerParams{
+		caller: fern.NewCaller(
+			&fern.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

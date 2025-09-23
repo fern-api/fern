@@ -4,6 +4,7 @@ package service
 
 import (
 	context "context"
+	fern "github.com/bearer-token-environment-variable/fern"
 	core "github.com/bearer-token-environment-variable/fern/core"
 	internal "github.com/bearer-token-environment-variable/fern/internal"
 	option "github.com/bearer-token-environment-variable/fern/option"
@@ -12,7 +13,7 @@ import (
 
 type RawClient struct {
 	baseURL string
-	caller  *internal.Caller
+	caller  *fern.Caller
 	options *core.RequestOptions
 }
 
@@ -20,8 +21,8 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
 		options: options,
 		baseURL: options.BaseURL,
-		caller: internal.NewCaller(
-			&internal.CallerParams{
+		caller: fern.NewCaller(
+			&fern.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -47,7 +48,7 @@ func (r *RawClient) GetWithBearerToken(
 	var response string
 	raw, err := r.caller.Call(
 		ctx,
-		&internal.CallParams{
+		&fern.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			Headers:         headers,

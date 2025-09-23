@@ -4,8 +4,8 @@ package primitive
 
 import (
 	context "context"
+	fern "github.com/exhaustive/fern"
 	core "github.com/exhaustive/fern/core"
-	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
 	uuid "github.com/google/uuid"
 	time "time"
@@ -16,7 +16,7 @@ type Client struct {
 
 	options *core.RequestOptions
 	baseURL string
-	caller  *internal.Caller
+	caller  *fern.Caller
 }
 
 func NewClient(options *core.RequestOptions) *Client {
@@ -24,8 +24,8 @@ func NewClient(options *core.RequestOptions) *Client {
 		WithRawResponse: NewRawClient(options),
 		options:         options,
 		baseURL:         options.BaseURL,
-		caller: internal.NewCaller(
-			&internal.CallerParams{
+		caller: fern.NewCaller(
+			&fern.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

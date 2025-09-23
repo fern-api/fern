@@ -6,7 +6,6 @@ import (
 	context "context"
 	undiscriminatedgo "github.com/fern-api/undiscriminated-go"
 	core "github.com/fern-api/undiscriminated-go/core"
-	internal "github.com/fern-api/undiscriminated-go/internal"
 	option "github.com/fern-api/undiscriminated-go/option"
 )
 
@@ -15,7 +14,7 @@ type Client struct {
 
 	options *core.RequestOptions
 	baseURL string
-	caller  *internal.Caller
+	caller  *undiscriminatedgo.Caller
 }
 
 func NewClient(options *core.RequestOptions) *Client {
@@ -23,8 +22,8 @@ func NewClient(options *core.RequestOptions) *Client {
 		WithRawResponse: NewRawClient(options),
 		options:         options,
 		baseURL:         options.BaseURL,
-		caller: internal.NewCaller(
-			&internal.CallerParams{
+		caller: undiscriminatedgo.NewCaller(
+			&undiscriminatedgo.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

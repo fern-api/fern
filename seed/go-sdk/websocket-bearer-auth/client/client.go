@@ -3,8 +3,8 @@
 package client
 
 import (
+	fern "github.com/websocket-bearer-auth/fern"
 	core "github.com/websocket-bearer-auth/fern/core"
-	internal "github.com/websocket-bearer-auth/fern/internal"
 	option "github.com/websocket-bearer-auth/fern/option"
 	os "os"
 )
@@ -12,7 +12,7 @@ import (
 type Client struct {
 	options *core.RequestOptions
 	baseURL string
-	caller  *internal.Caller
+	caller  *fern.Caller
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -23,8 +23,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 	return &Client{
 		options: options,
 		baseURL: options.BaseURL,
-		caller: internal.NewCaller(
-			&internal.CallerParams{
+		caller: fern.NewCaller(
+			&fern.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

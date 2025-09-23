@@ -3,13 +3,13 @@
 package completions
 
 import (
+	fern "github.com/server-sent-event-examples/fern"
 	core "github.com/server-sent-event-examples/fern/core"
-	internal "github.com/server-sent-event-examples/fern/internal"
 )
 
 type RawClient struct {
 	baseURL string
-	caller  *internal.Caller
+	caller  *fern.Caller
 	options *core.RequestOptions
 }
 
@@ -17,8 +17,8 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
 		options: options,
 		baseURL: options.BaseURL,
-		caller: internal.NewCaller(
-			&internal.CallerParams{
+		caller: fern.NewCaller(
+			&fern.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

@@ -5,6 +5,7 @@ package service
 import (
 	bytes "bytes"
 	context "context"
+	fern "github.com/plain-text/fern"
 	core "github.com/plain-text/fern/core"
 	internal "github.com/plain-text/fern/internal"
 	option "github.com/plain-text/fern/option"
@@ -13,7 +14,7 @@ import (
 
 type RawClient struct {
 	baseURL string
-	caller  *internal.Caller
+	caller  *fern.Caller
 	options *core.RequestOptions
 }
 
@@ -21,8 +22,8 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
 		options: options,
 		baseURL: options.BaseURL,
-		caller: internal.NewCaller(
-			&internal.CallerParams{
+		caller: fern.NewCaller(
+			&fern.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -48,7 +49,7 @@ func (r *RawClient) GetText(
 	response := bytes.NewBuffer(nil)
 	raw, err := r.caller.Call(
 		ctx,
-		&internal.CallParams{
+		&fern.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,

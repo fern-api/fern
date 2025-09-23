@@ -4,10 +4,10 @@ package client
 
 import (
 	context "context"
+	fern "github.com/folders/fern"
 	client "github.com/folders/fern/a/client"
 	core "github.com/folders/fern/core"
 	folderclient "github.com/folders/fern/folder/client"
-	internal "github.com/folders/fern/internal"
 	option "github.com/folders/fern/option"
 )
 
@@ -18,7 +18,7 @@ type Client struct {
 
 	options *core.RequestOptions
 	baseURL string
-	caller  *internal.Caller
+	caller  *fern.Caller
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -29,8 +29,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 		WithRawResponse: NewRawClient(options),
 		options:         options,
 		baseURL:         options.BaseURL,
-		caller: internal.NewCaller(
-			&internal.CallerParams{
+		caller: fern.NewCaller(
+			&fern.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

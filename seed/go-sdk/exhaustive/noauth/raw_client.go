@@ -13,7 +13,7 @@ import (
 
 type RawClient struct {
 	baseURL string
-	caller  *internal.Caller
+	caller  *fern.Caller
 	options *core.RequestOptions
 }
 
@@ -21,8 +21,8 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
 		options: options,
 		baseURL: options.BaseURL,
-		caller: internal.NewCaller(
-			&internal.CallerParams{
+		caller: fern.NewCaller(
+			&fern.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -46,17 +46,10 @@ func (r *RawClient) PostWithNoAuth(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &fern.BadRequestBody{
-				APIError: apiError,
-			}
-		},
-	}
 	var response bool
 	raw, err := r.caller.Call(
 		ctx,
-		&internal.CallParams{
+		&fern.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -66,7 +59,7 @@ func (r *RawClient) PostWithNoAuth(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    fern.NewErrorDecoder(),
 		},
 	)
 	if err != nil {

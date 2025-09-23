@@ -13,7 +13,7 @@ import (
 
 type RawClient struct {
 	baseURL string
-	caller  *internal.Caller
+	caller  *please.Caller
 	options *core.RequestOptions
 }
 
@@ -21,8 +21,8 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
 		options: options,
 		baseURL: options.BaseURL,
-		caller: internal.NewCaller(
-			&internal.CallerParams{
+		caller: please.NewCaller(
+			&please.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -49,7 +49,7 @@ func (r *RawClient) CreateMovie(
 	var response please.MovieId
 	raw, err := r.caller.Call(
 		ctx,
-		&internal.CallParams{
+		&please.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -90,17 +90,10 @@ func (r *RawClient) GetMovie(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		404: func(apiError *core.APIError) error {
-			return &please.MovieDoesNotExistError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *please.Movie
 	raw, err := r.caller.Call(
 		ctx,
-		&internal.CallParams{
+		&please.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			Headers:         headers,
@@ -109,7 +102,7 @@ func (r *RawClient) GetMovie(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    please.NewErrorDecoder(),
 		},
 	)
 	if err != nil {

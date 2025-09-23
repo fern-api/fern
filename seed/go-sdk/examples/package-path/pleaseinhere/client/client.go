@@ -8,7 +8,6 @@ import (
 	core "github.com/examples/fern/pleaseinhere/core"
 	client "github.com/examples/fern/pleaseinhere/file/client"
 	healthclient "github.com/examples/fern/pleaseinhere/health/client"
-	internal "github.com/examples/fern/pleaseinhere/internal"
 	option "github.com/examples/fern/pleaseinhere/option"
 	service "github.com/examples/fern/pleaseinhere/service"
 )
@@ -21,7 +20,7 @@ type Client struct {
 
 	options *core.RequestOptions
 	baseURL string
-	caller  *internal.Caller
+	caller  *pleaseinhere.Caller
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -33,8 +32,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 		WithRawResponse: NewRawClient(options),
 		options:         options,
 		baseURL:         options.BaseURL,
-		caller: internal.NewCaller(
-			&internal.CallerParams{
+		caller: pleaseinhere.NewCaller(
+			&pleaseinhere.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

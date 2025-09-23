@@ -3,8 +3,8 @@
 package client
 
 import (
+	fern "github.com/http-head/fern"
 	core "github.com/http-head/fern/core"
-	internal "github.com/http-head/fern/internal"
 	option "github.com/http-head/fern/option"
 	user "github.com/http-head/fern/user"
 )
@@ -14,7 +14,7 @@ type Client struct {
 
 	options *core.RequestOptions
 	baseURL string
-	caller  *internal.Caller
+	caller  *fern.Caller
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -23,8 +23,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 		User:    user.NewClient(options),
 		options: options,
 		baseURL: options.BaseURL,
-		caller: internal.NewCaller(
-			&internal.CallerParams{
+		caller: fern.NewCaller(
+			&fern.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

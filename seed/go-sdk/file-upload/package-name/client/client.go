@@ -3,8 +3,8 @@
 package client
 
 import (
+	fileuploadgo "github.com/fern-api/file-upload-go"
 	core "github.com/fern-api/file-upload-go/core"
-	internal "github.com/fern-api/file-upload-go/internal"
 	option "github.com/fern-api/file-upload-go/option"
 	service "github.com/fern-api/file-upload-go/service"
 )
@@ -14,7 +14,7 @@ type Client struct {
 
 	options *core.RequestOptions
 	baseURL string
-	caller  *internal.Caller
+	caller  *fileuploadgo.Caller
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -23,8 +23,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 		Service: service.NewClient(options),
 		options: options,
 		baseURL: options.BaseURL,
-		caller: internal.NewCaller(
-			&internal.CallerParams{
+		caller: fileuploadgo.NewCaller(
+			&fileuploadgo.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

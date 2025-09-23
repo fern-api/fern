@@ -4,6 +4,7 @@ package put
 
 import (
 	context "context"
+	fern "github.com/exhaustive/fern"
 	core "github.com/exhaustive/fern/core"
 	endpoints "github.com/exhaustive/fern/endpoints"
 	internal "github.com/exhaustive/fern/internal"
@@ -13,7 +14,7 @@ import (
 
 type RawClient struct {
 	baseURL string
-	caller  *internal.Caller
+	caller  *fern.Caller
 	options *core.RequestOptions
 }
 
@@ -21,8 +22,8 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
 		options: options,
 		baseURL: options.BaseURL,
-		caller: internal.NewCaller(
-			&internal.CallerParams{
+		caller: fern.NewCaller(
+			&fern.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -52,7 +53,7 @@ func (r *RawClient) Add(
 	var response *endpoints.PutResponse
 	raw, err := r.caller.Call(
 		ctx,
-		&internal.CallParams{
+		&fern.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPut,
 			Headers:         headers,

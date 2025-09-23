@@ -3,11 +3,11 @@
 package client
 
 import (
+	fern "github.com/cross-package-type-names/fern"
 	core "github.com/cross-package-type-names/fern/core"
 	client "github.com/cross-package-type-names/fern/foldera/client"
 	folderdclient "github.com/cross-package-type-names/fern/folderd/client"
 	foo "github.com/cross-package-type-names/fern/foo"
-	internal "github.com/cross-package-type-names/fern/internal"
 	option "github.com/cross-package-type-names/fern/option"
 )
 
@@ -18,7 +18,7 @@ type Client struct {
 
 	options *core.RequestOptions
 	baseURL string
-	caller  *internal.Caller
+	caller  *fern.Caller
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -29,8 +29,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 		Foo:     foo.NewClient(options),
 		options: options,
 		baseURL: options.BaseURL,
-		caller: internal.NewCaller(
-			&internal.CallerParams{
+		caller: fern.NewCaller(
+			&fern.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

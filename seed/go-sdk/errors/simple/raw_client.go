@@ -13,7 +13,7 @@ import (
 
 type RawClient struct {
 	baseURL string
-	caller  *internal.Caller
+	caller  *fern.Caller
 	options *core.RequestOptions
 }
 
@@ -21,8 +21,8 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
 		options: options,
 		baseURL: options.BaseURL,
-		caller: internal.NewCaller(
-			&internal.CallerParams{
+		caller: fern.NewCaller(
+			&fern.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -46,27 +46,10 @@ func (r *RawClient) FooWithoutEndpointError(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		404: func(apiError *core.APIError) error {
-			return &fern.NotFoundError{
-				APIError: apiError,
-			}
-		},
-		400: func(apiError *core.APIError) error {
-			return &fern.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		500: func(apiError *core.APIError) error {
-			return &fern.InternalServerError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *fern.FooResponse
 	raw, err := r.caller.Call(
 		ctx,
-		&internal.CallParams{
+		&fern.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -76,7 +59,7 @@ func (r *RawClient) FooWithoutEndpointError(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    fern.NewErrorDecoder(),
 		},
 	)
 	if err != nil {
@@ -105,37 +88,10 @@ func (r *RawClient) Foo(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		429: func(apiError *core.APIError) error {
-			return &fern.FooTooMuch{
-				APIError: apiError,
-			}
-		},
-		500: func(apiError *core.APIError) error {
-			return &fern.FooTooLittle{
-				APIError: apiError,
-			}
-		},
-		404: func(apiError *core.APIError) error {
-			return &fern.NotFoundError{
-				APIError: apiError,
-			}
-		},
-		400: func(apiError *core.APIError) error {
-			return &fern.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		500: func(apiError *core.APIError) error {
-			return &fern.InternalServerError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *fern.FooResponse
 	raw, err := r.caller.Call(
 		ctx,
-		&internal.CallParams{
+		&fern.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -145,7 +101,7 @@ func (r *RawClient) Foo(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    fern.NewErrorDecoder(),
 		},
 	)
 	if err != nil {
@@ -174,37 +130,10 @@ func (r *RawClient) FooWithExamples(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		429: func(apiError *core.APIError) error {
-			return &fern.FooTooMuch{
-				APIError: apiError,
-			}
-		},
-		500: func(apiError *core.APIError) error {
-			return &fern.FooTooLittle{
-				APIError: apiError,
-			}
-		},
-		404: func(apiError *core.APIError) error {
-			return &fern.NotFoundError{
-				APIError: apiError,
-			}
-		},
-		400: func(apiError *core.APIError) error {
-			return &fern.BadRequestError{
-				APIError: apiError,
-			}
-		},
-		500: func(apiError *core.APIError) error {
-			return &fern.InternalServerError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *fern.FooResponse
 	raw, err := r.caller.Call(
 		ctx,
-		&internal.CallParams{
+		&fern.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -214,7 +143,7 @@ func (r *RawClient) FooWithExamples(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    fern.NewErrorDecoder(),
 		},
 	)
 	if err != nil {

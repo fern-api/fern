@@ -8,7 +8,6 @@ import (
 	core "github.com/examples/fern/core"
 	client "github.com/examples/fern/file/client"
 	healthclient "github.com/examples/fern/health/client"
-	internal "github.com/examples/fern/internal"
 	option "github.com/examples/fern/option"
 	service "github.com/examples/fern/service"
 )
@@ -21,7 +20,7 @@ type Acme struct {
 
 	options *core.RequestOptions
 	baseURL string
-	caller  *internal.Caller
+	caller  *fern.Caller
 }
 
 func NewAcme(opts ...option.RequestOption) *Acme {
@@ -33,8 +32,8 @@ func NewAcme(opts ...option.RequestOption) *Acme {
 		WithRawResponse: NewRawAcme(options),
 		options:         options,
 		baseURL:         options.BaseURL,
-		caller: internal.NewCaller(
-			&internal.CallerParams{
+		caller: fern.NewCaller(
+			&fern.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

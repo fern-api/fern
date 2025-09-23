@@ -4,8 +4,8 @@ package propertybasederror
 
 import (
 	context "context"
+	fern "github.com/error-property/fern"
 	core "github.com/error-property/fern/core"
-	internal "github.com/error-property/fern/internal"
 	option "github.com/error-property/fern/option"
 )
 
@@ -14,7 +14,7 @@ type Client struct {
 
 	options *core.RequestOptions
 	baseURL string
-	caller  *internal.Caller
+	caller  *fern.Caller
 }
 
 func NewClient(options *core.RequestOptions) *Client {
@@ -22,8 +22,8 @@ func NewClient(options *core.RequestOptions) *Client {
 		WithRawResponse: NewRawClient(options),
 		options:         options,
 		baseURL:         options.BaseURL,
-		caller: internal.NewCaller(
-			&internal.CallerParams{
+		caller: fern.NewCaller(
+			&fern.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

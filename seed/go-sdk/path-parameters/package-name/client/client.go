@@ -3,8 +3,8 @@
 package client
 
 import (
+	pathparametersgo "github.com/fern-api/path-parameters-go"
 	core "github.com/fern-api/path-parameters-go/core"
-	internal "github.com/fern-api/path-parameters-go/internal"
 	option "github.com/fern-api/path-parameters-go/option"
 	organizations "github.com/fern-api/path-parameters-go/organizations"
 	user "github.com/fern-api/path-parameters-go/user"
@@ -16,7 +16,7 @@ type Client struct {
 
 	options *core.RequestOptions
 	baseURL string
-	caller  *internal.Caller
+	caller  *pathparametersgo.Caller
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -26,8 +26,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 		User:          user.NewClient(options),
 		options:       options,
 		baseURL:       options.BaseURL,
-		caller: internal.NewCaller(
-			&internal.CallerParams{
+		caller: pathparametersgo.NewCaller(
+			&pathparametersgo.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

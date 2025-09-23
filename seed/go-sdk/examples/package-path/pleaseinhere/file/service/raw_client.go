@@ -14,7 +14,7 @@ import (
 
 type RawClient struct {
 	baseURL string
-	caller  *internal.Caller
+	caller  *pleaseinhere.Caller
 	options *core.RequestOptions
 }
 
@@ -22,8 +22,8 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
 		options: options,
 		baseURL: options.BaseURL,
-		caller: internal.NewCaller(
-			&internal.CallerParams{
+		caller: pleaseinhere.NewCaller(
+			&pleaseinhere.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -52,17 +52,10 @@ func (r *RawClient) GetFile(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		404: func(apiError *core.APIError) error {
-			return &pleaseinhere.NotFoundError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *pleaseinhere.File
 	raw, err := r.caller.Call(
 		ctx,
-		&internal.CallParams{
+		&pleaseinhere.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			Headers:         headers,
@@ -71,7 +64,7 @@ func (r *RawClient) GetFile(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    pleaseinhere.NewErrorDecoder(),
 		},
 	)
 	if err != nil {

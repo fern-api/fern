@@ -3,8 +3,8 @@
 package client
 
 import (
+	fern "github.com/nullable-optional/fern"
 	core "github.com/nullable-optional/fern/core"
-	internal "github.com/nullable-optional/fern/internal"
 	nullableoptional "github.com/nullable-optional/fern/nullableoptional"
 	option "github.com/nullable-optional/fern/option"
 )
@@ -14,7 +14,7 @@ type Client struct {
 
 	options *core.RequestOptions
 	baseURL string
-	caller  *internal.Caller
+	caller  *fern.Caller
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -23,8 +23,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 		NullableOptional: nullableoptional.NewClient(options),
 		options:          options,
 		baseURL:          options.BaseURL,
-		caller: internal.NewCaller(
-			&internal.CallerParams{
+		caller: fern.NewCaller(
+			&fern.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
