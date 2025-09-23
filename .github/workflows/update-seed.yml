@@ -213,12 +213,13 @@ jobs:
           ruby_matrix='${{steps.build-ruby-model-matrix.outputs.ruby_model_matrix}}'
           python_matrix='${{steps.build-python-sdk-matrix.outputs.python_sdk_matrix}}'
 
-          combined=$(echo "$ruby_matrix python_matrix" | jq -s -c 'add')
-          matrix=$(echo '$combined' | jq '[.]')
-          echo "built-matrix=$matrix" >> $GITHUB_OUTPUT
+          combined=$(echo "$ruby_matrix $python_matrix" | jq -s -c 'add')
+          echo "${combined}" | jq . 
+          # matrix=$(echo '$combined' | jq '[.]')
+          # echo "built-matrix=$matrix" >> $GITHUB_OUTPUT
           
-          # Output for debug
-          echo "${matrix}" | jq .
+          # # Output for debug
+          # echo "${matrix}" | jq .
 
 # bash-3.2$ GEN_PATH="folder/file"
 # bash-3.2$ ruby_test="{\"ruby-model\": {\"generator-path\": \"${GEN_PATH}\", \"other\": 2}}"
