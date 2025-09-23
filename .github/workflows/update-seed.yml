@@ -214,11 +214,15 @@ jobs:
           '$ruby + $python')
           echo "${combined}" | jq . 
 
-          matrix=$(echo "${combined}" | jq '[.]' -c)
+          # matrix=$(echo "${combined}" | jq '[.]' -c)
+          # echo "built-matrix=$matrix" >> $GITHUB_OUTPUT
+
+          # Transform from object to array format
+          matrix=$(echo "${combined}" | jq -c 'to_entries | map(.value + {"name": .key})')
           echo "built-matrix=$matrix" >> $GITHUB_OUTPUT
 
           # Output for debug
-          # echo "${matrix}" | jq .
+          echo "${matrix}" | jq .
 
   matrix-example:
     needs: [setup, build-matrices] # CHRISM - add back changes
