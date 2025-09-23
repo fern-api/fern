@@ -84,10 +84,15 @@ runs:
       env:
         FORCE_COLOR: "2"
       run: |
+        FIXTURES_TO_RUN=""
+        if [[ "${{ inputs.fixtures-to-run }}" == "all" ]]; then
+          FIXTURES_TO_RUN="${{ inputs.fixtures-to-run }}"
+        fi
+
         pnpm seed:local test \
           --generator ${{ inputs.generator-name }} \
           --parallel 16 \
-          --fixture ${{ inputs.fixtures-to-run }} \
+          --fixture ${FIXTURES_TO_RUN} \
           ${{ inputs.skip-scripts == 'true' && '--skip-scripts' || '' }} \
           ${{ inputs.allow-unexpected-failures == 'true' && '--allow-unexpected-failures' || '' }}
 
