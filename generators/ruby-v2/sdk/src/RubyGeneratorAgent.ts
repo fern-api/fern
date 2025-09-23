@@ -1,4 +1,4 @@
-import { AbstractGeneratorAgent } from "@fern-api/base-generator";
+import { AbstractGeneratorAgent, RawGithubConfig } from "@fern-api/base-generator";
 import { Logger } from "@fern-api/logger";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
@@ -42,13 +42,8 @@ export class RubyGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorConte
 
     public getGitHubConfig(
         args: AbstractGeneratorAgent.GitHubConfigArgs<SdkGeneratorContext>
-    ): FernGeneratorCli.GitHubConfig {
-        // TODO: get from env
-        return {
-            sourceDirectory: "NONE",
-            uri: "NONE",
-            token: "token",
-            branch: "NONE"
-        };
+    ): RawGithubConfig {
+        args.context.logger.error("RubyGeneratorAgent.getGitHubConfig is not implemented");
+        throw new Error("RubyGeneratorAgent.getGitHubConfig is not implemented");
     }
 }

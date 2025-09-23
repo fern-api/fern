@@ -1,4 +1,4 @@
-import { AbstractGeneratorAgent, RawGitHubConfig } from "@fern-api/base-generator";
+import { AbstractGeneratorAgent, RawGithubConfig } from "@fern-api/base-generator";
 import { Logger } from "@fern-api/logger";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
@@ -35,7 +35,7 @@ export class PythonGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCon
 
     public getGitHubConfig(
         args: AbstractGeneratorAgent.GitHubConfigArgs<SdkGeneratorContext>
-    ): RawGitHubConfig {
+    ): RawGithubConfig {
         return {
             sourceDirectory: "fern/output",
             type: this.publishConfig?.type,

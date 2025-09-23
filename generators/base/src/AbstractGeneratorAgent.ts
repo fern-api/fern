@@ -7,7 +7,7 @@ import path from "path";
 
 import { GeneratorAgentClient } from "./GeneratorAgentClient";
 import { ReferenceConfigBuilder } from "./reference";
-import { RawGitHubConfig, ResolvedGitHubConfig } from "./utils";
+import { RawGithubConfig, ResolvedGithubConfig } from "./utils";
 import { isNonNullish } from "@fern-api/core-utils";
 
 const FEATURES_CONFIG_PATHS = [
@@ -111,9 +111,9 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
      */
     protected abstract getGitHubConfig(
         args: AbstractGeneratorAgent.GitHubConfigArgs<GeneratorContext>
-    ): RawGitHubConfig;
+    ): RawGithubConfig;
 
-    private resolveGitHubConfig(rawConfig: RawGitHubConfig): ResolvedGitHubConfig {
+    private resolveGitHubConfig(rawConfig: RawGithubConfig): ResolvedGithubConfig {
 
         if (rawConfig.type == null) {
             this.logger.error("Publishing config is missing");

@@ -1,7 +1,7 @@
 /**
  * The configuration used to interact with a GitHub repository.
  */
-export interface RawGitHubConfig {
+export interface RawGithubConfig {
     sourceDirectory: string;
     type?: string;
     uri?: string;
@@ -10,7 +10,7 @@ export interface RawGitHubConfig {
     mode?: "pull-request";
 }
 
-export interface ResolvedGitHubConfig {
+export interface ResolvedGithubConfig {
     sourceDirectory: string;
     uri: string;
     token: string;
