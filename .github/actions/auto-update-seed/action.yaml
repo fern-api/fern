@@ -54,7 +54,6 @@ runs:
         fi
 
     - name: Run seed
-      shell: bash
       uses: ./.github/actions/cached-seed
       with:
         generator-name: ${{ inputs.generator-name }}
