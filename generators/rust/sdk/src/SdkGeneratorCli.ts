@@ -337,7 +337,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             }
         }
 
-        // NEW: Add query parameter request structs for query-only endpoints
+        // Add query parameter request structs for query-only endpoints
         for (const service of Object.values(context.ir.services)) {
             for (const endpoint of service.endpoints) {
                 // Add query request structs for endpoints without request body but with query parameters

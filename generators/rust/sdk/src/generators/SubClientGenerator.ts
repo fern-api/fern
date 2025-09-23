@@ -345,7 +345,7 @@ export class SubClientGenerator {
         // Always add path parameters individually (needed for URL building)
         this.addPathParameters(endpoint, params);
 
-        // NEW: Handle all three scenarios properly
+        // Handle all three scenarios properly
         if (endpoint.requestBody && endpoint.queryParameters.length > 0) {
             // MIXED: Request body contains both body + query fields
             this.addRequestBodyParameter(endpoint, params);
@@ -392,7 +392,7 @@ export class SubClientGenerator {
         });
     }
 
-    // NEW: Add query request parameter for query-only endpoints
+    // Add query request parameter for query-only endpoints
     private addQueryRequestParameter(endpoint: HttpEndpoint, params: EndpointParameter[]): void {
         const requestTypeName = this.getQueryRequestTypeName(endpoint);
         params.push({
@@ -534,7 +534,7 @@ export class SubClientGenerator {
             return "None";
         }
 
-        // NEW: Pass endpoint context for smart parameter resolution
+        // Pass endpoint context for smart parameter resolution
         return this.buildQueryParameterStatements(queryParams, endpoint);
     }
 
@@ -562,7 +562,7 @@ export class SubClientGenerator {
             const wireValue = queryParam.name.wireValue;
             const method = this.getQueryBuilderMethod(queryParam);
 
-            // NEW: Determine parameter source based on endpoint type
+            // Determine parameter source based on endpoint type
             const paramName = this.getQueryParameterSource(queryParam, endpoint);
 
             return `.${method}("${wireValue}", ${paramName})`;
@@ -572,7 +572,7 @@ export class SubClientGenerator {
             .build()`;
     }
 
-    // NEW: Smart parameter source detection
+    // Smart parameter source detection
     private getQueryParameterSource(queryParam: QueryParameter, endpoint?: HttpEndpoint): string {
         const fieldName = queryParam.name.name.snakeCase.safeName;
 

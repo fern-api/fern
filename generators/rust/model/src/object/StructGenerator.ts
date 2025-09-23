@@ -4,20 +4,20 @@ import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 
 import { ObjectProperty, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
-import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { namedTypeSupportsHashAndEq } from "../utils/primitiveTypeUtils";
 import {
-    extractNamedTypesFromTypeReference,
-    getInnerTypeFromOptional,
-    isCollectionType,
-    isDateTimeType,
-    isFloatingPointType,
-    isOptionalType,
-    isUnknownType,
-    isUuidType,
-    namedTypeSupportsHashAndEq,
-    typeSupportsHashAndEq
-} from "../utils/primitiveTypeUtils";
+    canDeriveHashAndEq,
+    canDerivePartialEq,
+    generateFieldAttributes,
+    generateFieldType,
+    getCustomTypesUsedInFields,
+    hasCollectionFields,
+    hasDateTimeFields,
+    hasFloatingPointSets,
+    hasJsonValueFields,
+    hasUuidFields
+} from "../utils/structUtils";
 
 export class StructGenerator {
     private readonly typeDeclaration: TypeDeclaration;
@@ -67,7 +67,10 @@ export class StructGenerator {
 
     private writeUseStatements(writer: rust.Writer): void {
         // Add imports for custom named types referenced in fields FIRST
-        const customTypes = this.getCustomTypesUsedInFields();
+        const customTypes = getCustomTypesUsedInFields(
+            this.objectTypeDeclaration.properties,
+            this.typeDeclaration.name.name.pascalCase.unsafeName
+        );
         customTypes.forEach((typeName) => {
             const modulePath = this.context.getModulePathForType(typeName.snakeCase.unsafeName);
             const moduleNameEscaped = this.context.escapeRustKeyword(modulePath);
@@ -85,27 +88,27 @@ export class StructGenerator {
         }
 
         // Add chrono if we have datetime fields
-        if (this.hasDateTimeFields()) {
+        if (hasDateTimeFields(this.objectTypeDeclaration.properties)) {
             writer.writeLine("use chrono::{DateTime, NaiveDate, Utc};");
         }
 
         // Add std::collections if we have maps or sets
-        if (this.hasCollectionFields()) {
+        if (hasCollectionFields(this.objectTypeDeclaration.properties)) {
             writer.writeLine("use std::collections::HashMap;");
         }
 
         // Add ordered_float if we have floating-point sets
-        if (this.hasFloatingPointSets()) {
+        if (hasFloatingPointSets(this.objectTypeDeclaration.properties)) {
             writer.writeLine("use ordered_float::OrderedFloat;");
         }
 
         // Add uuid if we have UUID fields
-        if (this.hasUuidFields()) {
+        if (hasUuidFields(this.objectTypeDeclaration.properties)) {
             writer.writeLine("use uuid::Uuid;");
         }
 
         // Add serde_json if we have unknown/Value fields
-        if (this.hasJsonValueFields()) {
+        if (hasJsonValueFields(this.objectTypeDeclaration.properties)) {
             writer.writeLine("use serde_json::Value;");
         }
 
@@ -144,7 +147,7 @@ export class StructGenerator {
         }
 
         // Only add Hash and Eq if all field types support them
-        if (this.canDeriveHashAndEq()) {
+        if (this.needsDeriveHashAndEq()) {
             derives.push("Eq", "Hash");
         }
 
@@ -154,8 +157,8 @@ export class StructGenerator {
     }
 
     private generateRustFieldForProperty(property: ObjectProperty): rust.Field {
-        const fieldType = this.getFieldType(property);
-        const fieldAttributes = this.generateFieldAttributes(property);
+        const fieldType = generateFieldType(property);
+        const fieldAttributes = generateFieldAttributes(property);
         const fieldName = this.context.escapeRustKeyword(property.name.name.snakeCase.unsafeName);
 
         return rust.field({
@@ -186,112 +189,12 @@ export class StructGenerator {
         return fields;
     }
 
-    private getFieldType(property: ObjectProperty): rust.Type {
-        if (isOptionalType(property.valueType)) {
-            // For optional types, generate Option<T> where T is the inner type
-            const innerType = getInnerTypeFromOptional(property.valueType);
-            return rust.Type.option(generateRustTypeForTypeReference(innerType));
-        } else {
-            return generateRustTypeForTypeReference(property.valueType);
-        }
-    }
-
-    private generateFieldAttributes(property: ObjectProperty): rust.Attribute[] {
-        const attributes: rust.Attribute[] = [];
-
-        // Add serde rename if the field name differs from wire name
-        if (property.name.name.snakeCase.unsafeName !== property.name.wireValue) {
-            attributes.push(Attribute.serde.rename(property.name.wireValue));
-        }
-
-        // DateTime fields will use default RFC 3339 string serialization
-        // No special serde handling needed for datetime fields
-
-        // Add skip_serializing_if for optional fields to omit null values
-        const isOptional = isOptionalType(property.valueType);
-        if (isOptional) {
-            attributes.push(Attribute.serde.skipSerializingIf('"Option::is_none"'));
-        }
-
-        return attributes;
-    }
-
-    private isDateTimeProperty(property: ObjectProperty): boolean {
-        const typeRef = isOptionalType(property.valueType)
-            ? getInnerTypeFromOptional(property.valueType)
-            : property.valueType;
-
-        return isDateTimeType(typeRef);
-    }
-
-    private hasDateTimeFields(): boolean {
-        return this.objectTypeDeclaration.properties.some((prop) => this.isDateTimeProperty(prop));
-    }
-
-    private hasCollectionFields(): boolean {
-        return this.objectTypeDeclaration.properties.some((prop) => {
-            const typeRef = isOptionalType(prop.valueType) ? getInnerTypeFromOptional(prop.valueType) : prop.valueType;
-
-            return isCollectionType(typeRef);
-        });
-    }
-
-    private hasUuidFields(): boolean {
-        return this.objectTypeDeclaration.properties.some((prop) => {
-            const typeRef = isOptionalType(prop.valueType) ? getInnerTypeFromOptional(prop.valueType) : prop.valueType;
-
-            return isUuidType(typeRef);
-        });
-    }
-
-    private hasJsonValueFields(): boolean {
-        return this.objectTypeDeclaration.properties.some((prop) => {
-            const typeRef = isOptionalType(prop.valueType) ? getInnerTypeFromOptional(prop.valueType) : prop.valueType;
-
-            return isUnknownType(typeRef);
-        });
-    }
-
-    private hasFloatingPointSets(): boolean {
-        return this.objectTypeDeclaration.properties.some((prop) => {
-            const typeRef = isOptionalType(prop.valueType) ? getInnerTypeFromOptional(prop.valueType) : prop.valueType;
-
-            // Check if this is a set of floating point numbers
-            if (typeRef.type === "container" && typeRef.container.type === "set") {
-                const setElementType = typeRef.container.set;
-                return isFloatingPointType(setElementType);
-            }
-            return false;
-        });
-    }
-
-    private getCustomTypesUsedInFields(): {
-        snakeCase: { unsafeName: string };
-        pascalCase: { unsafeName: string };
-    }[] {
-        const customTypeNames: {
-            snakeCase: { unsafeName: string };
-            pascalCase: { unsafeName: string };
-        }[] = [];
-        const visited = new Set<string>();
-
-        this.objectTypeDeclaration.properties.forEach((property) => {
-            extractNamedTypesFromTypeReference(property.valueType, customTypeNames, visited);
-        });
-
-        // Filter out the current type itself to prevent self-imports
-        const currentTypeName = this.typeDeclaration.name.name.pascalCase.unsafeName;
-        return customTypeNames.filter((typeName) => typeName.pascalCase.unsafeName !== currentTypeName);
-    }
-
     private needsPartialEq(): boolean {
         // PartialEq is useful for testing and comparisons
         // Include it unless there are fields that can't support it
-        let isTypeSupportsHashAndEq = this.objectTypeDeclaration.properties.every((property) => {
-            return typeSupportsHashAndEq(property.valueType, this.context);
-        });
+        const isTypeSupportsHashAndEq = canDerivePartialEq(this.objectTypeDeclaration.properties, this.context);
 
-        let isNamedTypeSupportsHashAndEq = this.objectTypeDeclaration.extends.every((parentType) => {
+        const isNamedTypeSupportsHashAndEq = this.objectTypeDeclaration.extends.every((parentType) => {
             return namedTypeSupportsHashAndEq(
                 {
                     name: parentType.name,
@@ -307,12 +210,10 @@ export class StructGenerator {
         return isTypeSupportsHashAndEq && isNamedTypeSupportsHashAndEq;
     }
 
-    private canDeriveHashAndEq(): boolean {
+    private needsDeriveHashAndEq(): boolean {
         // Check if all field types can support Hash and Eq derives
-        let isTypeSupportsHashAndEq = this.objectTypeDeclaration.properties.every((property) => {
-            return typeSupportsHashAndEq(property.valueType, this.context);
-        });
-        let isNamedTypeSupportsHashAndEq = this.objectTypeDeclaration.extends.every((parentType) => {
+        const isTypeSupportsHashAndEq = canDeriveHashAndEq(this.objectTypeDeclaration.properties, this.context);
+        const isNamedTypeSupportsHashAndEq = this.objectTypeDeclaration.extends.every((parentType) => {
             return namedTypeSupportsHashAndEq(
                 {
                     name: parentType.name,

@@ -10,14 +10,14 @@ import {
 } from "@fern-fern/ir-sdk/api";
 
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { ObjectGenerator } from "./ObjectGenerator";
+import { RequestGenerator } from "./RequestGenerator";
 
 export class InlinedRequestBodyGenerator {
     private readonly ir: IntermediateRepresentation;
     private readonly context: ModelGeneratorContext;
 
-    public constructor(ir: IntermediateRepresentation, context: ModelGeneratorContext) {
-        this.ir = ir;
+    public constructor(context: ModelGeneratorContext) {
+        this.ir = context.ir;
         this.context = context;
     }
 
@@ -53,17 +53,17 @@ export class InlinedRequestBodyGenerator {
             const requestName = requestBody.name.pascalCase.safeName;
             const filename = this.context.getFilenameForInlinedRequestBody(requestName);
 
-            // NEW: Combine body properties with query parameters for mixed endpoints
+            // Combine body properties with query parameters for mixed endpoints
             const allProperties = [...(requestBody.properties || []), ...(requestBody.extendedProperties || [])];
 
-            // NEW: Add query parameters as properties for mixed endpoints
+            // Add query parameters as properties for mixed endpoints
             if (endpoint.queryParameters?.length > 0) {
                 const queryProperties = this.convertQueryParametersToProperties(endpoint.queryParameters);
                 allProperties.push(...queryProperties);
             }
 
-            // Create ObjectGenerator to generate the struct
-            const objectGenerator = new ObjectGenerator({
+            // Create RequestGenerator to generate the struct
+            const objectGenerator = new RequestGenerator({
                 name: requestName,
                 properties: allProperties, // Now includes query params
                 extendedProperties: [],
@@ -86,7 +86,7 @@ export class InlinedRequestBodyGenerator {
         }
     }
 
-    // NEW: Helper method to convert query parameters to object properties
+    // Helper method to convert query parameters to object properties
     private convertQueryParametersToProperties(queryParams: QueryParameter[]): ObjectProperty[] {
         return queryParams.map((queryParam) => ({
             name: queryParam.name,

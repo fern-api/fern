@@ -3,15 +3,15 @@ import { RustFile } from "@fern-api/rust-base";
 
 import { HttpEndpoint, IntermediateRepresentation, ObjectProperty, QueryParameter } from "@fern-fern/ir-sdk/api";
 
-import { ObjectGenerator } from "../inlined-request-body/ObjectGenerator";
+import { RequestGenerator } from "../inlined-request-body/RequestGenerator";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 export class QueryParameterRequestGenerator {
     private readonly ir: IntermediateRepresentation;
     private readonly context: ModelGeneratorContext;
 
-    public constructor(ir: IntermediateRepresentation, context: ModelGeneratorContext) {
-        this.ir = ir;
+    public constructor(context: ModelGeneratorContext) {
+        this.ir = context.ir;
         this.context = context;
     }
 
@@ -39,7 +39,7 @@ export class QueryParameterRequestGenerator {
             const requestTypeName = this.getQueryRequestTypeName(endpoint);
             const properties = this.convertQueryParametersToProperties(endpoint.queryParameters);
 
-            const objectGenerator = new ObjectGenerator({
+            const objectGenerator = new RequestGenerator({
                 name: requestTypeName,
                 properties,
                 extendedProperties: [],

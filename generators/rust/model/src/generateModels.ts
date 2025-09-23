@@ -43,11 +43,11 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
     }
 
     // Generate inlined request body types from services
-    const inlinedRequestBodyGenerator = new InlinedRequestBodyGenerator(context.ir, context);
+    const inlinedRequestBodyGenerator = new InlinedRequestBodyGenerator(context);
     files.push(...inlinedRequestBodyGenerator.generateFiles());
 
-    // NEW: Generate query parameter request structs for query-only endpoints
-    const queryRequestGenerator = new QueryParameterRequestGenerator(context.ir, context);
+    // Generate query parameter request structs for query-only endpoints
+    const queryRequestGenerator = new QueryParameterRequestGenerator(context);
     files.push(...queryRequestGenerator.generateFiles());
 
     return files;
