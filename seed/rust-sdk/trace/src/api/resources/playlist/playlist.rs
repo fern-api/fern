@@ -1,4 +1,4 @@
-use crate::api::types::*;
+use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
@@ -9,15 +9,13 @@ pub struct PlaylistClient {
 impl PlaylistClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config)?,
+            http_client: HttpClient::new(config.clone())?,
         })
     }
 
     pub async fn create_playlist(
         &self,
         service_param: i32,
-        datetime: Option<chrono::DateTime<chrono::Utc>>,
-        optional_datetime: Option<chrono::DateTime<chrono::Utc>>,
         request: &PlaylistCreateRequest,
         options: Option<RequestOptions>,
     ) -> Result<Playlist, ApiError> {
@@ -27,8 +25,8 @@ impl PlaylistClient {
                 &format!("/v2/playlist/{}", service_param),
                 Some(serde_json::to_value(request).unwrap_or_default()),
                 QueryBuilder::new()
-                    .datetime("datetime", datetime)
-                    .datetime("optionalDatetime", optional_datetime)
+                    .datetime("datetime", request.datetime.clone())
+                    .datetime("optionalDatetime", request.optional_datetime.clone())
                     .build(),
                 options,
             )
@@ -38,11 +36,7 @@ impl PlaylistClient {
     pub async fn get_playlists(
         &self,
         service_param: i32,
-        limit: Option<i32>,
-        other_field: Option<String>,
-        multi_line_docs: Option<String>,
-        optional_multiple_field: Option<String>,
-        multiple_field: Option<String>,
+        request: &GetPlaylistsQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<Vec<Playlist>, ApiError> {
         self.http_client
@@ -51,11 +45,14 @@ impl PlaylistClient {
                 &format!("/v2/playlist/{}", service_param),
                 None,
                 QueryBuilder::new()
-                    .int("limit", limit)
-                    .string("otherField", other_field)
-                    .string("multiLineDocs", multi_line_docs)
-                    .string("optionalMultipleField", optional_multiple_field)
-                    .string("multipleField", multiple_field)
+                    .int("limit", request.limit.clone())
+                    .string("otherField", request.other_field.clone())
+                    .string("multiLineDocs", request.multi_line_docs.clone())
+                    .string(
+                        "optionalMultipleField",
+                        request.optional_multiple_field.clone(),
+                    )
+                    .string("multipleField", request.multiple_field.clone())
                     .build(),
                 options,
             )

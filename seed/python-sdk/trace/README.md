@@ -39,7 +39,7 @@ client.admin.update_test_submission_status(
 
 ## Async Client
 
-The SDK also exports an `async` client so that you can make non-blocking calls to our API.
+The SDK also exports an `async` client so that you can make non-blocking calls to our API. Note that if you are constructing an Async httpx client class to pass into this client, use `httpx.AsyncClient()` instead of `httpx.Client()` (e.g. for the `httpx_client` parameter of this client).
 
 ```python
 import asyncio

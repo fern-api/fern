@@ -1,12 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
-- version: 4.30.0
+- version: 4.29.2
   changelogEntry:
-    - summary: |
-        Add support for PR mode for self-hosted/local sdk generation
-      type: feat
+    - summary: Added a note to the README on constructing Async httpx objects to pass into main Async clients.
+      type: chore
   createdAt: "2025-09-23"
-  irVersion: 60
+  irVersion: 59
 
 - version: 4.29.2-rc0
   changelogEntry:

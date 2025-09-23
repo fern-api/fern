@@ -1,6 +1,6 @@
 use crate::{ClientConfig, ApiError, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::{Method};
-use crate::api::types::{*};
+use crate::api::{*};
 
 pub struct PathParamClient {
     pub http_client: HttpClient,
@@ -9,7 +9,7 @@ pub struct PathParamClient {
 impl PathParamClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-    http_client: HttpClient::new(config)?
+    http_client: HttpClient::new(config.clone())?
 })
     }
 

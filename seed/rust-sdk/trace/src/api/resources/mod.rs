@@ -1,7 +1,9 @@
 use crate::{ApiError, ClientConfig};
 
 pub mod admin;
+pub mod commons;
 pub mod homepage;
+pub mod lang_server;
 pub mod migration;
 pub mod playlist;
 pub mod problem;
@@ -37,7 +39,9 @@ impl TraceClient {
 }
 
 pub use admin::*;
+pub use commons::*;
 pub use homepage::*;
+pub use lang_server::*;
 pub use migration::*;
 pub use playlist::*;
 pub use problem::*;
