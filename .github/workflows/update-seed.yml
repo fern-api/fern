@@ -317,7 +317,7 @@ jobs:
           generator-path: generators/ruby
           language-name: ruby
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ matrix.fixtures }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -354,7 +354,7 @@ jobs:
           generator-path: generators/ruby-v2
           language-name: ruby
           allow-unexpected-failures: true
-          fixtures-to-run: ${{ toJson(matrix.fixtures) }}
+          fixtures-to-run: ${{ matrix.fixtures }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
