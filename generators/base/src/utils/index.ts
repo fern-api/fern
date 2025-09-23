@@ -1,3 +1,3 @@
-export type { BaseGitHubConfig } from "./BaseGithubConfig";
+export type { RawGitHubConfig, ResolvedGitHubConfig } from "./GitHubConfig";
 export { parseGeneratorConfig } from "./parseGeneratorConfig";
 export { parseIR } from "./parseIR";
