@@ -82,26 +82,16 @@ runs:
       shell: bash
       id: format-fixtures
       run: |
+        json_data='${{toJson(inputs.fixtures-to-run)}}'
+        # Convert JSON array to space-separated string
+        string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+        echo "Generated string: '$string_result'"
 
-        # Debug
-        echo "${{ inputs.fixtures-to-run }}"
+        # Leave as default if set to special keyword "all"
         FORMATTED_FIXTURES=""
-
-        if echo "${{ inputs.fixtures-to-run }}" | jq -e . >/dev/null 2>&1; then
-          json_data='${{ inputs.fixtures-to-run }}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-
-          # Leave as default if set to special keyword "all"
-          if [[ "${{ inputs.fixtures-to-run }}" != "all" ]]; then
-            FORMATTED_FIXTURES="${{ inputs.fixtures-to-run }}"
-          fi
-        else
-          # Not a JSON array, pass data through as is
+        if [[ "${{ inputs.fixtures-to-run }}" != "all" ]]; then
           FORMATTED_FIXTURES="${{ inputs.fixtures-to-run }}"
         fi
-
 
         echo "formatted-fixtures=$FORMATTED_FIXTURES" >> $GITHUB_OUTPUT
 
