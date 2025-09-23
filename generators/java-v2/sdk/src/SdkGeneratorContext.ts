@@ -8,11 +8,11 @@ import {
     FernFilepath,
     HttpEndpoint,
     IntermediateRepresentation,
-    TypeReference,
     Name,
+    Pagination,
     TypeDeclaration,
     TypeId,
-    Pagination
+    TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { camelCase } from "lodash-es";
 import { TYPES_DIRECTORY } from "./constants";
@@ -86,6 +86,7 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
                         );
                     default:
                         assertNever(responseBody.value);
+                        throw new Error("Unknown streaming type");
                 }
             case "fileDownload":
                 return java.Type.inputStream();
@@ -178,28 +179,23 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
     private shouldUseCorePackageForPagination(): boolean {
         const packageName = this.getRootPackageName();
 
-        const coreFirstPatterns = [
-            /\.auth0\./i,
-            /\.core\./i,
-            /\.client\./i,
-            /management/i,
-            /authentication/i
-        ];
+        const coreFirstPatterns = [/\.auth0\./i, /\.core\./i, /\.client\./i, /management/i, /authentication/i];
 
-        if (coreFirstPatterns.some(pattern => pattern.test(packageName))) {
+        if (coreFirstPatterns.some((pattern) => pattern.test(packageName))) {
             return true;
         }
 
         const serviceCount = Object.keys(this.ir.services).length;
-        const serviceNames = Object.values(this.ir.services).map(service =>
-            service.name?.fernFilepath?.allParts?.map(part => part.originalName).join('') || ''
+        const serviceNames = Object.values(this.ir.services).map(
+            (service) => service.name?.fernFilepath?.allParts?.map((part) => part.originalName).join("") || ""
         );
 
-        if (serviceCount <= 2 || serviceNames.every(name =>
-            ['management', 'auth', 'api', 'client', 'core'].some(generic =>
-                name.toLowerCase().includes(generic)
+        if (
+            serviceCount <= 2 ||
+            serviceNames.every((name) =>
+                ["management", "auth", "api", "client", "core"].some((generic) => name.toLowerCase().includes(generic))
             )
-        )) {
+        ) {
             return true;
         }
 

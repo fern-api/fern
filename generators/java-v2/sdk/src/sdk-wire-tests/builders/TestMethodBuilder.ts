@@ -179,7 +179,6 @@ export class TestMethodBuilder {
         }
     }
 
-
     /**
      * Gets the return type for an endpoint and collects its imports.
      */

@@ -1,3 +1,11 @@
+- version: 3.5.8
+  changelogEntry:
+    - summary: |
+        Fixed wire test generation for union services and added automatic pagination package detection.
+      type: fix
+  createdAt: "2025-09-23"
+  irVersion: 59
+
 - version: 3.5.7
   changelogEntry:
     - summary: |

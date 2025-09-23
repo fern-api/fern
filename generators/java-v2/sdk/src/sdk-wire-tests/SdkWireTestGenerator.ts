@@ -125,10 +125,9 @@ export class SdkWireTestGenerator {
                             `Generating snippet for endpoint ${endpoint.id} (${endpoint.name.originalName}) with dynamic endpoint ${dynamicEndpoint.declaration.name.originalName}`
                         );
 
-
                         const expectedServiceName = serviceName.toLowerCase();
-                        const dynamicServiceName = dynamicEndpoint.declaration.fernFilepath?.allParts?.[0]?.originalName?.toLowerCase() || "";
-
+                        const dynamicServiceName =
+                            dynamicEndpoint.declaration.fernFilepath?.allParts?.[0]?.originalName?.toLowerCase() || "";
 
                         const rawSnippet = await this.generateSnippetWithServiceCorrection(
                             endpoint,
@@ -139,7 +138,6 @@ export class SdkWireTestGenerator {
                             dynamicSnippetsGenerator,
                             serviceName
                         );
-
 
                         const { snippet: fullSnippet, imports: endpointImports } = this.applyAllSnippetTransformations(
                             rawSnippet,
@@ -168,7 +166,9 @@ export class SdkWireTestGenerator {
                 }
             } else {
                 // No dynamic examples, but we have test examples from static IR
-                this.context.logger.info(`No dynamic examples for endpoint ${endpoint.id}, creating default snippet for service ${serviceName}`);
+                this.context.logger.info(
+                    `No dynamic examples for endpoint ${endpoint.id}, creating default snippet for service ${serviceName}`
+                );
 
                 const firstTestExample = testExamples[0];
                 if (firstTestExample) {
@@ -187,7 +187,9 @@ export class SdkWireTestGenerator {
                         const returnTypeInfo = this.testMethodBuilder.getEndpointReturnTypeWithImports(endpoint);
                         returnTypeInfo.imports.forEach((imp) => allImports.add(imp));
                     } catch (error) {
-                        this.context.logger.debug(`Failed to generate default snippet for endpoint ${endpoint.id}: ${error}`);
+                        this.context.logger.debug(
+                            `Failed to generate default snippet for endpoint ${endpoint.id}: ${error}`
+                        );
                     }
                 }
             }
@@ -234,7 +236,7 @@ export class SdkWireTestGenerator {
         let pathParamsStr = "";
         if (testExample.request.pathParams && Object.keys(testExample.request.pathParams).length > 0) {
             const pathValues = Object.values(testExample.request.pathParams);
-            pathParamsStr = pathValues.map(value => `"${value}"`).join(", ");
+            pathParamsStr = pathValues.map((value) => `"${value}"`).join(", ");
         }
 
         let methodCall = `client.${serviceNameLower}().${methodName}(`;
@@ -258,7 +260,6 @@ export class SdkWireTestGenerator {
         for (const service of Object.values(this.context.ir.services)) {
             const serviceName =
                 service.name?.fernFilepath?.allParts?.map((part) => part.pascalCase.safeName).join("") || "Service";
-
 
             endpointsByService.set(serviceName, service.endpoints);
         }
@@ -290,19 +291,27 @@ export class SdkWireTestGenerator {
                 declaration: {
                     ...dynamicEndpoint.declaration,
                     fernFilepath: {
-                        allParts: [{
-                            originalName: expectedServiceName,
-                            camelCase: { unsafeName: expectedServiceName, safeName: expectedServiceName },
-                            snakeCase: { unsafeName: expectedServiceName, safeName: expectedServiceName },
-                            screamingSnakeCase: { unsafeName: expectedServiceName.toUpperCase(), safeName: expectedServiceName.toUpperCase() },
-                            pascalCase: { unsafeName: serviceName, safeName: serviceName }
-                        }],
+                        allParts: [
+                            {
+                                originalName: expectedServiceName,
+                                camelCase: { unsafeName: expectedServiceName, safeName: expectedServiceName },
+                                snakeCase: { unsafeName: expectedServiceName, safeName: expectedServiceName },
+                                screamingSnakeCase: {
+                                    unsafeName: expectedServiceName.toUpperCase(),
+                                    safeName: expectedServiceName.toUpperCase()
+                                },
+                                pascalCase: { unsafeName: serviceName, safeName: serviceName }
+                            }
+                        ],
                         packagePath: [],
                         file: {
                             originalName: expectedServiceName,
                             camelCase: { unsafeName: expectedServiceName, safeName: expectedServiceName },
                             snakeCase: { unsafeName: expectedServiceName, safeName: expectedServiceName },
-                            screamingSnakeCase: { unsafeName: expectedServiceName.toUpperCase(), safeName: expectedServiceName.toUpperCase() },
+                            screamingSnakeCase: {
+                                unsafeName: expectedServiceName.toUpperCase(),
+                                safeName: expectedServiceName.toUpperCase()
+                            },
                             pascalCase: { unsafeName: serviceName, safeName: serviceName }
                         }
                     }
@@ -313,10 +322,7 @@ export class SdkWireTestGenerator {
 
             try {
                 dynamicIr.endpoints[endpoint.id] = correctedDynamicEndpoint;
-                return await this.generateSnippetForExample(
-                    firstDynamicExample,
-                    dynamicSnippetsGenerator
-                );
+                return await this.generateSnippetForExample(firstDynamicExample, dynamicSnippetsGenerator);
             } finally {
                 if (originalDynamicEndpoint) {
                     dynamicIr.endpoints[endpoint.id] = originalDynamicEndpoint;
@@ -325,10 +331,7 @@ export class SdkWireTestGenerator {
                 }
             }
         } else {
-            return await this.generateSnippetForExample(
-                firstDynamicExample,
-                dynamicSnippetsGenerator
-            );
+            return await this.generateSnippetForExample(firstDynamicExample, dynamicSnippetsGenerator);
         }
     }
 
@@ -341,7 +344,12 @@ export class SdkWireTestGenerator {
         let transformedSnippet = this.applyServiceNameCorrections(snippet, serviceName);
 
         // Apply endpoint-specific transformations
-        transformedSnippet = this.applyEndpointSpecificTransformations(transformedSnippet, endpoint, serviceName, imports);
+        transformedSnippet = this.applyEndpointSpecificTransformations(
+            transformedSnippet,
+            endpoint,
+            serviceName,
+            imports
+        );
 
         return { snippet: transformedSnippet, imports };
     }
@@ -368,24 +376,21 @@ export class SdkWireTestGenerator {
         let transformedSnippet = snippet;
 
         if (endpoint.name.originalName === "listUsernames") {
-            transformedSnippet = transformedSnippet.replace(
-                /\.listWithCursorPagination\(/g,
-                '.listUsernames('
-            );
+            transformedSnippet = transformedSnippet.replace(/\.listWithCursorPagination\(/g, ".listUsernames(");
             transformedSnippet = transformedSnippet.replace(
                 /ListUsersCursorPaginationRequest/g,
-                'ListUsernamesRequest'
+                "ListUsernamesRequest"
             );
         }
 
         if (endpoint.name.originalName === "listWithBodyCursorPagination") {
             transformedSnippet = transformedSnippet.replace(
                 /\.listWithMixedTypeCursorPagination\(/g,
-                '.listWithBodyCursorPagination('
+                ".listWithBodyCursorPagination("
             );
             transformedSnippet = transformedSnippet.replace(
                 /ListUsersMixedTypeCursorPaginationRequest/g,
-                'ListUsersBodyCursorPaginationRequest'
+                "ListUsersBodyCursorPaginationRequest"
             );
             transformedSnippet = transformedSnippet.replace(
                 /\.builder\(\)\s*\.build\(\)/g,
@@ -401,15 +406,15 @@ export class SdkWireTestGenerator {
         if (endpoint.name.originalName === "listWithBodyOffsetPagination") {
             transformedSnippet = transformedSnippet.replace(
                 /\.listWithMixedTypeCursorPagination\(/g,
-                '.listWithBodyOffsetPagination('
+                ".listWithBodyOffsetPagination("
             );
             transformedSnippet = transformedSnippet.replace(
                 /ListUsersMixedTypeCursorPaginationRequest/g,
-                'ListUsersBodyOffsetPaginationRequest'
+                "ListUsersBodyOffsetPaginationRequest"
             );
             transformedSnippet = transformedSnippet.replace(
                 /\.builder\(\)\s*\.build\(\)/g,
-                '.builder()\n                .pagination(WithPage.builder().page(1).build())\n                .build()'
+                ".builder()\n                .pagination(WithPage.builder().page(1).build())\n                .build()"
             );
             const packageName = this.context.getRootPackageName();
             const resourcePath = serviceName.toLowerCase().includes("inline")
@@ -441,7 +446,9 @@ export class SdkWireTestGenerator {
             responseType === "streaming" ||
             responseType === "streamParameter"
         ) {
-            this.context.logger.debug(`Skipping endpoint with unsupported response type ${responseType}: ${endpoint.id}`);
+            this.context.logger.debug(
+                `Skipping endpoint with unsupported response type ${responseType}: ${endpoint.id}`
+            );
             return false;
         }
 
