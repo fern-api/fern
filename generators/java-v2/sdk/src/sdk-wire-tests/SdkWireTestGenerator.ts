@@ -125,176 +125,35 @@ export class SdkWireTestGenerator {
                             `Generating snippet for endpoint ${endpoint.id} (${endpoint.name.originalName}) with dynamic endpoint ${dynamicEndpoint.declaration.name.originalName}`
                         );
 
-                        // TODO: Remove hardcoded service name checks in debug logging - make this configurable or generic
-                        if (serviceName === "Union" || serviceName === "Bigunion") {
-                            this.context.logger.info(
-                                `DEBUG: ${serviceName} endpoint details: ${JSON.stringify({
-                                    id: endpoint.id,
-                                    name: dynamicEndpoint.declaration.name.originalName,
-                                    path: dynamicEndpoint.declaration.fernFilepath
-                                })}`
-                            );
-                        }
-
-                        if (endpoint.name.originalName === "listUsernames") {
-                            this.context.logger.info(
-                                `DEBUG: listUsernames dynamic endpoint details: ${JSON.stringify({
-                                    id: endpoint.id,
-                                    name: dynamicEndpoint.declaration.name.originalName,
-                                    path: dynamicEndpoint.declaration.fernFilepath
-                                })}`
-                            );
-                        }
 
                         const expectedServiceName = serviceName.toLowerCase();
                         const dynamicServiceName = dynamicEndpoint.declaration.fernFilepath?.allParts?.[0]?.originalName?.toLowerCase() || "";
 
-                        // Always log service mapping for debugging
-                        this.context.logger.info(
-                            `Service mapping for ${endpoint.id}: expectedService='${expectedServiceName}' dynamicService='${dynamicServiceName}' serviceName='${serviceName}'`
+
+                        const rawSnippet = await this.generateSnippetWithServiceCorrection(
+                            endpoint,
+                            expectedServiceName,
+                            dynamicServiceName,
+                            firstDynamicExample,
+                            dynamicIr,
+                            dynamicSnippetsGenerator,
+                            serviceName
                         );
 
-                        let fullSnippet: string;
-                        if (expectedServiceName !== dynamicServiceName) {
-                            this.context.logger.warn(
-                                `Service mismatch for endpoint ${endpoint.id}: expected service '${expectedServiceName}' but dynamic endpoint has service '${dynamicServiceName}'`
-                            );
-                            const correctedDynamicEndpoint = {
-                                ...dynamicEndpoint,
-                                declaration: {
-                                    ...dynamicEndpoint.declaration,
-                                    fernFilepath: {
-                                        allParts: [{
-                                            originalName: expectedServiceName,
-                                            camelCase: { unsafeName: expectedServiceName, safeName: expectedServiceName },
-                                            snakeCase: { unsafeName: expectedServiceName, safeName: expectedServiceName },
-                                            screamingSnakeCase: { unsafeName: expectedServiceName.toUpperCase(), safeName: expectedServiceName.toUpperCase() },
-                                            pascalCase: { unsafeName: serviceName, safeName: serviceName }
-                                        }],
-                                        packagePath: [],
-                                        file: {
-                                            originalName: expectedServiceName,
-                                            camelCase: { unsafeName: expectedServiceName, safeName: expectedServiceName },
-                                            snakeCase: { unsafeName: expectedServiceName, safeName: expectedServiceName },
-                                            screamingSnakeCase: { unsafeName: expectedServiceName.toUpperCase(), safeName: expectedServiceName.toUpperCase() },
-                                            pascalCase: { unsafeName: serviceName, safeName: serviceName }
-                                        }
-                                    }
-                                }
-                            };
-                            const originalDynamicEndpoint = dynamicIr.endpoints[endpoint.id];
-                            dynamicIr.endpoints[endpoint.id] = correctedDynamicEndpoint;
-                            const correctedExample = firstDynamicExample;
-                            fullSnippet = await this.generateSnippetForExample(
-                                correctedExample,
-                                dynamicSnippetsGenerator
-                            );
-                            // Restore the original dynamic endpoint
-                            if (originalDynamicEndpoint) {
-                                dynamicIr.endpoints[endpoint.id] = originalDynamicEndpoint;
-                            }
-                        } else {
-                            fullSnippet = await this.generateSnippetForExample(
-                                firstDynamicExample,
-                                dynamicSnippetsGenerator
-                            );
-                        }
 
-                        // TODO: Remove hardcoded service name checks in snippet logging - make this configurable or generic
-                        if (serviceName === "Union" || serviceName === "Bigunion") {
-                            this.context.logger.info(
-                                `Generated snippet for ${serviceName} ${endpoint.id}: ${fullSnippet.substring(0, 200)}...`
-                            );
-                        }
+                        const { snippet: fullSnippet, imports: endpointImports } = this.applyAllSnippetTransformations(
+                            rawSnippet,
+                            serviceName,
+                            endpoint
+                        );
 
-                        // TODO (Tanmay): Remove this hardcoded service name correction once dynamic IR service mapping is fixed
-                        // This is a temporary workaround for union/bigunion service confusion in snippet generation
-                        // Root cause: Dynamic IR endpoints may reference wrong service names for similar endpoint patterns
-                        // Proper fix: Ensure dynamic IR generation correctly maps endpoints to their intended services
-                        if (serviceName === "Union" && fullSnippet.includes("client.bigunion()")) {
-                            this.context.logger.warn(
-                                `Found bigunion service call in Union service snippet for ${endpoint.id}, correcting to union service`
-                            );
-                            fullSnippet = fullSnippet.replace(/client\.bigunion\(\)/g, "client.union()");
-                        } else if (serviceName === "Bigunion" && fullSnippet.includes("client.union()")) {
-                            this.context.logger.warn(
-                                `Found union service call in Bigunion service snippet for ${endpoint.id}, correcting to bigunion service`
-                            );
-                            fullSnippet = fullSnippet.replace(/client\.union\(\)/g, "client.bigunion()");
-                        }
-
-                        if (endpoint.name.originalName === "listUsernames") {
-                            fullSnippet = fullSnippet.replace(
-                                /\.listWithCursorPagination\(/g,
-                                '.listUsernames('
-                            );
-                            // Replace the incorrect request type
-                            fullSnippet = fullSnippet.replace(
-                                /ListUsersCursorPaginationRequest/g,
-                                'ListUsernamesRequest'
-                            );
-                            this.context.logger.info(
-                                `Fixed snippet for listUsernames endpoint to use correct method`
-                            );
-                        }
-
-                        if (endpoint.name.originalName === "listWithBodyCursorPagination") {
-                            fullSnippet = fullSnippet.replace(
-                                /\.listWithMixedTypeCursorPagination\(/g,
-                                '.listWithBodyCursorPagination('
-                            );
-                            fullSnippet = fullSnippet.replace(
-                                /ListUsersMixedTypeCursorPaginationRequest/g,
-                                'ListUsersBodyCursorPaginationRequest'
-                            );
-                            fullSnippet = fullSnippet.replace(
-                                /\.builder\(\)\s*\.build\(\)/g,
-                                '.builder()\n                .pagination(WithCursor.builder().cursor("cursor").build())\n                .build()'
-                            );
-                            const packageName = this.context.getRootPackageName();
-                            const resourcePath = serviceName.toLowerCase().includes("inline")
-                                ? "resources.inlineusers.inlineusers.types"
-                                : "resources.users.types";
-                            allImports.add(`${packageName}.${resourcePath}.WithCursor`);
-                            this.context.logger.info(
-                                `Fixed snippet for listWithBodyCursorPagination endpoint to use correct method and parameters`
-                            );
-                        }
-
-                        if (endpoint.name.originalName === "listWithBodyOffsetPagination") {
-                            fullSnippet = fullSnippet.replace(
-                                /\.listWithMixedTypeCursorPagination\(/g,
-                                '.listWithBodyOffsetPagination('
-                            );
-                            fullSnippet = fullSnippet.replace(
-                                /ListUsersMixedTypeCursorPaginationRequest/g,
-                                'ListUsersBodyOffsetPaginationRequest'
-                            );
-                            fullSnippet = fullSnippet.replace(
-                                /\.builder\(\)\s*\.build\(\)/g,
-                                '.builder()\n                .pagination(WithPage.builder().page(1).build())\n                .build()'
-                            );
-                            const packageName = this.context.getRootPackageName();
-                            const resourcePath = serviceName.toLowerCase().includes("inline")
-                                ? "resources.inlineusers.inlineusers.types"
-                                : "resources.users.types";
-                            allImports.add(`${packageName}.${resourcePath}.WithPage`);
-                            this.context.logger.info(
-                                `Fixed snippet for listWithBodyOffsetPagination endpoint to use correct method and parameters`
-                            );
-                        }
+                        endpointImports.forEach((imp) => allImports.add(imp));
 
                         const imports = snippetExtractor.extractImports(fullSnippet);
                         imports.forEach((imp) => allImports.add(imp));
 
                         const firstTestExample = testExamples[0];
                         if (firstTestExample) {
-                            // TODO: Remove hardcoded service name checks in endpoint test storage logging - make this configurable or generic
-                            if (serviceName === "Union" || serviceName === "Bigunion") {
-                                this.context.logger.info(
-                                    `Storing endpoint test for ${serviceName} ${endpoint.id} with snippet: ${fullSnippet.substring(0, 100)}...`
-                                );
-                            }
                             endpointTests.set(endpoint.id, {
                                 snippet: fullSnippet,
                                 testExample: firstTestExample
@@ -314,21 +173,8 @@ export class SdkWireTestGenerator {
                 const firstTestExample = testExamples[0];
                 if (firstTestExample) {
                     try {
-                        let fullSnippet = this.generateDefaultSnippet(endpoint, serviceName, firstTestExample);
-
-                        // TODO: Remove this hardcoded service name correction in default snippets (duplicate of above TODO)
-                        // This is the same temporary workaround applied to fallback/default snippet generation
-                        if (serviceName === "Union" && fullSnippet.includes("client.bigunion()")) {
-                            this.context.logger.warn(
-                                `Found bigunion service call in Union service default snippet for ${endpoint.id}, correcting to union service`
-                            );
-                            fullSnippet = fullSnippet.replace(/client\.bigunion\(\)/g, "client.union()");
-                        } else if (serviceName === "Bigunion" && fullSnippet.includes("client.union()")) {
-                            this.context.logger.warn(
-                                `Found union service call in Bigunion service default snippet for ${endpoint.id}, correcting to bigunion service`
-                            );
-                            fullSnippet = fullSnippet.replace(/client\.union\(\)/g, "client.bigunion()");
-                        }
+                        const rawSnippet = this.generateDefaultSnippet(endpoint, serviceName, firstTestExample);
+                        const fullSnippet = this.applyServiceNameCorrections(rawSnippet, serviceName);
 
                         const imports = snippetExtractor.extractImports(fullSnippet);
                         imports.forEach((imp) => allImports.add(imp));
@@ -355,12 +201,6 @@ export class SdkWireTestGenerator {
             for (const endpoint of endpoints) {
                 const testData = endpointTests.get(endpoint.id);
                 if (testData) {
-                    // TODO: Remove hardcoded class name checks in test method creation logging - make this configurable or generic
-                    if (className.includes("Union") || className.includes("Bigunion")) {
-                        this.context.logger.info(
-                            `Creating test method for ${className} ${endpoint.id} with snippet: ${testData.snippet.substring(0, 100)}...`
-                        );
-                    }
                     this.testMethodBuilder.createTestMethod(endpoint, testData.snippet, testData.testExample)(writer);
                 }
             }
@@ -419,12 +259,6 @@ export class SdkWireTestGenerator {
             const serviceName =
                 service.name?.fernFilepath?.allParts?.map((part) => part.pascalCase.safeName).join("") || "Service";
 
-            // TODO: Remove hardcoded service name checks in grouping debug logging - make this configurable or generic
-            if (serviceName === "Union" || serviceName === "Bigunion") {
-                this.context.logger.info(
-                    `Grouping service ${serviceName} with ${service.endpoints.length} endpoints: ${service.endpoints.map(e => e.name.originalName).join(", ")}`
-                );
-            }
 
             endpointsByService.set(serviceName, service.endpoints);
         }
@@ -432,25 +266,173 @@ export class SdkWireTestGenerator {
         return endpointsByService;
     }
 
-    /**
-     * Determines if a test should be generated for the given endpoint.
-     * Filters out unsupported endpoint types like OAuth, file uploads/downloads, and streaming.
-     */
+    private async generateSnippetWithServiceCorrection(
+        endpoint: HttpEndpoint,
+        expectedServiceName: string,
+        dynamicServiceName: string,
+        firstDynamicExample: dynamic.EndpointExample,
+        dynamicIr: dynamic.DynamicIntermediateRepresentation,
+        dynamicSnippetsGenerator: DynamicSnippetsGenerator,
+        serviceName: string
+    ): Promise<string> {
+        if (expectedServiceName !== dynamicServiceName) {
+            this.context.logger.warn(
+                `Service mismatch for endpoint ${endpoint.id}: expected service '${expectedServiceName}' but dynamic endpoint has service '${dynamicServiceName}'`
+            );
+
+            const dynamicEndpoint = dynamicIr.endpoints[endpoint.id];
+            if (!dynamicEndpoint) {
+                throw new Error(`Dynamic endpoint not found for ${endpoint.id}`);
+            }
+
+            const correctedDynamicEndpoint = {
+                ...dynamicEndpoint,
+                declaration: {
+                    ...dynamicEndpoint.declaration,
+                    fernFilepath: {
+                        allParts: [{
+                            originalName: expectedServiceName,
+                            camelCase: { unsafeName: expectedServiceName, safeName: expectedServiceName },
+                            snakeCase: { unsafeName: expectedServiceName, safeName: expectedServiceName },
+                            screamingSnakeCase: { unsafeName: expectedServiceName.toUpperCase(), safeName: expectedServiceName.toUpperCase() },
+                            pascalCase: { unsafeName: serviceName, safeName: serviceName }
+                        }],
+                        packagePath: [],
+                        file: {
+                            originalName: expectedServiceName,
+                            camelCase: { unsafeName: expectedServiceName, safeName: expectedServiceName },
+                            snakeCase: { unsafeName: expectedServiceName, safeName: expectedServiceName },
+                            screamingSnakeCase: { unsafeName: expectedServiceName.toUpperCase(), safeName: expectedServiceName.toUpperCase() },
+                            pascalCase: { unsafeName: serviceName, safeName: serviceName }
+                        }
+                    }
+                }
+            };
+
+            const originalDynamicEndpoint = dynamicIr.endpoints[endpoint.id];
+
+            try {
+                dynamicIr.endpoints[endpoint.id] = correctedDynamicEndpoint;
+                return await this.generateSnippetForExample(
+                    firstDynamicExample,
+                    dynamicSnippetsGenerator
+                );
+            } finally {
+                if (originalDynamicEndpoint) {
+                    dynamicIr.endpoints[endpoint.id] = originalDynamicEndpoint;
+                } else {
+                    delete dynamicIr.endpoints[endpoint.id];
+                }
+            }
+        } else {
+            return await this.generateSnippetForExample(
+                firstDynamicExample,
+                dynamicSnippetsGenerator
+            );
+        }
+    }
+
+    private applyAllSnippetTransformations(
+        snippet: string,
+        serviceName: string,
+        endpoint: HttpEndpoint
+    ): { snippet: string; imports: string[] } {
+        const imports: string[] = [];
+        let transformedSnippet = this.applyServiceNameCorrections(snippet, serviceName);
+
+        // Apply endpoint-specific transformations
+        transformedSnippet = this.applyEndpointSpecificTransformations(transformedSnippet, endpoint, serviceName, imports);
+
+        return { snippet: transformedSnippet, imports };
+    }
+
+    private applyServiceNameCorrections(snippet: string, serviceName: string): string {
+        // TODO (Tanmay): Remove this hardcoded service name correction once dynamic IR service mapping is fixed
+        // This is a temporary workaround for union/bigunion service confusion in snippet generation
+        // Root cause: Dynamic IR endpoints may reference wrong service names for similar endpoint patterns
+        // Proper fix: Ensure dynamic IR generation correctly maps endpoints to their intended services
+        if (serviceName === "Union" && snippet.includes("client.bigunion()")) {
+            return snippet.replace(/client\.bigunion\(\)/g, "client.union()");
+        } else if (serviceName === "Bigunion" && snippet.includes("client.union()")) {
+            return snippet.replace(/client\.union\(\)/g, "client.bigunion()");
+        }
+        return snippet;
+    }
+
+    private applyEndpointSpecificTransformations(
+        snippet: string,
+        endpoint: HttpEndpoint,
+        serviceName: string,
+        imports: string[]
+    ): string {
+        let transformedSnippet = snippet;
+
+        if (endpoint.name.originalName === "listUsernames") {
+            transformedSnippet = transformedSnippet.replace(
+                /\.listWithCursorPagination\(/g,
+                '.listUsernames('
+            );
+            transformedSnippet = transformedSnippet.replace(
+                /ListUsersCursorPaginationRequest/g,
+                'ListUsernamesRequest'
+            );
+        }
+
+        if (endpoint.name.originalName === "listWithBodyCursorPagination") {
+            transformedSnippet = transformedSnippet.replace(
+                /\.listWithMixedTypeCursorPagination\(/g,
+                '.listWithBodyCursorPagination('
+            );
+            transformedSnippet = transformedSnippet.replace(
+                /ListUsersMixedTypeCursorPaginationRequest/g,
+                'ListUsersBodyCursorPaginationRequest'
+            );
+            transformedSnippet = transformedSnippet.replace(
+                /\.builder\(\)\s*\.build\(\)/g,
+                '.builder()\n                .pagination(WithCursor.builder().cursor("cursor").build())\n                .build()'
+            );
+            const packageName = this.context.getRootPackageName();
+            const resourcePath = serviceName.toLowerCase().includes("inline")
+                ? "resources.inlineusers.inlineusers.types"
+                : "resources.users.types";
+            imports.push(`${packageName}.${resourcePath}.WithCursor`);
+        }
+
+        if (endpoint.name.originalName === "listWithBodyOffsetPagination") {
+            transformedSnippet = transformedSnippet.replace(
+                /\.listWithMixedTypeCursorPagination\(/g,
+                '.listWithBodyOffsetPagination('
+            );
+            transformedSnippet = transformedSnippet.replace(
+                /ListUsersMixedTypeCursorPaginationRequest/g,
+                'ListUsersBodyOffsetPaginationRequest'
+            );
+            transformedSnippet = transformedSnippet.replace(
+                /\.builder\(\)\s*\.build\(\)/g,
+                '.builder()\n                .pagination(WithPage.builder().page(1).build())\n                .build()'
+            );
+            const packageName = this.context.getRootPackageName();
+            const resourcePath = serviceName.toLowerCase().includes("inline")
+                ? "resources.inlineusers.inlineusers.types"
+                : "resources.users.types";
+            imports.push(`${packageName}.${resourcePath}.WithPage`);
+        }
+
+        return transformedSnippet;
+    }
+
     private shouldBuildTest(endpoint: HttpEndpoint): boolean {
-        // Check if endpoint uses OAuth authentication (not yet supported)
         if (this.context.ir.auth?.schemes?.some((scheme) => scheme.type === "oauth") && endpoint.auth) {
             this.context.logger.debug(`Skipping OAuth endpoint: ${endpoint.id}`);
             return false;
         }
 
-        // Check request body type
         const requestType = endpoint.requestBody?.type;
         if (requestType === "bytes" || requestType === "fileUpload") {
             this.context.logger.debug(`Skipping endpoint with unsupported request type ${requestType}: ${endpoint.id}`);
             return false;
         }
 
-        // Check response body type
         const responseType = endpoint.response?.body?.type;
         if (
             responseType === "fileDownload" ||
@@ -463,7 +445,6 @@ export class SdkWireTestGenerator {
             return false;
         }
 
-        // Check for idempotent endpoints (not yet supported)
         if (endpoint.idempotent) {
             this.context.logger.debug(`Skipping idempotent endpoint: ${endpoint.id}`);
             return false;
