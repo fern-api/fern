@@ -40,6 +40,7 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         this.context.logger.debug(`Writing go files to ${this.absolutePathToOutputDirectory}`);
         await this.writeGoMod();
         await this.writeInternalFiles();
+        await this.writeRootAsIsFiles();
         await this.writeGoFiles({
             files: Object.values(this.goFiles).flat()
         });
@@ -82,43 +83,87 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         return this.absolutePathToOutputDirectory;
     }
 
-    private async writeInternalFiles(): Promise<void> {
-        for (const filename of this.context.getInternalAsIsFiles()) {
-            const file = await this.createAsIsFile({
-                filename
-            });
-
+    private async writeAsIsFiles({
+        filenames,
+        getPackageName,
+        getImportPath
+    }: {
+        filenames: string[];
+        getPackageName: (dirname: string) => string;
+        getImportPath: (dirname: string) => string;
+    }): Promise<void> {
+        for (const filename of filenames) {
             // Parse the directory path and filename from the full path
             const dirname = path.dirname(filename);
             const basename = path.basename(filename);
+            const packageName = getPackageName(dirname);
+
+            const file = await this.createAsIsFile({
+                filename,
+                templateVariables: {
+                    PackageName: packageName,
+                    RootImportPath: this.getRootImportPath()
+                }
+            });
             const goFilename = basename.replace(".go_", ".go");
+
+            // Normalize dirname for root directory
+            const normalizedDirname = dirname === "." ? "" : dirname;
 
             // Create a GoFile from the raw file content
             const goFile = new GoFile({
                 node: [], // Empty node since this is raw content
-                directory: RelativeFilePath.of(dirname),
+                directory: RelativeFilePath.of(normalizedDirname),
                 filename: goFilename,
-                packageName: "internal", // Default package name for internal files
+                packageName: getPackageName(dirname),
                 rootImportPath: this.getRootImportPath(),
-                importPath: this.getImportPath(dirname),
+                importPath: getImportPath(dirname),
                 customConfig: this.context.customConfig
             });
 
             // Override the content with the raw file content
             const originalToFile = goFile.toFile.bind(goFile);
-            goFile.toFile = () => new File(goFilename, RelativeFilePath.of(dirname), file.fileContents);
+            goFile.toFile = () => new File(goFilename, RelativeFilePath.of(normalizedDirname), file.fileContents);
 
             this.addGoFiles(goFile);
         }
     }
 
+    private async writeInternalFiles(): Promise<void> {
+        await this.writeAsIsFiles({
+            filenames: this.context.getInternalAsIsFiles(),
+            getPackageName: () => "internal",
+            getImportPath: (dirname) => this.getImportPath(dirname)
+        });
+    }
+
+    private async writeRootAsIsFiles(): Promise<void> {
+        await this.writeAsIsFiles({
+            filenames: this.context.getRootAsIsFiles(),
+            getPackageName: () => this.context.getRootPackageName(),
+            getImportPath: () => this.getRootImportPath()
+        });
+    }
+
     public async writeSharedTestFiles(): Promise<AbsoluteFilePath> {
         const sharedTestFiles = await Promise.all(
-            this.context.getTestAsIsFiles().map(async (filename) => await this.createAsIsFile({ filename }))
+            this.context.getTestAsIsFiles().map(async (filename) => {
+                const dirname = path.dirname(filename);
+                // For test files, we typically use the root package name if they're at root level
+                const packageName = dirname === "." || dirname === "" ? this.context.getRootPackageName() : "test";
+
+                return await this.createAsIsFile({
+                    filename,
+                    templateVariables: {
+                        PackageName: packageName,
+                        RootImportPath: this.getRootImportPath()
+                    }
+                });
+            })
         );
 
         return await this.createGoDirectory({
-            absolutePathToDirectory: join(this.absolutePathToOutputDirectory),
+            absolutePathToDirectory: this.absolutePathToOutputDirectory,
             files: sharedTestFiles
         });
     }
@@ -135,8 +180,24 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
 		return absolutePathToDirectory;
 	}
 
-    private async createAsIsFile({ filename }: { filename: string }): Promise<File> {
-        const contents = (await readFile(this.getAsIsFilepath(filename))).toString();
+    private async createAsIsFile({
+        filename,
+        templateVariables = {}
+    }: {
+        filename: string;
+        templateVariables?: Record<string, string>;
+    }): Promise<File> {
+        let contents = (await readFile(this.getAsIsFilepath(filename))).toString();
+
+        // Process template variables
+        for (const [key, value] of Object.entries(templateVariables)) {
+            // Handle both {{{{ variable }}}} and {{{ variable }}} syntax
+            const tripleRegex = new RegExp(`\\{\\{\\{ *\\.${key} *\\}\\}\\}`, 'g');
+            const doubleRegex = new RegExp(`\\{\\{ *\\.${key} *\\}\\}`, 'g');
+            contents = contents.replace(tripleRegex, value);
+            contents = contents.replace(doubleRegex, value);
+        }
+
         return new File(filename.replace(".go_", ".go"), RelativeFilePath.of(""), contents);
     }
 

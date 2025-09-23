@@ -36,28 +36,28 @@ export class Caller {
     public getTypeReference(): go.TypeReference {
         return go.typeReference({
             name: Caller.TYPE_NAME,
-            importPath: this.context.getInternalImportPath()
+            importPath: this.context.getRootImportPath()
         });
     }
 
     public getConstructorTypeReference(): go.TypeReference {
         return go.typeReference({
             name: Caller.CONSTRUCTOR_FUNC_NAME,
-            importPath: this.context.getInternalImportPath()
+            importPath: this.context.getRootImportPath()
         });
     }
 
     public getCallerParamsTypeReference(): go.TypeReference {
         return go.typeReference({
             name: Caller.CALLER_PARAMS_TYPE_NAME,
-            importPath: this.context.getInternalImportPath()
+            importPath: this.context.getRootImportPath()
         });
     }
 
     public getCallParamsTypeReference(): go.TypeReference {
         return go.typeReference({
             name: Caller.CALL_PARAMS_TYPE_NAME,
-            importPath: this.context.getInternalImportPath()
+            importPath: this.context.getRootImportPath()
         });
     }
 

@@ -35,14 +35,14 @@ export class Streamer {
     public getTypeReference(): go.TypeReference {
         return go.typeReference({
             name: Streamer.TYPE_NAME,
-            importPath: this.context.getInternalImportPath()
+            importPath: this.context.getRootImportPath()
         });
     }
 
     public getConstructorTypeReference({ streamPayload }: { streamPayload: go.Type }): go.TypeReference {
         return go.typeReference({
             name: Streamer.CONSTRUCTOR_FUNC_NAME,
-            importPath: this.context.getInternalImportPath(),
+            importPath: this.context.getRootImportPath(),
             generics: [streamPayload]
         });
     }
@@ -50,7 +50,7 @@ export class Streamer {
     public getStreamParamsTypeReference(): go.TypeReference {
         return go.typeReference({
             name: Streamer.STREAM_PARAMS_TYPE_NAME,
-            importPath: this.context.getInternalImportPath()
+            importPath: this.context.getRootImportPath()
         });
     }
 
