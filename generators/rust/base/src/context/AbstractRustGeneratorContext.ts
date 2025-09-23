@@ -94,6 +94,48 @@ export abstract class AbstractRustGeneratorContext<
     }
 
     /**
+     * Converts inlined request body names to consistent snake_case filenames
+     * This should be used for all inlined request body naming to ensure consistency
+     */
+    public getFilenameForInlinedRequestBody(requestBodyName: string): string {
+        return this.convertPascalToSnakeCase(requestBodyName) + ".rs";
+    }
+
+    /**
+     * Converts inlined request body names to consistent snake_case module names
+     * This should be used for module declarations and imports
+     */
+    public getModuleNameForInlinedRequestBody(requestBodyName: string): string {
+        return this.convertPascalToSnakeCase(requestBodyName);
+    }
+
+    /**
+     * Converts query request type names to consistent snake_case filenames
+     * This should be used for all query request type naming to ensure consistency
+     */
+    public getFilenameForQueryRequest(queryRequestTypeName: string): string {
+        return this.convertPascalToSnakeCase(queryRequestTypeName) + ".rs";
+    }
+
+    /**
+     * Converts query request type names to consistent snake_case module names
+     * This should be used for module declarations and imports
+     */
+    public getModuleNameForQueryRequest(queryRequestTypeName: string): string {
+        return this.convertPascalToSnakeCase(queryRequestTypeName);
+    }
+
+    /**
+     * Converts PascalCase to snake_case consistently across the generator
+     */
+    private convertPascalToSnakeCase(pascalCase: string): string {
+        return pascalCase
+            .replace(/([A-Z])/g, "_$1")
+            .toLowerCase()
+            .replace(/^_/, "");
+    }
+
+    /**
      * Get the unique filename for a subpackage using its fernFilepath
      * to prevent filename collisions between subpackages with the same name in different paths.
      *

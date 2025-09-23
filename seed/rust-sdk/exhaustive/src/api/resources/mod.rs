@@ -1,10 +1,12 @@
 use crate::{ApiError, ClientConfig};
 
 pub mod endpoints;
+pub mod general_errors;
 pub mod inlined_requests;
 pub mod no_auth;
 pub mod no_req_body;
 pub mod req_with_headers;
+pub mod types;
 pub struct ExhaustiveClient {
     pub config: ClientConfig,
     pub endpoints: EndpointsClient,
@@ -28,7 +30,9 @@ impl ExhaustiveClient {
 }
 
 pub use endpoints::*;
+pub use general_errors::*;
 pub use inlined_requests::*;
 pub use no_auth::*;
 pub use no_req_body::*;
 pub use req_with_headers::*;
+pub use types::*;

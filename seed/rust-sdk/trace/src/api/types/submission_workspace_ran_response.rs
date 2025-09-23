@@ -2,7 +2,7 @@ use crate::submission_submission_id::SubmissionId;
 use crate::submission_workspace_run_details::WorkspaceRunDetails;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct WorkspaceRanResponse {
     #[serde(rename = "submissionId")]
     pub submission_id: SubmissionId,

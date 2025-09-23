@@ -1,11 +1,12 @@
 use crate::name::Name;
 use chrono::{DateTime, NaiveDate, Utc};
+use ordered_float::OrderedFloat;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 use std::collections::HashMap;
 use uuid::Uuid;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Type {
     pub one: i32,
     pub two: f64,
@@ -17,7 +18,7 @@ pub struct Type {
     pub eight: uuid::Uuid,
     pub nine: String,
     pub ten: Vec<i32>,
-    pub eleven: std::collections::HashSet<f64>,
+    pub eleven: std::collections::HashSet<ordered_float::OrderedFloat<f64>>,
     pub twelve: HashMap<String, bool>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub thirteen: Option<i64>,

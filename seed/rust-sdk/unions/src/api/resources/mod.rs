@@ -1,6 +1,7 @@
 use crate::{ApiError, ClientConfig};
 
 pub mod bigunion;
+pub mod types;
 pub mod union_;
 pub struct UnionsClient {
     pub config: ClientConfig,
@@ -19,4 +20,5 @@ impl UnionsClient {
 }
 
 pub use bigunion::*;
+pub use types::*;
 pub use union_::*;

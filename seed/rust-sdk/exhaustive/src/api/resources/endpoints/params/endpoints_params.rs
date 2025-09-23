@@ -1,4 +1,4 @@
-use crate::api::types::*;
+use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
@@ -9,7 +9,7 @@ pub struct EndpointsParamsClient {
 impl EndpointsParamsClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config)?,
+            http_client: HttpClient::new(config.clone())?,
         })
     }
 
@@ -47,8 +47,7 @@ impl EndpointsParamsClient {
 
     pub async fn get_with_query(
         &self,
-        query: Option<String>,
-        number: Option<i32>,
+        request: &GetWithQueryQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -57,8 +56,8 @@ impl EndpointsParamsClient {
                 "/params",
                 None,
                 QueryBuilder::new()
-                    .structured_query("query", query)
-                    .int("number", number)
+                    .structured_query("query", request.query.clone())
+                    .int("number", request.number.clone())
                     .build(),
                 options,
             )
@@ -67,8 +66,7 @@ impl EndpointsParamsClient {
 
     pub async fn get_with_allow_multiple_query(
         &self,
-        query: Option<String>,
-        number: Option<i32>,
+        request: &GetWithAllowMultipleQueryQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -77,8 +75,8 @@ impl EndpointsParamsClient {
                 "/params",
                 None,
                 QueryBuilder::new()
-                    .structured_query("query", query)
-                    .int("number", number)
+                    .structured_query("query", request.query.clone())
+                    .int("number", request.number.clone())
                     .build(),
                 options,
             )
@@ -88,7 +86,7 @@ impl EndpointsParamsClient {
     pub async fn get_with_path_and_query(
         &self,
         param: &String,
-        query: Option<String>,
+        request: &GetWithPathAndQueryQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -96,7 +94,9 @@ impl EndpointsParamsClient {
                 Method::GET,
                 &format!("/params/path-query/{}", param),
                 None,
-                QueryBuilder::new().structured_query("query", query).build(),
+                QueryBuilder::new()
+                    .structured_query("query", request.query.clone())
+                    .build(),
                 options,
             )
             .await
@@ -105,7 +105,7 @@ impl EndpointsParamsClient {
     pub async fn get_with_inline_path_and_query(
         &self,
         param: &String,
-        query: Option<String>,
+        request: &GetWithInlinePathAndQueryQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -113,7 +113,9 @@ impl EndpointsParamsClient {
                 Method::GET,
                 &format!("/params/path-query/{}", param),
                 None,
-                QueryBuilder::new().structured_query("query", query).build(),
+                QueryBuilder::new()
+                    .structured_query("query", request.query.clone())
+                    .build(),
                 options,
             )
             .await

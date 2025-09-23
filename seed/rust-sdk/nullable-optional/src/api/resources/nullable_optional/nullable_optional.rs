@@ -1,4 +1,4 @@
-use crate::api::types::*;
+use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
@@ -9,7 +9,7 @@ pub struct NullableOptionalClient {
 impl NullableOptionalClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config)?,
+            http_client: HttpClient::new(config.clone())?,
         })
     }
 
@@ -64,10 +64,7 @@ impl NullableOptionalClient {
 
     pub async fn list_users(
         &self,
-        limit: Option<i32>,
-        offset: Option<i32>,
-        include_deleted: Option<bool>,
-        sort_by: Option<Option<String>>,
+        request: &ListUsersQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<Vec<UserResponse>, ApiError> {
         self.http_client
@@ -76,10 +73,10 @@ impl NullableOptionalClient {
                 "/api/users",
                 None,
                 QueryBuilder::new()
-                    .int("limit", limit)
-                    .int("offset", offset)
-                    .bool("includeDeleted", include_deleted)
-                    .serialize("sortBy", sort_by)
+                    .int("limit", request.limit.clone())
+                    .int("offset", request.offset.clone())
+                    .bool("includeDeleted", request.include_deleted.clone())
+                    .serialize("sortBy", request.sort_by.clone())
                     .build(),
                 options,
             )
@@ -88,10 +85,7 @@ impl NullableOptionalClient {
 
     pub async fn search_users(
         &self,
-        query: Option<String>,
-        department: Option<String>,
-        role: Option<String>,
-        is_active: Option<Option<bool>>,
+        request: &SearchUsersQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<Vec<UserResponse>, ApiError> {
         self.http_client
@@ -100,10 +94,10 @@ impl NullableOptionalClient {
                 "/api/users/search",
                 None,
                 QueryBuilder::new()
-                    .structured_query("query", query)
-                    .string("department", department)
-                    .string("role", role)
-                    .serialize("isActive", is_active)
+                    .structured_query("query", request.query.clone())
+                    .string("department", request.department.clone())
+                    .string("role", request.role.clone())
+                    .serialize("isActive", request.is_active.clone())
                     .build(),
                 options,
             )
@@ -145,7 +139,7 @@ impl NullableOptionalClient {
     pub async fn update_complex_profile(
         &self,
         profile_id: &String,
-        request: &serde_json::Value,
+        request: &UpdateComplexProfileRequest,
         options: Option<RequestOptions>,
     ) -> Result<ComplexProfile, ApiError> {
         self.http_client
@@ -177,9 +171,7 @@ impl NullableOptionalClient {
 
     pub async fn filter_by_role(
         &self,
-        role: Option<UserRole>,
-        status: Option<UserStatus>,
-        secondary_role: Option<Option<UserRole>>,
+        request: &FilterByRoleQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<Vec<UserResponse>, ApiError> {
         self.http_client
@@ -188,9 +180,9 @@ impl NullableOptionalClient {
                 "/api/users/filter",
                 None,
                 QueryBuilder::new()
-                    .serialize("role", role)
-                    .serialize("status", status)
-                    .serialize("secondaryRole", secondary_role)
+                    .serialize("role", request.role.clone())
+                    .serialize("status", request.status.clone())
+                    .serialize("secondaryRole", request.secondary_role.clone())
                     .build(),
                 options,
             )
@@ -216,7 +208,7 @@ impl NullableOptionalClient {
     pub async fn update_tags(
         &self,
         user_id: &String,
-        request: &serde_json::Value,
+        request: &UpdateTagsRequest,
         options: Option<RequestOptions>,
     ) -> Result<Vec<String>, ApiError> {
         self.http_client
@@ -232,7 +224,7 @@ impl NullableOptionalClient {
 
     pub async fn get_search_results(
         &self,
-        request: &serde_json::Value,
+        request: &SearchRequest,
         options: Option<RequestOptions>,
     ) -> Result<Option<Vec<SearchResult>>, ApiError> {
         self.http_client

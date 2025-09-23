@@ -1,4 +1,4 @@
-use crate::api::types::*;
+use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
@@ -9,7 +9,7 @@ pub struct UserClient {
 impl UserClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config)?,
+            http_client: HttpClient::new(config.clone())?,
         })
     }
 
@@ -69,7 +69,7 @@ impl UserClient {
         &self,
         tenant_id: &String,
         user_id: &String,
-        limit: Option<i32>,
+        request: &SearchUsersQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<Vec<User>, ApiError> {
         self.http_client
@@ -77,7 +77,9 @@ impl UserClient {
                 Method::GET,
                 &format!("/{}{}", tenant_id, user_id),
                 None,
-                QueryBuilder::new().int("limit", limit).build(),
+                QueryBuilder::new()
+                    .int("limit", request.limit.clone())
+                    .build(),
                 options,
             )
             .await

@@ -9,7 +9,9 @@ import {
     isDateTimeType,
     isOptionalType,
     isUnknownType,
-    isUuidType
+    isUuidType,
+    namedTypeSupportsHashAndEq,
+    typeSupportsHashAndEq
 } from "../utils/primitiveTypeUtils";
 
 export class UnionGenerator {
@@ -109,8 +111,14 @@ export class UnionGenerator {
     private generateUnionAttributes(): rust.Attribute[] {
         const attributes: rust.Attribute[] = [];
 
-        // Basic derives
-        const derives = ["Debug", "Clone", "Serialize", "Deserialize", "PartialEq"];
+        // Build derives conditionally based on actual needs
+        const derives: string[] = ["Debug", "Clone", "Serialize", "Deserialize"];
+
+        // PartialEq - for equality comparisons
+        if (this.needsPartialEq()) {
+            derives.push("PartialEq");
+        }
+
         attributes.push(Attribute.derive(derives));
 
         // Serde tag attribute for discriminated union
@@ -118,6 +126,30 @@ export class UnionGenerator {
         attributes.push(Attribute.serde.tag(discriminantField));
 
         return attributes;
+    }
+
+    private needsPartialEq(): boolean {
+        // PartialEq is useful for testing and comparisons
+        // Include it only if all variant types can support it
+        return this.unionTypeDeclaration.types.every((unionType) => {
+            return unionType.shape._visit({
+                noProperties: () => true, // Unit variants always support PartialEq
+                samePropertiesAsObject: (declaredTypeName) =>
+                    namedTypeSupportsHashAndEq(
+                        {
+                            name: declaredTypeName.name,
+                            typeId: declaredTypeName.typeId,
+                            default: undefined,
+                            inline: undefined,
+                            fernFilepath: declaredTypeName.fernFilepath,
+                            displayName: declaredTypeName.name.originalName
+                        },
+                        this.context
+                    ),
+                singleProperty: (property) => typeSupportsHashAndEq(property.type, this.context),
+                _other: () => false
+            });
+        });
     }
 
     private generateUnionVariant(writer: rust.Writer, unionType: SingleUnionType): void {

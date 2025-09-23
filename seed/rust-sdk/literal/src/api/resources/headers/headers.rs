@@ -1,4 +1,4 @@
-use crate::api::types::*;
+use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
@@ -9,13 +9,13 @@ pub struct HeadersClient {
 impl HeadersClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config)?,
+            http_client: HttpClient::new(config.clone())?,
         })
     }
 
     pub async fn send(
         &self,
-        request: &serde_json::Value,
+        request: &SendLiteralsInHeadersRequest,
         options: Option<RequestOptions>,
     ) -> Result<SendResponse, ApiError> {
         self.http_client

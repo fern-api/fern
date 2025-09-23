@@ -1,4 +1,4 @@
-use crate::api::types::*;
+use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
@@ -19,7 +19,7 @@ pub struct EndpointsClient {
 impl EndpointsClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config)?,
+            http_client: HttpClient::new(config.clone())?,
             container: EndpointsContainerClient::new(config.clone())?,
             content_type: EndpointsContentTypeClient::new(config.clone())?,
             enum_: EndpointsEnumClient::new(config.clone())?,
