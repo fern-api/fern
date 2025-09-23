@@ -46,29 +46,29 @@ runs:
       id: determine-test-setups
       shell: bash
       run: |
-        if [[ "${sdk-name}" == "fastapi" || \
-        "${sdk-name}" == "go-fiber" || \
-        "${sdk-name}" == "go-model" || \
-        "${sdk-name}" == "java-spring" || \
-        "${sdk-name}" == "openapi" || \
-        "${sdk-name}" == "php-model" || \
-        "${sdk-name}" == "postman" || \
-        "${sdk-name}" == "ruby-sdk" || \
-        "${sdk-name}" == "rust-model" || \
-        "${sdk-name}" == "ts-express" ]]; then
+        if [[ "${{ inputs.sdk-name }}" == "fastapi" || \
+        "${{ inputs.sdk-name }}" == "go-fiber" || \
+        "${{ inputs.sdk-name }}" == "go-model" || \
+        "${{ inputs.sdk-name }}" == "java-spring" || \
+        "${{ inputs.sdk-name }}" == "openapi" || \
+        "${{ inputs.sdk-name }}" == "php-model" || \
+        "${{ inputs.sdk-name }}" == "postman" || \
+        "${{ inputs.sdk-name }}" == "ruby-sdk" || \
+        "${{ inputs.sdk-name }}" == "rust-model" || \
+        "${{ inputs.sdk-name }}" == "ts-express" ]]; then
           echo "split-tests=false" >> $GITHUB_OUTPUT
         else
           echo "split-tests=true" >> $GITHUB_OUTPUT
         fi
 
-    - name: Get test matrix for ${sdk-name}
+    - name: Get test matrix for ${{ inputs.sdk-name }}
       if: steps.determine-test-setups.outputs.split-tests == 'true'
       id: get-test-matrices
       uses: ./.github/actions/parse-test-matrix-output
       with:
-        generator-name: ${sdk-name}
+        generator-name: ${{ inputs.sdk-name }}
 
-    - name: Package test matrices for ${sdk-name}
+    - name: Package test matrices for ${{ inputs.sdk-name }}
       if: steps.determine-test-setups.outputs.split-tests == 'true'
       id: package-test-matrices
       uses: ./.github/actions/package-test-matrix
