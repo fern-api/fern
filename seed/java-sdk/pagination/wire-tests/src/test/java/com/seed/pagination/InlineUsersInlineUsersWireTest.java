@@ -3,7 +3,7 @@ package com.seed.pagination;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.pagination.SeedPaginationClient;
-import com.seed.pagination.core.pagination.SyncPagingIterable;
+import com.seed.pagination.core.SyncPagingIterable;
 import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersCursorPaginationRequest;
 import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersExtendedRequest;
 import com.seed.pagination.resources.inlineusers.inlineusers.requests.ListUsersMixedTypeCursorPaginationRequest;
