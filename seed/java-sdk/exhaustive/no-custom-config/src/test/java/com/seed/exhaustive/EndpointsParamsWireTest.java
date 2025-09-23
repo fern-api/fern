@@ -35,7 +35,7 @@ public class EndpointsParamsWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("\"string\""));
-        String response = client.endpoints().params().getWithPath("param");
+        String response = client.endpoints().params().getWithPath(param);
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
@@ -73,7 +73,7 @@ public class EndpointsParamsWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("\"string\""));
-        String response = client.endpoints().params().getWithPath("param");
+        String response = client.endpoints().params().getWithPath(param);
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
@@ -144,7 +144,7 @@ public class EndpointsParamsWireTest {
             .setResponseCode(200)
             .setBody("{}"));
         client.endpoints().params().getWithPathAndQuery(
-            "param",
+            param,
             GetWithPathAndQuery
                 .builder()
                 .query("query")
@@ -160,7 +160,7 @@ public class EndpointsParamsWireTest {
             .setResponseCode(200)
             .setBody("{}"));
         client.endpoints().params().getWithPathAndQuery(
-            "param",
+            param,
             GetWithPathAndQuery
                 .builder()
                 .query("query")
@@ -175,7 +175,7 @@ public class EndpointsParamsWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("\"string\""));
-        String response = client.endpoints().params().modifyWithPath("param", "string");
+        String response = client.endpoints().params().modifyWithPath(param, "string");
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("PUT", request.getMethod());
@@ -239,7 +239,7 @@ public class EndpointsParamsWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("\"string\""));
-        String response = client.endpoints().params().modifyWithPath("param", "string");
+        String response = client.endpoints().params().modifyWithPath(param, "string");
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("PUT", request.getMethod());

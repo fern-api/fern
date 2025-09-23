@@ -9,6 +9,6 @@ public class Example0 {
             .url("https://api.fern.com")
             .build();
 
-        client.bigunion().get("id");
+        client.bigunion().get(id);
     }
 }

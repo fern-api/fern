@@ -21,7 +21,7 @@ public class Example7 {
             .build();
 
         client.nullableOptional().updateComplexProfile(
-            "profileId",
+            profileId,
             UpdateComplexProfileRequest
                 .builder()
                 .nullableRole(UserRole.ADMIN)

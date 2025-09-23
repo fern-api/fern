@@ -9,6 +9,6 @@ public class Example0 {
             .url("https://api.fern.com")
             .build();
 
-        client.nullableOptional().getUser("userId");
+        client.nullableOptional().getUser(userId);
     }
 }

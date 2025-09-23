@@ -12,7 +12,7 @@ public class Example6 {
             .build();
 
         client.file().service().getFile(
-            "filename",
+            filename,
             GetFileRequest
                 .builder()
                 .xFileApiVersion("X-File-API-Version")

@@ -36,7 +36,7 @@ public class FileServiceWireTest {
             .setResponseCode(404)
             .setBody("\"A file with that name was not found!\""));
         File response = client.file().service().getFile(
-            "file.txt",
+            filetxt,
             GetFileRequest
                 .builder()
                 .xFileApiVersion("0.0.2")

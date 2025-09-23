@@ -10,6 +10,6 @@ public class Example4 {
             .url("https://api.fern.com")
             .build();
 
-        client.file().notification().service().getException("notificationId");
+        client.file().notification().service().getException(notificationId);
     }
 }

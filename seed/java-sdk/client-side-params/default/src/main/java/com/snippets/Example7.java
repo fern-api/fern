@@ -10,6 +10,6 @@ public class Example7 {
             .url("https://api.fern.com")
             .build();
 
-        client.service().deleteUser("userId");
+        client.service().deleteUser(userId);
     }
 }

@@ -13,7 +13,7 @@
 <dd>
 
 ```java
-client.service().post("endpointParam");
+client.service().post(endpointParam);
 ```
 </dd>
 </dl>

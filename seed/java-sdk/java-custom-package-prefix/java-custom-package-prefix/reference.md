@@ -73,7 +73,7 @@ client.imdb().createMovie(
 <dd>
 
 ```java
-client.imdb().getMovie("movieId");
+client.imdb().getMovie(movieId);
 ```
 </dd>
 </dl>

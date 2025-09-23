@@ -13,7 +13,7 @@
 
 ```java
 client.postWithNullableNamedRequestBodyType(
-    "id",
+    id,
     PostWithNullableNamedRequestBodyTypeRequest
         .builder()
         .build()
@@ -66,7 +66,7 @@ client.postWithNullableNamedRequestBodyType(
 
 ```java
 client.postWithNonNullableNamedRequestBodyType(
-    "id",
+    id,
     NonNullableObject
         .builder()
         .build()

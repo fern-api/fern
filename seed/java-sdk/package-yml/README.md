@@ -50,7 +50,7 @@ public class Example {
             .build();
 
         client.echo(
-            "id-ksfd9c1",
+            idKsfd9c1,
             EchoRequest
                 .builder()
                 .name("Hello world!")

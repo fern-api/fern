@@ -24,7 +24,7 @@ public class Example7 {
             .build();
 
         client.admin().storeTracedWorkspace(
-            UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            d5e9c84fC2b24bf4B4b07ffd7a9ffc32,
             StoreTracedWorkspaceRequest
                 .builder()
                 .workspaceRunDetails(

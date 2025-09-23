@@ -10,6 +10,6 @@ public class Example25 {
             .url("https://api.fern.com")
             .build();
 
-        client.submission().getExecutionSession("sessionId");
+        client.submission().getExecutionSession(sessionId);
     }
 }

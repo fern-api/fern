@@ -14,7 +14,7 @@
 
 ```java
 client.complex().search(
-    "index",
+    index,
     SearchRequest
         .builder()
         .query(

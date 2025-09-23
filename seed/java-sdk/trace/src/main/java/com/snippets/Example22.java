@@ -10,6 +10,6 @@ public class Example22 {
             .url("https://api.fern.com")
             .build();
 
-        client.problem().deleteProblem("problemId");
+        client.problem().deleteProblem(problemId);
     }
 }

@@ -27,7 +27,7 @@ Get a user by ID
 <dd>
 
 ```java
-client.nullableOptional().getUser("userId");
+client.nullableOptional().getUser(userId);
 ```
 </dd>
 </dl>
@@ -155,7 +155,7 @@ Update a user (partial update)
 
 ```java
 client.nullableOptional().updateUser(
-    "userId",
+    userId,
     UpdateUserRequest
         .builder()
         .username("username")
@@ -616,7 +616,7 @@ Get a complex profile by ID
 <dd>
 
 ```java
-client.nullableOptional().getComplexProfile("profileId");
+client.nullableOptional().getComplexProfile(profileId);
 ```
 </dd>
 </dl>
@@ -671,7 +671,7 @@ Update complex profile to test nullable field updates
 
 ```java
 client.nullableOptional().updateComplexProfile(
-    "profileId",
+    profileId,
     UpdateComplexProfileRequest
         .builder()
         .nullableRole(UserRole.ADMIN)
@@ -1018,7 +1018,7 @@ Get notification settings which may be null
 <dd>
 
 ```java
-client.nullableOptional().getNotificationSettings("userId");
+client.nullableOptional().getNotificationSettings(userId);
 ```
 </dd>
 </dl>
@@ -1073,7 +1073,7 @@ Update tags to test array handling
 
 ```java
 client.nullableOptional().updateTags(
-    "userId",
+    userId,
     UpdateTagsRequest
         .builder()
         .tags(

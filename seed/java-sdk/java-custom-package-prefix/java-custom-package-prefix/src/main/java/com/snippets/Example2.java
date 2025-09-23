@@ -10,6 +10,6 @@ public class Example2 {
             .url("https://api.fern.com")
             .build();
 
-        client.imdb().getMovie("movieId");
+        client.imdb().getMovie(movieId);
     }
 }

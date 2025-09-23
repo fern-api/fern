@@ -15,7 +15,7 @@ public class Example18 {
 
         client.playlist().updatePlaylist(
             1,
-            "playlistId",
+            playlistId,
             Optional.of(
                 UpdatePlaylistRequest
                     .builder()

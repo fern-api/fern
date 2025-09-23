@@ -9,6 +9,6 @@ public class Example0 {
             .url("https://api.fern.com")
             .build();
 
-        client.organizations().getOrganization("tenant_id", "organization_id");
+        client.organizations().getOrganization(tenantId, organizationId);
     }
 }

@@ -11,7 +11,7 @@ public class Example4 {
             .build();
 
         client.service().regularPatch(
-            "id",
+            id,
             RegularPatchRequest
                 .builder()
                 .field1("field1")

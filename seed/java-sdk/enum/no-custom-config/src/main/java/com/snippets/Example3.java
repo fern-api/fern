@@ -1,8 +1,6 @@
 package com.snippets;
 
 import com.seed.enum.SeedEnumClient;
-import com.seed.enum.types.Color;
-import com.seed.enum.types.ColorOrOperand;
 import com.seed.enum.types.Operand;
 
 public class Example3 {
@@ -12,9 +10,6 @@ public class Example3 {
             .url("https://api.fern.com")
             .build();
 
-        client.pathParam().send(
-            Operand.GREATER_THAN,
-            ColorOrOperand.of(Color.RED)
-        );
+        client.pathParam().send(Operand.GREATER_THAN, red);
     }
 }

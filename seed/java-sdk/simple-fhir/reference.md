@@ -12,7 +12,7 @@
 <dd>
 
 ```java
-client.getAccount("account_id");
+client.getAccount(accountId);
 ```
 </dd>
 </dl>

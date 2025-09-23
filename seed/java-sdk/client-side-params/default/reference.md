@@ -141,7 +141,7 @@ Get a single resource
 
 ```java
 client.service().getResource(
-    "resourceId",
+    resourceId,
     GetResourceRequest
         .builder()
         .includeMetadata(true)
@@ -432,7 +432,7 @@ Get a user by ID
 
 ```java
 client.service().getUserById(
-    "userId",
+    userId,
     GetUserRequest
         .builder()
         .fields("fields")
@@ -588,7 +588,7 @@ Update a user
 
 ```java
 client.service().updateUser(
-    "userId",
+    userId,
     UpdateUserRequest
         .builder()
         .email("email")
@@ -675,7 +675,7 @@ Delete a user
 <dd>
 
 ```java
-client.service().deleteUser("userId");
+client.service().deleteUser(userId);
 ```
 </dd>
 </dl>
@@ -807,7 +807,7 @@ Get a connection by ID
 
 ```java
 client.service().getConnection(
-    "connectionId",
+    connectionId,
     GetConnectionRequest
         .builder()
         .fields("fields")
@@ -1001,7 +1001,7 @@ Get a client by ID
 
 ```java
 client.service().getClient(
-    "clientId",
+    clientId,
     GetClientRequest
         .builder()
         .fields("fields")

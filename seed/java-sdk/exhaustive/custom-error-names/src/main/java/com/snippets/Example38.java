@@ -14,7 +14,7 @@ public class Example38 {
         client.endpoints().put().add(
             PutRequest
                 .builder()
-                .id("id")
+                .id(id)
                 .build()
         );
     }

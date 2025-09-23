@@ -12,7 +12,7 @@ public class Example1 {
             .build();
 
         client.service().getResource(
-            "resourceId",
+            resourceId,
             GetResourceRequest
                 .builder()
                 .includeMetadata(true)

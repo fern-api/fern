@@ -9,6 +9,6 @@ public class Example0 {
             .url("https://api.fern.com")
             .build();
 
-        client.service().post("pathParam", "serviceParam", "resourceParam", 1);
+        client.service().post(pathParam, serviceParam, resourceParam, 1);
     }
 }

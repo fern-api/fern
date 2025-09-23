@@ -48,8 +48,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.enum.SeedEnumClient;\nimport com.seed.enum.types.Color;\nimport com.seed.enum.types.ColorOrOperand;\nimport com.seed.enum.types.Operand;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEnumClient client = SeedEnumClient\n            .builder()\n            .build();\n\n        client.pathParam().send(\n            Operand.GREATER_THAN,\n            ColorOrOperand.of(Color.RED)\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.enum.SeedEnumClient;\nimport com.seed.enum.types.Color;\nimport com.seed.enum.types.ColorOrOperand;\nimport com.seed.enum.types.Operand;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEnumClient client = SeedEnumClient\n            .builder()\n            .build();\n\n        client.pathParam().send(\n            Operand.GREATER_THAN,\n            ColorOrOperand.of(Color.RED)\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.enum.SeedEnumClient;\nimport com.seed.enum.types.Operand;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEnumClient client = SeedEnumClient\n            .builder()\n            .build();\n\n        client.pathParam().send(Operand.GREATER_THAN, red);\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.enum.SeedEnumClient;\nimport com.seed.enum.types.Operand;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEnumClient client = SeedEnumClient\n            .builder()\n            .build();\n\n        client.pathParam().send(Operand.GREATER_THAN, red);\n    }\n}\n"
             }
         },
         {
@@ -61,8 +61,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.enum.SeedEnumClient;\nimport com.seed.enum.types.Color;\nimport com.seed.enum.types.ColorOrOperand;\nimport com.seed.enum.types.Operand;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEnumClient client = SeedEnumClient\n            .builder()\n            .build();\n\n        client.pathParam().send(\n            Operand.GREATER_THAN,\n            ColorOrOperand.of(Color.RED)\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.enum.SeedEnumClient;\nimport com.seed.enum.types.Color;\nimport com.seed.enum.types.ColorOrOperand;\nimport com.seed.enum.types.Operand;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEnumClient client = SeedEnumClient\n            .builder()\n            .build();\n\n        client.pathParam().send(\n            Operand.GREATER_THAN,\n            ColorOrOperand.of(Color.RED)\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.enum.SeedEnumClient;\nimport com.seed.enum.types.Operand;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEnumClient client = SeedEnumClient\n            .builder()\n            .build();\n\n        client.pathParam().send(Operand.GREATER_THAN, red);\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.enum.SeedEnumClient;\nimport com.seed.enum.types.Operand;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedEnumClient client = SeedEnumClient\n            .builder()\n            .build();\n\n        client.pathParam().send(Operand.GREATER_THAN, red);\n    }\n}\n"
             }
         },
         {

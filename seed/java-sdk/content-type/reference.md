@@ -85,7 +85,7 @@ This endpoint demonstrates the distinction between:
 
 ```java
 client.service().patchComplex(
-    "id",
+    id,
     PatchComplexRequest
         .builder()
         .name("name")
@@ -251,7 +251,7 @@ This should trigger the NPE issue when optional fields aren't initialized.
 
 ```java
 client.service().namedPatchWithMixed(
-    "id",
+    id,
     NamedMixedPatchRequest
         .builder()
         .appId("appId")
@@ -435,7 +435,7 @@ Regular PATCH endpoint without merge-patch semantics
 
 ```java
 client.service().regularPatch(
-    "id",
+    id,
     RegularPatchRequest
         .builder()
         .field1("field1")

@@ -9,8 +9,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.mixedCase.SeedMixedCaseClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMixedCaseClient client = SeedMixedCaseClient\n            .builder()\n            .build();\n\n        client.service().getResource(\"rsc-xyz\");\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.mixedCase.SeedMixedCaseClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMixedCaseClient client = SeedMixedCaseClient\n            .builder()\n            .build();\n\n        client.service().getResource(\"rsc-xyz\");\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.mixedCase.SeedMixedCaseClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMixedCaseClient client = SeedMixedCaseClient\n            .builder()\n            .build();\n\n        client.service().getResource(rscXyz);\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.mixedCase.SeedMixedCaseClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMixedCaseClient client = SeedMixedCaseClient\n            .builder()\n            .build();\n\n        client.service().getResource(rscXyz);\n    }\n}\n"
             }
         },
         {
@@ -22,8 +22,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.mixedCase.SeedMixedCaseClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMixedCaseClient client = SeedMixedCaseClient\n            .builder()\n            .build();\n\n        client.service().getResource(\"ResourceID\");\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.mixedCase.SeedMixedCaseClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMixedCaseClient client = SeedMixedCaseClient\n            .builder()\n            .build();\n\n        client.service().getResource(\"ResourceID\");\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.mixedCase.SeedMixedCaseClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMixedCaseClient client = SeedMixedCaseClient\n            .builder()\n            .build();\n\n        client.service().getResource(resourceID);\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.mixedCase.SeedMixedCaseClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedMixedCaseClient client = SeedMixedCaseClient\n            .builder()\n            .build();\n\n        client.service().getResource(resourceID);\n    }\n}\n"
             }
         },
         {

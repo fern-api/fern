@@ -1,7 +1,6 @@
 package com.snippets;
 
 import com.seed.trace.SeedTraceClient;
-import com.seed.trace.resources.commons.types.Language;
 
 public class Example24 {
     public static void main(String[] args) {
@@ -11,6 +10,6 @@ public class Example24 {
             .url("https://api.fern.com")
             .build();
 
-        client.submission().createExecutionSession(Language.JAVA);
+        client.submission().createExecutionSession(jAVA);
     }
 }

@@ -9,6 +9,6 @@ public class Example6 {
             .url("https://api.fern.com")
             .build();
 
-        client.nullableOptional().getComplexProfile("profileId");
+        client.nullableOptional().getComplexProfile(profileId);
     }
 }

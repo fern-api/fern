@@ -42,7 +42,6 @@ package com.example.usage;
 
 import com.seed.trace.SeedTraceClient;
 import com.seed.trace.resources.submission.types.TestSubmissionStatus;
-import java.util.UUID;
 
 public class Example {
     public static void main(String[] args) {
@@ -52,7 +51,7 @@ public class Example {
             .build();
 
         client.admin().updateTestSubmissionStatus(
-            UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+            d5e9c84fC2b24bf4B4b07ffd7a9ffc32,
             TestSubmissionStatus.stopped()
         );
     }

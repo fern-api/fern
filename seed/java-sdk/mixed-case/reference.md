@@ -13,7 +13,7 @@
 <dd>
 
 ```java
-client.service().getResource("rsc-xyz");
+client.service().getResource(rscXyz);
 ```
 </dd>
 </dl>

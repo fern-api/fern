@@ -9,6 +9,6 @@ public class Example3 {
             .url("https://api.fern.com")
             .build();
 
-        client.service().nop("id", "nestedId");
+        client.service().nop(id, nestedId);
     }
 }

@@ -19,7 +19,7 @@ public class Example13 {
             .build();
 
         client.endpoints().httpMethods().testPatch(
-            "id",
+            id,
             ObjectWithOptionalField
                 .builder()
                 .string("string")

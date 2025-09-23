@@ -11,8 +11,8 @@ public class Example1 {
             .build();
 
         client.organizations().getOrganizationUser(
-            "organization_id",
-            "user_id",
+            organizationId,
+            userId,
             GetOrganizationUserRequest
                 .builder()
                 .build()

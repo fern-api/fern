@@ -14,7 +14,7 @@ public class Example1 {
             .build();
 
         client.service().patchComplex(
-            "id",
+            id,
             PatchComplexRequest
                 .builder()
                 .name("name")

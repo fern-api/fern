@@ -13,7 +13,7 @@ public class Example5 {
             .build();
 
         client.user().updateUser(
-            "user_id",
+            userId,
             UpdateUserRequest
                 .builder()
                 .body(

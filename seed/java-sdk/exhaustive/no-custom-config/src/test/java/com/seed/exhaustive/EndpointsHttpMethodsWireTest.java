@@ -42,7 +42,7 @@ public class EndpointsHttpMethodsWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("\"string\""));
-        String response = client.endpoints().httpMethods().testGet("id");
+        String response = client.endpoints().httpMethods().testGet(id);
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());
@@ -173,7 +173,7 @@ public class EndpointsHttpMethodsWireTest {
             .setResponseCode(200)
             .setBody("{\"string\":\"string\",\"integer\":1,\"long\":1000000,\"double\":1.1,\"bool\":true,\"datetime\":\"2024-01-15T09:30:00Z\",\"date\":\"2023-01-15\",\"uuid\":\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\"base64\":\"SGVsbG8gd29ybGQh\",\"list\":[\"list\",\"list\"],\"set\":[\"set\"],\"map\":{\"1\":\"map\"},\"bigint\":\"1000000\"}"));
         ObjectWithOptionalField response = client.endpoints().httpMethods().testPut(
-            "id",
+            id,
             ObjectWithRequiredField
                 .builder()
                 .string("string")
@@ -266,7 +266,7 @@ public class EndpointsHttpMethodsWireTest {
             .setResponseCode(200)
             .setBody("{\"string\":\"string\",\"integer\":1,\"long\":1000000,\"double\":1.1,\"bool\":true,\"datetime\":\"2024-01-15T09:30:00Z\",\"date\":\"2023-01-15\",\"uuid\":\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\"base64\":\"SGVsbG8gd29ybGQh\",\"list\":[\"list\",\"list\"],\"set\":[\"set\"],\"map\":{\"1\":\"map\"},\"bigint\":\"1000000\"}"));
         ObjectWithOptionalField response = client.endpoints().httpMethods().testPatch(
-            "id",
+            id,
             ObjectWithOptionalField
                 .builder()
                 .string("string")
@@ -401,7 +401,7 @@ public class EndpointsHttpMethodsWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("true"));
-        Boolean response = client.endpoints().httpMethods().testDelete("id");
+        Boolean response = client.endpoints().httpMethods().testDelete(id);
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("DELETE", request.getMethod());

@@ -518,7 +518,7 @@ client.endpoints().enum_().getAndReturnEnum(WeatherReport.SUNNY);
 <dd>
 
 ```java
-client.endpoints().httpMethods().testGet("id");
+client.endpoints().httpMethods().testGet(id);
 ```
 </dd>
 </dl>
@@ -604,7 +604,7 @@ client.endpoints().httpMethods().testPost(
 
 ```java
 client.endpoints().httpMethods().testPut(
-    "id",
+    id,
     ObjectWithRequiredField
         .builder()
         .string("string")
@@ -658,7 +658,7 @@ client.endpoints().httpMethods().testPut(
 
 ```java
 client.endpoints().httpMethods().testPatch(
-    "id",
+    id,
     ObjectWithOptionalField
         .builder()
         .string("string")
@@ -735,7 +735,7 @@ client.endpoints().httpMethods().testPatch(
 <dd>
 
 ```java
-client.endpoints().httpMethods().testDelete("id");
+client.endpoints().httpMethods().testDelete(id);
 ```
 </dd>
 </dl>
@@ -1017,7 +1017,7 @@ client.endpoints().object().getAndReturnNestedWithOptionalField(
 
 ```java
 client.endpoints().object().getAndReturnNestedWithRequiredField(
-    "string",
+    string,
     NestedObjectWithRequiredField
         .builder()
         .string("string")
@@ -1226,7 +1226,7 @@ GET with path param
 <dd>
 
 ```java
-client.endpoints().params().getWithPath("param");
+client.endpoints().params().getWithPath(param);
 ```
 </dd>
 </dl>
@@ -1280,7 +1280,7 @@ GET with path param
 <dd>
 
 ```java
-client.endpoints().params().getWithPath("param");
+client.endpoints().params().getWithPath(param);
 ```
 </dd>
 </dl>
@@ -1471,7 +1471,7 @@ GET with path and query params
 
 ```java
 client.endpoints().params().getWithPathAndQuery(
-    "param",
+    param,
     GetWithPathAndQuery
         .builder()
         .query("query")
@@ -1539,7 +1539,7 @@ GET with path and query params
 
 ```java
 client.endpoints().params().getWithPathAndQuery(
-    "param",
+    param,
     GetWithPathAndQuery
         .builder()
         .query("query")
@@ -1606,7 +1606,7 @@ PUT to update with path param
 <dd>
 
 ```java
-client.endpoints().params().modifyWithPath("param", "string");
+client.endpoints().params().modifyWithPath(param, "string");
 ```
 </dd>
 </dl>
@@ -1668,7 +1668,7 @@ PUT to update with path param
 <dd>
 
 ```java
-client.endpoints().params().modifyWithPath("param", "string");
+client.endpoints().params().modifyWithPath(param, "string");
 ```
 </dd>
 </dl>
@@ -2079,7 +2079,7 @@ client.endpoints().primitive().getAndReturnBase64("SGVsbG8gd29ybGQh".getBytes())
 
 ```java
 client.endpoints().put().add(
-    "id",
+    id,
     PutRequest
         .builder()
         .build()

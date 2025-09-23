@@ -11,7 +11,7 @@ public class Example3 {
             .build();
 
         client.user().getUser(
-            "user_id",
+            userId,
             GetUsersRequest
                 .builder()
                 .build()

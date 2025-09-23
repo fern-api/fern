@@ -93,7 +93,7 @@ client.echo("primitive");
 <dd>
 
 ```java
-client.file().notification().service().getException("notification-hsy129x");
+client.file().notification().service().getException(notificationHsy129x);
 ```
 </dd>
 </dl>
@@ -149,7 +149,7 @@ This endpoint returns a file by its name.
 
 ```java
 client.file().service().getFile(
-    "file.txt",
+    filetxt,
     GetFileRequest
         .builder()
         .xFileApiVersion("0.0.2")
@@ -209,7 +209,7 @@ This endpoint checks the health of a resource.
 <dd>
 
 ```java
-client.health().service().check("id-2sdx82h");
+client.health().service().check(id2sdx82h);
 ```
 </dd>
 </dl>
@@ -289,7 +289,7 @@ client.health().service().ping();
 <dd>
 
 ```java
-client.service().getMovie("movie-c06a4ad7");
+client.service().getMovie(movieC06a4ad7);
 ```
 </dd>
 </dl>

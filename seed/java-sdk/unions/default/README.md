@@ -48,7 +48,7 @@ public class Example {
             .builder()
             .build();
 
-        client.bigunion().get("id");
+        client.bigunion().get(id);
     }
 }
 ```

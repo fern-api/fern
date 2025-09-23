@@ -160,10 +160,7 @@ client.inlinedRequest().send(
 <dd>
 
 ```java
-client.pathParam().send(
-    Operand.GREATER_THAN,
-    ColorOrOperand.of(Color.RED)
-);
+client.pathParam().send(Operand.GREATER_THAN, red);
 ```
 </dd>
 </dl>

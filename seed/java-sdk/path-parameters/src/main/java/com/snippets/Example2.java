@@ -11,7 +11,7 @@ public class Example2 {
             .build();
 
         client.organizations().searchOrganizations(
-            "organization_id",
+            organizationId,
             SearchOrganizationsRequest
                 .builder()
                 .limit(1)

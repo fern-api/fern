@@ -55,7 +55,7 @@ public class Example {
             .build();
 
         client.complex().search(
-            "index",
+            index,
             SearchRequest
                 .builder()
                 .query(

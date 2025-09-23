@@ -10,6 +10,6 @@ public class Example10 {
             .url("https://api.fern.com")
             .build();
 
-        client.endpoints().httpMethods().testGet("id");
+        client.endpoints().httpMethods().testGet(id);
     }
 }

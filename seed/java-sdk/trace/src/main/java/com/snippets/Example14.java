@@ -10,6 +10,6 @@ public class Example14 {
             .url("https://api.fern.com")
             .build();
 
-        client.playlist().getPlaylist(1, "playlistId");
+        client.playlist().getPlaylist(1, playlistId);
     }
 }

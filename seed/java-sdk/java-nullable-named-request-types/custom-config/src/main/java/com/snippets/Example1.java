@@ -12,7 +12,7 @@ public class Example1 {
             .build();
 
         client.postWithNullableNamedRequestBodyType(
-            "id",
+            id,
             PostWithNullableNamedRequestBodyTypeRequest
                 .builder()
                 .body(

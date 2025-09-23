@@ -12,7 +12,7 @@ public class Example11 {
             .build();
 
         client.service().getClient(
-            "clientId",
+            clientId,
             GetClientRequest
                 .builder()
                 .fields("fields")

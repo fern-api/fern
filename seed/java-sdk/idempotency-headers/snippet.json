@@ -22,8 +22,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.idempotencyHeaders.SeedIdempotencyHeadersClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedIdempotencyHeadersClient client = SeedIdempotencyHeadersClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.payment().delete(\"paymentId\");\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.idempotencyHeaders.SeedIdempotencyHeadersClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedIdempotencyHeadersClient client = SeedIdempotencyHeadersClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.payment().delete(\"paymentId\");\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.idempotencyHeaders.SeedIdempotencyHeadersClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedIdempotencyHeadersClient client = SeedIdempotencyHeadersClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.payment().delete(paymentId);\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.idempotencyHeaders.SeedIdempotencyHeadersClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedIdempotencyHeadersClient client = SeedIdempotencyHeadersClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.payment().delete(paymentId);\n    }\n}\n"
             }
         }
     ],

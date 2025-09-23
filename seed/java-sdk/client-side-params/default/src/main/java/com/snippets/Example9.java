@@ -12,7 +12,7 @@ public class Example9 {
             .build();
 
         client.service().getConnection(
-            "connectionId",
+            connectionId,
             GetConnectionRequest
                 .builder()
                 .fields("fields")

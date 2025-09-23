@@ -14,7 +14,7 @@
 
 ```java
 client.singleProperty().doThing(
-    "id",
+    id,
     GetThingRequest
         .builder()
         .includeRemoteData(true)

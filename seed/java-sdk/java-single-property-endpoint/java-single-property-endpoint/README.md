@@ -50,7 +50,7 @@ public class Example {
             .build();
 
         client.singleProperty().doThing(
-            "id",
+            id,
             GetThingRequest
                 .builder()
                 .includeRemoteData(true)

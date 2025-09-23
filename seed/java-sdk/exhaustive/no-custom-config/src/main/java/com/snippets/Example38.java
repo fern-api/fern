@@ -12,7 +12,7 @@ public class Example38 {
             .build();
 
         client.endpoints().put().add(
-            "id",
+            id,
             PutRequest
                 .builder()
                 .build()

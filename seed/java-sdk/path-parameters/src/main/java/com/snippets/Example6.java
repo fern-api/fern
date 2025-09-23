@@ -11,7 +11,7 @@ public class Example6 {
             .build();
 
         client.user().searchUsers(
-            "user_id",
+            userId,
             SearchUsersRequest
                 .builder()
                 .limit(1)

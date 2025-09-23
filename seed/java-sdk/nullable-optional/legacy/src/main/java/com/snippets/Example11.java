@@ -13,7 +13,7 @@ public class Example11 {
             .build();
 
         client.nullableOptional().updateTags(
-            "userId",
+            userId,
             UpdateTagsRequest
                 .builder()
                 .tags(

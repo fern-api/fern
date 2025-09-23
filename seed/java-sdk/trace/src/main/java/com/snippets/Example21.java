@@ -24,7 +24,7 @@ public class Example21 {
             .build();
 
         client.problem().updateProblem(
-            "problemId",
+            problemId,
             CreateProblemRequest
                 .builder()
                 .problemName("problemName")

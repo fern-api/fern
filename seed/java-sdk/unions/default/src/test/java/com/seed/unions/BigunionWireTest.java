@@ -36,7 +36,7 @@ public class BigunionWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{\"type\":\"normalSweet\",\"value\":\"value\",\"id\":\"id\",\"created-at\":\"2024-01-15T09:30:00Z\",\"archived-at\":\"2024-01-15T09:30:00Z\"}"));
-        BigUnion response = client.bigunion().get("id");
+        BigUnion response = client.bigunion().get(id);
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());

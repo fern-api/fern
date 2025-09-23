@@ -36,7 +36,7 @@ public class EndpointsPutWireTest {
             .setResponseCode(200)
             .setBody("{\"errors\":[{\"category\":\"API_ERROR\",\"code\":\"INTERNAL_SERVER_ERROR\",\"detail\":\"detail\",\"field\":\"field\"},{\"category\":\"API_ERROR\",\"code\":\"INTERNAL_SERVER_ERROR\",\"detail\":\"detail\",\"field\":\"field\"}]}"));
         PutResponse response = client.endpoints().put().add(
-            "id",
+            id,
             PutRequest
                 .builder()
                 .build()

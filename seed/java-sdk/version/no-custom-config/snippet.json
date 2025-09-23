@@ -9,8 +9,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.version.SeedVersionClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedVersionClient client = SeedVersionClient\n            .builder()\n            .build();\n\n        client.user().getUser(\"userId\");\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.version.SeedVersionClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedVersionClient client = SeedVersionClient\n            .builder()\n            .build();\n\n        client.user().getUser(\"userId\");\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.version.SeedVersionClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedVersionClient client = SeedVersionClient\n            .builder()\n            .build();\n\n        client.user().getUser(userId);\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.version.SeedVersionClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedVersionClient client = SeedVersionClient\n            .builder()\n            .build();\n\n        client.user().getUser(userId);\n    }\n}\n"
             }
         }
     ],

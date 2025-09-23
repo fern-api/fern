@@ -21,8 +21,8 @@ public class Example6 {
             .build();
 
         client.admin().storeTracedTestCaseV2(
-            UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-            "testCaseId",
+            d5e9c84fC2b24bf4B4b07ffd7a9ffc32,
+            testCaseId,
             Arrays.asList(
                 TraceResponseV2
                     .builder()

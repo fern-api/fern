@@ -9,6 +9,6 @@ public class Example1 {
             .url("https://api.fern.com")
             .build();
 
-        client.service().getResource("ResourceID");
+        client.service().getResource(resourceID);
     }
 }

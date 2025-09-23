@@ -48,7 +48,7 @@ public class Example {
             .builder()
             .build();
 
-        client.get("typeId");
+        client.get(typeId);
     }
 }
 ```

@@ -11,7 +11,7 @@ public class Example2 {
             .build();
 
         client.postWithNonNullableNamedRequestBodyType(
-            "id",
+            id,
             NonNullableObject
                 .builder()
                 .build()

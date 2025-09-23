@@ -33,7 +33,7 @@ public class HealthServiceWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{}"));
-        client.health().service().check("id-2sdx82h");
+        client.health().service().check(id2sdx82h);
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("GET", request.getMethod());

@@ -48,8 +48,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.file().notification().service().getException(\"notification-hsy129x\");\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.file().notification().service().getException(\"notification-hsy129x\");\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.file().notification().service().getException(notificationHsy129x);\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.file().notification().service().getException(notificationHsy129x);\n    }\n}\n"
             }
         },
         {
@@ -61,8 +61,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.file().notification().service().getException(\"notificationId\");\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.file().notification().service().getException(\"notificationId\");\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.file().notification().service().getException(notificationId);\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.file().notification().service().getException(notificationId);\n    }\n}\n"
             }
         },
         {
@@ -74,8 +74,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.resources.file.service.requests.GetFileRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.file().service().getFile(\n            \"file.txt\",\n            GetFileRequest\n                .builder()\n                .xFileApiVersion(\"0.0.2\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.resources.file.service.requests.GetFileRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.file().service().getFile(\n            \"file.txt\",\n            GetFileRequest\n                .builder()\n                .xFileApiVersion(\"0.0.2\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.resources.file.service.requests.GetFileRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.file().service().getFile(\n            filetxt,\n            GetFileRequest\n                .builder()\n                .xFileApiVersion(\"0.0.2\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.resources.file.service.requests.GetFileRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.file().service().getFile(\n            filetxt,\n            GetFileRequest\n                .builder()\n                .xFileApiVersion(\"0.0.2\")\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
@@ -87,8 +87,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.resources.file.service.requests.GetFileRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.file().service().getFile(\n            \"filename\",\n            GetFileRequest\n                .builder()\n                .xFileApiVersion(\"X-File-API-Version\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.resources.file.service.requests.GetFileRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.file().service().getFile(\n            \"filename\",\n            GetFileRequest\n                .builder()\n                .xFileApiVersion(\"X-File-API-Version\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.resources.file.service.requests.GetFileRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.file().service().getFile(\n            filename,\n            GetFileRequest\n                .builder()\n                .xFileApiVersion(\"X-File-API-Version\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.resources.file.service.requests.GetFileRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.file().service().getFile(\n            filename,\n            GetFileRequest\n                .builder()\n                .xFileApiVersion(\"X-File-API-Version\")\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
@@ -100,8 +100,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.resources.file.service.requests.GetFileRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.file().service().getFile(\n            \"filename\",\n            GetFileRequest\n                .builder()\n                .xFileApiVersion(\"X-File-API-Version\")\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.resources.file.service.requests.GetFileRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.file().service().getFile(\n            \"filename\",\n            GetFileRequest\n                .builder()\n                .xFileApiVersion(\"X-File-API-Version\")\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.resources.file.service.requests.GetFileRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.file().service().getFile(\n            filename,\n            GetFileRequest\n                .builder()\n                .xFileApiVersion(\"X-File-API-Version\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport com.seed.examples.resources.file.service.requests.GetFileRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.file().service().getFile(\n            filename,\n            GetFileRequest\n                .builder()\n                .xFileApiVersion(\"X-File-API-Version\")\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
@@ -113,8 +113,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.health().service().check(\"id-2sdx82h\");\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.health().service().check(\"id-2sdx82h\");\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.health().service().check(id2sdx82h);\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.health().service().check(id2sdx82h);\n    }\n}\n"
             }
         },
         {
@@ -126,8 +126,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.health().service().check(\"id-3tey93i\");\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.health().service().check(\"id-3tey93i\");\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.health().service().check(id3tey93i);\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.health().service().check(id3tey93i);\n    }\n}\n"
             }
         },
         {
@@ -139,8 +139,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.health().service().check(\"id\");\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.health().service().check(\"id\");\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.health().service().check(id);\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.health().service().check(id);\n    }\n}\n"
             }
         },
         {
@@ -178,8 +178,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().getMovie(\"movie-c06a4ad7\");\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().getMovie(\"movie-c06a4ad7\");\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().getMovie(movieC06a4ad7);\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().getMovie(movieC06a4ad7);\n    }\n}\n"
             }
         },
         {
@@ -191,8 +191,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().getMovie(\"movieId\");\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().getMovie(\"movieId\");\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().getMovie(movieId);\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().getMovie(movieId);\n    }\n}\n"
             }
         },
         {

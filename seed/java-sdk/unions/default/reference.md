@@ -13,7 +13,7 @@
 <dd>
 
 ```java
-client.bigunion().get("id");
+client.bigunion().get(id);
 ```
 </dd>
 </dl>
@@ -156,7 +156,7 @@ client.bigunion().updateMany(
 <dd>
 
 ```java
-client.bigunion().get("id");
+client.bigunion().get(id);
 ```
 </dd>
 </dl>

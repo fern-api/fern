@@ -48,7 +48,7 @@ public class Example {
             .builder()
             .build();
 
-        client.getAccount("account_id");
+        client.getAccount(accountId);
     }
 }
 ```

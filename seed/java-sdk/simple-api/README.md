@@ -49,7 +49,7 @@ public class Example {
             .token("<token>")
             .build();
 
-        client.user().get("id");
+        client.user().get(id);
     }
 }
 ```

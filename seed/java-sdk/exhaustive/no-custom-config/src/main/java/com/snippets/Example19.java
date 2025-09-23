@@ -20,7 +20,7 @@ public class Example19 {
             .build();
 
         client.endpoints().object().getAndReturnNestedWithRequiredField(
-            "string",
+            string,
             NestedObjectWithRequiredField
                 .builder()
                 .string("string")

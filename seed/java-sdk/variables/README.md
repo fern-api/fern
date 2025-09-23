@@ -48,7 +48,7 @@ public class Example {
             .builder()
             .build();
 
-        client.service().post("endpointParam");
+        client.service().post(endpointParam);
     }
 }
 ```

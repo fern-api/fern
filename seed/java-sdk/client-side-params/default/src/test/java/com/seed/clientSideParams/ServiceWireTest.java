@@ -130,7 +130,7 @@ public class ServiceWireTest {
             .setResponseCode(200)
             .setBody("{\"id\":\"id\",\"name\":\"name\",\"description\":\"description\",\"created_at\":\"2024-01-15T09:30:00Z\",\"updated_at\":\"2024-01-15T09:30:00Z\",\"metadata\":{\"metadata\":{\"key\":\"value\"}}}"));
         Resource response = client.service().getResource(
-            "resourceId",
+            resourceId,
             GetResourceRequest
                 .builder()
                 .includeMetadata(true)
@@ -459,7 +459,7 @@ public class ServiceWireTest {
             .setResponseCode(200)
             .setBody("{\"user_id\":\"user_id\",\"email\":\"email\",\"email_verified\":true,\"username\":\"username\",\"phone_number\":\"phone_number\",\"phone_verified\":true,\"created_at\":\"2024-01-15T09:30:00Z\",\"updated_at\":\"2024-01-15T09:30:00Z\",\"identities\":[{\"connection\":\"connection\",\"user_id\":\"user_id\",\"provider\":\"provider\",\"is_social\":true,\"access_token\":\"access_token\",\"expires_in\":1},{\"connection\":\"connection\",\"user_id\":\"user_id\",\"provider\":\"provider\",\"is_social\":true,\"access_token\":\"access_token\",\"expires_in\":1}],\"app_metadata\":{\"app_metadata\":{\"key\":\"value\"}},\"user_metadata\":{\"user_metadata\":{\"key\":\"value\"}},\"picture\":\"picture\",\"name\":\"name\",\"nickname\":\"nickname\",\"multifactor\":[\"multifactor\",\"multifactor\"],\"last_ip\":\"last_ip\",\"last_login\":\"2024-01-15T09:30:00Z\",\"logins_count\":1,\"blocked\":true,\"given_name\":\"given_name\",\"family_name\":\"family_name\"}"));
         User response = client.service().getUserById(
-            "userId",
+            userId,
             GetUserRequest
                 .builder()
                 .fields("fields")
@@ -711,7 +711,7 @@ public class ServiceWireTest {
             .setResponseCode(200)
             .setBody("{\"user_id\":\"user_id\",\"email\":\"email\",\"email_verified\":true,\"username\":\"username\",\"phone_number\":\"phone_number\",\"phone_verified\":true,\"created_at\":\"2024-01-15T09:30:00Z\",\"updated_at\":\"2024-01-15T09:30:00Z\",\"identities\":[{\"connection\":\"connection\",\"user_id\":\"user_id\",\"provider\":\"provider\",\"is_social\":true,\"access_token\":\"access_token\",\"expires_in\":1},{\"connection\":\"connection\",\"user_id\":\"user_id\",\"provider\":\"provider\",\"is_social\":true,\"access_token\":\"access_token\",\"expires_in\":1}],\"app_metadata\":{\"app_metadata\":{\"key\":\"value\"}},\"user_metadata\":{\"user_metadata\":{\"key\":\"value\"}},\"picture\":\"picture\",\"name\":\"name\",\"nickname\":\"nickname\",\"multifactor\":[\"multifactor\",\"multifactor\"],\"last_ip\":\"last_ip\",\"last_login\":\"2024-01-15T09:30:00Z\",\"logins_count\":1,\"blocked\":true,\"given_name\":\"given_name\",\"family_name\":\"family_name\"}"));
         User response = client.service().updateUser(
-            "userId",
+            userId,
             UpdateUserRequest
                 .builder()
                 .email("email")
@@ -868,7 +868,7 @@ public class ServiceWireTest {
         server.enqueue(new MockResponse()
             .setResponseCode(200)
             .setBody("{}"));
-        client.service().deleteUser("userId");
+        client.service().deleteUser(userId);
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("DELETE", request.getMethod());
@@ -975,7 +975,7 @@ public class ServiceWireTest {
             .setResponseCode(200)
             .setBody("{\"id\":\"id\",\"name\":\"name\",\"display_name\":\"display_name\",\"strategy\":\"strategy\",\"options\":{\"options\":{\"key\":\"value\"}},\"enabled_clients\":[\"enabled_clients\",\"enabled_clients\"],\"realms\":[\"realms\",\"realms\"],\"is_domain_connection\":true,\"metadata\":{\"metadata\":{\"key\":\"value\"}}}"));
         Connection response = client.service().getConnection(
-            "connectionId",
+            connectionId,
             GetConnectionRequest
                 .builder()
                 .fields("fields")
@@ -1254,7 +1254,7 @@ public class ServiceWireTest {
             .setResponseCode(200)
             .setBody("{\"client_id\":\"client_id\",\"tenant\":\"tenant\",\"name\":\"name\",\"description\":\"description\",\"global\":true,\"client_secret\":\"client_secret\",\"app_type\":\"app_type\",\"logo_uri\":\"logo_uri\",\"is_first_party\":true,\"oidc_conformant\":true,\"callbacks\":[\"callbacks\",\"callbacks\"],\"allowed_origins\":[\"allowed_origins\",\"allowed_origins\"],\"web_origins\":[\"web_origins\",\"web_origins\"],\"grant_types\":[\"grant_types\",\"grant_types\"],\"jwt_configuration\":{\"jwt_configuration\":{\"key\":\"value\"}},\"signing_keys\":[{\"signing_keys\":{\"key\":\"value\"}},{\"signing_keys\":{\"key\":\"value\"}}],\"encryption_key\":{\"encryption_key\":{\"key\":\"value\"}},\"sso\":true,\"sso_disabled\":true,\"cross_origin_auth\":true,\"cross_origin_loc\":\"cross_origin_loc\",\"custom_login_page_on\":true,\"custom_login_page\":\"custom_login_page\",\"custom_login_page_preview\":\"custom_login_page_preview\",\"form_template\":\"form_template\",\"is_heroku_app\":true,\"addons\":{\"addons\":{\"key\":\"value\"}},\"token_endpoint_auth_method\":\"token_endpoint_auth_method\",\"client_metadata\":{\"client_metadata\":{\"key\":\"value\"}},\"mobile\":{\"mobile\":{\"key\":\"value\"}}}"));
         Client response = client.service().getClient(
-            "clientId",
+            clientId,
             GetClientRequest
                 .builder()
                 .fields("fields")

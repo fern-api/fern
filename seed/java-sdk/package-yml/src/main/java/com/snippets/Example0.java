@@ -11,7 +11,7 @@ public class Example0 {
             .build();
 
         client.echo(
-            "id-ksfd9c1",
+            idKsfd9c1,
             EchoRequest
                 .builder()
                 .name("Hello world!")

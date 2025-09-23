@@ -13,7 +13,7 @@ public class Example6 {
             .build();
 
         client.service().updateUser(
-            "userId",
+            userId,
             UpdateUserRequest
                 .builder()
                 .email("email")

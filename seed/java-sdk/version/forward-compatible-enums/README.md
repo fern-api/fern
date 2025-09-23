@@ -48,7 +48,7 @@ public class Example {
             .builder()
             .build();
 
-        client.user().getUser("userId");
+        client.user().getUser(userId);
     }
 }
 ```

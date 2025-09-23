@@ -11,7 +11,7 @@ public class Example2 {
             .build();
 
         client.service().namedPatchWithMixed(
-            "id",
+            id,
             NamedMixedPatchRequest
                 .builder()
                 .appId("appId")

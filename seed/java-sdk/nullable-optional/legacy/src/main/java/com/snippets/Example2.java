@@ -12,7 +12,7 @@ public class Example2 {
             .build();
 
         client.nullableOptional().updateUser(
-            "userId",
+            userId,
             UpdateUserRequest
                 .builder()
                 .username("username")

@@ -40,7 +40,7 @@ client.v2().test();
 
 ```java
 client.admin().updateTestSubmissionStatus(
-    UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    d5e9c84fC2b24bf4B4b07ffd7a9ffc32,
     TestSubmissionStatus.stopped()
 );
 ```
@@ -91,7 +91,7 @@ client.admin().updateTestSubmissionStatus(
 
 ```java
 client.admin().sendTestSubmissionUpdate(
-    UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    d5e9c84fC2b24bf4B4b07ffd7a9ffc32,
     TestSubmissionUpdate
         .builder()
         .updateTime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
@@ -148,7 +148,7 @@ client.admin().sendTestSubmissionUpdate(
 
 ```java
 client.admin().updateWorkspaceSubmissionStatus(
-    UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    d5e9c84fC2b24bf4B4b07ffd7a9ffc32,
     WorkspaceSubmissionStatus.stopped()
 );
 ```
@@ -199,7 +199,7 @@ client.admin().updateWorkspaceSubmissionStatus(
 
 ```java
 client.admin().sendWorkspaceSubmissionUpdate(
-    UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    d5e9c84fC2b24bf4B4b07ffd7a9ffc32,
     WorkspaceSubmissionUpdate
         .builder()
         .updateTime(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
@@ -256,8 +256,8 @@ client.admin().sendWorkspaceSubmissionUpdate(
 
 ```java
 client.admin().storeTracedTestCase(
-    UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    "testCaseId",
+    d5e9c84fC2b24bf4B4b07ffd7a9ffc32,
+    testCaseId,
     StoreTracedTestCaseRequest
         .builder()
         .result(
@@ -448,8 +448,8 @@ client.admin().storeTracedTestCase(
 
 ```java
 client.admin().storeTracedTestCaseV2(
-    UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    "testCaseId",
+    d5e9c84fC2b24bf4B4b07ffd7a9ffc32,
+    testCaseId,
     Arrays.asList(
         TraceResponseV2
             .builder()
@@ -621,7 +621,7 @@ client.admin().storeTracedTestCaseV2(
 
 ```java
 client.admin().storeTracedWorkspace(
-    UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    d5e9c84fC2b24bf4B4b07ffd7a9ffc32,
     StoreTracedWorkspaceRequest
         .builder()
         .workspaceRunDetails(
@@ -808,7 +808,7 @@ client.admin().storeTracedWorkspace(
 
 ```java
 client.admin().storeTracedWorkspaceV2(
-    UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
+    d5e9c84fC2b24bf4B4b07ffd7a9ffc32,
     Arrays.asList(
         TraceResponseV2
             .builder()
@@ -1305,7 +1305,7 @@ Returns a playlist
 <dd>
 
 ```java
-client.playlist().getPlaylist(1, "playlistId");
+client.playlist().getPlaylist(1, playlistId);
 ```
 </dd>
 </dl>
@@ -1369,7 +1369,7 @@ Updates a playlist
 ```java
 client.playlist().updatePlaylist(
     1,
-    "playlistId",
+    playlistId,
     Optional.of(
         UpdatePlaylistRequest
             .builder()
@@ -1449,7 +1449,7 @@ Deletes a playlist
 <dd>
 
 ```java
-client.playlist().deletePlaylist(1, "playlist_id");
+client.playlist().deletePlaylist(1, playlistId);
 ```
 </dd>
 </dl>
@@ -1673,7 +1673,7 @@ Updates a problem
 
 ```java
 client.problem().updateProblem(
-    "problemId",
+    problemId,
     CreateProblemRequest
         .builder()
         .problemName("problemName")
@@ -1841,7 +1841,7 @@ Soft deletes a problem
 <dd>
 
 ```java
-client.problem().deleteProblem("problemId");
+client.problem().deleteProblem(problemId);
 ```
 </dd>
 </dl>
@@ -1999,7 +1999,7 @@ Returns sessionId and execution server URL for session. Spins up server.
 <dd>
 
 ```java
-client.submission().createExecutionSession(Language.JAVA);
+client.submission().createExecutionSession(jAVA);
 ```
 </dd>
 </dl>
@@ -2053,7 +2053,7 @@ Returns execution server URL for session. Returns empty if session isn't registe
 <dd>
 
 ```java
-client.submission().getExecutionSession("sessionId");
+client.submission().getExecutionSession(sessionId);
 ```
 </dd>
 </dl>
@@ -2107,7 +2107,7 @@ Stops execution session.
 <dd>
 
 ```java
-client.submission().stopExecutionSession("sessionId");
+client.submission().stopExecutionSession(sessionId);
 ```
 </dd>
 </dl>
@@ -2173,7 +2173,7 @@ client.submission().getExecutionSessionsState();
 <dd>
 
 ```java
-client.sysprop().setNumWarmInstances(Language.JAVA, 1);
+client.sysprop().setNumWarmInstances(jAVA, 1);
 ```
 </dd>
 </dl>
@@ -2339,7 +2339,7 @@ Returns latest version of a problem
 <dd>
 
 ```java
-client.v2().problem().getLatestProblem("problemId");
+client.v2().problem().getLatestProblem(problemId);
 ```
 </dd>
 </dl>
@@ -2393,7 +2393,7 @@ Returns requested version of a problem
 <dd>
 
 ```java
-client.v2().problem().getProblemVersion("problemId", 1);
+client.v2().problem().getProblemVersion(problemId, 1);
 ```
 </dd>
 </dl>
@@ -2534,7 +2534,7 @@ Returns latest version of a problem
 <dd>
 
 ```java
-client.v2().problem().getLatestProblem("problemId");
+client.v2().problem().getLatestProblem(problemId);
 ```
 </dd>
 </dl>
@@ -2588,7 +2588,7 @@ Returns requested version of a problem
 <dd>
 
 ```java
-client.v2().problem().getProblemVersion("problemId", 1);
+client.v2().problem().getProblemVersion(problemId, 1);
 ```
 </dd>
 </dl>

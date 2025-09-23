@@ -9,6 +9,6 @@ public class Example10 {
             .url("https://api.fern.com")
             .build();
 
-        client.nullableOptional().getNotificationSettings("userId");
+        client.nullableOptional().getNotificationSettings(userId);
     }
 }

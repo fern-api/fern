@@ -12,7 +12,7 @@
 <dd>
 
 ```java
-client.get("typeId");
+client.get(typeId);
 ```
 </dd>
 </dl>

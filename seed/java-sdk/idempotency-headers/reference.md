@@ -67,7 +67,7 @@ client.payment().create(
 <dd>
 
 ```java
-client.payment().delete("paymentId");
+client.payment().delete(paymentId);
 ```
 </dd>
 </dl>

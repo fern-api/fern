@@ -50,7 +50,7 @@ public class Example {
             .build();
 
         client.postWithNullableNamedRequestBodyType(
-            "id",
+            id,
             PostWithNullableNamedRequestBodyTypeRequest
                 .builder()
                 .build()

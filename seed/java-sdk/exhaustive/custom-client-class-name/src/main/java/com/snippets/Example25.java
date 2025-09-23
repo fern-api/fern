@@ -12,7 +12,7 @@ public class Example25 {
             .build();
 
         client.endpoints().params().getWithPathAndQuery(
-            "param",
+            param,
             GetWithPathAndQuery
                 .builder()
                 .query("query")

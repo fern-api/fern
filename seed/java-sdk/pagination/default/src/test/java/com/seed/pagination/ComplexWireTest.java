@@ -41,7 +41,7 @@ public class ComplexWireTest {
             .setResponseCode(200)
             .setBody("{\"conversations\":[{\"foo\":\"foo\"},{\"foo\":\"foo\"}],\"pages\":{\"next\":{\"per_page\":1,\"starting_after\":\"starting_after\"},\"page\":1,\"per_page\":1,\"total_pages\":1,\"type\":\"pages\"},\"total_count\":1,\"type\":\"conversation.list\"}"));
         SyncPagingIterable<Conversation> response = client.complex().search(
-            "index",
+            index,
             SearchRequest
                 .builder()
                 .query(
