@@ -85,7 +85,7 @@ runs:
         FORCE_COLOR: "2"
       run: |
         FIXTURES_TO_RUN=""
-        if [[ "${{ inputs.fixtures-to-run }}" == "all" ]]; then
+        if [[ "${{ inputs.fixtures-to-run }}" != "all" ]]; then
           FIXTURES_TO_RUN="${{ inputs.fixtures-to-run }}"
         fi
 
