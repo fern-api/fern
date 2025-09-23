@@ -246,7 +246,9 @@ public final class GetPlaylistsRequest {
         @JsonSetter(value = "multipleField", nulls = Nulls.SKIP)
         public _FinalStage multipleField(List<String> multipleField) {
             this.multipleField.clear();
-            this.multipleField.addAll(multipleField);
+            if (multipleField != null) {
+                this.multipleField.addAll(multipleField);
+            }
             return this;
         }
 

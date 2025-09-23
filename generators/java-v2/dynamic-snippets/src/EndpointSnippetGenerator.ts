@@ -446,6 +446,18 @@ export class EndpointSnippetGenerator {
                     //
                     // We should fix the generator to permit the non-Optional type and
                     // remove this special case.
+
+                    // Check if value is undefined/null and use Optional.empty() in that case
+                    if (value === undefined || value === null) {
+                        return java.TypeLiteral.reference(
+                            java.invokeMethod({
+                                on: java.codeblock("Optional"),
+                                method: "empty",
+                                arguments_: []
+                            })
+                        );
+                    }
+
                     return java.TypeLiteral.optional({
                         value: this.context.dynamicTypeLiteralMapper.convert({
                             typeReference: body.value.value,

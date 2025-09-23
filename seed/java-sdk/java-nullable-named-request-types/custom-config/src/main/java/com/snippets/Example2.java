@@ -14,9 +14,6 @@ public class Example2 {
             "id",
             NonNullableObject
                 .builder()
-                .nonNullableObjectId("id")
-                .name("name")
-                .age(1)
                 .build()
         );
     }

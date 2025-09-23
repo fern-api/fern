@@ -129,7 +129,9 @@ public final class GradedResponseV2 {
     )
     public _FinalStage testCases(Map<TestCaseId, TestCaseGrade> testCases) {
       this.testCases.clear();
-      this.testCases.putAll(testCases);
+      if (testCases != null) {
+        this.testCases.putAll(testCases);
+      }
       return this;
     }
 

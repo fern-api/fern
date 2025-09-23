@@ -460,7 +460,7 @@ client.service().createBigEntity(
     BigEntity
         .builder()
         .castMember(
-            CastMember.ofActor(
+            CastMember.of(
                 Actor
                     .builder()
                     .name("name")
@@ -496,7 +496,7 @@ client.service().createBigEntity(
             Entity
                 .builder()
                 .type(
-                    Type.ofBasicType(BasicType.PRIMITIVE)
+                    Type.of(BasicType.PRIMITIVE)
                 )
                 .name("name")
                 .build()
@@ -950,7 +950,9 @@ client.service().createBigEntity(
 <dd>
 
 ```java
-client.service().refreshToken(Optional.of());
+client.service().refreshToken(
+    Optional.empty()
+);
 ```
 </dd>
 </dl>

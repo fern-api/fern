@@ -186,7 +186,9 @@ public final class Playlist implements IPlaylistCreateRequest {
         @JsonSetter(value = "problems", nulls = Nulls.SKIP)
         public _FinalStage problems(List<String> problems) {
             this.problems.clear();
-            this.problems.addAll(problems);
+            if (problems != null) {
+                this.problems.addAll(problems);
+            }
             return this;
         }
 

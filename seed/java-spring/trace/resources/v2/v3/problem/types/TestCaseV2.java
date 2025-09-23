@@ -184,7 +184,9 @@ public final class TestCaseV2 {
     )
     public _FinalStage arguments(Map<ParameterId, VariableValue> arguments) {
       this.arguments.clear();
-      this.arguments.putAll(arguments);
+      if (arguments != null) {
+        this.arguments.putAll(arguments);
+      }
       return this;
     }
 

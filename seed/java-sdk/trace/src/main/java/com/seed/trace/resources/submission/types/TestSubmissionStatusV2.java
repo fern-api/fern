@@ -185,7 +185,9 @@ public final class TestSubmissionStatusV2 {
         @JsonSetter(value = "updates", nulls = Nulls.SKIP)
         public _FinalStage updates(List<TestSubmissionUpdate> updates) {
             this.updates.clear();
-            this.updates.addAll(updates);
+            if (updates != null) {
+                this.updates.addAll(updates);
+            }
             return this;
         }
 

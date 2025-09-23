@@ -887,12 +887,16 @@
               "key": "channels",
               "schema": {
                 "generatedName": "CreateIssueTriggerRequestChannels",
-                "schema": "IssueTriggerChannels",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "CreateIssueTriggerRequestChannels",
+                  "schema": "IssueTriggerChannels",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "audiences": [],
               "readonly": false,
@@ -1268,12 +1272,16 @@
               "key": "channels",
               "schema": {
                 "generatedName": "UpsertIssueTriggerRequestChannels",
-                "schema": "IssueTriggerChannels",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "UpsertIssueTriggerRequestChannels",
+                  "schema": "IssueTriggerChannels",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "audiences": [],
               "readonly": false,
@@ -1874,12 +1882,16 @@
                 "generatedName": "updateIssueTriggerRequestChannels",
                 "value": {
                   "generatedName": "UpdateIssueTriggerRequestChannels",
-                  "schema": "IssueTriggerChannels",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "UpdateIssueTriggerRequestChannels",
+                    "schema": "IssueTriggerChannels",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -3395,12 +3407,16 @@
         "description": "A single attempt",
         "schema": {
           "generatedName": "GetAttemptResponse",
-          "schema": "EventAttempt",
-          "source": {
-            "file": "../openapi.yml",
-            "type": "openapi"
+          "value": {
+            "generatedName": "GetAttemptResponse",
+            "schema": "EventAttempt",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
           },
-          "type": "reference"
+          "type": "nullable"
         },
         "fullExamples": [],
         "source": {
@@ -41755,12 +41771,16 @@
         "description": "A single ruleset",
         "schema": {
           "generatedName": "CreateRulesetResponse",
-          "schema": "Ruleset",
-          "source": {
-            "file": "../openapi.yml",
-            "type": "openapi"
+          "value": {
+            "generatedName": "CreateRulesetResponse",
+            "schema": "Ruleset",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
           },
-          "type": "reference"
+          "type": "nullable"
         },
         "fullExamples": [],
         "source": {
@@ -42094,12 +42114,16 @@
         "description": "A single ruleset",
         "schema": {
           "generatedName": "UpsertRulesetResponse",
-          "schema": "Ruleset",
-          "source": {
-            "file": "../openapi.yml",
-            "type": "openapi"
+          "value": {
+            "generatedName": "UpsertRulesetResponse",
+            "schema": "Ruleset",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
           },
-          "type": "reference"
+          "type": "nullable"
         },
         "fullExamples": [],
         "source": {
@@ -42364,12 +42388,16 @@
         "description": "A single ruleset",
         "schema": {
           "generatedName": "GetRulesetResponse",
-          "schema": "Ruleset",
-          "source": {
-            "file": "../openapi.yml",
-            "type": "openapi"
+          "value": {
+            "generatedName": "GetRulesetResponse",
+            "schema": "Ruleset",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
           },
-          "type": "reference"
+          "type": "nullable"
         },
         "fullExamples": [],
         "source": {
@@ -42703,12 +42731,16 @@
         "description": "A single ruleset",
         "schema": {
           "generatedName": "UpdateRulesetResponse",
-          "schema": "Ruleset",
-          "source": {
-            "file": "../openapi.yml",
-            "type": "openapi"
+          "value": {
+            "generatedName": "UpdateRulesetResponse",
+            "schema": "Ruleset",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
           },
-          "type": "reference"
+          "type": "nullable"
         },
         "fullExamples": [],
         "source": {
@@ -43023,12 +43055,16 @@
         "description": "A single ruleset",
         "schema": {
           "generatedName": "ArchiveRulesetResponse",
-          "schema": "Ruleset",
-          "source": {
-            "file": "../openapi.yml",
-            "type": "openapi"
+          "value": {
+            "generatedName": "ArchiveRulesetResponse",
+            "schema": "Ruleset",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
           },
-          "type": "reference"
+          "type": "nullable"
         },
         "fullExamples": [],
         "source": {
@@ -43245,12 +43281,16 @@
         "description": "A single ruleset",
         "schema": {
           "generatedName": "UnarchiveRulesetResponse",
-          "schema": "Ruleset",
-          "source": {
-            "file": "../openapi.yml",
-            "type": "openapi"
+          "value": {
+            "generatedName": "UnarchiveRulesetResponse",
+            "schema": "Ruleset",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
           },
-          "type": "reference"
+          "type": "nullable"
         },
         "fullExamples": [],
         "source": {
@@ -57485,12 +57525,16 @@
               "generatedName": "issueTriggerChannels",
               "value": {
                 "generatedName": "IssueTriggerChannels",
-                "schema": "IssueTriggerChannels",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "IssueTriggerChannels",
+                  "schema": "IssueTriggerChannels",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -58122,12 +58166,16 @@
                 "generatedName": "eventAttemptTrigger",
                 "value": {
                   "generatedName": "EventAttemptTrigger",
-                  "schema": "AttemptTrigger",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "EventAttemptTrigger",
+                    "schema": "AttemptTrigger",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -58426,12 +58474,16 @@
                 "generatedName": "eventAttemptState",
                 "value": {
                   "generatedName": "EventAttemptState",
-                  "schema": "AttemptState",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "EventAttemptState",
+                    "schema": "AttemptState",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -58557,12 +58609,16 @@
               "value": {
                 "value": {
                   "generatedName": "EventAttemptPaginatedResultModelsItem",
-                  "schema": "EventAttempt",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "EventAttemptPaginatedResultModelsItem",
+                    "schema": "EventAttempt",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "generatedName": "EventAttemptPaginatedResultModels",
                 "groupName": [],
@@ -58958,12 +59014,16 @@
               "generatedName": "bookmarkData",
               "value": {
                 "generatedName": "BookmarkData",
-                "schema": "ShortEventData",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "BookmarkData",
+                  "schema": "ShortEventData",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -60017,12 +60077,16 @@
               "generatedName": "destinationRateLimitPeriod",
               "value": {
                 "generatedName": "DestinationRateLimitPeriod",
-                "schema": "DestinationRateLimitPeriod",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "DestinationRateLimitPeriod",
+                  "schema": "DestinationRateLimitPeriod",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -60313,12 +60377,16 @@
             "key": "attempt",
             "schema": {
               "generatedName": "RetriedEventAttempt",
-              "schema": "EventAttempt",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+              "value": {
+                "generatedName": "RetriedEventAttempt",
+                "schema": "EventAttempt",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
               },
-              "type": "reference"
+              "type": "nullable"
             },
             "audiences": [],
             "readonly": false,
@@ -61980,12 +62048,16 @@
                 "generatedName": "deliveryIssueDataTriggerAttempt",
                 "value": {
                   "generatedName": "DeliveryIssueDataTriggerAttempt",
-                  "schema": "EventAttempt",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "DeliveryIssueDataTriggerAttempt",
+                    "schema": "EventAttempt",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -62277,12 +62349,16 @@
               "generatedName": "deliveryIssueWithDataData",
               "value": {
                 "generatedName": "DeliveryIssueWithDataData",
-                "schema": "DeliveryIssueData",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "DeliveryIssueWithDataData",
+                  "schema": "DeliveryIssueData",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -62639,12 +62715,16 @@
               "generatedName": "transformationExecutionOriginalEventData",
               "value": {
                 "generatedName": "TransformationExecutionOriginalEventData",
-                "schema": "ShortEventData",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "TransformationExecutionOriginalEventData",
+                  "schema": "ShortEventData",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -62661,12 +62741,16 @@
               "generatedName": "transformationExecutionTransformedEventData",
               "value": {
                 "generatedName": "TransformationExecutionTransformedEventData",
-                "schema": "ShortEventData",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "TransformationExecutionTransformedEventData",
+                  "schema": "ShortEventData",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -62741,12 +62825,16 @@
                 "generatedName": "transformationIssueDataTriggerAttempt",
                 "value": {
                   "generatedName": "TransformationIssueDataTriggerAttempt",
-                  "schema": "EventAttempt",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "TransformationIssueDataTriggerAttempt",
+                    "schema": "EventAttempt",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -63038,12 +63126,16 @@
               "generatedName": "transformationIssueWithDataData",
               "value": {
                 "generatedName": "TransformationIssueWithDataData",
-                "schema": "TransformationIssueData",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "TransformationIssueWithDataData",
+                  "schema": "TransformationIssueData",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -65197,12 +65289,16 @@
               "generatedName": "filterRuleHeaders",
               "value": {
                 "generatedName": "FilterRuleHeaders",
-                "schema": "ConnectionFilterProperty",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "FilterRuleHeaders",
+                  "schema": "ConnectionFilterProperty",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -65219,12 +65315,16 @@
               "generatedName": "filterRuleBody",
               "value": {
                 "generatedName": "FilterRuleBody",
-                "schema": "ConnectionFilterProperty",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "FilterRuleBody",
+                  "schema": "ConnectionFilterProperty",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -65241,12 +65341,16 @@
               "generatedName": "filterRuleQuery",
               "value": {
                 "generatedName": "FilterRuleQuery",
-                "schema": "ConnectionFilterProperty",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "FilterRuleQuery",
+                  "schema": "ConnectionFilterProperty",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -65263,12 +65367,16 @@
               "generatedName": "filterRulePath",
               "value": {
                 "generatedName": "FilterRulePath",
-                "schema": "ConnectionFilterProperty",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "FilterRulePath",
+                  "schema": "ConnectionFilterProperty",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -65823,12 +65931,16 @@
               "value": {
                 "value": {
                   "generatedName": "RulesetPaginatedResultModelsItem",
-                  "schema": "Ruleset",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "RulesetPaginatedResultModelsItem",
+                    "schema": "Ruleset",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "generatedName": "RulesetPaginatedResultModels",
                 "groupName": [],
@@ -67139,12 +67251,16 @@
               "generatedName": "connectionRuleset",
               "value": {
                 "generatedName": "ConnectionRuleset",
-                "schema": "Ruleset",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ConnectionRuleset",
+                  "schema": "Ruleset",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"

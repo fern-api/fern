@@ -133,7 +133,9 @@ public final class GradedResponseV2 {
         @JsonSetter(value = "testCases", nulls = Nulls.SKIP)
         public _FinalStage testCases(Map<String, TestCaseGrade> testCases) {
             this.testCases.clear();
-            this.testCases.putAll(testCases);
+            if (testCases != null) {
+                this.testCases.putAll(testCases);
+            }
             return this;
         }
 

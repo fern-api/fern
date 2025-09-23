@@ -1,3 +1,36 @@
+- version: 3.5.8
+  changelogEntry:
+    - summary: |
+        Fixed wire test generation for union services and added automatic pagination package detection.
+      type: fix
+  createdAt: "2025-09-23"
+  irVersion: 59
+
+- version: 3.5.7
+  changelogEntry:
+    - summary: |
+        Fixed NullPointerException in builder setters when collections are null by adding null checks before addAll()/putAll() calls.
+      type: fix
+  createdAt: "2025-09-22"
+  irVersion: 59
+
+- version: 3.5.6
+  changelogEntry:
+    - summary: |
+        Fixed wire test generation: paginated endpoints return `SyncPagingIterable<T>`, auth methods use correct builder patterns
+      type: fix
+  createdAt: "2025-09-22"
+  irVersion: 59
+
+- version: 3.5.5
+  changelogEntry:
+    - summary: |
+        Fixed wire test compilation errors: pagination types now use raw responses, union factory methods use
+        correct variant names, and empty optionals generate `Optional.empty()` instead of invalid `Optional.of()` calls
+      type: fix
+  createdAt: "2025-09-20"
+  irVersion: 59
+
 - version: 3.5.4
   changelogEntry:
     - summary: |

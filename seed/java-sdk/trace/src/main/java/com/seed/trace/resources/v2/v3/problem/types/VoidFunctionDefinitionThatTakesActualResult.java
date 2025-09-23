@@ -136,7 +136,9 @@ public final class VoidFunctionDefinitionThatTakesActualResult {
         @JsonSetter(value = "additionalParameters", nulls = Nulls.SKIP)
         public _FinalStage additionalParameters(List<Parameter> additionalParameters) {
             this.additionalParameters.clear();
-            this.additionalParameters.addAll(additionalParameters);
+            if (additionalParameters != null) {
+                this.additionalParameters.addAll(additionalParameters);
+            }
             return this;
         }
 

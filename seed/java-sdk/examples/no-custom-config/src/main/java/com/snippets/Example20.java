@@ -1,7 +1,6 @@
 package com.snippets;
 
 import com.seed.examples.SeedExamplesClient;
-import java.util.Optional;
 
 public class Example20 {
     public static void main(String[] args) {
@@ -11,6 +10,8 @@ public class Example20 {
             .url("https://api.fern.com")
             .build();
 
-        client.service().refreshToken(Optional.of());
+        client.service().refreshToken(
+            Optional.empty()
+        );
     }
 }

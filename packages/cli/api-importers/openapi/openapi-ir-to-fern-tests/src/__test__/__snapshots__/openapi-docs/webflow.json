@@ -3415,7 +3415,7 @@
             "properties": {
               "code": {
                 "docs": "Error code",
-                "type": "optional<string>",
+                "type": "optional<literal<"user_limit_reached">>",
               },
               "details": {
                 "docs": "Array of errors",
@@ -3453,7 +3453,7 @@
             "properties": {
               "code": {
                 "docs": "Error code",
-                "type": "optional<string>",
+                "type": "optional<literal<"duplicate_user_email">>",
               },
               "details": {
                 "docs": "Array of errors",
@@ -3582,7 +3582,7 @@
             "properties": {
               "code": {
                 "docs": "Error code",
-                "type": "optional<string>",
+                "type": "optional<literal<"users_not_enabled">>",
               },
               "details": {
                 "docs": "Array of errors",
@@ -5294,7 +5294,7 @@
   ForbiddenErrorBodyOne:
     properties:
       code:
-        type: optional<string>
+        type: optional<literal<"users_not_enabled">>
         docs: Error code
       message:
         type: optional<string>
@@ -5785,7 +5785,7 @@
   ConflictErrorBodyZero:
     properties:
       code:
-        type: optional<string>
+        type: optional<literal<"duplicate_user_email">>
         docs: Error code
       message:
         type: optional<string>
@@ -5810,7 +5810,7 @@
   ConflictErrorBodyOne:
     properties:
       code:
-        type: optional<string>
+        type: optional<literal<"user_limit_reached">>
         docs: Error code
       message:
         type: optional<string>

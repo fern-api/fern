@@ -574,7 +574,9 @@ public final class BuilderGenerator {
                     .build());
             implSetterConsumer.accept(defaultMethodImplBuilder
                     .addStatement("this.$L.clear()", fieldSpec.name)
+                    .beginControlFlow("if ($L != null)", fieldSpec.name)
                     .addStatement("this.$L.putAll($L)", fieldSpec.name, fieldSpec.name)
+                    .endControlFlow()
                     .addStatement("return this")
                     .build());
             implSetterConsumer.accept(
@@ -608,7 +610,9 @@ public final class BuilderGenerator {
                     .build());
             implSetterConsumer.accept(defaultMethodImplBuilder
                     .addStatement("this.$L.clear()", fieldSpec.name)
+                    .beginControlFlow("if ($L != null)", fieldSpec.name)
                     .addStatement("this.$L.addAll($L)", fieldSpec.name, fieldSpec.name)
+                    .endControlFlow()
                     .addStatement("return this")
                     .build());
             implSetterConsumer.accept(createCollectionItemAppender(
@@ -638,7 +642,9 @@ public final class BuilderGenerator {
                     .build());
             implSetterConsumer.accept(defaultMethodImplBuilder
                     .addStatement("this.$L.clear()", fieldSpec.name)
+                    .beginControlFlow("if ($L != null)", fieldSpec.name)
                     .addStatement("this.$L.addAll($L)", fieldSpec.name, fieldSpec.name)
+                    .endControlFlow()
                     .addStatement("return this")
                     .build());
             implSetterConsumer.accept(createCollectionItemAppender(

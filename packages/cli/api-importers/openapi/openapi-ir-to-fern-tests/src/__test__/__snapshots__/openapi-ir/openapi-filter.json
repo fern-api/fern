@@ -164,12 +164,16 @@
       "request": {
         "schema": {
           "generatedName": "CreateOrUpdateCompanyRequestBody",
-          "schema": "create_or_update_company_request",
-          "source": {
-            "file": "../openapi.yml",
-            "type": "openapi"
+          "value": {
+            "generatedName": "CreateOrUpdateCompanyRequestBody",
+            "schema": "create_or_update_company_request",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
           },
-          "type": "reference"
+          "type": "nullable"
         },
         "contentType": "application/json",
         "fullExamples": [
@@ -865,12 +869,16 @@
                 "title": "Activity Log",
                 "value": {
                   "generatedName": "ActivityLogMetadata",
-                  "schema": "activity_log_metadata",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "ActivityLogMetadata",
+                    "schema": "activity_log_metadata",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -1331,12 +1339,16 @@
               "title": "Paginated Response",
               "value": {
                 "generatedName": "ActivityLogListPages",
-                "schema": "cursor_pages",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ActivityLogListPages",
+                  "schema": "cursor_pages",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -1356,12 +1368,16 @@
                 "description": "An array of activity logs",
                 "value": {
                   "generatedName": "ActivityLogListActivityLogsItem",
-                  "schema": "activity_log",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "ActivityLogListActivityLogsItem",
+                    "schema": "activity_log",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "generatedName": "ActivityLogListActivityLogs",
                 "groupName": [],
@@ -2022,12 +2038,16 @@
                 "title": "Admin",
                 "value": {
                   "generatedName": "AdminTeamPriorityLevel",
-                  "schema": "team_priority_level",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "AdminTeamPriorityLevel",
+                    "schema": "team_priority_level",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [
                   "Admins"
@@ -2097,12 +2117,16 @@
                 "description": "A list of admins associated with a given workspace.",
                 "value": {
                   "generatedName": "AdminListAdminsItem",
-                  "schema": "admin",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "AdminListAdminsItem",
+                    "schema": "admin",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "generatedName": "AdminListAdmins",
                 "groupName": [],
@@ -2936,14 +2960,18 @@
                 "nameOverride": "Admin",
                 "title": "Admin",
                 "value": {
-                  "description": "App that the admin belongs to.",
                   "generatedName": "AdminWithAppApp",
-                  "schema": "app",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "App that the admin belongs to.",
+                    "generatedName": "AdminWithAppApp",
+                    "schema": "app",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -3065,13 +3093,25 @@
                 "description": "The type of the last answer delivered by AI Agent. If no answer was delivered then this will return `null`",
                 "value": {
                   "description": "The type of the last answer delivered by AI Agent. If no answer was delivered then this will return `null`",
-                  "schema": {
-                    "example": "ai_answer",
-                    "type": "string"
-                  },
                   "generatedName": "AiAgentLastAnswerType",
+                  "values": [
+                    {
+                      "generatedName": "ai_answer",
+                      "value": "ai_answer",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "custom_answer",
+                      "value": "custom_answer",
+                      "casing": {}
+                    }
+                  ],
                   "groupName": [],
-                  "type": "primitive"
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "enum"
                 },
                 "groupName": [],
                 "type": "nullable"
@@ -3095,13 +3135,35 @@
                 "description": "The resolution state of AI Agent. If no AI or custom answer has been delivered then this will return `null`.",
                 "value": {
                   "description": "The resolution state of AI Agent. If no AI or custom answer has been delivered then this will return `null`.",
-                  "schema": {
-                    "example": "assumed_resolution",
-                    "type": "string"
-                  },
                   "generatedName": "AiAgentResolutionState",
+                  "values": [
+                    {
+                      "generatedName": "assumed_resolution",
+                      "value": "assumed_resolution",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "confirmed_resolution",
+                      "value": "confirmed_resolution",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "routed_to_team",
+                      "value": "routed_to_team",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "abandoned",
+                      "value": "abandoned",
+                      "casing": {}
+                    }
+                  ],
                   "groupName": [],
-                  "type": "primitive"
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "enum"
                 },
                 "groupName": [],
                 "type": "nullable"
@@ -3423,12 +3485,16 @@
               "title": "Article",
               "value": {
                 "generatedName": "ArticleStatistics",
-                "schema": "article_statistics",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ArticleStatistics",
+                  "schema": "article_statistics",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [
                 "Articles"
@@ -3474,13 +3540,13 @@
                   "description": "The type of object - `article_content` .",
                   "value": {
                     "description": "The type of object - `article_content` .",
-                    "schema": {
-                      "example": "article_content",
+                    "value": {
+                      "value": "article_content",
                       "type": "string"
                     },
                     "generatedName": "ArticleContentType",
                     "groupName": [],
-                    "type": "primitive"
+                    "type": "literal"
                   },
                   "groupName": [],
                   "type": "nullable"
@@ -3729,12 +3795,16 @@
               "title": "Articles",
               "value": {
                 "generatedName": "ArticleListPages",
-                "schema": "cursor_pages",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ArticleListPages",
+                  "schema": "cursor_pages",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -4245,12 +4315,16 @@
               "title": "Articles",
               "value": {
                 "generatedName": "ArticleListItemTranslatedContent",
-                "schema": "article_translated_content",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ArticleListItemTranslatedContent",
+                  "schema": "article_translated_content",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [
                 "Articles"
@@ -4644,12 +4718,16 @@
               "title": "Article Search Response",
               "value": {
                 "generatedName": "ArticleSearchResponsePages",
-                "schema": "cursor_pages",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ArticleSearchResponsePages",
+                  "schema": "cursor_pages",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [
                 "Articles"
@@ -4868,13 +4946,13 @@
                   "description": "The type of object - article_translated_content.",
                   "value": {
                     "description": "The type of object - article_translated_content.",
-                    "schema": {
-                      "example": "article_translated_content",
+                    "value": {
+                      "value": "article_translated_content",
                       "type": "string"
                     },
                     "generatedName": "ArticleTranslatedContentType",
                     "groupName": [],
-                    "type": "primitive"
+                    "type": "literal"
                   },
                   "groupName": [],
                   "type": "nullable"
@@ -4892,14 +4970,18 @@
                 "generatedName": "articleTranslatedContentAr",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Arabic",
                   "generatedName": "ArticleTranslatedContentAr",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Arabic",
+                    "generatedName": "ArticleTranslatedContentAr",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -4916,14 +4998,18 @@
                 "generatedName": "articleTranslatedContentBg",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Bulgarian",
                   "generatedName": "ArticleTranslatedContentBg",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Bulgarian",
+                    "generatedName": "ArticleTranslatedContentBg",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -4940,14 +5026,18 @@
                 "generatedName": "articleTranslatedContentBs",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Bosnian",
                   "generatedName": "ArticleTranslatedContentBs",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Bosnian",
+                    "generatedName": "ArticleTranslatedContentBs",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -4964,14 +5054,18 @@
                 "generatedName": "articleTranslatedContentCa",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Catalan",
                   "generatedName": "ArticleTranslatedContentCa",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Catalan",
+                    "generatedName": "ArticleTranslatedContentCa",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -4988,14 +5082,18 @@
                 "generatedName": "articleTranslatedContentCs",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Czech",
                   "generatedName": "ArticleTranslatedContentCs",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Czech",
+                    "generatedName": "ArticleTranslatedContentCs",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5012,14 +5110,18 @@
                 "generatedName": "articleTranslatedContentDa",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Danish",
                   "generatedName": "ArticleTranslatedContentDa",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Danish",
+                    "generatedName": "ArticleTranslatedContentDa",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5036,14 +5138,18 @@
                 "generatedName": "articleTranslatedContentDe",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in German",
                   "generatedName": "ArticleTranslatedContentDe",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in German",
+                    "generatedName": "ArticleTranslatedContentDe",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5060,14 +5166,18 @@
                 "generatedName": "articleTranslatedContentEl",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Greek",
                   "generatedName": "ArticleTranslatedContentEl",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Greek",
+                    "generatedName": "ArticleTranslatedContentEl",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5084,14 +5194,18 @@
                 "generatedName": "articleTranslatedContentEn",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in English",
                   "generatedName": "ArticleTranslatedContentEn",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in English",
+                    "generatedName": "ArticleTranslatedContentEn",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5108,14 +5222,18 @@
                 "generatedName": "articleTranslatedContentEs",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Spanish",
                   "generatedName": "ArticleTranslatedContentEs",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Spanish",
+                    "generatedName": "ArticleTranslatedContentEs",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5132,14 +5250,18 @@
                 "generatedName": "articleTranslatedContentEt",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Estonian",
                   "generatedName": "ArticleTranslatedContentEt",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Estonian",
+                    "generatedName": "ArticleTranslatedContentEt",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5156,14 +5278,18 @@
                 "generatedName": "articleTranslatedContentFi",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Finnish",
                   "generatedName": "ArticleTranslatedContentFi",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Finnish",
+                    "generatedName": "ArticleTranslatedContentFi",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5180,14 +5306,18 @@
                 "generatedName": "articleTranslatedContentFr",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in French",
                   "generatedName": "ArticleTranslatedContentFr",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in French",
+                    "generatedName": "ArticleTranslatedContentFr",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5204,14 +5334,18 @@
                 "generatedName": "articleTranslatedContentHe",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Hebrew",
                   "generatedName": "ArticleTranslatedContentHe",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Hebrew",
+                    "generatedName": "ArticleTranslatedContentHe",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5228,14 +5362,18 @@
                 "generatedName": "articleTranslatedContentHr",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Croatian",
                   "generatedName": "ArticleTranslatedContentHr",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Croatian",
+                    "generatedName": "ArticleTranslatedContentHr",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5252,14 +5390,18 @@
                 "generatedName": "articleTranslatedContentHu",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Hungarian",
                   "generatedName": "ArticleTranslatedContentHu",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Hungarian",
+                    "generatedName": "ArticleTranslatedContentHu",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5276,14 +5418,18 @@
                 "generatedName": "articleTranslatedContentId",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Indonesian",
                   "generatedName": "ArticleTranslatedContentId",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Indonesian",
+                    "generatedName": "ArticleTranslatedContentId",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5300,14 +5446,18 @@
                 "generatedName": "articleTranslatedContentIt",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Italian",
                   "generatedName": "ArticleTranslatedContentIt",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Italian",
+                    "generatedName": "ArticleTranslatedContentIt",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5324,14 +5474,18 @@
                 "generatedName": "articleTranslatedContentJa",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Japanese",
                   "generatedName": "ArticleTranslatedContentJa",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Japanese",
+                    "generatedName": "ArticleTranslatedContentJa",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5348,14 +5502,18 @@
                 "generatedName": "articleTranslatedContentKo",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Korean",
                   "generatedName": "ArticleTranslatedContentKo",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Korean",
+                    "generatedName": "ArticleTranslatedContentKo",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5372,14 +5530,18 @@
                 "generatedName": "articleTranslatedContentLt",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Lithuanian",
                   "generatedName": "ArticleTranslatedContentLt",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Lithuanian",
+                    "generatedName": "ArticleTranslatedContentLt",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5396,14 +5558,18 @@
                 "generatedName": "articleTranslatedContentLv",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Latvian",
                   "generatedName": "ArticleTranslatedContentLv",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Latvian",
+                    "generatedName": "ArticleTranslatedContentLv",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5420,14 +5586,18 @@
                 "generatedName": "articleTranslatedContentMn",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Mongolian",
                   "generatedName": "ArticleTranslatedContentMn",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Mongolian",
+                    "generatedName": "ArticleTranslatedContentMn",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5444,14 +5614,18 @@
                 "generatedName": "articleTranslatedContentNb",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Norwegian",
                   "generatedName": "ArticleTranslatedContentNb",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Norwegian",
+                    "generatedName": "ArticleTranslatedContentNb",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5468,14 +5642,18 @@
                 "generatedName": "articleTranslatedContentNl",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Dutch",
                   "generatedName": "ArticleTranslatedContentNl",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Dutch",
+                    "generatedName": "ArticleTranslatedContentNl",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5492,14 +5670,18 @@
                 "generatedName": "articleTranslatedContentPl",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Polish",
                   "generatedName": "ArticleTranslatedContentPl",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Polish",
+                    "generatedName": "ArticleTranslatedContentPl",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5516,14 +5698,18 @@
                 "generatedName": "articleTranslatedContentPt",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Portuguese (Portugal)",
                   "generatedName": "ArticleTranslatedContentPt",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Portuguese (Portugal)",
+                    "generatedName": "ArticleTranslatedContentPt",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5540,14 +5726,18 @@
                 "generatedName": "articleTranslatedContentRo",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Romanian",
                   "generatedName": "ArticleTranslatedContentRo",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Romanian",
+                    "generatedName": "ArticleTranslatedContentRo",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5564,14 +5754,18 @@
                 "generatedName": "articleTranslatedContentRu",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Russian",
                   "generatedName": "ArticleTranslatedContentRu",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Russian",
+                    "generatedName": "ArticleTranslatedContentRu",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5588,14 +5782,18 @@
                 "generatedName": "articleTranslatedContentSl",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Slovenian",
                   "generatedName": "ArticleTranslatedContentSl",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Slovenian",
+                    "generatedName": "ArticleTranslatedContentSl",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5612,14 +5810,18 @@
                 "generatedName": "articleTranslatedContentSr",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Serbian",
                   "generatedName": "ArticleTranslatedContentSr",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Serbian",
+                    "generatedName": "ArticleTranslatedContentSr",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5636,14 +5838,18 @@
                 "generatedName": "articleTranslatedContentSv",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Swedish",
                   "generatedName": "ArticleTranslatedContentSv",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Swedish",
+                    "generatedName": "ArticleTranslatedContentSv",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5660,14 +5866,18 @@
                 "generatedName": "articleTranslatedContentTr",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Turkish",
                   "generatedName": "ArticleTranslatedContentTr",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Turkish",
+                    "generatedName": "ArticleTranslatedContentTr",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5684,14 +5894,18 @@
                 "generatedName": "articleTranslatedContentVi",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Vietnamese",
                   "generatedName": "ArticleTranslatedContentVi",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Vietnamese",
+                    "generatedName": "ArticleTranslatedContentVi",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5708,14 +5922,18 @@
                 "generatedName": "articleTranslatedContentPtBr",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Portuguese (Brazil)",
                   "generatedName": "ArticleTranslatedContentPtBr",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Portuguese (Brazil)",
+                    "generatedName": "ArticleTranslatedContentPtBr",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5732,14 +5950,18 @@
                 "generatedName": "articleTranslatedContentZhCn",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Chinese (China)",
                   "generatedName": "ArticleTranslatedContentZhCn",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Chinese (China)",
+                    "generatedName": "ArticleTranslatedContentZhCn",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5756,14 +5978,18 @@
                 "generatedName": "articleTranslatedContentZhTw",
                 "title": "Article Translated Content",
                 "value": {
-                  "description": "The content of the article in Chinese (Taiwan)",
                   "generatedName": "ArticleTranslatedContentZhTw",
-                  "schema": "article_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the article in Chinese (Taiwan)",
+                    "generatedName": "ArticleTranslatedContentZhTw",
+                    "schema": "article_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -5964,12 +6190,16 @@
                             "title": "Intercom User ID",
                             "value": {
                               "generatedName": "AttachContactToConversationRequestCustomerIntercomUserIdCustomer",
-                              "schema": "customer_request",
-                              "source": {
-                                "file": "../openapi.yml",
-                                "type": "openapi"
+                              "value": {
+                                "generatedName": "AttachContactToConversationRequestCustomerIntercomUserIdCustomer",
+                                "schema": "customer_request",
+                                "source": {
+                                  "file": "../openapi.yml",
+                                  "type": "openapi"
+                                },
+                                "type": "reference"
                               },
-                              "type": "reference"
+                              "type": "nullable"
                             },
                             "groupName": [],
                             "type": "optional"
@@ -6018,12 +6248,16 @@
                             "title": "User ID",
                             "value": {
                               "generatedName": "AttachContactToConversationRequestCustomerUserIdCustomer",
-                              "schema": "customer_request",
-                              "source": {
-                                "file": "../openapi.yml",
-                                "type": "openapi"
+                              "value": {
+                                "generatedName": "AttachContactToConversationRequestCustomerUserIdCustomer",
+                                "schema": "customer_request",
+                                "source": {
+                                  "file": "../openapi.yml",
+                                  "type": "openapi"
+                                },
+                                "type": "reference"
                               },
-                              "type": "reference"
+                              "type": "nullable"
                             },
                             "groupName": [],
                             "type": "optional"
@@ -6073,12 +6307,16 @@
                             "title": "Email",
                             "value": {
                               "generatedName": "AttachContactToConversationRequestCustomerCustomerCustomer",
-                              "schema": "customer_request",
-                              "source": {
-                                "file": "../openapi.yml",
-                                "type": "openapi"
+                              "value": {
+                                "generatedName": "AttachContactToConversationRequestCustomerCustomerCustomer",
+                                "schema": "customer_request",
+                                "source": {
+                                  "file": "../openapi.yml",
+                                  "type": "openapi"
+                                },
+                                "type": "reference"
                               },
-                              "type": "reference"
+                              "type": "nullable"
                             },
                             "groupName": [],
                             "type": "optional"
@@ -6492,12 +6730,16 @@
               "title": "Collection",
               "value": {
                 "generatedName": "CollectionTranslatedContent",
-                "schema": "group_translated_content",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "CollectionTranslatedContent",
+                  "schema": "group_translated_content",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [
                 "Help Center"
@@ -6621,12 +6863,16 @@
               "title": "Collections",
               "value": {
                 "generatedName": "CollectionListPages",
-                "schema": "cursor_pages",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "CollectionListPages",
+                  "schema": "cursor_pages",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -7453,12 +7699,16 @@
               "title": "Company Attached Contacts",
               "value": {
                 "generatedName": "CompanyAttachedContactsPages",
-                "schema": "cursor_pages",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "CompanyAttachedContactsPages",
+                  "schema": "cursor_pages",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -7581,12 +7831,16 @@
               "title": "Companies",
               "value": {
                 "generatedName": "CompanyListPages",
-                "schema": "cursor_pages",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "CompanyListPages",
+                  "schema": "cursor_pages",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -7724,12 +7978,16 @@
                 "title": "Company Scroll",
                 "value": {
                   "generatedName": "CompanyScrollPages",
-                  "schema": "cursor_pages",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "CompanyScrollPages",
+                    "schema": "cursor_pages",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -9076,12 +9334,16 @@
               "title": "Contact",
               "value": {
                 "generatedName": "ContactTags",
-                "schema": "contact_tags",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ContactTags",
+                  "schema": "contact_tags",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [
                 "Contacts"
@@ -9708,12 +9970,16 @@
               "title": "Contact List",
               "value": {
                 "generatedName": "ContactListPages",
-                "schema": "cursor_pages",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ContactListPages",
+                  "schema": "cursor_pages",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -11682,12 +11948,16 @@
               "title": "Conversation",
               "value": {
                 "generatedName": "ConversationConversationRating",
-                "schema": "conversation_rating",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ConversationConversationRating",
+                  "schema": "conversation_rating",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [
                 "Conversations"
@@ -11760,12 +12030,16 @@
               "title": "Conversation",
               "value": {
                 "generatedName": "ConversationTeammates",
-                "schema": "conversation_teammates",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ConversationTeammates",
+                  "schema": "conversation_teammates",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [
                 "Conversations"
@@ -11812,12 +12086,16 @@
               "title": "Conversation",
               "value": {
                 "generatedName": "ConversationFirstContactReply",
-                "schema": "conversation_first_contact_reply",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ConversationFirstContactReply",
+                  "schema": "conversation_first_contact_reply",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [
                 "Conversations"
@@ -11838,12 +12116,16 @@
               "title": "Conversation",
               "value": {
                 "generatedName": "ConversationSlaApplied",
-                "schema": "sla_applied",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ConversationSlaApplied",
+                  "schema": "sla_applied",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [
                 "Conversations"
@@ -11864,12 +12146,16 @@
               "title": "Conversation",
               "value": {
                 "generatedName": "ConversationStatistics",
-                "schema": "conversation_statistics",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ConversationStatistics",
+                  "schema": "conversation_statistics",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [
                 "Conversations"
@@ -12327,12 +12613,16 @@
               "title": "Conversation List",
               "value": {
                 "generatedName": "ConversationListPages",
-                "schema": "cursor_pages",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ConversationListPages",
+                  "schema": "cursor_pages",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -13998,12 +14288,16 @@
                 "title": "Create Article Request Payload",
                 "value": {
                   "generatedName": "CreateArticleRequestTranslatedContent",
-                  "schema": "article_translated_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "CreateArticleRequestTranslatedContent",
+                    "schema": "article_translated_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -14078,12 +14372,16 @@
               "title": "Create Collection Request Payload",
               "value": {
                 "generatedName": "CreateCollectionRequestTranslatedContent",
-                "schema": "group_translated_content",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "CreateCollectionRequestTranslatedContent",
+                  "schema": "group_translated_content",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -15714,12 +16012,16 @@
                 "title": "Cursor based pages",
                 "value": {
                   "generatedName": "CursorPagesNext",
-                  "schema": "starting_after_paging",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "CursorPagesNext",
+                    "schema": "starting_after_paging",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -15812,12 +16114,16 @@
               },
               {
                 "generatedName": "CustomAttributesValueOne",
-                "schema": "custom_object_instance",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "CustomAttributesValueOne",
+                  "schema": "custom_object_instance",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               }
             ],
             "groupName": [],
@@ -17057,12 +17363,16 @@
                 "description": "A summary of data events",
                 "value": {
                   "generatedName": "DataEventSummaryEventsItem",
-                  "schema": "data_event_summary_item",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "DataEventSummaryEventsItem",
+                    "schema": "data_event_summary_item",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "generatedName": "DataEventSummaryEvents",
                 "groupName": [],
@@ -18640,13 +18950,13 @@
                   "description": "The type of object - `group_content` .",
                   "value": {
                     "description": "The type of object - `group_content` .",
-                    "schema": {
-                      "example": "group_content",
+                    "value": {
+                      "value": "group_content",
                       "type": "string"
                     },
                     "generatedName": "GroupContentType",
                     "groupName": [],
-                    "type": "primitive"
+                    "type": "literal"
                   },
                   "groupName": [],
                   "type": "nullable"
@@ -18735,13 +19045,13 @@
                   "description": "The type of object - group_translated_content.",
                   "value": {
                     "description": "The type of object - group_translated_content.",
-                    "schema": {
-                      "example": "group_translated_content",
+                    "value": {
+                      "value": "group_translated_content",
                       "type": "string"
                     },
                     "generatedName": "GroupTranslatedContentType",
                     "groupName": [],
-                    "type": "primitive"
+                    "type": "literal"
                   },
                   "groupName": [],
                   "type": "nullable"
@@ -18759,14 +19069,18 @@
                 "generatedName": "groupTranslatedContentAr",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Arabic",
                   "generatedName": "GroupTranslatedContentAr",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Arabic",
+                    "generatedName": "GroupTranslatedContentAr",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -18783,14 +19097,18 @@
                 "generatedName": "groupTranslatedContentBg",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Bulgarian",
                   "generatedName": "GroupTranslatedContentBg",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Bulgarian",
+                    "generatedName": "GroupTranslatedContentBg",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -18807,14 +19125,18 @@
                 "generatedName": "groupTranslatedContentBs",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Bosnian",
                   "generatedName": "GroupTranslatedContentBs",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Bosnian",
+                    "generatedName": "GroupTranslatedContentBs",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -18831,14 +19153,18 @@
                 "generatedName": "groupTranslatedContentCa",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Catalan",
                   "generatedName": "GroupTranslatedContentCa",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Catalan",
+                    "generatedName": "GroupTranslatedContentCa",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -18855,14 +19181,18 @@
                 "generatedName": "groupTranslatedContentCs",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Czech",
                   "generatedName": "GroupTranslatedContentCs",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Czech",
+                    "generatedName": "GroupTranslatedContentCs",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -18879,14 +19209,18 @@
                 "generatedName": "groupTranslatedContentDa",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Danish",
                   "generatedName": "GroupTranslatedContentDa",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Danish",
+                    "generatedName": "GroupTranslatedContentDa",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -18903,14 +19237,18 @@
                 "generatedName": "groupTranslatedContentDe",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in German",
                   "generatedName": "GroupTranslatedContentDe",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in German",
+                    "generatedName": "GroupTranslatedContentDe",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -18927,14 +19265,18 @@
                 "generatedName": "groupTranslatedContentEl",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Greek",
                   "generatedName": "GroupTranslatedContentEl",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Greek",
+                    "generatedName": "GroupTranslatedContentEl",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -18951,14 +19293,18 @@
                 "generatedName": "groupTranslatedContentEn",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in English",
                   "generatedName": "GroupTranslatedContentEn",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in English",
+                    "generatedName": "GroupTranslatedContentEn",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -18975,14 +19321,18 @@
                 "generatedName": "groupTranslatedContentEs",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Spanish",
                   "generatedName": "GroupTranslatedContentEs",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Spanish",
+                    "generatedName": "GroupTranslatedContentEs",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -18999,14 +19349,18 @@
                 "generatedName": "groupTranslatedContentEt",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Estonian",
                   "generatedName": "GroupTranslatedContentEt",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Estonian",
+                    "generatedName": "GroupTranslatedContentEt",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -19023,14 +19377,18 @@
                 "generatedName": "groupTranslatedContentFi",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Finnish",
                   "generatedName": "GroupTranslatedContentFi",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Finnish",
+                    "generatedName": "GroupTranslatedContentFi",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -19047,14 +19405,18 @@
                 "generatedName": "groupTranslatedContentFr",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in French",
                   "generatedName": "GroupTranslatedContentFr",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in French",
+                    "generatedName": "GroupTranslatedContentFr",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -19071,14 +19433,18 @@
                 "generatedName": "groupTranslatedContentHe",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Hebrew",
                   "generatedName": "GroupTranslatedContentHe",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Hebrew",
+                    "generatedName": "GroupTranslatedContentHe",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -19095,14 +19461,18 @@
                 "generatedName": "groupTranslatedContentHr",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Croatian",
                   "generatedName": "GroupTranslatedContentHr",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Croatian",
+                    "generatedName": "GroupTranslatedContentHr",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -19119,14 +19489,18 @@
                 "generatedName": "groupTranslatedContentHu",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Hungarian",
                   "generatedName": "GroupTranslatedContentHu",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Hungarian",
+                    "generatedName": "GroupTranslatedContentHu",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -19143,14 +19517,18 @@
                 "generatedName": "groupTranslatedContentId",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Indonesian",
                   "generatedName": "GroupTranslatedContentId",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Indonesian",
+                    "generatedName": "GroupTranslatedContentId",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -19167,14 +19545,18 @@
                 "generatedName": "groupTranslatedContentIt",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Italian",
                   "generatedName": "GroupTranslatedContentIt",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Italian",
+                    "generatedName": "GroupTranslatedContentIt",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -19191,14 +19573,18 @@
                 "generatedName": "groupTranslatedContentJa",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Japanese",
                   "generatedName": "GroupTranslatedContentJa",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Japanese",
+                    "generatedName": "GroupTranslatedContentJa",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -19215,14 +19601,18 @@
                 "generatedName": "groupTranslatedContentKo",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Korean",
                   "generatedName": "GroupTranslatedContentKo",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Korean",
+                    "generatedName": "GroupTranslatedContentKo",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -19239,14 +19629,18 @@
                 "generatedName": "groupTranslatedContentLt",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Lithuanian",
                   "generatedName": "GroupTranslatedContentLt",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Lithuanian",
+                    "generatedName": "GroupTranslatedContentLt",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -19263,14 +19657,18 @@
                 "generatedName": "groupTranslatedContentLv",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Latvian",
                   "generatedName": "GroupTranslatedContentLv",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Latvian",
+                    "generatedName": "GroupTranslatedContentLv",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -19287,14 +19685,18 @@
                 "generatedName": "groupTranslatedContentMn",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Mongolian",
                   "generatedName": "GroupTranslatedContentMn",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Mongolian",
+                    "generatedName": "GroupTranslatedContentMn",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -19311,14 +19713,18 @@
                 "generatedName": "groupTranslatedContentNb",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Norwegian",
                   "generatedName": "GroupTranslatedContentNb",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Norwegian",
+                    "generatedName": "GroupTranslatedContentNb",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -19335,14 +19741,18 @@
                 "generatedName": "groupTranslatedContentNl",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Dutch",
                   "generatedName": "GroupTranslatedContentNl",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Dutch",
+                    "generatedName": "GroupTranslatedContentNl",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -19359,14 +19769,18 @@
                 "generatedName": "groupTranslatedContentPl",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Polish",
                   "generatedName": "GroupTranslatedContentPl",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Polish",
+                    "generatedName": "GroupTranslatedContentPl",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -19383,14 +19797,18 @@
                 "generatedName": "groupTranslatedContentPt",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Portuguese (Portugal)",
                   "generatedName": "GroupTranslatedContentPt",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Portuguese (Portugal)",
+                    "generatedName": "GroupTranslatedContentPt",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -19407,14 +19825,18 @@
                 "generatedName": "groupTranslatedContentRo",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Romanian",
                   "generatedName": "GroupTranslatedContentRo",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Romanian",
+                    "generatedName": "GroupTranslatedContentRo",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -19431,14 +19853,18 @@
                 "generatedName": "groupTranslatedContentRu",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Russian",
                   "generatedName": "GroupTranslatedContentRu",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Russian",
+                    "generatedName": "GroupTranslatedContentRu",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -19455,14 +19881,18 @@
                 "generatedName": "groupTranslatedContentSl",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Slovenian",
                   "generatedName": "GroupTranslatedContentSl",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Slovenian",
+                    "generatedName": "GroupTranslatedContentSl",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -19479,14 +19909,18 @@
                 "generatedName": "groupTranslatedContentSr",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Serbian",
                   "generatedName": "GroupTranslatedContentSr",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Serbian",
+                    "generatedName": "GroupTranslatedContentSr",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -19503,14 +19937,18 @@
                 "generatedName": "groupTranslatedContentSv",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Swedish",
                   "generatedName": "GroupTranslatedContentSv",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Swedish",
+                    "generatedName": "GroupTranslatedContentSv",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -19527,14 +19965,18 @@
                 "generatedName": "groupTranslatedContentTr",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Turkish",
                   "generatedName": "GroupTranslatedContentTr",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Turkish",
+                    "generatedName": "GroupTranslatedContentTr",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -19551,14 +19993,18 @@
                 "generatedName": "groupTranslatedContentVi",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Vietnamese",
                   "generatedName": "GroupTranslatedContentVi",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Vietnamese",
+                    "generatedName": "GroupTranslatedContentVi",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -19575,14 +20021,18 @@
                 "generatedName": "groupTranslatedContentPtBr",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Portuguese (Brazil)",
                   "generatedName": "GroupTranslatedContentPtBr",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Portuguese (Brazil)",
+                    "generatedName": "GroupTranslatedContentPtBr",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -19599,14 +20049,18 @@
                 "generatedName": "groupTranslatedContentZhCn",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Chinese (China)",
                   "generatedName": "GroupTranslatedContentZhCn",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Chinese (China)",
+                    "generatedName": "GroupTranslatedContentZhCn",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -19623,14 +20077,18 @@
                 "generatedName": "groupTranslatedContentZhTw",
                 "title": "Group Translated Content",
                 "value": {
-                  "description": "The content of the group in Chinese (Taiwan)",
                   "generatedName": "GroupTranslatedContentZhTw",
-                  "schema": "group_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "description": "The content of the group in Chinese (Taiwan)",
+                    "generatedName": "GroupTranslatedContentZhTw",
+                    "schema": "group_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -20090,13 +20548,30 @@
                 "description": "Category of the Linked Ticket Object.",
                 "value": {
                   "description": "Category of the Linked Ticket Object.",
-                  "schema": {
-                    "example": "Customer",
-                    "type": "string"
-                  },
                   "generatedName": "LinkedObjectCategory",
+                  "values": [
+                    {
+                      "generatedName": "Customer",
+                      "value": "Customer",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "BackOffice",
+                      "value": "Back-office",
+                      "casing": {}
+                    },
+                    {
+                      "generatedName": "Tracker",
+                      "value": "Tracker",
+                      "casing": {}
+                    }
+                  ],
                   "groupName": [],
-                  "type": "primitive"
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "enum"
                 },
                 "groupName": [],
                 "type": "nullable"
@@ -21504,14 +21979,18 @@
               "nameOverride": "Note",
               "title": "Note",
               "value": {
-                "description": "Optional. Represents the Admin that created the note.",
                 "generatedName": "NoteAuthor",
-                "schema": "admin",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "description": "Optional. Represents the Admin that created the note.",
+                  "generatedName": "NoteAuthor",
+                  "schema": "admin",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [
                 "Notes"
@@ -21646,12 +22125,16 @@
               "title": "Paginated Response",
               "value": {
                 "generatedName": "NoteListPages",
-                "schema": "cursor_pages",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "NoteListPages",
+                  "schema": "cursor_pages",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -21894,12 +22377,16 @@
               "title": "Paginated Response",
               "value": {
                 "generatedName": "PaginatedResponsePages",
-                "schema": "cursor_pages",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "PaginatedResponsePages",
+                  "schema": "cursor_pages",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -22495,12 +22982,16 @@
               "title": "Search data",
               "value": {
                 "generatedName": "SearchRequestPagination",
-                "schema": "starting_after_paging",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "SearchRequestPagination",
+                  "schema": "starting_after_paging",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -24170,12 +24661,16 @@
               "title": "Team",
               "value": {
                 "generatedName": "TeamAdminPriorityLevel",
-                "schema": "admin_priority_level",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "TeamAdminPriorityLevel",
+                  "schema": "admin_priority_level",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [
                 "Teams"
@@ -24562,12 +25057,16 @@
                 "title": "Ticket",
                 "value": {
                   "generatedName": "TicketTicketType",
-                  "schema": "ticket_type",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "TicketTicketType",
+                    "schema": "ticket_type",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [
                   "Tickets"
@@ -25087,12 +25586,16 @@
                 "description": "The list of ticket objects",
                 "value": {
                   "generatedName": "TicketListTicketsItem",
-                  "schema": "ticket",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "TicketListTicketsItem",
+                    "schema": "ticket",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "generatedName": "TicketListTickets",
                 "groupName": [],
@@ -25134,12 +25637,16 @@
               "title": "Ticket List",
               "value": {
                 "generatedName": "TicketListPages",
-                "schema": "cursor_pages",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "TicketListPages",
+                  "schema": "cursor_pages",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -26839,12 +27346,16 @@
                 "description": "A list of ticket type attributes associated with a given ticket type.",
                 "value": {
                   "generatedName": "TicketTypeAttributeListTicketTypeAttributesItem",
-                  "schema": "ticket_type_attribute",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "TicketTypeAttributeListTicketTypeAttributesItem",
+                    "schema": "ticket_type_attribute",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "generatedName": "TicketTypeAttributeListTicketTypeAttributes",
                 "groupName": [],
@@ -26903,12 +27414,16 @@
                 "description": "A list of ticket_types associated with a given workspace.",
                 "value": {
                   "generatedName": "TicketTypeListTicketTypesItem",
-                  "schema": "ticket_type",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "TicketTypeListTicketTypesItem",
+                    "schema": "ticket_type",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "generatedName": "TicketTypeListTicketTypes",
                 "groupName": [],
@@ -27320,12 +27835,16 @@
                 "title": "Update Article Request Payload",
                 "value": {
                   "generatedName": "UpdateArticleRequestTranslatedContent",
-                  "schema": "article_translated_content",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "UpdateArticleRequestTranslatedContent",
+                    "schema": "article_translated_content",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -27406,12 +27925,16 @@
               "title": "Update Collection Request Payload",
               "value": {
                 "generatedName": "UpdateCollectionRequestTranslatedContent",
-                "schema": "group_translated_content",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "UpdateCollectionRequestTranslatedContent",
+                  "schema": "group_translated_content",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"

@@ -97,15 +97,14 @@ Paginated requests will return an Iterable<T>, which can be used to loop through
 
 ```java
 import com.seed.deepCursorPath.SeedDeepCursorPathClient;
-import com.seed.deepCursorPath.core.pagination.SyncPagingIterable;
-import com.seed.deepCursorPath.resources.deepcursorpath.types.Response;
+import com.seed.deepCursorPath.core.SyncPagingIterable;
 import java.util.List;
 
 SeedDeepCursorPathClient client = SeedDeepCursorPathClient
     .builder()
     .build();
 
-SyncPagingIterable<Response> response = client.deepCursorPath().doThing(...);
+SyncPagingIterable<SyncPagingIterable<String>> response = client.deepCursorPath().doThing(...);
 
 // Iterator
 for (item : response) {
@@ -117,7 +116,7 @@ response.streamItems().map(item -> ...);
 
 // Manual pagination
 for (
-        List<Response> items = response.getItems;
+        List<SyncPagingIterable<String>> items = response.getItems;
         response.hasNext();
         items = items.nextPage().getItems()) {
     // Do something with items

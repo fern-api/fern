@@ -103,7 +103,9 @@ public final class UsernamePage {
     )
     public Builder data(List<String> data) {
       this.data.clear();
-      this.data.addAll(data);
+      if (data != null) {
+        this.data.addAll(data);
+      }
       return this;
     }
 

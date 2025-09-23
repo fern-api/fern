@@ -42,7 +42,6 @@ package com.example.usage;
 
 import com.seed.api.SeedApiClient;
 import com.seed.api.requests.PostWithNullableNamedRequestBodyTypeRequest;
-import com.seed.api.types.NullableObject;
 
 public class Example {
     public static void main(String[] args) {
@@ -54,14 +53,6 @@ public class Example {
             "id",
             PostWithNullableNamedRequestBodyTypeRequest
                 .builder()
-                .body(
-                    NullableObject
-                        .builder()
-                        .id("id")
-                        .name("name")
-                        .age(1)
-                        .build()
-                )
                 .build()
         );
     }

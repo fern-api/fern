@@ -78,7 +78,9 @@ public final class WorkspaceStarterFilesResponse {
     )
     public Builder files(Map<Language, WorkspaceFiles> files) {
       this.files.clear();
-      this.files.putAll(files);
+      if (files != null) {
+        this.files.putAll(files);
+      }
       return this;
     }
 

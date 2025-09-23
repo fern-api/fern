@@ -131,7 +131,9 @@ public final class PlaylistCreateRequest implements IPlaylistCreateRequest {
     )
     public _FinalStage problems(List<ProblemId> problems) {
       this.problems.clear();
-      this.problems.addAll(problems);
+      if (problems != null) {
+        this.problems.addAll(problems);
+      }
       return this;
     }
 
