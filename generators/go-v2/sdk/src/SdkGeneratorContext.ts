@@ -51,6 +51,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             logger: this.logger,
             config: this.config,
             readmeConfigBuilder: new ReadmeConfigBuilder(),
+            publishConfig: this.ir.publishConfig,
             ir
         });
     }
@@ -745,5 +746,9 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             default:
                 assertNever(responseBody);
         }
+    }
+
+    public isSelfHosted(): boolean {
+        return this.ir.selfHosted ?? false;
     }
 }

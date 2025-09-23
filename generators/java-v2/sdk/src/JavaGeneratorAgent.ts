@@ -50,6 +50,7 @@ export class JavaGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorConte
             type: this.publishConfig?.type,
             uri: this.publishConfig?.type === "github" ? this.publishConfig.uri : undefined,
             token: this.publishConfig?.type === "github" ? this.publishConfig.token : undefined,
+            mode: this.publishConfig?.type === "github" ? this.publishConfig.mode : undefined
         };
     }
 }
