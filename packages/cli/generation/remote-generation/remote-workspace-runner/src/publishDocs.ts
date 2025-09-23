@@ -476,6 +476,14 @@ async function generateLanguageSpecificDynamicIRs({
         }
     }
 
+    for (const [language, packageName] of Object.entries(snippetConfiguration)) {
+        if (language && packageName && !Object.keys(languageSpecificIRs).includes(language)) {
+            context.logger.warn(
+                `Unknown package name ${packageName} referenced for ${language} snippets in ${workspace.workspaceName} API`
+            );
+        }
+    }
+
     if (Object.keys(languageSpecificIRs).length > 0) {
         return languageSpecificIRs;
     }
