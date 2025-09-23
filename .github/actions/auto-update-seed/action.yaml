@@ -17,6 +17,10 @@ inputs:
     description: Whether to skip running scripts during seed generation
     required: false
     default: "false"
+  fixtures-to-run:
+    description: Specific fixtures to run. If not supplied, will run all fixtures. Note - for multiple fixtures at once, separate by space, not comma.
+    required: false
+    default: ""
   allow-unexpected-failures:
     description: Whether to allow unexpected failures during seed generation
     required: false
@@ -54,6 +58,7 @@ runs:
       with:
         generator-name: ${{ inputs.generator-name }}
         generator-path: ${{ inputs.generator-path }}
+        fixtures-to-run: ${{ inputs.fixtures-to-run }}
         validate-git-diff: false
         allow-unexpected-failures: ${{ inputs.allow-unexpected-failures }}
         skip-scripts: ${{ inputs.skip-scripts }}
@@ -79,7 +84,8 @@ runs:
       if: steps.check-changes.outputs.seed-changes-generated == 'true' && inputs.create-artifacts == 'true'
       shell: bash
       run: |
-        git diff --staged > seed-${{ inputs.generator-name }}.patch
+        # CHRISM - need more unique name now!
+        git diff --staged > seed-${{ inputs.generator-name }}-${{ inputs.fixtures-to-run }}.patch
 
     # Upload patch files as artifacts to be applied and committed by caller when all of seed is up to date
     - name: Upload Seed Artifacts

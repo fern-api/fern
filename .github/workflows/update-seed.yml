@@ -965,7 +965,7 @@ jobs:
         ruby-model-seed-update,
         ruby-sdk-seed-update,
         ruby-sdk-v2-seed-update,
-        pydantic-model-seed-update,
+        pydantic-seed-update,
         python-sdk-seed-update,
         fastapi-seed-update,
         openapi-seed-update,
