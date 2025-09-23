@@ -18,14 +18,14 @@ _dynamic_imports: typing.Dict[str, str] = {
     "BadRequestBody": ".general_errors",
     "SeedExhaustive": ".client",
     "__version__": ".version",
-    "endpoints": ".",
-    "general_errors": ".",
-    "inlined_requests": ".",
+    "endpoints": ".endpoints",
+    "general_errors": ".general_errors",
+    "inlined_requests": ".inlined_requests",
     "myCustomFunction": ".client_additions",
-    "no_auth": ".",
-    "no_req_body": ".",
-    "req_with_headers": ".",
-    "types": ".",
+    "no_auth": ".no_auth",
+    "no_req_body": ".no_req_body",
+    "req_with_headers": ".req_with_headers",
+    "types": ".types",
 }
 
 
@@ -35,8 +35,10 @@ def __getattr__(attr_name: str) -> typing.Any:
         raise AttributeError(f"No {attr_name} found in _dynamic_imports for module name -> {__name__}")
     try:
         module = import_module(module_name, __package__)
-        result = getattr(module, attr_name)
-        return result
+        if module_name == f".{attr_name}":
+            return module
+        else:
+            return getattr(module, attr_name)
     except ImportError as e:
         raise ImportError(f"Failed to import {attr_name} from {module_name}: {e}") from e
     except AttributeError as e:
