@@ -204,19 +204,12 @@ jobs:
         id: combine-matrices
         shell: bash
         run: |
-          # debug
-          echo '${{steps.build-ruby-model-matrix.outputs.ruby_model_matrix }}' | jq .
-          echo '${{steps.build-python-sdk-matrix.outputs.python_sdk_matrix}}' | jq .
-
           # Combine all built matrices into a single JSON object. Wrap in array for GitHub matrix
           # strategy format.
           ruby_matrix='${{steps.build-ruby-model-matrix.outputs.ruby_model_matrix}}'
           python_matrix='${{steps.build-python-sdk-matrix.outputs.python_sdk_matrix}}'
 
-          echo "${ruby_matrix}" | jq .
-          echo "${python_matrix}" | jq .
-
-          combined=$(echo "$ruby_matrix $python_matrix" | jq -s -c 'add')
+          combined=$(jq -n --argjson ruby "$ruby_matrix" --argjson python "$python_matrix" '$ruby + $python')
           echo "${combined}" | jq . 
 
           matrix=$(echo "${combined}" | jq '[.]' -c)
