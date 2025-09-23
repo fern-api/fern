@@ -55,9 +55,7 @@ jobs:
             echo "create-pr=true" >> $GITHUB_OUTPUT
           fi
   changes:
-    # if: github.repository == 'fern-api/fern'
-    # CHRISM test
-    if: false
+    if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -951,13 +949,11 @@ jobs:
   commit-seed-changes:
     outputs:
       has-patches: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES }}
-    # if: >-
-    #   ${{
-    #     always() && needs.setup.outputs.create-artifacts == 'true' &&
-    #     !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
-    #   }}
-    # CHRISM test
-    if: false
+    if: >-
+      ${{
+        always() && needs.setup.outputs.create-artifacts == 'true' &&
+        !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
+      }}
     needs:
       [
         changes,
@@ -1044,15 +1040,16 @@ jobs:
         run: |
           git apply artifacts/*.patch
 
-      - name: Add and Commit Changes
-        id: commit-changes
-        uses: EndBug/add-and-commit@v9
-        if: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES == 'true' }}
-        with:
-          add: "seed/*"
-          push: true
-          fetch: false
-          message: "Automated update of seed files"
+      # CHRISM - avoid for now during testing
+      # - name: Add and Commit Changes
+      #   id: commit-changes
+      #   uses: EndBug/add-and-commit@v9
+      #   if: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES == 'true' }}
+      #   with:
+      #     add: "seed/*"
+      #     push: true
+      #     fetch: false
+      #     message: "Automated update of seed files"
 
   # Use always() to ensure this runs even if stages from needs are skipped.
   # Add check back to make sure it doesn't run for failures or cancellations.
