@@ -7,7 +7,7 @@ toolchain go1.23.8
 require (
 	github.com/google/uuid v1.6.0
 	github.com/stretchr/testify v1.9.0
-	github.com/wiremock/go-wiremock v1.13.0
+	github.com/wiremock/go-wiremock v1.14.0
 	github.com/wiremock/wiremock-testcontainers-go v1.0.0-alpha-9
 )
 
