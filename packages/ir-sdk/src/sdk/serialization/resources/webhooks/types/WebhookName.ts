@@ -7,7 +7,7 @@ import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { Name } from "../../commons/types/Name";
 
-export const WebhookName: core.serialization.ObjectSchema<serializers.WebhookName.Raw, FernIr.WebhookName> = Name;
+export const WebhookName: core.serialization.Schema<serializers.WebhookName.Raw, FernIr.WebhookName> = Name;
 
 export declare namespace WebhookName {
     export type Raw = Name.Raw;

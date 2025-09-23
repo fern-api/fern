@@ -7,7 +7,7 @@ import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { Name } from "../../commons/types/Name";
 
-export const WebSocketName: core.serialization.ObjectSchema<serializers.WebSocketName.Raw, FernIr.WebSocketName> = Name;
+export const WebSocketName: core.serialization.Schema<serializers.WebSocketName.Raw, FernIr.WebSocketName> = Name;
 
 export declare namespace WebSocketName {
     export type Raw = Name.Raw;
