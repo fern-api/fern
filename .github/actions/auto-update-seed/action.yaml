@@ -53,6 +53,11 @@ runs:
           exit 1
         fi
 
+    - name: Test debug
+      shell: bash
+      run: |
+        echo "Test debug: ${{ inputs.fixtures-to-run }}"
+
     - name: Run seed
       uses: ./.github/actions/cached-seed
       with:
