@@ -5,17 +5,13 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
+import { HttpEndpointSecurity } from "./HttpEndpointSecurity";
 
 export const HttpEndpointAuth: core.serialization.Schema<
     serializers.HttpEndpointAuth.Raw,
     FernDefinition.HttpEndpointAuth
-> = core.serialization.undiscriminatedUnion([
-    core.serialization.boolean(),
-    core.serialization.list(
-        core.serialization.record(core.serialization.string(), core.serialization.list(core.serialization.string())),
-    ),
-]);
+> = core.serialization.undiscriminatedUnion([core.serialization.boolean(), HttpEndpointSecurity]);
 
 export declare namespace HttpEndpointAuth {
-    export type Raw = boolean | Record<string, string[]>[];
+    export type Raw = boolean | HttpEndpointSecurity.Raw;
 }
