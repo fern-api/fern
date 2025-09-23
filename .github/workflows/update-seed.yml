@@ -234,29 +234,24 @@ jobs:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix: 
-        packages: ${{ fromJSON(needs.build-matrices.outputs.built-matrix) }}
+        include: ${{ fromJson(needs.build-matrices.outputs.built-matrix) }}
+        # packages: ${{ fromJSON(needs.build-matrices.outputs.built-matrix) }}
     steps:
+      - name: Echo name
+        shell: bash
+        run: echo '${{ matrix.name }}'
+
       - name: Echo package
-        run: echo '${{toJson(matrix.packages)}}' | jq .
-
-      - name: Get key for name
+        shell: bash
         run: |
-          SDK_NAME=$(echo "$${{ toJson(matrix) }}" | jq -r 'keys[]')
-          echo "${SDK_NAME}"
+          echo 'Generator path: '  
+          echo '${{ matrix.generator-path }}' | jq .
 
-      - name: Get data with key
-        run: |
-          SDK_NAME=$(echo "$${{ toJson(matrix) }}" | jq -r 'keys[]')
-          echo "${SDK_NAME}"
+          echo 'Language name: '  
+          echo '${{ matrix.language-name }}' | jq .
 
-          eval $(echo "$${{ toJson(matrix) }}" | jq -r --arg key "$SDK_NAME" '.[$key] | 
-          "GEN_PATH=\"\(.["generator-path"])\"; LANG_NAME=\"\(.["language-name"])\"; ALLOW_FAIL=\"\(.["allow-failures"])\";')
-
-          # For debug
-          echo "${GEN_PATH}"
-          echo "${LANG_NAME}"
-          echo "${ALLOW_FAIL}"
-
+          echo 'Allow fail: '  
+          echo '${{ matrix.allow-failures }}' | jq .
 
       # - name: Get data for key
       #   run: |
