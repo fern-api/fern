@@ -1,4 +1,4 @@
-import { AbstractGeneratorAgent } from "@fern-api/base-generator";
+import { AbstractGeneratorAgent, BaseGitHubConfig } from "@fern-api/base-generator";
 import { Logger } from "@fern-api/logger";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
@@ -35,7 +35,7 @@ export class PythonGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCon
 
     public getGitHubConfig(
         args: AbstractGeneratorAgent.GitHubConfigArgs<SdkGeneratorContext>
-    ): FernGeneratorCli.GitHubConfig {
+    ): BaseGitHubConfig {
         if (this.publishConfig == null) {
             args.context.logger.error("Publishing config is missing");
             throw new Error("Publishing config is required for GitHub actions");
