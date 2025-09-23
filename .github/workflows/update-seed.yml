@@ -176,6 +176,7 @@ jobs:
     steps:
       - name: Build ruby-model matrix
         id: build-ruby-model-matrix
+        shell: bash
         run: |
           SDK_NAME="ruby-model"
           GEN_PATH="generators/ruby"
@@ -185,6 +186,7 @@ jobs:
           echo "ruby_model_matrix=$BASH_VAR" >> $GITHUB_OUTPUT
       - name: Build python-sdk matrix
         id: build-python-sdk-matrix
+        shell: bash
         run: |
           SDK_NAME="python-sdk"
           GEN_PATH="generators/python"
@@ -198,6 +200,7 @@ jobs:
 
       - name: Combine matrices
         id: combine-matrices
+        shell: bash
         run: |
           # debug
           echo "${{steps.build-ruby-model-matrix.outputs.ruby_model_matrix}}" | jq .
