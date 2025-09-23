@@ -7,7 +7,7 @@ import { generateModels } from "@fern-api/rust-model";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { HttpRequestBody, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { mkdir, writeFile } from "fs/promises";
 import { join } from "path";
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
@@ -289,6 +289,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         // Use a Set to track unique module names and prevent duplicates
         const uniqueModuleNames = new Set<string>();
 
+        // Add regular IR types
         for (const [_typeId, typeDeclaration] of Object.entries(context.ir.types)) {
             // Use centralized method to get unique filename and extract module name from it
             const filename = context.getUniqueFilenameForType(typeDeclaration);
@@ -306,6 +307,33 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
                         isPublic: true
                     })
                 );
+            }
+        }
+
+        // Add inlined request body types from services
+        for (const service of Object.values(context.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.requestBody?.type === "inlinedRequestBody") {
+                    const inlinedRequestBody = endpoint.requestBody as HttpRequestBody.InlinedRequestBody;
+                    const requestName = inlinedRequestBody.name.pascalCase.safeName;
+
+                    // Use centralized method for consistent snake_case conversion
+                    const rawModuleName = context.getModuleNameForInlinedRequestBody(requestName);
+                    const escapedModuleName = context.configManager.escapeRustKeyword(rawModuleName);
+
+                    // Only add if we haven't seen this module name before
+                    if (!uniqueModuleNames.has(escapedModuleName)) {
+                        uniqueModuleNames.add(escapedModuleName);
+                        moduleDeclarations.push(new ModuleDeclaration({ name: escapedModuleName, isPublic: true }));
+                        useStatements.push(
+                            new UseStatement({
+                                path: escapedModuleName,
+                                items: ["*"],
+                                isPublic: true
+                            })
+                        );
+                    }
+                }
             }
         }
 

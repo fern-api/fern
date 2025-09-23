@@ -1,6 +1,7 @@
 import { RustFile } from "@fern-api/rust-base";
 import { AliasGenerator } from "./alias";
 import { EnumGenerator } from "./enum";
+import { InlinedRequestBodyGenerator } from "./inlined-request-body";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { StructGenerator } from "./object";
 import { UndiscriminatedUnionGenerator, UnionGenerator } from "./union";
@@ -39,6 +40,10 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
             files.push(file);
         }
     }
+
+    // Generate inlined request body types from services
+    const inlinedRequestBodyGenerator = new InlinedRequestBodyGenerator(context.ir, context);
+    files.push(...inlinedRequestBodyGenerator.generateFiles());
 
     return files;
 }
