@@ -216,44 +216,9 @@ jobs:
 
           matrix=$(echo "${combined}" | jq '[.]' -c)
           echo "built-matrix=$matrix" >> $GITHUB_OUTPUT
-          
+
           # Output for debug
           # echo "${matrix}" | jq .
-
-# bash-3.2$ GEN_PATH="folder/file"
-# bash-3.2$ ruby_test="{\"ruby-model\": {\"generator-path\": \"${GEN_PATH}\", \"other\": 2}}"
-# bash-3.2$ echo "${ruby_test}" | jq .
-
-
-# ruby_model_obj='{"ruby-model": {"generator-path": "path1", "other": 2}}'
-# bash-3.2$ python_sdk_obj='{"python-sdk": {"generator-path": "path2", "other": 4}}
-#           combined_json=$(jq -s '.[0] * .[1]' <(echo "$ruby_model_obj") <(echo "$python_sdk_obj"))
-
-#       if echo "$BASH_VAR" | jq -e ".[0] | has(\"python-sdk\")" > /dev/null 2>&1; then echo "exists"; fi
-
-
-  ruby-model-seed-update:
-    needs: [changes, setup]
-    if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
-    runs-on: Seed
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.FERN_GITHUB_PAT }}
-
-      - name: Update seed
-        uses: ./.github/actions/auto-update-seed
-        with:
-          generator-name: ruby-model
-          generator-path: generators/ruby
-          language-name: ruby
-          allow-unexpected-failures: true
-          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   matrix-example:
     needs: [setup, build-matrices] # CHRISM - add back changes
@@ -264,11 +229,11 @@ jobs:
     strategy:
       fail-fast: false # Let all tests run, even if some fail
       max-parallel: 10 # Limit the number of runners for this job to 10
-      matrix:
-        include: ${{ fromJSON(needs.build-matrices.outputs.built-matrix) }}
+      matrix: 
+        packages: ${{ fromJSON(needs.build-matrices.outputs.built-matrix) }}
     steps:
       - name: Echo package
-        run: echo '${{toJson(matrix)}}' | jq .
+        run: echo '${{toJson(matrix.packages)}}' | jq .
 
       - name: Get key for name
         run: |
@@ -311,6 +276,29 @@ jobs:
       #     create-pr: ${{ needs.setup.outputs.create-pr }}
       #     secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
       #     secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
+
+  ruby-model-seed-update:
+    needs: [changes, setup]
+    if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    runs-on: Seed
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      - name: Update seed
+        uses: ./.github/actions/auto-update-seed
+        with:
+          generator-name: ruby-model
+          generator-path: generators/ruby
+          language-name: ruby
+          allow-unexpected-failures: true
+          skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
+          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
+          create-pr: ${{ needs.setup.outputs.create-pr }}
+          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
+          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   ruby-sdk-seed-update:
     needs: [changes, setup]
