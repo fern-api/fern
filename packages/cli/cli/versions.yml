@@ -5,7 +5,6 @@
         - `true`: When a type reference points to a nullable schema, it will be wrapped in `optional<>`.
         - `false`: When a type reference points to a nullable schema, it will be wrapped in `nullable<>`.
         The default is `true`.
-        coerce-optional-schemas-to-nullable: false
       type: feat
     - summary: |
         Add new `coerce-optional-schemas-to-nullable` setting to control how optional schemas are treated:
