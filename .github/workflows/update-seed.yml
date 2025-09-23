@@ -55,7 +55,9 @@ jobs:
             echo "create-pr=true" >> $GITHUB_OUTPUT
           fi
   changes:
-    if: github.repository == 'fern-api/fern'
+    # if: github.repository == 'fern-api/fern'
+    # CHRISM test
+    if: false
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -821,11 +823,13 @@ jobs:
   commit-seed-changes:
     outputs:
       has-patches: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES }}
-    if: >-
-      ${{ 
-        always() && needs.setup.outputs.create-artifacts == 'true' &&
-        !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
-      }}
+    # if: >-
+    #   ${{ 
+    #     always() && needs.setup.outputs.create-artifacts == 'true' &&
+    #     !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
+    #   }}
+    # CHRISM test
+    if: false
     needs:
       [
         changes,
