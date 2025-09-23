@@ -35,6 +35,7 @@ class PydanticModel:
         update_forward_ref_function_reference: AST.Reference,
         field_metadata_getter: Callable[[], FieldMetadata],
         use_pydantic_field_aliases: bool,
+        use_annotated_field_aliases: bool,
         should_export: bool = True,
         base_models: Sequence[AST.ClassReference] = [],
         parent: Optional[ClassParent] = None,
@@ -78,6 +79,7 @@ class PydanticModel:
         self._update_forward_ref_function_reference = update_forward_ref_function_reference
         self._field_metadata_getter = field_metadata_getter
         self._use_pydantic_field_aliases = use_pydantic_field_aliases
+        self._use_annotated_field_aliases = use_annotated_field_aliases
 
     def to_reference(self) -> LocalClassReference:
         return self._local_class_reference
@@ -125,7 +127,39 @@ class PydanticModel:
             version=self._version,
         )
 
-        if is_aliased and not self._use_pydantic_field_aliases:
+        # Handle field aliasing approaches (mutually exclusive)
+        if (
+            is_aliased
+            and self._use_annotated_field_aliases
+            and self._version == PydanticVersionCompatibility.V2
+        ):
+            # New annotated field aliases feature - use pydantic.Field in Annotated
+            pydantic_field_annotation = AST.Expression(
+                AST.FunctionInvocation(
+                    function_definition=Pydantic(self._version).Field(),
+                    kwargs=[("alias", AST.Expression(f'"{field.json_field_name}"'))]
+                )
+            )
+
+            # Create annotated type hint
+            annotated_type_hint = AST.TypeHint.annotated(
+                type=field.type_hint,
+                annotation=pydantic_field_annotation,
+            )
+
+            # Update field with new type hint
+            prev_fields = field.__dict__
+            del prev_fields["type_hint"]
+            field = PydanticField(
+                **(field.__dict__),
+                type_hint=annotated_type_hint,
+            )
+
+            # Use only the default value as initializer, not pydantic.Field
+            initializer = default_value
+
+        elif is_aliased and not self._use_pydantic_field_aliases:
+            # Legacy approach - use FieldMetadata in Annotated
             field_metadata = self._field_metadata_getter().get_instance()
             field_metadata.add_alias(field.json_field_name)
 
