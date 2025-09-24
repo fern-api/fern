@@ -104,7 +104,7 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
             }
         }
 
-        await context.project.persist();
+        await context.project.persist({ tidy: true });
     }
 
     private generateRawClients(context: SdkGeneratorContext) {
