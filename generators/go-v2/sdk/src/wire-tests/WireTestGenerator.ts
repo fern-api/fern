@@ -2,13 +2,14 @@ import { File } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
-import { dynamic, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { dynamic, HttpEndpoint, QueryParameter } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
 import { convertIr } from "../utils/convertIr";
 
 const WIREMOCK_BASE_URL = "WireMockBaseURL";
 const WIREMOCK_CLIENT_VAR_NAME = "WireMockClient";
+const CLIENT_VAR_NAME = "client";
 
 export class WireTestGenerator {
     private readonly context: SdkGeneratorContext;
@@ -344,7 +345,7 @@ export class WireTestGenerator {
                                         name: "URLPathTemplate",
                                         importPath: "github.com/wiremock/go-wiremock"
                                     }),
-                                    arguments_: [go.TypeInstantiation.string(endpoint.location.path)],
+                                    arguments_: [go.TypeInstantiation.string(this.buildFullPath(endpoint))],
                                     multiline: false
                                 })
                             ],
@@ -354,10 +355,10 @@ export class WireTestGenerator {
                             ? endpoint.queryParameters
                                   //Exclude optional since it appears that optional query params do not automatically get mocked in the dynamic snippet invocation (for now)
                                   .filter(
-                                      (queryParameter: FernIr.dynamic.NamedParameter) =>
-                                          queryParameter.typeReference.type !== "optional"
+                                      (queryParameter: QueryParameter) =>
+                                          !this.context.isOptional(queryParameter.valueType)
                                   )
-                                  .map((queryParameter: FernIr.dynamic.NamedParameter) => ({
+                                  .map((queryParameter: QueryParameter) => ({
                                       method: "WithQueryParam",
                                       arguments_: [
                                           go.TypeInstantiation.string(queryParameter.name.wireValue),
@@ -372,11 +373,11 @@ export class WireTestGenerator {
                                       ]
                                   }))
                             : []),
-                        ...(endpoint.request.pathParameters && endpoint.request.pathParameters.length > 0
-                            ? endpoint.request.pathParameters.map((pathParameter: FernIr.dynamic.NamedParameter) => ({
+                        ...(endpoint.pathParameters && endpoint.pathParameters.length > 0
+                            ? endpoint.pathParameters.map((pathParameter) => ({
                                   method: "WithPathParam",
                                   arguments_: [
-                                      go.TypeInstantiation.string(pathParameter.name.wireValue),
+                                      go.TypeInstantiation.string(pathParameter.name.originalName),
                                       go.invokeFunc({
                                           func: go.typeReference({
                                               name: "Matching",
@@ -468,8 +469,8 @@ export class WireTestGenerator {
         endpoint,
         snippet
     }: {
-        endpoint: FernIr.dynamic.Endpoint;
-        snippet: FernIr.dynamic.EndpointSnippetRequest;
+        endpoint: HttpEndpoint;
+        snippet: string;
     }): go.CodeBlock {
         return go.codeblock((writer) => {
             writer.write(`${CLIENT_VAR_NAME} := `);
@@ -481,8 +482,8 @@ export class WireTestGenerator {
         endpoint,
         snippet
     }: {
-        endpoint: FernIr.dynamic.Endpoint;
-        snippet: FernIr.dynamic.EndpointSnippetRequest;
+        endpoint: HttpEndpoint;
+        snippet: string;
     }): go.CodeBlock {
         return go.codeblock((writer) => {
             // IMPORTANT: currently not capturing the response/error values since its not trivial to determine
@@ -495,7 +496,14 @@ export class WireTestGenerator {
                     on: go.codeblock(CLIENT_VAR_NAME),
                     method: this.getMethod({ endpoint }),
                     arguments_: [
-                        this.context.getContextTodoFunctionInvocation(),
+                        go.invokeFunc({
+                            func: go.typeReference({
+                                name: "TODO",
+                                importPath: "context"
+                            }),
+                            arguments_: [],
+                            multiline: false
+                        }),
                         ...this.getMethodArgs({ endpoint, snippet })
                     ]
                 })
@@ -740,13 +748,46 @@ export class WireTestGenerator {
     }
 
     private getTestMethodName(endpoint: HttpEndpoint): string {
-        return (
-            endpoint.name.
-        );
-        // return (
-        //     endpoint.declaration.fernFilepath.allParts.map((name) => name.pascalCase.unsafeName).join("") +
-        //     endpoint.declaration.name.pascalCase.unsafeName
-        // );
+        return endpoint.name.pascalCase.unsafeName;
+    }
+
+    private getWiremockTestConstructorArgs(): go.AstNode[] {
+        return [go.codeblock("ctx"), go.codeblock(WIREMOCK_BASE_URL)];
+    }
+
+    private getRootClientFuncInvocation(args: go.AstNode[]): go.AstNode {
+        return go.invokeFunc({
+            func: go.typeReference({
+                name: "NewClient",
+                importPath: this.context.getRootPackageName()
+            }),
+            arguments_: args,
+            multiline: true
+        });
+    }
+
+    private getMethod({ endpoint }: { endpoint: HttpEndpoint }): string {
+        return endpoint.name.camelCase.unsafeName;
+    }
+
+    private getMethodArgs({ endpoint, snippet }: { endpoint: HttpEndpoint; snippet: string }): go.AstNode[] {
+        // This is a simplified implementation - you may need to parse the snippet
+        // to extract the actual method arguments
+        return [];
+    }
+
+    private buildFullPath(endpoint: HttpEndpoint): string {
+        const parts = endpoint.fullPath.parts;
+        let fullPath = endpoint.fullPath.head;
+
+        for (const part of parts) {
+            if (part.pathParameter) {
+                fullPath += `{${part.pathParameter}}`;
+            }
+            fullPath += part.tail;
+        }
+
+        return fullPath;
     }
 
     private groupEndpointsByService(): Map<string, HttpEndpoint[]> {
