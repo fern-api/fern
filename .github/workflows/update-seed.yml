@@ -3,7 +3,7 @@ name: Update Seed
 on:
   push:
     branches:
-      - main
+      - mallinson/parallelize-update-seed-like-seed-test-changes-for-PR-test
     paths:
       - ".github/workflows/update-seed.yml"
       - "packages/seed/**"
@@ -1217,7 +1217,6 @@ jobs:
     if: >-
       ${{
         always() &&
-        github.ref == format('refs/heads/{0}', github.event.repository.default_branch) &&
         needs.setup.outputs.update-by-pr == 'true' &&
         !contains(needs.*.result, 'failure') && 
         !contains(needs.*.result, 'cancelled')
@@ -1413,12 +1412,12 @@ jobs:
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: squash
 
-      - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: ./.github/actions/auto-approve
-        with:
-          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+      # - name: Approve PR
+      #   if: steps.cpr.outputs.pull-request-operation == 'created'
+      #   uses: ./.github/actions/auto-approve
+      #   with:
+      #     approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+      #     pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
 
   # Use always() to ensure this runs even if stages from needs are skipped.
   # Add check back to make sure it doesn't run for failures or cancellations.
