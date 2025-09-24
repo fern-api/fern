@@ -388,6 +388,9 @@ func do() {
 					"Second",
 				),
 			},
+			MaybeFile: strings.NewReader(
+				"",
+			),
 		},
 	)
 }
@@ -1215,6 +1218,9 @@ func do() {
 					"Second",
 				),
 			},
+			MaybeFile: strings.NewReader(
+				"",
+			),
 		},
 	)
 }
@@ -2042,6 +2048,9 @@ func do() {
 					"Second",
 				),
 			},
+			MaybeFile: strings.NewReader(
+				"",
+			),
 		},
 	)
 }

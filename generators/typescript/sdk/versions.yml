@@ -1,4 +1,40 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.2.0
+  changelogEntry:
+    - summary: |
+        Add `generateEndpointMetadata` configuration to generate endpoint metadata for each endpoints.
+        When you use a callback function to generate headers or auth tokens, the endpoint metadata will be passed to the callback.
+        ```ts
+        const client = new Foo({
+            ...,
+            token: ({ endpointMetadata }) => {
+                // generate token based on endpoint metadata
+            }
+        });
+        ```
+
+        To enable this, set `generateEndpointMetadata` to `true` in the `config` of your generator configuration.
+        ```yml
+        # In generators.yml
+        groups:
+          ts-sdk:
+            generators:
+              - name: fernapi/fern-typescript-sdk
+                config:
+                  generateEndpointMetadata: true
+        ```
+      type: feat
+  createdAt: "2025-09-24"
+  irVersion: 60
+
+- version: 3.1.2
+  changelogEntry:
+    - summary: |
+        Pin `msw` dependency to `2.11.2` because newer version introduces jest/vitest compatibility issues.
+      type: fix
+  createdAt: "2025-09-24"
+  irVersion: 60
+
 - version: 3.1.1
   changelogEntry:
     - summary: |

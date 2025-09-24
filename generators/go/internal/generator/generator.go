@@ -563,30 +563,21 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			files = append(files, newOptionalTestFile(g.coordinator))
 		}
 		files = append(files, newApiErrorFile(g.coordinator))
-		files = append(files, newCallerFile(g.coordinator, g.config.FullImportPath))
-		files = append(files, newCallerTestFile(g.coordinator, g.config.FullImportPath))
-		files = append(files, newErrorDecoderFile(g.coordinator, g.config.FullImportPath))
-		files = append(files, newErrorDecoderTestFile(g.coordinator, g.config.FullImportPath))
 		files = append(files, newFileParamFile(g.coordinator, rootPackageName, generatedNames))
 		files = append(files, newHttpCoreFile(g.coordinator))
 		files = append(files, newHttpInternalFile(g.coordinator))
 		files = append(files, newPointerFile(g.coordinator, rootPackageName, generatedNames))
 		files = append(files, newQueryFile(g.coordinator))
 		files = append(files, newQueryTestFile(g.coordinator))
-		files = append(files, newRetrierFile(g.coordinator, g.config.FullImportPath))
-		files = append(files, newRetrierTestFile(g.coordinator, g.config.FullImportPath))
 		if needsFileUploadHelpers(ir) {
 			files = append(files, newMultipartFile(g.coordinator))
 			files = append(files, newMultipartTestFile(g.coordinator))
 		}
 		if ir.SdkConfig.HasStreamingEndpoints {
 			files = append(files, newStreamFile(g.coordinator))
-			files = append(files, newStreamerFile(g.coordinator, g.config.FullImportPath))
 		}
 		if generatedPagination {
 			files = append(files, newPageFile(g.coordinator))
-			files = append(files, newPagerFile(g.coordinator, g.config.FullImportPath))
-			files = append(files, newPagerTestFile(g.coordinator))
 		}
 		clientTestFile, err := newClientTestFile(g.config.FullImportPath, rootPackageName, g.coordinator,  g.config.ClientName, g.config.ClientConstructorName)
 		if err != nil {
@@ -753,6 +744,9 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		}
 	}
 
+	for _, file := range files {
+		fmt.Printf("v1 output file %s\n", file.Path)
+	}
 	return files, nil
 }
 
@@ -1211,41 +1205,24 @@ func newApiErrorFile(coordinator *coordinator.Client) *File {
 	)
 }
 
-func newCallerFile(coordinator *coordinator.Client, baseImportPath string) *File {
-	content := replaceCoreImportPath(callerFile, baseImportPath)
-	return NewFile(
-		coordinator,
-		"internal/caller.go",
-		[]byte(content),
-	)
-}
 
-func newCallerTestFile(coordinator *coordinator.Client, baseImportPath string) *File {
-	content := replaceCoreImportPath(callerTestFile, baseImportPath)
-	return NewFile(
-		coordinator,
-		"internal/caller_test.go",
-		[]byte(content),
-	)
-}
+// func newErrorDecoderFile(coordinator *coordinator.Client, baseImportPath string) *File {
+// 	content := replaceCoreImportPath(errorDecoderFile, baseImportPath)
+// 	return NewFile(
+// 		coordinator,
+// 		"internal/error_decoder.go",
+// 		[]byte(content),
+// 	)
+// }
 
-func newErrorDecoderFile(coordinator *coordinator.Client, baseImportPath string) *File {
-	content := replaceCoreImportPath(errorDecoderFile, baseImportPath)
-	return NewFile(
-		coordinator,
-		"internal/error_decoder.go",
-		[]byte(content),
-	)
-}
-
-func newErrorDecoderTestFile(coordinator *coordinator.Client, baseImportPath string) *File {
-	content := replaceCoreImportPath(errorDecoderTestFile, baseImportPath)
-	return NewFile(
-		coordinator,
-		"internal/error_decoder_test.go",
-		[]byte(content),
-	)
-}
+// func newErrorDecoderTestFile(coordinator *coordinator.Client, baseImportPath string) *File {
+// 	content := replaceCoreImportPath(errorDecoderTestFile, baseImportPath)
+// 	return NewFile(
+// 		coordinator,
+// 		"internal/error_decoder_test.go",
+// 		[]byte(content),
+// 	)
+// }
 
 func newHttpCoreFile(coordinator *coordinator.Client) *File {
 	return NewFile(
@@ -1295,22 +1272,6 @@ func newOptionalTestFile(coordinator *coordinator.Client) *File {
 	)
 }
 
-func newPagerFile(coordinator *coordinator.Client, baseImportPath string) *File {
-	content := replaceCoreImportPath(pagerFile, baseImportPath)
-	return NewFile(
-		coordinator,
-		"internal/pager.go",
-		[]byte(content),
-	)
-}
-
-func newPagerTestFile(coordinator *coordinator.Client) *File {
-	return NewFile(
-		coordinator,
-		"internal/pager_test.go",
-		[]byte(pagerTestFile),
-	)
-}
 
 func newPageFile(coordinator *coordinator.Client) *File {
 	return NewFile(
@@ -1328,32 +1289,7 @@ func newStreamFile(coordinator *coordinator.Client) *File {
 	)
 }
 
-func newStreamerFile(coordinator *coordinator.Client, baseImportPath string) *File {
-	content := replaceCoreImportPath(streamerFile, baseImportPath)
-	return NewFile(
-		coordinator,
-		"internal/streamer.go",
-		[]byte(content),
-	)
-}
 
-func newRetrierFile(coordinator *coordinator.Client, baseImportPath string) *File {
-	content := replaceCoreImportPath(retrierFile, baseImportPath)
-	return NewFile(
-		coordinator,
-		"internal/retrier.go",
-		[]byte(content),
-	)
-}
-
-func newRetrierTestFile(coordinator *coordinator.Client, baseImportPath string) *File {
-	content := replaceCoreImportPath(retrierTestFile, baseImportPath)
-	return NewFile(
-		coordinator,
-		"internal/retrier_test.go",
-		[]byte(content),
-	)
-}
 
 func newQueryFile(coordinator *coordinator.Client) *File {
 	return NewFile(
