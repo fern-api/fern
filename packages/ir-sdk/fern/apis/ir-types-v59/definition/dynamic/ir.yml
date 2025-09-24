@@ -3,7 +3,6 @@ imports:
   endpoints: ./endpoints.yml
   environment: ../environment.yml
   types: ./types.yml
-  variables: ./variables.yml
 types:
   DynamicIntermediateRepresentation:
     audiences:
@@ -33,11 +32,6 @@ types:
           path parameters are typically included in the SDK's client
           constructor.
         type: optional<list<types.NamedParameter>>
-      variables:
-        docs: |
-          Variables that are configured at the client level and can be
-          referenced in path parameters and other contexts.
-        type: optional<list<variables.VariableDeclaration>>
       generatorConfig: optional<GeneratorConfig>
 
   GeneratorConfig:
