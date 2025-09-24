@@ -7705,18 +7705,12 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "generatedName": "CompanyCustomAttributesValue",
-                  "value": {
-                    "schema": {
-                      "type": "string"
-                    },
-                    "generatedName": "CompanyCustomAttributesValue",
-                    "groupName": [],
-                    "type": "primitive"
+                  "schema": {
+                    "type": "string"
                   },
+                  "generatedName": "CompanyCustomAttributesValue",
                   "groupName": [],
-                  "inline": true,
-                  "type": "optional"
+                  "type": "primitive"
                 },
                 "generatedName": "CompanyCustomAttributes",
                 "groupName": [],
@@ -15381,18 +15375,12 @@
                     "type": "primitive"
                   },
                   "value": {
-                    "generatedName": "CreateOrUpdateCompanyRequestCustomAttributesValue",
-                    "value": {
-                      "schema": {
-                        "type": "string"
-                      },
-                      "generatedName": "CreateOrUpdateCompanyRequestCustomAttributesValue",
-                      "groupName": [],
-                      "type": "primitive"
+                    "schema": {
+                      "type": "string"
                     },
+                    "generatedName": "CreateOrUpdateCompanyRequestCustomAttributesValue",
                     "groupName": [],
-                    "inline": true,
-                    "type": "optional"
+                    "type": "primitive"
                   },
                   "generatedName": "CreateOrUpdateCompanyRequestCustomAttributes",
                   "groupName": [],
@@ -16383,46 +16371,40 @@
           "type": "primitive"
         },
         "value": {
-          "generatedName": "CustomAttributesValue",
           "value": {
-            "value": {
-              "generatedName": "CustomAttributesValue",
-              "schemas": [
-                {
-                  "schema": {
-                    "type": "string"
-                  },
-                  "generatedName": "CustomAttributesValue",
-                  "groupName": [],
-                  "type": "primitive"
+            "generatedName": "CustomAttributesValue",
+            "schemas": [
+              {
+                "schema": {
+                  "type": "string"
                 },
-                {
-                  "generatedName": "CustomAttributesValueOne",
-                  "value": {
-                    "generatedName": "CustomAttributesValueOne",
-                    "schema": "custom_object_instance",
-                    "source": {
-                      "file": "../openapi.yml",
-                      "type": "openapi"
-                    },
-                    "type": "reference"
-                  },
-                  "type": "nullable"
-                }
-              ],
-              "groupName": [],
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+                "generatedName": "CustomAttributesValue",
+                "groupName": [],
+                "type": "primitive"
               },
-              "inline": true,
-              "type": "undiscriminated"
+              {
+                "generatedName": "CustomAttributesValueOne",
+                "value": {
+                  "generatedName": "CustomAttributesValueOne",
+                  "schema": "custom_object_instance",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "type": "nullable"
+              }
+            ],
+            "groupName": [],
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
             },
-            "type": "oneOf"
+            "inline": true,
+            "type": "undiscriminated"
           },
-          "groupName": [],
-          "inline": true,
-          "type": "optional"
+          "type": "oneOf"
         },
         "generatedName": "CustomAttributes",
         "title": "Custom Attributes",
@@ -16526,18 +16508,12 @@
                     "type": "primitive"
                   },
                   "value": {
-                    "generatedName": "CustomObjectInstanceCustomAttributesValue",
-                    "value": {
-                      "schema": {
-                        "type": "string"
-                      },
-                      "generatedName": "CustomObjectInstanceCustomAttributesValue",
-                      "groupName": [],
-                      "type": "primitive"
+                    "schema": {
+                      "type": "string"
                     },
+                    "generatedName": "CustomObjectInstanceCustomAttributesValue",
                     "groupName": [],
-                    "inline": true,
-                    "type": "optional"
+                    "type": "primitive"
                   },
                   "generatedName": "CustomObjectInstanceCustomAttributes",
                   "groupName": [],
@@ -17390,18 +17366,12 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "generatedName": "DataEventMetadataValue",
-                  "value": {
-                    "schema": {
-                      "type": "string"
-                    },
-                    "generatedName": "DataEventMetadataValue",
-                    "groupName": [],
-                    "type": "primitive"
+                  "schema": {
+                    "type": "string"
                   },
+                  "generatedName": "DataEventMetadataValue",
                   "groupName": [],
-                  "inline": true,
-                  "type": "optional"
+                  "type": "primitive"
                 },
                 "generatedName": "DataEventMetadata",
                 "groupName": [],
@@ -25784,72 +25754,66 @@
           "type": "primitive"
         },
         "value": {
-          "generatedName": "TicketCustomAttributesValue",
           "value": {
-            "value": {
-              "generatedName": "TicketCustomAttributesValue",
-              "schemas": [
-                {
-                  "generatedName": "TicketCustomAttributesValue",
-                  "value": {
-                    "schema": {
-                      "type": "string"
-                    },
-                    "generatedName": "TicketCustomAttributesValue",
-                    "groupName": [],
-                    "type": "primitive"
-                  },
-                  "groupName": [],
-                  "type": "nullable"
-                },
-                {
+            "generatedName": "TicketCustomAttributesValue",
+            "schemas": [
+              {
+                "generatedName": "TicketCustomAttributesValue",
+                "value": {
                   "schema": {
-                    "type": "double"
+                    "type": "string"
                   },
                   "generatedName": "TicketCustomAttributesValue",
                   "groupName": [],
                   "type": "primitive"
                 },
-                {
-                  "schema": {
-                    "type": "boolean"
-                  },
-                  "generatedName": "TicketCustomAttributesValue",
-                  "groupName": [],
-                  "type": "primitive"
-                },
-                {
-                  "value": {
-                    "generatedName": "TicketCustomAttributesValue",
-                    "type": "unknown"
-                  },
-                  "generatedName": "TicketCustomAttributesValue",
-                  "groupName": [],
-                  "type": "array"
-                },
-                {
-                  "generatedName": "TicketCustomAttributesValueFour",
-                  "schema": "file_attribute",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
-                  },
-                  "type": "reference"
-                }
-              ],
-              "groupName": [],
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+                "groupName": [],
+                "type": "nullable"
               },
-              "inline": true,
-              "type": "undiscriminated"
+              {
+                "schema": {
+                  "type": "double"
+                },
+                "generatedName": "TicketCustomAttributesValue",
+                "groupName": [],
+                "type": "primitive"
+              },
+              {
+                "schema": {
+                  "type": "boolean"
+                },
+                "generatedName": "TicketCustomAttributesValue",
+                "groupName": [],
+                "type": "primitive"
+              },
+              {
+                "value": {
+                  "generatedName": "TicketCustomAttributesValue",
+                  "type": "unknown"
+                },
+                "generatedName": "TicketCustomAttributesValue",
+                "groupName": [],
+                "type": "array"
+              },
+              {
+                "generatedName": "TicketCustomAttributesValueFour",
+                "schema": "file_attribute",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              }
+            ],
+            "groupName": [],
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
             },
-            "type": "oneOf"
+            "inline": true,
+            "type": "undiscriminated"
           },
-          "groupName": [],
-          "inline": true,
-          "type": "optional"
+          "type": "oneOf"
         },
         "generatedName": "TicketCustomAttributes",
         "title": "Ticket Attributes",
@@ -26845,63 +26809,57 @@
           "type": "primitive"
         },
         "value": {
-          "generatedName": "TicketRequestCustomAttributesValue",
           "value": {
-            "value": {
-              "generatedName": "TicketRequestCustomAttributesValue",
-              "schemas": [
-                {
-                  "generatedName": "TicketRequestCustomAttributesValue",
-                  "value": {
-                    "schema": {
-                      "type": "string"
-                    },
-                    "generatedName": "TicketRequestCustomAttributesValue",
-                    "groupName": [],
-                    "type": "primitive"
-                  },
-                  "groupName": [],
-                  "type": "nullable"
-                },
-                {
+            "generatedName": "TicketRequestCustomAttributesValue",
+            "schemas": [
+              {
+                "generatedName": "TicketRequestCustomAttributesValue",
+                "value": {
                   "schema": {
-                    "type": "double"
+                    "type": "string"
                   },
                   "generatedName": "TicketRequestCustomAttributesValue",
                   "groupName": [],
                   "type": "primitive"
                 },
-                {
-                  "schema": {
-                    "type": "boolean"
-                  },
-                  "generatedName": "TicketRequestCustomAttributesValue",
-                  "groupName": [],
-                  "type": "primitive"
-                },
-                {
-                  "value": {
-                    "generatedName": "TicketRequestCustomAttributesValue",
-                    "type": "unknown"
-                  },
-                  "generatedName": "TicketRequestCustomAttributesValue",
-                  "groupName": [],
-                  "type": "array"
-                }
-              ],
-              "groupName": [],
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
+                "groupName": [],
+                "type": "nullable"
               },
-              "inline": true,
-              "type": "undiscriminated"
+              {
+                "schema": {
+                  "type": "double"
+                },
+                "generatedName": "TicketRequestCustomAttributesValue",
+                "groupName": [],
+                "type": "primitive"
+              },
+              {
+                "schema": {
+                  "type": "boolean"
+                },
+                "generatedName": "TicketRequestCustomAttributesValue",
+                "groupName": [],
+                "type": "primitive"
+              },
+              {
+                "value": {
+                  "generatedName": "TicketRequestCustomAttributesValue",
+                  "type": "unknown"
+                },
+                "generatedName": "TicketRequestCustomAttributesValue",
+                "groupName": [],
+                "type": "array"
+              }
+            ],
+            "groupName": [],
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
             },
-            "type": "oneOf"
+            "inline": true,
+            "type": "undiscriminated"
           },
-          "groupName": [],
-          "inline": true,
-          "type": "optional"
+          "type": "oneOf"
         },
         "generatedName": "TicketRequestCustomAttributes",
         "title": "Ticket Attributes",
@@ -30535,18 +30493,12 @@
                     "type": "primitive"
                   },
                   "value": {
-                    "generatedName": "VisitorCustomAttributesValue",
-                    "value": {
-                      "schema": {
-                        "type": "string"
-                      },
-                      "generatedName": "VisitorCustomAttributesValue",
-                      "groupName": [],
-                      "type": "primitive"
+                    "schema": {
+                      "type": "string"
                     },
+                    "generatedName": "VisitorCustomAttributesValue",
                     "groupName": [],
-                    "inline": true,
-                    "type": "optional"
+                    "type": "primitive"
                   },
                   "generatedName": "VisitorCustomAttributes",
                   "groupName": [],

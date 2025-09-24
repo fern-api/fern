@@ -8479,7 +8479,7 @@ service:
               },
               "fields": {
                 "docs": "A collection of form field objects",
-                "type": "optional<map<string, optional<FormsGetResponseFieldsValue>>>",
+                "type": "optional<map<string, FormsGetResponseFieldsValue>>",
               },
               "formElementId": {
                 "docs": "The unique id of the Form element",
@@ -8647,7 +8647,7 @@ service:
               },
               "fields": {
                 "docs": "A collection of form field objects",
-                "type": "optional<map<string, optional<FormsListResponseFormsItemFieldsValue>>>",
+                "type": "optional<map<string, FormsListResponseFormsItemFieldsValue>>",
               },
               "formElementId": {
                 "docs": "The unique id of the Form element",
@@ -8997,7 +8997,7 @@ service:
         type: optional<datetime>
         docs: Date that the Form was last updated on
       fields:
-        type: optional<map<string, optional<FormsListResponseFormsItemFieldsValue>>>
+        type: optional<map<string, FormsListResponseFormsItemFieldsValue>>
         docs: A collection of form field objects
       responseSettings:
         type: optional<FormsListResponseFormsItemResponseSettings>
@@ -9110,7 +9110,7 @@ service:
         type: optional<datetime>
         docs: Date that the Form was last updated on
       fields:
-        type: optional<map<string, optional<FormsGetResponseFieldsValue>>>
+        type: optional<map<string, FormsGetResponseFieldsValue>>
         docs: A collection of form field objects
       responseSettings:
         type: optional<FormsGetResponseResponseSettings>
@@ -28807,6 +28807,9 @@ webhooks:
                     "body": {
                       "nodes": [
                         {
+                          "attributes": {
+                            "key": "value",
+                          },
                           "id": "a245c12d-995b-55ee-5ec7-aa36a6cad623",
                           "text": {
                             "html": "<h1>The Hitchhiker's Guide to the Galaxy</h1>",
@@ -28815,6 +28818,9 @@ webhooks:
                           "type": "text",
                         },
                         {
+                          "attributes": {
+                            "key": "value",
+                          },
                           "id": "a245c12d-995b-55ee-5ec7-aa36a6cad627",
                           "text": {
                             "html": "<div><h3>Don't Panic!</h3><p>Always know where your towel is.</p></div>",
@@ -28822,6 +28828,9 @@ webhooks:
                           "type": "text",
                         },
                         {
+                          "attributes": {
+                            "key": "value",
+                          },
                           "id": "a245c12d-995b-55ee-5ec7-aa36a6cad629",
                           "image": {
                             "alt": "Marvin, the Paranoid Android",
@@ -29405,7 +29414,7 @@ Required scope | `pages:write`
             "properties": {
               "attributes": {
                 "docs": "The custom attributes of the node",
-                "type": "optional<map<string, optional<string>>>",
+                "type": "optional<map<string, string>>",
               },
               "id": {
                 "access": "read-only",
@@ -30531,7 +30540,7 @@ Required scope | `pages:write`
           attributes can be associated with the image for styling or other
           purposes.
       attributes:
-        type: optional<map<string, optional<string>>>
+        type: optional<map<string, string>>
         docs: The custom attributes of the node
     source:
       openapi: ../openapi.yml
@@ -30981,17 +30990,23 @@ service:
                   text:
                     html: <h1>The Hitchhiker's Guide to the Galaxy</h1>
                     text: The Hitchhiker's Guide to the Galaxy
+                  attributes:
+                    key: value
                 - id: a245c12d-995b-55ee-5ec7-aa36a6cad627
                   type: text
                   text:
                     html: >-
                       <div><h3>Don't Panic!</h3><p>Always know where your towel
                       is.</p></div>
+                  attributes:
+                    key: value
                 - id: a245c12d-995b-55ee-5ec7-aa36a6cad629
                   type: image
                   image:
                     alt: Marvin, the Paranoid Android
                     assetId: 659595234426a9fcbad57043
+                  attributes:
+                    key: value
               pagination:
                 limit: 3
                 offset: 0
@@ -32934,7 +32949,7 @@ Required scope | `ecommerce:write`
               "sku-values": {
                 "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.
 ",
-                "type": "optional<map<string, optional<string>>>",
+                "type": "optional<map<string, string>>",
               },
               "slug": {
                 "docs": "URL structure of the Product in your site.",
@@ -33418,7 +33433,7 @@ Required scope | `ecommerce:write`
               "sku-values": {
                 "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.
 ",
-                "type": "optional<map<string, optional<string>>>",
+                "type": "optional<map<string, string>>",
               },
               "slug": {
                 "docs": "URL structure of the Product in your site.",
@@ -33627,7 +33642,7 @@ Required scope | `ecommerce:write`
               "sku-values": {
                 "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.
 ",
-                "type": "optional<map<string, optional<string>>>",
+                "type": "optional<map<string, string>>",
               },
               "slug": {
                 "docs": "URL structure of the Product in your site.",
@@ -33834,7 +33849,7 @@ Required scope | `ecommerce:write`
               "sku-values": {
                 "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.
 ",
-                "type": "optional<map<string, optional<string>>>",
+                "type": "optional<map<string, string>>",
               },
               "slug": {
                 "docs": "URL structure of the Product in your site.",
@@ -34318,7 +34333,7 @@ Required scope | `ecommerce:write`
               "sku-values": {
                 "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.
 ",
-                "type": "optional<map<string, optional<string>>>",
+                "type": "optional<map<string, string>>",
               },
               "slug": {
                 "docs": "URL structure of the Product in your site.",
@@ -34819,7 +34834,7 @@ Required scope | `ecommerce:write`
               "sku-values": {
                 "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.
 ",
-                "type": "optional<map<string, optional<string>>>",
+                "type": "optional<map<string, string>>",
               },
               "slug": {
                 "docs": "URL structure of the Product in your site.",
@@ -35319,7 +35334,7 @@ Required scope | `ecommerce:write`
               "sku-values": {
                 "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.
 ",
-                "type": "optional<map<string, optional<string>>>",
+                "type": "optional<map<string, string>>",
               },
               "slug": {
                 "docs": "URL structure of the Product in your site.",
@@ -35798,7 +35813,7 @@ Required scope | `ecommerce:write`
               "sku-values": {
                 "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.
 ",
-                "type": "optional<map<string, optional<string>>>",
+                "type": "optional<map<string, string>>",
               },
               "slug": {
                 "docs": "URL structure of the Product in your site.",
@@ -35995,7 +36010,7 @@ Required scope | `ecommerce:write`
               "sku-values": {
                 "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.
 ",
-                "type": "optional<map<string, optional<string>>>",
+                "type": "optional<map<string, string>>",
               },
               "slug": {
                 "docs": "URL structure of the Product in your site.",
@@ -36412,7 +36427,7 @@ Required scope | `ecommerce:write`
     docs: Standard and Custom fields for a SKU
     properties:
       sku-values:
-        type: optional<map<string, optional<string>>>
+        type: optional<map<string, string>>
         docs: >
           A dictionary that maps a SKU property to a SKU value. The key of the
           dictionary is the SKU property ID, and the value is the SKU value ID.
@@ -36772,7 +36787,7 @@ Required scope | `ecommerce:write`
     docs: Standard and Custom fields for a SKU
     properties:
       sku-values:
-        type: optional<map<string, optional<string>>>
+        type: optional<map<string, string>>
         docs: >
           A dictionary that maps a SKU property to a SKU value. The key of the
           dictionary is the SKU property ID, and the value is the SKU value ID.
@@ -37110,7 +37125,7 @@ Required scope | `ecommerce:write`
     docs: Standard and Custom fields for a SKU
     properties:
       sku-values:
-        type: optional<map<string, optional<string>>>
+        type: optional<map<string, string>>
         docs: >
           A dictionary that maps a SKU property to a SKU value. The key of the
           dictionary is the SKU property ID, and the value is the SKU value ID.
@@ -37458,7 +37473,7 @@ Required scope | `ecommerce:write`
     docs: Standard and Custom fields for a SKU
     properties:
       sku-values:
-        type: optional<map<string, optional<string>>>
+        type: optional<map<string, string>>
         docs: >
           A dictionary that maps a SKU property to a SKU value. The key of the
           dictionary is the SKU property ID, and the value is the SKU value ID.
@@ -37815,7 +37830,7 @@ Required scope | `ecommerce:write`
     docs: Standard and Custom fields for a SKU
     properties:
       sku-values:
-        type: optional<map<string, optional<string>>>
+        type: optional<map<string, string>>
         docs: >
           A dictionary that maps a SKU property to a SKU value. The key of the
           dictionary is the SKU property ID, and the value is the SKU value ID.
@@ -38160,7 +38175,7 @@ Required scope | `ecommerce:write`
     docs: Standard and Custom fields for a SKU
     properties:
       sku-values:
-        type: optional<map<string, optional<string>>>
+        type: optional<map<string, string>>
         docs: >
           A dictionary that maps a SKU property to a SKU value. The key of the
           dictionary is the SKU property ID, and the value is the SKU value ID.
@@ -38308,7 +38323,7 @@ Required scope | `ecommerce:write`
     docs: Standard and Custom fields for a SKU
     properties:
       sku-values:
-        type: optional<map<string, optional<string>>>
+        type: optional<map<string, string>>
         docs: >
           A dictionary that maps a SKU property to a SKU value. The key of the
           dictionary is the SKU property ID, and the value is the SKU value ID.
@@ -38471,7 +38486,7 @@ Required scope | `ecommerce:write`
     docs: Standard and Custom fields for a SKU
     properties:
       sku-values:
-        type: optional<map<string, optional<string>>>
+        type: optional<map<string, string>>
         docs: >
           A dictionary that maps a SKU property to a SKU value. The key of the
           dictionary is the SKU property ID, and the value is the SKU value ID.
@@ -38619,7 +38634,7 @@ Required scope | `ecommerce:write`
     docs: Standard and Custom fields for a SKU
     properties:
       sku-values:
-        type: optional<map<string, optional<string>>>
+        type: optional<map<string, string>>
         docs: >
           A dictionary that maps a SKU property to a SKU value. The key of the
           dictionary is the SKU property ID, and the value is the SKU value ID.

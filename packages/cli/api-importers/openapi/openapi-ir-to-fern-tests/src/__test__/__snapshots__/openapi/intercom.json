@@ -4561,7 +4561,7 @@
               },
               "custom_attributes": {
                 "docs": "A hash of key/value pairs containing any other data about the company you want Intercom to store.",
-                "type": "optional<map<string, optional<string>>>",
+                "type": "optional<map<string, string>>",
               },
               "industry": {
                 "docs": "The industry that this company operates in.",
@@ -4726,7 +4726,7 @@ A "cursor" or pointer is used to keep track of the current position in the resul
           },
           "CustomAttributes": {
             "docs": "An object containing the different custom attributes associated to the conversation as key-value pairs. For relationship attributes the value will be a list of custom object instance models.",
-            "type": "map<string, optional<CustomAttributesValue>>",
+            "type": "map<string, CustomAttributesValue>",
           },
           "CustomAttributesValue": {
             "discriminated": false,
@@ -6242,7 +6242,7 @@ Important: if there are any canceled sla_events for the conversation - meaning a
           },
           "TicketCustomAttributes": {
             "docs": "An object containing the different attributes associated to the ticket as key-value pairs. For the default title and description attributes, the keys are `_default_title_` and `_default_description_`.",
-            "type": "map<string, optional<TicketCustomAttributesValue>>",
+            "type": "map<string, TicketCustomAttributesValue>",
           },
           "TicketCustomAttributesValue": {
             "discriminated": false,
@@ -6409,7 +6409,7 @@ Important: if there are any canceled sla_events for the conversation - meaning a
           },
           "TicketRequestCustomAttributes": {
             "docs": "The attributes set on the ticket. When setting the default title and description attributes, the attribute keys that should be used are `_default_title_` and `_default_description_`. When setting ticket type attributes of the list attribute type, the key should be the attribute name and the value of the attribute should be the list item id, obtainable by [listing the ticket type](ref:get_ticket-types). For example, if the ticket type has an attribute called `priority` of type `list`, the key should be `priority` and the value of the attribute should be the guid of the list item (e.g. `de1825a0-0164-4070-8ca6-13e22462fa7e`).",
-            "type": "map<string, optional<TicketRequestCustomAttributesValue>>",
+            "type": "map<string, TicketRequestCustomAttributesValue>",
           },
           "TicketRequestCustomAttributesValue": {
             "discriminated": false,
@@ -6728,7 +6728,7 @@ You can copy the `icon` property for your ticket type from [Twemoji Cheatsheet](
               },
               "custom_attributes": {
                 "docs": "The custom attributes you have set on the Visitor.",
-                "type": "optional<map<string, optional<string>>>",
+                "type": "optional<map<string, string>>",
               },
               "do_not_track": {
                 "docs": "Identifies if this visitor has do not track enabled.",
@@ -9840,7 +9840,7 @@ types:
         type: optional<string>
         docs: The industry that this company operates in.
       custom_attributes:
-        type: optional<map<string, optional<string>>>
+        type: optional<map<string, string>>
         docs: >-
           A hash of key/value pairs containing any other data about the company
           you want Intercom to store.
@@ -9960,7 +9960,7 @@ types:
       openapi: ../openapi.yml
     inline: true
   CustomAttributes:
-    type: map<string, optional<CustomAttributesValue>>
+    type: map<string, CustomAttributesValue>
     docs: >-
       An object containing the different custom attributes associated to the
       conversation as key-value pairs. For relationship attributes the value
@@ -11024,7 +11024,7 @@ types:
       openapi: ../openapi.yml
     inline: true
   TicketCustomAttributes:
-    type: map<string, optional<TicketCustomAttributesValue>>
+    type: map<string, TicketCustomAttributesValue>
     docs: >-
       An object containing the different attributes associated to the ticket as
       key-value pairs. For the default title and description attributes, the
@@ -11145,7 +11145,7 @@ types:
       openapi: ../openapi.yml
     inline: true
   TicketRequestCustomAttributes:
-    type: map<string, optional<TicketRequestCustomAttributesValue>>
+    type: map<string, TicketRequestCustomAttributesValue>
     docs: >-
       The attributes set on the ticket. When setting the default title and
       description attributes, the attribute keys that should be used are
@@ -11561,7 +11561,7 @@ types:
       segments:
         type: optional<VisitorSegments>
       custom_attributes:
-        type: optional<map<string, optional<string>>>
+        type: optional<map<string, string>>
         docs: The custom attributes you have set on the Visitor.
       referrer:
         type: optional<string>
@@ -18868,6 +18868,9 @@ When using the Companies endpoint and the pages object to iterate through the re
                           "app_id": "this_is_an_id158_that_should_be_at_least_",
                           "company_id": "remote_companies_scroll_2",
                           "created_at": 1719492746,
+                          "custom_attributes": {
+                            "key": "value",
+                          },
                           "id": "667d608a8a68186f43bafd61",
                           "industry": "Software",
                           "last_request_at": 1663597223,
@@ -18982,6 +18985,9 @@ You can fetch all companies and filter by `segment_id` or `tag_id` as a query pa
                           "app_id": "this_is_an_id122_that_should_be_at_least_",
                           "company_id": "remote_companies_scroll_2",
                           "created_at": 1719492734,
+                          "custom_attributes": {
+                            "key": "value",
+                          },
                           "id": "667d607e8a68186f43bafd26",
                           "industry": "Software",
                           "last_request_at": 1663597223,
@@ -19106,6 +19112,9 @@ You can fetch all companies and filter by `segment_id` or `tag_id` as a query pa
                           "app_id": "this_is_an_id162_that_should_be_at_least_",
                           "company_id": "remote_companies_scroll_2",
                           "created_at": 1719492747,
+                          "custom_attributes": {
+                            "key": "value",
+                          },
                           "id": "667d608b8a68186f43bafd67",
                           "industry": "Software",
                           "last_request_at": 1663597223,
@@ -19190,7 +19199,7 @@ You can fetch all companies and filter by `segment_id` or `tag_id` as a query pa
               },
               "custom_attributes": {
                 "docs": "The custom attributes you have set on the company.",
-                "type": "optional<map<string, optional<string>>>",
+                "type": "optional<map<string, string>>",
               },
               "id": {
                 "docs": "The Intercom defined id representing the company.",
@@ -19401,6 +19410,8 @@ service:
                   monthly_spend: 0
                   session_count: 0
                   user_count: 4
+                  custom_attributes:
+                    key: value
                   tags:
                     type: tag.list
                   segments:
@@ -19882,6 +19893,8 @@ service:
                   monthly_spend: 0
                   session_count: 0
                   user_count: 4
+                  custom_attributes:
+                    key: value
                   tags:
                     type: tag.list
                   segments:
@@ -19961,6 +19974,8 @@ service:
                   monthly_spend: 0
                   session_count: 0
                   user_count: 4
+                  custom_attributes:
+                    key: value
                   tags:
                     type: tag.list
                   segments:
@@ -20280,7 +20295,7 @@ types:
         type: optional<integer>
         docs: The number of users in the company.
       custom_attributes:
-        type: optional<map<string, optional<string>>>
+        type: optional<map<string, string>>
         docs: The custom attributes you have set on the company.
       tags:
         type: optional<CompanyTags>
@@ -26493,6 +26508,9 @@ The table below shows the operators you can use to define how you want to search
                             "total_count": 2,
                           },
                           "created_at": 1719492843,
+                          "custom_attributes": {
+                            "key": "value",
+                          },
                           "id": "378",
                           "linked_objects": {
                             "data": [
@@ -28142,6 +28160,8 @@ service:
                       - type: contact
                         id: 667d60ea8a68186f43bafdec
                         external_id: '70'
+                  custom_attributes:
+                    key: value
                   conversation_parts:
                     total_count: 2
                   linked_objects:
@@ -30648,7 +30668,7 @@ types:
             "properties": {
               "custom_attributes": {
                 "docs": "The custom attributes you have set on the custom object instance.",
-                "type": "optional<map<string, optional<string>>>",
+                "type": "optional<map<string, string>>",
               },
               "external_id": {
                 "docs": "The id you have defined for the custom object instance.",
@@ -30690,7 +30710,7 @@ types:
           The identifier of the custom object type that defines the structure of
           the custom object instance.
       custom_attributes:
-        type: optional<map<string, optional<string>>>
+        type: optional<map<string, string>>
         docs: The custom attributes you have set on the custom object instance.
     source:
       openapi: ../openapi.yml
@@ -32881,7 +32901,7 @@ You can optionally define the result page size as well with the `per_page` param
               },
               "metadata": {
                 "docs": "Optional metadata about the event.",
-                "type": "optional<map<string, optional<string>>>",
+                "type": "optional<map<string, string>>",
               },
               "type": {
                 "docs": "The type of the object",
@@ -33031,7 +33051,7 @@ You can optionally define the result page size as well with the `per_page` param
           An email address for your user. An email should only be used where
           your application uses email to uniquely identify users.
       metadata:
-        type: optional<map<string, optional<string>>>
+        type: optional<map<string, string>>
         docs: Optional metadata about the event.
     source:
       openapi: ../openapi.yml
@@ -43306,6 +43326,7 @@ docs: Everything about your ticket types
                       "snoozed_until": 1663597260,
                       "team_assignee_id": "0",
                       "ticket_attributes": {
+                        "_default_description_": "ticket_attributes",
                         "_default_title_": "attribute_value",
                       },
                       "ticket_id": "52",
@@ -43760,6 +43781,7 @@ The table below shows the operators you can use to define how you want to search
                           "snoozed_until": 1663597260,
                           "team_assignee_id": "0",
                           "ticket_attributes": {
+                            "_default_description_": null,
                             "_default_title_": "attribute_value",
                           },
                           "ticket_id": "53",
@@ -45660,6 +45682,7 @@ service:
               category: Back-office
               ticket_attributes:
                 _default_title_: attribute_value
+                _default_description_: ticket_attributes
               ticket_state: submitted
               ticket_type:
                 type: ticket_type
@@ -46528,6 +46551,7 @@ service:
                   category: Back-office
                   ticket_attributes:
                     _default_title_: attribute_value
+                    _default_description_: null
                   ticket_state: submitted
                   ticket_type:
                     type: ticket_type

@@ -19218,7 +19218,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                     },
                     "env": {
                       "docs": "Key-value environment variables to be passed to the transformation",
-                      "type": "optional<map<string, optional<CreateTransformationRequestEnvValue>>>",
+                      "type": "optional<map<string, CreateTransformationRequestEnvValue>>",
                     },
                     "name": {
                       "docs": "A unique, human-friendly name for the transformation",
@@ -19729,7 +19729,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                     },
                     "env": {
                       "docs": "Key-value environment variables to be passed to the transformation",
-                      "type": "optional<map<string, optional<UpdateTransformationRequestEnvValue>>>",
+                      "type": "optional<map<string, UpdateTransformationRequestEnvValue>>",
                     },
                     "name": {
                       "docs": "A unique, human-friendly name for the transformation",
@@ -19801,7 +19801,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                     },
                     "env": {
                       "docs": "Key-value environment variables to be passed to the transformation",
-                      "type": "optional<map<string, optional<UpsertTransformationRequestEnvValue>>>",
+                      "type": "optional<map<string, UpsertTransformationRequestEnvValue>>",
                     },
                     "name": {
                       "docs": "A unique, human-friendly name for the transformation",
@@ -19898,7 +19898,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               },
               "headers": {
                 "docs": "Headers of the request",
-                "type": "map<string, optional<string>>",
+                "type": "map<string, string>",
               },
               "parsed_query": {
                 "docs": "JSON representation of the query params",
@@ -20036,7 +20036,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
     docs: Request input to use for the transformation execution
     properties:
       headers:
-        type: map<string, optional<string>>
+        type: map<string, string>
         docs: Headers of the request
       body:
         type: optional<TestTransformationRequestRequestBody>
@@ -20163,9 +20163,7 @@ service:
               type: string
               docs: JavaScript code to be executed
             env:
-              type: >-
-                optional<map<string,
-                optional<CreateTransformationRequestEnvValue>>>
+              type: optional<map<string, CreateTransformationRequestEnvValue>>
               docs: >-
                 Key-value environment variables to be passed to the
                 transformation
@@ -20214,9 +20212,7 @@ service:
               type: string
               docs: JavaScript code to be executed
             env:
-              type: >-
-                optional<map<string,
-                optional<UpsertTransformationRequestEnvValue>>>
+              type: optional<map<string, UpsertTransformationRequestEnvValue>>
               docs: >-
                 Key-value environment variables to be passed to the
                 transformation
@@ -20297,9 +20293,7 @@ service:
               type: optional<string>
               docs: JavaScript code to be executed
             env:
-              type: >-
-                optional<map<string,
-                optional<UpdateTransformationRequestEnvValue>>>
+              type: optional<map<string, UpdateTransformationRequestEnvValue>>
               docs: >-
                 Key-value environment variables to be passed to the
                 transformation

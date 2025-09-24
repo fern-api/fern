@@ -24,20 +24,15 @@
           "generatedName": "MetadataValue",
           "value": {
             "generatedName": "MetadataValue",
-            "value": {
-              "generatedName": "MetadataValue",
-              "schema": "MetadataValue",
-              "source": {
-                "file": "../openapi.yml",
-                "type": "openapi"
-              },
-              "type": "reference"
+            "schema": "MetadataValue",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
             },
-            "inline": true,
-            "type": "nullable"
+            "type": "reference"
           },
           "inline": true,
-          "type": "optional"
+          "type": "nullable"
         },
         "generatedName": "Metadata",
         "groupName": [],

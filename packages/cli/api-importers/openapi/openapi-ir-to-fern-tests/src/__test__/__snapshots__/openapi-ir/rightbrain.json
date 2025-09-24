@@ -65817,56 +65817,50 @@
               },
               "value": {
                 "generatedName": "TaskCreateOutputFormatValue",
-                "value": {
-                  "generatedName": "TaskCreateOutputFormatValue",
-                  "values": [
-                    {
-                      "generatedName": "str",
-                      "value": "str",
-                      "casing": {}
-                    },
-                    {
-                      "generatedName": "string",
-                      "value": "string",
-                      "casing": {}
-                    },
-                    {
-                      "generatedName": "boolean",
-                      "value": "boolean",
-                      "casing": {}
-                    },
-                    {
-                      "generatedName": "bool",
-                      "value": "bool",
-                      "casing": {}
-                    },
-                    {
-                      "generatedName": "int",
-                      "value": "int",
-                      "casing": {}
-                    },
-                    {
-                      "generatedName": "integer",
-                      "value": "integer",
-                      "casing": {}
-                    },
-                    {
-                      "generatedName": "list",
-                      "value": "list",
-                      "casing": {}
-                    }
-                  ],
-                  "groupName": [],
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                "values": [
+                  {
+                    "generatedName": "str",
+                    "value": "str",
+                    "casing": {}
                   },
-                  "inline": true,
-                  "type": "enum"
-                },
+                  {
+                    "generatedName": "string",
+                    "value": "string",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "boolean",
+                    "value": "boolean",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "bool",
+                    "value": "bool",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "int",
+                    "value": "int",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "integer",
+                    "value": "integer",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "list",
+                    "value": "list",
+                    "casing": {}
+                  }
+                ],
                 "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
                 "inline": true,
-                "type": "optional"
+                "type": "enum"
               },
               "generatedName": "TaskCreateOutputFormat",
               "title": "Output Format",
@@ -67011,56 +67005,50 @@
               },
               "value": {
                 "generatedName": "TaskRevisionOutputFormatValue",
-                "value": {
-                  "generatedName": "TaskRevisionOutputFormatValue",
-                  "values": [
-                    {
-                      "generatedName": "str",
-                      "value": "str",
-                      "casing": {}
-                    },
-                    {
-                      "generatedName": "string",
-                      "value": "string",
-                      "casing": {}
-                    },
-                    {
-                      "generatedName": "boolean",
-                      "value": "boolean",
-                      "casing": {}
-                    },
-                    {
-                      "generatedName": "bool",
-                      "value": "bool",
-                      "casing": {}
-                    },
-                    {
-                      "generatedName": "int",
-                      "value": "int",
-                      "casing": {}
-                    },
-                    {
-                      "generatedName": "integer",
-                      "value": "integer",
-                      "casing": {}
-                    },
-                    {
-                      "generatedName": "list",
-                      "value": "list",
-                      "casing": {}
-                    }
-                  ],
-                  "groupName": [],
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                "values": [
+                  {
+                    "generatedName": "str",
+                    "value": "str",
+                    "casing": {}
                   },
-                  "inline": true,
-                  "type": "enum"
-                },
+                  {
+                    "generatedName": "string",
+                    "value": "string",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "boolean",
+                    "value": "boolean",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "bool",
+                    "value": "bool",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "int",
+                    "value": "int",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "integer",
+                    "value": "integer",
+                    "casing": {}
+                  },
+                  {
+                    "generatedName": "list",
+                    "value": "list",
+                    "casing": {}
+                  }
+                ],
                 "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
                 "inline": true,
-                "type": "optional"
+                "type": "enum"
               },
               "generatedName": "TaskRevisionOutputFormat",
               "title": "Output Format",
@@ -67588,7 +67576,7 @@
                     },
                     "groupName": [],
                     "inline": true,
-                    "type": "optional"
+                    "type": "nullable"
                   },
                   "generatedName": "TaskUpdateOutputFormat",
                   "groupName": [],

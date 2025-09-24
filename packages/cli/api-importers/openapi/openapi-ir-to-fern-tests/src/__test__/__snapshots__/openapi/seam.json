@@ -2582,7 +2582,7 @@
                 },
               },
               "created_at": "datetime",
-              "custom_metadata": "map<string, optional<ConnectWebviewCustomMetadataValue>>",
+              "custom_metadata": "map<string, ConnectWebviewCustomMetadataValue>",
               "custom_redirect_failure_url": {
                 "type": "optional<string>",
                 "validation": {
@@ -2681,7 +2681,7 @@
                 },
               },
               "created_at": "optional<datetime>",
-              "custom_metadata": "map<string, optional<ConnectedAccountCustomMetadataValue>>",
+              "custom_metadata": "map<string, ConnectedAccountCustomMetadataValue>",
               "errors": "optional<unknown>",
               "user_identifier": "optional<ConnectedAccountUserIdentifier>",
               "warnings": "optional<unknown>",
@@ -2746,7 +2746,7 @@
                 "docs": "Date and time at which the device object was created.",
                 "type": "datetime",
               },
-              "custom_metadata": "map<string, optional<DeviceCustomMetadataValue>>",
+              "custom_metadata": "map<string, DeviceCustomMetadataValue>",
               "device_id": {
                 "docs": "Unique identifier for the device.",
                 "type": "string",
@@ -4010,7 +4010,7 @@
                 "docs": "Date and time at which the device object was created.",
                 "type": "datetime",
               },
-              "custom_metadata": "map<string, optional<PhoneCustomMetadataValue>>",
+              "custom_metadata": "map<string, PhoneCustomMetadataValue>",
               "device_id": {
                 "docs": "Unique identifier for the device.",
                 "type": "string",
@@ -6143,7 +6143,7 @@ types:
         type: optional<string>
         validation:
           format: uri
-      custom_metadata: map<string, optional<ConnectWebviewCustomMetadataValue>>
+      custom_metadata: map<string, ConnectWebviewCustomMetadataValue>
       automatically_manage_new_devices: boolean
       wait_for_device_creation: boolean
       authorized_at: optional<datetime>
@@ -6180,7 +6180,7 @@ types:
       account_type_display_name: string
       errors: optional<unknown>
       warnings: optional<unknown>
-      custom_metadata: map<string, optional<ConnectedAccountCustomMetadataValue>>
+      custom_metadata: map<string, ConnectedAccountCustomMetadataValue>
       automatically_manage_new_devices: boolean
     source:
       openapi: ../openapi.json
@@ -6940,7 +6940,7 @@ types:
       is_managed:
         type: boolean
         docs: Indicates whether Seam manages the device.
-      custom_metadata: map<string, optional<DeviceCustomMetadataValue>>
+      custom_metadata: map<string, DeviceCustomMetadataValue>
       can_remotely_unlock: optional<boolean>
       can_remotely_lock: optional<boolean>
       can_program_offline_access_codes: optional<boolean>
@@ -7971,7 +7971,7 @@ types:
       is_managed:
         type: boolean
         docs: Indicates whether Seam manages the device.
-      custom_metadata: map<string, optional<PhoneCustomMetadataValue>>
+      custom_metadata: map<string, PhoneCustomMetadataValue>
       can_remotely_unlock: optional<boolean>
       can_remotely_lock: optional<boolean>
       can_program_offline_access_codes: optional<boolean>
@@ -18138,7 +18138,9 @@ service:
                           "connect_webview_id": "connect_webview_id",
                           "connected_account_id": "connected_account_id",
                           "created_at": "2024-01-15T09:30:00Z",
-                          "custom_metadata": {},
+                          "custom_metadata": {
+                            "key": "value",
+                          },
                           "custom_redirect_failure_url": "custom_redirect_failure_url",
                           "custom_redirect_url": "custom_redirect_url",
                           "device_selection_mode": "none",
@@ -18163,7 +18165,7 @@ service:
                   "properties": {
                     "custom_metadata_has": {
                       "docs": "Returns devices where the webview's custom_metadata contains all of the provided key/value pairs.",
-                      "type": "optional<map<string, optional<ConnectWebviewsListRequestCustomMetadataHasValue>>>",
+                      "type": "optional<map<string, ConnectWebviewsListRequestCustomMetadataHasValue>>",
                     },
                     "limit": {
                       "default": 500,
@@ -18646,7 +18648,7 @@ service:
             custom_metadata_has:
               type: >-
                 optional<map<string,
-                optional<ConnectWebviewsListRequestCustomMetadataHasValue>>>
+                ConnectWebviewsListRequestCustomMetadataHasValue>>
               docs: >-
                 Returns devices where the webview's custom_metadata contains all
                 of the provided key/value pairs.
@@ -18687,7 +18689,8 @@ service:
                   status: pending
                   custom_redirect_url: custom_redirect_url
                   custom_redirect_failure_url: custom_redirect_failure_url
-                  custom_metadata: {}
+                  custom_metadata:
+                    key: value
                   automatically_manage_new_devices: true
                   wait_for_device_creation: true
                   authorized_at: '2024-01-15T09:30:00Z'
@@ -18891,7 +18894,9 @@ service:
                           "automatically_manage_new_devices": true,
                           "connected_account_id": "connected_account_id",
                           "created_at": "2024-01-15T09:30:00Z",
-                          "custom_metadata": {},
+                          "custom_metadata": {
+                            "key": "value",
+                          },
                           "errors": {
                             "key": "value",
                           },
@@ -18913,7 +18918,7 @@ service:
                   "properties": {
                     "custom_metadata_has": {
                       "docs": "Returns devices where the account's custom_metadata contains all of the provided key/value pairs.",
-                      "type": "optional<map<string, optional<ConnectedAccountsListRequestCustomMetadataHasValue>>>",
+                      "type": "optional<map<string, ConnectedAccountsListRequestCustomMetadataHasValue>>",
                     },
                   },
                 },
@@ -19341,7 +19346,7 @@ service:
             custom_metadata_has:
               type: >-
                 optional<map<string,
-                optional<ConnectedAccountsListRequestCustomMetadataHasValue>>>
+                ConnectedAccountsListRequestCustomMetadataHasValue>>
               docs: >-
                 Returns devices where the account's custom_metadata contains all
                 of the provided key/value pairs.
@@ -19371,7 +19376,8 @@ service:
                     key: value
                   warnings:
                     key: value
-                  custom_metadata: {}
+                  custom_metadata:
+                    key: value
                   automatically_manage_new_devices: true
               ok: true
     update:
@@ -19884,7 +19890,9 @@ service:
                           ],
                           "connected_account_id": "connected_account_id",
                           "created_at": "2024-01-15T09:30:00Z",
-                          "custom_metadata": {},
+                          "custom_metadata": {
+                            "key": "value",
+                          },
                           "device_id": "device_id",
                           "device_type": "akuvox_lock",
                           "display_name": "display_name",
@@ -19949,7 +19957,7 @@ service:
                     },
                     "connected_account_ids": "optional<list<string>>",
                     "created_before": "optional<datetime>",
-                    "custom_metadata_has": "optional<map<string, optional<DevicesListRequestCustomMetadataHasValue>>>",
+                    "custom_metadata_has": "optional<map<string, DevicesListRequestCustomMetadataHasValue>>",
                     "device_ids": "optional<list<string>>",
                     "device_type": "optional<DevicesListRequestDeviceType>",
                     "device_types": "optional<list<DevicesListRequestDeviceTypesItem>>",
@@ -20911,9 +20919,7 @@ service:
               default: 500
             created_before: optional<datetime>
             user_identifier_key: optional<string>
-            custom_metadata_has: >-
-              optional<map<string,
-              optional<DevicesListRequestCustomMetadataHasValue>>>
+            custom_metadata_has: optional<map<string, DevicesListRequestCustomMetadataHasValue>>
             include_if: optional<list<DevicesListRequestIncludeIfItem>>
             exclude_if: optional<list<DevicesListRequestExcludeIfItem>>
         content-type: application/json
@@ -20959,7 +20965,8 @@ service:
                       message: message
                   created_at: '2024-01-15T09:30:00Z'
                   is_managed: true
-                  custom_metadata: {}
+                  custom_metadata:
+                    key: value
                   can_remotely_unlock: true
                   can_remotely_lock: true
                   can_program_offline_access_codes: true
@@ -21670,7 +21677,7 @@ service:
                     },
                     "connected_account_ids": "optional<list<string>>",
                     "created_before": "optional<datetime>",
-                    "custom_metadata_has": "optional<map<string, optional<UnmanagedListRequestCustomMetadataHasValue>>>",
+                    "custom_metadata_has": "optional<map<string, UnmanagedListRequestCustomMetadataHasValue>>",
                     "device_ids": "optional<list<string>>",
                     "device_type": "optional<UnmanagedListRequestDeviceType>",
                     "device_types": "optional<list<UnmanagedListRequestDeviceTypesItem>>",
@@ -22257,9 +22264,7 @@ service:
               default: 500
             created_before: optional<datetime>
             user_identifier_key: optional<string>
-            custom_metadata_has: >-
-              optional<map<string,
-              optional<UnmanagedListRequestCustomMetadataHasValue>>>
+            custom_metadata_has: optional<map<string, UnmanagedListRequestCustomMetadataHasValue>>
             include_if: optional<list<UnmanagedListRequestIncludeIfItem>>
             exclude_if: optional<list<UnmanagedListRequestExcludeIfItem>>
         content-type: application/json
@@ -24123,7 +24128,9 @@ service:
                           ],
                           "connected_account_id": "connected_account_id",
                           "created_at": "2024-01-15T09:30:00Z",
-                          "custom_metadata": {},
+                          "custom_metadata": {
+                            "key": "value",
+                          },
                           "device_id": "device_id",
                           "device_type": "akuvox_lock",
                           "display_name": "display_name",
@@ -24170,7 +24177,9 @@ service:
                           ],
                           "connected_account_id": "connected_account_id",
                           "created_at": "2024-01-15T09:30:00Z",
-                          "custom_metadata": {},
+                          "custom_metadata": {
+                            "key": "value",
+                          },
                           "device_id": "device_id",
                           "device_type": "akuvox_lock",
                           "display_name": "display_name",
@@ -24235,7 +24244,7 @@ service:
                     },
                     "connected_account_ids": "optional<list<string>>",
                     "created_before": "optional<datetime>",
-                    "custom_metadata_has": "optional<map<string, optional<LocksListRequestCustomMetadataHasValue>>>",
+                    "custom_metadata_has": "optional<map<string, LocksListRequestCustomMetadataHasValue>>",
                     "device_ids": "optional<list<string>>",
                     "device_type": "optional<LocksListRequestDeviceType>",
                     "device_types": "optional<list<LocksListRequestDeviceTypesItem>>",
@@ -25296,9 +25305,7 @@ service:
               default: 500
             created_before: optional<datetime>
             user_identifier_key: optional<string>
-            custom_metadata_has: >-
-              optional<map<string,
-              optional<LocksListRequestCustomMetadataHasValue>>>
+            custom_metadata_has: optional<map<string, LocksListRequestCustomMetadataHasValue>>
             include_if: optional<list<LocksListRequestIncludeIfItem>>
             exclude_if: optional<list<LocksListRequestExcludeIfItem>>
         content-type: application/json
@@ -25344,7 +25351,8 @@ service:
                       message: message
                   created_at: '2024-01-15T09:30:00Z'
                   is_managed: true
-                  custom_metadata: {}
+                  custom_metadata:
+                    key: value
                   can_remotely_unlock: true
                   can_remotely_lock: true
                   can_program_offline_access_codes: true
@@ -25378,7 +25386,8 @@ service:
                       message: message
                   created_at: '2024-01-15T09:30:00Z'
                   is_managed: true
-                  custom_metadata: {}
+                  custom_metadata:
+                    key: value
                   can_remotely_unlock: true
                   can_remotely_lock: true
                   can_program_offline_access_codes: true
@@ -26836,7 +26845,9 @@ service:
                             "access_code",
                           ],
                           "created_at": "2024-01-15T09:30:00Z",
-                          "custom_metadata": {},
+                          "custom_metadata": {
+                            "key": "value",
+                          },
                           "device_id": "device_id",
                           "device_type": "android_phone",
                           "display_name": "display_name",
@@ -27030,7 +27041,8 @@ service:
                       message: message
                   created_at: '2024-01-15T09:30:00Z'
                   is_managed: true
-                  custom_metadata: {}
+                  custom_metadata:
+                    key: value
                   can_remotely_unlock: true
                   can_remotely_lock: true
                   can_program_offline_access_codes: true
@@ -28036,7 +28048,9 @@ service:
                           ],
                           "connected_account_id": "connected_account_id",
                           "created_at": "2024-01-15T09:30:00Z",
-                          "custom_metadata": {},
+                          "custom_metadata": {
+                            "key": "value",
+                          },
                           "device_id": "device_id",
                           "device_type": "akuvox_lock",
                           "display_name": "display_name",
@@ -28100,7 +28114,7 @@ service:
                     },
                     "connected_account_ids": "optional<list<string>>",
                     "created_before": "optional<datetime>",
-                    "custom_metadata_has": "optional<map<string, optional<ThermostatsListRequestCustomMetadataHasValue>>>",
+                    "custom_metadata_has": "optional<map<string, ThermostatsListRequestCustomMetadataHasValue>>",
                     "device_ids": "optional<list<string>>",
                     "device_type": "optional<ThermostatsListRequestDeviceType>",
                     "device_types": "optional<list<ThermostatsListRequestDeviceTypesItem>>",
@@ -29336,7 +29350,7 @@ service:
             user_identifier_key: optional<string>
             custom_metadata_has: >-
               optional<map<string,
-              optional<ThermostatsListRequestCustomMetadataHasValue>>>
+              ThermostatsListRequestCustomMetadataHasValue>>
             include_if: optional<list<ThermostatsListRequestIncludeIfItem>>
             exclude_if: optional<list<ThermostatsListRequestExcludeIfItem>>
         content-type: application/json
@@ -29382,7 +29396,8 @@ service:
                       message: message
                   created_at: '2024-01-15T09:30:00Z'
                   is_managed: true
-                  custom_metadata: {}
+                  custom_metadata:
+                    key: value
                   can_remotely_unlock: true
                   can_remotely_lock: true
                   can_program_offline_access_codes: true
@@ -30945,7 +30960,9 @@ service:
                           ],
                           "connected_account_id": "connected_account_id",
                           "created_at": "2024-01-15T09:30:00Z",
-                          "custom_metadata": {},
+                          "custom_metadata": {
+                            "key": "value",
+                          },
                           "device_id": "device_id",
                           "device_type": "akuvox_lock",
                           "display_name": "display_name",
@@ -30992,7 +31009,9 @@ service:
                           ],
                           "connected_account_id": "connected_account_id",
                           "created_at": "2024-01-15T09:30:00Z",
-                          "custom_metadata": {},
+                          "custom_metadata": {
+                            "key": "value",
+                          },
                           "device_id": "device_id",
                           "device_type": "akuvox_lock",
                           "display_name": "display_name",
@@ -32113,7 +32132,8 @@ service:
                       message: message
                   created_at: '2024-01-15T09:30:00Z'
                   is_managed: true
-                  custom_metadata: {}
+                  custom_metadata:
+                    key: value
                   can_remotely_unlock: true
                   can_remotely_lock: true
                   can_program_offline_access_codes: true
@@ -32147,7 +32167,8 @@ service:
                       message: message
                   created_at: '2024-01-15T09:30:00Z'
                   is_managed: true
-                  custom_metadata: {}
+                  custom_metadata:
+                    key: value
                   can_remotely_unlock: true
                   can_remotely_lock: true
                   can_program_offline_access_codes: true

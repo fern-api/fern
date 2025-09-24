@@ -166,18 +166,12 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "generatedName": "ExampleResponseCustomFieldsValue",
-                  "value": {
-                    "schema": {
-                      "type": "string"
-                    },
-                    "generatedName": "ExampleResponseCustomFieldsValue",
-                    "groupName": [],
-                    "type": "primitive"
+                  "schema": {
+                    "type": "string"
                   },
+                  "generatedName": "ExampleResponseCustomFieldsValue",
                   "groupName": [],
-                  "inline": true,
-                  "type": "optional"
+                  "type": "primitive"
                 },
                 "generatedName": "ExampleResponseCustomFields",
                 "groupName": [],

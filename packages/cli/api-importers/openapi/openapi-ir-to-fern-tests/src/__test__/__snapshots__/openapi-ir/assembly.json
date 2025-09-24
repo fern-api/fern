@@ -1627,11 +1627,58 @@
                               "type": "object"
                             },
                             "summary": {
-                              "value": [],
+                              "value": [
+                                {
+                                  "key": {
+                                    "value": "key",
+                                    "type": "string"
+                                  },
+                                  "value": {
+                                    "value": {
+                                      "value": 1.1,
+                                      "type": "double"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                }
+                              ],
                               "type": "map"
                             },
                             "severity_score_summary": {
-                              "value": [],
+                              "value": [
+                                {
+                                  "key": {
+                                    "value": "key",
+                                    "type": "string"
+                                  },
+                                  "value": {
+                                    "properties": {
+                                      "low": {
+                                        "value": {
+                                          "value": 1.1,
+                                          "type": "double"
+                                        },
+                                        "type": "primitive"
+                                      },
+                                      "medium": {
+                                        "value": {
+                                          "value": 1.1,
+                                          "type": "double"
+                                        },
+                                        "type": "primitive"
+                                      },
+                                      "high": {
+                                        "value": {
+                                          "value": 1.1,
+                                          "type": "double"
+                                        },
+                                        "type": "primitive"
+                                      }
+                                    },
+                                    "type": "object"
+                                  }
+                                }
+                              ],
                               "type": "map"
                             }
                           },
@@ -2716,11 +2763,58 @@
                               "type": "object"
                             },
                             "summary": {
-                              "value": [],
+                              "value": [
+                                {
+                                  "key": {
+                                    "value": "key",
+                                    "type": "string"
+                                  },
+                                  "value": {
+                                    "value": {
+                                      "value": 1.1,
+                                      "type": "double"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                }
+                              ],
                               "type": "map"
                             },
                             "severity_score_summary": {
-                              "value": [],
+                              "value": [
+                                {
+                                  "key": {
+                                    "value": "key",
+                                    "type": "string"
+                                  },
+                                  "value": {
+                                    "properties": {
+                                      "low": {
+                                        "value": {
+                                          "value": 1.1,
+                                          "type": "double"
+                                        },
+                                        "type": "primitive"
+                                      },
+                                      "medium": {
+                                        "value": {
+                                          "value": 1.1,
+                                          "type": "double"
+                                        },
+                                        "type": "primitive"
+                                      },
+                                      "high": {
+                                        "value": {
+                                          "value": 1.1,
+                                          "type": "double"
+                                        },
+                                        "type": "primitive"
+                                      }
+                                    },
+                                    "type": "object"
+                                  }
+                                }
+                              ],
                               "type": "map"
                             }
                           },
@@ -3805,11 +3899,58 @@
                               "type": "object"
                             },
                             "summary": {
-                              "value": [],
+                              "value": [
+                                {
+                                  "key": {
+                                    "value": "key",
+                                    "type": "string"
+                                  },
+                                  "value": {
+                                    "value": {
+                                      "value": 1.1,
+                                      "type": "double"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                }
+                              ],
                               "type": "map"
                             },
                             "severity_score_summary": {
-                              "value": [],
+                              "value": [
+                                {
+                                  "key": {
+                                    "value": "key",
+                                    "type": "string"
+                                  },
+                                  "value": {
+                                    "properties": {
+                                      "low": {
+                                        "value": {
+                                          "value": 1.1,
+                                          "type": "double"
+                                        },
+                                        "type": "primitive"
+                                      },
+                                      "medium": {
+                                        "value": {
+                                          "value": 1.1,
+                                          "type": "double"
+                                        },
+                                        "type": "primitive"
+                                      },
+                                      "high": {
+                                        "value": {
+                                          "value": 1.1,
+                                          "type": "double"
+                                        },
+                                        "type": "primitive"
+                                      }
+                                    },
+                                    "type": "object"
+                                  }
+                                }
+                              ],
                               "type": "map"
                             }
                           },
@@ -10630,20 +10771,14 @@
                           "type": "primitive"
                         },
                         "value": {
-                          "generatedName": "TranscriptIabCategoriesResultSummaryValue",
-                          "value": {
-                            "schema": {
-                              "minimum": 0,
-                              "maximum": 1,
-                              "type": "double"
-                            },
-                            "generatedName": "TranscriptIabCategoriesResultSummaryValue",
-                            "groupName": [],
-                            "type": "primitive"
+                          "schema": {
+                            "minimum": 0,
+                            "maximum": 1,
+                            "type": "double"
                           },
+                          "generatedName": "TranscriptIabCategoriesResultSummaryValue",
                           "groupName": [],
-                          "inline": true,
-                          "type": "optional"
+                          "type": "primitive"
                         },
                         "generatedName": "TranscriptIabCategoriesResultSummary",
                         "groupName": [],
@@ -11937,22 +12072,15 @@
                 "type": "primitive"
               },
               "value": {
-                "generatedName": "ContentSafetyLabelResultSummaryValue",
                 "description": "A confidence score for the presence of the sensitive topic \"topic\" across the entire audio file",
-                "value": {
-                  "description": "A confidence score for the presence of the sensitive topic \"topic\" across the entire audio file",
-                  "schema": {
-                    "minimum": 0,
-                    "maximum": 1,
-                    "type": "double"
-                  },
-                  "generatedName": "ContentSafetyLabelResultSummaryValue",
-                  "groupName": [],
-                  "type": "primitive"
+                "schema": {
+                  "minimum": 0,
+                  "maximum": 1,
+                  "type": "double"
                 },
+                "generatedName": "ContentSafetyLabelResultSummaryValue",
                 "groupName": [],
-                "inline": true,
-                "type": "optional"
+                "type": "primitive"
               },
               "generatedName": "ContentSafetyLabelResultSummary",
               "groupName": [],
@@ -11976,17 +12104,12 @@
               },
               "value": {
                 "generatedName": "ContentSafetyLabelResultSeverityScoreSummaryValue",
-                "value": {
-                  "generatedName": "ContentSafetyLabelResultSeverityScoreSummaryValue",
-                  "schema": "SeverityScoreSummary",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
-                  },
-                  "type": "reference"
+                "schema": "SeverityScoreSummary",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
                 },
-                "inline": true,
-                "type": "optional"
+                "type": "reference"
               },
               "generatedName": "ContentSafetyLabelResultSeverityScoreSummary",
               "groupName": [],

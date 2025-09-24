@@ -6953,60 +6953,54 @@
                   "value": {
                     "generatedName": "ConnectWebviewsCreateRequestCustomMetadataValue",
                     "value": {
-                      "generatedName": "ConnectWebviewsCreateRequestCustomMetadataValue",
                       "value": {
-                        "value": {
-                          "generatedName": "ConnectWebviewsCreateRequestCustomMetadataValue",
-                          "schemas": [
-                            {
+                        "generatedName": "ConnectWebviewsCreateRequestCustomMetadataValue",
+                        "schemas": [
+                          {
+                            "schema": {
+                              "maxLength": 500,
+                              "type": "string"
+                            },
+                            "generatedName": "ConnectWebviewsCreateRequestCustomMetadataValue",
+                            "groupName": [],
+                            "type": "primitive"
+                          },
+                          {
+                            "schema": {
+                              "type": "boolean"
+                            },
+                            "generatedName": "ConnectWebviewsCreateRequestCustomMetadataValue",
+                            "groupName": [],
+                            "type": "primitive"
+                          },
+                          {
+                            "generatedName": "ConnectWebviewsCreateRequestCustomMetadataValue",
+                            "value": {
                               "schema": {
-                                "maxLength": 500,
+                                "format": "null",
                                 "type": "string"
                               },
                               "generatedName": "ConnectWebviewsCreateRequestCustomMetadataValue",
                               "groupName": [],
                               "type": "primitive"
                             },
-                            {
-                              "schema": {
-                                "type": "boolean"
-                              },
-                              "generatedName": "ConnectWebviewsCreateRequestCustomMetadataValue",
-                              "groupName": [],
-                              "type": "primitive"
-                            },
-                            {
-                              "generatedName": "ConnectWebviewsCreateRequestCustomMetadataValue",
-                              "value": {
-                                "schema": {
-                                  "format": "null",
-                                  "type": "string"
-                                },
-                                "generatedName": "ConnectWebviewsCreateRequestCustomMetadataValue",
-                                "groupName": [],
-                                "type": "primitive"
-                              },
-                              "groupName": [],
-                              "type": "nullable"
-                            }
-                          ],
-                          "groupName": [],
-                          "source": {
-                            "file": "../openapi.json",
-                            "type": "openapi"
-                          },
-                          "inline": true,
-                          "type": "undiscriminated"
+                            "groupName": [],
+                            "type": "nullable"
+                          }
+                        ],
+                        "groupName": [],
+                        "source": {
+                          "file": "../openapi.json",
+                          "type": "openapi"
                         },
-                        "type": "oneOf"
+                        "inline": true,
+                        "type": "undiscriminated"
                       },
-                      "groupName": [],
-                      "inline": true,
-                      "type": "nullable"
+                      "type": "oneOf"
                     },
                     "groupName": [],
                     "inline": true,
-                    "type": "optional"
+                    "type": "nullable"
                   },
                   "generatedName": "ConnectWebviewsCreateRequestCustomMetadata",
                   "groupName": [],
@@ -7946,41 +7940,35 @@
                     "type": "primitive"
                   },
                   "value": {
-                    "generatedName": "ConnectWebviewsListRequestCustomMetadataHasValue",
                     "value": {
-                      "value": {
-                        "generatedName": "ConnectWebviewsListRequestCustomMetadataHasValue",
-                        "schemas": [
-                          {
-                            "schema": {
-                              "type": "string"
-                            },
-                            "generatedName": "ConnectWebviewsListRequestCustomMetadataHasValue",
-                            "groupName": [],
-                            "type": "primitive"
+                      "generatedName": "ConnectWebviewsListRequestCustomMetadataHasValue",
+                      "schemas": [
+                        {
+                          "schema": {
+                            "type": "string"
                           },
-                          {
-                            "schema": {
-                              "type": "boolean"
-                            },
-                            "generatedName": "ConnectWebviewsListRequestCustomMetadataHasValue",
-                            "groupName": [],
-                            "type": "primitive"
-                          }
-                        ],
-                        "groupName": [],
-                        "source": {
-                          "file": "../openapi.json",
-                          "type": "openapi"
+                          "generatedName": "ConnectWebviewsListRequestCustomMetadataHasValue",
+                          "groupName": [],
+                          "type": "primitive"
                         },
-                        "inline": true,
-                        "type": "undiscriminated"
+                        {
+                          "schema": {
+                            "type": "boolean"
+                          },
+                          "generatedName": "ConnectWebviewsListRequestCustomMetadataHasValue",
+                          "groupName": [],
+                          "type": "primitive"
+                        }
+                      ],
+                      "groupName": [],
+                      "source": {
+                        "file": "../openapi.json",
+                        "type": "openapi"
                       },
-                      "type": "oneOf"
+                      "inline": true,
+                      "type": "undiscriminated"
                     },
-                    "groupName": [],
-                    "inline": true,
-                    "type": "optional"
+                    "type": "oneOf"
                   },
                   "generatedName": "ConnectWebviewsListRequestCustomMetadataHas",
                   "groupName": [],
@@ -8258,7 +8246,21 @@
                           "type": "primitive"
                         },
                         "custom_metadata": {
-                          "value": [],
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
+                              "value": {
+                                "value": {
+                                  "value": "value",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            }
+                          ],
                           "type": "map"
                         },
                         "automatically_manage_new_devices": {
@@ -8924,41 +8926,35 @@
                     "type": "primitive"
                   },
                   "value": {
-                    "generatedName": "ConnectedAccountsListRequestCustomMetadataHasValue",
                     "value": {
-                      "value": {
-                        "generatedName": "ConnectedAccountsListRequestCustomMetadataHasValue",
-                        "schemas": [
-                          {
-                            "schema": {
-                              "type": "string"
-                            },
-                            "generatedName": "ConnectedAccountsListRequestCustomMetadataHasValue",
-                            "groupName": [],
-                            "type": "primitive"
+                      "generatedName": "ConnectedAccountsListRequestCustomMetadataHasValue",
+                      "schemas": [
+                        {
+                          "schema": {
+                            "type": "string"
                           },
-                          {
-                            "schema": {
-                              "type": "boolean"
-                            },
-                            "generatedName": "ConnectedAccountsListRequestCustomMetadataHasValue",
-                            "groupName": [],
-                            "type": "primitive"
-                          }
-                        ],
-                        "groupName": [],
-                        "source": {
-                          "file": "../openapi.json",
-                          "type": "openapi"
+                          "generatedName": "ConnectedAccountsListRequestCustomMetadataHasValue",
+                          "groupName": [],
+                          "type": "primitive"
                         },
-                        "inline": true,
-                        "type": "undiscriminated"
+                        {
+                          "schema": {
+                            "type": "boolean"
+                          },
+                          "generatedName": "ConnectedAccountsListRequestCustomMetadataHasValue",
+                          "groupName": [],
+                          "type": "primitive"
+                        }
+                      ],
+                      "groupName": [],
+                      "source": {
+                        "file": "../openapi.json",
+                        "type": "openapi"
                       },
-                      "type": "oneOf"
+                      "inline": true,
+                      "type": "undiscriminated"
                     },
-                    "groupName": [],
-                    "inline": true,
-                    "type": "optional"
+                    "type": "oneOf"
                   },
                   "generatedName": "ConnectedAccountsListRequestCustomMetadataHas",
                   "groupName": [],
@@ -9170,7 +9166,21 @@
                           "type": "map"
                         },
                         "custom_metadata": {
-                          "value": [],
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
+                              "value": {
+                                "value": {
+                                  "value": "value",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            }
+                          ],
                           "type": "map"
                         },
                         "automatically_manage_new_devices": {
@@ -9280,60 +9290,54 @@
                   "value": {
                     "generatedName": "ConnectedAccountsUpdateRequestCustomMetadataValue",
                     "value": {
-                      "generatedName": "ConnectedAccountsUpdateRequestCustomMetadataValue",
                       "value": {
-                        "value": {
-                          "generatedName": "ConnectedAccountsUpdateRequestCustomMetadataValue",
-                          "schemas": [
-                            {
+                        "generatedName": "ConnectedAccountsUpdateRequestCustomMetadataValue",
+                        "schemas": [
+                          {
+                            "schema": {
+                              "maxLength": 500,
+                              "type": "string"
+                            },
+                            "generatedName": "ConnectedAccountsUpdateRequestCustomMetadataValue",
+                            "groupName": [],
+                            "type": "primitive"
+                          },
+                          {
+                            "schema": {
+                              "type": "boolean"
+                            },
+                            "generatedName": "ConnectedAccountsUpdateRequestCustomMetadataValue",
+                            "groupName": [],
+                            "type": "primitive"
+                          },
+                          {
+                            "generatedName": "ConnectedAccountsUpdateRequestCustomMetadataValue",
+                            "value": {
                               "schema": {
-                                "maxLength": 500,
+                                "format": "null",
                                 "type": "string"
                               },
                               "generatedName": "ConnectedAccountsUpdateRequestCustomMetadataValue",
                               "groupName": [],
                               "type": "primitive"
                             },
-                            {
-                              "schema": {
-                                "type": "boolean"
-                              },
-                              "generatedName": "ConnectedAccountsUpdateRequestCustomMetadataValue",
-                              "groupName": [],
-                              "type": "primitive"
-                            },
-                            {
-                              "generatedName": "ConnectedAccountsUpdateRequestCustomMetadataValue",
-                              "value": {
-                                "schema": {
-                                  "format": "null",
-                                  "type": "string"
-                                },
-                                "generatedName": "ConnectedAccountsUpdateRequestCustomMetadataValue",
-                                "groupName": [],
-                                "type": "primitive"
-                              },
-                              "groupName": [],
-                              "type": "nullable"
-                            }
-                          ],
-                          "groupName": [],
-                          "source": {
-                            "file": "../openapi.json",
-                            "type": "openapi"
-                          },
-                          "inline": true,
-                          "type": "undiscriminated"
+                            "groupName": [],
+                            "type": "nullable"
+                          }
+                        ],
+                        "groupName": [],
+                        "source": {
+                          "file": "../openapi.json",
+                          "type": "openapi"
                         },
-                        "type": "oneOf"
+                        "inline": true,
+                        "type": "undiscriminated"
                       },
-                      "groupName": [],
-                      "inline": true,
-                      "type": "nullable"
+                      "type": "oneOf"
                     },
                     "groupName": [],
                     "inline": true,
-                    "type": "optional"
+                    "type": "nullable"
                   },
                   "generatedName": "ConnectedAccountsUpdateRequestCustomMetadata",
                   "groupName": [],
@@ -12074,41 +12078,35 @@
                     "type": "primitive"
                   },
                   "value": {
-                    "generatedName": "DevicesListRequestCustomMetadataHasValue",
                     "value": {
-                      "value": {
-                        "generatedName": "DevicesListRequestCustomMetadataHasValue",
-                        "schemas": [
-                          {
-                            "schema": {
-                              "type": "string"
-                            },
-                            "generatedName": "DevicesListRequestCustomMetadataHasValue",
-                            "groupName": [],
-                            "type": "primitive"
+                      "generatedName": "DevicesListRequestCustomMetadataHasValue",
+                      "schemas": [
+                        {
+                          "schema": {
+                            "type": "string"
                           },
-                          {
-                            "schema": {
-                              "type": "boolean"
-                            },
-                            "generatedName": "DevicesListRequestCustomMetadataHasValue",
-                            "groupName": [],
-                            "type": "primitive"
-                          }
-                        ],
-                        "groupName": [],
-                        "source": {
-                          "file": "../openapi.json",
-                          "type": "openapi"
+                          "generatedName": "DevicesListRequestCustomMetadataHasValue",
+                          "groupName": [],
+                          "type": "primitive"
                         },
-                        "inline": true,
-                        "type": "undiscriminated"
+                        {
+                          "schema": {
+                            "type": "boolean"
+                          },
+                          "generatedName": "DevicesListRequestCustomMetadataHasValue",
+                          "groupName": [],
+                          "type": "primitive"
+                        }
+                      ],
+                      "groupName": [],
+                      "source": {
+                        "file": "../openapi.json",
+                        "type": "openapi"
                       },
-                      "type": "oneOf"
+                      "inline": true,
+                      "type": "undiscriminated"
                     },
-                    "groupName": [],
-                    "inline": true,
-                    "type": "optional"
+                    "type": "oneOf"
                   },
                   "generatedName": "DevicesListRequestCustomMetadataHas",
                   "groupName": [],
@@ -12547,7 +12545,21 @@
                           "type": "primitive"
                         },
                         "custom_metadata": {
-                          "value": [],
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
+                              "value": {
+                                "value": {
+                                  "value": "value",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            }
+                          ],
                           "type": "map"
                         },
                         "can_remotely_unlock": {
@@ -13034,60 +13046,54 @@
                   "value": {
                     "generatedName": "DevicesUpdateRequestCustomMetadataValue",
                     "value": {
-                      "generatedName": "DevicesUpdateRequestCustomMetadataValue",
                       "value": {
-                        "value": {
-                          "generatedName": "DevicesUpdateRequestCustomMetadataValue",
-                          "schemas": [
-                            {
+                        "generatedName": "DevicesUpdateRequestCustomMetadataValue",
+                        "schemas": [
+                          {
+                            "schema": {
+                              "maxLength": 500,
+                              "type": "string"
+                            },
+                            "generatedName": "DevicesUpdateRequestCustomMetadataValue",
+                            "groupName": [],
+                            "type": "primitive"
+                          },
+                          {
+                            "schema": {
+                              "type": "boolean"
+                            },
+                            "generatedName": "DevicesUpdateRequestCustomMetadataValue",
+                            "groupName": [],
+                            "type": "primitive"
+                          },
+                          {
+                            "generatedName": "DevicesUpdateRequestCustomMetadataValue",
+                            "value": {
                               "schema": {
-                                "maxLength": 500,
+                                "format": "null",
                                 "type": "string"
                               },
                               "generatedName": "DevicesUpdateRequestCustomMetadataValue",
                               "groupName": [],
                               "type": "primitive"
                             },
-                            {
-                              "schema": {
-                                "type": "boolean"
-                              },
-                              "generatedName": "DevicesUpdateRequestCustomMetadataValue",
-                              "groupName": [],
-                              "type": "primitive"
-                            },
-                            {
-                              "generatedName": "DevicesUpdateRequestCustomMetadataValue",
-                              "value": {
-                                "schema": {
-                                  "format": "null",
-                                  "type": "string"
-                                },
-                                "generatedName": "DevicesUpdateRequestCustomMetadataValue",
-                                "groupName": [],
-                                "type": "primitive"
-                              },
-                              "groupName": [],
-                              "type": "nullable"
-                            }
-                          ],
-                          "groupName": [],
-                          "source": {
-                            "file": "../openapi.json",
-                            "type": "openapi"
-                          },
-                          "inline": true,
-                          "type": "undiscriminated"
+                            "groupName": [],
+                            "type": "nullable"
+                          }
+                        ],
+                        "groupName": [],
+                        "source": {
+                          "file": "../openapi.json",
+                          "type": "openapi"
                         },
-                        "type": "oneOf"
+                        "inline": true,
+                        "type": "undiscriminated"
                       },
-                      "groupName": [],
-                      "inline": true,
-                      "type": "nullable"
+                      "type": "oneOf"
                     },
                     "groupName": [],
                     "inline": true,
-                    "type": "optional"
+                    "type": "nullable"
                   },
                   "generatedName": "DevicesUpdateRequestCustomMetadata",
                   "groupName": [],
@@ -18252,41 +18258,35 @@
                     "type": "primitive"
                   },
                   "value": {
-                    "generatedName": "LocksListRequestCustomMetadataHasValue",
                     "value": {
-                      "value": {
-                        "generatedName": "LocksListRequestCustomMetadataHasValue",
-                        "schemas": [
-                          {
-                            "schema": {
-                              "type": "string"
-                            },
-                            "generatedName": "LocksListRequestCustomMetadataHasValue",
-                            "groupName": [],
-                            "type": "primitive"
+                      "generatedName": "LocksListRequestCustomMetadataHasValue",
+                      "schemas": [
+                        {
+                          "schema": {
+                            "type": "string"
                           },
-                          {
-                            "schema": {
-                              "type": "boolean"
-                            },
-                            "generatedName": "LocksListRequestCustomMetadataHasValue",
-                            "groupName": [],
-                            "type": "primitive"
-                          }
-                        ],
-                        "groupName": [],
-                        "source": {
-                          "file": "../openapi.json",
-                          "type": "openapi"
+                          "generatedName": "LocksListRequestCustomMetadataHasValue",
+                          "groupName": [],
+                          "type": "primitive"
                         },
-                        "inline": true,
-                        "type": "undiscriminated"
+                        {
+                          "schema": {
+                            "type": "boolean"
+                          },
+                          "generatedName": "LocksListRequestCustomMetadataHasValue",
+                          "groupName": [],
+                          "type": "primitive"
+                        }
+                      ],
+                      "groupName": [],
+                      "source": {
+                        "file": "../openapi.json",
+                        "type": "openapi"
                       },
-                      "type": "oneOf"
+                      "inline": true,
+                      "type": "undiscriminated"
                     },
-                    "groupName": [],
-                    "inline": true,
-                    "type": "optional"
+                    "type": "oneOf"
                   },
                   "generatedName": "LocksListRequestCustomMetadataHas",
                   "groupName": [],
@@ -18745,7 +18745,21 @@
                           "type": "primitive"
                         },
                         "custom_metadata": {
-                          "value": [],
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
+                              "value": {
+                                "value": {
+                                  "value": "value",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            }
+                          ],
                           "type": "map"
                         },
                         "can_remotely_unlock": {
@@ -18972,7 +18986,21 @@
                           "type": "primitive"
                         },
                         "custom_metadata": {
-                          "value": [],
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
+                              "value": {
+                                "value": {
+                                  "value": "value",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            }
+                          ],
                           "type": "map"
                         },
                         "can_remotely_unlock": {
@@ -20470,7 +20498,21 @@
                           "type": "primitive"
                         },
                         "custom_metadata": {
-                          "value": [],
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
+                              "value": {
+                                "value": {
+                                  "value": "value",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            }
+                          ],
                           "type": "map"
                         },
                         "can_remotely_unlock": {
@@ -23734,41 +23776,35 @@
                     "type": "primitive"
                   },
                   "value": {
-                    "generatedName": "ThermostatsListRequestCustomMetadataHasValue",
                     "value": {
-                      "value": {
-                        "generatedName": "ThermostatsListRequestCustomMetadataHasValue",
-                        "schemas": [
-                          {
-                            "schema": {
-                              "type": "string"
-                            },
-                            "generatedName": "ThermostatsListRequestCustomMetadataHasValue",
-                            "groupName": [],
-                            "type": "primitive"
+                      "generatedName": "ThermostatsListRequestCustomMetadataHasValue",
+                      "schemas": [
+                        {
+                          "schema": {
+                            "type": "string"
                           },
-                          {
-                            "schema": {
-                              "type": "boolean"
-                            },
-                            "generatedName": "ThermostatsListRequestCustomMetadataHasValue",
-                            "groupName": [],
-                            "type": "primitive"
-                          }
-                        ],
-                        "groupName": [],
-                        "source": {
-                          "file": "../openapi.json",
-                          "type": "openapi"
+                          "generatedName": "ThermostatsListRequestCustomMetadataHasValue",
+                          "groupName": [],
+                          "type": "primitive"
                         },
-                        "inline": true,
-                        "type": "undiscriminated"
+                        {
+                          "schema": {
+                            "type": "boolean"
+                          },
+                          "generatedName": "ThermostatsListRequestCustomMetadataHasValue",
+                          "groupName": [],
+                          "type": "primitive"
+                        }
+                      ],
+                      "groupName": [],
+                      "source": {
+                        "file": "../openapi.json",
+                        "type": "openapi"
                       },
-                      "type": "oneOf"
+                      "inline": true,
+                      "type": "undiscriminated"
                     },
-                    "groupName": [],
-                    "inline": true,
-                    "type": "optional"
+                    "type": "oneOf"
                   },
                   "generatedName": "ThermostatsListRequestCustomMetadataHas",
                   "groupName": [],
@@ -24207,7 +24243,21 @@
                           "type": "primitive"
                         },
                         "custom_metadata": {
-                          "value": [],
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
+                              "value": {
+                                "value": {
+                                  "value": "value",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            }
+                          ],
                           "type": "map"
                         },
                         "can_remotely_unlock": {
@@ -27071,7 +27121,21 @@
                           "type": "primitive"
                         },
                         "custom_metadata": {
-                          "value": [],
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
+                              "value": {
+                                "value": {
+                                  "value": "value",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            }
+                          ],
                           "type": "map"
                         },
                         "can_remotely_unlock": {
@@ -27298,7 +27362,21 @@
                           "type": "primitive"
                         },
                         "custom_metadata": {
-                          "value": [],
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
+                              "value": {
+                                "value": {
+                                  "value": "value",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            }
+                          ],
                           "type": "map"
                         },
                         "can_remotely_unlock": {
@@ -44787,41 +44865,35 @@
                     "type": "primitive"
                   },
                   "value": {
-                    "generatedName": "UnmanagedListRequestCustomMetadataHasValue",
                     "value": {
-                      "value": {
-                        "generatedName": "UnmanagedListRequestCustomMetadataHasValue",
-                        "schemas": [
-                          {
-                            "schema": {
-                              "type": "string"
-                            },
-                            "generatedName": "UnmanagedListRequestCustomMetadataHasValue",
-                            "groupName": [],
-                            "type": "primitive"
+                      "generatedName": "UnmanagedListRequestCustomMetadataHasValue",
+                      "schemas": [
+                        {
+                          "schema": {
+                            "type": "string"
                           },
-                          {
-                            "schema": {
-                              "type": "boolean"
-                            },
-                            "generatedName": "UnmanagedListRequestCustomMetadataHasValue",
-                            "groupName": [],
-                            "type": "primitive"
-                          }
-                        ],
-                        "groupName": [],
-                        "source": {
-                          "file": "../openapi.json",
-                          "type": "openapi"
+                          "generatedName": "UnmanagedListRequestCustomMetadataHasValue",
+                          "groupName": [],
+                          "type": "primitive"
                         },
-                        "inline": true,
-                        "type": "undiscriminated"
+                        {
+                          "schema": {
+                            "type": "boolean"
+                          },
+                          "generatedName": "UnmanagedListRequestCustomMetadataHasValue",
+                          "groupName": [],
+                          "type": "primitive"
+                        }
+                      ],
+                      "groupName": [],
+                      "source": {
+                        "file": "../openapi.json",
+                        "type": "openapi"
                       },
-                      "type": "oneOf"
+                      "inline": true,
+                      "type": "undiscriminated"
                     },
-                    "groupName": [],
-                    "inline": true,
-                    "type": "optional"
+                    "type": "oneOf"
                   },
                   "generatedName": "UnmanagedListRequestCustomMetadataHas",
                   "groupName": [],
@@ -57449,41 +57521,35 @@
                 "type": "primitive"
               },
               "value": {
-                "generatedName": "ConnectWebviewCustomMetadataValue",
                 "value": {
-                  "value": {
-                    "generatedName": "ConnectWebviewCustomMetadataValue",
-                    "schemas": [
-                      {
-                        "schema": {
-                          "type": "string"
-                        },
-                        "generatedName": "ConnectWebviewCustomMetadataValue",
-                        "groupName": [],
-                        "type": "primitive"
+                  "generatedName": "ConnectWebviewCustomMetadataValue",
+                  "schemas": [
+                    {
+                      "schema": {
+                        "type": "string"
                       },
-                      {
-                        "schema": {
-                          "type": "boolean"
-                        },
-                        "generatedName": "ConnectWebviewCustomMetadataValue",
-                        "groupName": [],
-                        "type": "primitive"
-                      }
-                    ],
-                    "groupName": [],
-                    "source": {
-                      "file": "../openapi.json",
-                      "type": "openapi"
+                      "generatedName": "ConnectWebviewCustomMetadataValue",
+                      "groupName": [],
+                      "type": "primitive"
                     },
-                    "inline": true,
-                    "type": "undiscriminated"
+                    {
+                      "schema": {
+                        "type": "boolean"
+                      },
+                      "generatedName": "ConnectWebviewCustomMetadataValue",
+                      "groupName": [],
+                      "type": "primitive"
+                    }
+                  ],
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.json",
+                    "type": "openapi"
                   },
-                  "type": "oneOf"
+                  "inline": true,
+                  "type": "undiscriminated"
                 },
-                "groupName": [],
-                "inline": true,
-                "type": "optional"
+                "type": "oneOf"
               },
               "generatedName": "ConnectWebviewCustomMetadata",
               "groupName": [],
@@ -57807,41 +57873,35 @@
                 "type": "primitive"
               },
               "value": {
-                "generatedName": "ConnectedAccountCustomMetadataValue",
                 "value": {
-                  "value": {
-                    "generatedName": "ConnectedAccountCustomMetadataValue",
-                    "schemas": [
-                      {
-                        "schema": {
-                          "type": "string"
-                        },
-                        "generatedName": "ConnectedAccountCustomMetadataValue",
-                        "groupName": [],
-                        "type": "primitive"
+                  "generatedName": "ConnectedAccountCustomMetadataValue",
+                  "schemas": [
+                    {
+                      "schema": {
+                        "type": "string"
                       },
-                      {
-                        "schema": {
-                          "type": "boolean"
-                        },
-                        "generatedName": "ConnectedAccountCustomMetadataValue",
-                        "groupName": [],
-                        "type": "primitive"
-                      }
-                    ],
-                    "groupName": [],
-                    "source": {
-                      "file": "../openapi.json",
-                      "type": "openapi"
+                      "generatedName": "ConnectedAccountCustomMetadataValue",
+                      "groupName": [],
+                      "type": "primitive"
                     },
-                    "inline": true,
-                    "type": "undiscriminated"
+                    {
+                      "schema": {
+                        "type": "boolean"
+                      },
+                      "generatedName": "ConnectedAccountCustomMetadataValue",
+                      "groupName": [],
+                      "type": "primitive"
+                    }
+                  ],
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.json",
+                    "type": "openapi"
                   },
-                  "type": "oneOf"
+                  "inline": true,
+                  "type": "undiscriminated"
                 },
-                "groupName": [],
-                "inline": true,
-                "type": "optional"
+                "type": "oneOf"
               },
               "generatedName": "ConnectedAccountCustomMetadata",
               "groupName": [],
@@ -62184,41 +62244,35 @@
                 "type": "primitive"
               },
               "value": {
-                "generatedName": "DeviceCustomMetadataValue",
                 "value": {
-                  "value": {
-                    "generatedName": "DeviceCustomMetadataValue",
-                    "schemas": [
-                      {
-                        "schema": {
-                          "type": "string"
-                        },
-                        "generatedName": "DeviceCustomMetadataValue",
-                        "groupName": [],
-                        "type": "primitive"
+                  "generatedName": "DeviceCustomMetadataValue",
+                  "schemas": [
+                    {
+                      "schema": {
+                        "type": "string"
                       },
-                      {
-                        "schema": {
-                          "type": "boolean"
-                        },
-                        "generatedName": "DeviceCustomMetadataValue",
-                        "groupName": [],
-                        "type": "primitive"
-                      }
-                    ],
-                    "groupName": [],
-                    "source": {
-                      "file": "../openapi.json",
-                      "type": "openapi"
+                      "generatedName": "DeviceCustomMetadataValue",
+                      "groupName": [],
+                      "type": "primitive"
                     },
-                    "inline": true,
-                    "type": "undiscriminated"
+                    {
+                      "schema": {
+                        "type": "boolean"
+                      },
+                      "generatedName": "DeviceCustomMetadataValue",
+                      "groupName": [],
+                      "type": "primitive"
+                    }
+                  ],
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.json",
+                    "type": "openapi"
                   },
-                  "type": "oneOf"
+                  "inline": true,
+                  "type": "undiscriminated"
                 },
-                "groupName": [],
-                "inline": true,
-                "type": "optional"
+                "type": "oneOf"
               },
               "generatedName": "DeviceCustomMetadata",
               "groupName": [],
@@ -67155,41 +67209,35 @@
                 "type": "primitive"
               },
               "value": {
-                "generatedName": "PhoneCustomMetadataValue",
                 "value": {
-                  "value": {
-                    "generatedName": "PhoneCustomMetadataValue",
-                    "schemas": [
-                      {
-                        "schema": {
-                          "type": "string"
-                        },
-                        "generatedName": "PhoneCustomMetadataValue",
-                        "groupName": [],
-                        "type": "primitive"
+                  "generatedName": "PhoneCustomMetadataValue",
+                  "schemas": [
+                    {
+                      "schema": {
+                        "type": "string"
                       },
-                      {
-                        "schema": {
-                          "type": "boolean"
-                        },
-                        "generatedName": "PhoneCustomMetadataValue",
-                        "groupName": [],
-                        "type": "primitive"
-                      }
-                    ],
-                    "groupName": [],
-                    "source": {
-                      "file": "../openapi.json",
-                      "type": "openapi"
+                      "generatedName": "PhoneCustomMetadataValue",
+                      "groupName": [],
+                      "type": "primitive"
                     },
-                    "inline": true,
-                    "type": "undiscriminated"
+                    {
+                      "schema": {
+                        "type": "boolean"
+                      },
+                      "generatedName": "PhoneCustomMetadataValue",
+                      "groupName": [],
+                      "type": "primitive"
+                    }
+                  ],
+                  "groupName": [],
+                  "source": {
+                    "file": "../openapi.json",
+                    "type": "openapi"
                   },
-                  "type": "oneOf"
+                  "inline": true,
+                  "type": "undiscriminated"
                 },
-                "groupName": [],
-                "inline": true,
-                "type": "optional"
+                "type": "oneOf"
               },
               "generatedName": "PhoneCustomMetadata",
               "groupName": [],

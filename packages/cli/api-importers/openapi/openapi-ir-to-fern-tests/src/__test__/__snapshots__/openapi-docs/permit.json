@@ -3020,18 +3020,18 @@ The actions represents the ways you can interact with a protected resource.",
             "inline": undefined,
             "properties": {
               "action_groups": {
-                "type": "optional<map<string, optional<list<string>>>>",
+                "type": "optional<map<string, list<string>>>",
               },
               "actions": {
                 "docs": "
         A actions definition block, typically contained within a resource type definition block.
         The actions represents the ways you can interact with a protected resource.
         ",
-                "type": "optional<map<string, optional<ActionBlockRead>>>",
+                "type": "optional<map<string, ActionBlockRead>>",
               },
               "attributes": {
                 "docs": "Attributes that each resource of this type defines, and can be used in your ABAC policies.",
-                "type": "optional<map<string, optional<AttributeBlockRead>>>",
+                "type": "optional<map<string, AttributeBlockRead>>",
               },
               "created_at": {
                 "docs": "Date and time when the resource was created (ISO_8601 format).",
@@ -5718,19 +5718,19 @@ types:
           An optional longer description of what this resource respresents in
           your system
       actions:
-        type: optional<map<string, optional<ActionBlockRead>>>
+        type: optional<map<string, ActionBlockRead>>
         docs: |2-
 
                   A actions definition block, typically contained within a resource type definition block.
                   The actions represents the ways you can interact with a protected resource.
                   
       attributes:
-        type: optional<map<string, optional<AttributeBlockRead>>>
+        type: optional<map<string, AttributeBlockRead>>
         docs: >-
           Attributes that each resource of this type defines, and can be used in
           your ABAC policies.
       action_groups:
-        type: optional<map<string, optional<list<string>>>>
+        type: optional<map<string, list<string>>>
     source:
       openapi: ../openapi.json
   Roles:
@@ -7867,6 +7867,11 @@ This includes any permissions granted to said condition set (i.e: any matching c
                         "parent_id": "parent_id",
                         "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                         "resource": {
+                          "action_groups": {
+                            "key": [
+                              "value",
+                            ],
+                          },
                           "actions": {
                             "clone": {
                               "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
@@ -8017,6 +8022,11 @@ This includes any permissions granted to said condition set (i.e: any matching c
                         "parent_id": "parent_id",
                         "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                         "resource": {
+                          "action_groups": {
+                            "key": [
+                              "value",
+                            ],
+                          },
                           "actions": {
                             "clone": {
                               "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
@@ -9089,6 +9099,9 @@ service:
                         whether the repo is private (if false, the repo is
                         public)
                       id: 497f6eca-6276-4993-bfeb-53cbbbba6f22
+                  action_groups:
+                    key:
+                      - value
                 name: US or Canada based employees
                 description: All employees based in the US or Canada
                 conditions:
@@ -9197,6 +9210,9 @@ service:
                         whether the repo is private (if false, the repo is
                         public)
                       id: 497f6eca-6276-4993-bfeb-53cbbbba6f22
+                  action_groups:
+                    key:
+                      - value
                 name: US or Canada based employees
                 description: All employees based in the US or Canada
                 conditions:
@@ -16269,7 +16285,11 @@ A resource may also contain:
                     "proj_id": "proj_id",
                   },
                   "request": {
-                    "actions": {},
+                    "actions": {
+                      "clone": {},
+                      "push": {},
+                      "read": {},
+                    },
                     "attributes": {
                       "created": {
                         "description": "the time (timestamp) the repository was created",
@@ -16368,11 +16388,11 @@ A resource may also contain:
         A actions definition block, typically contained within a resource type definition block.
         The actions represents the ways you can interact with a protected resource.
         ",
-                      "type": "map<string, optional<root.ActionBlockEditable>>",
+                      "type": "map<string, root.ActionBlockEditable>",
                     },
                     "attributes": {
                       "docs": "Attributes that each resource of this type defines, and can be used in your ABAC policies.",
-                      "type": "optional<map<string, optional<root.AttributeBlockEditable>>>",
+                      "type": "optional<map<string, root.AttributeBlockEditable>>",
                     },
                     "description": {
                       "docs": "An optional longer description of what this resource respresents in your system",
@@ -16590,6 +16610,11 @@ A resource may also contain:
                     "body": {
                       "data": [
                         {
+                          "action_groups": {
+                            "key": [
+                              "value",
+                            ],
+                          },
                           "actions": {
                             "clone": {
                               "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
@@ -16721,7 +16746,9 @@ TODO: we need to decide if we are auto-revoking, or if we are rejecting the PUT 
                     "resource_id": "resource_id",
                   },
                   "request": {
-                    "actions": {},
+                    "actions": {
+                      "key": {},
+                    },
                     "name": "name",
                   },
                   "response": {
@@ -16813,11 +16840,11 @@ TODO: we need to decide if we are auto-revoking, or if we are rejecting the PUT 
         A actions definition block, typically contained within a resource type definition block.
         The actions represents the ways you can interact with a protected resource.
         ",
-                      "type": "map<string, optional<root.ActionBlockEditable>>",
+                      "type": "map<string, root.ActionBlockEditable>",
                     },
                     "attributes": {
                       "docs": "Attributes that each resource of this type defines, and can be used in your ABAC policies.",
-                      "type": "optional<map<string, optional<root.AttributeBlockEditable>>>",
+                      "type": "optional<map<string, root.AttributeBlockEditable>>",
                     },
                     "description": {
                       "docs": "An optional longer description of what this resource respresents in your system",
@@ -16957,11 +16984,11 @@ Fields that will be provided will be completely overwritten.",
         A actions definition block, typically contained within a resource type definition block.
         The actions represents the ways you can interact with a protected resource.
         ",
-                      "type": "optional<map<string, optional<root.ActionBlockEditable>>>",
+                      "type": "optional<map<string, root.ActionBlockEditable>>",
                     },
                     "attributes": {
                       "docs": "Attributes that each resource of this type defines, and can be used in your ABAC policies.",
-                      "type": "optional<map<string, optional<root.AttributeBlockEditable>>>",
+                      "type": "optional<map<string, root.AttributeBlockEditable>>",
                     },
                     "description": {
                       "docs": "An optional longer description of what this resource respresents in your system",
@@ -17123,6 +17150,9 @@ service:
                         whether the repo is private (if false, the repo is
                         public)
                       id: 497f6eca-6276-4993-bfeb-53cbbbba6f22
+                  action_groups:
+                    key:
+                      - value
               total_count: 1
               page_count: 1
     create_resource:
@@ -17173,14 +17203,14 @@ service:
                 An optional longer description of what this resource respresents
                 in your system
             actions:
-              type: map<string, optional<root.ActionBlockEditable>>
+              type: map<string, root.ActionBlockEditable>
               docs: |2-
 
                         A actions definition block, typically contained within a resource type definition block.
                         The actions represents the ways you can interact with a protected resource.
                         
             attributes:
-              type: optional<map<string, optional<root.AttributeBlockEditable>>>
+              type: optional<map<string, root.AttributeBlockEditable>>
               docs: >-
                 Attributes that each resource of this type defines, and can be
                 used in your ABAC policies.
@@ -17198,7 +17228,10 @@ service:
           request:
             key: repository
             name: Repository
-            actions: {}
+            actions:
+              clone: {}
+              read: {}
+              push: {}
             attributes:
               created:
                 type: time
@@ -17395,14 +17428,14 @@ service:
                 An optional longer description of what this resource respresents
                 in your system
             actions:
-              type: map<string, optional<root.ActionBlockEditable>>
+              type: map<string, root.ActionBlockEditable>
               docs: |2-
 
                         A actions definition block, typically contained within a resource type definition block.
                         The actions represents the ways you can interact with a protected resource.
                         
             attributes:
-              type: optional<map<string, optional<root.AttributeBlockEditable>>>
+              type: optional<map<string, root.AttributeBlockEditable>>
               docs: >-
                 Attributes that each resource of this type defines, and can be
                 used in your ABAC policies.
@@ -17420,7 +17453,8 @@ service:
             resource_id: resource_id
           request:
             name: name
-            actions: {}
+            actions:
+              key: {}
           response:
             body:
               key: repository
@@ -17546,14 +17580,14 @@ service:
                 An optional longer description of what this resource respresents
                 in your system
             actions:
-              type: optional<map<string, optional<root.ActionBlockEditable>>>
+              type: optional<map<string, root.ActionBlockEditable>>
               docs: |2-
 
                         A actions definition block, typically contained within a resource type definition block.
                         The actions represents the ways you can interact with a protected resource.
                         
             attributes:
-              type: optional<map<string, optional<root.AttributeBlockEditable>>>
+              type: optional<map<string, root.AttributeBlockEditable>>
               docs: >-
                 Attributes that each resource of this type defines, and can be
                 used in your ABAC policies.

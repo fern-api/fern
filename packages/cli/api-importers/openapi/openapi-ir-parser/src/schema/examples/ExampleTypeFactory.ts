@@ -423,7 +423,7 @@ export class ExampleTypeFactory {
                     },
                     skipReadonly
                 });
-                if (valueExample != null) {
+                if (valueExample != null && valueExample.type !== "null") {
                     return FullExample.map([
                         {
                             key: keyExample,

@@ -36165,18 +36165,12 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "generatedName": "AmlRecordAmlValue",
-                  "value": {
-                    "schema": {
-                      "type": "string"
-                    },
-                    "generatedName": "AmlRecordAmlValue",
-                    "groupName": [],
-                    "type": "primitive"
+                  "schema": {
+                    "type": "string"
                   },
+                  "generatedName": "AmlRecordAmlValue",
                   "groupName": [],
-                  "inline": true,
-                  "type": "optional"
+                  "type": "primitive"
                 },
                 "generatedName": "AmlRecordAml",
                 "groupName": [],
@@ -37353,7 +37347,7 @@
                     },
                     "groupName": [],
                     "inline": true,
-                    "type": "optional"
+                    "type": "nullable"
                   },
                   "generatedName": "AttributeMimeTypesResultResults",
                   "groupName": [],
@@ -37599,27 +37593,21 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "generatedName": "ClearPendingRevocationsRequestPurgeValue",
                   "value": {
-                    "value": {
-                      "description": "Credential revocation identifier",
-                      "schema": {
-                        "pattern": "^[1-9][0-9]*$",
-                        "example": "12345",
-                        "type": "string"
-                      },
-                      "generatedName": "ClearPendingRevocationsRequestPurgeValueItem",
-                      "groupName": [],
-                      "type": "primitive"
+                    "description": "Credential revocation identifier",
+                    "schema": {
+                      "pattern": "^[1-9][0-9]*$",
+                      "example": "12345",
+                      "type": "string"
                     },
-                    "generatedName": "ClearPendingRevocationsRequestPurgeValue",
+                    "generatedName": "ClearPendingRevocationsRequestPurgeValueItem",
                     "groupName": [],
-                    "inline": true,
-                    "type": "array"
+                    "type": "primitive"
                   },
+                  "generatedName": "ClearPendingRevocationsRequestPurgeValue",
                   "groupName": [],
                   "inline": true,
-                  "type": "optional"
+                  "type": "array"
                 },
                 "generatedName": "ClearPendingRevocationsRequestPurge",
                 "groupName": [],
@@ -44145,19 +44133,13 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "generatedName": "IndyCredInfoAttrsValue",
-                  "value": {
-                    "schema": {
-                      "example": "alice",
-                      "type": "string"
-                    },
-                    "generatedName": "IndyCredInfoAttrsValue",
-                    "groupName": [],
-                    "type": "primitive"
+                  "schema": {
+                    "example": "alice",
+                    "type": "string"
                   },
+                  "generatedName": "IndyCredInfoAttrsValue",
                   "groupName": [],
-                  "inline": true,
-                  "type": "optional"
+                  "type": "primitive"
                 },
                 "generatedName": "IndyCredInfoAttrs",
                 "groupName": [],
@@ -44682,17 +44664,12 @@
               },
               "value": {
                 "generatedName": "IndyCredentialValuesValue",
-                "value": {
-                  "generatedName": "IndyCredentialValuesValue",
-                  "schema": "IndyCredential_values_value",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
-                  },
-                  "type": "reference"
+                "schema": "IndyCredential_values_value",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
                 },
-                "inline": true,
-                "type": "optional"
+                "type": "reference"
               },
               "generatedName": "IndyCredentialValues",
               "title": "values",
@@ -44822,20 +44799,14 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "generatedName": "IndyEqProofMValue",
-                  "value": {
-                    "schema": {
-                      "pattern": "^[0-9]*$",
-                      "example": "0",
-                      "type": "string"
-                    },
-                    "generatedName": "IndyEqProofMValue",
-                    "groupName": [],
-                    "type": "primitive"
+                  "schema": {
+                    "pattern": "^[0-9]*$",
+                    "example": "0",
+                    "type": "string"
                   },
+                  "generatedName": "IndyEqProofMValue",
                   "groupName": [],
-                  "inline": true,
-                  "type": "optional"
+                  "type": "primitive"
                 },
                 "generatedName": "IndyEqProofM",
                 "title": "m",
@@ -44890,20 +44861,14 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "generatedName": "IndyEqProofRevealedAttrsValue",
-                  "value": {
-                    "schema": {
-                      "pattern": "^-?[0-9]*$",
-                      "example": "-1",
-                      "type": "string"
-                    },
-                    "generatedName": "IndyEqProofRevealedAttrsValue",
-                    "groupName": [],
-                    "type": "primitive"
+                  "schema": {
+                    "pattern": "^-?[0-9]*$",
+                    "example": "-1",
+                    "type": "string"
                   },
+                  "generatedName": "IndyEqProofRevealedAttrsValue",
                   "groupName": [],
-                  "inline": true,
-                  "type": "optional"
+                  "type": "primitive"
                 },
                 "generatedName": "IndyEqProofRevealedAttrs",
                 "title": "revealed_attrs",
@@ -45048,20 +45013,14 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "generatedName": "IndyGeProofRValue",
-                  "value": {
-                    "schema": {
-                      "pattern": "^[0-9]*$",
-                      "example": "0",
-                      "type": "string"
-                    },
-                    "generatedName": "IndyGeProofRValue",
-                    "groupName": [],
-                    "type": "primitive"
+                  "schema": {
+                    "pattern": "^[0-9]*$",
+                    "example": "0",
+                    "type": "string"
                   },
+                  "generatedName": "IndyGeProofRValue",
                   "groupName": [],
-                  "inline": true,
-                  "type": "optional"
+                  "type": "primitive"
                 },
                 "generatedName": "IndyGeProofR",
                 "title": "r",
@@ -45092,20 +45051,14 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "generatedName": "IndyGeProofTValue",
-                  "value": {
-                    "schema": {
-                      "pattern": "^[0-9]*$",
-                      "example": "0",
-                      "type": "string"
-                    },
-                    "generatedName": "IndyGeProofTValue",
-                    "groupName": [],
-                    "type": "primitive"
+                  "schema": {
+                    "pattern": "^[0-9]*$",
+                    "example": "0",
+                    "type": "string"
                   },
+                  "generatedName": "IndyGeProofTValue",
                   "groupName": [],
-                  "inline": true,
-                  "type": "optional"
+                  "type": "primitive"
                 },
                 "generatedName": "IndyGeProofT",
                 "title": "t",
@@ -45136,20 +45089,14 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "generatedName": "IndyGeProofUValue",
-                  "value": {
-                    "schema": {
-                      "pattern": "^[0-9]*$",
-                      "example": "0",
-                      "type": "string"
-                    },
-                    "generatedName": "IndyGeProofUValue",
-                    "groupName": [],
-                    "type": "primitive"
+                  "schema": {
+                    "pattern": "^[0-9]*$",
+                    "example": "0",
+                    "type": "string"
                   },
+                  "generatedName": "IndyGeProofUValue",
                   "groupName": [],
-                  "inline": true,
-                  "type": "optional"
+                  "type": "primitive"
                 },
                 "generatedName": "IndyGeProofU",
                 "title": "u",
@@ -45386,18 +45333,12 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "generatedName": "IndyNonRevocProofCListValue",
-                  "value": {
-                    "schema": {
-                      "type": "string"
-                    },
-                    "generatedName": "IndyNonRevocProofCListValue",
-                    "groupName": [],
-                    "type": "primitive"
+                  "schema": {
+                    "type": "string"
                   },
+                  "generatedName": "IndyNonRevocProofCListValue",
                   "groupName": [],
-                  "inline": true,
-                  "type": "optional"
+                  "type": "primitive"
                 },
                 "generatedName": "IndyNonRevocProofCList",
                 "title": "c_list",
@@ -45427,18 +45368,12 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "generatedName": "IndyNonRevocProofXListValue",
-                  "value": {
-                    "schema": {
-                      "type": "string"
-                    },
-                    "generatedName": "IndyNonRevocProofXListValue",
-                    "groupName": [],
-                    "type": "primitive"
+                  "schema": {
+                    "type": "string"
                   },
+                  "generatedName": "IndyNonRevocProofXListValue",
                   "groupName": [],
-                  "inline": true,
-                  "type": "optional"
+                  "type": "primitive"
                 },
                 "generatedName": "IndyNonRevocProofXList",
                 "title": "x_list",
@@ -45868,17 +45803,12 @@
               },
               "value": {
                 "generatedName": "IndyPresSpecRequestedAttributesValue",
-                "value": {
-                  "generatedName": "IndyPresSpecRequestedAttributesValue",
-                  "schema": "IndyRequestedCredsRequestedAttr",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
-                  },
-                  "type": "reference"
+                "schema": "IndyRequestedCredsRequestedAttr",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
                 },
-                "inline": true,
-                "type": "optional"
+                "type": "reference"
               },
               "generatedName": "IndyPresSpecRequestedAttributes",
               "groupName": [],
@@ -45902,17 +45832,12 @@
               },
               "value": {
                 "generatedName": "IndyPresSpecRequestedPredicatesValue",
-                "value": {
-                  "generatedName": "IndyPresSpecRequestedPredicatesValue",
-                  "schema": "IndyRequestedCredsRequestedPred",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
-                  },
-                  "type": "reference"
+                "schema": "IndyRequestedCredsRequestedPred",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
                 },
-                "inline": true,
-                "type": "optional"
+                "type": "reference"
               },
               "generatedName": "IndyPresSpecRequestedPredicates",
               "groupName": [],
@@ -45935,21 +45860,14 @@
                 "type": "primitive"
               },
               "value": {
-                "generatedName": "IndyPresSpecSelfAttestedAttributesValue",
                 "description": "Self-attested attribute values to use in requested-credentials structure for proof construction",
-                "value": {
-                  "description": "Self-attested attribute values to use in requested-credentials structure for proof construction",
-                  "schema": {
-                    "example": "self_attested_value",
-                    "type": "string"
-                  },
-                  "generatedName": "IndyPresSpecSelfAttestedAttributesValue",
-                  "groupName": [],
-                  "type": "primitive"
+                "schema": {
+                  "example": "self_attested_value",
+                  "type": "string"
                 },
+                "generatedName": "IndyPresSpecSelfAttestedAttributesValue",
                 "groupName": [],
-                "inline": true,
-                "type": "optional"
+                "type": "primitive"
               },
               "generatedName": "IndyPresSpecSelfAttestedAttributes",
               "groupName": [],
@@ -46612,19 +46530,13 @@
                     "type": "primitive"
                   },
                   "value": {
-                    "generatedName": "IndyProofReqAttrSpecRestrictionsItemValue",
-                    "value": {
-                      "schema": {
-                        "example": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                        "type": "string"
-                      },
-                      "generatedName": "IndyProofReqAttrSpecRestrictionsItemValue",
-                      "groupName": [],
-                      "type": "primitive"
+                    "schema": {
+                      "example": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                      "type": "string"
                     },
+                    "generatedName": "IndyProofReqAttrSpecRestrictionsItemValue",
                     "groupName": [],
-                    "inline": true,
-                    "type": "optional"
+                    "type": "primitive"
                   },
                   "generatedName": "IndyProofReqAttrSpecRestrictionsItem",
                   "groupName": [],
@@ -46846,19 +46758,13 @@
                     "type": "primitive"
                   },
                   "value": {
-                    "generatedName": "IndyProofReqPredSpecRestrictionsItemValue",
-                    "value": {
-                      "schema": {
-                        "example": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                        "type": "string"
-                      },
-                      "generatedName": "IndyProofReqPredSpecRestrictionsItemValue",
-                      "groupName": [],
-                      "type": "primitive"
+                    "schema": {
+                      "example": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                      "type": "string"
                     },
+                    "generatedName": "IndyProofReqPredSpecRestrictionsItemValue",
                     "groupName": [],
-                    "inline": true,
-                    "type": "optional"
+                    "type": "primitive"
                   },
                   "generatedName": "IndyProofReqPredSpecRestrictionsItem",
                   "groupName": [],
@@ -47050,17 +46956,12 @@
               },
               "value": {
                 "generatedName": "IndyProofRequestRequestedAttributesValue",
-                "value": {
-                  "generatedName": "IndyProofRequestRequestedAttributesValue",
-                  "schema": "IndyProofReqAttrSpec",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
-                  },
-                  "type": "reference"
+                "schema": "IndyProofReqAttrSpec",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
                 },
-                "inline": true,
-                "type": "optional"
+                "type": "reference"
               },
               "generatedName": "IndyProofRequestRequestedAttributes",
               "groupName": [],
@@ -47084,17 +46985,12 @@
               },
               "value": {
                 "generatedName": "IndyProofRequestRequestedPredicatesValue",
-                "value": {
-                  "generatedName": "IndyProofRequestRequestedPredicatesValue",
-                  "schema": "IndyProofReqPredSpec",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
-                  },
-                  "type": "reference"
+                "schema": "IndyProofReqPredSpec",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
                 },
-                "inline": true,
-                "type": "optional"
+                "type": "reference"
               },
               "generatedName": "IndyProofRequestRequestedPredicates",
               "groupName": [],
@@ -47232,17 +47128,12 @@
                 },
                 "value": {
                   "generatedName": "IndyProofRequestedProofPredicatesValue",
-                  "value": {
-                    "generatedName": "IndyProofRequestedProofPredicatesValue",
-                    "schema": "IndyProofRequestedProofPredicate",
-                    "source": {
-                      "file": "../openapi.yml",
-                      "type": "openapi"
-                    },
-                    "type": "reference"
+                  "schema": "IndyProofRequestedProofPredicate",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
                   },
-                  "inline": true,
-                  "type": "optional"
+                  "type": "reference"
                 },
                 "generatedName": "IndyProofRequestedProofPredicates",
                 "title": "predicates",
@@ -47289,7 +47180,7 @@
                       "type": "reference"
                     },
                     "inline": true,
-                    "type": "optional"
+                    "type": "nullable"
                   },
                   "generatedName": "IndyProofRequestedProofRevealedAttrGroups",
                   "title": "revealed_attr_groups",
@@ -47338,7 +47229,7 @@
                       "type": "reference"
                     },
                     "inline": true,
-                    "type": "optional"
+                    "type": "nullable"
                   },
                   "generatedName": "IndyProofRequestedProofRevealedAttrs",
                   "title": "revealed_attrs",
@@ -47596,17 +47487,12 @@
                 },
                 "value": {
                   "generatedName": "IndyProofRequestedProofRevealedAttrGroupValuesValue",
-                  "value": {
-                    "generatedName": "IndyProofRequestedProofRevealedAttrGroupValuesValue",
-                    "schema": "RawEncoded",
-                    "source": {
-                      "file": "../openapi.yml",
-                      "type": "openapi"
-                    },
-                    "type": "reference"
+                  "schema": "RawEncoded",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
                   },
-                  "inline": true,
-                  "type": "optional"
+                  "type": "reference"
                 },
                 "generatedName": "IndyProofRequestedProofRevealedAttrGroupValues",
                 "title": "values",
@@ -52706,19 +52592,13 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "generatedName": "PerformRequestParamsValue",
-                  "value": {
-                    "schema": {
-                      "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "type": "string"
-                    },
-                    "generatedName": "PerformRequestParamsValue",
-                    "groupName": [],
-                    "type": "primitive"
+                  "schema": {
+                    "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "type": "string"
                   },
+                  "generatedName": "PerformRequestParamsValue",
                   "groupName": [],
-                  "inline": true,
-                  "type": "optional"
+                  "type": "primitive"
                 },
                 "generatedName": "PerformRequestParams",
                 "groupName": [],
@@ -53319,27 +53199,21 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "generatedName": "PublishRevocationsRrid2CridValue",
                   "value": {
-                    "value": {
-                      "description": "Credential revocation identifier",
-                      "schema": {
-                        "pattern": "^[1-9][0-9]*$",
-                        "example": "12345",
-                        "type": "string"
-                      },
-                      "generatedName": "PublishRevocationsRrid2CridValueItem",
-                      "groupName": [],
-                      "type": "primitive"
+                    "description": "Credential revocation identifier",
+                    "schema": {
+                      "pattern": "^[1-9][0-9]*$",
+                      "example": "12345",
+                      "type": "string"
                     },
-                    "generatedName": "PublishRevocationsRrid2CridValue",
+                    "generatedName": "PublishRevocationsRrid2CridValueItem",
                     "groupName": [],
-                    "inline": true,
-                    "type": "array"
+                    "type": "primitive"
                   },
+                  "generatedName": "PublishRevocationsRrid2CridValue",
                   "groupName": [],
                   "inline": true,
-                  "type": "optional"
+                  "type": "array"
                 },
                 "generatedName": "PublishRevocationsRrid2Crid",
                 "groupName": [],
@@ -56593,18 +56467,12 @@
                     "type": "primitive"
                   },
                   "value": {
-                    "generatedName": "TransactionRecordFormatsItemValue",
-                    "value": {
-                      "schema": {
-                        "type": "string"
-                      },
-                      "generatedName": "TransactionRecordFormatsItemValue",
-                      "groupName": [],
-                      "type": "primitive"
+                    "schema": {
+                      "type": "string"
                     },
+                    "generatedName": "TransactionRecordFormatsItemValue",
                     "groupName": [],
-                    "inline": true,
-                    "type": "optional"
+                    "type": "primitive"
                   },
                   "generatedName": "TransactionRecordFormatsItem",
                   "groupName": [],
@@ -65715,20 +65583,13 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "generatedName": "VcRecordCredTagsValue",
                   "description": "Retrieval tag value",
-                  "value": {
-                    "description": "Retrieval tag value",
-                    "schema": {
-                      "type": "string"
-                    },
-                    "generatedName": "VcRecordCredTagsValue",
-                    "groupName": [],
-                    "type": "primitive"
+                  "schema": {
+                    "type": "string"
                   },
+                  "generatedName": "VcRecordCredTagsValue",
                   "groupName": [],
-                  "inline": true,
-                  "type": "optional"
+                  "type": "primitive"
                 },
                 "generatedName": "VcRecordCredTags",
                 "groupName": [],
@@ -66305,20 +66166,13 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "generatedName": "W3CCredentialsListRequestTagQueryValue",
                   "description": "Tag value",
-                  "value": {
-                    "description": "Tag value",
-                    "schema": {
-                      "type": "string"
-                    },
-                    "generatedName": "W3CCredentialsListRequestTagQueryValue",
-                    "groupName": [],
-                    "type": "primitive"
+                  "schema": {
+                    "type": "string"
                   },
+                  "generatedName": "W3CCredentialsListRequestTagQueryValue",
                   "groupName": [],
-                  "inline": true,
-                  "type": "optional"
+                  "type": "primitive"
                 },
                 "generatedName": "W3CCredentialsListRequestTagQuery",
                 "groupName": [],

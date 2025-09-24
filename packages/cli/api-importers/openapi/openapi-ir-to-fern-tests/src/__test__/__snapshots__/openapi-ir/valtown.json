@@ -3892,59 +3892,50 @@
                                     "title": "TursoValue",
                                     "description": "A value to be used as a parameter",
                                     "value": {
-                                      "generatedName": "SqliteExecuteRequestStatementArgsArgsOneValue",
-                                      "nameOverride": "TursoValue",
-                                      "title": "TursoValue",
-                                      "description": "A value to be used as a parameter",
                                       "value": {
-                                        "value": {
-                                          "description": "A value to be used as a parameter",
-                                          "generatedName": "SqliteExecuteRequestStatementArgsArgsOneValue",
-                                          "title": "TursoValue",
-                                          "nameOverride": "TursoValue",
-                                          "schemas": [
-                                            {
-                                              "schema": {
-                                                "type": "string"
-                                              },
-                                              "generatedName": "SqliteExecuteRequestStatementArgsArgsOneValue",
-                                              "groupName": [],
-                                              "type": "primitive"
+                                        "description": "A value to be used as a parameter",
+                                        "generatedName": "SqliteExecuteRequestStatementArgsArgsOneValue",
+                                        "title": "TursoValue",
+                                        "nameOverride": "TursoValue",
+                                        "schemas": [
+                                          {
+                                            "schema": {
+                                              "type": "string"
                                             },
-                                            {
-                                              "schema": {
-                                                "type": "double"
-                                              },
-                                              "generatedName": "SqliteExecuteRequestStatementArgsArgsOneValue",
-                                              "groupName": [],
-                                              "type": "primitive"
-                                            },
-                                            {
-                                              "schema": {
-                                                "type": "boolean"
-                                              },
-                                              "generatedName": "SqliteExecuteRequestStatementArgsArgsOneValue",
-                                              "groupName": [],
-                                              "type": "primitive"
-                                            }
-                                          ],
-                                          "groupName": [],
-                                          "source": {
-                                            "file": "../openapi.yml",
-                                            "type": "openapi"
+                                            "generatedName": "SqliteExecuteRequestStatementArgsArgsOneValue",
+                                            "groupName": [],
+                                            "type": "primitive"
                                           },
-                                          "inline": true,
-                                          "type": "undiscriminated"
+                                          {
+                                            "schema": {
+                                              "type": "double"
+                                            },
+                                            "generatedName": "SqliteExecuteRequestStatementArgsArgsOneValue",
+                                            "groupName": [],
+                                            "type": "primitive"
+                                          },
+                                          {
+                                            "schema": {
+                                              "type": "boolean"
+                                            },
+                                            "generatedName": "SqliteExecuteRequestStatementArgsArgsOneValue",
+                                            "groupName": [],
+                                            "type": "primitive"
+                                          }
+                                        ],
+                                        "groupName": [],
+                                        "source": {
+                                          "file": "../openapi.yml",
+                                          "type": "openapi"
                                         },
-                                        "type": "oneOf"
+                                        "inline": true,
+                                        "type": "undiscriminated"
                                       },
-                                      "groupName": [],
-                                      "inline": true,
-                                      "type": "nullable"
+                                      "type": "oneOf"
                                     },
                                     "groupName": [],
                                     "inline": true,
-                                    "type": "optional"
+                                    "type": "nullable"
                                   },
                                   "generatedName": "SqliteExecuteRequestStatementArgsArgsOne",
                                   "groupName": [],
@@ -4399,59 +4390,50 @@
                                       "title": "TursoValue",
                                       "description": "A value to be used as a parameter",
                                       "value": {
-                                        "generatedName": "SqliteBatchRequestStatementsItemArgsArgsOneValue",
-                                        "nameOverride": "TursoValue",
-                                        "title": "TursoValue",
-                                        "description": "A value to be used as a parameter",
                                         "value": {
-                                          "value": {
-                                            "description": "A value to be used as a parameter",
-                                            "generatedName": "SqliteBatchRequestStatementsItemArgsArgsOneValue",
-                                            "title": "TursoValue",
-                                            "nameOverride": "TursoValue",
-                                            "schemas": [
-                                              {
-                                                "schema": {
-                                                  "type": "string"
-                                                },
-                                                "generatedName": "SqliteBatchRequestStatementsItemArgsArgsOneValue",
-                                                "groupName": [],
-                                                "type": "primitive"
+                                          "description": "A value to be used as a parameter",
+                                          "generatedName": "SqliteBatchRequestStatementsItemArgsArgsOneValue",
+                                          "title": "TursoValue",
+                                          "nameOverride": "TursoValue",
+                                          "schemas": [
+                                            {
+                                              "schema": {
+                                                "type": "string"
                                               },
-                                              {
-                                                "schema": {
-                                                  "type": "double"
-                                                },
-                                                "generatedName": "SqliteBatchRequestStatementsItemArgsArgsOneValue",
-                                                "groupName": [],
-                                                "type": "primitive"
-                                              },
-                                              {
-                                                "schema": {
-                                                  "type": "boolean"
-                                                },
-                                                "generatedName": "SqliteBatchRequestStatementsItemArgsArgsOneValue",
-                                                "groupName": [],
-                                                "type": "primitive"
-                                              }
-                                            ],
-                                            "groupName": [],
-                                            "source": {
-                                              "file": "../openapi.yml",
-                                              "type": "openapi"
+                                              "generatedName": "SqliteBatchRequestStatementsItemArgsArgsOneValue",
+                                              "groupName": [],
+                                              "type": "primitive"
                                             },
-                                            "inline": true,
-                                            "type": "undiscriminated"
+                                            {
+                                              "schema": {
+                                                "type": "double"
+                                              },
+                                              "generatedName": "SqliteBatchRequestStatementsItemArgsArgsOneValue",
+                                              "groupName": [],
+                                              "type": "primitive"
+                                            },
+                                            {
+                                              "schema": {
+                                                "type": "boolean"
+                                              },
+                                              "generatedName": "SqliteBatchRequestStatementsItemArgsArgsOneValue",
+                                              "groupName": [],
+                                              "type": "primitive"
+                                            }
+                                          ],
+                                          "groupName": [],
+                                          "source": {
+                                            "file": "../openapi.yml",
+                                            "type": "openapi"
                                           },
-                                          "type": "oneOf"
+                                          "inline": true,
+                                          "type": "undiscriminated"
                                         },
-                                        "groupName": [],
-                                        "inline": true,
-                                        "type": "nullable"
+                                        "type": "oneOf"
                                       },
                                       "groupName": [],
                                       "inline": true,
-                                      "type": "optional"
+                                      "type": "nullable"
                                     },
                                     "generatedName": "SqliteBatchRequestStatementsItemArgsArgsOne",
                                     "groupName": [],

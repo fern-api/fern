@@ -48883,41 +48883,35 @@
                     "type": "primitive"
                   },
                   "value": {
-                    "generatedName": "CreateTransformationRequestEnvValue",
                     "value": {
-                      "value": {
-                        "generatedName": "CreateTransformationRequestEnvValue",
-                        "schemas": [
-                          {
-                            "schema": {
-                              "type": "string"
-                            },
-                            "generatedName": "CreateTransformationRequestEnvValue",
-                            "groupName": [],
-                            "type": "primitive"
+                      "generatedName": "CreateTransformationRequestEnvValue",
+                      "schemas": [
+                        {
+                          "schema": {
+                            "type": "string"
                           },
-                          {
-                            "schema": {
-                              "type": "float"
-                            },
-                            "generatedName": "CreateTransformationRequestEnvValue",
-                            "groupName": [],
-                            "type": "primitive"
-                          }
-                        ],
-                        "groupName": [],
-                        "source": {
-                          "file": "../openapi.yml",
-                          "type": "openapi"
+                          "generatedName": "CreateTransformationRequestEnvValue",
+                          "groupName": [],
+                          "type": "primitive"
                         },
-                        "inline": true,
-                        "type": "undiscriminated"
+                        {
+                          "schema": {
+                            "type": "float"
+                          },
+                          "generatedName": "CreateTransformationRequestEnvValue",
+                          "groupName": [],
+                          "type": "primitive"
+                        }
+                      ],
+                      "groupName": [],
+                      "source": {
+                        "file": "../openapi.yml",
+                        "type": "openapi"
                       },
-                      "type": "oneOf"
+                      "inline": true,
+                      "type": "undiscriminated"
                     },
-                    "groupName": [],
-                    "inline": true,
-                    "type": "optional"
+                    "type": "oneOf"
                   },
                   "generatedName": "CreateTransformationRequestEnv",
                   "groupName": [],
@@ -49248,41 +49242,35 @@
                     "type": "primitive"
                   },
                   "value": {
-                    "generatedName": "UpsertTransformationRequestEnvValue",
                     "value": {
-                      "value": {
-                        "generatedName": "UpsertTransformationRequestEnvValue",
-                        "schemas": [
-                          {
-                            "schema": {
-                              "type": "string"
-                            },
-                            "generatedName": "UpsertTransformationRequestEnvValue",
-                            "groupName": [],
-                            "type": "primitive"
+                      "generatedName": "UpsertTransformationRequestEnvValue",
+                      "schemas": [
+                        {
+                          "schema": {
+                            "type": "string"
                           },
-                          {
-                            "schema": {
-                              "type": "float"
-                            },
-                            "generatedName": "UpsertTransformationRequestEnvValue",
-                            "groupName": [],
-                            "type": "primitive"
-                          }
-                        ],
-                        "groupName": [],
-                        "source": {
-                          "file": "../openapi.yml",
-                          "type": "openapi"
+                          "generatedName": "UpsertTransformationRequestEnvValue",
+                          "groupName": [],
+                          "type": "primitive"
                         },
-                        "inline": true,
-                        "type": "undiscriminated"
+                        {
+                          "schema": {
+                            "type": "float"
+                          },
+                          "generatedName": "UpsertTransformationRequestEnvValue",
+                          "groupName": [],
+                          "type": "primitive"
+                        }
+                      ],
+                      "groupName": [],
+                      "source": {
+                        "file": "../openapi.yml",
+                        "type": "openapi"
                       },
-                      "type": "oneOf"
+                      "inline": true,
+                      "type": "undiscriminated"
                     },
-                    "groupName": [],
-                    "inline": true,
-                    "type": "optional"
+                    "type": "oneOf"
                   },
                   "generatedName": "UpsertTransformationRequestEnv",
                   "groupName": [],
@@ -49849,41 +49837,35 @@
                     "type": "primitive"
                   },
                   "value": {
-                    "generatedName": "UpdateTransformationRequestEnvValue",
                     "value": {
-                      "value": {
-                        "generatedName": "UpdateTransformationRequestEnvValue",
-                        "schemas": [
-                          {
-                            "schema": {
-                              "type": "string"
-                            },
-                            "generatedName": "UpdateTransformationRequestEnvValue",
-                            "groupName": [],
-                            "type": "primitive"
+                      "generatedName": "UpdateTransformationRequestEnvValue",
+                      "schemas": [
+                        {
+                          "schema": {
+                            "type": "string"
                           },
-                          {
-                            "schema": {
-                              "type": "float"
-                            },
-                            "generatedName": "UpdateTransformationRequestEnvValue",
-                            "groupName": [],
-                            "type": "primitive"
-                          }
-                        ],
-                        "groupName": [],
-                        "source": {
-                          "file": "../openapi.yml",
-                          "type": "openapi"
+                          "generatedName": "UpdateTransformationRequestEnvValue",
+                          "groupName": [],
+                          "type": "primitive"
                         },
-                        "inline": true,
-                        "type": "undiscriminated"
+                        {
+                          "schema": {
+                            "type": "float"
+                          },
+                          "generatedName": "UpdateTransformationRequestEnvValue",
+                          "groupName": [],
+                          "type": "primitive"
+                        }
+                      ],
+                      "groupName": [],
+                      "source": {
+                        "file": "../openapi.yml",
+                        "type": "openapi"
                       },
-                      "type": "oneOf"
+                      "inline": true,
+                      "type": "undiscriminated"
                     },
-                    "groupName": [],
-                    "inline": true,
-                    "type": "optional"
+                    "type": "oneOf"
                   },
                   "generatedName": "UpdateTransformationRequestEnv",
                   "groupName": [],
@@ -50317,18 +50299,12 @@
                           "type": "primitive"
                         },
                         "value": {
-                          "generatedName": "TestTransformationRequestRequestHeadersValue",
-                          "value": {
-                            "schema": {
-                              "type": "string"
-                            },
-                            "generatedName": "TestTransformationRequestRequestHeadersValue",
-                            "groupName": [],
-                            "type": "primitive"
+                          "schema": {
+                            "type": "string"
                           },
+                          "generatedName": "TestTransformationRequestRequestHeadersValue",
                           "groupName": [],
-                          "inline": true,
-                          "type": "optional"
+                          "type": "primitive"
                         },
                         "generatedName": "TestTransformationRequestRequestHeaders",
                         "groupName": [],
@@ -60984,22 +60960,16 @@
                           "value": {
                             "generatedName": "ShortEventDataHeadersOneValue",
                             "value": {
-                              "generatedName": "ShortEventDataHeadersOneValue",
-                              "value": {
-                                "schema": {
-                                  "type": "string"
-                                },
-                                "generatedName": "ShortEventDataHeadersOneValue",
-                                "groupName": [],
-                                "type": "primitive"
+                              "schema": {
+                                "type": "string"
                               },
+                              "generatedName": "ShortEventDataHeadersOneValue",
                               "groupName": [],
-                              "inline": true,
-                              "type": "nullable"
+                              "type": "primitive"
                             },
                             "groupName": [],
                             "inline": true,
-                            "type": "optional"
+                            "type": "nullable"
                           },
                           "generatedName": "ShortEventDataHeadersOne",
                           "groupName": [],
@@ -61694,22 +61664,16 @@
                                   "value": {
                                     "generatedName": "EventDataHeadersOneValue",
                                     "value": {
-                                      "generatedName": "EventDataHeadersOneValue",
-                                      "value": {
-                                        "schema": {
-                                          "type": "string"
-                                        },
-                                        "generatedName": "EventDataHeadersOneValue",
-                                        "groupName": [],
-                                        "type": "primitive"
+                                      "schema": {
+                                        "type": "string"
                                       },
+                                      "generatedName": "EventDataHeadersOneValue",
                                       "groupName": [],
-                                      "inline": true,
-                                      "type": "nullable"
+                                      "type": "primitive"
                                     },
                                     "groupName": [],
                                     "inline": true,
-                                    "type": "optional"
+                                    "type": "nullable"
                                   },
                                   "generatedName": "EventDataHeadersOne",
                                   "groupName": [],
@@ -66631,22 +66595,16 @@
                                   "value": {
                                     "generatedName": "RequestDataHeadersOneValue",
                                     "value": {
-                                      "generatedName": "RequestDataHeadersOneValue",
-                                      "value": {
-                                        "schema": {
-                                          "type": "string"
-                                        },
-                                        "generatedName": "RequestDataHeadersOneValue",
-                                        "groupName": [],
-                                        "type": "primitive"
+                                      "schema": {
+                                        "type": "string"
                                       },
+                                      "generatedName": "RequestDataHeadersOneValue",
                                       "groupName": [],
-                                      "inline": true,
-                                      "type": "nullable"
+                                      "type": "primitive"
                                     },
                                     "groupName": [],
                                     "inline": true,
-                                    "type": "optional"
+                                    "type": "nullable"
                                   },
                                   "generatedName": "RequestDataHeadersOne",
                                   "groupName": [],
@@ -67787,7 +67745,7 @@
                             },
                             "groupName": [],
                             "inline": true,
-                            "type": "optional"
+                            "type": "nullable"
                           },
                           "generatedName": "TransformFullTransformationEnv",
                           "groupName": [],
@@ -68777,7 +68735,7 @@
                     },
                     "groupName": [],
                     "inline": true,
-                    "type": "optional"
+                    "type": "nullable"
                   },
                   "generatedName": "TransformationEnv",
                   "groupName": [],

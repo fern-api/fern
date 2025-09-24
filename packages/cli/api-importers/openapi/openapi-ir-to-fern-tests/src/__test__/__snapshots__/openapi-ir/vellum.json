@@ -7123,7 +7123,7 @@
                     },
                     "groupName": [],
                     "inline": true,
-                    "type": "optional"
+                    "type": "nullable"
                   },
                   "generatedName": "ModelVersionExecConfigParametersLogitBias",
                   "groupName": [],
@@ -7618,7 +7618,7 @@
                   },
                   "groupName": [],
                   "inline": true,
-                  "type": "optional"
+                  "type": "nullable"
                 },
                 "generatedName": "NormalizedTokenLogProbsTopLogprobs",
                 "groupName": [],
@@ -8860,7 +8860,7 @@
                     },
                     "groupName": [],
                     "inline": true,
-                    "type": "optional"
+                    "type": "nullable"
                   },
                   "generatedName": "RegisterPromptModelParametersRequestLogitBias",
                   "groupName": [],

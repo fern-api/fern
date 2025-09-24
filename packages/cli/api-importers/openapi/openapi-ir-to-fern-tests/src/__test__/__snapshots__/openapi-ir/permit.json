@@ -4923,6 +4923,29 @@
                             }
                           ],
                           "type": "map"
+                        },
+                        "action_groups": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
+                              "value": {
+                                "value": [
+                                  {
+                                    "value": {
+                                      "value": "value",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                ],
+                                "type": "array"
+                              }
+                            }
+                          ],
+                          "type": "map"
                         }
                       },
                       "type": "object"
@@ -5124,7 +5147,38 @@
                 "type": "primitive"
               },
               "actions": {
-                "value": [],
+                "value": [
+                  {
+                    "key": {
+                      "value": "clone",
+                      "type": "string"
+                    },
+                    "value": {
+                      "properties": {},
+                      "type": "object"
+                    }
+                  },
+                  {
+                    "key": {
+                      "value": "read",
+                      "type": "string"
+                    },
+                    "value": {
+                      "properties": {},
+                      "type": "object"
+                    }
+                  },
+                  {
+                    "key": {
+                      "value": "push",
+                      "type": "string"
+                    },
+                    "value": {
+                      "properties": {},
+                      "type": "object"
+                    }
+                  }
+                ],
                 "type": "map"
               },
               "attributes": {
@@ -6268,7 +6322,18 @@
                 "type": "primitive"
               },
               "actions": {
-                "value": [],
+                "value": [
+                  {
+                    "key": {
+                      "value": "key",
+                      "type": "string"
+                    },
+                    "value": {
+                      "properties": {},
+                      "type": "object"
+                    }
+                  }
+                ],
                 "type": "map"
               }
             },
@@ -22476,6 +22541,29 @@
                             }
                           ],
                           "type": "map"
+                        },
+                        "action_groups": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
+                              "value": {
+                                "value": [
+                                  {
+                                    "value": {
+                                      "value": "value",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                ],
+                                "type": "array"
+                              }
+                            }
+                          ],
+                          "type": "map"
                         }
                       },
                       "type": "object"
@@ -23111,6 +23199,29 @@
                                   }
                                 },
                                 "type": "object"
+                              }
+                            }
+                          ],
+                          "type": "map"
+                        },
+                        "action_groups": {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
+                              "value": {
+                                "value": [
+                                  {
+                                    "value": {
+                                      "value": "value",
+                                      "type": "string"
+                                    },
+                                    "type": "primitive"
+                                  }
+                                ],
+                                "type": "array"
                               }
                             }
                           ],
@@ -40164,17 +40275,12 @@
               },
               "value": {
                 "generatedName": "ResourceCreateActionsValue",
-                "value": {
-                  "generatedName": "ResourceCreateActionsValue",
-                  "schema": "ActionBlockEditable",
-                  "source": {
-                    "file": "../openapi.json",
-                    "type": "openapi"
-                  },
-                  "type": "reference"
+                "schema": "ActionBlockEditable",
+                "source": {
+                  "file": "../openapi.json",
+                  "type": "openapi"
                 },
-                "inline": true,
-                "type": "optional"
+                "type": "reference"
               },
               "generatedName": "ResourceCreateActions",
               "title": "Actions",
@@ -40204,17 +40310,12 @@
                 },
                 "value": {
                   "generatedName": "ResourceCreateAttributesValue",
-                  "value": {
-                    "generatedName": "ResourceCreateAttributesValue",
-                    "schema": "AttributeBlockEditable",
-                    "source": {
-                      "file": "../openapi.json",
-                      "type": "openapi"
-                    },
-                    "type": "reference"
+                  "schema": "AttributeBlockEditable",
+                  "source": {
+                    "file": "../openapi.json",
+                    "type": "openapi"
                   },
-                  "inline": true,
-                  "type": "optional"
+                  "type": "reference"
                 },
                 "generatedName": "ResourceCreateAttributes",
                 "title": "Attributes",
@@ -40852,17 +40953,12 @@
                 },
                 "value": {
                   "generatedName": "ResourceReadActionsValue",
-                  "value": {
-                    "generatedName": "ResourceReadActionsValue",
-                    "schema": "ActionBlockRead",
-                    "source": {
-                      "file": "../openapi.json",
-                      "type": "openapi"
-                    },
-                    "type": "reference"
+                  "schema": "ActionBlockRead",
+                  "source": {
+                    "file": "../openapi.json",
+                    "type": "openapi"
                   },
-                  "inline": true,
-                  "type": "optional"
+                  "type": "reference"
                 },
                 "generatedName": "ResourceReadActions",
                 "title": "Actions",
@@ -40895,17 +40991,12 @@
                 },
                 "value": {
                   "generatedName": "ResourceReadAttributesValue",
-                  "value": {
-                    "generatedName": "ResourceReadAttributesValue",
-                    "schema": "AttributeBlockRead",
-                    "source": {
-                      "file": "../openapi.json",
-                      "type": "openapi"
-                    },
-                    "type": "reference"
+                  "schema": "AttributeBlockRead",
+                  "source": {
+                    "file": "../openapi.json",
+                    "type": "openapi"
                   },
-                  "inline": true,
-                  "type": "optional"
+                  "type": "reference"
                 },
                 "generatedName": "ResourceReadAttributes",
                 "title": "Attributes",
@@ -40936,24 +41027,18 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "generatedName": "ResourceReadActionGroupsValue",
                   "value": {
-                    "value": {
-                      "schema": {
-                        "type": "string"
-                      },
-                      "generatedName": "ResourceReadActionGroupsValueItem",
-                      "groupName": [],
-                      "type": "primitive"
+                    "schema": {
+                      "type": "string"
                     },
-                    "generatedName": "ResourceReadActionGroupsValue",
+                    "generatedName": "ResourceReadActionGroupsValueItem",
                     "groupName": [],
-                    "inline": true,
-                    "type": "array"
+                    "type": "primitive"
                   },
+                  "generatedName": "ResourceReadActionGroupsValue",
                   "groupName": [],
                   "inline": true,
-                  "type": "optional"
+                  "type": "array"
                 },
                 "generatedName": "ResourceReadActionGroups",
                 "title": "Action Groups",
@@ -41062,17 +41147,12 @@
               },
               "value": {
                 "generatedName": "ResourceReplaceActionsValue",
-                "value": {
-                  "generatedName": "ResourceReplaceActionsValue",
-                  "schema": "ActionBlockEditable",
-                  "source": {
-                    "file": "../openapi.json",
-                    "type": "openapi"
-                  },
-                  "type": "reference"
+                "schema": "ActionBlockEditable",
+                "source": {
+                  "file": "../openapi.json",
+                  "type": "openapi"
                 },
-                "inline": true,
-                "type": "optional"
+                "type": "reference"
               },
               "generatedName": "ResourceReplaceActions",
               "title": "Actions",
@@ -41102,17 +41182,12 @@
                 },
                 "value": {
                   "generatedName": "ResourceReplaceAttributesValue",
-                  "value": {
-                    "generatedName": "ResourceReplaceAttributesValue",
-                    "schema": "AttributeBlockEditable",
-                    "source": {
-                      "file": "../openapi.json",
-                      "type": "openapi"
-                    },
-                    "type": "reference"
+                  "schema": "AttributeBlockEditable",
+                  "source": {
+                    "file": "../openapi.json",
+                    "type": "openapi"
                   },
-                  "inline": true,
-                  "type": "optional"
+                  "type": "reference"
                 },
                 "generatedName": "ResourceReplaceAttributes",
                 "title": "Attributes",
@@ -41898,17 +41973,12 @@
                 },
                 "value": {
                   "generatedName": "ResourceUpdateActionsValue",
-                  "value": {
-                    "generatedName": "ResourceUpdateActionsValue",
-                    "schema": "ActionBlockEditable",
-                    "source": {
-                      "file": "../openapi.json",
-                      "type": "openapi"
-                    },
-                    "type": "reference"
+                  "schema": "ActionBlockEditable",
+                  "source": {
+                    "file": "../openapi.json",
+                    "type": "openapi"
                   },
-                  "inline": true,
-                  "type": "optional"
+                  "type": "reference"
                 },
                 "generatedName": "ResourceUpdateActions",
                 "title": "Actions",
@@ -41941,17 +42011,12 @@
                 },
                 "value": {
                   "generatedName": "ResourceUpdateAttributesValue",
-                  "value": {
-                    "generatedName": "ResourceUpdateAttributesValue",
-                    "schema": "AttributeBlockEditable",
-                    "source": {
-                      "file": "../openapi.json",
-                      "type": "openapi"
-                    },
-                    "type": "reference"
+                  "schema": "AttributeBlockEditable",
+                  "source": {
+                    "file": "../openapi.json",
+                    "type": "openapi"
                   },
-                  "inline": true,
-                  "type": "optional"
+                  "type": "reference"
                 },
                 "generatedName": "ResourceUpdateAttributes",
                 "title": "Attributes",
