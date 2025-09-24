@@ -31,7 +31,6 @@ types:
     properties:
       t: string
       ty: string
-      typ: string
 
 service:
   auth: false
