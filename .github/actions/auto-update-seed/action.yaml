@@ -96,7 +96,7 @@ runs:
       uses: actions/upload-artifact@v4
       with:
         name: seed-${{ inputs.generator-name }}-${{ inputs.index }}.patch
-        path: seed-${{ inputs.generator-name }}.patch
+        path: seed-${{ inputs.generator-name }}-${{ inputs.index }}.patch
         if-no-files-found: error
         retention-days: 7
 
