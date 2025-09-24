@@ -5231,13 +5231,14 @@ type LiteralVisitor interface {
 }
 
 func (l *Literal) Accept(visitor LiteralVisitor) error {
-	if l.String != "" {
+	switch l.Type {
+	default:
+		return fmt.Errorf("invalid type %s in %T", l.Type, l)
+	case "string":
 		return visitor.VisitString(l.String)
-	}
-	if l.Boolean != false {
+	case "boolean":
 		return visitor.VisitBoolean(l.Boolean)
 	}
-	return fmt.Errorf("type %T does not define a non-empty union type", l)
 }
 
 func (l *Literal) validate() error {
