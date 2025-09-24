@@ -136,7 +136,3 @@ allowedFailures:
   - bytes-download
   - bytes-upload
   - request-parameters
-  - client-side-params
-  - multiple-request-bodies
-  - query-parameters-openapi
-  - query-parameters-openapi-as-objects

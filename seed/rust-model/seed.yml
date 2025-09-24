@@ -49,7 +49,3 @@ fixtures:
     - customConfig:
         generateBuilders: true
       outputFolder: with-builders 
-
-allowedFailures:
-  - examples
-  - objects-with-imports

@@ -316,5 +316,3 @@ allowedFailures:
   - streaming
   - undiscriminated-unions
   - variables
-  - java-pagination-deep-cursor-path:wire-tests
-  - pagination:wire-tests

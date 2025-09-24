@@ -59,4 +59,3 @@ allowedFailures:
   - streaming:.
   - trace
   - property-access
-  - enum

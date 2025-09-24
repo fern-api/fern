@@ -464,8 +464,3 @@ allowedFailures:
   - license
   - oauth-client-credentials:no-custom-config
   - ts-inline-types:inline
-  - bytes-download
-  - exhaustive:local-files-no-source
-  - query-parameters:no-custom-config
-  - pagination-custom
-  - path-parameters:inline-path-parameters-retain-original-casing
