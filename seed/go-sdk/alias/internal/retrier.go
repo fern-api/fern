@@ -118,7 +118,7 @@ func (r *Retrier) run(
 			request,
 			errorDecoder,
 			maxRetryAttempts,
-			retryAttempt + 1,
+			retryAttempt+1,
 			decodeError(response, errorDecoder),
 		)
 	}
@@ -199,13 +199,13 @@ func (r *Retrier) exponentialBackoff(retryAttempt uint) (time.Duration, error) {
 // addJitterWithRange applies jitter to the given delay.
 // minPercent and maxPercent define the jitter range (e.g., 100, 120 for +0% to +20%).
 func (r *Retrier) addJitterWithRange(delay time.Duration, minPercent, maxPercent int) (time.Duration, error) {
-	jitterRange := big.NewInt(int64(delay * time.Duration(maxPercent - minPercent) / 100))
+	jitterRange := big.NewInt(int64(delay * time.Duration(maxPercent-minPercent) / 100))
 	jitter, err := rand.Int(rand.Reader, jitterRange)
 	if err != nil {
 		return 0, err
 	}
 
-	jitteredDelay := delay + time.Duration(jitter.Int64()) + delay * time.Duration(minPercent-100)/100
+	jitteredDelay := delay + time.Duration(jitter.Int64()) + delay*time.Duration(minPercent-100)/100
 	if jitteredDelay < minRetryDelay {
 		jitteredDelay = minRetryDelay
 	}
