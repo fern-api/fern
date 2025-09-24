@@ -35,14 +35,14 @@ export class Streamer {
     public getTypeReference(): go.TypeReference {
         return go.typeReference({
             name: Streamer.TYPE_NAME,
-            importPath: this.context.getRootImportPath()
+            importPath: this.context.getInternalImportPath()
         });
     }
 
     public getConstructorTypeReference({ streamPayload }: { streamPayload: go.Type }): go.TypeReference {
         return go.typeReference({
             name: Streamer.CONSTRUCTOR_FUNC_NAME,
-            importPath: this.context.getRootImportPath(),
+            importPath: this.context.getInternalImportPath(),
             generics: [streamPayload]
         });
     }
@@ -50,7 +50,7 @@ export class Streamer {
     public getStreamParamsTypeReference(): go.TypeReference {
         return go.typeReference({
             name: Streamer.STREAM_PARAMS_TYPE_NAME,
-            importPath: this.context.getRootImportPath()
+            importPath: this.context.getInternalImportPath()
         });
     }
 
@@ -147,7 +147,11 @@ export class Streamer {
         }
         arguments_.push({
             name: "ErrorDecoder",
-            value: go.TypeInstantiation.reference(this.context.callNewErrorDecoder([]))
+            value: go.TypeInstantiation.reference(
+                this.context.callNewErrorDecoder([
+                    go.TypeInstantiation.reference(this.context.getErrorCodesVariableReference())
+                ])
+            )
         });
         return go.codeblock((writer) => {
             writer.writeNode(

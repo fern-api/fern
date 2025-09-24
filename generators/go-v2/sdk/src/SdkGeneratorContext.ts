@@ -60,7 +60,14 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     }
 
     public getRootAsIsFiles(): string[] {
-        const files = [AsIsFiles.ErrorDecoder, AsIsFiles.ErrorDecoderTest, AsIsFiles.Caller, AsIsFiles.CallerTest, AsIsFiles.Retrier, AsIsFiles.RetrierTest];
+        const files = [
+            AsIsFiles.ErrorDecoder,
+            AsIsFiles.ErrorDecoderTest,
+            AsIsFiles.Caller,
+            AsIsFiles.CallerTest,
+            AsIsFiles.Retrier,
+            AsIsFiles.RetrierTest
+        ];
 
         if (this.needsPaginationHelpers()) {
             files.push(AsIsFiles.Pager, AsIsFiles.PagerTest);
@@ -279,7 +286,7 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     public getErrorCodesTypeReference(): go.TypeReference {
         return go.typeReference({
             name: "ErrorCodes",
-            importPath: this.getRootImportPath()
+            importPath: this.getInternalImportPath()
         });
     }
 
@@ -409,10 +416,17 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return go.invokeFunc({
             func: go.typeReference({
                 name: "NewErrorDecoder",
-                importPath: this.getRootImportPath()
+                importPath: this.getInternalImportPath()
             }),
             arguments_,
             multiline: false
+        });
+    }
+
+    public getErrorCodesVariableReference(): go.TypeReference {
+        return go.typeReference({
+            name: "ErrorCodes",
+            importPath: this.getRootImportPath()
         });
     }
 

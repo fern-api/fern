@@ -207,7 +207,7 @@ function instantiatePager({
             return go.invokeFunc({
                 func: go.typeReference({
                     name: "NewCursorPager",
-                    importPath: context.getRootImportPath()
+                    importPath: context.getInternalImportPath()
                 }),
                 arguments_
             });
@@ -215,7 +215,7 @@ function instantiatePager({
             return go.invokeFunc({
                 func: go.typeReference({
                     name: "NewOffsetPager",
-                    importPath: context.getRootImportPath()
+                    importPath: context.getInternalImportPath()
                 }),
                 arguments_
             });
@@ -612,7 +612,7 @@ function getPageRequestType({ context, pageType }: { context: SdkGeneratorContex
         go.Type.reference(
             go.typeReference({
                 name: "PageRequest",
-                importPath: context.getRootImportPath(),
+                importPath: context.getInternalImportPath(),
                 generics: [pageType]
             })
         )
@@ -642,7 +642,7 @@ function getPageResponseTypeReference({
 }): go.TypeReference {
     return go.typeReference({
         name: "PageResponse",
-        importPath: context.getRootImportPath(),
+        importPath: context.getInternalImportPath(),
         generics: [pageType, getResponseElementType({ context, pagination })]
     });
 }

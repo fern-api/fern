@@ -6,13 +6,13 @@ export enum AsIsFiles {
     Time = "internal/time.go_",
     MainTest = "test/main_test.go_",
     ErrorCodes = "error_codes.go_",
-    ErrorDecoder = "error_decoder.go_",
-    ErrorDecoderTest = "error_decoder_test.go_",
-    Caller = "caller.go_",
-    CallerTest = "caller_test.go_",
-    Retrier = "retrier.go_",
-    RetrierTest = "retrier_test.go_",
-    Pager = "pager.go_",
-    PagerTest = "pager_test.go_",
-    Streamer = "streamer.go_"
+    ErrorDecoder = "internal/error_decoder.go_",
+    ErrorDecoderTest = "internal/error_decoder_test.go_",
+    Caller = "internal/caller.go_",
+    CallerTest = "internal/caller_test.go_",
+    Retrier = "internal/retrier.go_",
+    RetrierTest = "internal/retrier_test.go_",
+    Pager = "internal/pager.go_",
+    PagerTest = "internal/pager_test.go_",
+    Streamer = "internal/streamer.go_"
 }

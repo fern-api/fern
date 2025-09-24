@@ -1,4 +1,4 @@
-package {{{ .PackageName }}}
+package internal
 
 import (
 	"bytes"
@@ -13,7 +13,6 @@ import (
 	"strings"
 
 	"{{ .RootImportPath }}/core"
-	"{{ .RootImportPath }}/internal"
 )
 
 const (
@@ -212,7 +211,7 @@ func newRequestBody(request interface{}, bodyProperties map[string]interface{}) 
 	if body, ok := request.(io.Reader); ok {
 		return body, nil
 	}
-	requestBytes, err := internal.MarshalJSONWithExtraProperties(request, bodyProperties)
+	requestBytes, err := MarshalJSONWithExtraProperties(request, bodyProperties)
 	if err != nil {
 		return nil, err
 	}

@@ -64,7 +64,7 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
             ? path.join(this.absolutePathToOutputDirectory, this.context.customConfig.packagePath)
             : this.absolutePathToOutputDirectory;
 
-        console.log(
+        this.context.logger.debug(
             "goFiles",
             JSON.stringify(
                 files.map((file) => file.getFullyQualifiedName()),
@@ -168,17 +168,17 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         });
     }
 
-	private async createGoDirectory({
-		absolutePathToDirectory,
-		files
-	}: {
-		absolutePathToDirectory: AbsoluteFilePath;
-		files: File[];
-	}): Promise<AbsoluteFilePath> {
-		await this.mkdir(absolutePathToDirectory);
-		await Promise.all(files.map(async (file) => await file.write(absolutePathToDirectory)));
-		return absolutePathToDirectory;
-	}
+    private async createGoDirectory({
+        absolutePathToDirectory,
+        files
+    }: {
+        absolutePathToDirectory: AbsoluteFilePath;
+        files: File[];
+    }): Promise<AbsoluteFilePath> {
+        await this.mkdir(absolutePathToDirectory);
+        await Promise.all(files.map(async (file) => await file.write(absolutePathToDirectory)));
+        return absolutePathToDirectory;
+    }
 
     private async createAsIsFile({
         filename,
@@ -191,10 +191,7 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
 
         // Process template variables
         for (const [key, value] of Object.entries(templateVariables)) {
-            // Handle both {{{{ variable }}}} and {{{ variable }}} syntax
-            const tripleRegex = new RegExp(`\\{\\{\\{ *\\.${key} *\\}\\}\\}`, 'g');
-            const doubleRegex = new RegExp(`\\{\\{ *\\.${key} *\\}\\}`, 'g');
-            contents = contents.replace(tripleRegex, value);
+            const doubleRegex = new RegExp(`\\{\\{ *\\.${key} *\\}\\}`, "g");
             contents = contents.replace(doubleRegex, value);
         }
 

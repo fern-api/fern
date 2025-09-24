@@ -1,4 +1,4 @@
-package {{{ .PackageName }}}
+package internal
 
 import (
 	"bytes"
@@ -11,6 +11,9 @@ import (
 	"{{ .RootImportPath }}/core"
 )
 
+// ErrorCodes maps HTTP status codes to error constructors.
+type ErrorCodes map[int]func(*core.APIError) error
+
 // ErrorDecoder decodes *http.Response errors and returns a
 // typed API error (e.g. *core.APIError).
 type ErrorDecoder func(statusCode int, header http.Header, body io.Reader) error
@@ -18,7 +21,7 @@ type ErrorDecoder func(statusCode int, header http.Header, body io.Reader) error
 // NewErrorDecoder returns a new ErrorDecoder backed by the given error codes.
 // errorCodesOverrides is optional and will be merged with the default error codes,
 // with overrides taking precedence.
-func NewErrorDecoder(errorCodesOverrides ...ErrorCodes) ErrorDecoder {
+func NewErrorDecoder(errorCodes ErrorCodes, errorCodesOverrides ...ErrorCodes) ErrorDecoder {
 	// Merge default error codes with overrides
 	mergedErrorCodes := make(ErrorCodes)
 

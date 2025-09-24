@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
-import { AsIsFiles, GoFile } from "@fern-api/go-base";
+import { GoFile } from "@fern-api/go-base";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export class InternalFilesGenerator {
@@ -17,15 +17,10 @@ export class InternalFilesGenerator {
 
     private generateErrorFiles(): GoFile[] {
         const errorCodesContent = go.codeblock((writer) => {
-            // First write the ErrorCodes type definition
-            writer.writeLine("// ErrorCodes maps HTTP status codes to error constructors.");
-            writer.write("type ErrorCodes map[int]func(");
-            writer.writeNode(go.Type.pointer(go.Type.reference(this.context.getCoreApiErrorTypeReference())));
-            writer.writeLine(") error");
-            writer.writeNewLineIfLastLineNot();
-
             // Then write the variable
-            writer.write("var errorCodes ErrorCodes = ");
+            writer.write("var ErrorCodes ");
+            writer.writeNode(this.context.getErrorCodesTypeReference());
+            writer.write(" = ");
             writer.writeNode(
                 go.TypeInstantiation.struct({
                     typeReference: this.context.getErrorCodesTypeReference(),

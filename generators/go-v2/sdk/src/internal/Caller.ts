@@ -36,28 +36,28 @@ export class Caller {
     public getTypeReference(): go.TypeReference {
         return go.typeReference({
             name: Caller.TYPE_NAME,
-            importPath: this.context.getRootImportPath()
+            importPath: this.context.getInternalImportPath()
         });
     }
 
     public getConstructorTypeReference(): go.TypeReference {
         return go.typeReference({
             name: Caller.CONSTRUCTOR_FUNC_NAME,
-            importPath: this.context.getRootImportPath()
+            importPath: this.context.getInternalImportPath()
         });
     }
 
     public getCallerParamsTypeReference(): go.TypeReference {
         return go.typeReference({
             name: Caller.CALLER_PARAMS_TYPE_NAME,
-            importPath: this.context.getRootImportPath()
+            importPath: this.context.getInternalImportPath()
         });
     }
 
     public getCallParamsTypeReference(): go.TypeReference {
         return go.typeReference({
             name: Caller.CALL_PARAMS_TYPE_NAME,
-            importPath: this.context.getRootImportPath()
+            importPath: this.context.getInternalImportPath()
         });
     }
 
@@ -171,7 +171,11 @@ export class Caller {
         if (args.errorCodes != null) {
             arguments_.push({
                 name: "ErrorDecoder",
-                value: go.TypeInstantiation.reference(this.context.callNewErrorDecoder([]))
+                value: go.TypeInstantiation.reference(
+                    this.context.callNewErrorDecoder([
+                        go.TypeInstantiation.reference(this.context.getErrorCodesVariableReference())
+                    ])
+                )
             });
         }
         return go.TypeInstantiation.structPointer({
