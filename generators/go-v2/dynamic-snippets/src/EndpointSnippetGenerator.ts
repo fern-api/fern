@@ -196,17 +196,60 @@ export class EndpointSnippetGenerator {
         });
     }
 
+    private writeMethodInvocation({
+        writer,
+        endpoint,
+        snippet
+    }: {
+        writer: go.Writer;
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): void {
+        const { otherArgs, requestArg } = this.getMethodArgs({ endpoint, snippet });
+
+        if (requestArg != null) {
+            if (requestArg instanceof go.TypeInstantiation && go.TypeInstantiation.isNop(requestArg)) {
+                writer.writeNode(
+                    go.invokeMethod({
+                        on: go.codeblock(CLIENT_VAR_NAME),
+                        method: this.getMethod({ endpoint }),
+                        arguments_: [this.context.getContextTodoFunctionInvocation(), ...otherArgs, go.codeblock("nil")]
+                    })
+                );
+            } else {
+                writer.write("request := ");
+                writer.writeNode(requestArg);
+                writer.writeLine();
+
+                const requestRef = go.codeblock("request");
+                writer.writeNode(
+                    go.invokeMethod({
+                        on: go.codeblock(CLIENT_VAR_NAME),
+                        method: this.getMethod({ endpoint }),
+                        arguments_: [this.context.getContextTodoFunctionInvocation(), ...otherArgs, requestRef]
+                    })
+                );
+            }
+        } else {
+            writer.writeNode(
+                go.invokeMethod({
+                    on: go.codeblock(CLIENT_VAR_NAME),
+                    method: this.getMethod({ endpoint }),
+                    arguments_: [this.context.getContextTodoFunctionInvocation(), ...otherArgs]
+                })
+            );
+        }
+    }
+
     private callMethod({
         endpoint,
         snippet
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): go.MethodInvocation {
-        return go.invokeMethod({
-            on: go.codeblock(CLIENT_VAR_NAME),
-            method: this.getMethod({ endpoint }),
-            arguments_: [this.context.getContextTodoFunctionInvocation(), ...this.getMethodArgs({ endpoint, snippet })]
+    }): go.CodeBlock {
+        return go.codeblock((writer) => {
+            this.writeMethodInvocation({ writer, endpoint, snippet });
         });
     }
 
@@ -480,7 +523,7 @@ export class EndpointSnippetGenerator {
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): go.AstNode[] {
+    }): { otherArgs: go.AstNode[]; requestArg: go.AstNode | undefined } {
         switch (endpoint.request.type) {
             case "inlined":
                 return this.getMethodArgsForInlinedRequest({ request: endpoint.request, snippet });
@@ -497,25 +540,25 @@ export class EndpointSnippetGenerator {
     }: {
         request: FernIr.dynamic.BodyRequest;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): go.TypeInstantiation[] {
-        const args: go.TypeInstantiation[] = [];
+    }): { otherArgs: go.AstNode[]; requestArg: go.AstNode | undefined } {
+        const otherArgs: go.AstNode[] = [];
 
         this.context.errors.scope(Scope.PathParameters);
         const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
         if (pathParameters.length > 0) {
-            args.push(
+            otherArgs.push(
                 ...this.getPathParameters({ namedParameters: pathParameters, snippet }).map((field) => field.value)
             );
         }
         this.context.errors.unscope();
 
         this.context.errors.scope(Scope.RequestBody);
-        if (request.body != null) {
-            args.push(this.getBodyRequestArg({ body: request.body, value: snippet.requestBody }));
-        }
+        const requestArg: go.AstNode | undefined = request.body != null
+            ? this.getBodyRequestArg({ body: request.body, value: snippet.requestBody })
+            : undefined;
         this.context.errors.unscope();
 
-        return args;
+        return { otherArgs, requestArg };
     }
 
     private getBodyRequestArg({
@@ -553,8 +596,8 @@ export class EndpointSnippetGenerator {
     }: {
         request: FernIr.dynamic.InlinedRequest;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): go.TypeInstantiation[] {
-        const args: go.TypeInstantiation[] = [];
+    }): { otherArgs: go.AstNode[]; requestArg: go.AstNode | undefined } {
+        const otherArgs: go.AstNode[] = [];
 
         const { inlinePathParameters, inlineFileProperties } = {
             inlinePathParameters: this.context.customConfig?.inlinePathParameters ?? false,
@@ -579,29 +622,27 @@ export class EndpointSnippetGenerator {
         this.context.errors.unscope();
 
         if (!this.context.includePathParametersInWrappedRequest({ request, inlinePathParameters })) {
-            args.push(...pathParameterFields.map((field) => field.value));
+            otherArgs.push(...pathParameterFields.map((field) => field.value));
         }
 
         if (!inlineFileProperties) {
-            args.push(...filePropertyInfo.fileFields.map((field) => field.value));
+            otherArgs.push(...filePropertyInfo.fileFields.map((field) => field.value));
         }
 
-        if (this.context.needsRequestParameter({ request, inlinePathParameters, inlineFileProperties })) {
-            args.push(
-                this.getInlinedRequestArg({
+        const requestArg: go.AstNode | undefined = this.context.needsRequestParameter({ request, inlinePathParameters, inlineFileProperties })
+            ? this.getInlinedRequestArg({
+                request,
+                snippet,
+                pathParameterFields: this.context.includePathParametersInWrappedRequest({
                     request,
-                    snippet,
-                    pathParameterFields: this.context.includePathParametersInWrappedRequest({
-                        request,
-                        inlinePathParameters
-                    })
-                        ? pathParameterFields
-                        : [],
-                    filePropertyInfo
+                    inlinePathParameters
                 })
-            );
-        }
-        return args;
+                    ? pathParameterFields
+                    : [],
+                filePropertyInfo
+            })
+            : undefined;
+        return { otherArgs, requestArg };
     }
 
     private getFilePropertyInfo({
@@ -760,6 +801,7 @@ export class EndpointSnippetGenerator {
 
         return fields;
     }
+
 
     private getPathParameters({
         namedParameters,
@@ -1079,16 +1121,7 @@ export class EndpointSnippetGenerator {
 
             // Call the method and capture response and error
             // writer.write("_, invocationErr := ");
-            writer.writeNode(
-                go.invokeMethod({
-                    on: go.codeblock(CLIENT_VAR_NAME),
-                    method: this.getMethod({ endpoint }),
-                    arguments_: [
-                        this.context.getContextTodoFunctionInvocation(),
-                        ...this.getMethodArgs({ endpoint, snippet })
-                    ]
-                })
-            );
+            this.writeMethodInvocation({ writer, endpoint, snippet });
             writer.writeLine();
             writer.writeLine();
 

@@ -2,10 +2,19 @@
 - version: 1.12.4
   changelogEntry:
     - summary: |
+        Internal cleaning, cosmetic changes in dynamic snippet output.
+      type: chore
+  createdAt: "2025-09-24"
+  irVersion: 60
+
+- version: 1.12.4
+  changelogEntry:
+    - summary: |
         Upgrade to IRv60.
       type: chore
   createdAt: "2025-09-24"
   irVersion: 60
+
 
 - version: 1.12.3
   changelogEntry:
