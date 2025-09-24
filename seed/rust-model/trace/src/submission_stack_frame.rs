@@ -1,7 +1,7 @@
 use crate::submission_scope::Scope;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct StackFrame {
     #[serde(rename = "methodName")]
     pub method_name: String,

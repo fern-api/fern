@@ -1,7 +1,7 @@
 use crate::submission_trace_response_v_2::TraceResponseV2;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct TraceResponsesPageV2 {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub offset: Option<i32>,

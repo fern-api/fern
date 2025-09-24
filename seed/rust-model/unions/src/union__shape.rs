@@ -2,7 +2,7 @@ use crate::union__circle::Circle;
 use crate::union__square::Square;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "type")]
 pub enum Shape {
         Circle {
