@@ -509,7 +509,7 @@ export function buildArrayTypeReference({
         namespace,
         declarationDepth
     });
-    const type = `list<${getTypeFromTypeReference(item)}>`;
+    const type = `list<${unwrapOptional(getTypeFromTypeReference(item))}>`;
     if (schema.description == null && schema.title == null) {
         return type;
     }
@@ -536,6 +536,8 @@ export function buildMapTypeReference({
     declarationDepth: number;
 }): RawSchemas.TypeReferenceSchema {
     const keyTypeReference = buildPrimitiveTypeReference(schema.key);
+
+    // If the value is optional, we want to get the underlying type for the purposes of generating the map type.
     const valueTypeReference = buildTypeReference({
         schema: schema.value,
         fileContainingReference,
@@ -545,7 +547,7 @@ export function buildMapTypeReference({
         declarationDepth
     });
     const encoding = schema.encoding != null ? convertToEncodingSchema(schema.encoding) : undefined;
-    const type = `map<${getTypeFromTypeReference(keyTypeReference)}, ${getTypeFromTypeReference(valueTypeReference)}>`;
+    const type = `map<${getTypeFromTypeReference(keyTypeReference)}, ${unwrapOptional(getTypeFromTypeReference(valueTypeReference))}>`;
     if (schema.description == null && encoding == null && schema.title == null) {
         return type;
     }
@@ -892,4 +894,11 @@ function getDisplayName(schema: Schema): string | undefined {
         unknown: (s) => undefined,
         _other: () => undefined
     });
+}
+
+function unwrapOptional(type: string): string {
+    if (type.startsWith("optional<") && type.endsWith(">")) {
+        return type.substring("optional<".length, type.length - 1);
+    }
+    return type;
 }

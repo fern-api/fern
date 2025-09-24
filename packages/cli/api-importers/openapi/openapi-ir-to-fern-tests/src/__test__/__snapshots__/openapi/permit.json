@@ -1808,18 +1808,18 @@ The actions represents the ways you can interact with a protected resource.",
             "inline": undefined,
             "properties": {
               "action_groups": {
-                "type": "optional<map<string, optional<list<string>>>>",
+                "type": "optional<map<string, list<string>>>",
               },
               "actions": {
                 "docs": "
         A actions definition block, typically contained within a resource type definition block.
         The actions represents the ways you can interact with a protected resource.
         ",
-                "type": "optional<map<string, optional<ActionBlockRead>>>",
+                "type": "optional<map<string, ActionBlockRead>>",
               },
               "attributes": {
                 "docs": "Attributes that each resource of this type defines, and can be used in your ABAC policies.",
-                "type": "optional<map<string, optional<AttributeBlockRead>>>",
+                "type": "optional<map<string, AttributeBlockRead>>",
               },
               "created_at": {
                 "docs": "Date and time when the resource was created (ISO_8601 format).",
@@ -3900,19 +3900,19 @@ types:
           An optional longer description of what this resource respresents in
           your system
       actions:
-        type: optional<map<string, optional<ActionBlockRead>>>
+        type: optional<map<string, ActionBlockRead>>
         docs: |2-
 
                   A actions definition block, typically contained within a resource type definition block.
                   The actions represents the ways you can interact with a protected resource.
                   
       attributes:
-        type: optional<map<string, optional<AttributeBlockRead>>>
+        type: optional<map<string, AttributeBlockRead>>
         docs: >-
           Attributes that each resource of this type defines, and can be used in
           your ABAC policies.
       action_groups:
-        type: optional<map<string, optional<list<string>>>>
+        type: optional<map<string, list<string>>>
     source:
       openapi: ../openapi.json
   Roles:
@@ -14564,11 +14564,11 @@ A resource may also contain:
         A actions definition block, typically contained within a resource type definition block.
         The actions represents the ways you can interact with a protected resource.
         ",
-                      "type": "map<string, optional<root.ActionBlockEditable>>",
+                      "type": "map<string, root.ActionBlockEditable>",
                     },
                     "attributes": {
                       "docs": "Attributes that each resource of this type defines, and can be used in your ABAC policies.",
-                      "type": "optional<map<string, optional<root.AttributeBlockEditable>>>",
+                      "type": "optional<map<string, root.AttributeBlockEditable>>",
                     },
                     "description": {
                       "docs": "An optional longer description of what this resource respresents in your system",
@@ -15014,11 +15014,11 @@ TODO: we need to decide if we are auto-revoking, or if we are rejecting the PUT 
         A actions definition block, typically contained within a resource type definition block.
         The actions represents the ways you can interact with a protected resource.
         ",
-                      "type": "map<string, optional<root.ActionBlockEditable>>",
+                      "type": "map<string, root.ActionBlockEditable>",
                     },
                     "attributes": {
                       "docs": "Attributes that each resource of this type defines, and can be used in your ABAC policies.",
-                      "type": "optional<map<string, optional<root.AttributeBlockEditable>>>",
+                      "type": "optional<map<string, root.AttributeBlockEditable>>",
                     },
                     "description": {
                       "docs": "An optional longer description of what this resource respresents in your system",
@@ -15158,11 +15158,11 @@ Fields that will be provided will be completely overwritten.",
         A actions definition block, typically contained within a resource type definition block.
         The actions represents the ways you can interact with a protected resource.
         ",
-                      "type": "optional<map<string, optional<root.ActionBlockEditable>>>",
+                      "type": "optional<map<string, root.ActionBlockEditable>>",
                     },
                     "attributes": {
                       "docs": "Attributes that each resource of this type defines, and can be used in your ABAC policies.",
-                      "type": "optional<map<string, optional<root.AttributeBlockEditable>>>",
+                      "type": "optional<map<string, root.AttributeBlockEditable>>",
                     },
                     "description": {
                       "docs": "An optional longer description of what this resource respresents in your system",
@@ -15376,14 +15376,14 @@ service:
                 An optional longer description of what this resource respresents
                 in your system
             actions:
-              type: map<string, optional<root.ActionBlockEditable>>
+              type: map<string, root.ActionBlockEditable>
               docs: |2-
 
                         A actions definition block, typically contained within a resource type definition block.
                         The actions represents the ways you can interact with a protected resource.
                         
             attributes:
-              type: optional<map<string, optional<root.AttributeBlockEditable>>>
+              type: optional<map<string, root.AttributeBlockEditable>>
               docs: >-
                 Attributes that each resource of this type defines, and can be
                 used in your ABAC policies.
@@ -15601,14 +15601,14 @@ service:
                 An optional longer description of what this resource respresents
                 in your system
             actions:
-              type: map<string, optional<root.ActionBlockEditable>>
+              type: map<string, root.ActionBlockEditable>
               docs: |2-
 
                         A actions definition block, typically contained within a resource type definition block.
                         The actions represents the ways you can interact with a protected resource.
                         
             attributes:
-              type: optional<map<string, optional<root.AttributeBlockEditable>>>
+              type: optional<map<string, root.AttributeBlockEditable>>
               docs: >-
                 Attributes that each resource of this type defines, and can be
                 used in your ABAC policies.
@@ -15753,14 +15753,14 @@ service:
                 An optional longer description of what this resource respresents
                 in your system
             actions:
-              type: optional<map<string, optional<root.ActionBlockEditable>>>
+              type: optional<map<string, root.ActionBlockEditable>>
               docs: |2-
 
                         A actions definition block, typically contained within a resource type definition block.
                         The actions represents the ways you can interact with a protected resource.
                         
             attributes:
-              type: optional<map<string, optional<root.AttributeBlockEditable>>>
+              type: optional<map<string, root.AttributeBlockEditable>>
               docs: >-
                 Attributes that each resource of this type defines, and can be
                 used in your ABAC policies.

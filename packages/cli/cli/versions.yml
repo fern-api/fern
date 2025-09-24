@@ -16,7 +16,10 @@
         Add type for nullable schema examples. 
         If a schema is nullable, examples for its inner type will be parsed or generated, or `null` will be used as an example if no inner examples are available.
       type: feat
-  irVersion: 59
+    - summary: |
+        Remove `optional<T>` from `TValue` in `list<TValue>` and `map<TValue>` the value of a list and map cannot be optional.
+      type: fix
+  irVersion: 60
   createdAt: "2025-09-24"
   version: 0.81.0
 

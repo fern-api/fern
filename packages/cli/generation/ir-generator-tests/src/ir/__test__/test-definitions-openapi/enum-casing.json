@@ -324,19 +324,13 @@
                                             }
                                         },
                                         "valueType": {
-                                            "_type": "container",
-                                            "container": {
-                                                "_type": "optional",
-                                                "optional": {
-                                                    "_type": "primitive",
-                                                    "primitive": {
-                                                        "v1": "STRING",
-                                                        "v2": {
-                                                            "type": "string",
-                                                            "default": null,
-                                                            "validation": null
-                                                        }
-                                                    }
+                                            "_type": "primitive",
+                                            "primitive": {
+                                                "v1": "STRING",
+                                                "v2": {
+                                                    "type": "string",
+                                                    "default": null,
+                                                    "validation": null
                                                 }
                                             }
                                         }
@@ -922,31 +916,11 @@
                                                                                             },
                                                                                             "value": {
                                                                                                 "shape": {
-                                                                                                    "type": "container",
-                                                                                                    "container": {
-                                                                                                        "type": "optional",
-                                                                                                        "optional": {
-                                                                                                            "shape": {
-                                                                                                                "type": "primitive",
-                                                                                                                "primitive": {
-                                                                                                                    "type": "string",
-                                                                                                                    "string": {
-                                                                                                                        "original": "value"
-                                                                                                                    }
-                                                                                                                }
-                                                                                                            },
-                                                                                                            "jsonExample": "value"
-                                                                                                        },
-                                                                                                        "valueType": {
-                                                                                                            "_type": "primitive",
-                                                                                                            "primitive": {
-                                                                                                                "v1": "STRING",
-                                                                                                                "v2": {
-                                                                                                                    "type": "string",
-                                                                                                                    "default": null,
-                                                                                                                    "validation": null
-                                                                                                                }
-                                                                                                            }
+                                                                                                    "type": "primitive",
+                                                                                                    "primitive": {
+                                                                                                        "type": "string",
+                                                                                                        "string": {
+                                                                                                            "original": "value"
                                                                                                         }
                                                                                                     }
                                                                                                 },
@@ -966,19 +940,13 @@
                                                                                         }
                                                                                     },
                                                                                     "valueType": {
-                                                                                        "_type": "container",
-                                                                                        "container": {
-                                                                                            "_type": "optional",
-                                                                                            "optional": {
-                                                                                                "_type": "primitive",
-                                                                                                "primitive": {
-                                                                                                    "v1": "STRING",
-                                                                                                    "v2": {
-                                                                                                        "type": "string",
-                                                                                                        "default": null,
-                                                                                                        "validation": null
-                                                                                                    }
-                                                                                                }
+                                                                                        "_type": "primitive",
+                                                                                        "primitive": {
+                                                                                            "v1": "STRING",
+                                                                                            "v2": {
+                                                                                                "type": "string",
+                                                                                                "default": null,
+                                                                                                "validation": null
                                                                                             }
                                                                                         }
                                                                                     }
@@ -1004,19 +972,13 @@
                                                                                     }
                                                                                 },
                                                                                 "valueType": {
-                                                                                    "_type": "container",
-                                                                                    "container": {
-                                                                                        "_type": "optional",
-                                                                                        "optional": {
-                                                                                            "_type": "primitive",
-                                                                                            "primitive": {
-                                                                                                "v1": "STRING",
-                                                                                                "v2": {
-                                                                                                    "type": "string",
-                                                                                                    "default": null,
-                                                                                                    "validation": null
-                                                                                                }
-                                                                                            }
+                                                                                    "_type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "v1": "STRING",
+                                                                                        "v2": {
+                                                                                            "type": "string",
+                                                                                            "default": null,
+                                                                                            "validation": null
                                                                                         }
                                                                                     }
                                                                                 }
@@ -1079,7 +1041,7 @@
                     "autogeneratedExamples": [
                         {
                             "example": {
-                                "id": "d9152cbe",
+                                "id": "5e71d67",
                                 "url": "/example",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -1413,31 +1375,11 @@
                                                                                             },
                                                                                             "value": {
                                                                                                 "shape": {
-                                                                                                    "type": "container",
-                                                                                                    "container": {
-                                                                                                        "type": "optional",
-                                                                                                        "optional": {
-                                                                                                            "shape": {
-                                                                                                                "type": "primitive",
-                                                                                                                "primitive": {
-                                                                                                                    "type": "string",
-                                                                                                                    "string": {
-                                                                                                                        "original": "custom_fields"
-                                                                                                                    }
-                                                                                                                }
-                                                                                                            },
-                                                                                                            "jsonExample": "custom_fields"
-                                                                                                        },
-                                                                                                        "valueType": {
-                                                                                                            "_type": "primitive",
-                                                                                                            "primitive": {
-                                                                                                                "v1": "STRING",
-                                                                                                                "v2": {
-                                                                                                                    "type": "string",
-                                                                                                                    "default": null,
-                                                                                                                    "validation": null
-                                                                                                                }
-                                                                                                            }
+                                                                                                    "type": "primitive",
+                                                                                                    "primitive": {
+                                                                                                        "type": "string",
+                                                                                                        "string": {
+                                                                                                            "original": "custom_fields"
                                                                                                         }
                                                                                                     }
                                                                                                 },
@@ -1457,19 +1399,13 @@
                                                                                         }
                                                                                     },
                                                                                     "valueType": {
-                                                                                        "_type": "container",
-                                                                                        "container": {
-                                                                                            "_type": "optional",
-                                                                                            "optional": {
-                                                                                                "_type": "primitive",
-                                                                                                "primitive": {
-                                                                                                    "v1": "STRING",
-                                                                                                    "v2": {
-                                                                                                        "type": "string",
-                                                                                                        "default": null,
-                                                                                                        "validation": null
-                                                                                                    }
-                                                                                                }
+                                                                                        "_type": "primitive",
+                                                                                        "primitive": {
+                                                                                            "v1": "STRING",
+                                                                                            "v2": {
+                                                                                                "type": "string",
+                                                                                                "default": null,
+                                                                                                "validation": null
                                                                                             }
                                                                                         }
                                                                                     }
@@ -1495,19 +1431,13 @@
                                                                                     }
                                                                                 },
                                                                                 "valueType": {
-                                                                                    "_type": "container",
-                                                                                    "container": {
-                                                                                        "_type": "optional",
-                                                                                        "optional": {
-                                                                                            "_type": "primitive",
-                                                                                            "primitive": {
-                                                                                                "v1": "STRING",
-                                                                                                "v2": {
-                                                                                                    "type": "string",
-                                                                                                    "default": null,
-                                                                                                    "validation": null
-                                                                                                }
-                                                                                            }
+                                                                                    "_type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "v1": "STRING",
+                                                                                        "v2": {
+                                                                                            "type": "string",
+                                                                                            "default": null,
+                                                                                            "validation": null
                                                                                         }
                                                                                     }
                                                                                 }
@@ -1829,11 +1759,8 @@
                                     "value": "STRING"
                                 },
                                 "value": {
-                                    "type": "optional",
-                                    "value": {
-                                        "type": "primitive",
-                                        "value": "STRING"
-                                    }
+                                    "type": "primitive",
+                                    "value": "STRING"
                                 }
                             }
                         },

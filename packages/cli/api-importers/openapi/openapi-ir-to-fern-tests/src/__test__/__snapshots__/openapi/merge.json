@@ -472,7 +472,7 @@ Fetch from the `LIST Companies` endpoint and filter by `ID` to show all companie
               },
               "eins": {
                 "docs": "The company's Employer Identification Numbers.",
-                "type": "optional<list<optional<string>>>",
+                "type": "optional<list<string>>",
               },
               "field_mappings": {
                 "access": "read-only",
@@ -1323,7 +1323,7 @@ Fetch from the `LIST Employee` endpoint and filter by `ID` to show all employees
               },
               "employments": {
                 "docs": "Array of `Employment` IDs for this Employee.",
-                "type": "optional<list<optional<string>>>",
+                "type": "optional<list<string>>",
               },
               "ethnicity": {
                 "docs": "The employee's ethnicity.
@@ -1356,7 +1356,7 @@ Fetch from the `LIST Employee` endpoint and filter by `ID` to show all employees
 * `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE",
                 "type": "optional<GenderEnum>",
               },
-              "groups": "optional<list<optional<string>>>",
+              "groups": "optional<list<string>>",
               "hire_date": {
                 "availability": "deprecated",
                 "docs": "The date that the employee was hired, usually the day that an offer letter is signed. If an employee has multiple hire dates from previous employments, this represents the most recent hire date. Note: If you're looking for the employee's start date, refer to the start_date field.",
@@ -1657,7 +1657,7 @@ Fetch from the `LIST Employee` endpoint and filter by `ID` to show all employees
               },
               "employments": {
                 "docs": "Array of `Employment` IDs for this Employee.",
-                "type": "optional<list<optional<string>>>",
+                "type": "optional<list<string>>",
               },
               "ethnicity": {
                 "docs": "The employee's ethnicity.
@@ -1686,7 +1686,7 @@ Fetch from the `LIST Employee` endpoint and filter by `ID` to show all employees
 * `PREFER_NOT_TO_DISCLOSE` - PREFER_NOT_TO_DISCLOSE",
                 "type": "optional<GenderEnum>",
               },
-              "groups": "optional<list<optional<string>>>",
+              "groups": "optional<list<string>>",
               "hire_date": {
                 "availability": "deprecated",
                 "docs": "The date that the employee was hired, usually the day that an offer letter is signed. If an employee has multiple hire dates from previous employments, this represents the most recent hire date. Note: If you're looking for the employee's start date, refer to the start_date field.",
@@ -5251,7 +5251,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         docs: The company's display name.
       eins:
-        type: optional<list<optional<string>>>
+        type: optional<list<string>>
         docs: The company's Employer Identification Numbers.
       remote_was_deleted:
         type: optional<boolean>
@@ -6024,7 +6024,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       username:
         type: optional<string>
         docs: The employee's username that appears in the remote UI.
-      groups: optional<list<optional<string>>>
+      groups: optional<list<string>>
       work_email:
         type: optional<string>
         docs: The employee's work email.
@@ -6041,7 +6041,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         docs: The employee's mobile phone number.
       employments:
-        type: optional<list<optional<string>>>
+        type: optional<list<string>>
         docs: Array of `Employment` IDs for this Employee.
       home_location:
         type: optional<string>
@@ -6296,7 +6296,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
       username:
         type: optional<string>
         docs: The employee's username that appears in the remote UI.
-      groups: optional<list<optional<string>>>
+      groups: optional<list<string>>
       work_email:
         type: optional<string>
         docs: The employee's work email.
@@ -6313,7 +6313,7 @@ Fetch from the `LIST TimeOffs` endpoint and filter by `ID` to show all time off 
         type: optional<string>
         docs: The employee's mobile phone number.
       employments:
-        type: optional<list<optional<string>>>
+        type: optional<list<string>>
         docs: Array of `Employment` IDs for this Employee.
       home_location:
         type: optional<string>

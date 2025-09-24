@@ -13340,19 +13340,13 @@
                       "type": "primitive"
                     },
                     "valueType": {
-                      "container": {
-                        "optional": {
-                          "primitive": {
-                            "v1": "INTEGER",
-                            "v2": {
-                              "type": "integer"
-                            }
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "optional"
+                      "primitive": {
+                        "v1": "INTEGER",
+                        "v2": {
+                          "type": "integer"
+                        }
                       },
-                      "type": "container"
+                      "type": "primitive"
                     },
                     "type": "map"
                   },
@@ -19795,19 +19789,13 @@
                       "type": "primitive"
                     },
                     "valueType": {
-                      "container": {
-                        "optional": {
-                          "primitive": {
-                            "v1": "INTEGER",
-                            "v2": {
-                              "type": "integer"
-                            }
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "optional"
+                      "primitive": {
+                        "v1": "INTEGER",
+                        "v2": {
+                          "type": "integer"
+                        }
                       },
-                      "type": "container"
+                      "type": "primitive"
                     },
                     "type": "map"
                   },

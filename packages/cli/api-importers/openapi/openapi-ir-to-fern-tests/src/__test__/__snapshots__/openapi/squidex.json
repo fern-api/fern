@@ -1106,7 +1106,7 @@
               },
               "details": {
                 "docs": "The statistics by date and group.",
-                "type": "map<string, optional<list<CallsUsagePerDateDto>>>",
+                "type": "map<string, list<CallsUsagePerDateDto>>",
               },
               "monthBytes": {
                 "docs": "The total number of bytes transferred this month.",
@@ -1369,7 +1369,7 @@
               "openapi": "../openapi.json",
             },
           },
-          "ConfigurePreviewUrlsDto": "map<string, optional<string>>",
+          "ConfigurePreviewUrlsDto": "map<string, string>",
           "ContentChangedRuleTriggerDto": {
             "docs": undefined,
             "inline": undefined,
@@ -1391,7 +1391,7 @@
               "openapi": "../openapi.json",
             },
           },
-          "ContentData": "map<string, optional<ContentFieldData>>",
+          "ContentData": "map<string, ContentFieldData>",
           "ContentDto": {
             "docs": undefined,
             "extends": [
@@ -2000,7 +2000,7 @@
               "openapi": "../openapi.json",
             },
           },
-          "ExposedValues": "map<string, optional<string>>",
+          "ExposedValues": "map<string, string>",
           "FastlyRuleActionDto": {
             "docs": undefined,
             "inline": undefined,
@@ -2349,11 +2349,11 @@
               "openapi": "../openapi.json",
             },
           },
-          "LocalizedValueOfNullableBoolean": "map<string, optional<boolean>>",
-          "LocalizedValueOfNullableDouble": "map<string, optional<double>>",
-          "LocalizedValueOfNullableInstant": "map<string, optional<datetime>>",
-          "LocalizedValueOfReadonlyListOfString": "map<string, optional<list<string>>>",
-          "LocalizedValueOfString": "map<string, optional<string>>",
+          "LocalizedValueOfNullableBoolean": "map<string, boolean>",
+          "LocalizedValueOfNullableDouble": "map<string, double>",
+          "LocalizedValueOfNullableInstant": "map<string, datetime>",
+          "LocalizedValueOfReadonlyListOfString": "map<string, list<string>>",
+          "LocalizedValueOfString": "map<string, string>",
           "LogDownloadDto": {
             "docs": undefined,
             "inline": undefined,
@@ -2921,7 +2921,7 @@
             "properties": {
               "_links": {
                 "docs": "The links.",
-                "type": "map<string, optional<ResourceLink>>",
+                "type": "map<string, ResourceLink>",
               },
             },
             "source": {
@@ -3512,7 +3512,7 @@
               },
               "previewUrls": {
                 "docs": "The preview Urls.",
-                "type": "map<string, optional<string>>",
+                "type": "map<string, string>",
               },
               "properties": {
                 "docs": "The schema properties.",
@@ -4437,7 +4437,7 @@
               },
               "previewUrls": {
                 "docs": "The optional preview urls.",
-                "type": "optional<map<string, optional<string>>>",
+                "type": "optional<map<string, string>>",
               },
               "properties": {
                 "docs": "The optional properties.",
@@ -4711,7 +4711,7 @@
               },
               "steps": {
                 "docs": "The workflow steps.",
-                "type": "optional<map<string, optional<WorkflowStepDto>>>",
+                "type": "optional<map<string, WorkflowStepDto>>",
               },
             },
             "source": {
@@ -4740,7 +4740,7 @@
               },
               "transitions": {
                 "docs": "The transitions.",
-                "type": "optional<map<string, optional<WorkflowTransitionDto>>>",
+                "type": "optional<map<string, WorkflowTransitionDto>>",
               },
               "validate": {
                 "docs": "True if the content should be validated when moving to this step.",
@@ -4971,7 +4971,7 @@ types:
       - Resource
     source:
       openapi: ../openapi.json
-  ContentData: map<string, optional<ContentFieldData>>
+  ContentData: map<string, ContentFieldData>
   ContentFieldData: map<string, unknown>
   ScheduleJobDto:
     properties:
@@ -5169,7 +5169,7 @@ types:
     docs: ''
     source:
       openapi: ../openapi.json
-  LocalizedValueOfReadonlyListOfString: map<string, optional<list<string>>>
+  LocalizedValueOfReadonlyListOfString: map<string, list<string>>
   AssetType:
     enum:
       - Unknown
@@ -5195,7 +5195,7 @@ types:
         docs: The editor that is used to manage this field.
     source:
       openapi: ../openapi.json
-  LocalizedValueOfNullableBoolean: map<string, optional<boolean>>
+  LocalizedValueOfNullableBoolean: map<string, boolean>
   BooleanFieldEditor:
     enum:
       - Checkbox
@@ -5251,7 +5251,7 @@ types:
         docs: The calculated default value for the field value.
     source:
       openapi: ../openapi.json
-  LocalizedValueOfNullableInstant: map<string, optional<datetime>>
+  LocalizedValueOfNullableInstant: map<string, datetime>
   DateTimeFieldEditor:
     enum:
       - Date
@@ -5313,7 +5313,7 @@ types:
         docs: The editor that is used to manage this field.
     source:
       openapi: ../openapi.json
-  LocalizedValueOfNullableDouble: map<string, optional<double>>
+  LocalizedValueOfNullableDouble: map<string, double>
   NumberFieldEditor:
     enum:
       - Input
@@ -5427,7 +5427,7 @@ types:
         docs: The editor that is used to manage this field.
     source:
       openapi: ../openapi.json
-  LocalizedValueOfString: map<string, optional<string>>
+  LocalizedValueOfString: map<string, string>
   StringContentType:
     enum:
       - Unspecified
@@ -5524,7 +5524,7 @@ types:
   Resource:
     properties:
       _links:
-        type: map<string, optional<ResourceLink>>
+        type: map<string, ResourceLink>
         docs: The links.
     source:
       openapi: ../openapi.json
@@ -5884,7 +5884,7 @@ types:
         type: double
         docs: The average duration in milliseconds.
       details:
-        type: map<string, optional<list<CallsUsagePerDateDto>>>
+        type: map<string, list<CallsUsagePerDateDto>>
         docs: The statistics by date and group.
     source:
       openapi: ../openapi.json
@@ -6007,7 +6007,7 @@ types:
         type: SchemaScriptsDto
         docs: The scripts.
       previewUrls:
-        type: map<string, optional<string>>
+        type: map<string, string>
         docs: The preview Urls.
       fieldsInLists:
         docs: The name of fields that are used in content lists.
@@ -6168,7 +6168,7 @@ types:
         type: optional<list<UpsertSchemaFieldDto>>
         docs: Optional fields.
       previewUrls:
-        type: optional<map<string, optional<string>>>
+        type: optional<map<string, string>>
         docs: The optional preview urls.
       fieldRules:
         type: optional<list<FieldRuleDto>>
@@ -6231,7 +6231,7 @@ types:
         docs: The field properties.
     source:
       openapi: ../openapi.json
-  ConfigurePreviewUrlsDto: map<string, optional<string>>
+  ConfigurePreviewUrlsDto: map<string, string>
   RuleElementDto:
     properties:
       description:
@@ -7105,7 +7105,7 @@ types:
           minLength: 1
     source:
       openapi: ../openapi.json
-  ExposedValues: map<string, optional<string>>
+  ExposedValues: map<string, string>
   FeaturesDto:
     properties:
       features:
@@ -7778,7 +7778,7 @@ types:
         type: optional<string>
         docs: The name of the workflow.
       steps:
-        type: optional<map<string, optional<WorkflowStepDto>>>
+        type: optional<map<string, WorkflowStepDto>>
         docs: The workflow steps.
       schemaIds:
         type: optional<list<string>>
@@ -7793,7 +7793,7 @@ types:
   WorkflowStepDto:
     properties:
       transitions:
-        type: optional<map<string, optional<WorkflowTransitionDto>>>
+        type: optional<map<string, WorkflowTransitionDto>>
         docs: The transitions.
       color:
         type: optional<string>
@@ -10370,7 +10370,7 @@ The client secret is auto generated on the server and returned. The client does 
                     },
                     "steps": {
                       "docs": "The workflow steps.",
-                      "type": "map<string, optional<root.WorkflowStepDto>>",
+                      "type": "map<string, root.WorkflowStepDto>",
                     },
                   },
                 },
@@ -12066,7 +12066,7 @@ service:
               type: optional<string>
               docs: The name of the workflow.
             steps:
-              type: map<string, optional<root.WorkflowStepDto>>
+              type: map<string, root.WorkflowStepDto>
               docs: The workflow steps.
             schemaIds:
               type: optional<list<string>>
@@ -12978,7 +12978,7 @@ service:
               "response": {
                 "docs": "Assets tags returned.",
                 "status-code": 200,
-                "type": "map<string, optional<integer>>",
+                "type": "map<string, integer>",
               },
               "source": {
                 "openapi": "../openapi.json",
@@ -13831,7 +13831,7 @@ service:
               "response": {
                 "docs": "Asset tag renamed and new tags returned.",
                 "status-code": 200,
-                "type": "map<string, optional<integer>>",
+                "type": "map<string, integer>",
               },
               "source": {
                 "openapi": "../openapi.json",
@@ -14233,7 +14233,7 @@ service:
       display-name: Get assets tags.
       response:
         docs: Assets tags returned.
-        type: map<string, optional<integer>>
+        type: map<string, integer>
         status-code: 200
       errors:
         - root.NotFoundError
@@ -14272,7 +14272,7 @@ service:
         content-type: application/json
       response:
         docs: Asset tag renamed and new tags returned.
-        type: map<string, optional<integer>>
+        type: map<string, integer>
         status-code: 200
       errors:
         - root.BadRequestError
@@ -21818,7 +21818,7 @@ service:
               "response": {
                 "docs": "Rule actions returned.",
                 "status-code": 200,
-                "type": "map<string, optional<root.RuleElementDto>>",
+                "type": "map<string, root.RuleElementDto>",
               },
               "source": {
                 "openapi": "../openapi.json",
@@ -22573,7 +22573,7 @@ service:
       display-name: Get supported rule actions.
       response:
         docs: Rule actions returned.
-        type: map<string, optional<root.RuleElementDto>>
+        type: map<string, root.RuleElementDto>
         status-code: 200
       errors:
         - root.InternalServerError

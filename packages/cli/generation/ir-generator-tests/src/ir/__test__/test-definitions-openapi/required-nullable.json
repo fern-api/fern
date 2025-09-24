@@ -323,6 +323,7 @@
                     },
                     "displayName": "Get foo",
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,

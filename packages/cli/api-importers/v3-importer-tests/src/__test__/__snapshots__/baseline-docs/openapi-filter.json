@@ -1601,19 +1601,13 @@
                       "type": "primitive"
                     },
                     "valueType": {
-                      "container": {
-                        "optional": {
-                          "primitive": {
-                            "v1": "STRING",
-                            "v2": {
-                              "type": "string"
-                            }
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "optional"
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
                       },
-                      "type": "container"
+                      "type": "primitive"
                     },
                     "type": "map"
                   },
@@ -2751,19 +2745,13 @@
                       "type": "primitive"
                     },
                     "valueType": {
-                      "container": {
-                        "optional": {
-                          "primitive": {
-                            "v1": "STRING",
-                            "v2": {
-                              "type": "string"
-                            }
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "optional"
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
                       },
-                      "type": "container"
+                      "type": "primitive"
                     },
                     "type": "map"
                   },
@@ -5759,11 +5747,8 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "optional"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "map"
               },
@@ -6482,11 +6467,8 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "value": {
-                    "value": "STRING",
-                    "type": "primitive"
-                  },
-                  "type": "optional"
+                  "value": "STRING",
+                  "type": "primitive"
                 },
                 "type": "map"
               },

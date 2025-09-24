@@ -3619,8 +3619,8 @@ docs: Search
               "openapi": "../openapi.yml",
             },
             "union": [
-              "list<optional<TursoValue>>",
-              "map<string, optional<TursoValue>>",
+              "list<TursoValue>",
+              "map<string, TursoValue>",
             ],
           },
           "TursoValue": {
@@ -3654,8 +3654,8 @@ docs: Search
     discriminated: false
     docs: List of arguments to be used in the given statement
     union:
-      - list<optional<TursoValue>>
-      - map<string, optional<TursoValue>>
+      - list<TursoValue>
+      - map<string, TursoValue>
     source:
       openapi: ../openapi.yml
     inline: true

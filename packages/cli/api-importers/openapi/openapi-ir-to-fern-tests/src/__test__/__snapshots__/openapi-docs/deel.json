@@ -10561,7 +10561,7 @@
               "openapi": "../openapi.yml",
             },
           },
-          "InvoiceAdjustmentStatusEnumList": "list<optional<InvoiceAdjustmentStatusEnum>>",
+          "InvoiceAdjustmentStatusEnumList": "list<InvoiceAdjustmentStatusEnum>",
           "InvoiceAdjustmentToCreate": {
             "docs": "Details of invoice adjustment to create.",
             "inline": undefined,
@@ -12754,7 +12754,7 @@
               "openapi": "../openapi.yml",
             },
           },
-          "TimesheetStatusEnumList": "list<optional<TimesheetStatusEnum>>",
+          "TimesheetStatusEnumList": "list<TimesheetStatusEnum>",
           "TimesheetToCreate": "TimesheetSharedProperties",
           "TimesheetToCreateContainerWithFile": "TimesheetToCreateWithFile",
           "TimesheetToCreateWithFile": {
@@ -14965,7 +14965,7 @@
   OffCyclePaymentTypeEnum:
     type: literal<"offcycle">
     docs: Type for Off-cycle payments
-  TimesheetStatusEnumList: list<optional<TimesheetStatusEnum>>
+  TimesheetStatusEnumList: list<TimesheetStatusEnum>
   TimesheetStatusEnum:
     enum:
       - approved
@@ -15028,7 +15028,7 @@
     docs: Type of invoice adjustment.
     source:
       openapi: ../openapi.yml
-  InvoiceAdjustmentStatusEnumList: list<optional<InvoiceAdjustmentStatusEnum>>
+  InvoiceAdjustmentStatusEnumList: list<InvoiceAdjustmentStatusEnum>
   InvoiceAdjustmentStatusEnum:
     enum:
       - approved

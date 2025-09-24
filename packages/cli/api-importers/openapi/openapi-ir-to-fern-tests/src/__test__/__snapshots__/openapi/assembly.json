@@ -234,11 +234,11 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
               },
               "severity_score_summary": {
                 "docs": "A summary of the Content Moderation severity results for the entire audio file",
-                "type": "map<string, optional<SeverityScoreSummary>>",
+                "type": "map<string, SeverityScoreSummary>",
               },
               "summary": {
                 "docs": "A summary of the Content Moderation confidence results for the entire audio file",
-                "type": "map<string, optional<double>>",
+                "type": "map<string, double>",
               },
               "text": {
                 "docs": "The transcript of the section flagged by the Content Moderation model",
@@ -1634,7 +1634,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
               },
               "summary": {
                 "docs": "The overall relevance of topic to the entire audio file",
-                "type": "map<string, optional<double>>",
+                "type": "map<string, double>",
               },
             },
             "source": {
@@ -2430,7 +2430,7 @@ types:
         docs: An array of results for the Topic Detection model.
         type: list<TopicDetectionResult>
       summary:
-        type: map<string, optional<double>>
+        type: map<string, double>
         docs: The overall relevance of topic to the entire audio file
     source:
       openapi: ../openapi.yml
@@ -2993,12 +2993,12 @@ types:
         type: Timestamp
         docs: Timestamp information for the section
       summary:
-        type: map<string, optional<double>>
+        type: map<string, double>
         docs: >-
           A summary of the Content Moderation confidence results for the entire
           audio file
       severity_score_summary:
-        type: map<string, optional<SeverityScoreSummary>>
+        type: map<string, SeverityScoreSummary>
         docs: >-
           A summary of the Content Moderation severity results for the entire
           audio file

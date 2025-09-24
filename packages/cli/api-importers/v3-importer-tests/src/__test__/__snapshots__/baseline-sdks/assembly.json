@@ -5825,19 +5825,13 @@
                   "type": "primitive"
                 },
                 "valueType": {
-                  "container": {
-                    "optional": {
-                      "primitive": {
-                        "v1": "DOUBLE",
-                        "v2": {
-                          "type": "double"
-                        }
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "optional"
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "type": "double"
+                    }
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
                 "type": "map"
               },
@@ -10979,19 +10973,13 @@
                   "type": "primitive"
                 },
                 "valueType": {
-                  "container": {
-                    "optional": {
-                      "primitive": {
-                        "v1": "DOUBLE",
-                        "v2": {
-                          "type": "double"
-                        }
-                      },
-                      "type": "primitive"
-                    },
-                    "type": "optional"
+                  "primitive": {
+                    "v1": "DOUBLE",
+                    "v2": {
+                      "type": "double"
+                    }
                   },
-                  "type": "container"
+                  "type": "primitive"
                 },
                 "type": "map"
               },
@@ -11038,37 +11026,31 @@
                   "type": "primitive"
                 },
                 "valueType": {
-                  "container": {
-                    "optional": {
-                      "name": {
-                        "originalName": "SeverityScoreSummary",
-                        "camelCase": {
-                          "unsafeName": "severityScoreSummary",
-                          "safeName": "severityScoreSummary"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "severity_score_summary",
-                          "safeName": "severity_score_summary"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "SEVERITY_SCORE_SUMMARY",
-                          "safeName": "SEVERITY_SCORE_SUMMARY"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "SeverityScoreSummary",
-                          "safeName": "SeverityScoreSummary"
-                        }
-                      },
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "typeId": "type_:SeverityScoreSummary",
-                      "type": "named"
+                  "name": {
+                    "originalName": "SeverityScoreSummary",
+                    "camelCase": {
+                      "unsafeName": "severityScoreSummary",
+                      "safeName": "severityScoreSummary"
                     },
-                    "type": "optional"
+                    "snakeCase": {
+                      "unsafeName": "severity_score_summary",
+                      "safeName": "severity_score_summary"
+                    },
+                    "screamingSnakeCase": {
+                      "unsafeName": "SEVERITY_SCORE_SUMMARY",
+                      "safeName": "SEVERITY_SCORE_SUMMARY"
+                    },
+                    "pascalCase": {
+                      "unsafeName": "SeverityScoreSummary",
+                      "safeName": "SeverityScoreSummary"
+                    }
                   },
-                  "type": "container"
+                  "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": []
+                  },
+                  "typeId": "type_:SeverityScoreSummary",
+                  "type": "named"
                 },
                 "type": "map"
               },
@@ -34265,11 +34247,8 @@
                 "type": "primitive"
               },
               "value": {
-                "value": {
-                  "value": "DOUBLE",
-                  "type": "primitive"
-                },
-                "type": "optional"
+                "value": "DOUBLE",
+                "type": "primitive"
               },
               "type": "map"
             }
@@ -37819,11 +37798,8 @@
                 "type": "primitive"
               },
               "value": {
-                "value": {
-                  "value": "DOUBLE",
-                  "type": "primitive"
-                },
-                "type": "optional"
+                "value": "DOUBLE",
+                "type": "primitive"
               },
               "type": "map"
             }
@@ -37857,11 +37833,8 @@
                 "type": "primitive"
               },
               "value": {
-                "value": {
-                  "value": "type_:SeverityScoreSummary",
-                  "type": "named"
-                },
-                "type": "optional"
+                "value": "type_:SeverityScoreSummary",
+                "type": "named"
               },
               "type": "map"
             }

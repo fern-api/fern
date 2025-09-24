@@ -9393,19 +9393,13 @@
                       "type": "primitive"
                     },
                     "valueType": {
-                      "container": {
-                        "optional": {
-                          "primitive": {
-                            "v1": "DOUBLE",
-                            "v2": {
-                              "type": "double"
-                            }
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "optional"
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "type": "double"
+                        }
                       },
-                      "type": "container"
+                      "type": "primitive"
                     },
                     "type": "map"
                   },
@@ -10667,19 +10661,13 @@
                       "type": "primitive"
                     },
                     "valueType": {
-                      "container": {
-                        "optional": {
-                          "primitive": {
-                            "v1": "DOUBLE",
-                            "v2": {
-                              "type": "double"
-                            }
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "optional"
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "type": "double"
+                        }
                       },
-                      "type": "container"
+                      "type": "primitive"
                     },
                     "type": "map"
                   },
@@ -13975,19 +13963,13 @@
                       "type": "primitive"
                     },
                     "valueType": {
-                      "container": {
-                        "optional": {
-                          "primitive": {
-                            "v1": "DOUBLE",
-                            "v2": {
-                              "type": "double"
-                            }
-                          },
-                          "type": "primitive"
-                        },
-                        "type": "optional"
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "type": "double"
+                        }
                       },
-                      "type": "container"
+                      "type": "primitive"
                     },
                     "type": "map"
                   },
@@ -37979,11 +37961,8 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "value": {
-                    "value": "DOUBLE",
-                    "type": "primitive"
-                  },
-                  "type": "optional"
+                  "value": "DOUBLE",
+                  "type": "primitive"
                 },
                 "type": "map"
               },
@@ -38833,11 +38812,8 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "value": {
-                    "value": "DOUBLE",
-                    "type": "primitive"
-                  },
-                  "type": "optional"
+                  "value": "DOUBLE",
+                  "type": "primitive"
                 },
                 "type": "map"
               },
@@ -41085,11 +41061,8 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "value": {
-                    "value": "DOUBLE",
-                    "type": "primitive"
-                  },
-                  "type": "optional"
+                  "value": "DOUBLE",
+                  "type": "primitive"
                 },
                 "type": "map"
               },

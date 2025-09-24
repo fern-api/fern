@@ -3842,7 +3842,7 @@
                 },
               },
               "created_at": "datetime",
-              "custom_metadata": "map<string, optional<ConnectWebviewCustomMetadataValue>>",
+              "custom_metadata": "map<string, ConnectWebviewCustomMetadataValue>",
               "custom_redirect_failure_url": {
                 "type": "optional<string>",
                 "validation": {
@@ -3941,7 +3941,7 @@
                 },
               },
               "created_at": "optional<datetime>",
-              "custom_metadata": "map<string, optional<ConnectedAccountCustomMetadataValue>>",
+              "custom_metadata": "map<string, ConnectedAccountCustomMetadataValue>",
               "errors": "optional<unknown>",
               "user_identifier": "optional<ConnectedAccountUserIdentifier>",
               "warnings": "optional<unknown>",
@@ -4006,7 +4006,7 @@
                 "docs": "Date and time at which the device object was created.",
                 "type": "datetime",
               },
-              "custom_metadata": "map<string, optional<DeviceCustomMetadataValue>>",
+              "custom_metadata": "map<string, DeviceCustomMetadataValue>",
               "device_id": {
                 "docs": "Unique identifier for the device.",
                 "type": "string",
@@ -5270,7 +5270,7 @@
                 "docs": "Date and time at which the device object was created.",
                 "type": "datetime",
               },
-              "custom_metadata": "map<string, optional<PhoneCustomMetadataValue>>",
+              "custom_metadata": "map<string, PhoneCustomMetadataValue>",
               "device_id": {
                 "docs": "Unique identifier for the device.",
                 "type": "string",
@@ -8411,7 +8411,7 @@ types:
         type: optional<string>
         validation:
           format: uri
-      custom_metadata: map<string, optional<ConnectWebviewCustomMetadataValue>>
+      custom_metadata: map<string, ConnectWebviewCustomMetadataValue>
       automatically_manage_new_devices: boolean
       wait_for_device_creation: boolean
       authorized_at: optional<datetime>
@@ -8448,7 +8448,7 @@ types:
       account_type_display_name: string
       errors: optional<unknown>
       warnings: optional<unknown>
-      custom_metadata: map<string, optional<ConnectedAccountCustomMetadataValue>>
+      custom_metadata: map<string, ConnectedAccountCustomMetadataValue>
       automatically_manage_new_devices: boolean
     source:
       openapi: ../openapi.json
@@ -9208,7 +9208,7 @@ types:
       is_managed:
         type: boolean
         docs: Indicates whether Seam manages the device.
-      custom_metadata: map<string, optional<DeviceCustomMetadataValue>>
+      custom_metadata: map<string, DeviceCustomMetadataValue>
       can_remotely_unlock: optional<boolean>
       can_remotely_lock: optional<boolean>
       can_program_offline_access_codes: optional<boolean>
@@ -10239,7 +10239,7 @@ types:
       is_managed:
         type: boolean
         docs: Indicates whether Seam manages the device.
-      custom_metadata: map<string, optional<PhoneCustomMetadataValue>>
+      custom_metadata: map<string, PhoneCustomMetadataValue>
       can_remotely_unlock: optional<boolean>
       can_remotely_lock: optional<boolean>
       can_program_offline_access_codes: optional<boolean>
@@ -20170,7 +20170,7 @@ service:
                       "default": true,
                       "type": "optional<boolean>",
                     },
-                    "custom_metadata": "optional<map<string, optional<ConnectWebviewsCreateRequestCustomMetadataValue>>>",
+                    "custom_metadata": "optional<map<string, ConnectWebviewsCreateRequestCustomMetadataValue>>",
                     "custom_redirect_failure_url": "optional<string>",
                     "custom_redirect_url": "optional<string>",
                     "device_selection_mode": "optional<ConnectWebviewsCreateRequestDeviceSelectionMode>",
@@ -20435,7 +20435,7 @@ service:
                   "properties": {
                     "custom_metadata_has": {
                       "docs": "Returns devices where the webview's custom_metadata contains all of the provided key/value pairs.",
-                      "type": "optional<map<string, optional<ConnectWebviewsListRequestCustomMetadataHasValue>>>",
+                      "type": "optional<map<string, ConnectWebviewsListRequestCustomMetadataHasValue>>",
                     },
                     "limit": {
                       "default": 500,
@@ -20754,7 +20754,7 @@ service:
             provider_category: optional<ConnectWebviewsCreateRequestProviderCategory>
             custom_metadata: >-
               optional<map<string,
-              optional<ConnectWebviewsCreateRequestCustomMetadataValue>>>
+              ConnectWebviewsCreateRequestCustomMetadataValue>>
             automatically_manage_new_devices:
               type: optional<boolean>
               default: true
@@ -20918,7 +20918,7 @@ service:
             custom_metadata_has:
               type: >-
                 optional<map<string,
-                optional<ConnectWebviewsListRequestCustomMetadataHasValue>>>
+                ConnectWebviewsListRequestCustomMetadataHasValue>>
               docs: >-
                 Returns devices where the webview's custom_metadata contains all
                 of the provided key/value pairs.
@@ -21188,7 +21188,7 @@ service:
                   "properties": {
                     "custom_metadata_has": {
                       "docs": "Returns devices where the account's custom_metadata contains all of the provided key/value pairs.",
-                      "type": "optional<map<string, optional<ConnectedAccountsListRequestCustomMetadataHasValue>>>",
+                      "type": "optional<map<string, ConnectedAccountsListRequestCustomMetadataHasValue>>",
                     },
                   },
                 },
@@ -21282,7 +21282,7 @@ service:
                         "pattern": undefined,
                       },
                     },
-                    "custom_metadata": "optional<map<string, optional<ConnectedAccountsUpdateRequestCustomMetadataValue>>>",
+                    "custom_metadata": "optional<map<string, ConnectedAccountsUpdateRequestCustomMetadataValue>>",
                   },
                 },
                 "content-type": "application/json",
@@ -21616,7 +21616,7 @@ service:
             custom_metadata_has:
               type: >-
                 optional<map<string,
-                optional<ConnectedAccountsListRequestCustomMetadataHasValue>>>
+                ConnectedAccountsListRequestCustomMetadataHasValue>>
               docs: >-
                 Returns devices where the account's custom_metadata contains all
                 of the provided key/value pairs.
@@ -21671,7 +21671,7 @@ service:
             automatically_manage_new_devices: optional<boolean>
             custom_metadata: >-
               optional<map<string,
-              optional<ConnectedAccountsUpdateRequestCustomMetadataValue>>>
+              ConnectedAccountsUpdateRequestCustomMetadataValue>>
         content-type: application/json
       response:
         docs: OK
@@ -22227,7 +22227,7 @@ service:
                     },
                     "connected_account_ids": "optional<list<string>>",
                     "created_before": "optional<datetime>",
-                    "custom_metadata_has": "optional<map<string, optional<DevicesListRequestCustomMetadataHasValue>>>",
+                    "custom_metadata_has": "optional<map<string, DevicesListRequestCustomMetadataHasValue>>",
                     "device_ids": "optional<list<string>>",
                     "device_type": "optional<DevicesListRequestDeviceType>",
                     "device_types": "optional<list<DevicesListRequestDeviceTypesItem>>",
@@ -22369,7 +22369,7 @@ service:
               "request": {
                 "body": {
                   "properties": {
-                    "custom_metadata": "optional<map<string, optional<DevicesUpdateRequestCustomMetadataValue>>>",
+                    "custom_metadata": "optional<map<string, DevicesUpdateRequestCustomMetadataValue>>",
                     "device_id": {
                       "type": "string",
                       "validation": {
@@ -23189,9 +23189,7 @@ service:
               default: 500
             created_before: optional<datetime>
             user_identifier_key: optional<string>
-            custom_metadata_has: >-
-              optional<map<string,
-              optional<DevicesListRequestCustomMetadataHasValue>>>
+            custom_metadata_has: optional<map<string, DevicesListRequestCustomMetadataHasValue>>
             include_if: optional<list<DevicesListRequestIncludeIfItem>>
             exclude_if: optional<list<DevicesListRequestExcludeIfItem>>
         content-type: application/json
@@ -23310,9 +23308,7 @@ service:
             is_managed:
               type: optional<boolean>
               default: true
-            custom_metadata: >-
-              optional<map<string,
-              optional<DevicesUpdateRequestCustomMetadataValue>>>
+            custom_metadata: optional<map<string, DevicesUpdateRequestCustomMetadataValue>>
         content-type: application/json
       response:
         docs: OK
@@ -23949,7 +23945,7 @@ service:
                     },
                     "connected_account_ids": "optional<list<string>>",
                     "created_before": "optional<datetime>",
-                    "custom_metadata_has": "optional<map<string, optional<UnmanagedListRequestCustomMetadataHasValue>>>",
+                    "custom_metadata_has": "optional<map<string, UnmanagedListRequestCustomMetadataHasValue>>",
                     "device_ids": "optional<list<string>>",
                     "device_type": "optional<UnmanagedListRequestDeviceType>",
                     "device_types": "optional<list<UnmanagedListRequestDeviceTypesItem>>",
@@ -24536,9 +24532,7 @@ service:
               default: 500
             created_before: optional<datetime>
             user_identifier_key: optional<string>
-            custom_metadata_has: >-
-              optional<map<string,
-              optional<UnmanagedListRequestCustomMetadataHasValue>>>
+            custom_metadata_has: optional<map<string, UnmanagedListRequestCustomMetadataHasValue>>
             include_if: optional<list<UnmanagedListRequestIncludeIfItem>>
             exclude_if: optional<list<UnmanagedListRequestExcludeIfItem>>
         content-type: application/json
@@ -26518,7 +26512,7 @@ service:
                     },
                     "connected_account_ids": "optional<list<string>>",
                     "created_before": "optional<datetime>",
-                    "custom_metadata_has": "optional<map<string, optional<LocksListRequestCustomMetadataHasValue>>>",
+                    "custom_metadata_has": "optional<map<string, LocksListRequestCustomMetadataHasValue>>",
                     "device_ids": "optional<list<string>>",
                     "device_type": "optional<LocksListRequestDeviceType>",
                     "device_types": "optional<list<LocksListRequestDeviceTypesItem>>",
@@ -27579,9 +27573,7 @@ service:
               default: 500
             created_before: optional<datetime>
             user_identifier_key: optional<string>
-            custom_metadata_has: >-
-              optional<map<string,
-              optional<LocksListRequestCustomMetadataHasValue>>>
+            custom_metadata_has: optional<map<string, LocksListRequestCustomMetadataHasValue>>
             include_if: optional<list<LocksListRequestIncludeIfItem>>
             exclude_if: optional<list<LocksListRequestExcludeIfItem>>
         content-type: application/json
@@ -30390,7 +30382,7 @@ service:
                     },
                     "connected_account_ids": "optional<list<string>>",
                     "created_before": "optional<datetime>",
-                    "custom_metadata_has": "optional<map<string, optional<ThermostatsListRequestCustomMetadataHasValue>>>",
+                    "custom_metadata_has": "optional<map<string, ThermostatsListRequestCustomMetadataHasValue>>",
                     "device_ids": "optional<list<string>>",
                     "device_type": "optional<ThermostatsListRequestDeviceType>",
                     "device_types": "optional<list<ThermostatsListRequestDeviceTypesItem>>",
@@ -31626,7 +31618,7 @@ service:
             user_identifier_key: optional<string>
             custom_metadata_has: >-
               optional<map<string,
-              optional<ThermostatsListRequestCustomMetadataHasValue>>>
+              ThermostatsListRequestCustomMetadataHasValue>>
             include_if: optional<list<ThermostatsListRequestIncludeIfItem>>
             exclude_if: optional<list<ThermostatsListRequestExcludeIfItem>>
         content-type: application/json

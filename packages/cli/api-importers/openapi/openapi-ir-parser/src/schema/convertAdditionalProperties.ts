@@ -52,10 +52,6 @@ export function convertAdditionalProperties({
         additionalProperties = context.options.additionalPropertiesDefaultsTo;
     }
 
-    const [isValueOptional, isValueNullable] = context.options.coerceOptionalSchemasToNullable
-        ? [false, context.options.optionalAdditionalProperties ? true : wrapAsOptional]
-        : [context.options.optionalAdditionalProperties ? true : wrapAsOptional, false];
-
     return wrapMap({
         nameOverride,
         generatedName,
@@ -97,8 +93,8 @@ export function convertAdditionalProperties({
                 : addInline(
                       convertSchema(
                           additionalProperties,
-                          isValueOptional,
-                          isValueNullable,
+                          false,
+                          context.options.optionalAdditionalProperties,
                           context,
                           [...breadcrumbs, "Value"],
                           source,

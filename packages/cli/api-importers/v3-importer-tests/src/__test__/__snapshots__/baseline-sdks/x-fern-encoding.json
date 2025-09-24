@@ -67,37 +67,31 @@
               "type": "primitive"
             },
             "valueType": {
-              "container": {
-                "optional": {
-                  "name": {
-                    "originalName": "MetadataValue",
-                    "camelCase": {
-                      "unsafeName": "metadataValue",
-                      "safeName": "metadataValue"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "metadata_value",
-                      "safeName": "metadata_value"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "METADATA_VALUE",
-                      "safeName": "METADATA_VALUE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "MetadataValue",
-                      "safeName": "MetadataValue"
-                    }
-                  },
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
-                  },
-                  "typeId": "type_:MetadataValue",
-                  "type": "named"
+              "name": {
+                "originalName": "MetadataValue",
+                "camelCase": {
+                  "unsafeName": "metadataValue",
+                  "safeName": "metadataValue"
                 },
-                "type": "optional"
+                "snakeCase": {
+                  "unsafeName": "metadata_value",
+                  "safeName": "metadata_value"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "METADATA_VALUE",
+                  "safeName": "METADATA_VALUE"
+                },
+                "pascalCase": {
+                  "unsafeName": "MetadataValue",
+                  "safeName": "MetadataValue"
+                }
               },
-              "type": "container"
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "typeId": "type_:MetadataValue",
+              "type": "named"
             },
             "type": "map"
           },
@@ -115,37 +109,31 @@
               "type": "primitive"
             },
             "valueType": {
-              "container": {
-                "optional": {
-                  "name": {
-                    "originalName": "MetadataValue",
-                    "camelCase": {
-                      "unsafeName": "metadataValue",
-                      "safeName": "metadataValue"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "metadata_value",
-                      "safeName": "metadata_value"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "METADATA_VALUE",
-                      "safeName": "METADATA_VALUE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "MetadataValue",
-                      "safeName": "MetadataValue"
-                    }
-                  },
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
-                  },
-                  "typeId": "type_:MetadataValue",
-                  "type": "named"
+              "name": {
+                "originalName": "MetadataValue",
+                "camelCase": {
+                  "unsafeName": "metadataValue",
+                  "safeName": "metadataValue"
                 },
-                "type": "optional"
+                "snakeCase": {
+                  "unsafeName": "metadata_value",
+                  "safeName": "metadata_value"
+                },
+                "screamingSnakeCase": {
+                  "unsafeName": "METADATA_VALUE",
+                  "safeName": "METADATA_VALUE"
+                },
+                "pascalCase": {
+                  "unsafeName": "MetadataValue",
+                  "safeName": "MetadataValue"
+                }
               },
-              "type": "container"
+              "fernFilepath": {
+                "allParts": [],
+                "packagePath": []
+              },
+              "typeId": "type_:MetadataValue",
+              "type": "named"
             },
             "type": "map"
           },
@@ -337,11 +325,8 @@
             "type": "primitive"
           },
           "value": {
-            "value": {
-              "value": "type_:MetadataValue",
-              "type": "named"
-            },
-            "type": "optional"
+            "value": "type_:MetadataValue",
+            "type": "named"
           },
           "type": "map"
         },
