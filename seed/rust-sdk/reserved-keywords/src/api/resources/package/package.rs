@@ -1,4 +1,4 @@
-use crate::{ClientConfig, ApiError, HttpClient, QueryBuilder, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions, QueryBuilder};
 use reqwest::{Method};
 use crate::api::{*};
 

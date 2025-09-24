@@ -3,6 +3,7 @@ import {
     Attribute,
     Client,
     CodeBlock,
+    DocComment,
     Enum,
     EnumVariant,
     Expression,
@@ -99,6 +100,10 @@ export function client(args: Client.Args): Client {
     return new Client(args);
 }
 
+export function docComment(args: DocComment.Args): DocComment {
+    return new DocComment(args);
+}
+
 // Factory function for Writer creation
 export function writer(): Writer {
     return new Writer();
@@ -119,6 +124,7 @@ export const rust = {
     ImplBlock,
     Module,
     Client,
+    DocComment,
     Expression,
     Statement,
     CodeBlock,
@@ -135,6 +141,7 @@ export const rust = {
     implBlock,
     module,
     client,
+    docComment,
     writer,
     visibility: {
         public: PUBLIC as Visibility,

@@ -3,11 +3,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum UnionWithOptionalTime {
-    Date {
-        value: Option<chrono::NaiveDate>,
-    },
+    Date { value: Option<NaiveDate> },
 
-    Datetime {
-        value: Option<chrono::DateTime<chrono::Utc>>,
-    },
+    Datetime { value: Option<DateTime<Utc>> },
 }

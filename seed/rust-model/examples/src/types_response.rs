@@ -1,5 +1,4 @@
 use crate::identifier::Identifier;
-use serde_json::Value;
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]

@@ -1,5 +1,5 @@
 use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
 
 pub struct UserClient {
@@ -13,6 +13,18 @@ impl UserClient {
         })
     }
 
+    /// Retrieve a user.
+    /// This endpoint is used to retrieve a user.
+    ///
+    /// # Arguments
+    ///
+    /// * `user_id` - The ID of the user to retrieve.
+    /// This ID is unique to each user.
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// Empty response
     pub async fn get_user(
         &self,
         user_id: &String,
@@ -29,6 +41,16 @@ impl UserClient {
             .await
     }
 
+    /// Create a new user.
+    /// This endpoint is used to create a new user.
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn create_user(
         &self,
         request: &CreateUserRequest,

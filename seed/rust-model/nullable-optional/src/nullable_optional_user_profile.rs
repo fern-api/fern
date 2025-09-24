@@ -1,8 +1,9 @@
 use crate::nullable_optional_address::Address;
-use chrono::{DateTime, NaiveDate, Utc};
+use chrono::{DateTime, Utc};
 use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 
+/// Test object with nullable and optional fields
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct UserProfile {
     pub id: String,
@@ -18,7 +19,7 @@ pub struct UserProfile {
     pub nullable_boolean: Option<bool>,
     #[serde(rename = "nullableDate")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub nullable_date: Option<chrono::DateTime<chrono::Utc>>,
+    pub nullable_date: Option<DateTime<Utc>>,
     #[serde(rename = "nullableObject")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub nullable_object: Option<Address>,
@@ -39,7 +40,7 @@ pub struct UserProfile {
     pub optional_boolean: Option<bool>,
     #[serde(rename = "optionalDate")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub optional_date: Option<chrono::DateTime<chrono::Utc>>,
+    pub optional_date: Option<DateTime<Utc>>,
     #[serde(rename = "optionalObject")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub optional_object: Option<Address>,

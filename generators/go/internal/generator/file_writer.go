@@ -12,6 +12,7 @@ import (
 
 	"github.com/fern-api/fern-go/internal/coordinator"
 	"github.com/fern-api/fern-go/internal/fern/ir"
+	"github.com/fern-api/fern-go/internal/fern/ir/common"
 	"github.com/fern-api/fern-go/internal/gospec"
 	"golang.org/x/tools/go/ast/astutil"
 )
@@ -40,7 +41,7 @@ type fileWriter struct {
 	exportAllRequestsAtRoot      bool
 	unionVersion                 UnionVersion
 	scope                        *gospec.Scope
-	types                        map[ir.TypeId]*ir.TypeDeclaration
+	types                        map[common.TypeId]*ir.TypeDeclaration
 	errors                       map[ir.ErrorId]*ir.ErrorDeclaration
 	coordinator                  *coordinator.Client
 	snippetWriter                *SnippetWriter
@@ -60,7 +61,7 @@ func newFileWriter(
 	gettersPassByValue bool,
 	exportAllRequestsAtRoot bool,
 	unionVersion UnionVersion,
-	types map[ir.TypeId]*ir.TypeDeclaration,
+	types map[common.TypeId]*ir.TypeDeclaration,
 	errors map[ir.ErrorId]*ir.ErrorDeclaration,
 	coordinator *coordinator.Client,
 ) *fileWriter {

@@ -10,6 +10,7 @@ pub struct Movie {
     pub prequel: Option<MovieId>,
     pub title: String,
     pub from: String,
+    /// The rating scale is one to five stars
     pub rating: f64,
     pub r#type: String,
     pub tag: Tag,

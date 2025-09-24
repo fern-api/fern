@@ -1,5 +1,5 @@
 use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
 
 pub struct HealthServiceClient {
@@ -13,6 +13,16 @@ impl HealthServiceClient {
         })
     }
 
+    /// This endpoint checks the health of a resource.
+    ///
+    /// # Arguments
+    ///
+    /// * `id` - The id to check
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// Empty response
     pub async fn check(
         &self,
         id: &String,
@@ -23,6 +33,15 @@ impl HealthServiceClient {
             .await
     }
 
+    /// This endpoint checks the health of the service.
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn ping(&self, options: Option<RequestOptions>) -> Result<bool, ApiError> {
         self.http_client
             .execute_request(Method::GET, "/ping", None, None, options)

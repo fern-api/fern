@@ -1,6 +1,4 @@
 use std::collections::HashMap;
-use std::time::Duration;
-
 /// Options for customizing individual requests
 #[derive(Debug, Clone, Default)]
 pub struct RequestOptions {
