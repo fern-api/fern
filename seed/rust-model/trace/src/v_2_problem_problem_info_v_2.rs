@@ -8,7 +8,7 @@ use crate::v_2_problem_test_case_v_2::TestCaseV2;
 use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ProblemInfoV2 {
     #[serde(rename = "problemId")]
     pub problem_id: ProblemId,

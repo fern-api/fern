@@ -1,5 +1,5 @@
 use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
 
 pub struct ProblemClient {
@@ -13,6 +13,15 @@ impl ProblemClient {
         })
     }
 
+    /// Creates a problem
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn create_problem(
         &self,
         request: &CreateProblemRequest,
@@ -29,6 +38,15 @@ impl ProblemClient {
             .await
     }
 
+    /// Updates a problem
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn update_problem(
         &self,
         problem_id: &ProblemId,
@@ -46,6 +64,15 @@ impl ProblemClient {
             .await
     }
 
+    /// Soft deletes a problem
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// Empty response
     pub async fn delete_problem(
         &self,
         problem_id: &ProblemId,
@@ -62,6 +89,15 @@ impl ProblemClient {
             .await
     }
 
+    /// Returns default starter files for problem
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn get_default_starter_files(
         &self,
         request: &GetDefaultStarterFilesRequest,

@@ -13,6 +13,15 @@ impl PlaylistClient {
         })
     }
 
+    /// Create a new playlist
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn create_playlist(
         &self,
         service_param: i32,
@@ -33,6 +42,18 @@ impl PlaylistClient {
             .await
     }
 
+    /// Returns the user's playlists
+    ///
+    /// # Arguments
+    ///
+    /// * `other_field` - i'm another field
+    /// * `multi_line_docs` - I'm a multiline
+    /// description
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn get_playlists(
         &self,
         service_param: i32,
@@ -59,6 +80,15 @@ impl PlaylistClient {
             .await
     }
 
+    /// Returns a playlist
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn get_playlist(
         &self,
         service_param: i32,
@@ -76,6 +106,15 @@ impl PlaylistClient {
             .await
     }
 
+    /// Updates a playlist
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn update_playlist(
         &self,
         service_param: i32,
@@ -94,6 +133,15 @@ impl PlaylistClient {
             .await
     }
 
+    /// Deletes a playlist
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// Empty response
     pub async fn delete_playlist(
         &self,
         service_param: i32,

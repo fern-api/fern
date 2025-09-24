@@ -1,5 +1,5 @@
 use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
 
 pub struct SubmissionClient {
@@ -13,6 +13,15 @@ impl SubmissionClient {
         })
     }
 
+    /// Returns sessionId and execution server URL for session. Spins up server.
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn create_execution_session(
         &self,
         language: &Language,
@@ -29,6 +38,15 @@ impl SubmissionClient {
             .await
     }
 
+    /// Returns execution server URL for session. Returns empty if session isn't registered.
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn get_execution_session(
         &self,
         session_id: &String,
@@ -45,6 +63,15 @@ impl SubmissionClient {
             .await
     }
 
+    /// Stops execution session.
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// Empty response
     pub async fn stop_execution_session(
         &self,
         session_id: &String,

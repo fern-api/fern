@@ -60,6 +60,7 @@
     "seed": "node --enable-source-maps packages/seed/dist/cli.cjs",
     "seed:local": "pnpm --filter @fern-api/seed-cli dist:cli && node --enable-source-maps packages/seed/dist/cli.cjs",
     "ir:generate": "pnpm --filter @fern-api/ir-sdk generate",
+    "ir:generate:go": "cd packages/ir-sdk && fern ir ../../generators/go/internal/fern/ir.json --api ir-types-latest --language go && cd ../../generators/go && make install && make generate",
     "openapi-ir:generate": "pnpm --filter @fern-api/openapi-ir generate",
     "conjure-sdk:generate": "pnpm --filter @fern-api/conjure-sdk generate",
     "seed-config:generate": "pnpm --filter @fern-api/seed-cli generate",

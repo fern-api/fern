@@ -90,13 +90,6 @@ func (r *RawClient) GetMovie(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		404: func(apiError *core.APIError) error {
-			return &fern.MovieDoesNotExistError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *fern.Movie
 	raw, err := r.caller.Call(
 		ctx,
@@ -109,7 +102,7 @@ func (r *RawClient) GetMovie(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(fern.ErrorCodes),
 		},
 	)
 	if err != nil {

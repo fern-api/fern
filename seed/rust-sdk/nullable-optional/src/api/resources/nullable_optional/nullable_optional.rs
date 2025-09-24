@@ -13,6 +13,15 @@ impl NullableOptionalClient {
         })
     }
 
+    /// Get a user by ID
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn get_user(
         &self,
         user_id: &String,
@@ -29,6 +38,15 @@ impl NullableOptionalClient {
             .await
     }
 
+    /// Create a new user
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn create_user(
         &self,
         request: &CreateUserRequest,
@@ -45,6 +63,15 @@ impl NullableOptionalClient {
             .await
     }
 
+    /// Update a user (partial update)
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn update_user(
         &self,
         user_id: &String,
@@ -62,6 +89,15 @@ impl NullableOptionalClient {
             .await
     }
 
+    /// List all users
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn list_users(
         &self,
         request: &ListUsersQueryRequest,
@@ -83,6 +119,15 @@ impl NullableOptionalClient {
             .await
     }
 
+    /// Search users
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn search_users(
         &self,
         request: &SearchUsersQueryRequest,
@@ -104,6 +149,15 @@ impl NullableOptionalClient {
             .await
     }
 
+    /// Create a complex profile to test nullable enums and unions
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn create_complex_profile(
         &self,
         request: &ComplexProfile,
@@ -120,6 +174,15 @@ impl NullableOptionalClient {
             .await
     }
 
+    /// Get a complex profile by ID
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn get_complex_profile(
         &self,
         profile_id: &String,
@@ -136,6 +199,15 @@ impl NullableOptionalClient {
             .await
     }
 
+    /// Update complex profile to test nullable field updates
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn update_complex_profile(
         &self,
         profile_id: &String,
@@ -153,6 +225,15 @@ impl NullableOptionalClient {
             .await
     }
 
+    /// Test endpoint for validating null deserialization
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn test_deserialization(
         &self,
         request: &DeserializationTestRequest,
@@ -169,6 +250,15 @@ impl NullableOptionalClient {
             .await
     }
 
+    /// Filter users by role with nullable enum
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn filter_by_role(
         &self,
         request: &FilterByRoleQueryRequest,
@@ -189,6 +279,15 @@ impl NullableOptionalClient {
             .await
     }
 
+    /// Get notification settings which may be null
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn get_notification_settings(
         &self,
         user_id: &String,
@@ -205,6 +304,15 @@ impl NullableOptionalClient {
             .await
     }
 
+    /// Update tags to test array handling
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn update_tags(
         &self,
         user_id: &String,
@@ -222,6 +330,15 @@ impl NullableOptionalClient {
             .await
     }
 
+    /// Get search results with nullable unions
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn get_search_results(
         &self,
         request: &SearchRequest,

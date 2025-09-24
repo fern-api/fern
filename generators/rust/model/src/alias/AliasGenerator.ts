@@ -4,13 +4,7 @@ import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 import { AliasTypeDeclaration, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 import { generateRustTypeForTypeReference } from "../converters";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import {
-    isChronoType,
-    isCollectionType,
-    isUnknownType,
-    isUuidType,
-    typeSupportsHashAndEq
-} from "../utils/primitiveTypeUtils";
+import { isChronoType, isCollectionType, isUuidType, typeSupportsHashAndEq } from "../utils/primitiveTypeUtils";
 
 export class AliasGenerator {
     private readonly typeDeclaration: TypeDeclaration;
@@ -91,10 +85,10 @@ export class AliasGenerator {
             writer.writeLine("use std::collections::HashMap;");
         }
 
-        // Add serde_json if aliasing unknown type
-        if (isUnknownType(innerType)) {
-            writer.writeLine("use serde_json::Value;");
-        }
+        // TODO: @iamnamananand996 build to use serde_json::Value ---> Value directly
+        // if (hasJsonValueFields(properties)) {
+        //     writer.writeLine("use serde_json::Value;");
+        // }
     }
 
     private generateNewtypeForTypeDeclaration(): rust.NewtypeStruct {

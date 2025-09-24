@@ -9,15 +9,15 @@ use uuid::Uuid;
 pub struct GetUsernameQueryRequest {
     pub limit: i32,
     pub id: uuid::Uuid,
-    pub date: chrono::NaiveDate,
-    pub deadline: chrono::DateTime<chrono::Utc>,
+    pub date: NaiveDate,
+    pub deadline: DateTime<Utc>,
     pub bytes: String,
     pub user: User,
     #[serde(rename = "userList")]
     pub user_list: Vec<User>,
     #[serde(rename = "optionalDeadline")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub optional_deadline: Option<chrono::DateTime<chrono::Utc>>,
+    pub optional_deadline: Option<DateTime<Utc>>,
     #[serde(rename = "keyValue")]
     pub key_value: HashMap<String, String>,
     #[serde(rename = "optionalString")]

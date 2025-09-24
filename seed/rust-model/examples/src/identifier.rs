@@ -1,10 +1,9 @@
-use serde::{Deserialize, Serialize};
 use crate::type_::Type;
+use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct Identifier {
-    #[serde(rename = "type")]
-    pub type_: Type,
+    pub r#type: Type,
     pub value: String,
     pub label: String,
 }

@@ -6072,6 +6072,7 @@
                 ]
             }
         },
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": [

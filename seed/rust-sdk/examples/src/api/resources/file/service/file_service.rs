@@ -1,5 +1,5 @@
 use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
 
 pub struct FileServiceClient {
@@ -13,6 +13,16 @@ impl FileServiceClient {
         })
     }
 
+    /// This endpoint returns a file by its name.
+    ///
+    /// # Arguments
+    ///
+    /// * `filename` - This is a filename
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn get_file(
         &self,
         filename: &String,
