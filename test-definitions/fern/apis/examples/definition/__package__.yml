@@ -27,6 +27,12 @@ types:
       - name: unknown
         value: unknown
 
+  TypeWithSingleCharPropertyEqualToTypeStartingLetter:
+    properties:
+      t: string
+      ty: string
+      typ: string
+
 service:
   auth: false
   base-path: /
