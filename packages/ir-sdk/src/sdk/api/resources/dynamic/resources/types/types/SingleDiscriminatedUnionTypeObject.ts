@@ -5,8 +5,8 @@
 import * as FernIr from "../../../../../index";
 
 export interface SingleDiscriminatedUnionTypeObject {
-    typeId: FernIr.TypeId;
-    discriminantValue: FernIr.NameAndWireValue;
+    typeId: FernIr.dynamic.TypeId;
+    discriminantValue: FernIr.dynamic.NameAndWireValue;
     /** Any properties included here are the base and/or extended properties from the union. */
     properties: FernIr.dynamic.NamedParameter[];
 }

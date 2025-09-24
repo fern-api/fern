@@ -32,7 +32,7 @@ export namespace TypeReference {
 
     export interface Named extends _Utils {
         type: "named";
-        value: FernIr.TypeId;
+        value: FernIr.dynamic.TypeId;
     }
 
     export interface Nullable extends _Utils {
@@ -47,7 +47,7 @@ export namespace TypeReference {
 
     export interface Primitive extends _Utils {
         type: "primitive";
-        value: FernIr.PrimitiveTypeV1;
+        value: FernIr.dynamic.PrimitiveTypeV1;
     }
 
     export interface Set extends _Utils {
@@ -67,10 +67,10 @@ export namespace TypeReference {
         list: (value: FernIr.dynamic.TypeReference) => _Result;
         literal: (value: FernIr.dynamic.LiteralType) => _Result;
         map: (value: FernIr.dynamic.MapType) => _Result;
-        named: (value: FernIr.TypeId) => _Result;
+        named: (value: FernIr.dynamic.TypeId) => _Result;
         nullable: (value: FernIr.dynamic.TypeReference) => _Result;
         optional: (value: FernIr.dynamic.TypeReference) => _Result;
-        primitive: (value: FernIr.PrimitiveTypeV1) => _Result;
+        primitive: (value: FernIr.dynamic.PrimitiveTypeV1) => _Result;
         set: (value: FernIr.dynamic.TypeReference) => _Result;
         unknown: () => _Result;
         _other: (value: { type: string }) => _Result;
@@ -117,7 +117,7 @@ export const TypeReference = {
         };
     },
 
-    named: (value: FernIr.TypeId): FernIr.dynamic.TypeReference.Named => {
+    named: (value: FernIr.dynamic.TypeId): FernIr.dynamic.TypeReference.Named => {
         return {
             value: value,
             type: "named",
@@ -156,7 +156,7 @@ export const TypeReference = {
         };
     },
 
-    primitive: (value: FernIr.PrimitiveTypeV1): FernIr.dynamic.TypeReference.Primitive => {
+    primitive: (value: FernIr.dynamic.PrimitiveTypeV1): FernIr.dynamic.TypeReference.Primitive => {
         return {
             value: value,
             type: "primitive",
