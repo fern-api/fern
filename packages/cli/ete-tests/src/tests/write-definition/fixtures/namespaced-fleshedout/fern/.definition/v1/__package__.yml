@@ -256,9 +256,7 @@ service:
         - ServiceUnavailableError
         - GatewayTimeoutError
       examples:
-        - headers:
-            Accepts: text/event-stream
-          request:
+        - request:
             message: message
           response:
             body:

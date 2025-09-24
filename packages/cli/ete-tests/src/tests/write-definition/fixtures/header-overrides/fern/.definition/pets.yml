@@ -18,8 +18,6 @@ service:
       examples:
         - headers:
             X-Dummy-Header: X-Dummy-Header
-          query-parameters:
-            limit: 1
           response:
             body:
               - id: 1000000

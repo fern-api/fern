@@ -15,9 +15,7 @@ service:
     listPets:
       display-name: List all pets
       examples:
-        - query-parameters:
-            limit: 1
-          response:
+        - response:
             body:
               - id: 1000000
                 name: name
