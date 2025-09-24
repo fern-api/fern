@@ -2,6 +2,7 @@ use crate::v_2_problem_function_implementation_for_multiple_languages::FunctionI
 use crate::v_2_problem_parameter::Parameter;
 use serde::{Deserialize, Serialize};
 
+/// The generated signature will include an additional param, actualResult
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct VoidFunctionDefinitionThatTakesActualResult {
     #[serde(rename = "additionalParameters")]

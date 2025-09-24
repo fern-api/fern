@@ -1,6 +1,7 @@
 use crate::nullable_optional_address::Address;
 use serde::{Deserialize, Serialize};
 
+/// For testing PATCH operations
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct UpdateUserRequest {
     #[serde(skip_serializing_if = "Option::is_none")]

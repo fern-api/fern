@@ -6,11 +6,11 @@ pub enum Status {
     Active,
 
     Archived {
-        value: Option<chrono::DateTime<chrono::Utc>>,
+        value: Option<DateTime<Utc>>,
     },
 
     #[serde(rename = "soft-deleted")]
     SoftDeleted {
-        value: Option<chrono::DateTime<chrono::Utc>>,
+        value: Option<DateTime<Utc>>,
     },
 }

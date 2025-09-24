@@ -1,5 +1,5 @@
 use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
 
 pub struct EndpointsPrimitiveClient {
@@ -95,9 +95,9 @@ impl EndpointsPrimitiveClient {
 
     pub async fn get_and_return_datetime(
         &self,
-        request: &chrono::DateTime<chrono::Utc>,
+        request: &DateTime<Utc>,
         options: Option<RequestOptions>,
-    ) -> Result<chrono::DateTime<chrono::Utc>, ApiError> {
+    ) -> Result<DateTime<Utc>, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -111,9 +111,9 @@ impl EndpointsPrimitiveClient {
 
     pub async fn get_and_return_date(
         &self,
-        request: &chrono::NaiveDate,
+        request: &NaiveDate,
         options: Option<RequestOptions>,
-    ) -> Result<chrono::NaiveDate, ApiError> {
+    ) -> Result<NaiveDate, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
