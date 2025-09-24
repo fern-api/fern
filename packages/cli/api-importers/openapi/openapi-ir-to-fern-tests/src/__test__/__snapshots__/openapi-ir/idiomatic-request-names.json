@@ -96,6 +96,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/organizations/{organizationId}/users",
       "examples": [
@@ -112,7 +113,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "pageSize",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -242,12 +264,34 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/users",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "pageSize",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -350,6 +394,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/users/{userId}",
       "examples": [

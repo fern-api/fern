@@ -1,6 +1,5 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{*};
-pub use types::{*};
-
+pub use resources::ApiClient;
+pub use types::*;

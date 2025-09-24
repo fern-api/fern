@@ -1,4 +1,4 @@
-use crate::api::types::*;
+use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
@@ -9,10 +9,19 @@ pub struct EndpointsParamsClient {
 impl EndpointsParamsClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config)?,
+            http_client: HttpClient::new(config.clone())?,
         })
     }
 
+    /// GET with path param
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn get_with_path(
         &self,
         param: &String,
@@ -29,6 +38,15 @@ impl EndpointsParamsClient {
             .await
     }
 
+    /// GET with path param
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn get_with_inline_path(
         &self,
         param: &String,
@@ -45,10 +63,18 @@ impl EndpointsParamsClient {
             .await
     }
 
+    /// GET with query param
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// Empty response
     pub async fn get_with_query(
         &self,
-        query: Option<String>,
-        number: Option<i32>,
+        request: &GetWithQueryQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -57,18 +83,26 @@ impl EndpointsParamsClient {
                 "/params",
                 None,
                 QueryBuilder::new()
-                    .structured_query("query", query)
-                    .int("number", number)
+                    .structured_query("query", request.query.clone())
+                    .int("number", request.number.clone())
                     .build(),
                 options,
             )
             .await
     }
 
+    /// GET with multiple of same query param
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// Empty response
     pub async fn get_with_allow_multiple_query(
         &self,
-        query: Option<String>,
-        number: Option<i32>,
+        request: &GetWithAllowMultipleQueryQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -77,18 +111,27 @@ impl EndpointsParamsClient {
                 "/params",
                 None,
                 QueryBuilder::new()
-                    .structured_query("query", query)
-                    .int("number", number)
+                    .structured_query("query", request.query.clone())
+                    .int("number", request.number.clone())
                     .build(),
                 options,
             )
             .await
     }
 
+    /// GET with path and query params
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// Empty response
     pub async fn get_with_path_and_query(
         &self,
         param: &String,
-        query: Option<String>,
+        request: &GetWithPathAndQueryQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -96,16 +139,27 @@ impl EndpointsParamsClient {
                 Method::GET,
                 &format!("/params/path-query/{}", param),
                 None,
-                QueryBuilder::new().structured_query("query", query).build(),
+                QueryBuilder::new()
+                    .structured_query("query", request.query.clone())
+                    .build(),
                 options,
             )
             .await
     }
 
+    /// GET with path and query params
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// Empty response
     pub async fn get_with_inline_path_and_query(
         &self,
         param: &String,
-        query: Option<String>,
+        request: &GetWithInlinePathAndQueryQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -113,12 +167,23 @@ impl EndpointsParamsClient {
                 Method::GET,
                 &format!("/params/path-query/{}", param),
                 None,
-                QueryBuilder::new().structured_query("query", query).build(),
+                QueryBuilder::new()
+                    .structured_query("query", request.query.clone())
+                    .build(),
                 options,
             )
             .await
     }
 
+    /// PUT to update with path param
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn modify_with_path(
         &self,
         param: &String,
@@ -136,6 +201,15 @@ impl EndpointsParamsClient {
             .await
     }
 
+    /// PUT to update with path param
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn modify_with_inline_path(
         &self,
         param: &String,

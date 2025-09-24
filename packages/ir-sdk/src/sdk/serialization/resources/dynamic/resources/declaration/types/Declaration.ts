@@ -5,8 +5,8 @@
 import * as serializers from "../../../../../index";
 import * as FernIr from "../../../../../../api/index";
 import * as core from "../../../../../../core";
-import { FernFilepath } from "../../../../commons/types/FernFilepath";
-import { Name } from "../../../../commons/types/Name";
+import { FernFilepath } from "../../commons/types/FernFilepath";
+import { Name } from "../../commons/types/Name";
 
 export const Declaration: core.serialization.ObjectSchema<
     serializers.dynamic.Declaration.Raw,

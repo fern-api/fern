@@ -4,6 +4,7 @@ pub mod headers;
 pub mod inlined_request;
 pub mod path_param;
 pub mod query_param;
+pub mod unknown;
 pub struct EnumClient {
     pub config: ClientConfig,
     pub headers: HeadersClient,
@@ -29,3 +30,4 @@ pub use headers::*;
 pub use inlined_request::*;
 pub use path_param::*;
 pub use query_param::*;
+pub use unknown::*;

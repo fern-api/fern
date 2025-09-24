@@ -45,13 +45,6 @@ func (r *RawClient) ThrowError(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &fern.PropertyBasedErrorTest{
-				APIError: apiError,
-			}
-		},
-	}
 	var response string
 	raw, err := r.caller.Call(
 		ctx,
@@ -64,7 +57,7 @@ func (r *RawClient) ThrowError(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(fern.ErrorCodes),
 		},
 	)
 	if err != nil {

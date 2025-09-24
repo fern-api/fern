@@ -14,9 +14,9 @@ impl QueryBuilder {
         Self::default()
     }
 
-    /// Add a string parameter
-    pub fn string(mut self, key: &str, value: Option<String>) -> Self {
-        if let Some(v) = value {
+    /// Add a string parameter (accept both required/optional)
+    pub fn string(mut self, key: &str, value: impl Into<Option<String>>) -> Self {
+        if let Some(v) = value.into() {
             self.params.push((key.to_string(), v));
         }
         self
@@ -75,8 +75,16 @@ impl QueryBuilder {
     /// Add any serializable parameter (for enums and complex types)
     pub fn serialize<T: Serialize>(mut self, key: &str, value: Option<T>) -> Self {
         if let Some(v) = value {
+            // For enums that implement Display, use the Display implementation
+            // to avoid JSON quotes in query parameters
             if let Ok(serialized) = serde_json::to_string(&v) {
-                self.params.push((key.to_string(), serialized));
+                // Remove JSON quotes if the value is a simple string
+                let cleaned = if serialized.starts_with('"') && serialized.ends_with('"') {
+                    serialized.trim_matches('"').to_string()
+                } else {
+                    serialized
+                };
+                self.params.push((key.to_string(), cleaned));
             }
         }
         self

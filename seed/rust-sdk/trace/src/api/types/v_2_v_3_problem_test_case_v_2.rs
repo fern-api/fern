@@ -6,7 +6,7 @@ use crate::v_2_problem_test_case_metadata::TestCaseMetadata;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct TestCaseV2 {
     pub metadata: TestCaseMetadata,
     pub implementation: TestCaseImplementationReference,

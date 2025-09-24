@@ -310,6 +310,7 @@ export function convertRequest({
         const convertedMultipartSchema = convertSchema(
             resolvedMultipartSchema.schema,
             false,
+            false,
             context,
             requestBreadcrumbs,
             source,
@@ -367,6 +368,7 @@ export function convertRequest({
         const requestSchema = convertSchema(
             jsonMediaObject.schema,
             false,
+            false,
             context,
             requestBreadcrumbs,
             source,
@@ -391,6 +393,7 @@ export function convertRequest({
     if (urlEncodedRequest != null && urlEncodedRequest.schema != null) {
         const convertedUrlEncodedSchema = convertSchema(
             urlEncodedRequest.schema,
+            false,
             false,
             context,
             requestBreadcrumbs,

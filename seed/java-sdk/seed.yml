@@ -42,7 +42,8 @@ generatorType: SDK
 defaultOutputMode: github
 fixtures:
   exhaustive:
-    - customConfig: null
+    - customConfig:
+        enable-wire-tests: true
       outputFolder: no-custom-config
     - customConfig:
         package-layout: flat
@@ -79,10 +80,11 @@ fixtures:
         inline-path-parameters: true
         enable-public-constructors: true
       outputFolder: enable-public-constructors
-    - customConfig:
-        inline-path-parameters: true
-        enable-wire-tests: true
-      outputFolder: wire-tests
+    # Wire tests moved to main module to fix compilation
+    # - customConfig:
+    #     inline-path-parameters: true
+    #     enable-wire-tests: true
+    #   outputFolder: wire-tests
     - customConfig:
         publish-to: central
       outputFolder: publish-to
@@ -150,11 +152,11 @@ fixtures:
   pagination:
     - customConfig:
         enable-wire-tests: true
-      outputFolder: wire-tests
+      outputFolder: default
   unions:
     - customConfig:
         enable-wire-tests: true
-      outputFolder: wire-tests
+      outputFolder: default
   accept-header:
     - outputFolder: accept-header
   client-side-params:
@@ -174,7 +176,7 @@ fixtures:
   examples:
     - customConfig:
         enable-wire-tests: true
-      outputFolder: wire-tests
+      outputFolder: default
     - customConfig:
         inline-file-properties: true
         inline-path-parameters: true
@@ -265,7 +267,7 @@ allowedFailures:
   - enum:forward-compatible-enums
   - enum:no-custom-config
   - errors
-  - examples:wire-tests
+  - examples:default
   - examples:inline-file-properties
   - examples:no-custom-config
   - examples:readme-config

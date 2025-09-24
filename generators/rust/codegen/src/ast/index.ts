@@ -2,6 +2,7 @@ export { AstNode } from "./AstNode";
 export { Attribute } from "./Attribute";
 export { Client } from "./Client";
 export { CodeBlock } from "./CodeBlock";
+export { DocComment } from "./DocComment";
 export { Enum } from "./Enum";
 export { EnumVariant } from "./EnumVariant";
 export { Expression } from "./Expression";

@@ -6,6 +6,7 @@ import { generateRustTypeForTypeReference } from "@fern-api/rust-model";
 import {
     CursorPagination,
     HttpEndpoint,
+    HttpRequestBody,
     HttpService,
     OffsetPagination,
     Pagination,
@@ -108,11 +109,18 @@ export class SubClientGenerator {
     private generateImports(): UseStatement[] {
         const hasTypes = this.hasTypes(this.context);
         const hasHashMapInQueryParams = this.hasHashMapInQueryParams();
+        const hasQueryParams = this.hasQueryParameters();
+
+        // Build base crate imports conditionally
+        const crateItems = ["ClientConfig", "ApiError", "HttpClient", "RequestOptions"];
+        if (hasQueryParams) {
+            crateItems.push("QueryBuilder");
+        }
 
         const imports = [
             new UseStatement({
                 path: "crate",
-                items: ["ClientConfig", "ApiError", "HttpClient", "QueryBuilder", "RequestOptions"]
+                items: crateItems
             }),
             new UseStatement({
                 path: "reqwest",
@@ -132,7 +140,7 @@ export class SubClientGenerator {
         if (hasTypes) {
             imports.push(
                 new UseStatement({
-                    path: "crate::api::types",
+                    path: "crate::api",
                     items: ["*"]
                 })
             );
@@ -190,7 +198,11 @@ export class SubClientGenerator {
             name: this.clientGeneratorContext.httpClient.fieldName,
             value: rust.Expression.try(
                 rust.Expression.functionCall(`${this.clientGeneratorContext.httpClient.clientName}::new`, [
-                    rust.Expression.reference("config")
+                    rust.Expression.methodCall({
+                        target: rust.Expression.reference("config"),
+                        method: "clone",
+                        args: []
+                    })
                 ])
             )
         });
@@ -239,6 +251,11 @@ export class SubClientGenerator {
         return endpoints.some((endpoint) => endpoint.pagination != null);
     }
 
+    private hasQueryParameters(): boolean {
+        const endpoints = this.service?.endpoints || [];
+        return endpoints.some((endpoint) => endpoint.queryParameters.length > 0);
+    }
+
     private hasHashMapInQueryParams(): boolean {
         const endpoints = this.service?.endpoints || [];
         return endpoints.some((endpoint) =>
@@ -268,7 +285,7 @@ export class SubClientGenerator {
 
     private generateHttpMethod(endpoint: HttpEndpoint): rust.Client.SimpleMethod {
         const params = this.extractParametersFromEndpoint(endpoint);
-        const parameters = this.buildMethodParameters(params);
+        const parameters = this.buildMethodParameters(params, endpoint);
         const httpMethod = this.getHttpMethod(endpoint);
         const pathExpression = this.getPathExpression(endpoint);
         const requestBody = this.getRequestBody(endpoint, params);
@@ -289,27 +306,52 @@ export class SubClientGenerator {
             ${requestBody},
             ${this.buildQueryParameters(endpoint)},
             options,
-        ).await`
+        ).await`,
+            docs: endpoint.docs
+                ? rust.docComment({
+                      summary: endpoint.docs,
+                      parameters: this.extractParameterDocs(params, endpoint),
+                      returns: this.getReturnTypeDescription(endpoint)
+                  })
+                : undefined
         };
     }
 
-    private buildMethodParameters(params: EndpointParameter[]): string[] {
-        return [
-            ...params.map((param) => {
-                let paramType = param.type.toString();
+    private buildMethodParameters(params: EndpointParameter[], endpoint: HttpEndpoint): string[] {
+        // Separate path parameters from request body
+        const pathParams = params.filter((p) => p.name !== "request");
+        const requestBodyParam = params.find((p) => p.name === "request");
 
-                if (param.isRef) {
-                    paramType = `&${paramType}`;
-                }
+        const methodParams: string[] = [];
 
-                if (param.optional) {
-                    paramType = `Option<${paramType}>`;
-                }
+        // Add path parameters individually (they need to be accessible for URL building)
+        pathParams.forEach((param) => {
+            let paramType = param.type.toString();
 
-                return `${param.name}: ${paramType}`;
-            }),
-            "options: Option<RequestOptions>"
-        ];
+            if (param.isRef) {
+                paramType = `&${paramType}`;
+            }
+
+            if (param.optional) {
+                paramType = `Option<${paramType}>`;
+            }
+
+            methodParams.push(`${param.name}: ${paramType}`);
+        });
+
+        // Add request body parameter if it exists (structured request type)
+        if (requestBodyParam) {
+            let paramType = requestBodyParam.type.toString();
+            if (requestBodyParam.isRef) {
+                paramType = `&${paramType}`;
+            }
+            methodParams.push(`${requestBodyParam.name}: ${paramType}`);
+        }
+
+        // Always add options parameter last
+        methodParams.push("options: Option<RequestOptions>");
+
+        return methodParams;
     }
 
     // =============================================================================
@@ -319,9 +361,22 @@ export class SubClientGenerator {
     private extractParametersFromEndpoint(endpoint: HttpEndpoint): EndpointParameter[] {
         const params: EndpointParameter[] = [];
 
+        // Always add path parameters individually (needed for URL building)
         this.addPathParameters(endpoint, params);
-        this.addQueryParameters(endpoint, params);
-        this.addRequestBodyParameter(endpoint, params);
+
+        // Handle all three scenarios properly
+        if (endpoint.requestBody && endpoint.queryParameters.length > 0) {
+            // MIXED: Request body contains both body + query fields
+            this.addRequestBodyParameter(endpoint, params);
+            // Query params are now included in the request body struct
+        } else if (endpoint.requestBody) {
+            // BODY-ONLY: Traditional request body
+            this.addRequestBodyParameter(endpoint, params);
+        } else if (endpoint.queryParameters.length > 0) {
+            // QUERY-ONLY: Separate query request struct
+            this.addQueryRequestParameter(endpoint, params);
+        }
+        // ELSE: No parameters beyond path params
 
         return params;
     }
@@ -356,19 +411,36 @@ export class SubClientGenerator {
         });
     }
 
+    // Add query request parameter for query-only endpoints
+    private addQueryRequestParameter(endpoint: HttpEndpoint, params: EndpointParameter[]): void {
+        const requestTypeName = this.getQueryRequestTypeName(endpoint);
+        params.push({
+            name: "request",
+            type: rust.Type.reference(rust.reference({ name: requestTypeName })),
+            isRef: true,
+            optional: false
+        });
+    }
+
     private addRequestBodyParameter(endpoint: HttpEndpoint, params: EndpointParameter[]): void {
         if (endpoint.requestBody) {
             const requestBodyType = endpoint.requestBody._visit({
-                inlinedRequestBody: () => {
-                    return rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" }));
+                inlinedRequestBody: (inlinedBody) => {
+                    // Generate proper request type name based on endpoint
+                    const requestTypeName = this.getRequestTypeName(endpoint);
+                    return rust.Type.reference(rust.reference({ name: requestTypeName }));
                 },
                 reference: (reference) => generateRustTypeForTypeReference(reference.requestBodyType),
                 fileUpload: () => {
-                    return rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" }));
+                    // For file uploads, use a structured type instead of generic Value
+                    const requestTypeName = this.getRequestTypeName(endpoint);
+                    return rust.Type.reference(rust.reference({ name: requestTypeName }));
                 },
                 bytes: () => rust.Type.vec(rust.Type.primitive(rust.PrimitiveType.U8)),
                 _other: () => {
-                    return rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" }));
+                    // Generate proper request type for unknown cases too
+                    const requestTypeName = this.getRequestTypeName(endpoint);
+                    return rust.Type.reference(rust.reference({ name: requestTypeName }));
                 }
             });
 
@@ -379,6 +451,24 @@ export class SubClientGenerator {
                 optional: false
             });
         }
+    }
+
+    private getRequestTypeName(endpoint: HttpEndpoint): string {
+        // For inlined request bodies, use the name from the IR to ensure consistency
+        if (endpoint.requestBody?.type === "inlinedRequestBody") {
+            const inlinedRequestBody = endpoint.requestBody as HttpRequestBody.InlinedRequestBody;
+            return inlinedRequestBody.name.pascalCase.safeName;
+        }
+
+        // Generate TypeScript-style request type name: GetTokenRequest, CreateMovieRequest, etc.
+        const methodName = endpoint.name.pascalCase.safeName;
+        return `${methodName}Request`;
+    }
+
+    private getQueryRequestTypeName(endpoint: HttpEndpoint): string {
+        // Generate query-specific request type name: GetUsersQueryRequest, SearchItemsQueryRequest, etc.
+        const methodName = endpoint.name.pascalCase.safeName;
+        return `${methodName}QueryRequest`;
     }
 
     // =============================================================================
@@ -463,7 +553,8 @@ export class SubClientGenerator {
             return "None";
         }
 
-        return this.buildQueryParameterStatements(queryParams);
+        // Pass endpoint context for smart parameter resolution
+        return this.buildQueryParameterStatements(queryParams, endpoint);
     }
 
     private buildQueryParametersWithoutPagination(endpoint: HttpEndpoint, paginationConfig: Pagination): string {
@@ -482,20 +573,38 @@ export class SubClientGenerator {
             return "None";
         }
 
-        return this.buildQueryParameterStatements(filteredParams);
+        return this.buildQueryParameterStatements(filteredParams, endpoint);
     }
 
-    private buildQueryParameterStatements(queryParams: QueryParameter[]): string {
+    private buildQueryParameterStatements(queryParams: QueryParameter[], endpoint?: HttpEndpoint): string {
         const builderChain = queryParams.map((queryParam) => {
-            const paramName = queryParam.name.name.snakeCase.safeName;
             const wireValue = queryParam.name.wireValue;
             const method = this.getQueryBuilderMethod(queryParam);
+
+            // Determine parameter source based on endpoint type
+            const paramName = this.getQueryParameterSource(queryParam, endpoint);
 
             return `.${method}("${wireValue}", ${paramName})`;
         });
 
         return `QueryBuilder::new()${builderChain.join("")}
             .build()`;
+    }
+
+    // Smart parameter source detection
+    private getQueryParameterSource(queryParam: QueryParameter, endpoint?: HttpEndpoint): string {
+        const fieldName = queryParam.name.name.snakeCase.safeName;
+
+        if (endpoint?.requestBody) {
+            // MIXED or BODY-ONLY: Query params are in request struct
+            return `request.${fieldName}.clone()`;
+        } else if (endpoint && endpoint.queryParameters.length > 0 && !endpoint.requestBody) {
+            // QUERY-ONLY: Query params are in dedicated request struct
+            return `request.${fieldName}.clone()`;
+        } else {
+            // FALLBACK: Individual parameter (legacy behavior)
+            return fieldName;
+        }
     }
 
     private extractPaginationParameterNames(paginationConfig: Pagination): Set<string> {
@@ -759,14 +868,14 @@ export class SubClientGenerator {
         }
 
         const params = this.extractParametersFromEndpoint(endpoint);
-        const parameters = this.buildMethodParameters(params);
+        const parameters = this.buildMethodParameters(params, endpoint);
         const baseName = endpoint.name.snakeCase.safeName;
         const httpMethod = this.getHttpMethod(endpoint);
         const pathExpression = this.getPathExpression(endpoint);
         const requestBody = this.getRequestBody(endpoint, params);
 
         // Always use generic serde_json::Value for maximum compatibility
-        const itemType = rust.Type.reference(rust.reference({ name: "serde_json::Value" }));
+        const itemType = rust.Type.reference(rust.reference({ name: "Value", module: "serde_json" }));
 
         // Return AsyncPaginator<ItemType> with proper typing
         const returnType = rust.Type.result(
@@ -1192,5 +1301,64 @@ export class SubClientGenerator {
             });
         }
         return "per_page"; // Default fallback
+    }
+
+    // Helper methods for documentation generation
+    private extractParameterDocs(
+        _params: EndpointParameter[],
+        endpoint: HttpEndpoint
+    ): { name: string; description: string }[] {
+        const paramDocs: { name: string; description: string }[] = [];
+
+        // Add path parameter docs
+        endpoint.allPathParameters.forEach((pathParam) => {
+            if (pathParam.docs) {
+                paramDocs.push({
+                    name: pathParam.name.snakeCase.safeName,
+                    description: pathParam.docs
+                });
+            }
+        });
+
+        // Add query parameter docs
+        endpoint.queryParameters.forEach((queryParam) => {
+            if (queryParam.docs) {
+                paramDocs.push({
+                    name: queryParam.name.name.snakeCase.safeName,
+                    description: queryParam.docs
+                });
+            }
+        });
+
+        // Add request body docs
+        if (endpoint.requestBody?.docs) {
+            paramDocs.push({
+                name: "request",
+                description: endpoint.requestBody.docs
+            });
+        }
+
+        // Always document the options parameter
+        paramDocs.push({
+            name: "options",
+            description: "Additional request options such as headers, timeout, etc."
+        });
+
+        return paramDocs;
+    }
+
+    private getReturnTypeDescription(endpoint: HttpEndpoint): string {
+        if (endpoint.response?.body) {
+            return endpoint.response.body._visit({
+                json: () => "JSON response from the API",
+                fileDownload: () => "Downloaded file as bytes",
+                text: () => "Text response",
+                bytes: () => "Raw bytes response",
+                streaming: () => "Streaming response",
+                streamParameter: () => "Stream parameter response",
+                _other: () => "API response"
+            });
+        }
+        return "Empty response";
     }
 }

@@ -3,7 +3,7 @@ use crate::types_product::Product;
 use crate::types_category::Category;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "type")]
 pub enum SearchResult {
         User {

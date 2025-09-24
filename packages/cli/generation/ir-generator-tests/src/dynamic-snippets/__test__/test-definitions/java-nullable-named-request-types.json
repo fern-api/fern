@@ -315,8 +315,11 @@
                         "value": {
                             "type": "optional",
                             "value": {
-                                "type": "named",
-                                "value": "type_:NullableObject"
+                                "type": "nullable",
+                                "value": {
+                                    "type": "named",
+                                    "value": "type_:NullableObject"
+                                }
                             }
                         }
                     }
@@ -538,5 +541,6 @@
     },
     "pathParameters": [],
     "environments": null,
+    "variables": null,
     "generatorConfig": null
 }

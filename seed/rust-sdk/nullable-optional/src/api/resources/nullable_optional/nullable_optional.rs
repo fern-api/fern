@@ -1,4 +1,4 @@
-use crate::api::types::*;
+use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
@@ -9,10 +9,19 @@ pub struct NullableOptionalClient {
 impl NullableOptionalClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config)?,
+            http_client: HttpClient::new(config.clone())?,
         })
     }
 
+    /// Get a user by ID
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn get_user(
         &self,
         user_id: &String,
@@ -29,6 +38,15 @@ impl NullableOptionalClient {
             .await
     }
 
+    /// Create a new user
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn create_user(
         &self,
         request: &CreateUserRequest,
@@ -45,6 +63,15 @@ impl NullableOptionalClient {
             .await
     }
 
+    /// Update a user (partial update)
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn update_user(
         &self,
         user_id: &String,
@@ -62,12 +89,18 @@ impl NullableOptionalClient {
             .await
     }
 
+    /// List all users
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn list_users(
         &self,
-        limit: Option<i32>,
-        offset: Option<i32>,
-        include_deleted: Option<bool>,
-        sort_by: Option<Option<String>>,
+        request: &ListUsersQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<Vec<UserResponse>, ApiError> {
         self.http_client
@@ -76,22 +109,28 @@ impl NullableOptionalClient {
                 "/api/users",
                 None,
                 QueryBuilder::new()
-                    .int("limit", limit)
-                    .int("offset", offset)
-                    .bool("includeDeleted", include_deleted)
-                    .serialize("sortBy", sort_by)
+                    .int("limit", request.limit.clone())
+                    .int("offset", request.offset.clone())
+                    .bool("includeDeleted", request.include_deleted.clone())
+                    .serialize("sortBy", request.sort_by.clone())
                     .build(),
                 options,
             )
             .await
     }
 
+    /// Search users
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn search_users(
         &self,
-        query: Option<String>,
-        department: Option<String>,
-        role: Option<String>,
-        is_active: Option<Option<bool>>,
+        request: &SearchUsersQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<Vec<UserResponse>, ApiError> {
         self.http_client
@@ -100,16 +139,25 @@ impl NullableOptionalClient {
                 "/api/users/search",
                 None,
                 QueryBuilder::new()
-                    .structured_query("query", query)
-                    .string("department", department)
-                    .string("role", role)
-                    .serialize("isActive", is_active)
+                    .structured_query("query", request.query.clone())
+                    .string("department", request.department.clone())
+                    .string("role", request.role.clone())
+                    .serialize("isActive", request.is_active.clone())
                     .build(),
                 options,
             )
             .await
     }
 
+    /// Create a complex profile to test nullable enums and unions
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn create_complex_profile(
         &self,
         request: &ComplexProfile,
@@ -126,6 +174,15 @@ impl NullableOptionalClient {
             .await
     }
 
+    /// Get a complex profile by ID
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn get_complex_profile(
         &self,
         profile_id: &String,
@@ -142,10 +199,19 @@ impl NullableOptionalClient {
             .await
     }
 
+    /// Update complex profile to test nullable field updates
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn update_complex_profile(
         &self,
         profile_id: &String,
-        request: &serde_json::Value,
+        request: &UpdateComplexProfileRequest,
         options: Option<RequestOptions>,
     ) -> Result<ComplexProfile, ApiError> {
         self.http_client
@@ -159,6 +225,15 @@ impl NullableOptionalClient {
             .await
     }
 
+    /// Test endpoint for validating null deserialization
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn test_deserialization(
         &self,
         request: &DeserializationTestRequest,
@@ -175,11 +250,18 @@ impl NullableOptionalClient {
             .await
     }
 
+    /// Filter users by role with nullable enum
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn filter_by_role(
         &self,
-        role: Option<UserRole>,
-        status: Option<UserStatus>,
-        secondary_role: Option<Option<UserRole>>,
+        request: &FilterByRoleQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<Vec<UserResponse>, ApiError> {
         self.http_client
@@ -188,15 +270,24 @@ impl NullableOptionalClient {
                 "/api/users/filter",
                 None,
                 QueryBuilder::new()
-                    .serialize("role", role)
-                    .serialize("status", status)
-                    .serialize("secondaryRole", secondary_role)
+                    .serialize("role", request.role.clone())
+                    .serialize("status", request.status.clone())
+                    .serialize("secondaryRole", request.secondary_role.clone())
                     .build(),
                 options,
             )
             .await
     }
 
+    /// Get notification settings which may be null
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn get_notification_settings(
         &self,
         user_id: &String,
@@ -213,10 +304,19 @@ impl NullableOptionalClient {
             .await
     }
 
+    /// Update tags to test array handling
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn update_tags(
         &self,
         user_id: &String,
-        request: &serde_json::Value,
+        request: &UpdateTagsRequest,
         options: Option<RequestOptions>,
     ) -> Result<Vec<String>, ApiError> {
         self.http_client
@@ -230,9 +330,18 @@ impl NullableOptionalClient {
             .await
     }
 
+    /// Get search results with nullable unions
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn get_search_results(
         &self,
-        request: &serde_json::Value,
+        request: &SearchRequest,
         options: Option<RequestOptions>,
     ) -> Result<Option<Vec<SearchResult>>, ApiError> {
         self.http_client

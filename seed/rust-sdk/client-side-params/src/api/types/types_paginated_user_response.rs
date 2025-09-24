@@ -1,7 +1,8 @@
 use crate::types_user::User;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+/// Response with pagination info like Auth0
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PaginatedUserResponse {
     pub users: Vec<User>,
     pub start: i32,

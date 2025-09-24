@@ -1,5 +1,5 @@
-use crate::api::types::*;
-use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
+use crate::api::*;
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
 
 pub struct DummyClient {
@@ -9,13 +9,13 @@ pub struct DummyClient {
 impl DummyClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config)?,
+            http_client: HttpClient::new(config.clone())?,
         })
     }
 
     pub async fn generate(
         &self,
-        request: &serde_json::Value,
+        request: &GenerateRequest,
         options: Option<RequestOptions>,
     ) -> Result<serde_json::Value, ApiError> {
         self.http_client

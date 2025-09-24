@@ -10,7 +10,7 @@
           "base-path": "",
           "endpoints": {
             "getTree": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Get tree",
               "docs": undefined,
               "examples": [
@@ -70,7 +70,6 @@
     getTree:
       path: /tree
       method: GET
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: Get tree

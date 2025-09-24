@@ -1,5 +1,5 @@
-use crate::api::types::*;
-use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
+use crate::api::*;
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
 
 pub struct InlinedRequestsClient {
@@ -9,13 +9,22 @@ pub struct InlinedRequestsClient {
 impl InlinedRequestsClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config)?,
+            http_client: HttpClient::new(config.clone())?,
         })
     }
 
+    /// POST with custom object in request body, response is an object
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn post_with_object_bodyand_response(
         &self,
-        request: &serde_json::Value,
+        request: &PostWithObjectBody,
         options: Option<RequestOptions>,
     ) -> Result<ObjectWithOptionalField, ApiError> {
         self.http_client

@@ -40,7 +40,7 @@
           "base-path": "",
           "endpoints": {
             "get-token": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Request an access token",
               "docs": "Exchange credentials or refresh token for an access token",
               "errors": [
@@ -176,7 +176,6 @@ service:
     get-token:
       path: /oauth/token
       method: POST
-      auth: false
       docs: Exchange credentials or refresh token for an access token
       source:
         openapi: ../openapi.yml

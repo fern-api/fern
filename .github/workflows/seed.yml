@@ -125,7 +125,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        generator-name:
+        sdk-name:
           [
             ruby-model,
             ruby-sdk,
@@ -152,75 +152,60 @@ jobs:
             rust-sdk
           ]
     outputs:
-      ruby-model: ${{ steps.set-test-matrices.outputs.ruby-model-test-matrix }}
-      ruby-sdk: ${{ steps.set-test-matrices.outputs.ruby-sdk-test-matrix }}
-      ruby-sdk-v2: ${{ steps.set-test-matrices.outputs.ruby-sdk-v2-test-matrix }}
-      pydantic: ${{ steps.set-test-matrices.outputs.pydantic-test-matrix }}
-      python-sdk: ${{ steps.set-test-matrices.outputs.python-sdk-test-matrix }}
-      fastapi: ${{ steps.set-test-matrices.outputs.fastapi-test-matrix }}
-      openapi: ${{ steps.set-test-matrices.outputs.openapi-test-matrix }}
-      postman: ${{ steps.set-test-matrices.outputs.postman-test-matrix }}
-      java-sdk: ${{ steps.set-test-matrices.outputs.java-sdk-test-matrix }}
-      java-model: ${{ steps.set-test-matrices.outputs.java-model-test-matrix }}
-      java-spring: ${{ steps.set-test-matrices.outputs.java-spring-test-matrix }}
-      ts-sdk: ${{ steps.set-test-matrices.outputs.ts-sdk-test-matrix }}
-      ts-express: ${{ steps.set-test-matrices.outputs.ts-express-test-matrix }}
-      go-fiber: ${{ steps.set-test-matrices.outputs.go-fiber-test-matrix }}
-      go-model: ${{ steps.set-test-matrices.outputs.go-model-test-matrix }}
-      go-sdk: ${{ steps.set-test-matrices.outputs.go-sdk-test-matrix }}
-      csharp-model: ${{ steps.set-test-matrices.outputs.csharp-model-test-matrix }}
-      csharp-sdk: ${{ steps.set-test-matrices.outputs.csharp-sdk-test-matrix }}
-      php-model: ${{ steps.set-test-matrices.outputs.php-model-test-matrix }}
-      php-sdk: ${{ steps.set-test-matrices.outputs.php-sdk-test-matrix }}
-      swift-sdk: ${{ steps.set-test-matrices.outputs.swift-sdk-test-matrix }}
-      rust-model: ${{ steps.set-test-matrices.outputs.rust-model-test-matrix }}
-      rust-sdk: ${{ steps.set-test-matrices.outputs.rust-sdk-test-matrix }}
+      ruby-model: ${{ steps.set-test-matrix.outputs.ruby-model-test-matrix }}
+      ruby-sdk: ${{ steps.set-test-matrix.outputs.ruby-sdk-test-matrix }}
+      ruby-sdk-v2: ${{ steps.set-test-matrix.outputs.ruby-sdk-v2-test-matrix }}
+      pydantic: ${{ steps.set-test-matrix.outputs.pydantic-test-matrix }}
+      python-sdk: ${{ steps.set-test-matrix.outputs.python-sdk-test-matrix }}
+      fastapi: ${{ steps.set-test-matrix.outputs.fastapi-test-matrix }}
+      openapi: ${{ steps.set-test-matrix.outputs.openapi-test-matrix }}
+      postman: ${{ steps.set-test-matrix.outputs.postman-test-matrix }}
+      java-sdk: ${{ steps.set-test-matrix.outputs.java-sdk-test-matrix }}
+      java-model: ${{ steps.set-test-matrix.outputs.java-model-test-matrix }}
+      java-spring: ${{ steps.set-test-matrix.outputs.java-spring-test-matrix }}
+      ts-sdk: ${{ steps.set-test-matrix.outputs.ts-sdk-test-matrix }}
+      ts-express: ${{ steps.set-test-matrix.outputs.ts-express-test-matrix }}
+      go-fiber: ${{ steps.set-test-matrix.outputs.go-fiber-test-matrix }}
+      go-model: ${{ steps.set-test-matrix.outputs.go-model-test-matrix }}
+      go-sdk: ${{ steps.set-test-matrix.outputs.go-sdk-test-matrix }}
+      csharp-model: ${{ steps.set-test-matrix.outputs.csharp-model-test-matrix }}
+      csharp-sdk: ${{ steps.set-test-matrix.outputs.csharp-sdk-test-matrix }}
+      php-model: ${{ steps.set-test-matrix.outputs.php-model-test-matrix }}
+      php-sdk: ${{ steps.set-test-matrix.outputs.php-sdk-test-matrix }}
+      swift-sdk: ${{ steps.set-test-matrix.outputs.swift-sdk-test-matrix }}
+      rust-model: ${{ steps.set-test-matrix.outputs.rust-model-test-matrix }}
+      rust-sdk: ${{ steps.set-test-matrix.outputs.rust-sdk-test-matrix }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install
-        uses: ./.github/actions/install
-
-      - uses: bufbuild/buf-setup-action@v1.34.0
+      - name: Get test matrix
+        id: get-test-matrix
+        uses: ./.github/actions/get-test-matrix
         with:
-          github_token: ${{ github.token }}
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version: "stable"
-
-      - name: Install protoc-gen-openapi
-        shell: bash
-        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
-
-      - name: Build seed
-        shell: bash
-        run: |
-          pnpm seed:build
-
-      - name: Get test matrices for ${{ matrix.generator-name }}
-        id: get-test-matrices
-        uses: ./.github/actions/parse-test-matrix-output
-        with:
-          generator-name: ${{ matrix.generator-name }}
-
-      - name: Package test matrices for ${{ matrix.generator-name }}
-        id: package-test-matrices
-        uses: ./.github/actions/package-test-matrix
-        with:
-          full-fixture-matrix: ${{ steps.get-test-matrices.outputs.parsed }}
+          sdk-name: ${{ matrix.sdk-name }}
           package-amount: 10
 
-      - name: Set test matrices for ${{ matrix.generator-name }}
-        id: set-test-matrices
+      - name: Set test matrix for ${{ matrix.sdk-name }}
+        id: set-test-matrix
         run: |
-          BASH_VAR='${{ steps.package-test-matrices.outputs.packaged }}'
-          echo "${{ matrix.generator-name }}-test-matrix=$BASH_VAR" >> $GITHUB_OUTPUT
+          if [[ "${{ steps.get-test-matrix.outputs.split-tests }}" == "true" ]]; then
+              BASH_VAR='${{ steps.get-test-matrix.outputs.test-matrix }}'
+              echo "${{ matrix.sdk-name }}-test-matrix=$BASH_VAR" >> $GITHUB_OUTPUT
 
-          # Echo the data to command line for visibility
-          echo "Packaged data for ${{ matrix.generator-name }}-test-matrix:"
-          echo "$BASH_VAR" | jq .
+              # Echo the data to command line for visibility
+              echo "Packaged data for ${{ matrix.sdk-name }}-test-matrix:"
+              echo "$BASH_VAR" | jq .
+          else
+            echo "Set empty json matrix, which will run all tests on a single runner"
+            BASH_VAR='[{"fixtures":["all"]}]'
+            echo "${{ matrix.sdk-name }}-test-matrix=$BASH_VAR" >> $GITHUB_OUTPUT
+
+            # Echo the data to command line for visibility
+            echo "Packaged data for ${{ matrix.sdk-name }}-test-matrix:"
+            echo "$BASH_VAR" | jq .
+          fi
+
   ruby-model:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
@@ -330,7 +315,7 @@ jobs:
           validation-exclude-paths: "seed/*/.mock/*,seed/**/Gemfile.lock"
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
-  pydantic-model:
+  pydantic:
     runs-on: ubuntu-latest
     needs: [changes, get-all-test-matrices]
     if: >-

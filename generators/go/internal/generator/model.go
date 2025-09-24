@@ -9,6 +9,7 @@ import (
 	"unicode"
 
 	"github.com/fern-api/fern-go/internal/fern/ir"
+	"github.com/fern-api/fern-go/internal/fern/ir/common"
 	"github.com/fern-api/fern-go/internal/gospec"
 )
 
@@ -973,7 +974,7 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 // (e.g. containers, primitives, etc), but specifically for undiscriminated union generation.
 type undiscriminatedUnionTypeReferenceVisitor struct {
 	value string
-	types map[ir.TypeId]*ir.TypeDeclaration
+	types map[common.TypeId]*ir.TypeDeclaration
 	scope *gospec.Scope
 }
 
@@ -1005,7 +1006,7 @@ func (u *undiscriminatedUnionTypeReferenceVisitor) VisitUnknown(unknown any) err
 type undiscriminatedUnionContainerTypeVisitor struct {
 	value string
 	scope *gospec.Scope
-	types map[ir.TypeId]*ir.TypeDeclaration
+	types map[common.TypeId]*ir.TypeDeclaration
 }
 
 // Compile-time assertion.
@@ -1064,7 +1065,7 @@ type objectProperties struct {
 // date contains the information required to generate code for date and date-time
 // properties.
 type date struct {
-	Name            *ir.NameAndWireValue
+	Name            *common.NameAndWireValue
 	ValueType       *ir.TypeReference
 	Constructor     string
 	TimeMethod      string
@@ -1076,7 +1077,7 @@ type date struct {
 
 // literal contains the information required to generate code for literal properties.
 type literal struct {
-	Name  *ir.NameAndWireValue
+	Name  *common.NameAndWireValue
 	Value *ir.Literal
 }
 
@@ -1181,7 +1182,7 @@ func isOptionalOrNullableType(typeReference *ir.TypeReference) bool {
 
 // processTypeFieldForOptional handles the common logic for processing optional/nullable type fields
 // Returns the Go type, zero value, whether the field needs dereferencing, and whether the field is optional
-func processTypeFieldForOptional(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration, scope *gospec.Scope, baseImportPath, importPath string, gettersPassByValue bool) (goType string, zeroValue string, needsDereference bool, isOptional bool) {
+func processTypeFieldForOptional(typeReference *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration, scope *gospec.Scope, baseImportPath, importPath string, gettersPassByValue bool) (goType string, zeroValue string, needsDereference bool, isOptional bool) {
 	originalGoType := typeReferenceToGoType(typeReference, types, scope, baseImportPath, importPath, false)
 	isOptional = isOptionalOrNullableType(typeReference)
 
@@ -1221,7 +1222,7 @@ func unwrapOptionalAndOrNullable(typeReference *ir.TypeReference) *ir.TypeRefere
 
 // zeroValueForDereferencedType returns the zero value for the given type, handling
 // the special case of objects and unions that can take a default struct initialization.
-func zeroValueForDereferencedType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration, scope *gospec.Scope, baseImportPath, importPath string) string {
+func zeroValueForDereferencedType(typeReference *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration, scope *gospec.Scope, baseImportPath, importPath string) string {
 	if typeReference.Named != nil {
 		typeDeclaration := types[typeReference.Named.TypeId]
 		if typeDeclaration.Shape.Alias == nil && typeDeclaration.Shape.Enum == nil {
@@ -1335,7 +1336,7 @@ type typeReferenceVisitor struct {
 	baseImportPath   string
 	importPath       string
 	scope            *gospec.Scope
-	types            map[ir.TypeId]*ir.TypeDeclaration
+	types            map[common.TypeId]*ir.TypeDeclaration
 	includeOptionals bool
 }
 
@@ -1377,7 +1378,7 @@ type containerTypeVisitor struct {
 	baseImportPath   string
 	importPath       string
 	scope            *gospec.Scope
-	types            map[ir.TypeId]*ir.TypeDeclaration
+	types            map[common.TypeId]*ir.TypeDeclaration
 	includeOptionals bool
 }
 
@@ -1456,7 +1457,7 @@ type singleUnionTypePropertiesVisitor struct {
 	baseImportPath string
 	importPath     string
 	scope          *gospec.Scope
-	types          map[ir.TypeId]*ir.TypeDeclaration
+	types          map[common.TypeId]*ir.TypeDeclaration
 }
 
 // Compile-time assertion.
@@ -1511,7 +1512,7 @@ type singleUnionTypePropertiesInitializerVisitor struct {
 	baseImportPath   string
 	importPath       string
 	scope            *gospec.Scope
-	types            map[ir.TypeId]*ir.TypeDeclaration
+	types            map[common.TypeId]*ir.TypeDeclaration
 }
 
 // Compile-time assertion.
@@ -1581,7 +1582,7 @@ func (l *literalTypeVisitor) VisitString(_ string) error {
 // typeReferenceToGoType maps the given type reference into its Go-equivalent.
 func typeReferenceToGoType(
 	typeReference *ir.TypeReference,
-	types map[ir.TypeId]*ir.TypeDeclaration,
+	types map[common.TypeId]*ir.TypeDeclaration,
 	scope *gospec.Scope,
 	baseImportPath string,
 	importPath string,
@@ -1601,7 +1602,7 @@ func typeReferenceToGoType(
 // containerTypeToGoType maps the given container type into its Go-equivalent.
 func containerTypeToGoType(
 	containerType *ir.ContainerType,
-	types map[ir.TypeId]*ir.TypeDeclaration,
+	types map[common.TypeId]*ir.TypeDeclaration,
 	scope *gospec.Scope,
 	baseImportPath string,
 	importPath string,
@@ -1631,7 +1632,7 @@ type singleUnionProperty struct {
 // singleUnionTypePropertiesToGoType maps the given container type into its Go-equivalent.
 func singleUnionTypePropertiesToGoType(
 	singleUnionTypeProperties *ir.SingleUnionTypeProperties,
-	types map[ir.TypeId]*ir.TypeDeclaration,
+	types map[common.TypeId]*ir.TypeDeclaration,
 	scope *gospec.Scope,
 	baseImportPath string,
 	importPath string,
@@ -1658,7 +1659,7 @@ func singleUnionTypePropertiesToGoType(
 // the given property, e.g. 'value := new(Foo)'
 func singleUnionTypePropertiesToInitializer(
 	singleUnionTypeProperties *ir.SingleUnionTypeProperties,
-	types map[ir.TypeId]*ir.TypeDeclaration,
+	types map[common.TypeId]*ir.TypeDeclaration,
 	scope *gospec.Scope,
 	baseImportPath string,
 	importPath string,
@@ -1699,7 +1700,7 @@ func writeExtractExtraProperties(
 
 // typeReferenceToUndiscriminatedUnionField maps Fern's type references to the field name used in an
 // undiscriminated union.
-func typeReferenceToUndiscriminatedUnionField(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration, scope *gospec.Scope) string {
+func typeReferenceToUndiscriminatedUnionField(typeReference *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration, scope *gospec.Scope) string {
 	visitor := &undiscriminatedUnionTypeReferenceVisitor{
 		types: types,
 		scope: scope,
@@ -1710,7 +1711,7 @@ func typeReferenceToUndiscriminatedUnionField(typeReference *ir.TypeReference, t
 
 // containerToUndiscriminatedUnionField maps Fern's container types to the field name used in an
 // undiscriminated union.
-func containerToUndiscriminatedUnionField(container *ir.ContainerType, types map[ir.TypeId]*ir.TypeDeclaration, scope *gospec.Scope) string {
+func containerToUndiscriminatedUnionField(container *ir.ContainerType, types map[common.TypeId]*ir.TypeDeclaration, scope *gospec.Scope) string {
 	visitor := &undiscriminatedUnionContainerTypeVisitor{
 		types: types,
 		scope: scope,
@@ -1735,7 +1736,7 @@ func literalToValue(literal *ir.Literal) string {
 
 // fernFilepathToImportPath maps the given Fern filepath to its
 // Go import path.
-func fernFilepathToImportPath(baseImportPath string, fernFilepath *ir.FernFilepath) string {
+func fernFilepathToImportPath(baseImportPath string, fernFilepath *common.FernFilepath) string {
 	var packages []string
 	for _, packageName := range fernFilepath.PackagePath {
 		packages = append(packages, strings.ToLower(packageName.CamelCase.SafeName))
@@ -1787,7 +1788,7 @@ func firstLetterToLower(s string) string {
 func fullFieldTagForType(
 	wireValue string,
 	valueType *ir.TypeReference,
-	types map[ir.TypeId]*ir.TypeDeclaration,
+	types map[common.TypeId]*ir.TypeDeclaration,
 	alwaysSendRequiredProperties bool,
 ) string {
 	return structTagForType(
@@ -1803,7 +1804,7 @@ func fullFieldTagForType(
 func fullFieldTagForTypeWithIgnoredURL(
 	wireValue string,
 	valueType *ir.TypeReference,
-	types map[ir.TypeId]*ir.TypeDeclaration,
+	types map[common.TypeId]*ir.TypeDeclaration,
 	alwaysSendRequiredProperties bool,
 ) string {
 	return structTagForType(
@@ -1820,7 +1821,7 @@ func fullFieldTagForTypeWithIgnoredURL(
 func jsonTagForType(
 	wireValue string,
 	valueType *ir.TypeReference,
-	types map[ir.TypeId]*ir.TypeDeclaration,
+	types map[common.TypeId]*ir.TypeDeclaration,
 	alwaysSendRequiredProperties bool,
 ) string {
 	return structTagForType(
@@ -1838,7 +1839,7 @@ func jsonTagForType(
 func urlTagForType(
 	wireValue string,
 	valueType *ir.TypeReference,
-	types map[ir.TypeId]*ir.TypeDeclaration,
+	types map[common.TypeId]*ir.TypeDeclaration,
 	alwaysSendRequiredProperties bool,
 ) string {
 	tagFormat := tagFormatForType(valueType, types, alwaysSendRequiredProperties)
@@ -1858,7 +1859,7 @@ func urlTagForType(
 func structTagForType(
 	wireValue string,
 	valueType *ir.TypeReference,
-	types map[ir.TypeId]*ir.TypeDeclaration,
+	types map[common.TypeId]*ir.TypeDeclaration,
 	tags []string,
 	ignoreTags []string,
 	alwaysSendRequiredProperties bool,
@@ -1883,7 +1884,7 @@ func structTagForType(
 // tagFormatForType returns the string format string for the given type's struct tag.
 func tagFormatForType(
 	valueType *ir.TypeReference,
-	types map[ir.TypeId]*ir.TypeDeclaration,
+	types map[common.TypeId]*ir.TypeDeclaration,
 	alwaysSendRequiredProperties bool,
 ) string {
 	if alwaysSendRequiredProperties {
@@ -1948,34 +1949,34 @@ func primitiveToGoType(primitive *ir.PrimitiveType) string {
 		return "interface{}"
 	}
 	switch primitive.V1 {
-	case ir.PrimitiveTypeV1Integer:
+	case common.PrimitiveTypeV1Integer:
 		return "int"
-	case ir.PrimitiveTypeV1Long:
+	case common.PrimitiveTypeV1Long:
 		return "int64"
-	case ir.PrimitiveTypeV1Uint:
+	case common.PrimitiveTypeV1Uint:
 		// TODO: Add support for uint.
 		return "int"
-	case ir.PrimitiveTypeV1Uint64:
+	case common.PrimitiveTypeV1Uint64:
 		// TODO: Add support for uint64.
 		return "int64"
-	case ir.PrimitiveTypeV1Float:
+	case common.PrimitiveTypeV1Float:
 		// TODO: Add support for float32.
 		return "float64"
-	case ir.PrimitiveTypeV1Double:
+	case common.PrimitiveTypeV1Double:
 		return "float64"
-	case ir.PrimitiveTypeV1String:
+	case common.PrimitiveTypeV1String:
 		return "string"
-	case ir.PrimitiveTypeV1Boolean:
+	case common.PrimitiveTypeV1Boolean:
 		return "bool"
-	case ir.PrimitiveTypeV1DateTime:
+	case common.PrimitiveTypeV1DateTime:
 		return "time.Time"
-	case ir.PrimitiveTypeV1Date:
+	case common.PrimitiveTypeV1Date:
 		return "time.Time"
-	case ir.PrimitiveTypeV1Uuid:
+	case common.PrimitiveTypeV1Uuid:
 		return "uuid.UUID"
-	case ir.PrimitiveTypeV1Base64:
+	case common.PrimitiveTypeV1Base64:
 		return "[]byte"
-	case ir.PrimitiveTypeV1BigInteger:
+	case common.PrimitiveTypeV1BigInteger:
 		// TODO: Add support for big integer.
 		return "string"
 	default:
@@ -1990,34 +1991,34 @@ func primitiveToUndiscriminatedUnionField(primitive *ir.PrimitiveType) string {
 		return "Any"
 	}
 	switch primitive.V1 {
-	case ir.PrimitiveTypeV1Integer:
+	case common.PrimitiveTypeV1Integer:
 		return "Integer"
-	case ir.PrimitiveTypeV1Long:
+	case common.PrimitiveTypeV1Long:
 		return "Long"
-	case ir.PrimitiveTypeV1Uint:
+	case common.PrimitiveTypeV1Uint:
 		// TODO: Add support for uint.
 		return "Integer"
-	case ir.PrimitiveTypeV1Uint64:
+	case common.PrimitiveTypeV1Uint64:
 		// TODO: Add support for uint64.
 		return "Long"
-	case ir.PrimitiveTypeV1Float:
+	case common.PrimitiveTypeV1Float:
 		// TODO: Add support for float32.
 		return "Double"
-	case ir.PrimitiveTypeV1Double:
+	case common.PrimitiveTypeV1Double:
 		return "Double"
-	case ir.PrimitiveTypeV1String:
+	case common.PrimitiveTypeV1String:
 		return "String"
-	case ir.PrimitiveTypeV1Boolean:
+	case common.PrimitiveTypeV1Boolean:
 		return "Boolean"
-	case ir.PrimitiveTypeV1Date:
+	case common.PrimitiveTypeV1Date:
 		return "Date"
-	case ir.PrimitiveTypeV1DateTime:
+	case common.PrimitiveTypeV1DateTime:
 		return "DateTime"
-	case ir.PrimitiveTypeV1Uuid:
+	case common.PrimitiveTypeV1Uuid:
 		return "Uuid"
-	case ir.PrimitiveTypeV1Base64:
+	case common.PrimitiveTypeV1Base64:
 		return "Base64"
-	case ir.PrimitiveTypeV1BigInteger:
+	case common.PrimitiveTypeV1BigInteger:
 		// TODO: Implement big integer.
 		return "BigInteger"
 	default:
@@ -2025,8 +2026,8 @@ func primitiveToUndiscriminatedUnionField(primitive *ir.PrimitiveType) string {
 	}
 }
 
-func maybeDateProperty(valueType *ir.TypeReference, name *ir.NameAndWireValue, isOptional bool) *date {
-	if valueType.Primitive != nil && valueType.Primitive.V1 == ir.PrimitiveTypeV1Date {
+func maybeDateProperty(valueType *ir.TypeReference, name *common.NameAndWireValue, isOptional bool) *date {
+	if valueType.Primitive != nil && valueType.Primitive.V1 == common.PrimitiveTypeV1Date {
 		var (
 			typeDeclaration = "*internal.Date"
 			constructor     = "internal.NewDate"
@@ -2048,7 +2049,7 @@ func maybeDateProperty(valueType *ir.TypeReference, name *ir.NameAndWireValue, i
 			IsOptional:      isOptional,
 		}
 	}
-	if valueType.Primitive != nil && valueType.Primitive.V1 == ir.PrimitiveTypeV1DateTime {
+	if valueType.Primitive != nil && valueType.Primitive.V1 == common.PrimitiveTypeV1DateTime {
 		var (
 			typeDeclaration = "*internal.DateTime"
 			constructor     = "internal.NewDateTime"
@@ -2082,7 +2083,7 @@ func maybeDateProperty(valueType *ir.TypeReference, name *ir.NameAndWireValue, i
 // any property-oriented information. This is tailored to the undiscriminated
 // union use case.
 func maybeDate(valueType *ir.TypeReference, isOptional bool) *date {
-	if valueType.Primitive != nil && valueType.Primitive.V1 == ir.PrimitiveTypeV1Date {
+	if valueType.Primitive != nil && valueType.Primitive.V1 == common.PrimitiveTypeV1Date {
 		var (
 			typeDeclaration = "*internal.Date"
 			constructor     = "internal.NewDate"
@@ -2100,7 +2101,7 @@ func maybeDate(valueType *ir.TypeReference, isOptional bool) *date {
 			IsOptional:      isOptional,
 		}
 	}
-	if valueType.Primitive != nil && valueType.Primitive.V1 == ir.PrimitiveTypeV1DateTime {
+	if valueType.Primitive != nil && valueType.Primitive.V1 == common.PrimitiveTypeV1DateTime {
 		var (
 			typeDeclaration = "*internal.DateTime"
 			constructor     = "internal.NewDateTime"
@@ -2130,7 +2131,7 @@ func maybeDate(valueType *ir.TypeReference, isOptional bool) *date {
 // Note that we don't need to include a custom layout for DateTime because that
 // is the default format used for time.Time types.
 func maybeFormatStructTag(valueType *ir.TypeReference) string {
-	if valueType.Primitive != nil && valueType.Primitive.V1 == ir.PrimitiveTypeV1Date {
+	if valueType.Primitive != nil && valueType.Primitive.V1 == common.PrimitiveTypeV1Date {
 		return `format:"date"`
 	}
 	if valueType.Type != "container" {
@@ -2198,31 +2199,31 @@ func defaultValueForPrimitiveType(primitiveType *ir.PrimitiveType) string {
 		return "nil"
 	}
 	switch primitiveType.V1 {
-	case ir.PrimitiveTypeV1Integer:
+	case common.PrimitiveTypeV1Integer:
 		return "0"
-	case ir.PrimitiveTypeV1Long:
+	case common.PrimitiveTypeV1Long:
 		return "0"
-	case ir.PrimitiveTypeV1Uint:
+	case common.PrimitiveTypeV1Uint:
 		return "0"
-	case ir.PrimitiveTypeV1Uint64:
+	case common.PrimitiveTypeV1Uint64:
 		return "0"
-	case ir.PrimitiveTypeV1Float:
+	case common.PrimitiveTypeV1Float:
 		return "0"
-	case ir.PrimitiveTypeV1Double:
+	case common.PrimitiveTypeV1Double:
 		return "0"
-	case ir.PrimitiveTypeV1String:
+	case common.PrimitiveTypeV1String:
 		return `""`
-	case ir.PrimitiveTypeV1Boolean:
+	case common.PrimitiveTypeV1Boolean:
 		return "false"
-	case ir.PrimitiveTypeV1DateTime:
+	case common.PrimitiveTypeV1DateTime:
 		return "time.Time{}"
-	case ir.PrimitiveTypeV1Date:
+	case common.PrimitiveTypeV1Date:
 		return "time.Time{}"
-	case ir.PrimitiveTypeV1Uuid:
+	case common.PrimitiveTypeV1Uuid:
 		return "uuid.Nil"
-	case ir.PrimitiveTypeV1Base64:
+	case common.PrimitiveTypeV1Base64:
 		return "nil"
-	case ir.PrimitiveTypeV1BigInteger:
+	case common.PrimitiveTypeV1BigInteger:
 		// TODO: Implement big integer types.
 		return `""`
 	}

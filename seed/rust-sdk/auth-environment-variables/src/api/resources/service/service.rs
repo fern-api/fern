@@ -1,4 +1,4 @@
-use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
 
 pub struct ServiceClient {
@@ -8,10 +8,19 @@ pub struct ServiceClient {
 impl ServiceClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config)?,
+            http_client: HttpClient::new(config.clone())?,
         })
     }
 
+    /// GET request with custom api key
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn get_with_api_key(
         &self,
         options: Option<RequestOptions>,
@@ -21,6 +30,15 @@ impl ServiceClient {
             .await
     }
 
+    /// GET request with custom api key
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn get_with_header(
         &self,
         options: Option<RequestOptions>,

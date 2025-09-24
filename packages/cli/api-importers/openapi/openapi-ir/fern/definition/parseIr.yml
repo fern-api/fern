@@ -23,6 +23,7 @@ types:
       - commons.WithNamespace
     properties:
       authed: boolean
+      security: finalIr.EndpointSecurity
       internal: optional<boolean>
       idempotent: optional<boolean>
       method: finalIr.HttpMethod

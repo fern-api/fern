@@ -10,7 +10,7 @@
           "base-path": "",
           "endpoints": {
             "listAllPets": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List all pets",
               "docs": undefined,
               "examples": [
@@ -60,7 +60,6 @@
     listAllPets:
       path: /pets
       method: GET
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: List all pets

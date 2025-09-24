@@ -66,9 +66,8 @@ jobs:
             usePnpm
                 ? `
 
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10`
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4`
                 : ""
         }
 
@@ -98,9 +97,8 @@ ${getTestJob({ config, packageManager })}`;
             usePnpm
                 ? `
 
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10`
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4`
                 : ""
         }
 
@@ -143,9 +141,8 @@ ${getTestJob({ config, packageManager })}`;
             usePnpm
                 ? `
 
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10`
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4`
                 : ""
         }
       
@@ -183,9 +180,8 @@ function getTestJob({
             usePnpm
                 ? `
                 
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10`
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4`
                 : ""
         }
 

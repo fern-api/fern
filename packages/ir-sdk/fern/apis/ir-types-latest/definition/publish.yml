@@ -24,6 +24,7 @@ types:
       repo: string
       uri: optional<string>
       token: optional<string>
+      mode: optional<literal<"pull-request">>
       target: PublishTarget
 
   DirectPublish:

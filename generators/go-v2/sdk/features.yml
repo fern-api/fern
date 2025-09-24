@@ -48,9 +48,20 @@ features:
       - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
       - [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
 
+      If the `Retry-After` header is present in the response, the SDK will prioritize respecting its value exactly
+      over the default exponential backoff.
+
       Use the `option.WithMaxAttempts` option to configure this behavior for the entire client or an individual request:
 
   - id: TIMEOUTS
     advanced: true
     description: |
       Setting a timeout for each individual request is as simple as using the standard context library. Setting a one second timeout for an individual API call looks like the following:
+
+  - id: EXPLICIT_NULL
+    advanced: true
+    description: |
+      If you want to send the explicit `null` JSON value through an optional parameter, you can use the setters\
+      that come with every object. Calling a setter method for a property will flip a bit in the `explicitFields`
+      bitfield for that setter's object; during serialization, any property with a flipped bit will have its
+      omittable status stripped, so zero or `nil` values will be sent explicitly rather than omitted altogether:

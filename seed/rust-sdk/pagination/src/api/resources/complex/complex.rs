@@ -1,6 +1,6 @@
-use crate::{ClientConfig, ApiError, HttpClient, QueryBuilder, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
 use reqwest::{Method};
-use crate::api::types::{*};
+use crate::api::{*};
 use crate::{AsyncPaginator, PaginationResult};
 
 pub struct ComplexClient {
@@ -10,7 +10,7 @@ pub struct ComplexClient {
 impl ComplexClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-    http_client: HttpClient::new(config)?
+    http_client: HttpClient::new(config.clone())?
 })
     }
 

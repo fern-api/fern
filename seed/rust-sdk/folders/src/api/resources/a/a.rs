@@ -1,6 +1,6 @@
-use crate::{ClientConfig, ApiError, HttpClient, QueryBuilder, RequestOptions};
-use reqwest::{Method};
-use crate::api::types::{*};
+use crate::api::*;
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use reqwest::Method;
 
 pub struct AClient {
     pub http_client: HttpClient,
@@ -11,11 +11,9 @@ pub struct AClient {
 impl AClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-    http_client: HttpClient::new(config)?,
-    b: ABClient::new(config.clone())?,
-    c: ACClient::new(config.clone())?
-})
+            http_client: HttpClient::new(config.clone())?,
+            b: ABClient::new(config.clone())?,
+            c: ACClient::new(config.clone())?,
+        })
     }
-
 }
-

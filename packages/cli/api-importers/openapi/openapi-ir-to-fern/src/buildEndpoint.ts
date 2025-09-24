@@ -106,7 +106,7 @@ export function buildEndpoint({
     const convertedEndpoint: RawSchemas.HttpEndpointSchema = {
         path,
         method: convertToHttpMethod(endpoint.method),
-        auth: endpoint.authed,
+        auth: Object.keys(endpoint.security).length > 0 ? endpoint.security : undefined,
         docs: endpoint.description ?? undefined,
         pagination,
         source: endpoint.source != null ? convertToSourceSchema(endpoint.source) : undefined

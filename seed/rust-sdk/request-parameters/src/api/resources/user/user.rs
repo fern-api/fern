@@ -1,4 +1,4 @@
-use crate::api::types::*;
+use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 use std::collections::HashMap;
@@ -10,14 +10,13 @@ pub struct UserClient {
 impl UserClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config)?,
+            http_client: HttpClient::new(config.clone())?,
         })
     }
 
     pub async fn create_username(
         &self,
-        tags: Option<Vec<String>>,
-        request: &serde_json::Value,
+        request: &CreateUsernameRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -25,7 +24,9 @@ impl UserClient {
                 Method::POST,
                 "/user/username",
                 Some(serde_json::to_value(request).unwrap_or_default()),
-                QueryBuilder::new().serialize("tags", tags).build(),
+                QueryBuilder::new()
+                    .serialize("tags", request.tags.clone())
+                    .build(),
                 options,
             )
             .await
@@ -33,7 +34,6 @@ impl UserClient {
 
     pub async fn create_username_with_referenced_type(
         &self,
-        tags: Option<Vec<String>>,
         request: &CreateUsernameBody,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
@@ -42,7 +42,9 @@ impl UserClient {
                 Method::POST,
                 "/user/username-referenced",
                 Some(serde_json::to_value(request).unwrap_or_default()),
-                QueryBuilder::new().serialize("tags", tags).build(),
+                QueryBuilder::new()
+                    .serialize("tags", request.tags.clone())
+                    .build(),
                 options,
             )
             .await
@@ -50,22 +52,7 @@ impl UserClient {
 
     pub async fn get_username(
         &self,
-        limit: Option<i32>,
-        id: Option<uuid::Uuid>,
-        date: Option<chrono::NaiveDate>,
-        deadline: Option<chrono::DateTime<chrono::Utc>>,
-        bytes: Option<String>,
-        user: Option<User>,
-        user_list: Option<Vec<User>>,
-        optional_deadline: Option<chrono::DateTime<chrono::Utc>>,
-        key_value: Option<HashMap<String, String>>,
-        optional_string: Option<String>,
-        nested_user: Option<NestedUser>,
-        optional_user: Option<User>,
-        exclude_user: Option<User>,
-        filter: Option<String>,
-        long_param: Option<i64>,
-        big_int_param: Option<num_bigint::BigInt>,
+        request: &GetUsernameQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<User, ApiError> {
         self.http_client
@@ -74,22 +61,22 @@ impl UserClient {
                 "/user",
                 None,
                 QueryBuilder::new()
-                    .int("limit", limit)
-                    .uuid("id", id)
-                    .date("date", date)
-                    .datetime("deadline", deadline)
-                    .string("bytes", bytes)
-                    .serialize("user", user)
-                    .serialize("userList", user_list)
-                    .datetime("optionalDeadline", optional_deadline)
-                    .serialize("keyValue", key_value)
-                    .string("optionalString", optional_string)
-                    .serialize("nestedUser", nested_user)
-                    .serialize("optionalUser", optional_user)
-                    .serialize("excludeUser", exclude_user)
-                    .string("filter", filter)
-                    .int("longParam", long_param)
-                    .string("bigIntParam", big_int_param)
+                    .int("limit", request.limit.clone())
+                    .uuid("id", request.id.clone())
+                    .date("date", request.date.clone())
+                    .datetime("deadline", request.deadline.clone())
+                    .string("bytes", request.bytes.clone())
+                    .serialize("user", request.user.clone())
+                    .serialize("userList", request.user_list.clone())
+                    .datetime("optionalDeadline", request.optional_deadline.clone())
+                    .serialize("keyValue", request.key_value.clone())
+                    .string("optionalString", request.optional_string.clone())
+                    .serialize("nestedUser", request.nested_user.clone())
+                    .serialize("optionalUser", request.optional_user.clone())
+                    .serialize("excludeUser", request.exclude_user.clone())
+                    .string("filter", request.filter.clone())
+                    .int("longParam", request.long_param.clone())
+                    .string("bigIntParam", request.big_int_param.clone())
                     .build(),
                 options,
             )

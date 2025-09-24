@@ -1,4 +1,4 @@
-use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
 
 pub struct ServiceClient {
@@ -8,13 +8,13 @@ pub struct ServiceClient {
 impl ServiceClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config)?,
+            http_client: HttpClient::new(config.clone())?,
         })
     }
 
     pub async fn patch(
         &self,
-        request: &serde_json::Value,
+        request: &PatchProxyRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -28,10 +28,22 @@ impl ServiceClient {
             .await
     }
 
+    /// Update with JSON merge patch - complex types.
+    /// This endpoint demonstrates the distinction between:
+    /// - optional<T> fields (can be present or absent, but not null)
+    /// - optional<nullable<T>> fields (can be present, absent, or null)
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// Empty response
     pub async fn patch_complex(
         &self,
         id: &String,
-        request: &serde_json::Value,
+        request: &PatchComplexRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -45,10 +57,20 @@ impl ServiceClient {
             .await
     }
 
+    /// Named request with mixed optional/nullable fields and merge-patch content type.
+    /// This should trigger the NPE issue when optional fields aren't initialized.
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// Empty response
     pub async fn named_patch_with_mixed(
         &self,
         id: &String,
-        request: &serde_json::Value,
+        request: &NamedMixedPatchRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -62,9 +84,21 @@ impl ServiceClient {
             .await
     }
 
+    /// Test endpoint to verify Optional field initialization and JsonSetter with Nulls.SKIP.
+    /// This endpoint should:
+    /// 1. Not NPE when fields are not provided (tests initialization)
+    /// 2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// Empty response
     pub async fn optional_merge_patch_test(
         &self,
-        request: &serde_json::Value,
+        request: &OptionalMergePatchRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -78,10 +112,19 @@ impl ServiceClient {
             .await
     }
 
+    /// Regular PATCH endpoint without merge-patch semantics
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// Empty response
     pub async fn regular_patch(
         &self,
         id: &String,
-        request: &serde_json::Value,
+        request: &RegularPatchRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client

@@ -4,8 +4,8 @@ package service
 
 import (
 	context "context"
+	fern "github.com/folders/fern"
 	core "github.com/folders/fern/core"
-	folder "github.com/folders/fern/folder"
 	internal "github.com/folders/fern/internal"
 	option "github.com/folders/fern/option"
 	http "net/http"
@@ -83,13 +83,6 @@ func (r *RawClient) UnknownRequest(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		404: func(apiError *core.APIError) error {
-			return &folder.NotFoundError{
-				APIError: apiError,
-			}
-		},
-	}
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -101,7 +94,7 @@ func (r *RawClient) UnknownRequest(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Request:         request,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(fern.ErrorCodes),
 		},
 	)
 	if err != nil {

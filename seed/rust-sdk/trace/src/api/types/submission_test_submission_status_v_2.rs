@@ -3,7 +3,7 @@ use crate::submission_test_submission_update::TestSubmissionUpdate;
 use crate::v_2_problem_problem_info_v_2::ProblemInfoV2;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct TestSubmissionStatusV2 {
     pub updates: Vec<TestSubmissionUpdate>,
     #[serde(rename = "problemId")]

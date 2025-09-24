@@ -3,7 +3,7 @@ use crate::types_motorcycle::Motorcycle;
 use crate::types_truck::Truck;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "vehicle_type")]
 pub enum Vehicle {
         Car {

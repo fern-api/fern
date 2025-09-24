@@ -1523,6 +1523,34 @@
         }
       ]
     },
+    "auth.AuthScope": {
+      "type": "string"
+    },
+    "service.HttpEndpointSecurityItem": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/auth.AuthScope"
+        }
+      }
+    },
+    "service.HttpEndpointSecurity": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/service.HttpEndpointSecurityItem"
+      }
+    },
+    "service.HttpEndpointAuth": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "$ref": "#/definitions/service.HttpEndpointSecurity"
+        }
+      ]
+    },
     "service.QueryParameterTypeReferenceDetailed": {
       "type": "object",
       "properties": {
@@ -2739,7 +2767,7 @@
         "auth": {
           "oneOf": [
             {
-              "type": "boolean"
+              "$ref": "#/definitions/service.HttpEndpointAuth"
             },
             {
               "type": "null"

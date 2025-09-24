@@ -6,8 +6,8 @@ import * as serializers from "../../../../../index";
 import * as FernIr from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { LiteralType } from "./LiteralType";
-import { TypeId } from "../../../../commons/types/TypeId";
-import { PrimitiveTypeV1 } from "../../../../types/types/PrimitiveTypeV1";
+import { TypeId } from "../../commons/types/TypeId";
+import { PrimitiveTypeV1 } from "./PrimitiveTypeV1";
 
 export const TypeReference: core.serialization.Schema<
     serializers.dynamic.TypeReference.Raw,

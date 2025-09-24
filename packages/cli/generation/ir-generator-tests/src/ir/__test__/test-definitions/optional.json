@@ -118,6 +118,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -470,6 +471,7 @@
         },
         "pathParameters": [],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,

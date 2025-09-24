@@ -48,6 +48,7 @@
                     }
                 },
                 "tokenEnvVar": null,
+                "key": "BearerAuthScheme",
                 "docs": null
             }
         ],
@@ -610,6 +611,11 @@
                     },
                     "displayName": "Upload document metadata (JSON) or document file",
                     "auth": true,
+                    "security": [
+                        {
+                            "BearerAuthScheme": []
+                        }
+                    ],
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -2073,6 +2079,11 @@
                     },
                     "displayName": "Upload document metadata (JSON) or document file",
                     "auth": true,
+                    "security": [
+                        {
+                            "BearerAuthScheme": []
+                        }
+                    ],
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -2866,6 +2877,7 @@
                 ]
             }
         },
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,

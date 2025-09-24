@@ -1,4 +1,5 @@
 import { AstNode } from "./AstNode";
+import { DocComment } from "./DocComment";
 import { Writer } from "./Writer";
 
 /**
@@ -25,6 +26,7 @@ export declare namespace Client {
         returnType?: string;
         isAsync?: boolean;
         body?: string;
+        docs?: DocComment;
     }
 }
 
@@ -90,6 +92,11 @@ export class Client extends AstNode {
     }
 
     private writeMethod(writer: Writer, method: Client.SimpleMethod): void {
+        // Write method documentation first
+        if (method.docs) {
+            method.docs.write(writer);
+        }
+
         const params = method.parameters?.join(", ") || "";
         const returnType = method.returnType || "String";
         const asyncKeyword = method.isAsync ? "async " : "";

@@ -184,6 +184,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/action-menu/{conn_id}/close",
       "examples": [
@@ -285,6 +286,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/action-menu/{conn_id}/fetch",
       "examples": [
@@ -388,6 +390,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/action-menu/{conn_id}/perform",
       "examples": [
@@ -519,6 +522,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/action-menu/{conn_id}/request",
       "examples": [
@@ -639,6 +643,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/action-menu/{conn_id}/send-menu",
       "examples": [
@@ -1036,12 +1041,95 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/connections",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "alias",
+              "value": {
+                "value": {
+                  "value": "alias",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "connection_protocol",
+              "value": {
+                "value": "connections/1.0",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "invitation_key",
+              "value": {
+                "value": {
+                  "value": "invitation_key",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "invitation_msg_id",
+              "value": {
+                "value": {
+                  "value": "invitation_msg_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "my_did",
+              "value": {
+                "value": {
+                  "value": "my_did",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "state",
+              "value": {
+                "value": "start",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "their_did",
+              "value": {
+                "value": {
+                  "value": "their_did",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "their_public_did",
+              "value": {
+                "value": {
+                  "value": "their_public_did",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "their_role",
+              "value": {
+                "value": "invitee",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -1462,12 +1550,54 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/connections/create-invitation",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "alias",
+              "value": {
+                "value": {
+                  "value": "alias",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "auto_accept",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "multi_use",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "public",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "request": {
             "properties": {
@@ -1701,6 +1831,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/connections/create-static",
       "examples": [
@@ -2068,12 +2199,44 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/connections/receive-invitation",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "alias",
+              "value": {
+                "value": {
+                  "value": "alias",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "auto_accept",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "mediation_id",
+              "value": {
+                "value": {
+                  "value": "mediation_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "request": {
             "properties": {
@@ -2345,6 +2508,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/connections/{conn_id}",
       "examples": [
@@ -2555,6 +2719,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/connections/{conn_id}",
       "examples": [
@@ -2722,6 +2887,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/connections/{conn_id}/accept-invitation",
       "examples": [
@@ -2738,7 +2904,38 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "mediation_id",
+              "value": {
+                "value": {
+                  "value": "mediation_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "my_endpoint",
+              "value": {
+                "value": {
+                  "value": "my_endpoint",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "my_label",
+              "value": {
+                "value": {
+                  "value": "my_label",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -2955,6 +3152,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/connections/{conn_id}/accept-request",
       "examples": [
@@ -2971,7 +3169,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "my_endpoint",
+              "value": {
+                "value": {
+                  "value": "my_endpoint",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -3165,6 +3374,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/connections/{conn_id}/endpoints",
       "examples": [
@@ -3280,6 +3490,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/connections/{conn_id}/establish-inbound/{ref_id}",
       "examples": [
@@ -3413,6 +3624,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/connections/{conn_id}/metadata",
       "examples": [
@@ -3429,7 +3641,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "key",
+              "value": {
+                "value": {
+                  "value": "key",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -3516,6 +3739,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/connections/{conn_id}/metadata",
       "examples": [
@@ -3628,6 +3852,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/connections/{conn_id}/send-message",
       "examples": [
@@ -3760,6 +3985,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/connections/{conn_id}/send-ping",
       "examples": [
@@ -3902,6 +4128,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/connections/{conn_id}/start-introduction",
       "examples": [
@@ -3924,6 +4151,16 @@
               "value": {
                 "value": {
                   "value": "target_connection_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "message",
+              "value": {
+                "value": {
+                  "value": "message",
                   "type": "string"
                 },
                 "type": "primitive"
@@ -4059,12 +4296,34 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/credential-definitions",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "conn_id",
+              "value": {
+                "value": {
+                  "value": "conn_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "create_transaction_for_endorser",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "request": {
             "properties": {
@@ -4293,12 +4552,74 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/credential-definitions/created",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cred_def_id",
+              "value": {
+                "value": {
+                  "value": "cred_def_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "issuer_did",
+              "value": {
+                "value": {
+                  "value": "issuer_did",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "schema_id",
+              "value": {
+                "value": {
+                  "value": "schema_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "schema_issuer_did",
+              "value": {
+                "value": {
+                  "value": "schema_issuer_did",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "schema_name",
+              "value": {
+                "value": {
+                  "value": "schema_name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "schema_version",
+              "value": {
+                "value": {
+                  "value": "schema_version",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -4387,6 +4708,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/credential-definitions/{cred_def_id}",
       "examples": [
@@ -4527,6 +4849,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/credential-definitions/{cred_def_id}/write_record",
       "examples": [
@@ -4666,6 +4989,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/credential/mime-types/{credential_id}",
       "examples": [
@@ -4814,6 +5138,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/credential/revoked/{credential_id}",
       "examples": [
@@ -4830,7 +5155,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "from",
+              "value": {
+                "value": {
+                  "value": "from",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "to",
+              "value": {
+                "value": {
+                  "value": "to",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -4906,6 +5252,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/credential/w3c/{credential_id}",
       "examples": [
@@ -5125,6 +5472,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/credential/w3c/{credential_id}",
       "examples": [
@@ -5226,6 +5574,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/credential/{credential_id}",
       "examples": [
@@ -5364,6 +5713,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/credential/{credential_id}",
       "examples": [
@@ -5515,12 +5865,44 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/credentials",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "count",
+              "value": {
+                "value": {
+                  "value": "count",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "start",
+              "value": {
+                "value": {
+                  "value": "start",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "wql",
+              "value": {
+                "value": {
+                  "value": "wql",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -5779,12 +6161,44 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/credentials/w3c",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "count",
+              "value": {
+                "value": {
+                  "value": "count",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "start",
+              "value": {
+                "value": {
+                  "value": "start",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "wql",
+              "value": {
+                "value": {
+                  "value": "wql",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "request": {
             "properties": {
@@ -6383,6 +6797,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/didexchange/create-request",
       "examples": [
@@ -6395,6 +6810,56 @@
                 "value": {
                   "value": "their_public_did",
                   "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "alias",
+              "value": {
+                "value": {
+                  "value": "alias",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "mediation_id",
+              "value": {
+                "value": {
+                  "value": "mediation_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "my_endpoint",
+              "value": {
+                "value": {
+                  "value": "my_endpoint",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "my_label",
+              "value": {
+                "value": {
+                  "value": "my_label",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "use_public_did",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
                 },
                 "type": "primitive"
               }
@@ -6682,12 +7147,54 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/didexchange/receive-request",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "alias",
+              "value": {
+                "value": {
+                  "value": "alias",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "auto_accept",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "mediation_id",
+              "value": {
+                "value": {
+                  "value": "mediation_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "my_endpoint",
+              "value": {
+                "value": {
+                  "value": "my_endpoint",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "request": {
             "properties": {
@@ -6951,6 +7458,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/didexchange/{conn_id}/accept-invitation",
       "examples": [
@@ -6967,7 +7475,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "my_endpoint",
+              "value": {
+                "value": {
+                  "value": "my_endpoint",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "my_label",
+              "value": {
+                "value": {
+                  "value": "my_label",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -7206,6 +7735,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/didexchange/{conn_id}/accept-request",
       "examples": [
@@ -7222,7 +7752,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "mediation_id",
+              "value": {
+                "value": {
+                  "value": "mediation_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "my_endpoint",
+              "value": {
+                "value": {
+                  "value": "my_endpoint",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -7463,12 +8014,44 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/discover-features-2.0/queries",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "connection_id",
+              "value": {
+                "value": {
+                  "value": "connection_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "query_goal_code",
+              "value": {
+                "value": {
+                  "value": "query_goal_code",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "query_protocol",
+              "value": {
+                "value": {
+                  "value": "query_protocol",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -7541,12 +8124,24 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/discover-features-2.0/records",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "connection_id",
+              "value": {
+                "value": {
+                  "value": "connection_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -7903,12 +8498,44 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/discover-features/query",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "comment",
+              "value": {
+                "value": {
+                  "value": "comment",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "connection_id",
+              "value": {
+                "value": {
+                  "value": "connection_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "query",
+              "value": {
+                "value": {
+                  "value": "query",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -8031,12 +8658,24 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/discover-features/records",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "connection_id",
+              "value": {
+                "value": {
+                  "value": "connection_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -8220,6 +8859,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/create",
       "examples": [
@@ -8484,6 +9124,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/create-offer",
       "examples": [
@@ -8894,12 +9535,48 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/issue-credential-2.0/records",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "connection_id",
+              "value": {
+                "value": {
+                  "value": "connection_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "role",
+              "value": {
+                "value": "issuer",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "state",
+              "value": {
+                "value": "proposal-sent",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "thread_id",
+              "value": {
+                "value": {
+                  "value": "thread_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -9200,6 +9877,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/issue-credential-2.0/records/{cred_ex_id}",
       "examples": [
@@ -9394,6 +10072,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/issue-credential-2.0/records/{cred_ex_id}",
       "examples": [
@@ -9515,6 +10194,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/records/{cred_ex_id}/issue",
       "examples": [
@@ -9740,6 +10420,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/records/{cred_ex_id}/problem-report",
       "examples": [
@@ -9873,6 +10554,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/records/{cred_ex_id}/send-offer",
       "examples": [
@@ -10071,6 +10753,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/records/{cred_ex_id}/send-request",
       "examples": [
@@ -10277,6 +10960,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/records/{cred_ex_id}/store",
       "examples": [
@@ -10484,6 +11168,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/send",
       "examples": [
@@ -10762,6 +11447,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/send-offer",
       "examples": [
@@ -11040,6 +11726,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/send-proposal",
       "examples": [
@@ -11318,6 +12005,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/send-request",
       "examples": [
@@ -11665,6 +12353,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential/create",
       "examples": [
@@ -12005,6 +12694,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential/create-offer",
       "examples": [
@@ -12456,12 +13146,48 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/issue-credential/records",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "connection_id",
+              "value": {
+                "value": {
+                  "value": "connection_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "role",
+              "value": {
+                "value": "issuer",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "state",
+              "value": {
+                "value": "proposal_sent",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "thread_id",
+              "value": {
+                "value": {
+                  "value": "thread_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -12800,6 +13526,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/issue-credential/records/{cred_ex_id}",
       "examples": [
@@ -13013,6 +13740,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/issue-credential/records/{cred_ex_id}",
       "examples": [
@@ -13134,6 +13862,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential/records/{cred_ex_id}/issue",
       "examples": [
@@ -13378,6 +14107,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential/records/{cred_ex_id}/problem-report",
       "examples": [
@@ -13511,6 +14241,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential/records/{cred_ex_id}/send-offer",
       "examples": [
@@ -13728,6 +14459,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential/records/{cred_ex_id}/send-request",
       "examples": [
@@ -13960,6 +14692,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential/records/{cred_ex_id}/store",
       "examples": [
@@ -14186,6 +14919,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential/send",
       "examples": [
@@ -14533,6 +15267,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential/send-offer",
       "examples": [
@@ -14852,6 +15587,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential/send-proposal",
       "examples": [
@@ -15199,6 +15935,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/jsonld/sign",
       "examples": [
@@ -15322,6 +16059,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/jsonld/verify",
       "examples": [
@@ -15486,6 +16224,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/ledger/did-endpoint",
       "examples": [
@@ -15500,6 +16239,13 @@
                   "type": "string"
                 },
                 "type": "primitive"
+              }
+            },
+            {
+              "name": "endpoint_type",
+              "value": {
+                "value": "Endpoint",
+                "type": "enum"
               }
             }
           ],
@@ -15579,6 +16325,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/ledger/did-verkey",
       "examples": [
@@ -15672,6 +16419,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/ledger/get-nym-role",
       "examples": [
@@ -15744,6 +16492,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/ledger/multiple/config",
       "examples": [
@@ -15886,6 +16635,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/ledger/multiple/get-write-ledger",
       "examples": [
@@ -16097,6 +16847,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/ledger/register-nym",
       "examples": [
@@ -16121,6 +16872,43 @@
                   "type": "string"
                 },
                 "type": "primitive"
+              }
+            },
+            {
+              "name": "alias",
+              "value": {
+                "value": {
+                  "value": "alias",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "conn_id",
+              "value": {
+                "value": {
+                  "value": "conn_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "create_transaction_for_endorser",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "role",
+              "value": {
+                "value": "STEWARD",
+                "type": "enum"
               }
             }
           ],
@@ -16182,6 +16970,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "PATCH",
       "path": "/ledger/rotate-public-did-keypair",
       "examples": [
@@ -16255,6 +17044,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/ledger/taa",
       "examples": [
@@ -16425,6 +17215,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/ledger/taa/accept",
       "examples": [
@@ -16524,6 +17315,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/mediation/default-mediator",
       "examples": [
@@ -16687,6 +17479,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/mediation/default-mediator",
       "examples": [
@@ -16912,12 +17705,31 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/mediation/keylists",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "conn_id",
+              "value": {
+                "value": {
+                  "value": "conn_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "role",
+              "value": {
+                "value": "client",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -17178,6 +17990,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/mediation/keylists/{mediation_id}/send-keylist-query",
       "examples": [
@@ -17194,7 +18007,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "paginate_limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "paginate_offset",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "request": {
             "properties": {},
@@ -17301,6 +18135,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/mediation/keylists/{mediation_id}/send-keylist-update",
       "examples": [
@@ -17498,6 +18333,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/mediation/request/{conn_id}",
       "examples": [
@@ -17831,12 +18667,31 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/mediation/requests",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "conn_id",
+              "value": {
+                "value": {
+                  "value": "conn_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "state",
+              "value": {
+                "value": "request",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -18133,6 +18988,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/mediation/requests/{mediation_id}",
       "examples": [
@@ -18325,6 +19181,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/mediation/requests/{mediation_id}",
       "examples": [
@@ -18536,6 +19393,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/mediation/requests/{mediation_id}/deny",
       "examples": [
@@ -18717,6 +19575,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/mediation/requests/{mediation_id}/grant",
       "examples": [
@@ -18861,6 +19720,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/mediation/update-keylist/{conn_id}",
       "examples": [
@@ -19010,6 +19870,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/mediation/{mediation_id}/default-mediator",
       "examples": [
@@ -19203,6 +20064,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/multitenancy/wallet",
       "examples": [
@@ -19387,6 +20249,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/multitenancy/wallet/{wallet_id}",
       "examples": [
@@ -19523,6 +20386,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/multitenancy/wallet/{wallet_id}",
       "examples": [
@@ -19701,6 +20565,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/multitenancy/wallet/{wallet_id}/remove",
       "examples": [
@@ -19832,6 +20697,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/multitenancy/wallet/{wallet_id}/token",
       "examples": [
@@ -19941,12 +20807,24 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/multitenancy/wallets",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "wallet_name",
+              "value": {
+                "value": {
+                  "value": "wallet_name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -20139,12 +21017,34 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/out-of-band/create-invitation",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "auto_accept",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "multi_use",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "request": {
             "properties": {
@@ -20472,12 +21372,54 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/out-of-band/receive-invitation",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "alias",
+              "value": {
+                "value": {
+                  "value": "alias",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "auto_accept",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "mediation_id",
+              "value": {
+                "value": {
+                  "value": "mediation_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "use_existing_connection",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "request": {
             "properties": {
@@ -21493,6 +22435,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/plugins",
       "examples": [
@@ -21588,6 +22531,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof-2.0/create-request",
       "examples": [
@@ -21916,12 +22860,48 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/present-proof-2.0/records",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "connection_id",
+              "value": {
+                "value": {
+                  "value": "connection_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "role",
+              "value": {
+                "value": "prover",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "state",
+              "value": {
+                "value": "proposal-sent",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "thread_id",
+              "value": {
+                "value": {
+                  "value": "thread_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -22202,6 +23182,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/present-proof-2.0/records/{pres_ex_id}",
       "examples": [
@@ -22386,6 +23367,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/present-proof-2.0/records/{pres_ex_id}",
       "examples": [
@@ -22581,6 +23563,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/present-proof-2.0/records/{pres_ex_id}/credentials",
       "examples": [
@@ -22597,7 +23580,48 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "count",
+              "value": {
+                "value": {
+                  "value": "count",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "extra_query",
+              "value": {
+                "value": {
+                  "value": "extra_query",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "referent",
+              "value": {
+                "value": {
+                  "value": "referent",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "start",
+              "value": {
+                "value": {
+                  "value": "start",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -22710,6 +23734,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof-2.0/records/{pres_ex_id}/problem-report",
       "examples": [
@@ -22843,6 +23868,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof-2.0/records/{pres_ex_id}/send-presentation",
       "examples": [
@@ -23058,6 +24084,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof-2.0/records/{pres_ex_id}/send-request",
       "examples": [
@@ -23261,6 +24288,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof-2.0/records/{pres_ex_id}/verify-presentation",
       "examples": [
@@ -23446,6 +24474,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof-2.0/send-proposal",
       "examples": [
@@ -23657,6 +24686,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof-2.0/send-request",
       "examples": [
@@ -23868,6 +24898,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof/create-request",
       "examples": [
@@ -24384,12 +25415,48 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/present-proof/records",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "connection_id",
+              "value": {
+                "value": {
+                  "value": "connection_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "role",
+              "value": {
+                "value": "prover",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "state",
+              "value": {
+                "value": "proposal_sent",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "thread_id",
+              "value": {
+                "value": {
+                  "value": "thread_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -24676,6 +25743,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/present-proof/records/{pres_ex_id}",
       "examples": [
@@ -24863,6 +25931,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/present-proof/records/{pres_ex_id}",
       "examples": [
@@ -25058,6 +26127,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/present-proof/records/{pres_ex_id}/credentials",
       "examples": [
@@ -25074,7 +26144,48 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "count",
+              "value": {
+                "value": {
+                  "value": "count",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "extra_query",
+              "value": {
+                "value": {
+                  "value": "extra_query",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "referent",
+              "value": {
+                "value": {
+                  "value": "referent",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "start",
+              "value": {
+                "value": {
+                  "value": "start",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -25187,6 +26298,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof/records/{pres_ex_id}/problem-report",
       "examples": [
@@ -25320,6 +26432,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof/records/{pres_ex_id}/send-presentation",
       "examples": [
@@ -25616,6 +26729,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof/records/{pres_ex_id}/send-request",
       "examples": [
@@ -25822,6 +26936,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof/records/{pres_ex_id}/verify-presentation",
       "examples": [
@@ -26010,6 +27125,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof/send-proposal",
       "examples": [
@@ -26382,6 +27498,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof/send-request",
       "examples": [
@@ -26775,6 +27892,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/resolver/resolve/{did}",
       "examples": [
@@ -26869,6 +27987,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/revocation/active-registry/{cred_def_id}",
       "examples": [
@@ -27078,6 +28197,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/revocation/clear-pending-revocations",
       "examples": [
@@ -27219,6 +28339,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/revocation/create-registry",
       "examples": [
@@ -27484,12 +28605,44 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/revocation/credential-record",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cred_ex_id",
+              "value": {
+                "value": {
+                  "value": "cred_ex_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "cred_rev_id",
+              "value": {
+                "value": {
+                  "value": "cred_rev_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "rev_reg_id",
+              "value": {
+                "value": {
+                  "value": "rev_reg_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -27628,6 +28781,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/revocation/publish-revocations",
       "examples": [
@@ -27827,12 +28981,31 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/revocation/registries/created",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cred_def_id",
+              "value": {
+                "value": {
+                  "value": "cred_def_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "state",
+              "value": {
+                "value": "init",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -27948,12 +29121,34 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/revocation/registry/delete-tails-file",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cred_def_id",
+              "value": {
+                "value": {
+                  "value": "cred_def_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "rev_reg_id",
+              "value": {
+                "value": {
+                  "value": "rev_reg_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -28030,6 +29225,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/revocation/registry/{rev_reg_id}",
       "examples": [
@@ -28257,6 +29453,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "PATCH",
       "path": "/revocation/registry/{rev_reg_id}",
       "examples": [
@@ -28520,6 +29717,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/revocation/registry/{rev_reg_id}/definition",
       "examples": [
@@ -28536,7 +29734,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "conn_id",
+              "value": {
+                "value": {
+                  "value": "conn_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "create_transaction_for_endorser",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -28776,6 +29995,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/revocation/registry/{rev_reg_id}/entry",
       "examples": [
@@ -28792,7 +30012,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "conn_id",
+              "value": {
+                "value": {
+                  "value": "conn_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "create_transaction_for_endorser",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -29001,6 +30242,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/revocation/registry/{rev_reg_id}/fix-revocation-entry-state",
       "examples": [
@@ -29097,6 +30339,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/revocation/registry/{rev_reg_id}/issued",
       "examples": [
@@ -29190,6 +30433,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/revocation/registry/{rev_reg_id}/issued/details",
       "examples": [
@@ -29417,6 +30661,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/revocation/registry/{rev_reg_id}/issued/indy_recs",
       "examples": [
@@ -29547,6 +30792,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "PATCH",
       "path": "/revocation/registry/{rev_reg_id}/set-state",
       "examples": [
@@ -29753,6 +30999,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/revocation/registry/{rev_reg_id}/tails-file-less-deets",
       "examples": [],
@@ -29802,6 +31049,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/revocation/registry/{rev_reg_id}/tails-file",
       "examples": [],
@@ -29861,6 +31109,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/revocation/registry/{rev_reg_id}/tails-file",
       "examples": [
@@ -29964,6 +31213,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/revocation/revoke",
       "examples": [
@@ -30164,12 +31414,34 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/schemas",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "conn_id",
+              "value": {
+                "value": {
+                  "value": "conn_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "create_transaction_for_endorser",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "request": {
             "properties": {
@@ -30346,12 +31618,54 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/schemas/created",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "schema_id",
+              "value": {
+                "value": {
+                  "value": "schema_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "schema_issuer_did",
+              "value": {
+                "value": {
+                  "value": "schema_issuer_did",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "schema_name",
+              "value": {
+                "value": {
+                  "value": "schema_name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "schema_version",
+              "value": {
+                "value": {
+                  "value": "schema_version",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -30440,6 +31754,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/schemas/{schema_id}",
       "examples": [
@@ -30585,6 +31900,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/schemas/{schema_id}/write_record",
       "examples": [
@@ -30712,6 +32028,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/shutdown",
       "examples": [
@@ -30785,6 +32102,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/status",
       "examples": [
@@ -30856,6 +32174,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/status/config",
       "examples": [
@@ -30912,6 +32231,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/status/live",
       "examples": [
@@ -30976,6 +32296,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/status/ready",
       "examples": [
@@ -31040,6 +32361,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/status/reset",
       "examples": [
@@ -31130,6 +32452,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/transaction/{tran_id}/resend",
       "examples": [
@@ -31367,6 +32690,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/transactions",
       "examples": [
@@ -31834,6 +33158,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/transactions/create-request",
       "examples": [
@@ -31846,6 +33171,16 @@
                 "value": {
                   "value": "tran_id",
                   "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "endorser_write_txn",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
                 },
                 "type": "primitive"
               }
@@ -32138,6 +33473,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/transactions/{conn_id}/set-endorser-info",
       "examples": [
@@ -32160,6 +33496,16 @@
               "value": {
                 "value": {
                   "value": "endorser_did",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "endorser_name",
+              "value": {
+                "value": {
+                  "value": "endorser_name",
                   "type": "string"
                 },
                 "type": "primitive"
@@ -32288,6 +33634,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/transactions/{conn_id}/set-endorser-role",
       "examples": [
@@ -32304,7 +33651,15 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "transaction_my_job",
+              "value": {
+                "value": "TRANSACTION_AUTHOR",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -32381,6 +33736,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/transactions/{tran_id}",
       "examples": [
@@ -32635,6 +33991,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/transactions/{tran_id}/cancel",
       "examples": [
@@ -32911,6 +34268,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/transactions/{tran_id}/endorse",
       "examples": [
@@ -32927,7 +34285,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "endorser_did",
+              "value": {
+                "value": {
+                  "value": "endorser_did",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -33165,6 +34534,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/transactions/{tran_id}/refuse",
       "examples": [
@@ -33419,6 +34789,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/transactions/{tran_id}/write",
       "examples": [
@@ -33808,12 +35179,55 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/wallet/did",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "did",
+              "value": {
+                "value": {
+                  "value": "did",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "key_type",
+              "value": {
+                "value": "ed25519",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "method",
+              "value": {
+                "value": "key",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "posture",
+              "value": {
+                "value": "public",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "verkey",
+              "value": {
+                "value": {
+                  "value": "verkey",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -33957,6 +35371,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/wallet/did/create",
       "examples": [
@@ -34085,6 +35500,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "PATCH",
       "path": "/wallet/did/local/rotate-keypair",
       "examples": [
@@ -34169,6 +35585,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/wallet/did/public",
       "examples": [
@@ -34341,6 +35758,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/wallet/did/public",
       "examples": [
@@ -34352,6 +35770,36 @@
               "value": {
                 "value": {
                   "value": "did",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "conn_id",
+              "value": {
+                "value": {
+                  "value": "conn_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "create_transaction_for_endorser",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "mediation_id",
+              "value": {
+                "value": {
+                  "value": "mediation_id",
                   "type": "string"
                 },
                 "type": "primitive"
@@ -34461,6 +35909,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/wallet/get-did-endpoint",
       "examples": [
@@ -34605,12 +36054,34 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/wallet/set-did-endpoint",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "conn_id",
+              "value": {
+                "value": {
+                  "value": "conn_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "create_transaction_for_endorser",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "request": {
             "properties": {
@@ -44453,12 +45924,16 @@
               "title": "IndyPrimaryProof",
               "value": {
                 "generatedName": "IndyPrimaryProofEqProof",
-                "schema": "IndyPrimaryProof_eq_proof",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "IndyPrimaryProofEqProof",
+                  "schema": "IndyPrimaryProof_eq_proof",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -44898,12 +46373,16 @@
               "title": "IndyProofProofProofsProof",
               "value": {
                 "generatedName": "IndyProofProofProofsProofNonRevocProof",
-                "schema": "IndyProofProofProofsProof_non_revoc_proof",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "IndyProofProofProofsProofNonRevocProof",
+                  "schema": "IndyProofProofProofsProof_non_revoc_proof",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -45013,12 +46492,16 @@
               "title": "IndyProofReqAttrSpec",
               "value": {
                 "generatedName": "IndyProofReqAttrSpecNonRevoked",
-                "schema": "IndyProofReqAttrSpec_non_revoked",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "IndyProofReqAttrSpecNonRevoked",
+                  "schema": "IndyProofReqAttrSpec_non_revoked",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -45180,12 +46663,16 @@
               "title": "IndyProofReqPredSpec",
               "value": {
                 "generatedName": "IndyProofReqPredSpecNonRevoked",
-                "schema": "IndyProofReqPredSpec_non_revoked",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "IndyProofReqPredSpecNonRevoked",
+                  "schema": "IndyProofReqPredSpec_non_revoked",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -45411,12 +46898,16 @@
               "title": "IndyProofRequest",
               "value": {
                 "generatedName": "IndyProofRequestNonRevoked",
-                "schema": "IndyProofRequest_non_revoked",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "IndyProofRequestNonRevoked",
+                  "schema": "IndyProofRequest_non_revoked",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"

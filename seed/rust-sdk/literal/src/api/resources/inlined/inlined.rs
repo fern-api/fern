@@ -1,5 +1,5 @@
-use crate::api::types::*;
-use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
+use crate::api::*;
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
 
 pub struct InlinedClient {
@@ -9,13 +9,13 @@ pub struct InlinedClient {
 impl InlinedClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config)?,
+            http_client: HttpClient::new(config.clone())?,
         })
     }
 
     pub async fn send(
         &self,
-        request: &serde_json::Value,
+        request: &SendLiteralsInlinedRequest,
         options: Option<RequestOptions>,
     ) -> Result<SendResponse, ApiError> {
         self.http_client

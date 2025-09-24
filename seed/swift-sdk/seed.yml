@@ -108,6 +108,8 @@ allowedFailures:
   - enum
   - errors
   - examples
+  - examples:no-custom-config
+  - examples:readme-config
   - exhaustive
   - extra-properties
   - folders

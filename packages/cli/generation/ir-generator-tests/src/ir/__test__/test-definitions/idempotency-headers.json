@@ -48,6 +48,7 @@
                     }
                 },
                 "tokenEnvVar": null,
+                "key": "bearer",
                 "docs": null
             }
         ],
@@ -367,6 +368,11 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "security": [
+                        {
+                            "bearer": []
+                        }
+                    ],
                     "idempotent": true,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -873,6 +879,11 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "security": [
+                        {
+                            "bearer": []
+                        }
+                    ],
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -1591,6 +1602,7 @@
         },
         "pathParameters": [],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,

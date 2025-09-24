@@ -1,13 +1,12 @@
 imports:
-  commons: ../commons.yml
+  commons: ./commons.yml
   declaration: ./declaration.yml
-  root: ../types.yml
 types:
   NamedParameter:
     properties:
       name: commons.NameAndWireValue
       typeReference: TypeReference
-      propertyAccess: optional<root.ObjectPropertyAccess>
+      propertyAccess: optional<ObjectPropertyAccess>
 
   NamedType:
     docs: |
@@ -27,7 +26,7 @@ types:
       named: commons.TypeId
       nullable: TypeReference
       optional: TypeReference
-      primitive: root.PrimitiveTypeV1
+      primitive: PrimitiveTypeV1
       set: TypeReference
       unknown: {}
 
@@ -107,3 +106,25 @@ types:
     union:
       boolean: boolean
       string: string
+
+  ObjectPropertyAccess:
+    enum:
+      - READ_ONLY
+      - WRITE_ONLY
+
+  PrimitiveTypeV1:
+    enum:
+      - INTEGER
+      - value: LONG
+        docs: "Within the range -2^53 to 2^53"
+      - UINT
+      - UINT_64
+      - FLOAT
+      - DOUBLE
+      - BOOLEAN
+      - STRING
+      - DATE
+      - DATE_TIME
+      - UUID
+      - BASE_64
+      - BIG_INTEGER

@@ -1,4 +1,4 @@
-use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
 
 pub struct Ec2Client {
@@ -8,13 +8,13 @@ pub struct Ec2Client {
 impl Ec2Client {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config)?,
+            http_client: HttpClient::new(config.clone())?,
         })
     }
 
     pub async fn boot_instance(
         &self,
-        request: &serde_json::Value,
+        request: &BootInstanceRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client

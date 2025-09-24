@@ -1,6 +1,6 @@
-use crate::{ClientConfig, ApiError, HttpClient, QueryBuilder, RequestOptions};
-use reqwest::{Method};
-use crate::api::types::{*};
+use crate::api::*;
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
+use reqwest::Method;
 
 pub struct FolderServiceClient {
     pub http_client: HttpClient,
@@ -9,29 +9,29 @@ pub struct FolderServiceClient {
 impl FolderServiceClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-    http_client: HttpClient::new(config)?
-})
+            http_client: HttpClient::new(config.clone())?,
+        })
     }
 
     pub async fn endpoint(&self, options: Option<RequestOptions>) -> Result<(), ApiError> {
-        self.http_client.execute_request(
-            Method::GET,
-            "/service",
-            None,
-            None,
-            options,
-        ).await
+        self.http_client
+            .execute_request(Method::GET, "/service", None, None, options)
+            .await
     }
 
-    pub async fn unknown_request(&self, request: &serde_json::Value, options: Option<RequestOptions>) -> Result<(), ApiError> {
-        self.http_client.execute_request(
-            Method::POST,
-            "/service",
-            Some(serde_json::to_value(request).unwrap_or_default()),
-            None,
-            options,
-        ).await
+    pub async fn unknown_request(
+        &self,
+        request: &serde_json::Value,
+        options: Option<RequestOptions>,
+    ) -> Result<(), ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                "/service",
+                Some(serde_json::to_value(request).unwrap_or_default()),
+                None,
+                options,
+            )
+            .await
     }
-
 }
-

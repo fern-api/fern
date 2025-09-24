@@ -6,10 +6,14 @@ import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTy
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import {
     isCollectionType,
+    isDateTimeOnlyType,
     isDateTimeType,
+    isDateType,
     isOptionalType,
     isUnknownType,
-    isUuidType
+    isUuidType,
+    namedTypeSupportsHashAndEq,
+    typeSupportsHashAndEq
 } from "../utils/primitiveTypeUtils";
 
 export class UnionGenerator {
@@ -56,8 +60,19 @@ export class UnionGenerator {
             writer.writeLine(`use crate::${moduleNameEscaped}::${typeName.pascalCase.unsafeName};`);
         });
 
-        // Add chrono if we have datetime fields
-        if (this.hasDateTimeFields()) {
+        // Add chrono imports based on specific types needed
+        const hasDateOnly = this.hasDateFields();
+        const hasDateTimeOnly = this.hasDateTimeOnlyFields();
+
+        // TODO: @iamnamananand996 - use AST mechanism for all imports
+        if (hasDateOnly && hasDateTimeOnly) {
+            // Both date and datetime types present
+            writer.writeLine("use chrono::{DateTime, NaiveDate, Utc};");
+        } else if (hasDateOnly) {
+            // Only date type present, import NaiveDate only
+            writer.writeLine("use chrono::NaiveDate;");
+        } else if (hasDateTimeOnly) {
+            // Only datetime type present, import DateTime and Utc only
             writer.writeLine("use chrono::{DateTime, Utc};");
         }
 
@@ -66,14 +81,14 @@ export class UnionGenerator {
             writer.writeLine("use std::collections::HashMap;");
         }
 
+        // TODO: @iamnamananand996 build to use serde_json::Value ---> Value directly
+        // if (hasJsonValueFields(properties)) {
+        //     writer.writeLine("use serde_json::Value;");
+        // }
+
         // Add uuid if we have UUID fields
         if (this.hasUuidFields()) {
             writer.writeLine("use uuid::Uuid;");
-        }
-
-        // Add serde_json if we have unknown/Value fields
-        if (this.hasJsonValueFields()) {
-            writer.writeLine("use serde_json::Value;");
         }
 
         // Add serde imports LAST
@@ -109,8 +124,14 @@ export class UnionGenerator {
     private generateUnionAttributes(): rust.Attribute[] {
         const attributes: rust.Attribute[] = [];
 
-        // Basic derives
-        const derives = ["Debug", "Clone", "Serialize", "Deserialize", "PartialEq"];
+        // Build derives conditionally based on actual needs
+        const derives: string[] = ["Debug", "Clone", "Serialize", "Deserialize"];
+
+        // PartialEq - for equality comparisons
+        if (this.needsPartialEq()) {
+            derives.push("PartialEq");
+        }
+
         attributes.push(Attribute.derive(derives));
 
         // Serde tag attribute for discriminated union
@@ -118,6 +139,30 @@ export class UnionGenerator {
         attributes.push(Attribute.serde.tag(discriminantField));
 
         return attributes;
+    }
+
+    private needsPartialEq(): boolean {
+        // PartialEq is useful for testing and comparisons
+        // Include it only if all variant types can support it
+        return this.unionTypeDeclaration.types.every((unionType) => {
+            return unionType.shape._visit({
+                noProperties: () => true, // Unit variants always support PartialEq
+                samePropertiesAsObject: (declaredTypeName) =>
+                    namedTypeSupportsHashAndEq(
+                        {
+                            name: declaredTypeName.name,
+                            typeId: declaredTypeName.typeId,
+                            default: undefined,
+                            inline: undefined,
+                            fernFilepath: declaredTypeName.fernFilepath,
+                            displayName: declaredTypeName.name.originalName
+                        },
+                        this.context
+                    ),
+                singleProperty: (property) => typeSupportsHashAndEq(property.type, this.context),
+                _other: () => false
+            });
+        });
     }
 
     private generateUnionVariant(writer: rust.Writer, unionType: SingleUnionType): void {
@@ -239,6 +284,14 @@ export class UnionGenerator {
     // Helper methods to detect field types for imports
     private hasDateTimeFields(): boolean {
         return this.hasFieldsOfType(isDateTimeType);
+    }
+
+    private hasDateFields(): boolean {
+        return this.hasFieldsOfType(isDateType);
+    }
+
+    private hasDateTimeOnlyFields(): boolean {
+        return this.hasFieldsOfType(isDateTimeOnlyType);
     }
 
     private hasUuidFields(): boolean {

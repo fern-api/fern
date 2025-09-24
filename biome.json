@@ -411,6 +411,7 @@
         "seed/**/gradlew.bat",
         "seed/**/gradle",
         "generators/csharp/playground/**/obj/**",
+        "generators/go/internal/fern/ir.json",
         "!generators/ruby/playground/lib/**",
         ".next",
         "next-env.d.ts",

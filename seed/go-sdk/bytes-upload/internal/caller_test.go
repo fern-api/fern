@@ -18,8 +18,8 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// TestCase represents a single test case.
-type TestCase struct {
+// InternalTestCase represents a single test case.
+type InternalTestCase struct {
 	description string
 
 	// Server-side assertions.
@@ -28,47 +28,47 @@ type TestCase struct {
 	giveResponseIsOptional bool
 	giveHeader             http.Header
 	giveErrorDecoder       ErrorDecoder
-	giveRequest            *Request
+	giveRequest            *InternalTestRequest
 	giveQueryParams        url.Values
 	giveBodyProperties     map[string]interface{}
 
 	// Client-side assertions.
-	wantResponse *Response
+	wantResponse *InternalTestResponse
 	wantHeaders  http.Header
 	wantError    error
 }
 
-// Request a simple request body.
-type Request struct {
+// InternalTestRequest a simple request body.
+type InternalTestRequest struct {
 	Id string `json:"id"`
 }
 
-// Response a simple response body.
-type Response struct {
+// InternalTestResponse a simple response body.
+type InternalTestResponse struct {
 	Id                  string                 `json:"id"`
 	ExtraBodyProperties map[string]interface{} `json:"extraBodyProperties,omitempty"`
 	QueryParameters     url.Values             `json:"queryParameters,omitempty"`
 }
 
-// NotFoundError represents a 404.
-type NotFoundError struct {
+// InternalTestNotFoundError represents a 404.
+type InternalTestNotFoundError struct {
 	*core.APIError
 
 	Message string `json:"message"`
 }
 
 func TestCall(t *testing.T) {
-	tests := []*TestCase{
+	tests := []*InternalTestCase{
 		{
 			description: "GET success",
 			giveMethod:  http.MethodGet,
 			giveHeader: http.Header{
 				"X-API-Status": []string{"success"},
 			},
-			giveRequest: &Request{
+			giveRequest: &InternalTestRequest{
 				Id: "123",
 			},
-			wantResponse: &Response{
+			wantResponse: &InternalTestResponse{
 				Id: "123",
 			},
 		},
@@ -79,10 +79,10 @@ func TestCall(t *testing.T) {
 			giveHeader: http.Header{
 				"X-API-Status": []string{"success"},
 			},
-			giveRequest: &Request{
+			giveRequest: &InternalTestRequest{
 				Id: "123",
 			},
-			wantResponse: &Response{
+			wantResponse: &InternalTestResponse{
 				Id: "123",
 				QueryParameters: url.Values{
 					"limit": []string{"1"},
@@ -95,11 +95,11 @@ func TestCall(t *testing.T) {
 			giveHeader: http.Header{
 				"X-API-Status": []string{"fail"},
 			},
-			giveRequest: &Request{
+			giveRequest: &InternalTestRequest{
 				Id: strconv.Itoa(http.StatusNotFound),
 			},
 			giveErrorDecoder: newTestErrorDecoder(t),
-			wantError: &NotFoundError{
+			wantError: &InternalTestNotFoundError{
 				APIError: core.NewAPIError(
 					http.StatusNotFound,
 					http.Header{},
@@ -126,7 +126,7 @@ func TestCall(t *testing.T) {
 			giveHeader: http.Header{
 				"X-API-Status": []string{"success"},
 			},
-			giveRequest: &Request{
+			giveRequest: &InternalTestRequest{
 				Id: "123",
 			},
 			giveResponseIsOptional: true,
@@ -137,7 +137,7 @@ func TestCall(t *testing.T) {
 			giveHeader: http.Header{
 				"X-API-Status": []string{"fail"},
 			},
-			giveRequest: &Request{
+			giveRequest: &InternalTestRequest{
 				Id: strconv.Itoa(http.StatusInternalServerError),
 			},
 			wantError: core.NewAPIError(
@@ -152,11 +152,11 @@ func TestCall(t *testing.T) {
 			giveHeader: http.Header{
 				"X-API-Status": []string{"success"},
 			},
-			giveRequest: new(Request),
+			giveRequest: new(InternalTestRequest),
 			giveBodyProperties: map[string]interface{}{
 				"key": "value",
 			},
-			wantResponse: &Response{
+			wantResponse: &InternalTestResponse{
 				ExtraBodyProperties: map[string]interface{}{
 					"key": "value",
 				},
@@ -171,10 +171,10 @@ func TestCall(t *testing.T) {
 			giveQueryParams: url.Values{
 				"extra": []string{"true"},
 			},
-			giveRequest: &Request{
+			giveRequest: &InternalTestRequest{
 				Id: "123",
 			},
-			wantResponse: &Response{
+			wantResponse: &InternalTestResponse{
 				Id: "123",
 				QueryParameters: url.Values{
 					"extra": []string{"true"},
@@ -188,13 +188,13 @@ func TestCall(t *testing.T) {
 			giveHeader: http.Header{
 				"X-API-Status": []string{"success"},
 			},
-			giveRequest: &Request{
+			giveRequest: &InternalTestRequest{
 				Id: "123",
 			},
 			giveQueryParams: url.Values{
 				"extra": []string{"true"},
 			},
-			wantResponse: &Response{
+			wantResponse: &InternalTestResponse{
 				Id: "123",
 				QueryParameters: url.Values{
 					"limit": []string{"1"},
@@ -214,7 +214,7 @@ func TestCall(t *testing.T) {
 					Client: client,
 				},
 			)
-			var response *Response
+			var response *InternalTestResponse
 			_, err := caller.Call(
 				context.Background(),
 				&CallParams{
@@ -303,7 +303,7 @@ func TestMergeHeaders(t *testing.T) {
 
 // newTestServer returns a new *httptest.Server configured with the
 // given test parameters.
-func newTestServer(t *testing.T, tc *TestCase) *httptest.Server {
+func newTestServer(t *testing.T, tc *InternalTestCase) *httptest.Server {
 	return httptest.NewServer(
 		http.HandlerFunc(
 			func(w http.ResponseWriter, r *http.Request) {
@@ -313,7 +313,7 @@ func newTestServer(t *testing.T, tc *TestCase) *httptest.Server {
 					assert.Equal(t, value, r.Header.Values(header))
 				}
 
-				request := new(Request)
+				request := new(InternalTestRequest)
 
 				bytes, err := io.ReadAll(r.Body)
 				if tc.giveRequest == nil {
@@ -328,7 +328,7 @@ func newTestServer(t *testing.T, tc *TestCase) *httptest.Server {
 
 				switch request.Id {
 				case strconv.Itoa(http.StatusNotFound):
-					notFoundError := &NotFoundError{
+					notFoundError := &InternalTestNotFoundError{
 						APIError: &core.APIError{
 							StatusCode: http.StatusNotFound,
 						},
@@ -358,7 +358,7 @@ func newTestServer(t *testing.T, tc *TestCase) *httptest.Server {
 				require.NoError(t, json.Unmarshal(bytes, &extraBodyProperties))
 				delete(extraBodyProperties, "id")
 
-				response := &Response{
+				response := &InternalTestResponse{
 					Id:                  request.Id,
 					ExtraBodyProperties: extraBodyProperties,
 					QueryParameters:     r.URL.Query(),
@@ -384,7 +384,7 @@ func newTestErrorDecoder(t *testing.T) func(int, http.Header, io.Reader) error {
 			decoder  = json.NewDecoder(bytes.NewReader(raw))
 		)
 		if statusCode == http.StatusNotFound {
-			value := new(NotFoundError)
+			value := new(InternalTestNotFoundError)
 			value.APIError = apiError
 			require.NoError(t, decoder.Decode(value))
 

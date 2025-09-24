@@ -1,4 +1,4 @@
-use crate::api::types::*;
+use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use crate::{AsyncPaginator, PaginationResult};
 use reqwest::Method;
@@ -10,20 +10,21 @@ pub struct UsersClient {
 impl UsersClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config)?,
+            http_client: HttpClient::new(config.clone())?,
         })
     }
 
     pub async fn list_usernames_custom(
         &self,
-        starting_after: Option<String>,
+        request: &ListUsernamesCustomQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<AsyncPaginator<serde_json::Value>, ApiError> {
         let http_client = std::sync::Arc::new(self.http_client.clone());
         let base_query_params = QueryBuilder::new()
-            .string("starting_after", starting_after)
+            .string("starting_after", request.starting_after.clone())
             .build();
         let options_clone = options.clone();
+        let request_clone = request.clone();
 
         AsyncPaginator::new(
             http_client,
@@ -33,6 +34,7 @@ impl UsersClient {
                 // Custom pagination logic would go here
 
                 // Clone captured variables to move into the async block
+                let request_for_async = request_clone.clone();
 
                 Box::pin(async move {
                     let response: serde_json::Value = client

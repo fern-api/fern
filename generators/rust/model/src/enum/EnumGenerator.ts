@@ -64,7 +64,12 @@ export class EnumGenerator {
             name: this.typeDeclaration.name.name.pascalCase.unsafeName,
             visibility: PUBLIC,
             attributes: this.generateEnumAttributes(),
-            variants: this.enumTypeDeclaration.values.map((enumValue) => this.generateEnumVariant(enumValue))
+            variants: this.enumTypeDeclaration.values.map((enumValue) => this.generateEnumVariant(enumValue)),
+            docs: this.typeDeclaration.docs
+                ? rust.docComment({
+                      summary: this.typeDeclaration.docs
+                  })
+                : undefined
         });
     }
 
@@ -89,7 +94,12 @@ export class EnumGenerator {
 
         return rust.enumVariant({
             name: enumValue.name.name.pascalCase.unsafeName,
-            attributes: variantAttributes.length > 0 ? variantAttributes : undefined
+            attributes: variantAttributes.length > 0 ? variantAttributes : undefined,
+            docs: enumValue.docs
+                ? rust.docComment({
+                      summary: enumValue.docs
+                  })
+                : undefined
         });
     }
 

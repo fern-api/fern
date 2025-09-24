@@ -7,7 +7,7 @@ import { generateModels } from "@fern-api/rust-model";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { HttpRequestBody, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { mkdir, writeFile } from "fs/promises";
 import { join } from "path";
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
@@ -145,6 +145,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     private generateApiModFile(context: SdkGeneratorContext): RustFile {
         const hasTypes = this.hasTypes(context);
+        const clientName = context.getClientName();
         const moduleDeclarations: ModuleDeclaration[] = [];
         const useStatements: UseStatement[] = [];
 
@@ -155,7 +156,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         }
 
         // Add re-exports
-        useStatements.push(new UseStatement({ path: "resources", items: ["*"], isPublic: true }));
+        useStatements.push(new UseStatement({ path: "resources", items: [clientName], isPublic: true }));
         if (hasTypes) {
             useStatements.push(new UseStatement({ path: "types", items: ["*"], isPublic: true }));
         }
@@ -179,12 +180,9 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     private generateSubClientFiles(context: SdkGeneratorContext, files: RustFile[]): void {
         Object.values(context.ir.subpackages).forEach((subpackage) => {
-            if (subpackage.service != null || subpackage.hasEndpointsInTree) {
-                const subClientGenerator = new SubClientGenerator(context, subpackage);
-
-                // Generate the client file
-                files.push(subClientGenerator.generate());
-            }
+            // Always generate client files, even for subpackages without services/endpoints
+            const subClientGenerator = new SubClientGenerator(context, subpackage);
+            files.push(subClientGenerator.generate());
         });
     }
 
@@ -248,9 +246,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
         // Add re-exports
         const clientExports = [];
-        const subpackages = Object.values(context.ir.subpackages).filter(
-            (subpackage) => subpackage.service != null || subpackage.hasEndpointsInTree
-        );
+        const subpackages = Object.values(context.ir.subpackages);
 
         // Only add root client if there are multiple services
         if (subpackages.length > 1) {
@@ -294,6 +290,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         // Use a Set to track unique module names and prevent duplicates
         const uniqueModuleNames = new Set<string>();
 
+        // Add regular IR types
         for (const [_typeId, typeDeclaration] of Object.entries(context.ir.types)) {
             // Use centralized method to get unique filename and extract module name from it
             const filename = context.getUniqueFilenameForType(typeDeclaration);
@@ -311,6 +308,58 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
                         isPublic: true
                     })
                 );
+            }
+        }
+
+        // Add inlined request body types from services
+        for (const service of Object.values(context.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.requestBody?.type === "inlinedRequestBody") {
+                    const inlinedRequestBody = endpoint.requestBody as HttpRequestBody.InlinedRequestBody;
+                    const requestName = inlinedRequestBody.name.pascalCase.safeName;
+
+                    // Use centralized method for consistent snake_case conversion
+                    const rawModuleName = context.getModuleNameForInlinedRequestBody(requestName);
+                    const escapedModuleName = context.configManager.escapeRustKeyword(rawModuleName);
+
+                    // Only add if we haven't seen this module name before
+                    if (!uniqueModuleNames.has(escapedModuleName)) {
+                        uniqueModuleNames.add(escapedModuleName);
+                        moduleDeclarations.push(new ModuleDeclaration({ name: escapedModuleName, isPublic: true }));
+                        useStatements.push(
+                            new UseStatement({
+                                path: escapedModuleName,
+                                items: ["*"],
+                                isPublic: true
+                            })
+                        );
+                    }
+                }
+            }
+        }
+
+        // Add query parameter request structs for query-only endpoints
+        for (const service of Object.values(context.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                // Add query request structs for endpoints without request body but with query parameters
+                if (endpoint.queryParameters.length > 0 && !endpoint.requestBody) {
+                    const queryRequestTypeName = `${endpoint.name.pascalCase.safeName}QueryRequest`;
+                    const rawModuleName = context.getModuleNameForQueryRequest(queryRequestTypeName);
+                    const escapedModuleName = context.configManager.escapeRustKeyword(rawModuleName);
+
+                    // Only add if we haven't seen this module name before
+                    if (!uniqueModuleNames.has(escapedModuleName)) {
+                        uniqueModuleNames.add(escapedModuleName);
+                        moduleDeclarations.push(new ModuleDeclaration({ name: escapedModuleName, isPublic: true }));
+                        useStatements.push(
+                            new UseStatement({
+                                path: escapedModuleName,
+                                items: ["*"],
+                                isPublic: true
+                            })
+                        );
+                    }
+                }
             }
         }
 

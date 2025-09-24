@@ -1,5 +1,5 @@
-use crate::api::types::*;
-use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
+use crate::api::*;
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
 
 pub struct AuthClient {
@@ -9,13 +9,13 @@ pub struct AuthClient {
 impl AuthClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config)?,
+            http_client: HttpClient::new(config.clone())?,
         })
     }
 
     pub async fn get_token_with_client_credentials(
         &self,
-        request: &serde_json::Value,
+        request: &GetTokenRequest,
         options: Option<RequestOptions>,
     ) -> Result<TokenResponse, ApiError> {
         self.http_client
@@ -31,7 +31,7 @@ impl AuthClient {
 
     pub async fn refresh_token(
         &self,
-        request: &serde_json::Value,
+        request: &RefreshTokenRequest,
         options: Option<RequestOptions>,
     ) -> Result<TokenResponse, ApiError> {
         self.http_client

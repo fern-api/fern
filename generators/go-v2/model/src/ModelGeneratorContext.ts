@@ -37,4 +37,8 @@ export class ModelGeneratorContext extends AbstractGoGeneratorContext<ModelCusto
     public getTestAsIsFiles(): string[] {
         return [];
     }
+
+    public getRootAsIsFiles(): string[] {
+        return [];
+    }
 }

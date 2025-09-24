@@ -11,6 +11,8 @@ public class Example20 {
             .url("https://api.fern.com")
             .build();
 
-        client.service().refreshToken(Optional.of());
+        client.service().refreshToken(
+            Optional.empty()
+        );
     }
 }

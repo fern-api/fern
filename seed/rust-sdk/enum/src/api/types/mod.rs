@@ -5,6 +5,9 @@ pub mod enum_with_special_characters;
 pub mod enum_with_custom;
 pub mod special_enum;
 pub mod unknown_status;
+pub mod send_enum_inlined_request;
+pub mod send_query_request;
+pub mod send_list_query_request;
 
 pub use operand::{*};
 pub use color::{*};
@@ -13,4 +16,7 @@ pub use enum_with_special_characters::{*};
 pub use enum_with_custom::{*};
 pub use special_enum::{*};
 pub use unknown_status::{*};
+pub use send_enum_inlined_request::{*};
+pub use send_query_request::{*};
+pub use send_list_query_request::{*};
 

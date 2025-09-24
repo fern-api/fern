@@ -7,6 +7,6 @@ import * as FernIr from "../../../index";
 /**
  * We currently assume the resultant token is leveraged as a bearer token, e.g. "Authorization Bearer"
  */
-export interface OAuthScheme extends FernIr.WithDocs {
+export interface OAuthScheme extends FernIr.BaseAuthScheme {
     configuration: FernIr.OAuthConfiguration;
 }

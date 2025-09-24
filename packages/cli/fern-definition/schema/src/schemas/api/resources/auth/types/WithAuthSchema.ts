@@ -6,5 +6,5 @@ import * as FernDefinition from "../../../index";
 
 export interface WithAuthSchema {
     auth?: FernDefinition.ApiAuthSchema;
-    "auth-schemes"?: Record<string, FernDefinition.AuthSchemeDeclarationSchema>;
+    "auth-schemes"?: Record<FernDefinition.AuthSchemeKey, FernDefinition.AuthSchemeDeclarationSchema>;
 }

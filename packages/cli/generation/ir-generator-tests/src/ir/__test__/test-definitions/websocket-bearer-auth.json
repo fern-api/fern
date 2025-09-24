@@ -48,6 +48,7 @@
                     }
                 },
                 "tokenEnvVar": "SEED_API_KEY",
+                "key": "Bearer",
                 "docs": null
             }
         ],
@@ -4893,6 +4894,7 @@
         "endpoints": {},
         "pathParameters": [],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,

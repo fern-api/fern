@@ -52,13 +52,6 @@ func (r *RawClient) GetFile(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		404: func(apiError *core.APIError) error {
-			return &fern.NotFoundError{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *fern.File
 	raw, err := r.caller.Call(
 		ctx,
@@ -71,7 +64,7 @@ func (r *RawClient) GetFile(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(fern.ErrorCodes),
 		},
 	)
 	if err != nil {

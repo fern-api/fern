@@ -30,6 +30,8 @@ export function convertFullExample(fullExample: FullExample): RawSchemas.Example
             return convertLiteralExample(fullExample.value);
         case "unknown":
             return convertFullExample(fullExample.value);
+        case "null":
+            return null;
         default:
             assertNever(fullExample);
     }

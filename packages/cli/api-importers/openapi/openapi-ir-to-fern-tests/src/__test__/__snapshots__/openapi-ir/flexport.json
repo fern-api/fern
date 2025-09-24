@@ -675,6 +675,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/booking_amendments",
       "examples": [
@@ -2267,6 +2268,7 @@
       "servers": [],
       "description": "Returns a list of booking line items linked to submitted bookings",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/booking_line_items",
       "examples": [
@@ -2292,6 +2294,13 @@
                   "type": "int"
                 },
                 "type": "primitive"
+              }
+            },
+            {
+              "name": "direction",
+              "value": {
+                "value": "asc",
+                "type": "enum"
               }
             },
             {
@@ -2818,6 +2827,7 @@
       "servers": [],
       "description": "Creates and returns a booking line item",
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/booking_line_items",
       "examples": [
@@ -3310,6 +3320,7 @@
       "servers": [],
       "description": "Returns a list of booking line items",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/booking_line_items/{id}",
       "examples": [
@@ -4538,6 +4549,7 @@
       "servers": [],
       "description": "Returns a list of bookings.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/bookings",
       "examples": [
@@ -4566,6 +4578,27 @@
               }
             },
             {
+              "name": "sort",
+              "value": {
+                "value": "cargo_ready_date",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "direction",
+              "value": {
+                "value": "asc",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "f.status",
+              "value": {
+                "value": "booked",
+                "type": "enum"
+              }
+            },
+            {
               "name": "f.shipment.id",
               "value": {
                 "value": {
@@ -4590,6 +4623,126 @@
               "value": {
                 "value": {
                   "value": "amazon-us",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.name",
+              "value": {
+                "value": {
+                  "value": "f.name",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.cargo_ready_date",
+              "value": {
+                "value": {
+                  "value": "f.cargo_ready_date",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.cargo_ready_date.gt",
+              "value": {
+                "value": {
+                  "value": "f.cargo_ready_date.gt",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.cargo_ready_date.gte",
+              "value": {
+                "value": {
+                  "value": "f.cargo_ready_date.gte",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.cargo_ready_date.lt",
+              "value": {
+                "value": {
+                  "value": "f.cargo_ready_date.lt",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.cargo_ready_date.lte",
+              "value": {
+                "value": {
+                  "value": "f.cargo_ready_date.lte",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.created_at",
+              "value": {
+                "value": {
+                  "value": "f.created_at",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.created_at.gt",
+              "value": {
+                "value": {
+                  "value": "f.created_at.gt",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.created_at.gte",
+              "value": {
+                "value": {
+                  "value": "f.created_at.gte",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.created_at.lt",
+              "value": {
+                "value": {
+                  "value": "f.created_at.lt",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.created_at.lte",
+              "value": {
+                "value": {
+                  "value": "f.created_at.lte",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.metadata.YOUR_METADATA_KEY",
+              "value": {
+                "value": {
+                  "value": "f.metadata.YOUR_METADATA_KEY",
                   "type": "string"
                 },
                 "type": "primitive"
@@ -6339,6 +6492,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/bookings",
       "examples": [
@@ -8591,6 +8745,7 @@
       "servers": [],
       "description": "Retrieves the details of a single booking.\n",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/bookings/{id}",
       "examples": [
@@ -10251,6 +10406,7 @@
       "servers": [],
       "description": "Rate limited to 2,000 requests per hour",
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/carbon_calculation",
       "examples": [
@@ -10838,6 +10994,7 @@
       "servers": [],
       "description": "Returns a list of commercial invoices",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/commercial_invoices",
       "examples": [
@@ -10861,6 +11018,46 @@
                 "value": {
                   "value": 20,
                   "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.shipment.id",
+              "value": {
+                "value": {
+                  "value": "f.shipment.id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.invoice_number",
+              "value": {
+                "value": {
+                  "value": "f.invoice_number",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.involved_party_seller_id",
+              "value": {
+                "value": {
+                  "value": "f.involved_party_seller_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.involved_party_seller_ref",
+              "value": {
+                "value": {
+                  "value": "f.involved_party_seller_ref",
+                  "type": "string"
                 },
                 "type": "primitive"
               }
@@ -11865,6 +12062,7 @@
       "servers": [],
       "description": "**The Commercial Invoices POST endpoint needs special permission to access. Please contact your Flexport Sales representative if you are interested in using this endpoint.**",
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/commercial_invoices",
       "examples": [
@@ -12956,6 +13154,7 @@
       "servers": [],
       "description": "**The Commercial Invoices PATCH endpoint needs special permission to access. Please contact your Flexport Sales representative if you are interested in using this endpoint.**",
       "authed": false,
+      "security": [],
       "method": "PATCH",
       "path": "/commercial_invoices",
       "examples": [
@@ -13986,6 +14185,7 @@
       "servers": [],
       "description": "Retrieves the details of a single commercial invoice.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/commercial_invoices/{id}",
       "examples": [
@@ -15110,6 +15310,7 @@
       "servers": [],
       "description": "Returns a list of customs entries.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/customs_entries",
       "examples": [
@@ -15133,6 +15334,16 @@
                 "value": {
                   "value": 20,
                   "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.shipment.id",
+              "value": {
+                "value": {
+                  "value": "f.shipment.id",
+                  "type": "string"
                 },
                 "type": "primitive"
               }
@@ -15595,6 +15806,7 @@
       "servers": [],
       "description": "Retrieves the details of a single customs entry.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/customs_entries/{id}",
       "examples": [
@@ -16358,6 +16570,7 @@
       "servers": [],
       "description": "Returns a list of all documents associated with shipments.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/documents",
       "examples": [
@@ -16381,6 +16594,76 @@
                 "value": {
                   "value": 20,
                   "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.shipment.id",
+              "value": {
+                "value": {
+                  "value": "f.shipment.id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.document_type",
+              "value": {
+                "value": {
+                  "value": "f.document_type",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.archived_at.exists",
+              "value": {
+                "value": {
+                  "value": "f.archived_at.exists",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.uploaded_at.gt",
+              "value": {
+                "value": {
+                  "value": "f.uploaded_at.gt",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.uploaded_at.lt",
+              "value": {
+                "value": {
+                  "value": "f.uploaded_at.lt",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.uploaded_at.gte",
+              "value": {
+                "value": {
+                  "value": "f.uploaded_at.gte",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.uploaded_at.lte",
+              "value": {
+                "value": {
+                  "value": "f.uploaded_at.lte",
+                  "type": "string"
                 },
                 "type": "primitive"
               }
@@ -16890,6 +17173,7 @@
       "servers": [],
       "description": "Create a new document for this client using the request payload",
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/documents",
       "examples": [
@@ -17361,6 +17645,7 @@
       "servers": [],
       "description": "Retrieves the details of a single document.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/documents/{id}",
       "examples": [
@@ -17721,6 +18006,7 @@
       "servers": [],
       "description": "Retrieves the contents of a specified file. Returns the file as a stream of bytes.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/documents/{id}/download",
       "examples": [],
@@ -18251,6 +18537,7 @@
       "servers": [],
       "description": "Returns a list of all events delivered to any webhook registered by this client",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/events",
       "examples": [
@@ -18285,6 +18572,23 @@
                   "type": "string"
                 },
                 "type": "primitive"
+              }
+            },
+            {
+              "name": "f.data.shipment.id",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.data.resource._object",
+              "value": {
+                "value": "/document",
+                "type": "enum"
               }
             }
           ],
@@ -18706,6 +19010,7 @@
       "servers": [],
       "description": "Returns the webhook event with ID \":id\"",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/events/{id}",
       "examples": [
@@ -20280,6 +20585,7 @@
       "servers": [],
       "description": "Returns a list of invoices.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/invoices",
       "examples": [
@@ -20308,11 +20614,45 @@
               }
             },
             {
+              "name": "sort",
+              "value": {
+                "value": {
+                  "value": "due_date",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "direction",
+              "value": {
+                "value": "asc",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "f.status",
+              "value": {
+                "value": "outstanding",
+                "type": "enum"
+              }
+            },
+            {
               "name": "f.shipment.id",
               "value": {
                 "value": {
                   "value": 12345,
                   "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.billed_directly_to_client",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
                 },
                 "type": "primitive"
               }
@@ -22140,6 +22480,7 @@
       "servers": [],
       "description": "Retrieves the details of a single invoice",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/invoices/{id}",
       "examples": [
@@ -23883,6 +24224,7 @@
       "servers": [],
       "description": "Returns a list of companies in the network.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/network/companies",
       "examples": [
@@ -23906,6 +24248,26 @@
                 "value": {
                   "value": 20,
                   "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.ref",
+              "value": {
+                "value": {
+                  "value": "f.ref",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.metadata.YOUR_METADATA_KEY",
+              "value": {
+                "value": {
+                  "value": "f.metadata.YOUR_METADATA_KEY",
+                  "type": "string"
                 },
                 "type": "primitive"
               }
@@ -24595,6 +24957,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/network/companies",
       "examples": [
@@ -25137,6 +25500,7 @@
       "servers": [],
       "description": "Retrieves the details of a single company.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/network/companies/{id}",
       "examples": [
@@ -25827,6 +26191,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "PATCH",
       "path": "/network/companies/{id}",
       "examples": [
@@ -26737,6 +27102,7 @@
       "servers": [],
       "description": "Returns a list of the company entity objects in the network.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/network/company_entities",
       "examples": [
@@ -26760,6 +27126,36 @@
                 "value": {
                   "value": 20,
                   "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.ref",
+              "value": {
+                "value": {
+                  "value": "f.ref",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.company_id",
+              "value": {
+                "value": {
+                  "value": "f.company_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.company_ref",
+              "value": {
+                "value": {
+                  "value": "f.company_ref",
+                  "type": "string"
                 },
                 "type": "primitive"
               }
@@ -27319,6 +27715,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/network/company_entities",
       "examples": [
@@ -27863,6 +28260,7 @@
       "servers": [],
       "description": "Retrieves the details of a single company entity",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/network/company_entities/{id}",
       "examples": [
@@ -28421,6 +28819,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "PATCH",
       "path": "/network/company_entities/{id}",
       "examples": [
@@ -29178,6 +29577,7 @@
       "servers": [],
       "description": "Returns a list of contacts in the network.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/network/contacts",
       "examples": [
@@ -29201,6 +29601,36 @@
                 "value": {
                   "value": 20,
                   "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.company_ref",
+              "value": {
+                "value": {
+                  "value": "f.company_ref",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.company.id",
+              "value": {
+                "value": {
+                  "value": "f.company.id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.location.id",
+              "value": {
+                "value": {
+                  "value": "f.location.id",
+                  "type": "string"
                 },
                 "type": "primitive"
               }
@@ -29705,6 +30135,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/network/contacts",
       "examples": [
@@ -30205,6 +30636,7 @@
       "servers": [],
       "description": "Retrieves the details of a single contact.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/network/contacts/{id}",
       "examples": [
@@ -30709,6 +31141,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "PATCH",
       "path": "/network/contacts/{id}",
       "examples": [
@@ -31475,6 +31908,7 @@
       "servers": [],
       "description": "Returns a list of location objects in the network.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/network/locations",
       "examples": [
@@ -31498,6 +31932,56 @@
                 "value": {
                   "value": 20,
                   "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.ref",
+              "value": {
+                "value": {
+                  "value": "f.ref",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.company_ref",
+              "value": {
+                "value": {
+                  "value": "f.company_ref",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.company.id",
+              "value": {
+                "value": {
+                  "value": "f.company.id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.contact.id",
+              "value": {
+                "value": {
+                  "value": "f.contact.id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.metadata.YOUR_METADATA_KEY",
+              "value": {
+                "value": {
+                  "value": "f.metadata.YOUR_METADATA_KEY",
+                  "type": "string"
                 },
                 "type": "primitive"
               }
@@ -32111,6 +32595,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/network/locations",
       "examples": [
@@ -32730,6 +33215,7 @@
       "servers": [],
       "description": "Retrieves the details of a single location",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/network/locations/{id}",
       "examples": [
@@ -33356,6 +33842,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "PATCH",
       "path": "/network/locations/{id}",
       "examples": [
@@ -33952,6 +34439,7 @@
       "servers": [],
       "description": "Retrieves the details of your own organization.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/network/me/companies",
       "examples": [
@@ -34819,6 +35307,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/ocean/shipment_container_legs",
       "examples": [
@@ -34842,6 +35331,36 @@
                 "value": {
                   "value": 20,
                   "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.leg.id",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.shipment_container.id",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.shipment_container.container_number",
+              "value": {
+                "value": {
+                  "value": "f.shipment_container.container_number",
+                  "type": "string"
                 },
                 "type": "primitive"
               }
@@ -35351,6 +35870,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/ocean/shipment_container_legs/{id}",
       "examples": [
@@ -36082,6 +36602,7 @@
       "servers": [],
       "description": "Returns a list of containers. The containers are sorted descending by creation date.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/ocean/shipment_containers",
       "examples": [
@@ -36105,6 +36626,36 @@
                 "value": {
                   "value": 20,
                   "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.shipment.id",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.container_number",
+              "value": {
+                "value": {
+                  "value": "f.container_number",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.metadata.YOUR_METADATA_KEY",
+              "value": {
+                "value": {
+                  "value": "f.metadata.YOUR_METADATA_KEY",
+                  "type": "string"
                 },
                 "type": "primitive"
               }
@@ -36906,6 +37457,7 @@
       "servers": [],
       "description": "Retrieves the details of a single container.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/ocean/shipment_containers/{id}",
       "examples": [
@@ -37626,12 +38178,16 @@
                         "value": {
                           "value": {
                             "generatedName": "PortsIndexResponseDataDataItem",
-                            "schema": "Place",
-                            "source": {
-                              "file": "../openapi.yml",
-                              "type": "openapi"
+                            "value": {
+                              "generatedName": "PortsIndexResponseDataDataItem",
+                              "schema": "Place",
+                              "source": {
+                                "file": "../openapi.yml",
+                                "type": "openapi"
+                              },
+                              "type": "reference"
                             },
-                            "type": "reference"
+                            "type": "nullable"
                           },
                           "generatedName": "PortsIndexResponseDataData",
                           "groupName": [],
@@ -37921,6 +38477,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/ports",
       "examples": [
@@ -37946,6 +38503,13 @@
                   "type": "int"
                 },
                 "type": "primitive"
+              }
+            },
+            {
+              "name": "f.port_type",
+              "value": {
+                "value": "airport",
+                "type": "enum"
               }
             },
             {
@@ -38839,13 +39403,45 @@
       "servers": [],
       "description": "Returns a list of all products belonging to this client",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/products",
       "examples": [
         {
           "name": "Success",
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "f.sku",
+              "value": {
+                "value": {
+                  "value": "f.sku",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.archived_at.exists",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.product_properties.TYPE",
+              "value": {
+                "value": {
+                  "value": "f.product_properties.TYPE",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -39390,6 +39986,7 @@
       "servers": [],
       "description": "Create a new product for this client using the request payload",
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/products",
       "examples": [
@@ -39941,6 +40538,7 @@
       "servers": [],
       "description": "Returns the client's product with this ID",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/products/{id}",
       "examples": [
@@ -40489,6 +41087,7 @@
       "servers": [],
       "description": "Update this product to represent the request payload",
       "authed": false,
+      "security": [],
       "method": "PATCH",
       "path": "/products/{id}",
       "examples": [
@@ -41365,6 +41964,7 @@
       "servers": [],
       "description": "Returns a list of purchase order line items",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/purchase_order_line_items",
       "examples": [
@@ -41393,6 +41993,13 @@
               }
             },
             {
+              "name": "direction",
+              "value": {
+                "value": "asc",
+                "type": "enum"
+              }
+            },
+            {
               "name": "f.purchase_order.id",
               "value": {
                 "value": {
@@ -41403,11 +42010,31 @@
               }
             },
             {
+              "name": "f.line_item_number",
+              "value": {
+                "value": {
+                  "value": "f.line_item_number",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
               "name": "f.item_key",
               "value": {
                 "value": {
                   "value": "item1",
                   "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.purchase_order_version.id",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
                 },
                 "type": "primitive"
               }
@@ -42450,6 +43077,7 @@
       "servers": [],
       "description": "Returns the details of a purchase order line item",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/purchase_order_line_items/{id}",
       "examples": [
@@ -44087,6 +44715,7 @@
       "servers": [],
       "description": "Returns a list of purchase orders",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/purchase_orders",
       "examples": [
@@ -44112,6 +44741,40 @@
                   "type": "int"
                 },
                 "type": "primitive"
+              }
+            },
+            {
+              "name": "sort",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "direction",
+              "value": {
+                "value": "asc",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "f.archived_at.exists",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.status",
+              "value": {
+                "value": "open",
+                "type": "enum"
               }
             },
             {
@@ -45791,6 +46454,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/purchase_orders",
       "examples": [
@@ -47710,6 +48374,7 @@
       "servers": [],
       "description": "Retrieves the details of a single purchase order.\n",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/purchase_orders/{id}",
       "examples": [
@@ -47727,7 +48392,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "f.purchase_order_version.id",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -48911,6 +49587,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/purchase_orders/{id}",
       "examples": [
@@ -50595,6 +51272,7 @@
       "servers": [],
       "description": "Returns a list of shipment route legs. The legs are sorted descending by creation date.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/shipment_legs",
       "examples": [
@@ -50618,6 +51296,36 @@
                 "value": {
                   "value": 20,
                   "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.shipment.id",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.transportation_mode",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.include_deleted",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
                 },
                 "type": "primitive"
               }
@@ -51840,6 +52548,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/shipment_legs/{id}",
       "examples": [
@@ -51857,7 +52566,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "f.include_deleted",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -53962,6 +54682,7 @@
       "servers": [],
       "description": "Returns a list of shipments.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/shipments",
       "examples": [
@@ -53990,6 +54711,41 @@
               }
             },
             {
+              "name": "sort",
+              "value": {
+                "value": "id",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "direction",
+              "value": {
+                "value": "asc",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "f.transportation_mode",
+              "value": {
+                "value": "ocean",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "f.status",
+              "value": {
+                "value": "seller_location",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "f.statuses.any",
+              "value": {
+                "value": "seller_location",
+                "type": "enum"
+              }
+            },
+            {
               "name": "f.container_number",
               "value": {
                 "value": {
@@ -54015,6 +54771,216 @@
                 "value": {
                   "value": "ASA121",
                   "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.updated_at.gt",
+              "value": {
+                "value": {
+                  "value": "f.updated_at.gt",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.updated_at.lt",
+              "value": {
+                "value": {
+                  "value": "f.updated_at.lt",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.archived_at.gt",
+              "value": {
+                "value": {
+                  "value": "f.archived_at.gt",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.archived_at.lt",
+              "value": {
+                "value": {
+                  "value": "f.archived_at.lt",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.master_bill_number",
+              "value": {
+                "value": {
+                  "value": "f.master_bill_number",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.house_bill_number",
+              "value": {
+                "value": {
+                  "value": "f.house_bill_number",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.consignee_external_ref",
+              "value": {
+                "value": {
+                  "value": "f.consignee_external_ref",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.origin_address_ref",
+              "value": {
+                "value": {
+                  "value": "f.origin_address_ref",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.destination_address_ref",
+              "value": {
+                "value": {
+                  "value": "f.destination_address_ref",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.metadata.YOUR_METADATA_KEY",
+              "value": {
+                "value": {
+                  "value": "f.metadata.YOUR_METADATA_KEY",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.wants_freight_management_bco",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.wants_flexport_freight",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.wants_import_customs_service",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.wants_export_customs_service",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.wants_commercial_invoice_transcription",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.wants_flexport_insurance",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.wants_pickup_service",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.wants_trade_declaration_service",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.visibility_only",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.wants_delivery_service",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "f.belongs_to_a_buyers_consol",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
                 },
                 "type": "primitive"
               }
@@ -56089,6 +57055,7 @@
       "servers": [],
       "description": "Retrieves the details of a single shipment.\n",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/shipments/{id}",
       "examples": [
@@ -58185,6 +59152,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "PATCH",
       "path": "/shipments/{id}",
       "examples": [
@@ -60258,6 +61226,7 @@
       "servers": [],
       "description": "Returns a list of shipments status shareable url",
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/shipments_shareable",
       "examples": [
@@ -64949,12 +65918,16 @@
                 "generatedName": "oceanBookingDetailOriginPort",
                 "value": {
                   "generatedName": "OceanBookingDetailOriginPort",
-                  "schema": "Place",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "OceanBookingDetailOriginPort",
+                    "schema": "Place",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -64971,12 +65944,16 @@
                 "generatedName": "oceanBookingDetailDestinationPort",
                 "value": {
                   "generatedName": "OceanBookingDetailDestinationPort",
-                  "schema": "Place",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "OceanBookingDetailDestinationPort",
+                    "schema": "Place",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -65180,12 +66157,16 @@
                 "generatedName": "airBookingDetailOriginPort",
                 "value": {
                   "generatedName": "AirBookingDetailOriginPort",
-                  "schema": "Place",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "AirBookingDetailOriginPort",
+                    "schema": "Place",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -65202,12 +66183,16 @@
                 "generatedName": "airBookingDetailDestinationPort",
                 "value": {
                   "generatedName": "AirBookingDetailDestinationPort",
-                  "schema": "Place",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "AirBookingDetailDestinationPort",
+                    "schema": "Place",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "type": "nullable"
                 },
                 "groupName": [],
                 "type": "optional"
@@ -65756,12 +66741,16 @@
               "generatedName": "bookingOceanBooking",
               "value": {
                 "generatedName": "BookingOceanBooking",
-                "schema": "OceanBookingDetail",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "BookingOceanBooking",
+                  "schema": "OceanBookingDetail",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -65778,12 +66767,16 @@
               "generatedName": "bookingAirBooking",
               "value": {
                 "generatedName": "BookingAirBooking",
-                "schema": "AirBookingDetail",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "BookingAirBooking",
+                  "schema": "AirBookingDetail",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -65800,12 +66793,16 @@
               "generatedName": "bookingTruckingBooking",
               "value": {
                 "generatedName": "BookingTruckingBooking",
-                "schema": "TruckingBookingDetail",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "BookingTruckingBooking",
+                  "schema": "TruckingBookingDetail",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -73325,12 +74322,16 @@
               "generatedName": "shipmentOceanShipment",
               "value": {
                 "generatedName": "ShipmentOceanShipment",
-                "schema": "OceanShipmentDetail",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ShipmentOceanShipment",
+                  "schema": "OceanShipmentDetail",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -73347,12 +74348,16 @@
               "generatedName": "shipmentAirShipment",
               "value": {
                 "generatedName": "ShipmentAirShipment",
-                "schema": "AirShipmentDetail",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ShipmentAirShipment",
+                  "schema": "AirShipmentDetail",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -74030,12 +75035,16 @@
               "generatedName": "shipmentNodePlace",
               "value": {
                 "generatedName": "ShipmentNodePlace",
-                "schema": "Place",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ShipmentNodePlace",
+                  "schema": "Place",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -74052,12 +75061,16 @@
               "generatedName": "shipmentNodeTerminal",
               "value": {
                 "generatedName": "ShipmentNodeTerminal",
-                "schema": "Terminal",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ShipmentNodeTerminal",
+                  "schema": "Terminal",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -74913,12 +75926,16 @@
               "generatedName": "shipmentLegAirLeg",
               "value": {
                 "generatedName": "ShipmentLegAirLeg",
-                "schema": "AirShipmentLeg",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ShipmentLegAirLeg",
+                  "schema": "AirShipmentLeg",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -74957,12 +75974,16 @@
               "generatedName": "shipmentLegTruckingLeg",
               "value": {
                 "generatedName": "ShipmentLegTruckingLeg",
-                "schema": "TruckingShipmentLeg",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ShipmentLegTruckingLeg",
+                  "schema": "TruckingShipmentLeg",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -74979,12 +76000,16 @@
               "generatedName": "shipmentLegRailLeg",
               "value": {
                 "generatedName": "ShipmentLegRailLeg",
-                "schema": "RailShipmentLeg",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "ShipmentLegRailLeg",
+                  "schema": "RailShipmentLeg",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -80764,12 +81789,16 @@
               "generatedName": "purchaseOrderLineItemOriginPort",
               "value": {
                 "generatedName": "PurchaseOrderLineItemOriginPort",
-                "schema": "Place",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "PurchaseOrderLineItemOriginPort",
+                  "schema": "Place",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -80808,12 +81837,16 @@
               "generatedName": "purchaseOrderLineItemDestinationPort",
               "value": {
                 "generatedName": "PurchaseOrderLineItemDestinationPort",
-                "schema": "Place",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "PurchaseOrderLineItemDestinationPort",
+                  "schema": "Place",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -81740,12 +82773,16 @@
               "generatedName": "purchaseOrderOriginPort",
               "value": {
                 "generatedName": "PurchaseOrderOriginPort",
-                "schema": "Place",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "PurchaseOrderOriginPort",
+                  "schema": "Place",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"
@@ -81784,12 +82821,16 @@
               "generatedName": "purchaseOrderDestinationPort",
               "value": {
                 "generatedName": "PurchaseOrderDestinationPort",
-                "schema": "Place",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "PurchaseOrderDestinationPort",
+                  "schema": "Place",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "type": "nullable"
               },
               "groupName": [],
               "type": "optional"

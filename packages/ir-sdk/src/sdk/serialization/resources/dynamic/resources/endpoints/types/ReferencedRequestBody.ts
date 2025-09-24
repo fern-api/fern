@@ -5,7 +5,7 @@
 import * as serializers from "../../../../../index";
 import * as FernIr from "../../../../../../api/index";
 import * as core from "../../../../../../core";
-import { Name } from "../../../../commons/types/Name";
+import { Name } from "../../commons/types/Name";
 import { ReferencedRequestBodyType } from "./ReferencedRequestBodyType";
 
 export const ReferencedRequestBody: core.serialization.ObjectSchema<

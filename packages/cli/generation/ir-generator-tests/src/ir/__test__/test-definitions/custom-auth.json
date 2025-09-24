@@ -63,6 +63,7 @@
                 },
                 "prefix": null,
                 "headerEnvVar": null,
+                "key": "CustomAuthScheme",
                 "docs": null
             }
         ],
@@ -548,6 +549,11 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "security": [
+                        {
+                            "CustomAuthScheme": []
+                        }
+                    ],
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -1024,6 +1030,11 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "security": [
+                        {
+                            "CustomAuthScheme": []
+                        }
+                    ],
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -2095,6 +2106,7 @@
         },
         "pathParameters": [],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,

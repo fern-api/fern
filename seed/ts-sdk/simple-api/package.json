@@ -41,7 +41,7 @@
         "webpack": "^5.97.1",
         "ts-loader": "^9.5.1",
         "vitest": "^3.2.4",
-        "msw": "^2.8.4",
+        "msw": "2.11.2",
         "@types/node": "^18.19.70",
         "prettier": "^3.4.2",
         "typescript": "~5.7.2"

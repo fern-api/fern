@@ -2,7 +2,7 @@ use crate::v_2_problem_deep_equality_correctness_check::DeepEqualityCorrectnessC
 use crate::v_2_problem_void_function_definition_that_takes_actual_result::VoidFunctionDefinitionThatTakesActualResult;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "type")]
 pub enum AssertCorrectnessCheck {
     DeepEquality {
