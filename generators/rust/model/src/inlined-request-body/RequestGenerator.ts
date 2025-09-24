@@ -1,6 +1,7 @@
 import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 import { InlinedRequestBodyProperty, ObjectProperty } from "@fern-fern/ir-sdk/api";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { isOptionalType } from "../utils/primitiveTypeUtils";
 import {
     canDeriveHashAndEq,
     canDerivePartialEq,
@@ -61,6 +62,11 @@ export class RequestGenerator {
         // Build derives conditionally based on actual needs
         const derives: string[] = ["Debug", "Clone", "Serialize", "Deserialize"];
 
+        // Default - only add if all properties are optional
+        if (this.allPropertiesAreOptional()) {
+            derives.push("Default");
+        }
+
         // PartialEq - for equality comparisons
         if (canDerivePartialEq(this.properties, this.context)) {
             derives.push("PartialEq");
@@ -74,6 +80,17 @@ export class RequestGenerator {
         attributes.push(Attribute.derive(derives));
 
         return attributes;
+    }
+
+    private allPropertiesAreOptional(): boolean {
+        // Check if all regular properties are optional
+        const allRegularPropsOptional = this.properties.every((property) => isOptionalType(property.valueType));
+
+        // Check if there are any extended properties (inheritance fields)
+        // If there are extended properties, we can't derive Default because we can't default the parent type
+        const hasExtendedProperties = this.extendedProperties.length > 0;
+
+        return allRegularPropsOptional && !hasExtendedProperties;
     }
 
     private generateRustFieldForProperty(property: ObjectProperty | InlinedRequestBodyProperty): rust.Field {

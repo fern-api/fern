@@ -3,8 +3,16 @@
     - summary: |
         Add support for PR mode for self-hosted/local sdk generation.
       type: feat
-  createdAt: "2025-09-23"
+  createdAt: "2025-09-24"
   irVersion: 60
+
+- version: 3.5.9
+  changelogEntry:
+    - summary: |
+        Fixed missing java.util.Optional import in dynamic snippets generation for wire tests.
+      type: fix
+  createdAt: "2025-09-24"
+  irVersion: 59
 
 - version: 3.5.8
   changelogEntry:

@@ -12,6 +12,7 @@ export declare namespace CoreUtility {
     }
     export interface Init {
         getReferenceToExport: (args: { manifest: CoreUtility.Manifest; exportedName: string }) => Reference;
+        generateEndpointMetadata: boolean;
     }
 
     export interface Manifest {
@@ -33,9 +34,11 @@ export abstract class CoreUtility {
         manifest: CoreUtility.Manifest;
         exportedName: string;
     }) => Reference;
+    protected readonly generateEndpointMetadata: boolean;
 
     constructor(init: CoreUtility.Init) {
         this.getReferenceToExportInCoreUtilities = init.getReferenceToExport;
+        this.generateEndpointMetadata = init.generateEndpointMetadata;
     }
 
     // eslint-disable-next-line @typescript-eslint/ban-types

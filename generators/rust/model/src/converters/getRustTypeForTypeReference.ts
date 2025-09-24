@@ -75,25 +75,22 @@ export function generateRustTypeForTypeReference(typeReference: TypeReference): 
                     );
                 },
                 date: () => {
-                    // Use chrono::NaiveDate for date-only
+                    // Use NaiveDate for date-only (imported from chrono)
                     return rust.Type.reference(
                         rust.reference({
-                            name: "NaiveDate",
-                            module: "chrono"
+                            name: "NaiveDate"
                         })
                     );
                 },
                 dateTime: () => {
-                    // Use chrono::DateTime<Utc> for timestamps
+                    // Use DateTime<Utc> for timestamps (imported from chrono)
                     return rust.Type.reference(
                         rust.reference({
                             name: "DateTime",
-                            module: "chrono",
                             genericArgs: [
                                 rust.Type.reference(
                                     rust.reference({
-                                        name: "Utc",
-                                        module: "chrono"
+                                        name: "Utc"
                                     })
                                 )
                             ]

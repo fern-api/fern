@@ -50,7 +50,7 @@ func (c *Client) Stream(
 		options.ToHeader(),
 	)
 	headers.Add("Accept", "text/event-stream")
-	streamer := internal.NewStreamer[fern.StreamedCompletion](c.caller)
+	streamer := fern.NewStreamer[fern.StreamedCompletion](c.caller)
 	return streamer.Stream(
 		ctx,
 		&internal.StreamParams{
@@ -65,6 +65,7 @@ func (c *Client) Stream(
 			Terminator:      "[[DONE]]",
 			Format:          core.StreamFormatSSE,
 			Request:         request,
+			ErrorDecoder:    internal.NewErrorDecoder(fern.ErrorCodes),
 		},
 	)
 }

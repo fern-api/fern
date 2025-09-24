@@ -656,6 +656,7 @@
         ],
       },
     },
+    "variables": undefined,
     "version": "1.0.0",
   },
   "environments": undefined,

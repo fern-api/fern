@@ -8,6 +8,7 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { ClientGenerator } from "./client/ClientGenerator";
+import { InternalFilesGenerator } from "./internal/InternalFilesGenerator";
 import { RawClientGenerator } from "./raw-client/RawClientGenerator";
 import { buildReference } from "./reference/buildReference";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
@@ -60,6 +61,7 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         this.generateClients(context);
         this.generateRawClients(context);
+        this.generateInternalFiles(context);
 
         await context.snippetGenerator.populateSnippetsCache();
 
@@ -161,6 +163,15 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
                     : undefined
         });
         context.project.addGoFiles(client.generate());
+    }
+
+    private generateInternalFiles(context: SdkGeneratorContext) {
+        const internalFiles = new InternalFilesGenerator({
+            context
+        });
+        for (const file of internalFiles.generate()) {
+            context.project.addGoFiles(file);
+        }
     }
 
     private generateSnippets({ context }: { context: SdkGeneratorContext }): Endpoint[] {

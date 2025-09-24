@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Update migrations for go to support IRv60.
+      type: chore
+  irVersion: 60
+  createdAt: "2025-09-24"
+  version: 0.80.2
+
+- changelogEntry:
+    - summary: |
         Warn user about unknown package names when using dynamic snippets.
       type: fix
   irVersion: 60

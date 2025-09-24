@@ -4,8 +4,40 @@
     - summary: |
         Add support for PR mode for self-hosted/local sdk generation
       type: feat
-  createdAt: "2025-09-23"
+  createdAt: "2025-09-24"
   irVersion: 60
+
+- version: 1.12.4
+  changelogEntry:
+    - summary: |
+        Upgrade to IRv60.
+      type: chore
+  createdAt: "2025-09-24"
+  irVersion: 60
+
+- version: 1.12.3
+  changelogEntry:
+    - summary: |
+        Handle error codes using a shared error decoder.
+      type: fix
+  createdAt: "2025-09-24"
+  irVersion: 59
+
+- version: 1.12.2
+  changelogEntry:
+    - summary: |
+        Fix small inconsistencies in dynamic snippets logic blocking wire test generation
+      type: fix
+  createdAt: "2025-09-24"
+  irVersion: 59
+
+- version: 1.12.1
+  changelogEntry:
+    - summary: |
+        Document setters and explicit null in `README.md`.
+      type: chore
+  createdAt: "2025-09-23"
+  irVersion: 59
 
 - version: 1.12.0
   changelogEntry:

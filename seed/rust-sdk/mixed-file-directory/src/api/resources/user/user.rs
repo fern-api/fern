@@ -15,6 +15,16 @@ impl UserClient {
         })
     }
 
+    /// List all users.
+    ///
+    /// # Arguments
+    ///
+    /// * `limit` - The maximum number of results to return.
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn list(
         &self,
         request: &ListQueryRequest,
