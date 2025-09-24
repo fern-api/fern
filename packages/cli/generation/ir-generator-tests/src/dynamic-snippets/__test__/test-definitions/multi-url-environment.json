@@ -521,5 +521,6 @@
             ]
         }
     },
+    "variables": null,
     "generatorConfig": null
 }

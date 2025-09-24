@@ -524,6 +524,7 @@
                 ]
             }
         },
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,
