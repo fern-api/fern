@@ -30,5 +30,10 @@ export interface DynamicIntermediateRepresentation {
      * constructor.
      */
     pathParameters: FernIr.dynamic.NamedParameter[] | undefined;
+    /**
+     * Variables that are configured at the client level and can be
+     * referenced in path parameters and other contexts.
+     */
+    variables: FernIr.dynamic.VariableDeclaration[] | undefined;
     generatorConfig: FernIr.dynamic.GeneratorConfig | undefined;
 }

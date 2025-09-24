@@ -12,3 +12,5 @@ export * as snippets from "./snippets";
 export * from "./snippets/types";
 export * as types from "./types";
 export * from "./types/types";
+export * as variables from "./variables";
+export * from "./variables/types";
