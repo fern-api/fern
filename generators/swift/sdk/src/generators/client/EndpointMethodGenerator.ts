@@ -130,16 +130,22 @@ export class EndpointMethodGenerator {
                         docsContent: endpoint.requestBody.docs
                     })
                 );
-            } else {
-                // TODO(kafkas): Handle other request body types
+            } else if (endpoint.requestBody.type === "fileUpload") {
+                const fullyQualifiedRequestTypeSymbolName =
+                    this.sdkGeneratorContext.project.symbolRegistry.getFullyQualifiedRequestTypeSymbolOrThrow(
+                        endpoint.id,
+                        endpoint.requestBody.name.pascalCase.unsafeName
+                    );
                 params.push(
                     swift.functionParameter({
                         argumentLabel: "request",
                         unsafeName: "request",
-                        type: swift.Type.existentialAny(swift.Protocol.Codable),
+                        type: swift.Type.custom(fullyQualifiedRequestTypeSymbolName),
                         docsContent: endpoint.requestBody.docs
                     })
                 );
+            } else {
+                assertNever(endpoint.requestBody);
             }
         }
 
@@ -175,6 +181,27 @@ export class EndpointMethodGenerator {
     private getMethodBodyForEndpoint(endpoint: HttpEndpoint): swift.CodeBlock {
         // TODO(kafkas): Handle name collisions
 
+        const statements: swift.Statement[] = [
+            swift.Statement.return(
+                swift.Expression.try(
+                    swift.Expression.await(
+                        swift.Expression.methodCall({
+                            target: swift.Expression.reference(
+                                this.clientGeneratorContext.httpClient.property.unsafeName
+                            ),
+                            methodName: "performRequest",
+                            arguments_: this.getPerformRequestArgumentsForEndpoint(endpoint),
+                            multiline: true
+                        })
+                    )
+                )
+            )
+        ];
+
+        return swift.CodeBlock.withStatements(statements);
+    }
+
+    private getPerformRequestArgumentsForEndpoint(endpoint: HttpEndpoint) {
         const arguments_ = [
             swift.functionArgument({
                 label: "method",
@@ -192,6 +219,13 @@ export class EndpointMethodGenerator {
                 swift.functionArgument({
                     label: "contentType",
                     value: swift.Expression.enumCaseShorthand("applicationOctetStream")
+                })
+            );
+        } else if (endpoint.requestBody?.type === "fileUpload") {
+            arguments_.push(
+                swift.functionArgument({
+                    label: "contentType",
+                    value: swift.Expression.enumCaseShorthand("multipartFormData")
                 })
             );
         }
@@ -308,12 +342,24 @@ export class EndpointMethodGenerator {
         }
 
         if (endpoint.requestBody) {
-            arguments_.push(
-                swift.functionArgument({
-                    label: "body",
-                    value: swift.Expression.reference("request")
-                })
-            );
+            if (endpoint.requestBody.type === "fileUpload") {
+                arguments_.push(
+                    swift.functionArgument({
+                        label: "body",
+                        value: swift.Expression.methodCall({
+                            target: swift.Expression.reference("request"),
+                            methodName: "asMultipartFormData"
+                        })
+                    })
+                );
+            } else {
+                arguments_.push(
+                    swift.functionArgument({
+                        label: "body",
+                        value: swift.Expression.reference("request")
+                    })
+                );
+            }
         }
 
         arguments_.push(
@@ -337,22 +383,7 @@ export class EndpointMethodGenerator {
             );
         }
 
-        return swift.CodeBlock.withStatements([
-            swift.Statement.return(
-                swift.Expression.try(
-                    swift.Expression.await(
-                        swift.Expression.methodCall({
-                            target: swift.Expression.reference(
-                                this.clientGeneratorContext.httpClient.property.unsafeName
-                            ),
-                            methodName: "performRequest",
-                            arguments_,
-                            multiline: true
-                        })
-                    )
-                )
-            )
-        ]);
+        return arguments_;
     }
 
     private getEnumCaseNameForHttpMethod(method: HttpMethod): string {

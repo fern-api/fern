@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.1.1
+  changelogEntry:
+    - summary: |
+        Rely on the version of pnpm in _package.json_ instead of hardcoding the version in GitHub workflows.
+      type: fix
+  createdAt: "2025-09-23"
+  irVersion: 60
+
 - version: 3.1.0
   changelogEntry:
     - summary: |

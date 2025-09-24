@@ -33,20 +33,43 @@ const AsIsFileSpecs = {
         filenameWithoutExtension: "HTTPClient",
         symbolNames: ["HTTPClient"]
     },
+    MultipartFormData: {
+        relativePathToDir: "Core/Networking",
+        filenameWithoutExtension: "MultipartFormData",
+        symbolNames: ["MultipartFormData"]
+    },
+    MultipartFormDataConvertible: {
+        relativePathToDir: "Core/Networking",
+        filenameWithoutExtension: "MultipartFormDataConvertible",
+        symbolNames: ["MultipartFormDataConvertible"]
+    },
+    MultipartFormField: {
+        relativePathToDir: "Core/Networking",
+        filenameWithoutExtension: "MultipartFormField",
+        symbolNames: ["MultipartFormField"]
+    },
     QueryParameter: {
         relativePathToDir: "Core/Networking",
         filenameWithoutExtension: "QueryParameter",
         symbolNames: ["QueryParameter"]
     },
-
     // Core/Serde
     DecoderPlusAdditionalProperties: {
         relativePathToDir: "Core/Serde",
         filenameWithoutExtension: "Decoder+AdditionalProperties"
     },
+    EncodableValue: {
+        relativePathToDir: "Core/Serde",
+        filenameWithoutExtension: "EncodableValue",
+        symbolNames: ["EncodableValue"]
+    },
     EncoderPlusAdditionalProperties: {
         relativePathToDir: "Core/Serde",
         filenameWithoutExtension: "Encoder+AdditionalProperties"
+    },
+    JSONEncoderPlusEncodableValue: {
+        relativePathToDir: "Core/Serde",
+        filenameWithoutExtension: "JSONEncoder+EncodableValue"
     },
     KeyedDecodingContainerPlusNullable: {
         relativePathToDir: "Core/Serde",
@@ -73,6 +96,10 @@ const AsIsFileSpecs = {
         filenameWithoutExtension: "CalendarDate",
         symbolNames: ["CalendarDate"]
     },
+    DataPlusString: {
+        relativePathToDir: "Core",
+        filenameWithoutExtension: "Data+String"
+    },
     StringPlusUrlEncoding: {
         relativePathToDir: "Core",
         filenameWithoutExtension: "String+URLEncoding"
@@ -93,6 +120,11 @@ const AsIsFileSpecs = {
         relativePathToDir: "Public",
         filenameWithoutExtension: "ClientError",
         symbolNames: ["ClientError"]
+    },
+    FormFile: {
+        relativePathToDir: "Public",
+        filenameWithoutExtension: "FormFile",
+        symbolNames: ["FormFile"]
     },
     JsonValue: {
         relativePathToDir: "Public",
