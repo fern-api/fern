@@ -478,12 +478,14 @@ async function generateLanguageSpecificDynamicIRs({
 
     for (const [language, packageName] of Object.entries(snippetConfiguration)) {
         if (language && packageName && !Object.keys(languageSpecificIRs).includes(language)) {
+            context.logger.warn();
             context.logger.warn(
-                `\nFailed to upload ${language} SDK snippets because of unknown package \`${packageName}\`.`
+                `Failed to upload ${language} SDK snippets because of unknown package \`${packageName}\`.`
             );
             context.logger.warn(
-                `Please make sure your ${workspace.workspaceName ? `${workspace.workspaceName}/` : ""}generators.yml has a generator that publishes a ${packageName} package.\n`
+                `Please make sure your ${workspace.workspaceName ? `${workspace.workspaceName}/` : ""}generators.yml has a generator that publishes a ${packageName} package.`
             );
+            context.logger.warn();
         }
     }
 
