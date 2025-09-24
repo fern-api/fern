@@ -91,6 +91,7 @@ export class StructGenerator {
         const hasDateOnly = hasDateFields(this.objectTypeDeclaration.properties);
         const hasDateTimeOnly = hasDateTimeOnlyFields(this.objectTypeDeclaration.properties);
 
+        // TODO: @iamnamananand996 - use AST mechanism for all imports
         if (hasDateOnly && hasDateTimeOnly) {
             // Both date and datetime types present
             writer.writeLine("use chrono::{DateTime, NaiveDate, Utc};");

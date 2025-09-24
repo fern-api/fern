@@ -69,6 +69,7 @@ export class UndiscriminatedUnionGenerator {
         const hasDateOnly = this.hasDateFields();
         const hasDateTimeOnly = this.hasDateTimeOnlyFields();
 
+        // TODO: @iamnamananand996 - use AST mechanism for all imports
         if (hasDateOnly && hasDateTimeOnly) {
             // Both date and datetime types present
             writer.writeLine("use chrono::{DateTime, NaiveDate, Utc};");
