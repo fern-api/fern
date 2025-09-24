@@ -124,6 +124,7 @@ exports[`ir > {"name":"auth-header-prefix"} 1`] = `
         "endpoints": {},
         "pathParameters": [],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -1520,6 +1521,7 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
         "endpoints": {},
         "pathParameters": [],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -2425,6 +2427,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
         },
         "pathParameters": [],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -9905,6 +9908,7 @@ exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
                 ]
             }
         },
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -10175,6 +10179,7 @@ exports[`ir > {"name":"navigation-points-to"} 1`] = `
         "endpoints": {},
         "pathParameters": [],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -12874,6 +12879,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
         },
         "pathParameters": [],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -14218,6 +14224,7 @@ exports[`ir > {"name":"packages"} 1`] = `
         },
         "pathParameters": [],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -17375,6 +17382,7 @@ exports[`ir > {"name":"response-property"} 1`] = `
         },
         "pathParameters": [],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -19404,6 +19412,7 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
             }
         ],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": [
@@ -23484,6 +23493,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
             }
         ],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": [
@@ -40303,6 +40313,7 @@ exports[`ir > {"name":"simple"} 1`] = `
             }
         ],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": [
@@ -41413,6 +41424,7 @@ exports[`ir > {"name":"streaming"} 1`] = `
         },
         "pathParameters": [],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -42805,6 +42817,34 @@ exports[`ir > {"name":"variables"} 1`] = `
             }
         ],
         "environments": null,
+        "variables": [
+            {
+                "id": "my-variable",
+                "name": {
+                    "originalName": "my-variable",
+                    "camelCase": {
+                        "unsafeName": "myVariable",
+                        "safeName": "myVariable"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "my_variable",
+                        "safeName": "my_variable"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "MY_VARIABLE",
+                        "safeName": "MY_VARIABLE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "MyVariable",
+                        "safeName": "MyVariable"
+                    }
+                },
+                "typeReference": {
+                    "type": "named",
+                    "value": "type_commons:StringAlias"
+                }
+            }
+        ],
         "generatorConfig": null
     },
     "audiences": null,
@@ -43207,6 +43247,7 @@ exports[`ir > {"name":"webhooks"} 1`] = `
         "endpoints": {},
         "pathParameters": [],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,
