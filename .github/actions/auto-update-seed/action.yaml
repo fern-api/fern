@@ -84,8 +84,7 @@ runs:
       if: steps.check-changes.outputs.seed-changes-generated == 'true' && inputs.create-artifacts == 'true'
       shell: bash
       run: |
-        # CHRISM - need more unique name now!
-        git diff --staged > seed-${{ inputs.generator-name }}-${{ inputs.fixtures-to-run }}.patch
+        git diff --staged > seed-${{ inputs.generator-name }}-${{ strategy.job-index }}.patch
 
     # Upload patch files as artifacts to be applied and committed by caller when all of seed is up to date
     - name: Upload Seed Artifacts
