@@ -269,8 +269,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().refreshToken(\n            Optional.empty()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().refreshToken(\n            Optional.empty()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().refreshToken(\n            Optional.empty()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.examples.SeedExamplesClient;\nimport java.util.Optional;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedExamplesClient client = SeedExamplesClient\n            .builder()\n            .token(\"<token>\")\n            .build();\n\n        client.service().refreshToken(\n            Optional.empty()\n        );\n    }\n}\n"
             }
         },
         {
