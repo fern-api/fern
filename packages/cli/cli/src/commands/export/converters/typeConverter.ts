@@ -22,6 +22,7 @@ import isEqual from "lodash-es/isEqual";
 import { OpenAPIV3 } from "openapi-types";
 
 import { convertObject } from "./convertObject";
+import { getOriginalName } from "@fern-api/ir-utils";
 
 export interface ConvertedType {
     openApiSchema: OpenApiComponentSchema;
@@ -483,8 +484,8 @@ export function getReferenceFromDeclaredTypeName(declaredTypeName: DeclaredTypeN
 
 export function getNameFromDeclaredTypeName(declaredTypeName: DeclaredTypeName): string {
     return [
-        ...declaredTypeName.fernFilepath.packagePath.map((part) => part.originalName),
-        declaredTypeName.name.originalName
+        ...declaredTypeName.fernFilepath.packagePath.map((part) => getOriginalName(part)),
+        getOriginalName(declaredTypeName.name)
     ].join("");
 }
 

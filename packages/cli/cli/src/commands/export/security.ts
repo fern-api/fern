@@ -1,4 +1,5 @@
 import { ApiAuth, AuthScheme, AuthSchemesRequirement } from "@fern-api/ir-sdk";
+import { expandName } from "@fern-api/ir-utils";
 import { OpenAPIV3 } from "openapi-types";
 
 export function constructEndpointSecurity(apiAuth: ApiAuth): OpenAPIV3.SecurityRequirementObject[] {
@@ -65,7 +66,7 @@ function getNameForAuthScheme(authScheme: AuthScheme): string {
         inferred: () => "InferredAuth",
         basic: () => "BasicAuth",
         oauth: () => "BearerAuth",
-        header: (header) => `${header.name.name.pascalCase.unsafeName}Auth`,
+        header: (header) => `${expandName(header.name.name).pascalCase.unsafeName}Auth`,
         _other: () => {
             throw new Error("Unknown auth scheme: " + authScheme.type);
         }

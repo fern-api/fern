@@ -10,6 +10,7 @@ import { OpenAPIV3 } from "openapi-types";
 import { convertServices } from "./converters/servicesConverter";
 import { convertType } from "./converters/typeConverter";
 import { constructEndpointSecurity, constructSecuritySchemes } from "./security";
+import { getOriginalName } from "@fern-api/ir-utils";
 
 export type Mode = "stoplight" | "openapi";
 
@@ -78,8 +79,8 @@ export function convertIrToOpenApi({
                 url: environment.url,
                 description:
                     environment.docs != null
-                        ? `${environment.name.originalName} (${environment.docs})`
-                        : environment.name.originalName
+                        ? `${getOriginalName(environment.name)} (${environment.docs})`
+                        : getOriginalName(environment.name)
             };
         });
     }
@@ -89,14 +90,14 @@ export function convertIrToOpenApi({
 
 export function getDeclaredTypeNameKey(declaredTypeName: DeclaredTypeName): string {
     return [
-        ...declaredTypeName.fernFilepath.allParts.map((part) => part.originalName),
-        declaredTypeName.name.originalName
+        ...declaredTypeName.fernFilepath.allParts.map((part) => getOriginalName(part)),
+        getOriginalName(declaredTypeName.name)
     ].join("-");
 }
 
 export function getErrorTypeNameKey(declaredErrorName: DeclaredErrorName): string {
     return [
-        ...declaredErrorName.fernFilepath.allParts.map((part) => part.originalName),
-        declaredErrorName.name.originalName
+        ...declaredErrorName.fernFilepath.allParts.map((part) => getOriginalName(part)),
+        getOriginalName(declaredErrorName.name)
     ].join("-");
 }

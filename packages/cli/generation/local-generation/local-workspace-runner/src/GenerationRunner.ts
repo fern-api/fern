@@ -19,6 +19,7 @@ import { generateDynamicSnippetTests } from "./dynamic-snippets/generateDynamicS
 import { ExecutionEnvironment } from "./ExecutionEnvironment";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator";
 import { getWorkspaceTempDir } from "./runLocalGenerationForWorkspace";
+import { getOriginalName } from "@fern-api/ir-utils";
 
 export declare namespace GenerationRunner {
     interface RunArgs {
@@ -284,7 +285,7 @@ export class GenerationRunner {
                             ...(example.example?.endpointPathParameters ?? [])
                         ].map((parameter) => {
                             return {
-                                name: parameter.name.originalName,
+                                name: getOriginalName(parameter.name),
                                 value: parameter.value.jsonExample
                             };
                         }),
