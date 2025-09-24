@@ -766,9 +766,9 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
-      '@fern-api/dynamic-ir-sdk':
-        specifier: ^59.6.1
-        version: 59.6.1
+      '@fern-api/ir-sdk':
+        specifier: workspace:*
+        version: link:../../../packages/ir-sdk
       '@fern-api/java-ast':
         specifier: workspace:*
         version: link:../ast

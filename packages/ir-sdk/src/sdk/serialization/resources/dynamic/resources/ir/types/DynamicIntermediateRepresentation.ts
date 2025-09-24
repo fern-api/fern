@@ -11,8 +11,8 @@ import { EndpointId } from "../../../../commons/types/EndpointId";
 import { Endpoint } from "../../endpoints/types/Endpoint";
 import { EnvironmentsConfig } from "../../../../environment/types/EnvironmentsConfig";
 import { NamedParameter } from "../../types/types/NamedParameter";
-import { GeneratorConfig } from "./GeneratorConfig";
 import { VariableDeclaration } from "../../variables/types/VariableDeclaration";
+import { GeneratorConfig } from "./GeneratorConfig";
 
 export const DynamicIntermediateRepresentation: core.serialization.ObjectSchema<
     serializers.dynamic.DynamicIntermediateRepresentation.Raw,
