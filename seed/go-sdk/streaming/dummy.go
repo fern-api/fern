@@ -3,28 +3,28 @@
 
 package stream
 import (
+base64 "encoding/base64"
 io "io"
-strconv "strconv"
 strings "strings"
-testing "testing"
-multipart "mime/multipart"
+errors "errors"
 time "time"
 big "math/big"
-assert "github.com/stretchr/testify/assert"
-require "github.com/stretchr/testify/require"
-core "github.com/fern-api/stream-go/v2/core"
+multipart "mime/multipart"
+testing "testing"
+internal "github.com/fern-api/stream-go/v2/internal"
 option "github.com/fern-api/stream-go/v2/option"
+os "os"
+strconv "strconv"
 bytes "bytes"
 context "context"
 json "encoding/json"
 fmt "fmt"
 http "net/http"
-os "os"
-internal "github.com/fern-api/stream-go/v2/internal"
-base64 "encoding/base64"
-errors "errors"
 url "net/url"
 uuid "github.com/google/uuid"
+assert "github.com/stretchr/testify/assert"
+require "github.com/stretchr/testify/require"
+core "github.com/fern-api/stream-go/v2/core"
 )
 var (
 	generateequestFieldNumEvents = big.NewInt(1 << 0)
