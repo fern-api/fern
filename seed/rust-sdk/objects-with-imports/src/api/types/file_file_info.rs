@@ -3,8 +3,10 @@ use std::fmt;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub enum FileInfo {
+    /// A regular file (e.g. foo.txt).
     #[serde(rename = "REGULAR")]
     Regular,
+    /// A directory (e.g. foo/).
     #[serde(rename = "DIRECTORY")]
     Directory,
 }
