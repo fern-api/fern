@@ -469,12 +469,18 @@ export function buildReferenceTypeReference({
         type: schemaName
     });
 
-    const type = resolvedSchema.type === "nullable" ? `optional<${typeWithPrefix}>` : typeWithPrefix;
+    let type = typeWithPrefix;
+    if (resolvedSchema.type === "nullable") {
+        type = context.wrapReferencesToNullableInOptional ? `optional<${type}>` : `nullable<${type}>`;
+    }
+    if (resolvedSchema.type === "optional" && !type.startsWith("optional<")) {
+        type = `optional<${type}>`;
+    }
     if (schema.description == null && displayName == null) {
         return type;
     }
     return {
-        type: resolvedSchema.type === "nullable" ? `optional<${typeWithPrefix}>` : typeWithPrefix,
+        type,
         ...(schema.description != null ? { docs: schema.description } : {}),
         ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {})
     };
@@ -530,6 +536,7 @@ export function buildMapTypeReference({
     declarationDepth: number;
 }): RawSchemas.TypeReferenceSchema {
     const keyTypeReference = buildPrimitiveTypeReference(schema.key);
+
     const valueTypeReference = buildTypeReference({
         schema: schema.value,
         fileContainingReference,
@@ -605,7 +612,7 @@ export function buildNullableTypeReference({
         itemValidation == null &&
         schema.title == null
     ) {
-        return wrapTypeReferenceAsOptional(type);
+        return type;
     }
     const result: RawSchemas.TypeReferenceSchema =
         typeof type === "string"
@@ -627,7 +634,7 @@ export function buildNullableTypeReference({
     }
 
     // Nullable schemas are always treated as optional.
-    return wrapTypeReferenceAsOptional(result);
+    return result;
 }
 
 export function buildOptionalTypeReference({

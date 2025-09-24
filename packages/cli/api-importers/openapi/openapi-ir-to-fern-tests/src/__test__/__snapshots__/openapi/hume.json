@@ -74,6 +74,13 @@
               "docs": "Sort and filter jobs.",
               "examples": [
                 {
+                  "query-parameters": {
+                    "direction": "asc",
+                    "limit": 1,
+                    "sort_by": "created",
+                    "timestamp_ms": 1000000,
+                    "when": "created_before",
+                  },
                   "response": {
                     "body": [
                       {
@@ -2169,7 +2176,13 @@ This message indicates the user has interrupted the assistant’s response. EVI 
         type: list<JobRequest>
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            limit: 1
+            when: created_before
+            timestamp_ms: 1000000
+            sort_by: created
+            direction: asc
+          response:
             body:
               - user_id: user_id
                 job_id: job_id

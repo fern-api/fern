@@ -229,6 +229,7 @@ Generate a completion using a previously defined deployment.
                           "data": {
                             "completions": [
                               {
+                                "finish_reason": null,
                                 "id": "id",
                                 "model_version_id": "model_version_id",
                                 "text": "text",
@@ -330,6 +331,7 @@ Generate a stream of completions using a previously defined deployment.
                         "delta": {
                           "data": {
                             "completion": {
+                              "finish_reason": null,
                               "id": "id",
                               "model_version_id": "model_version_id",
                               "text": "text",
@@ -2766,6 +2768,7 @@ Used to submit feedback regarding the quality of previously generated completion
                     completions:
                       - id: id
                         text: text
+                        finish_reason: null
                         model_version_id: model_version_id
                   error:
                     message: message
@@ -2838,6 +2841,7 @@ Used to submit feedback regarding the quality of previously generated completion
                     completion:
                       id: id
                       text: text
+                      finish_reason: null
                       model_version_id: model_version_id
                   error:
                     message: message
@@ -4822,6 +4826,12 @@ Used to list documents. Optionally filter on supported fields.
 ",
               "examples": [
                 {
+                  "query-parameters": {
+                    "document_index_id": "document_index_id",
+                    "limit": 1,
+                    "offset": 1,
+                    "ordering": "ordering",
+                  },
                   "response": {
                     "body": {
                       "count": 123,
@@ -5022,7 +5032,12 @@ service:
         type: root.PaginatedSlimDocumentList
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            document_index_id: document_index_id
+            limit: 1
+            offset: 1
+            ordering: ordering
+          response:
             body:
               count: 123
               next: http://api.example.org/accounts/?offset=400&limit=100

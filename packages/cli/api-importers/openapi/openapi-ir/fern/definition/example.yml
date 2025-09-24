@@ -13,7 +13,11 @@ types:
       enum: string
       literal: LiteralExample
       oneOf: FullOneOfExample
+      null: NullExample
       unknown: FullExample
+
+  NullExample:
+    properties: {}
 
   PrimitiveExample:
     union:

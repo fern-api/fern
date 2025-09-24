@@ -601,6 +601,8 @@ export function isExamplePrimitive(example: FullExample): boolean {
                 default:
                     return false;
             }
+        case "null":
+            return true;
         default:
             assertNever(example);
     }
