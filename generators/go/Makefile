@@ -6,9 +6,7 @@ build:
 	docker tag fernapi/fern-go-sdk fernapi/fern-go-sdk:0.0.0
 
 .PHONY: generate
-# jsklan:TODO: revert this
-# generate: install
-generate:
+generate: install
 	cd internal/fern; fern-go-model ir_config.json
 
 .PHONY: install
