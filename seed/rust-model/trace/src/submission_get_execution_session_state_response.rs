@@ -2,7 +2,7 @@ use crate::submission_execution_session_state::ExecutionSessionState;
 use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct GetExecutionSessionStateResponse {
     pub states: HashMap<String, ExecutionSessionState>,
     #[serde(rename = "numWarmingInstances")]

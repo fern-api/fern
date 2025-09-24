@@ -3,7 +3,7 @@ use crate::submission_running_submission_state::RunningSubmissionState;
 use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "type")]
 pub enum TestSubmissionStatus {
         Stopped,

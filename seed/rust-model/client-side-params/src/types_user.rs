@@ -3,7 +3,7 @@ use chrono::{DateTime, NaiveDate, Utc};
 use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct User {
     pub user_id: String,
     pub email: String,

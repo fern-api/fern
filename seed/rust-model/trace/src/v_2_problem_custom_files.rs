@@ -2,7 +2,7 @@ use crate::v_2_problem_basic_custom_files::BasicCustomFiles;
 use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "type")]
 pub enum CustomFiles {
         Basic {
