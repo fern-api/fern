@@ -2,7 +2,7 @@ use crate::submission_exception_v_2::ExceptionV2;
 use crate::submission_exception_info::ExceptionInfo;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct WorkspaceRunDetails {
     #[serde(rename = "exceptionV2")]
     #[serde(skip_serializing_if = "Option::is_none")]
