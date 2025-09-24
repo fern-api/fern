@@ -29,7 +29,9 @@ const (
 
 	// defaultModulePath is used as the default go.mod path used in the generated
 	// SDK.
-	defaultModulePath = "sdk"
+	// jsklan:TODO: revert this maybe?
+	// defaultModulePath = "sdk"
+	defaultModulePath = "github.com/fern-api/fern-go"
 )
 
 var (
