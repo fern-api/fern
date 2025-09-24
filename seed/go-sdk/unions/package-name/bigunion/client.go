@@ -6,6 +6,7 @@ import (
 	context "context"
 	unionsgo "github.com/fern-api/unions-go"
 	core "github.com/fern-api/unions-go/core"
+	internal "github.com/fern-api/unions-go/internal"
 	option "github.com/fern-api/unions-go/option"
 )
 
@@ -14,7 +15,7 @@ type Client struct {
 
 	options *core.RequestOptions
 	baseURL string
-	caller  *unionsgo.Caller
+	caller  *internal.Caller
 }
 
 func NewClient(options *core.RequestOptions) *Client {
@@ -22,8 +23,8 @@ func NewClient(options *core.RequestOptions) *Client {
 		WithRawResponse: NewRawClient(options),
 		options:         options,
 		baseURL:         options.BaseURL,
-		caller: unionsgo.NewCaller(
-			&unionsgo.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

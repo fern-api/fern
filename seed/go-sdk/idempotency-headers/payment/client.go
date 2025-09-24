@@ -7,6 +7,7 @@ import (
 	uuid "github.com/google/uuid"
 	fern "github.com/idempotency-headers/fern"
 	core "github.com/idempotency-headers/fern/core"
+	internal "github.com/idempotency-headers/fern/internal"
 	option "github.com/idempotency-headers/fern/option"
 )
 
@@ -15,7 +16,7 @@ type Client struct {
 
 	options *core.RequestOptions
 	baseURL string
-	caller  *fern.Caller
+	caller  *internal.Caller
 }
 
 func NewClient(options *core.RequestOptions) *Client {
@@ -23,8 +24,8 @@ func NewClient(options *core.RequestOptions) *Client {
 		WithRawResponse: NewRawClient(options),
 		options:         options,
 		baseURL:         options.BaseURL,
-		caller: fern.NewCaller(
-			&fern.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

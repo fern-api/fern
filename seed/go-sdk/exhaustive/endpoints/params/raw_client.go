@@ -4,7 +4,6 @@ package params
 
 import (
 	context "context"
-	fern "github.com/exhaustive/fern"
 	core "github.com/exhaustive/fern/core"
 	endpoints "github.com/exhaustive/fern/endpoints"
 	internal "github.com/exhaustive/fern/internal"
@@ -14,7 +13,7 @@ import (
 
 type RawClient struct {
 	baseURL string
-	caller  *fern.Caller
+	caller  *internal.Caller
 	options *core.RequestOptions
 }
 
@@ -22,8 +21,8 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
 		options: options,
 		baseURL: options.BaseURL,
-		caller: fern.NewCaller(
-			&fern.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -53,7 +52,7 @@ func (r *RawClient) GetWithPath(
 	var response string
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			Headers:         headers,
@@ -96,7 +95,7 @@ func (r *RawClient) GetWithInlinePath(
 	var response string
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			Headers:         headers,
@@ -142,7 +141,7 @@ func (r *RawClient) GetWithQuery(
 	)
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			Headers:         headers,
@@ -187,7 +186,7 @@ func (r *RawClient) GetWithAllowMultipleQuery(
 	)
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			Headers:         headers,
@@ -236,7 +235,7 @@ func (r *RawClient) GetWithPathAndQuery(
 	)
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			Headers:         headers,
@@ -284,7 +283,7 @@ func (r *RawClient) GetWithInlinePathAndQuery(
 	)
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			Headers:         headers,
@@ -327,7 +326,7 @@ func (r *RawClient) ModifyWithPath(
 	var response string
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPut,
 			Headers:         headers,
@@ -371,7 +370,7 @@ func (r *RawClient) ModifyWithInlinePath(
 	var response string
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPut,
 			Headers:         headers,

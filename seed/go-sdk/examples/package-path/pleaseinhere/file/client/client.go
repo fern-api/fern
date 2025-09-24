@@ -3,10 +3,10 @@
 package client
 
 import (
-	pleaseinhere "github.com/examples/fern/pleaseinhere"
 	core "github.com/examples/fern/pleaseinhere/core"
 	client "github.com/examples/fern/pleaseinhere/file/notification/client"
 	service "github.com/examples/fern/pleaseinhere/file/service"
+	internal "github.com/examples/fern/pleaseinhere/internal"
 )
 
 type Client struct {
@@ -15,7 +15,7 @@ type Client struct {
 
 	options *core.RequestOptions
 	baseURL string
-	caller  *pleaseinhere.Caller
+	caller  *internal.Caller
 }
 
 func NewClient(options *core.RequestOptions) *Client {
@@ -24,8 +24,8 @@ func NewClient(options *core.RequestOptions) *Client {
 		Service:      service.NewClient(options),
 		options:      options,
 		baseURL:      options.BaseURL,
-		caller: pleaseinhere.NewCaller(
-			&pleaseinhere.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

@@ -3,8 +3,8 @@
 package client
 
 import (
-	fern "github.com/bearer-token-environment-variable/fern"
 	core "github.com/bearer-token-environment-variable/fern/core"
+	internal "github.com/bearer-token-environment-variable/fern/internal"
 	option "github.com/bearer-token-environment-variable/fern/option"
 	service "github.com/bearer-token-environment-variable/fern/service"
 	os "os"
@@ -15,7 +15,7 @@ type Client struct {
 
 	options *core.RequestOptions
 	baseURL string
-	caller  *fern.Caller
+	caller  *internal.Caller
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -27,8 +27,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 		Service: service.NewClient(options),
 		options: options,
 		baseURL: options.BaseURL,
-		caller: fern.NewCaller(
-			&fern.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

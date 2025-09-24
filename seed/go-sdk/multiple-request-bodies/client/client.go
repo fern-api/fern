@@ -6,6 +6,7 @@ import (
 	context "context"
 	fern "github.com/multiple-request-bodies/fern"
 	core "github.com/multiple-request-bodies/fern/core"
+	internal "github.com/multiple-request-bodies/fern/internal"
 	option "github.com/multiple-request-bodies/fern/option"
 	io "io"
 )
@@ -15,7 +16,7 @@ type Client struct {
 
 	options *core.RequestOptions
 	baseURL string
-	caller  *fern.Caller
+	caller  *internal.Caller
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -24,8 +25,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 		WithRawResponse: NewRawClient(options),
 		options:         options,
 		baseURL:         options.BaseURL,
-		caller: fern.NewCaller(
-			&fern.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

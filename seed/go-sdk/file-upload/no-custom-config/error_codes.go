@@ -3,10 +3,7 @@
 package fileupload
 
 import (
-	core "github.com/file-upload/fern/core"
+	internal "github.com/file-upload/fern/internal"
 )
 
-// ErrorCodes maps HTTP status codes to error constructors.
-type ErrorCodes map[int]func(*core.APIError) error
-
-var errorCodes ErrorCodes = ErrorCodes{}
+var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{}

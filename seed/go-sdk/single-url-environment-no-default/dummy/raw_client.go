@@ -4,7 +4,6 @@ package dummy
 
 import (
 	context "context"
-	fern "github.com/single-url-environment-no-default/fern"
 	core "github.com/single-url-environment-no-default/fern/core"
 	internal "github.com/single-url-environment-no-default/fern/internal"
 	option "github.com/single-url-environment-no-default/fern/option"
@@ -13,7 +12,7 @@ import (
 
 type RawClient struct {
 	baseURL string
-	caller  *fern.Caller
+	caller  *internal.Caller
 	options *core.RequestOptions
 }
 
@@ -21,8 +20,8 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
 		options: options,
 		baseURL: options.BaseURL,
-		caller: fern.NewCaller(
-			&fern.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -48,7 +47,7 @@ func (r *RawClient) GetDummy(
 	var response string
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			Headers:         headers,

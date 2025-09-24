@@ -4,7 +4,6 @@ package service
 
 import (
 	context "context"
-	pleaseinhere "github.com/examples/fern/pleaseinhere"
 	core "github.com/examples/fern/pleaseinhere/core"
 	internal "github.com/examples/fern/pleaseinhere/internal"
 	option "github.com/examples/fern/pleaseinhere/option"
@@ -13,7 +12,7 @@ import (
 
 type RawClient struct {
 	baseURL string
-	caller  *pleaseinhere.Caller
+	caller  *internal.Caller
 	options *core.RequestOptions
 }
 
@@ -21,8 +20,8 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
 		options: options,
 		baseURL: options.BaseURL,
-		caller: pleaseinhere.NewCaller(
-			&pleaseinhere.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -52,7 +51,7 @@ func (r *RawClient) Check(
 	)
 	raw, err := r.caller.Call(
 		ctx,
-		&pleaseinhere.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			Headers:         headers,
@@ -90,7 +89,7 @@ func (r *RawClient) Ping(
 	var response bool
 	raw, err := r.caller.Call(
 		ctx,
-		&pleaseinhere.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			Headers:         headers,

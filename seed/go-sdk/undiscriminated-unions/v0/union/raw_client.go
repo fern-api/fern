@@ -13,7 +13,7 @@ import (
 
 type RawClient struct {
 	baseURL string
-	caller  *fern.Caller
+	caller  *internal.Caller
 	options *core.RequestOptions
 }
 
@@ -21,8 +21,8 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
 		options: options,
 		baseURL: options.BaseURL,
-		caller: fern.NewCaller(
-			&fern.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -49,7 +49,7 @@ func (r *RawClient) Get(
 	var response *fern.MyUnion
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -89,7 +89,7 @@ func (r *RawClient) GetMetadata(
 	var response fern.Metadata
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			Headers:         headers,
@@ -129,7 +129,7 @@ func (r *RawClient) UpdateMetadata(
 	var response bool
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPut,
 			Headers:         headers,
@@ -170,7 +170,7 @@ func (r *RawClient) Call(
 	var response bool
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -211,7 +211,7 @@ func (r *RawClient) DuplicateTypesUnion(
 	var response *fern.UnionWithDuplicateTypes
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -252,7 +252,7 @@ func (r *RawClient) NestedUnions(
 	var response string
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,

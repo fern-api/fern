@@ -13,7 +13,7 @@ import (
 
 type RawClient struct {
 	baseURL string
-	caller  *unionsgo.Caller
+	caller  *internal.Caller
 	options *core.RequestOptions
 }
 
@@ -21,8 +21,8 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
 		options: options,
 		baseURL: options.BaseURL,
-		caller: unionsgo.NewCaller(
-			&unionsgo.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -52,7 +52,7 @@ func (r *RawClient) Get(
 	var response *unionsgo.Shape
 	raw, err := r.caller.Call(
 		ctx,
-		&unionsgo.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			Headers:         headers,
@@ -92,7 +92,7 @@ func (r *RawClient) Update(
 	var response bool
 	raw, err := r.caller.Call(
 		ctx,
-		&unionsgo.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPatch,
 			Headers:         headers,

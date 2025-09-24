@@ -3,10 +3,7 @@
 package oauthclientcredentials
 
 import (
-	core "github.com/oauth-client-credentials-nested-root/fern/core"
+	internal "github.com/oauth-client-credentials-nested-root/fern/internal"
 )
 
-// ErrorCodes maps HTTP status codes to error constructors.
-type ErrorCodes map[int]func(*core.APIError) error
-
-var errorCodes ErrorCodes = ErrorCodes{}
+var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{}

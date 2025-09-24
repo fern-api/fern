@@ -14,7 +14,7 @@ import (
 
 type RawClient struct {
 	baseURL string
-	caller  *fileuploadgo.Caller
+	caller  *internal.Caller
 	options *core.RequestOptions
 }
 
@@ -22,8 +22,8 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
 		options: options,
 		baseURL: options.BaseURL,
-		caller: fileuploadgo.NewCaller(
-			&fileuploadgo.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -122,7 +122,7 @@ func (r *RawClient) Post(
 
 	raw, err := r.caller.Call(
 		ctx,
-		&fileuploadgo.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -170,7 +170,7 @@ func (r *RawClient) JustFile(
 
 	raw, err := r.caller.Call(
 		ctx,
-		&fileuploadgo.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -225,7 +225,7 @@ func (r *RawClient) JustFileWithQueryParams(
 
 	raw, err := r.caller.Call(
 		ctx,
-		&fileuploadgo.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -284,7 +284,7 @@ func (r *RawClient) WithContentType(
 
 	raw, err := r.caller.Call(
 		ctx,
-		&fileuploadgo.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -338,7 +338,7 @@ func (r *RawClient) WithFormEncoding(
 
 	raw, err := r.caller.Call(
 		ctx,
-		&fileuploadgo.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -455,7 +455,7 @@ func (r *RawClient) WithFormEncodedContainers(
 
 	raw, err := r.caller.Call(
 		ctx,
-		&fileuploadgo.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -509,7 +509,7 @@ func (r *RawClient) OptionalArgs(
 	var response string
 	raw, err := r.caller.Call(
 		ctx,
-		&fileuploadgo.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -562,7 +562,7 @@ func (r *RawClient) WithInlineType(
 	var response string
 	raw, err := r.caller.Call(
 		ctx,
-		&fileuploadgo.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -601,7 +601,7 @@ func (r *RawClient) Simple(
 	)
 	raw, err := r.caller.Call(
 		ctx,
-		&fileuploadgo.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,

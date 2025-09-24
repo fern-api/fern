@@ -3,10 +3,7 @@
 package singleurlenvironmentnodefault
 
 import (
-	core "github.com/single-url-environment-no-default/fern/core"
+	internal "github.com/single-url-environment-no-default/fern/internal"
 )
 
-// ErrorCodes maps HTTP status codes to error constructors.
-type ErrorCodes map[int]func(*core.APIError) error
-
-var errorCodes ErrorCodes = ErrorCodes{}
+var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{}

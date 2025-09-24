@@ -4,12 +4,10 @@ package api
 
 import (
 	core "github.com/imdb/fern/inhereplease/core"
+	internal "github.com/imdb/fern/inhereplease/internal"
 )
 
-// ErrorCodes maps HTTP status codes to error constructors.
-type ErrorCodes map[int]func(*core.APIError) error
-
-var errorCodes ErrorCodes = ErrorCodes{
+var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{
 	404: func(apiError *core.APIError) error {
 		return &MovieDoesNotExistError{
 			APIError: apiError,

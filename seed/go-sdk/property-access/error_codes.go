@@ -3,10 +3,7 @@
 package propertyaccess
 
 import (
-	core "github.com/property-access/fern/core"
+	internal "github.com/property-access/fern/internal"
 )
 
-// ErrorCodes maps HTTP status codes to error constructors.
-type ErrorCodes map[int]func(*core.APIError) error
-
-var errorCodes ErrorCodes = ErrorCodes{}
+var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{}

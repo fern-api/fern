@@ -3,10 +3,7 @@
 package gobytesrequest
 
 import (
-	core "github.com/go-bytes-request/fern/core"
+	internal "github.com/go-bytes-request/fern/internal"
 )
 
-// ErrorCodes maps HTTP status codes to error constructors.
-type ErrorCodes map[int]func(*core.APIError) error
-
-var errorCodes ErrorCodes = ErrorCodes{}
+var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{}

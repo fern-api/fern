@@ -3,10 +3,7 @@
 package clientsideparams
 
 import (
-	core "github.com/client-side-params/fern/core"
+	internal "github.com/client-side-params/fern/internal"
 )
 
-// ErrorCodes maps HTTP status codes to error constructors.
-type ErrorCodes map[int]func(*core.APIError) error
-
-var errorCodes ErrorCodes = ErrorCodes{}
+var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{}

@@ -13,7 +13,7 @@ import (
 
 type RawClient struct {
 	baseURL string
-	caller  *fern.Caller
+	caller  *internal.Caller
 	options *core.RequestOptions
 }
 
@@ -21,8 +21,8 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
 		options: options,
 		baseURL: options.BaseURL,
-		caller: fern.NewCaller(
-			&fern.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -52,7 +52,7 @@ func (r *RawClient) GetUser(
 	var response *fern.UserResponse
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			Headers:         headers,
@@ -92,7 +92,7 @@ func (r *RawClient) CreateUser(
 	var response *fern.UserResponse
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -137,7 +137,7 @@ func (r *RawClient) UpdateUser(
 	var response *fern.UserResponse
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPatch,
 			Headers:         headers,
@@ -185,7 +185,7 @@ func (r *RawClient) ListUsers(
 	var response []*fern.UserResponse
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			Headers:         headers,
@@ -232,7 +232,7 @@ func (r *RawClient) SearchUsers(
 	var response []*fern.UserResponse
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			Headers:         headers,
@@ -272,7 +272,7 @@ func (r *RawClient) CreateComplexProfile(
 	var response *fern.ComplexProfile
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -316,7 +316,7 @@ func (r *RawClient) GetComplexProfile(
 	var response *fern.ComplexProfile
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			Headers:         headers,
@@ -360,7 +360,7 @@ func (r *RawClient) UpdateComplexProfile(
 	var response *fern.ComplexProfile
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPatch,
 			Headers:         headers,
@@ -401,7 +401,7 @@ func (r *RawClient) TestDeserialization(
 	var response *fern.DeserializationTestResponse
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -449,7 +449,7 @@ func (r *RawClient) FilterByRole(
 	var response []*fern.UserResponse
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			Headers:         headers,
@@ -492,7 +492,7 @@ func (r *RawClient) GetNotificationSettings(
 	var response *fern.NotificationMethod
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			Headers:         headers,
@@ -536,7 +536,7 @@ func (r *RawClient) UpdateTags(
 	var response []string
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPut,
 			Headers:         headers,
@@ -577,7 +577,7 @@ func (r *RawClient) GetSearchResults(
 	var response []*fern.SearchResult
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,

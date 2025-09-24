@@ -6,6 +6,7 @@ import (
 	context "context"
 	inhereplease "github.com/imdb/fern/inhereplease"
 	core "github.com/imdb/fern/inhereplease/core"
+	internal "github.com/imdb/fern/inhereplease/internal"
 	option "github.com/imdb/fern/inhereplease/option"
 )
 
@@ -14,7 +15,7 @@ type Client struct {
 
 	options *core.RequestOptions
 	baseURL string
-	caller  *inhereplease.Caller
+	caller  *internal.Caller
 }
 
 func NewClient(options *core.RequestOptions) *Client {
@@ -22,8 +23,8 @@ func NewClient(options *core.RequestOptions) *Client {
 		WithRawResponse: NewRawClient(options),
 		options:         options,
 		baseURL:         options.BaseURL,
-		caller: inhereplease.NewCaller(
-			&inhereplease.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

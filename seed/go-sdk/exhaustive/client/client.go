@@ -3,10 +3,10 @@
 package client
 
 import (
-	fern "github.com/exhaustive/fern"
 	core "github.com/exhaustive/fern/core"
 	client "github.com/exhaustive/fern/endpoints/client"
 	inlinedrequests "github.com/exhaustive/fern/inlinedrequests"
+	internal "github.com/exhaustive/fern/internal"
 	noauth "github.com/exhaustive/fern/noauth"
 	noreqbody "github.com/exhaustive/fern/noreqbody"
 	option "github.com/exhaustive/fern/option"
@@ -22,7 +22,7 @@ type Client struct {
 
 	options *core.RequestOptions
 	baseURL string
-	caller  *fern.Caller
+	caller  *internal.Caller
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -35,8 +35,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 		ReqWithHeaders:  reqwithheaders.NewClient(options),
 		options:         options,
 		baseURL:         options.BaseURL,
-		caller: fern.NewCaller(
-			&fern.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

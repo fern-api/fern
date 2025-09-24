@@ -3,10 +3,7 @@
 package packageyml
 
 import (
-	core "github.com/package-yml/fern/core"
+	internal "github.com/package-yml/fern/internal"
 )
 
-// ErrorCodes maps HTTP status codes to error constructors.
-type ErrorCodes map[int]func(*core.APIError) error
-
-var errorCodes ErrorCodes = ErrorCodes{}
+var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{}

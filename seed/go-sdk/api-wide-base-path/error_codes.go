@@ -3,10 +3,7 @@
 package apiwidebasepath
 
 import (
-	core "github.com/api-wide-base-path/fern/core"
+	internal "github.com/api-wide-base-path/fern/internal"
 )
 
-// ErrorCodes maps HTTP status codes to error constructors.
-type ErrorCodes map[int]func(*core.APIError) error
-
-var errorCodes ErrorCodes = ErrorCodes{}
+var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{}

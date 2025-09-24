@@ -13,7 +13,7 @@ import (
 
 type RawClient struct {
 	baseURL string
-	caller  *fern.Caller
+	caller  *internal.Caller
 	options *core.RequestOptions
 }
 
@@ -21,8 +21,8 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
 		options: options,
 		baseURL: options.BaseURL,
-		caller: fern.NewCaller(
-			&fern.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -49,7 +49,7 @@ func (r *RawClient) FooWithoutEndpointError(
 	var response *fern.FooResponse
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -59,7 +59,7 @@ func (r *RawClient) FooWithoutEndpointError(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    fern.NewErrorDecoder(),
+			ErrorDecoder:    internal.NewErrorDecoder(fern.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -91,7 +91,7 @@ func (r *RawClient) Foo(
 	var response *fern.FooResponse
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -101,7 +101,7 @@ func (r *RawClient) Foo(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    fern.NewErrorDecoder(),
+			ErrorDecoder:    internal.NewErrorDecoder(fern.ErrorCodes),
 		},
 	)
 	if err != nil {
@@ -133,7 +133,7 @@ func (r *RawClient) FooWithExamples(
 	var response *fern.FooResponse
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -143,7 +143,7 @@ func (r *RawClient) FooWithExamples(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    fern.NewErrorDecoder(),
+			ErrorDecoder:    internal.NewErrorDecoder(fern.ErrorCodes),
 		},
 	)
 	if err != nil {

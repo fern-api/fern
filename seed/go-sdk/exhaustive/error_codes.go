@@ -4,13 +4,11 @@ package exhaustive
 
 import (
 	core "github.com/exhaustive/fern/core"
+	internal "github.com/exhaustive/fern/internal"
 	types "github.com/exhaustive/fern/types"
 )
 
-// ErrorCodes maps HTTP status codes to error constructors.
-type ErrorCodes map[int]func(*core.APIError) error
-
-var errorCodes ErrorCodes = ErrorCodes{
+var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{
 	400: func(apiError *core.APIError) error {
 		return &BadRequestBody{
 			APIError: apiError,

@@ -3,10 +3,7 @@
 package emptyclients
 
 import (
-	core "github.com/empty-clients/fern/core"
+	internal "github.com/empty-clients/fern/internal"
 )
 
-// ErrorCodes maps HTTP status codes to error constructors.
-type ErrorCodes map[int]func(*core.APIError) error
-
-var errorCodes ErrorCodes = ErrorCodes{}
+var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{}

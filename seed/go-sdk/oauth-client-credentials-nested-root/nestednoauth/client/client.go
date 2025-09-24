@@ -3,8 +3,8 @@
 package client
 
 import (
-	fern "github.com/oauth-client-credentials-nested-root/fern"
 	core "github.com/oauth-client-credentials-nested-root/fern/core"
+	internal "github.com/oauth-client-credentials-nested-root/fern/internal"
 	api "github.com/oauth-client-credentials-nested-root/fern/nestednoauth/api"
 )
 
@@ -13,7 +13,7 @@ type Client struct {
 
 	options *core.RequestOptions
 	baseURL string
-	caller  *fern.Caller
+	caller  *internal.Caller
 }
 
 func NewClient(options *core.RequestOptions) *Client {
@@ -21,8 +21,8 @@ func NewClient(options *core.RequestOptions) *Client {
 		Api:     api.NewClient(options),
 		options: options,
 		baseURL: options.BaseURL,
-		caller: fern.NewCaller(
-			&fern.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

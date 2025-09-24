@@ -4,7 +4,6 @@ package object
 
 import (
 	context "context"
-	fern "github.com/exhaustive/fern"
 	core "github.com/exhaustive/fern/core"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
@@ -14,7 +13,7 @@ import (
 
 type RawClient struct {
 	baseURL string
-	caller  *fern.Caller
+	caller  *internal.Caller
 	options *core.RequestOptions
 }
 
@@ -22,8 +21,8 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
 		options: options,
 		baseURL: options.BaseURL,
-		caller: fern.NewCaller(
-			&fern.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -50,7 +49,7 @@ func (r *RawClient) GetAndReturnWithOptionalField(
 	var response *types.ObjectWithOptionalField
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -91,7 +90,7 @@ func (r *RawClient) GetAndReturnWithRequiredField(
 	var response *types.ObjectWithRequiredField
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -132,7 +131,7 @@ func (r *RawClient) GetAndReturnWithMapOfMap(
 	var response *types.ObjectWithMapOfMap
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -173,7 +172,7 @@ func (r *RawClient) GetAndReturnNestedWithOptionalField(
 	var response *types.NestedObjectWithOptionalField
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -218,7 +217,7 @@ func (r *RawClient) GetAndReturnNestedWithRequiredField(
 	var response *types.NestedObjectWithRequiredField
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -259,7 +258,7 @@ func (r *RawClient) GetAndReturnNestedWithRequiredFieldAsList(
 	var response *types.NestedObjectWithRequiredField
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,

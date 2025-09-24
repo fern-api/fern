@@ -4,12 +4,10 @@ package examples
 
 import (
 	core "github.com/examples/fern/pleaseinhere/core"
+	internal "github.com/examples/fern/pleaseinhere/internal"
 )
 
-// ErrorCodes maps HTTP status codes to error constructors.
-type ErrorCodes map[int]func(*core.APIError) error
-
-var errorCodes ErrorCodes = ErrorCodes{
+var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{
 	404: func(apiError *core.APIError) error {
 		return &NotFoundError{
 			APIError: apiError,

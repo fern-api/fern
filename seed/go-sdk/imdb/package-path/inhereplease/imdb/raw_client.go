@@ -13,7 +13,7 @@ import (
 
 type RawClient struct {
 	baseURL string
-	caller  *inhereplease.Caller
+	caller  *internal.Caller
 	options *core.RequestOptions
 }
 
@@ -21,8 +21,8 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
 		options: options,
 		baseURL: options.BaseURL,
-		caller: inhereplease.NewCaller(
-			&inhereplease.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -49,7 +49,7 @@ func (r *RawClient) CreateMovie(
 	var response inhereplease.MovieId
 	raw, err := r.caller.Call(
 		ctx,
-		&inhereplease.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -93,7 +93,7 @@ func (r *RawClient) GetMovie(
 	var response *inhereplease.Movie
 	raw, err := r.caller.Call(
 		ctx,
-		&inhereplease.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodGet,
 			Headers:         headers,
@@ -102,7 +102,7 @@ func (r *RawClient) GetMovie(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Response:        &response,
-			ErrorDecoder:    inhereplease.NewErrorDecoder(),
+			ErrorDecoder:    internal.NewErrorDecoder(inhereplease.ErrorCodes),
 		},
 	)
 	if err != nil {

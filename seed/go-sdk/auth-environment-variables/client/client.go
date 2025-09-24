@@ -3,8 +3,8 @@
 package client
 
 import (
-	fern "github.com/auth-environment-variables/fern"
 	core "github.com/auth-environment-variables/fern/core"
+	internal "github.com/auth-environment-variables/fern/internal"
 	option "github.com/auth-environment-variables/fern/option"
 	service "github.com/auth-environment-variables/fern/service"
 	os "os"
@@ -15,7 +15,7 @@ type Client struct {
 
 	options *core.RequestOptions
 	baseURL string
-	caller  *fern.Caller
+	caller  *internal.Caller
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -33,8 +33,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 		Service: service.NewClient(options),
 		options: options,
 		baseURL: options.BaseURL,
-		caller: fern.NewCaller(
-			&fern.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

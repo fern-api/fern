@@ -3,9 +3,9 @@
 package client
 
 import (
-	fern "github.com/server-sent-event-examples/fern"
 	completions "github.com/server-sent-event-examples/fern/completions"
 	core "github.com/server-sent-event-examples/fern/core"
+	internal "github.com/server-sent-event-examples/fern/internal"
 	option "github.com/server-sent-event-examples/fern/option"
 )
 
@@ -14,7 +14,7 @@ type Client struct {
 
 	options *core.RequestOptions
 	baseURL string
-	caller  *fern.Caller
+	caller  *internal.Caller
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -23,8 +23,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 		Completions: completions.NewClient(options),
 		options:     options,
 		baseURL:     options.BaseURL,
-		caller: fern.NewCaller(
-			&fern.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

@@ -3,8 +3,8 @@
 package client
 
 import (
-	fern "github.com/mixed-file-directory/fern"
 	core "github.com/mixed-file-directory/fern/core"
+	internal "github.com/mixed-file-directory/fern/internal"
 	option "github.com/mixed-file-directory/fern/option"
 	organization "github.com/mixed-file-directory/fern/organization"
 	client "github.com/mixed-file-directory/fern/user/client"
@@ -16,7 +16,7 @@ type Client struct {
 
 	options *core.RequestOptions
 	baseURL string
-	caller  *fern.Caller
+	caller  *internal.Caller
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -26,8 +26,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 		User:         client.NewClient(options),
 		options:      options,
 		baseURL:      options.BaseURL,
-		caller: fern.NewCaller(
-			&fern.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

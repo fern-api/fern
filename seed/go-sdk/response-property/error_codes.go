@@ -3,10 +3,7 @@
 package responseproperty
 
 import (
-	core "github.com/response-property/fern/core"
+	internal "github.com/response-property/fern/internal"
 )
 
-// ErrorCodes maps HTTP status codes to error constructors.
-type ErrorCodes map[int]func(*core.APIError) error
-
-var errorCodes ErrorCodes = ErrorCodes{}
+var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{}

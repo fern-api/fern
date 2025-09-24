@@ -4,12 +4,10 @@ package basicauthenvironmentvariables
 
 import (
 	core "github.com/basic-auth-environment-variables/fern/core"
+	internal "github.com/basic-auth-environment-variables/fern/internal"
 )
 
-// ErrorCodes maps HTTP status codes to error constructors.
-type ErrorCodes map[int]func(*core.APIError) error
-
-var errorCodes ErrorCodes = ErrorCodes{
+var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{
 	401: func(apiError *core.APIError) error {
 		return &UnauthorizedRequest{
 			APIError: apiError,

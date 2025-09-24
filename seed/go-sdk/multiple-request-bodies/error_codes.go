@@ -3,10 +3,7 @@
 package api
 
 import (
-	core "github.com/multiple-request-bodies/fern/core"
+	internal "github.com/multiple-request-bodies/fern/internal"
 )
 
-// ErrorCodes maps HTTP status codes to error constructors.
-type ErrorCodes map[int]func(*core.APIError) error
-
-var errorCodes ErrorCodes = ErrorCodes{}
+var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{}

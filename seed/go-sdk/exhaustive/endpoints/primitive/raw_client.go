@@ -4,7 +4,6 @@ package primitive
 
 import (
 	context "context"
-	fern "github.com/exhaustive/fern"
 	core "github.com/exhaustive/fern/core"
 	internal "github.com/exhaustive/fern/internal"
 	option "github.com/exhaustive/fern/option"
@@ -15,7 +14,7 @@ import (
 
 type RawClient struct {
 	baseURL string
-	caller  *fern.Caller
+	caller  *internal.Caller
 	options *core.RequestOptions
 }
 
@@ -23,8 +22,8 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
 		options: options,
 		baseURL: options.BaseURL,
-		caller: fern.NewCaller(
-			&fern.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -51,7 +50,7 @@ func (r *RawClient) GetAndReturnString(
 	var response string
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -92,7 +91,7 @@ func (r *RawClient) GetAndReturnInt(
 	var response int
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -133,7 +132,7 @@ func (r *RawClient) GetAndReturnLong(
 	var response int64
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -174,7 +173,7 @@ func (r *RawClient) GetAndReturnDouble(
 	var response float64
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -215,7 +214,7 @@ func (r *RawClient) GetAndReturnBool(
 	var response bool
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -256,7 +255,7 @@ func (r *RawClient) GetAndReturnDatetime(
 	var response time.Time
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -297,7 +296,7 @@ func (r *RawClient) GetAndReturnDate(
 	var response time.Time
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -338,7 +337,7 @@ func (r *RawClient) GetAndReturnUuid(
 	var response uuid.UUID
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -379,7 +378,7 @@ func (r *RawClient) GetAndReturnBase64(
 	var response []byte
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,

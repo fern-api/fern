@@ -3,9 +3,9 @@
 package client
 
 import (
-	fern "github.com/imdb/fern"
 	core "github.com/imdb/fern/core"
 	imdb "github.com/imdb/fern/imdb"
+	internal "github.com/imdb/fern/internal"
 	option "github.com/imdb/fern/option"
 )
 
@@ -14,7 +14,7 @@ type Client struct {
 
 	options *core.RequestOptions
 	baseURL string
-	caller  *fern.Caller
+	caller  *internal.Caller
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -23,8 +23,8 @@ func NewClient(opts ...option.RequestOption) *Client {
 		Imdb:    imdb.NewClient(options),
 		options: options,
 		baseURL: options.BaseURL,
-		caller: fern.NewCaller(
-			&fern.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},

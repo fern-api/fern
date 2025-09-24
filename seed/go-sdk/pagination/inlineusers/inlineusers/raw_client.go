@@ -4,7 +4,6 @@ package inlineusers
 
 import (
 	context "context"
-	fern "github.com/pagination/fern"
 	core "github.com/pagination/fern/core"
 	inlineusers "github.com/pagination/fern/inlineusers"
 	internal "github.com/pagination/fern/internal"
@@ -14,7 +13,7 @@ import (
 
 type RawClient struct {
 	baseURL string
-	caller  *fern.Caller
+	caller  *internal.Caller
 	options *core.RequestOptions
 }
 
@@ -22,8 +21,8 @@ func NewRawClient(options *core.RequestOptions) *RawClient {
 	return &RawClient{
 		options: options,
 		baseURL: options.BaseURL,
-		caller: fern.NewCaller(
-			&fern.CallerParams{
+		caller: internal.NewCaller(
+			&internal.CallerParams{
 				Client:      options.HTTPClient,
 				MaxAttempts: options.MaxAttempts,
 			},
@@ -50,7 +49,7 @@ func (r *RawClient) ListWithBodyCursorPagination(
 	var response *inlineusers.ListUsersPaginationResponse
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,
@@ -91,7 +90,7 @@ func (r *RawClient) ListWithBodyOffsetPagination(
 	var response *inlineusers.ListUsersPaginationResponse
 	raw, err := r.caller.Call(
 		ctx,
-		&fern.CallParams{
+		&internal.CallParams{
 			URL:             endpointURL,
 			Method:          http.MethodPost,
 			Headers:         headers,

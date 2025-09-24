@@ -4,12 +4,10 @@ package errorproperty
 
 import (
 	core "github.com/error-property/fern/core"
+	internal "github.com/error-property/fern/internal"
 )
 
-// ErrorCodes maps HTTP status codes to error constructors.
-type ErrorCodes map[int]func(*core.APIError) error
-
-var errorCodes ErrorCodes = ErrorCodes{
+var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{
 	400: func(apiError *core.APIError) error {
 		return &PropertyBasedErrorTest{
 			APIError: apiError,
