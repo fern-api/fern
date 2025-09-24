@@ -5316,12 +5316,12 @@ func (i *InlinedRequestBody) GetExtendedProperties() []*ObjectProperty {
 	return i.ExtendedProperties
 }
 
-func (i *InlinedRequestBody) GetExtraProperties() bool {
-	if i == nil {
-		return false
-	}
-	return i.ExtraProperties
-}
+// func (i *InlinedRequestBody) GetExtraProperties() bool {
+// 	if i == nil {
+// 		return false
+// 	}
+// 	return i.ExtraProperties
+// }
 
 func (i *InlinedRequestBody) GetExtraProperties() map[string]interface{} {
 	return i.extraProperties

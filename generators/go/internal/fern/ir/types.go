@@ -5873,12 +5873,12 @@ func (o *ObjectTypeDeclaration) GetExtendedProperties() []*ObjectProperty {
 	return o.ExtendedProperties
 }
 
-func (o *ObjectTypeDeclaration) GetExtraProperties() bool {
-	if o == nil {
-		return false
-	}
-	return o.ExtraProperties
-}
+// func (o *ObjectTypeDeclaration) GetExtraProperties() bool {
+// 	if o == nil {
+// 		return false
+// 	}
+// 	return o.ExtraProperties
+// }
 
 func (o *ObjectTypeDeclaration) GetExtraProperties() map[string]interface{} {
 	return o.extraProperties

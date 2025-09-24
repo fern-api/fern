@@ -657,7 +657,7 @@ func (u *UserDefinedProtobufType) String() string {
 //
 // The full list of well-known types can be found at https://protobuf.dev/reference/protobuf/google.protobuf
 type WellKnownProtobufType struct {
-	Type             string
+	// Type             string
 	Any              interface{}
 	Api              interface{}
 	BoolValue        interface{}
@@ -690,12 +690,12 @@ type WellKnownProtobufType struct {
 	Value            interface{}
 }
 
-func (w *WellKnownProtobufType) GetType() string {
-	if w == nil {
-		return ""
-	}
-	return w.Type
-}
+// func (w *WellKnownProtobufType) GetType() string {
+// 	if w == nil {
+// 		return ""
+// 	}
+// 	return w.Type
+// }
 
 func (w *WellKnownProtobufType) GetAny() interface{} {
 	if w == nil {
@@ -1367,16 +1367,16 @@ func (w WellKnownProtobufType) MarshalJSON() ([]byte, error) {
 		}
 		return json.Marshal(marshaler)
 	}
-	if w.Type != nil {
-		var marshaler = struct {
-			Type string      `json:"type"`
-			Type interface{} `json:"type,omitempty"`
-		}{
-			Type: "type",
-			Type: w.Type,
-		}
-		return json.Marshal(marshaler)
-	}
+	// if w.Type != nil {
+	// 	var marshaler = struct {
+	// 		Type string      `json:"type"`
+	// 		Type interface{} `json:"type,omitempty"`
+	// 	}{
+	// 		Type: "type",
+	// 		Type: w.Type,
+	// 	}
+	// 	return json.Marshal(marshaler)
+	// }
 	if w.Uint32Value != nil {
 		var marshaler = struct {
 			Type        string      `json:"type"`
