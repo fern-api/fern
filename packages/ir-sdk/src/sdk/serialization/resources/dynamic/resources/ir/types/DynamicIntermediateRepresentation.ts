@@ -12,6 +12,7 @@ import { Endpoint } from "../../endpoints/types/Endpoint";
 import { EnvironmentsConfig } from "../../../../environment/types/EnvironmentsConfig";
 import { NamedParameter } from "../../types/types/NamedParameter";
 import { GeneratorConfig } from "./GeneratorConfig";
+import { VariableDeclaration } from "../../variables/types/VariableDeclaration";
 
 export const DynamicIntermediateRepresentation: core.serialization.ObjectSchema<
     serializers.dynamic.DynamicIntermediateRepresentation.Raw,
@@ -23,6 +24,7 @@ export const DynamicIntermediateRepresentation: core.serialization.ObjectSchema<
     environments: EnvironmentsConfig.optional(),
     headers: core.serialization.list(NamedParameter).optional(),
     pathParameters: core.serialization.list(NamedParameter).optional(),
+    variables: core.serialization.list(VariableDeclaration).optional(),
     generatorConfig: GeneratorConfig.optional(),
 });
 
@@ -34,6 +36,7 @@ export declare namespace DynamicIntermediateRepresentation {
         environments?: EnvironmentsConfig.Raw | null;
         headers?: NamedParameter.Raw[] | null;
         pathParameters?: NamedParameter.Raw[] | null;
+        variables?: VariableDeclaration.Raw[] | null;
         generatorConfig?: GeneratorConfig.Raw | null;
     }
 }

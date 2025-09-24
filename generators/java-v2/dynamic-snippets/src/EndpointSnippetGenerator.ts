@@ -160,6 +160,18 @@ export class EndpointSnippetGenerator {
             );
         }
         this.context.errors.unscope();
+
+        this.context.errors.scope(Scope.PathParameters);
+        if (this.context.ir.pathParameters != null && snippet.pathParameters != null) {
+            builderArgs.push(
+                ...this.getRootClientPathParameterArgs({
+                    pathParameters: this.context.ir.pathParameters,
+                    values: snippet.pathParameters
+                })
+            );
+        }
+        this.context.errors.unscope();
+
         return builderArgs;
     }
 
@@ -370,6 +382,29 @@ export class EndpointSnippetGenerator {
         return typeLiteral;
     }
 
+    private getRootClientPathParameterArgs({
+        pathParameters,
+        values
+    }: {
+        pathParameters: FernIr.dynamic.NamedParameter[];
+        values: FernIr.dynamic.Values;
+    }): java.BuilderParameter[] {
+        const args: java.BuilderParameter[] = [];
+        for (const pathParam of pathParameters) {
+            const value = values[pathParam.name.wireValue];
+            if (value != null) {
+                args.push({
+                    name: this.context.getMethodName(pathParam.name.name),
+                    value: this.context.dynamicTypeLiteralMapper.convert({
+                        typeReference: pathParam.typeReference,
+                        value
+                    })
+                });
+            }
+        }
+        return args;
+    }
+
     private callMethod({
         endpoint,
         snippet
@@ -411,7 +446,9 @@ export class EndpointSnippetGenerator {
         const args: java.TypeLiteral[] = [];
 
         this.context.errors.scope(Scope.PathParameters);
-        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
+        // Only include endpoint-specific path parameters, not root-level ones
+        // Root-level path parameters are handled in getRootClientBuilderArgs
+        const pathParameters = request.pathParameters ?? [];
         if (pathParameters.length > 0) {
             args.push(
                 ...this.getPathParameters({ namedParameters: pathParameters, snippet }).map((field) => field.value)
