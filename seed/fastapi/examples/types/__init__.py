@@ -6,5 +6,8 @@ from .basic_type import BasicType
 from .complex_type import ComplexType
 from .identifier import Identifier
 from .type import Type
+from .type_with_single_char_property_equal_to_type_starting_letter import (
+    TypeWithSingleCharPropertyEqualToTypeStartingLetter,
+)
 
-__all__ = ["BasicType", "ComplexType", "Identifier", "Type"]
+__all__ = ["BasicType", "ComplexType", "Identifier", "Type", "TypeWithSingleCharPropertyEqualToTypeStartingLetter"]
