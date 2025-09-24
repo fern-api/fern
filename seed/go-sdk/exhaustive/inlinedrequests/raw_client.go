@@ -47,13 +47,6 @@ func (r *RawClient) PostWithObjectBodyandResponse(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	errorCodes := internal.ErrorCodes{
-		400: func(apiError *core.APIError) error {
-			return &fern.BadRequestBody{
-				APIError: apiError,
-			}
-		},
-	}
 	var response *types.ObjectWithOptionalField
 	raw, err := r.caller.Call(
 		ctx,
@@ -67,7 +60,7 @@ func (r *RawClient) PostWithObjectBodyandResponse(
 			Client:          options.HTTPClient,
 			Request:         request,
 			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(errorCodes),
+			ErrorDecoder:    internal.NewErrorDecoder(fern.ErrorCodes),
 		},
 	)
 	if err != nil {

@@ -6,15 +6,15 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/undiscriminated-unions/fern/core"
 	"github.com/stretchr/testify/assert"
+	"github.com/undiscriminated-unions/fern/core"
 )
 
 func TestErrorDecoder(t *testing.T) {
 	decoder := NewErrorDecoder(
 		ErrorCodes{
 			http.StatusNotFound: func(apiError *core.APIError) error {
-				return &NotFoundError{APIError: apiError}
+				return &InternalTestNotFoundError{APIError: apiError}
 			},
 		})
 
@@ -37,7 +37,7 @@ func TestErrorDecoder(t *testing.T) {
 			giveStatusCode: http.StatusNotFound,
 			giveHeader:     http.Header{},
 			giveBody:       `{"message": "Resource not found"}`,
-			wantError: &NotFoundError{
+			wantError: &InternalTestNotFoundError{
 				APIError: core.NewAPIError(http.StatusNotFound, http.Header{}, errors.New(`{"message": "Resource not found"}`)),
 				Message:  "Resource not found",
 			},
