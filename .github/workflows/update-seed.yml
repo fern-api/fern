@@ -37,22 +37,22 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       skip-scripts: ${{ steps.set-update-options.outputs.skip-scripts }}
-      create-artifacts: ${{ steps.set-update-options.outputs.create-artifacts }}
-      create-pr: ${{ steps.set-update-options.outputs.create-pr }}
+      update-by-push: ${{ steps.set-update-options.outputs.update-by-push }}
+      update-by-pr: ${{ steps.set-update-options.outputs.update-by-pr }}
     steps:
-      # Apply by commit for PR to main, apply by PR for push to main or workflow_dispatch
+      # Apply by direct push for PRs to main, apply by PR for push to main or workflow_dispatch
       - name: Set update options
         id: set-update-options
         shell: bash
         run: |
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
             echo "skip-scripts=true" >> $GITHUB_OUTPUT
-            echo "create-artifacts=true" >> $GITHUB_OUTPUT
-            echo "create-pr=false" >> $GITHUB_OUTPUT
+            echo "update-by-push=true" >> $GITHUB_OUTPUT
+            echo "update-by-pr=false" >> $GITHUB_OUTPUT
           else
             echo "skip-scripts=false" >> $GITHUB_OUTPUT
-            echo "create-artifacts=false" >> $GITHUB_OUTPUT
-            echo "create-pr=true" >> $GITHUB_OUTPUT
+            echo "update-by-push=false" >> $GITHUB_OUTPUT
+            echo "update-by-pr=true" >> $GITHUB_OUTPUT
           fi
   changes:
     if: github.repository == 'fern-api/fern'
@@ -289,10 +289,6 @@ jobs:
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   ruby-sdk-seed-update:
     needs: [changes, setup, get-all-test-matrices]
@@ -330,10 +326,6 @@ jobs:
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   ruby-sdk-v2-seed-update:
     needs: [changes, setup, get-all-test-matrices]
@@ -372,10 +364,6 @@ jobs:
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   pydantic-seed-update:
     needs: [changes, setup, get-all-test-matrices]
@@ -413,10 +401,6 @@ jobs:
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   python-sdk-seed-update:
     needs: [changes, setup, get-all-test-matrices]
@@ -454,10 +438,6 @@ jobs:
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   fastapi-seed-update:
     needs: [changes, setup, get-all-test-matrices]
@@ -495,10 +475,6 @@ jobs:
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   openapi-seed-update:
     needs: [changes, setup, get-all-test-matrices]
@@ -536,10 +512,6 @@ jobs:
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   postman-seed-update:
     needs: [changes, setup, get-all-test-matrices]
@@ -577,10 +549,6 @@ jobs:
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   java-sdk-seed-update:
     needs: [changes, setup, get-all-test-matrices]
@@ -618,10 +586,6 @@ jobs:
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   java-model-seed-update:
     needs: [changes, setup, get-all-test-matrices]
@@ -659,10 +623,6 @@ jobs:
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   java-spring-seed-update:
     needs: [changes, setup, get-all-test-matrices]
@@ -700,10 +660,6 @@ jobs:
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   typescript-sdk-seed-update:
     needs: [changes, setup, get-all-test-matrices]
@@ -741,10 +697,6 @@ jobs:
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   typescript-express-seed-update:
     needs: [changes, setup, get-all-test-matrices]
@@ -782,10 +734,6 @@ jobs:
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   go-fiber-seed-update:
     needs: [changes, setup, get-all-test-matrices]
@@ -823,10 +771,6 @@ jobs:
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   go-model-seed-update:
     needs: [changes, setup, get-all-test-matrices]
@@ -864,10 +808,6 @@ jobs:
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   go-sdk-seed-update:
     needs: [changes, setup, get-all-test-matrices]
@@ -905,10 +845,6 @@ jobs:
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   csharp-model-seed-update:
     needs: [changes, setup, get-all-test-matrices]
@@ -946,10 +882,6 @@ jobs:
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   csharp-sdk-seed-update:
     needs: [changes, setup, get-all-test-matrices]
@@ -987,10 +919,6 @@ jobs:
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   php-model-seed-update:
     needs: [changes, setup, get-all-test-matrices]
@@ -1028,10 +956,6 @@ jobs:
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   php-sdk-seed-update:
     needs: [changes, setup, get-all-test-matrices]
@@ -1069,10 +993,6 @@ jobs:
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   swift-sdk-seed-update:
     needs: [changes, setup, get-all-test-matrices]
@@ -1110,10 +1030,6 @@ jobs:
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   rust-model-seed-update:
     needs: [changes, setup, get-all-test-matrices]
@@ -1151,10 +1067,6 @@ jobs:
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   rust-sdk-seed-update:
     needs: [changes, setup, get-all-test-matrices]
@@ -1192,19 +1104,15 @@ jobs:
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
           index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   # Use always() to ensure this runs even if stages from needs are skipped.
   # Add check back to make sure it doesn't run for failures or cancellations.
-  commit-seed-changes:
+  commit-seed-changes-by-push:
     outputs:
       has-patches: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES }}
     if: >-
       ${{
-        always() && needs.setup.outputs.create-artifacts == 'true' &&
+        always() && needs.setup.outputs.update-by-push == 'true' &&
         !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
       }}
     needs:
@@ -1274,6 +1182,7 @@ jobs:
         shell: bash
         id: get-number-of-patches
         run: |
+          # Apply all patches together for single commit
           file_count=$(find ./artifacts -type f -name "*.patch" | wc -l)
           echo "Number of patches downloaded: $file_count"
           if [ "$file_count" -gt 0 ]; then
@@ -1303,15 +1212,224 @@ jobs:
           fetch: false
           message: "Automated update of seed files"
 
+  # Verify that the branch is the default branch (running for push to main)
+  commit-seed-changes-by-pr:
+    if: >-
+      ${{
+        always() &&
+        github.ref == format('refs/heads/{0}', github.event.repository.default_branch) &&
+        needs.setup.outputs.update-by-pr == 'true' &&
+        !contains(needs.*.result, 'failure') && 
+        !contains(needs.*.result, 'cancelled')
+      }}
+    needs:
+      [
+        changes,
+        setup,
+        ruby-model-seed-update,
+        ruby-sdk-seed-update,
+        ruby-sdk-v2-seed-update,
+        pydantic-seed-update,
+        python-sdk-seed-update,
+        fastapi-seed-update,
+        openapi-seed-update,
+        postman-seed-update,
+        java-sdk-seed-update,
+        java-model-seed-update,
+        java-spring-seed-update,
+        typescript-sdk-seed-update,
+        typescript-express-seed-update,
+        go-fiber-seed-update,
+        go-model-seed-update,
+        go-sdk-seed-update,
+        csharp-model-seed-update,
+        csharp-sdk-seed-update,
+        php-model-seed-update,
+        php-sdk-seed-update,
+        swift-sdk-seed-update,
+        rust-model-seed-update,
+        rust-sdk-seed-update
+      ]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        sdk-name:
+          [
+            ruby-model,
+            ruby-sdk,
+            ruby-sdk-v2,
+            pydantic,
+            python-sdk,
+            fastapi,
+            openapi,
+            postman,
+            java-sdk,
+            java-model,
+            java-spring,
+            ts-sdk,
+            ts-express,
+            go-fiber,
+            go-model,
+            go-sdk,
+            csharp-model,
+            csharp-sdk,
+            php-model,
+            php-sdk,
+            swift-sdk,
+            rust-model,
+            rust-sdk
+          ]
+        include:
+          - language-name: ruby
+            sdk-name: ruby-model
+          - language-name: ruby
+            sdk-name: ruby-sdk
+          - language-name: ruby
+            sdk-name: ruby-sdk-v2
+          - language-name: python
+            sdk-name: pydantic
+          - language-name: python
+            sdk-name: python-sdk
+          - language-name: python
+            sdk-name: fastapi
+          - language-name: openapi
+            sdk-name: openapi
+          - language-name: postman
+            sdk-name: postman
+          - language-name: java
+            sdk-name: java-sdk
+          - language-name: java
+            sdk-name: java-model
+          - language-name: java
+            sdk-name: java-spring
+          - language-name: typescript
+            sdk-name: ts-sdk
+          - language-name: typescript
+            sdk-name: ts-express
+          - language-name: go
+            sdk-name: go-fiber
+          - language-name: go
+            sdk-name: go-model
+          - language-name: go
+            sdk-name: go-sdk
+          - language-name: csharp
+            sdk-name: csharp-model
+          - language-name: csharp
+            sdk-name: csharp-sdk
+          - language-name: php
+            sdk-name: php-model
+          - language-name: php
+            sdk-name: php-sdk
+          - language-name: swift
+            sdk-name: swift-sdk
+          - language-name: rust
+            sdk-name: rust-model
+          - language-name: rust
+            sdk-name: rust-sdk
+    steps:
+      # Can checkout detached head here since changes will be PR'd
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      - name: Create artifacts downloads directory
+        shell: bash
+        run: |
+          DIRECTORY=artifacts
+          if [ ! -d "$DIRECTORY" ]; then
+            echo "'$DIRECTORY' does NOT exist, creating it now."
+            mkdir $DIRECTORY
+          else
+            echo "WARNING: Directory '$DIRECTORY' already exists. Not an immediate error but could cause a problem downstream."
+          fi
+
+      # Merge-multiple is set so all patches are downloaded into the same folder. Otherwise
+      # they are subfoldered into folders that match *.patch pattern and cause errors downstream
+      - name: Download patches
+        uses: actions/download-artifact@v5
+        with:
+          path: ./artifacts
+          merge-multiple: true
+
+      - name: Get number of patches
+        shell: bash
+        id: get-number-of-patches
+        run: |
+          # Apply patches per generator for multiple, separate, PRs
+          file_count=$(find ./artifacts -type f -name "${{ matrix.sdk-name }}-*.patch" | wc -l)
+          echo "Number of patches downloaded: $file_count"
+          if [ "$file_count" -gt 0 ]; then
+            echo "HAS_PATCHES=true" >> $GITHUB_OUTPUT
+          else
+            echo "HAS_PATCHES=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Display content of a folder
+        run: |
+          echo "Content of 'artifacts' folder:"
+          ls -R artifacts/
+
+      - name: Apply patches
+        shell: bash
+        if: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES == 'true' }}
+        run: |
+          git apply artifacts/${{ matrix.sdk-name }}-*.patch
+  
+
+      # Create PR, approve and set to merge per generator
+      - name: Create Pull Request
+        if: steps.get-number-of-patches.outputs.HAS_PATCHES == 'true'
+        id: cpr
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+          commit-message: "chore(${{ matrix.language-name }}): update ${{ matrix.sdk-name }} seed"
+          title: "chore(${{ matrix.language-name }}): update ${{ matrix.sdk-name }} seed"
+          branch: update-${{ matrix.sdk-name }}-seed
+          body: "Auto-generated PR, triggered by GitHub event: ${{ github.event_name }} from branch: ${{ github.ref_name }}.\nGitHub workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          delete-branch: true
+          labels: |
+            seed
+            language/${{ matrix.language-name }}
+
+      - name: Log PR Creation Failure
+        if: steps.cpr.outputs.pull-request-operation != 'created'
+        shell: bash
+        run: |
+          echo "PR was not created, likely due to no diff for the generated seed output"
+
+      - name: Log PR Creation Details
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        shell: bash
+        run: |
+          echo "PR Created: ${{ steps.cpr.outputs.pull-request-url }}"
+
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
+
+      - name: Approve PR
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: ./.github/actions/auto-approve
+        with:
+          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+
   # Use always() to ensure this runs even if stages from needs are skipped.
   # Add check back to make sure it doesn't run for failures or cancellations.
-  # Only trigger if there are no new patches (seed is up to date)
+  # Only trigger if there are no new patches (seed is up to date) and workflow
+  # is adding changes by commit (not by PR)
   trigger-seed-snapshot-tests:
-    needs: [commit-seed-changes, changes, setup]
+    needs: [commit-seed-changes-by-push, changes, setup]
     if: >-
       ${{ 
-        always() && needs.setup.outputs.create-artifacts == 'true' &&
-        needs.commit-seed-changes.outputs.has-patches == 'false' &&
+        always() && needs.setup.outputs.update-by-push == 'true' &&
+        needs.commit-seed-changes-by-push.outputs.has-patches == 'false' &&
         !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
       }}
     runs-on: ubuntu-latest
