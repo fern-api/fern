@@ -253,7 +253,7 @@ export class TestGenerator {
                 break;
         }
         if (this.generateWireTests) {
-            this.dependencyManager.addDependency("msw", "^2.8.4", {
+            this.dependencyManager.addDependency("msw", "2.11.2", {
                 type: DependencyType.DEV
             });
         }

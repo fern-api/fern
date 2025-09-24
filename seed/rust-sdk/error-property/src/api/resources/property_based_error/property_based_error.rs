@@ -1,5 +1,5 @@
 use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
 
 pub struct PropertyBasedErrorClient {
@@ -13,6 +13,15 @@ impl PropertyBasedErrorClient {
         })
     }
 
+    /// GET request that always throws an error
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn throw_error(&self, options: Option<RequestOptions>) -> Result<String, ApiError> {
         self.http_client
             .execute_request(Method::GET, "property-based-error", None, None, options)

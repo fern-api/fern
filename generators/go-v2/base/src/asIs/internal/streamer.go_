@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/fern-api/stream-go/v2/core"
+	"{{ .RootImportPath }}/core"
 )
 
 const (

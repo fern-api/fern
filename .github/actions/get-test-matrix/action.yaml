@@ -1,0 +1,77 @@
+name: Get Test Matrix
+description: Determines all seed tests to run and how to package it for the given SDK
+
+inputs:
+  sdk-name:
+    description: The name of the SDK to get the test matrix for
+    required: true
+  package-amount:
+    description: "Maximum number of packages to bundle the test sets into"
+    required: true
+
+outputs:
+  test-matrix:
+    description: "Packaged test matrix"
+    value: ${{ steps.package-test-matrices.outputs.packaged }}
+  split-tests:
+    description: "Whether to split tests into multiple runners or run as one"
+    value: ${{ steps.determine-test-setups.outputs.split-tests }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install
+      uses: ./.github/actions/install
+
+    - uses: bufbuild/buf-setup-action@v1.34.0
+      with:
+        github_token: ${{ github.token }}
+
+    - uses: actions/setup-go@v5
+      with:
+        go-version: "stable"
+
+    - name: Install protoc-gen-openapi
+      shell: bash
+      run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+
+    - name: Build seed
+      shell: bash
+      run: |
+        pnpm seed:build
+
+    # Several generators are already running within target time. Run all of their tests at once
+    # to save on runner count. Eventually this will be done dynamically
+    - name: Determine test setups
+      id: determine-test-setups
+      shell: bash
+      run: |
+        if [[ "${{ inputs.sdk-name }}" == "fastapi" || \
+        "${{ inputs.sdk-name }}" == "go-fiber" || \
+        "${{ inputs.sdk-name }}" == "go-model" || \
+        "${{ inputs.sdk-name }}" == "java-spring" || \
+        "${{ inputs.sdk-name }}" == "openapi" || \
+        "${{ inputs.sdk-name }}" == "php-model" || \
+        "${{ inputs.sdk-name }}" == "postman" || \
+        "${{ inputs.sdk-name }}" == "ruby-sdk" || \
+        "${{ inputs.sdk-name }}" == "rust-model" || \
+        "${{ inputs.sdk-name }}" == "ts-express" ]]; then
+          echo "split-tests=false" >> $GITHUB_OUTPUT
+        else
+          echo "split-tests=true" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Get test matrix for ${{ inputs.sdk-name }}
+      if: steps.determine-test-setups.outputs.split-tests == 'true'
+      id: get-test-matrices
+      uses: ./.github/actions/parse-test-matrix-output
+      with:
+        generator-name: ${{ inputs.sdk-name }}
+
+    - name: Package test matrices for ${{ inputs.sdk-name }}
+      if: steps.determine-test-setups.outputs.split-tests == 'true'
+      id: package-test-matrices
+      uses: ./.github/actions/package-test-matrix
+      with:
+        full-fixture-matrix: ${{ steps.get-test-matrices.outputs.parsed }}
+        package-amount: ${{ inputs.package-amount }}

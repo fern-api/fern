@@ -1,5 +1,5 @@
 use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
 
 pub struct BasicAuthClient {
@@ -13,6 +13,15 @@ impl BasicAuthClient {
         })
     }
 
+    /// GET request with basic auth scheme
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn get_with_basic_auth(
         &self,
         options: Option<RequestOptions>,
@@ -22,6 +31,15 @@ impl BasicAuthClient {
             .await
     }
 
+    /// POST request with basic auth scheme
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn post_with_basic_auth(
         &self,
         request: &serde_json::Value,

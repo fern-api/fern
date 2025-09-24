@@ -1,12 +1,16 @@
 use serde::{Deserialize, Serialize};
 use std::fmt;
 
+/// Tests enum name and value can be
+/// different.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub enum Operand {
     #[serde(rename = ">")]
     GreaterThan,
     #[serde(rename = "=")]
     EqualTo,
+    /// The name and value should be similar
+    /// are similar for less than.
     #[serde(rename = "less_than")]
     LessThan,
 }

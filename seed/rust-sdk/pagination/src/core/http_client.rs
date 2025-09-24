@@ -1,4 +1,4 @@
-use crate::{Utils::join_url, ApiError, ClientConfig, RequestOptions};
+use crate::{join_url, ApiError, ClientConfig, RequestOptions};
 use reqwest::{
     header::{HeaderName, HeaderValue},
     Client, Method, Request, Response,

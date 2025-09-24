@@ -412,6 +412,9 @@
                   "path-parameters": {
                     "id": "id",
                   },
+                  "query-parameters": {
+                    "expand": true,
+                  },
                   "response": {
                     "body": {
                       "data": {
@@ -656,6 +659,8 @@ service:
       examples:
         - path-parameters:
             id: id
+          query-parameters:
+            expand: true
           headers:
             x-client-id: x-client-id
             x-client-secret: x-client-secret
@@ -1114,6 +1119,9 @@ service:
                   "path-parameters": {
                     "id": "id",
                   },
+                  "query-parameters": {
+                    "expand": true,
+                  },
                   "response": {
                     "body": {
                       "data": {
@@ -1278,6 +1286,8 @@ service:
       examples:
         - path-parameters:
             id: id
+          query-parameters:
+            expand: true
           headers:
             x-client-id: x-client-id
             x-client-secret: x-client-secret

@@ -7,6 +7,7 @@ pub struct ExecutionSessionState {
     #[serde(rename = "lastTimeContacted")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub last_time_contacted: Option<String>,
+    /// The auto-generated session id. Formatted as a uuid.
     #[serde(rename = "sessionId")]
     pub session_id: String,
     #[serde(rename = "isWarmInstance")]

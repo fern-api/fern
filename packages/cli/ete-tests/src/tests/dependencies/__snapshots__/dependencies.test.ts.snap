@@ -934,6 +934,7 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
         },
         "pathParameters": [],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,
@@ -1244,4 +1245,4 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies > file dependencies 1`] = `4804632`;
+exports[`dependencies > file dependencies 1`] = `4838241`;

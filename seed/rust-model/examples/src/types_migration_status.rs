@@ -3,8 +3,10 @@ use std::fmt;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub enum MigrationStatus {
+    /// The migration is running.
     #[serde(rename = "RUNNING")]
     Running,
+    /// The migration failed.
     #[serde(rename = "FAILED")]
     Failed,
     #[serde(rename = "FINISHED")]

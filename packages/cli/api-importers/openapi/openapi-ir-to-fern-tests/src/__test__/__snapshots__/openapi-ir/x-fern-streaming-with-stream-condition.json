@@ -157,7 +157,28 @@
         {
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": "Request-Timeout",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "Request-Timeout-Millis",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "request": {
             "properties": {
               "query": {
@@ -350,7 +371,28 @@
         {
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": "Request-Timeout",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "Request-Timeout-Millis",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "request": {
             "properties": {
               "query": {

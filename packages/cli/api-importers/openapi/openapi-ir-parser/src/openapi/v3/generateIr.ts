@@ -170,6 +170,7 @@ export function generateIr({
                                 // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                                 { ...schema, "x-fern-type-name": `${key}Body` } as any as OpenAPIV3.SchemaObject,
                                 false,
+                                false,
                                 context,
                                 [key],
                                 source,
@@ -178,7 +179,7 @@ export function generateIr({
                         ];
                     }
                 }
-                return [key, convertSchema(schema, false, context, [key], source, schemaNamespace ?? namespace)];
+                return [key, convertSchema(schema, false, false, context, [key], source, schemaNamespace ?? namespace)];
             })
             .filter((entry) => entry.length > 0)
     );

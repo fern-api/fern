@@ -15,6 +15,16 @@ impl UserEventsClient {
         })
     }
 
+    /// List all user events.
+    ///
+    /// # Arguments
+    ///
+    /// * `limit` - The maximum number of results to return.
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn list_events(
         &self,
         request: &ListEventsQueryRequest,

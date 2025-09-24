@@ -125,6 +125,10 @@ export function isValidSemVerChange(currentVersion: SemVer, previousVersion: Sem
             (currentVersion.prerelease === undefined || currentVersion.prerelease === 0)
         );
     }
+    // If current version has no prerelease but previous version does (ex: 4.29.2-rc0), it's a valid RC-to-final transition (4.29.2-rc0 -> 4.29.2)
+    if (currentVersion.prerelease === undefined && previousVersion.prerelease !== undefined) {
+        return true;
+    }
     // If prerelease is undefined, and no other versions are different, it's invalid
     if (currentVersion.prerelease === undefined) {
         return false;

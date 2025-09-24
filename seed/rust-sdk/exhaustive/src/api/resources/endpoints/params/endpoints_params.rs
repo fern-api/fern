@@ -13,6 +13,15 @@ impl EndpointsParamsClient {
         })
     }
 
+    /// GET with path param
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn get_with_path(
         &self,
         param: &String,
@@ -29,6 +38,15 @@ impl EndpointsParamsClient {
             .await
     }
 
+    /// GET with path param
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn get_with_inline_path(
         &self,
         param: &String,
@@ -45,6 +63,15 @@ impl EndpointsParamsClient {
             .await
     }
 
+    /// GET with query param
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// Empty response
     pub async fn get_with_query(
         &self,
         request: &GetWithQueryQueryRequest,
@@ -64,6 +91,15 @@ impl EndpointsParamsClient {
             .await
     }
 
+    /// GET with multiple of same query param
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// Empty response
     pub async fn get_with_allow_multiple_query(
         &self,
         request: &GetWithAllowMultipleQueryQueryRequest,
@@ -83,6 +119,15 @@ impl EndpointsParamsClient {
             .await
     }
 
+    /// GET with path and query params
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// Empty response
     pub async fn get_with_path_and_query(
         &self,
         param: &String,
@@ -102,6 +147,15 @@ impl EndpointsParamsClient {
             .await
     }
 
+    /// GET with path and query params
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// Empty response
     pub async fn get_with_inline_path_and_query(
         &self,
         param: &String,
@@ -121,6 +175,15 @@ impl EndpointsParamsClient {
             .await
     }
 
+    /// PUT to update with path param
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn modify_with_path(
         &self,
         param: &String,
@@ -138,6 +201,15 @@ impl EndpointsParamsClient {
             .await
     }
 
+    /// PUT to update with path param
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn modify_with_inline_path(
         &self,
         param: &String,

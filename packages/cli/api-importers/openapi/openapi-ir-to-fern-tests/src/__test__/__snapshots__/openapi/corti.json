@@ -4914,6 +4914,9 @@ types:
                     "documentId": "documentId",
                     "id": "id",
                   },
+                  "query-parameters": {
+                    "context": true,
+                  },
                   "response": {
                     "body": {
                       "createdAt": "2024-01-15T09:30:00Z",
@@ -5390,6 +5393,8 @@ service:
         - path-parameters:
             id: id
             documentId: documentId
+          query-parameters:
+            context: true
           headers:
             Tenant-Name: copiloteu
           response:
@@ -6363,6 +6368,14 @@ types:
                   "headers": {
                     "Tenant-Name": "copiloteu",
                   },
+                  "query-parameters": {
+                    "direction": "direction",
+                    "encounterStatus": "encounterStatus",
+                    "index": 1000000,
+                    "pageSize": 1000000,
+                    "patient": "patient",
+                    "sort": "sort",
+                  },
                   "response": {
                     "body": {
                       "interactions": [
@@ -6577,7 +6590,14 @@ service:
         - root.ForbiddenError
         - root.GatewayTimeoutError
       examples:
-        - headers:
+        - query-parameters:
+            sort: sort
+            direction: direction
+            pageSize: 1000000
+            index: 1000000
+            encounterStatus: encounterStatus
+            patient: patient
+          headers:
             Tenant-Name: copiloteu
           response:
             body:
@@ -7711,6 +7731,10 @@ imports:
                   "headers": {
                     "Tenant-Name": "copiloteu",
                   },
+                  "query-parameters": {
+                    "lang": "lang",
+                    "org": "org",
+                  },
                   "response": {
                     "body": {
                       "data": [
@@ -7769,6 +7793,11 @@ imports:
                 {
                   "headers": {
                     "Tenant-Name": "copiloteu",
+                  },
+                  "query-parameters": {
+                    "lang": "lang",
+                    "org": "org",
+                    "templateStatus": "templateStatus",
                   },
                   "response": {
                     "body": {
@@ -7856,7 +7885,10 @@ service:
         - root.UnauthorizedError
         - root.InternalServerError
       examples:
-        - headers:
+        - query-parameters:
+            org: org
+            lang: lang
+          headers:
             Tenant-Name: copiloteu
           response:
             body:
@@ -7897,7 +7929,11 @@ service:
         - root.UnauthorizedError
         - root.InternalServerError
       examples:
-        - headers:
+        - query-parameters:
+            org: org
+            lang: lang
+            templateStatus: templateStatus
+          headers:
             Tenant-Name: copiloteu
           response:
             body:
@@ -8196,6 +8232,13 @@ service:
                   "path-parameters": {
                     "id": "id",
                   },
+                  "query-parameters": {
+                    "direction": "direction",
+                    "full": true,
+                    "index": 1000000,
+                    "pageSize": 1000000,
+                    "sort": "sort",
+                  },
                   "response": {
                     "body": {
                       "transcripts": [
@@ -8327,6 +8370,12 @@ service:
       examples:
         - path-parameters:
             id: id
+          query-parameters:
+            sort: sort
+            direction: direction
+            pageSize: 1000000
+            index: 1000000
+            full: true
           headers:
             Tenant-Name: copiloteu
           response:

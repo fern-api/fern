@@ -2,7 +2,7 @@ use crate::user::User;
 use crate::nested_user::NestedUser;
 use crate::search_request_neighbor::SearchRequestNeighbor;
 use crate::search_request_neighbor_required::SearchRequestNeighborRequired;
-use chrono::{DateTime, NaiveDate, Utc};
+use chrono::{DateTime, Utc};
 use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 
@@ -11,7 +11,7 @@ pub struct SearchQueryRequest {
     pub limit: i32,
     pub id: String,
     pub date: String,
-    pub deadline: chrono::DateTime<chrono::Utc>,
+    pub deadline: DateTime<Utc>,
     pub bytes: String,
     pub user: User,
     #[serde(rename = "userList")]
@@ -19,7 +19,7 @@ pub struct SearchQueryRequest {
     pub user_list: Option<User>,
     #[serde(rename = "optionalDeadline")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub optional_deadline: Option<chrono::DateTime<chrono::Utc>>,
+    pub optional_deadline: Option<DateTime<Utc>>,
     #[serde(rename = "keyValue")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub key_value: Option<HashMap<String, Option<String>>>,
