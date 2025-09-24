@@ -10,7 +10,7 @@
           "base-path": "",
           "endpoints": {
             "getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParam": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -112,7 +112,7 @@
               },
             },
             "postSuccessInlineBetaBody": {
-              "auth": false,
+              "auth": undefined,
               "availability": "pre-release",
               "docs": undefined,
               "examples": [
@@ -150,7 +150,7 @@
               },
             },
             "postSuccessInlineObjectDeprecation": {
-              "auth": false,
+              "auth": undefined,
               "availability": "deprecated",
               "docs": undefined,
               "examples": [
@@ -188,7 +188,7 @@
               },
             },
             "postSuccessInlinePropertyDeprecation": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -229,7 +229,7 @@
               },
             },
             "postSuccessRef": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -307,7 +307,6 @@
       path: >-
         /collection/{id}/{active_id}/{deprecated_ref_id}/{x-fern-availability_path_param}
       method: GET
-      auth: false
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -383,7 +382,6 @@
     postSuccessRef:
       path: /success-ref
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       request:
@@ -407,7 +405,6 @@
     postSuccessInlinePropertyDeprecation:
       path: /success-inline-property-deprecation
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       request:
@@ -431,7 +428,6 @@
     postSuccessInlineObjectDeprecation:
       path: /success-inline-object-deprecation
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       request:
@@ -453,7 +449,6 @@
     postSuccessInlineBetaBody:
       path: /success-inline-beta-body
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       request:

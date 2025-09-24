@@ -1,4 +1,6 @@
+pub mod create_request;
 pub mod double;
+pub mod get_query_request;
 pub mod large_integer;
 pub mod sentence;
 pub mod shape;
@@ -6,7 +8,9 @@ pub mod small_integer;
 pub mod type_;
 pub mod word;
 
+pub use create_request::*;
 pub use double::*;
+pub use get_query_request::*;
 pub use large_integer::*;
 pub use sentence::*;
 pub use shape::*;

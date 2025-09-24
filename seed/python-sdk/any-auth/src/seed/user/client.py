@@ -48,6 +48,31 @@ class UserClient:
         _response = self._raw_client.get(request_options=request_options)
         return _response.data
 
+    def get_admins(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[User]
+
+        Examples
+        --------
+        from seed import SeedAnyAuth
+
+        client = SeedAnyAuth(
+            base_url="https://yourhost.com/path/to/api",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
+        client.user.get_admins()
+        """
+        _response = self._raw_client.get_admins(request_options=request_options)
+        return _response.data
+
 
 class AsyncUserClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -95,4 +120,37 @@ class AsyncUserClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.get(request_options=request_options)
+        return _response.data
+
+    async def get_admins(self, *, request_options: typing.Optional[RequestOptions] = None) -> typing.List[User]:
+        """
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        typing.List[User]
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedAnyAuth
+
+        client = AsyncSeedAnyAuth(
+            base_url="https://yourhost.com/path/to/api",
+            client_id="YOUR_CLIENT_ID",
+            client_secret="YOUR_CLIENT_SECRET",
+        )
+
+
+        async def main() -> None:
+            await client.user.get_admins()
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.get_admins(request_options=request_options)
         return _response.data

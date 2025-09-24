@@ -123,6 +123,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/foo",
       "examples": [

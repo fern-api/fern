@@ -24,6 +24,7 @@
     "requirement": "ALL",
     "schemes": [
       {
+        "key": "BearerAuthScheme",
         "token": {
           "originalName": "token",
           "camelCase": {
@@ -1600,13 +1601,19 @@
                       "type": "primitive"
                     },
                     "valueType": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "type": "string"
-                        }
+                      "container": {
+                        "optional": {
+                          "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                              "type": "string"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "optional"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
                     "type": "map"
                   },
@@ -2744,13 +2751,19 @@
                       "type": "primitive"
                     },
                     "valueType": {
-                      "primitive": {
-                        "v1": "STRING",
-                        "v2": {
-                          "type": "string"
-                        }
+                      "container": {
+                        "optional": {
+                          "primitive": {
+                            "v1": "STRING",
+                            "v2": {
+                              "type": "string"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "optional"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
                     "type": "map"
                   },
@@ -4379,7 +4392,7 @@
             }
           },
           "displayName": "Create or Update a company",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -5746,8 +5759,11 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "value": "STRING",
-                  "type": "primitive"
+                  "value": {
+                    "value": "STRING",
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
                 "type": "map"
               },
@@ -6466,8 +6482,11 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "value": "STRING",
-                  "type": "primitive"
+                  "value": {
+                    "value": "STRING",
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
                 "type": "map"
               },
@@ -6819,6 +6838,7 @@
     "endpoints": {
       "endpoint_companies.createOrUpdateCompany": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -7130,7 +7150,7 @@
     "hasEndpointsInTree": true
   },
   "sdkConfig": {
-    "isAuthMandatory": true,
+    "isAuthMandatory": false,
     "hasStreamingEndpoints": false,
     "hasPaginatedEndpoints": false,
     "hasFileDownloadEndpoints": false,

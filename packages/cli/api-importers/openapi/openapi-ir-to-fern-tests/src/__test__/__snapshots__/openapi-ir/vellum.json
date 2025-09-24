@@ -64,6 +64,11 @@
       "servers": [],
       "description": "\n<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nUsed to retrieve a deployment given its ID or name.\n",
       "authed": true,
+      "security": [
+        {
+          "apiKeyAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/v1/deployments/{id}",
       "examples": [
@@ -283,6 +288,11 @@
       "servers": [],
       "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nCreates a new document index.",
       "authed": true,
+      "security": [
+        {
+          "apiKeyAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/v1/document-indexes",
       "examples": [
@@ -1059,6 +1069,11 @@
       "servers": [],
       "description": "\n<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nUsed to list documents. Optionally filter on supported fields.\n",
       "authed": true,
+      "security": [
+        {
+          "apiKeyAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/v1/documents",
       "examples": [
@@ -1279,6 +1294,11 @@
       ],
       "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nExecutes a deployed Workflow and streams back its results.",
       "authed": true,
+      "security": [
+        {
+          "apiKeyAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/v1/execute-workflow-stream",
       "examples": [
@@ -1645,6 +1665,11 @@
       ],
       "description": "<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nGenerate a completion using a previously defined deployment.\n\n**Note:** Uses a base url of `https://predict.vellum.ai`.",
       "authed": true,
+      "security": [
+        {
+          "apiKeyAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/v1/generate",
       "examples": [
@@ -1956,6 +1981,11 @@
       ],
       "description": "<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nGenerate a stream of completions using a previously defined deployment.\n\n**Note:** Uses a base url of `https://predict.vellum.ai`.",
       "authed": true,
+      "security": [
+        {
+          "apiKeyAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/v1/generate-stream",
       "examples": [
@@ -2135,6 +2165,11 @@
       "servers": [],
       "description": "\n<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nUsed to retrieve a model version given its ID.\n",
       "authed": true,
+      "security": [
+        {
+          "apiKeyAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/v1/model-versions/{id}",
       "examples": [
@@ -2284,11 +2319,7 @@
                                 "type": "string"
                               },
                               "value": {
-                                "value": {
-                                  "value": 1.1,
-                                  "type": "double"
-                                },
-                                "type": "primitive"
+                                "type": "null"
                               }
                             }
                           ],
@@ -2475,6 +2506,11 @@
       "servers": [],
       "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nCompiles the prompt backing the model version using the provided input values.",
       "authed": true,
+      "security": [
+        {
+          "apiKeyAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/v1/model-versions/{id}/compile-prompt",
       "examples": [
@@ -2641,6 +2677,11 @@
       "servers": [],
       "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nRegisters a prompt within Vellum and creates associated Vellum entities. Intended to be used by integration\npartners, not directly by Vellum users.\n\nUnder the hood, this endpoint creates a new sandbox, a new model version, and a new deployment.",
       "authed": true,
+      "security": [
+        {
+          "apiKeyAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/v1/registered-prompts/register",
       "examples": [
@@ -3010,6 +3051,11 @@
       "servers": [],
       "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nUpserts a new scenario for a sandbox, keying off of the optionally provided scenario id.\n\nIf an id is provided and has a match, the scenario will be updated. If no id is provided or no match\nis found, a new scenario will be appended to the end.\n\nNote that a full replacement of the scenario is performed, so any fields not provided will be removed\nor overwritten with default values.",
       "authed": true,
+      "security": [
+        {
+          "apiKeyAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/v1/sandboxes/{id}/scenarios",
       "examples": [
@@ -3414,6 +3460,11 @@
       "servers": [],
       "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nDeletes an existing scenario from a sandbox, keying off of the provided scenario id.",
       "authed": true,
+      "security": [
+        {
+          "apiKeyAuth": []
+        }
+      ],
       "method": "DELETE",
       "path": "/v1/sandboxes/{id}/scenarios/{scenario_id}",
       "examples": [
@@ -3608,6 +3659,11 @@
       ],
       "description": "<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nPerform a search against a document index.\n\n**Note:** Uses a base url of `https://predict.vellum.ai`.",
       "authed": true,
+      "security": [
+        {
+          "apiKeyAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/v1/search",
       "examples": [
@@ -3830,6 +3886,11 @@
       ],
       "description": "<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nUsed to submit feedback regarding the quality of previously generated completions.\n\n**Note:** Uses a base url of `https://predict.vellum.ai`.",
       "authed": true,
+      "security": [
+        {
+          "apiKeyAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/v1/submit-completion-actuals",
       "examples": [
@@ -3930,6 +3991,11 @@
       "servers": [],
       "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nUpserts a new test case for a test suite, keying off of the optionally provided test case id.\n\nIf an id is provided and has a match, the test case will be updated. If no id is provided or no match\nis found, a new test case will be appended to the end.\n\nNote that a full replacement of the test case is performed, so any fields not provided will be removed\nor overwritten with default values.",
       "authed": true,
+      "security": [
+        {
+          "apiKeyAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/v1/test-suites/{id}/test-cases",
       "examples": [
@@ -4090,6 +4156,11 @@
       "servers": [],
       "description": "<strong style=\"background-color:#ffc107; color:white; padding:4px; border-radius:4px\">Unstable</strong>\n\nDeletes an existing test case for a test suite, keying off of the test case id.",
       "authed": true,
+      "security": [
+        {
+          "apiKeyAuth": []
+        }
+      ],
       "method": "DELETE",
       "path": "/v1/test-suites/{id}/test-cases/{test_case_id}",
       "examples": [
@@ -4393,6 +4464,11 @@
       ],
       "description": "<strong style=\"background-color:#4caf50; color:white; padding:4px; border-radius:4px\">Stable</strong>\n\nUpload a document to be indexed and used for search.\n\n**Note:** Uses a base url of `https://documents.vellum.ai`.",
       "authed": true,
+      "security": [
+        {
+          "apiKeyAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/v1/upload-document",
       "examples": [
@@ -7050,12 +7126,18 @@
                     "type": "primitive"
                   },
                   "value": {
-                    "schema": {
-                      "type": "double"
-                    },
                     "generatedName": "ModelVersionExecConfigParametersLogitBiasValue",
+                    "value": {
+                      "schema": {
+                        "type": "double"
+                      },
+                      "generatedName": "ModelVersionExecConfigParametersLogitBiasValue",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
                     "groupName": [],
-                    "type": "primitive"
+                    "inline": true,
+                    "type": "nullable"
                   },
                   "generatedName": "ModelVersionExecConfigParametersLogitBias",
                   "groupName": [],
@@ -7539,12 +7621,18 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "schema": {
-                    "type": "double"
-                  },
                   "generatedName": "NormalizedTokenLogProbsTopLogprobsValue",
+                  "value": {
+                    "schema": {
+                      "type": "double"
+                    },
+                    "generatedName": "NormalizedTokenLogProbsTopLogprobsValue",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
                   "groupName": [],
-                  "type": "primitive"
+                  "inline": true,
+                  "type": "nullable"
                 },
                 "generatedName": "NormalizedTokenLogProbsTopLogprobs",
                 "groupName": [],
@@ -8775,12 +8863,18 @@
                     "type": "primitive"
                   },
                   "value": {
-                    "schema": {
-                      "type": "double"
-                    },
                     "generatedName": "RegisterPromptModelParametersRequestLogitBiasValue",
+                    "value": {
+                      "schema": {
+                        "type": "double"
+                      },
+                      "generatedName": "RegisterPromptModelParametersRequestLogitBiasValue",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
                     "groupName": [],
-                    "type": "primitive"
+                    "inline": true,
+                    "type": "nullable"
                   },
                   "generatedName": "RegisterPromptModelParametersRequestLogitBias",
                   "groupName": [],

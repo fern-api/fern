@@ -1,4 +1,4 @@
-use crate::api::types::*;
+use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
@@ -9,7 +9,7 @@ pub struct AdminClient {
 impl AdminClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config)?,
+            http_client: HttpClient::new(config.clone())?,
         })
     }
 
@@ -91,7 +91,7 @@ impl AdminClient {
         &self,
         submission_id: &SubmissionId,
         test_case_id: &String,
-        request: &serde_json::Value,
+        request: &StoreTracedTestCaseRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -132,7 +132,7 @@ impl AdminClient {
     pub async fn store_traced_workspace(
         &self,
         submission_id: &SubmissionId,
-        request: &serde_json::Value,
+        request: &StoreTracedWorkspaceRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client

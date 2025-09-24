@@ -3,7 +3,7 @@ use crate::v_2_problem_void_function_signature::VoidFunctionSignature;
 use crate::v_2_problem_void_function_signature_that_takes_actual_result::VoidFunctionSignatureThatTakesActualResult;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "type")]
 pub enum FunctionSignature {
     Void {

@@ -70,8 +70,8 @@ export class RootClientGenerator {
             rawDeclarations.push(moduleDeclarations);
         }
 
-        // Only generate root client if there are multiple services
-        if (subpackages.length > 1) {
+        // Generate root client if there are multiple services, or if no subpackages exist (empty client)
+        if (subpackages.length > 1 || subpackages.length === 0) {
             const rootClient = this.generateRootClient(subpackages);
             rawDeclarations.push(rootClient);
         }
@@ -248,9 +248,7 @@ export class RootClientGenerator {
     // =============================================================================
 
     private getSubpackages(): Subpackage[] {
-        return this.package.subpackages
-            .map((subpackageId) => this.context.getSubpackageOrThrow(subpackageId))
-            .filter((subpackage) => subpackage.service != null || subpackage.hasEndpointsInTree);
+        return this.package.subpackages.map((subpackageId) => this.context.getSubpackageOrThrow(subpackageId));
     }
 
     private getAllSubpackagesForModuleDetection(): Subpackage[] {

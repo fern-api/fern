@@ -184,6 +184,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/action-menu/{conn_id}/close",
       "examples": [
@@ -285,6 +286,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/action-menu/{conn_id}/fetch",
       "examples": [
@@ -388,6 +390,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/action-menu/{conn_id}/perform",
       "examples": [
@@ -519,6 +522,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/action-menu/{conn_id}/request",
       "examples": [
@@ -639,6 +643,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/action-menu/{conn_id}/send-menu",
       "examples": [
@@ -1036,6 +1041,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/connections",
       "examples": [
@@ -1544,6 +1550,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/connections/create-invitation",
       "examples": [
@@ -1824,6 +1831,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/connections/create-static",
       "examples": [
@@ -2191,6 +2199,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/connections/receive-invitation",
       "examples": [
@@ -2499,6 +2508,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/connections/{conn_id}",
       "examples": [
@@ -2709,6 +2719,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/connections/{conn_id}",
       "examples": [
@@ -2876,6 +2887,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/connections/{conn_id}/accept-invitation",
       "examples": [
@@ -3140,6 +3152,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/connections/{conn_id}/accept-request",
       "examples": [
@@ -3361,6 +3374,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/connections/{conn_id}/endpoints",
       "examples": [
@@ -3476,6 +3490,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/connections/{conn_id}/establish-inbound/{ref_id}",
       "examples": [
@@ -3609,6 +3624,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/connections/{conn_id}/metadata",
       "examples": [
@@ -3723,6 +3739,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/connections/{conn_id}/metadata",
       "examples": [
@@ -3835,6 +3852,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/connections/{conn_id}/send-message",
       "examples": [
@@ -3967,6 +3985,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/connections/{conn_id}/send-ping",
       "examples": [
@@ -4109,6 +4128,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/connections/{conn_id}/start-introduction",
       "examples": [
@@ -4276,6 +4296,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/credential-definitions",
       "examples": [
@@ -4531,6 +4552,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/credential-definitions/created",
       "examples": [
@@ -4686,6 +4708,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/credential-definitions/{cred_def_id}",
       "examples": [
@@ -4826,6 +4849,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/credential-definitions/{cred_def_id}/write_record",
       "examples": [
@@ -4965,6 +4989,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/credential/mime-types/{credential_id}",
       "examples": [
@@ -5113,6 +5138,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/credential/revoked/{credential_id}",
       "examples": [
@@ -5226,6 +5252,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/credential/w3c/{credential_id}",
       "examples": [
@@ -5445,6 +5472,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/credential/w3c/{credential_id}",
       "examples": [
@@ -5546,6 +5574,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/credential/{credential_id}",
       "examples": [
@@ -5684,6 +5713,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/credential/{credential_id}",
       "examples": [
@@ -5835,6 +5865,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/credentials",
       "examples": [
@@ -6130,6 +6161,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/credentials/w3c",
       "examples": [
@@ -6765,6 +6797,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/didexchange/create-request",
       "examples": [
@@ -7114,6 +7147,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/didexchange/receive-request",
       "examples": [
@@ -7424,6 +7458,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/didexchange/{conn_id}/accept-invitation",
       "examples": [
@@ -7700,6 +7735,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/didexchange/{conn_id}/accept-request",
       "examples": [
@@ -7978,6 +8014,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/discover-features-2.0/queries",
       "examples": [
@@ -8087,6 +8124,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/discover-features-2.0/records",
       "examples": [
@@ -8460,6 +8498,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/discover-features/query",
       "examples": [
@@ -8619,6 +8658,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/discover-features/records",
       "examples": [
@@ -8819,6 +8859,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/create",
       "examples": [
@@ -9083,6 +9124,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/create-offer",
       "examples": [
@@ -9493,6 +9535,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/issue-credential-2.0/records",
       "examples": [
@@ -9834,6 +9877,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/issue-credential-2.0/records/{cred_ex_id}",
       "examples": [
@@ -10028,6 +10072,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/issue-credential-2.0/records/{cred_ex_id}",
       "examples": [
@@ -10149,6 +10194,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/records/{cred_ex_id}/issue",
       "examples": [
@@ -10374,6 +10420,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/records/{cred_ex_id}/problem-report",
       "examples": [
@@ -10507,6 +10554,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/records/{cred_ex_id}/send-offer",
       "examples": [
@@ -10705,6 +10753,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/records/{cred_ex_id}/send-request",
       "examples": [
@@ -10911,6 +10960,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/records/{cred_ex_id}/store",
       "examples": [
@@ -11118,6 +11168,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/send",
       "examples": [
@@ -11396,6 +11447,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/send-offer",
       "examples": [
@@ -11674,6 +11726,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/send-proposal",
       "examples": [
@@ -11952,6 +12005,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential-2.0/send-request",
       "examples": [
@@ -12299,6 +12353,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential/create",
       "examples": [
@@ -12639,6 +12694,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential/create-offer",
       "examples": [
@@ -13090,6 +13146,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/issue-credential/records",
       "examples": [
@@ -13469,6 +13526,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/issue-credential/records/{cred_ex_id}",
       "examples": [
@@ -13682,6 +13740,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/issue-credential/records/{cred_ex_id}",
       "examples": [
@@ -13803,6 +13862,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential/records/{cred_ex_id}/issue",
       "examples": [
@@ -14047,6 +14107,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential/records/{cred_ex_id}/problem-report",
       "examples": [
@@ -14180,6 +14241,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential/records/{cred_ex_id}/send-offer",
       "examples": [
@@ -14397,6 +14459,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential/records/{cred_ex_id}/send-request",
       "examples": [
@@ -14629,6 +14692,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential/records/{cred_ex_id}/store",
       "examples": [
@@ -14855,6 +14919,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential/send",
       "examples": [
@@ -15202,6 +15267,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential/send-offer",
       "examples": [
@@ -15521,6 +15587,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/issue-credential/send-proposal",
       "examples": [
@@ -15868,6 +15935,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/jsonld/sign",
       "examples": [
@@ -15991,6 +16059,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/jsonld/verify",
       "examples": [
@@ -16155,6 +16224,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/ledger/did-endpoint",
       "examples": [
@@ -16255,6 +16325,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/ledger/did-verkey",
       "examples": [
@@ -16348,6 +16419,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/ledger/get-nym-role",
       "examples": [
@@ -16420,6 +16492,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/ledger/multiple/config",
       "examples": [
@@ -16562,6 +16635,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/ledger/multiple/get-write-ledger",
       "examples": [
@@ -16773,6 +16847,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/ledger/register-nym",
       "examples": [
@@ -16895,6 +16970,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "PATCH",
       "path": "/ledger/rotate-public-did-keypair",
       "examples": [
@@ -16968,6 +17044,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/ledger/taa",
       "examples": [
@@ -17138,6 +17215,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/ledger/taa/accept",
       "examples": [
@@ -17237,6 +17315,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/mediation/default-mediator",
       "examples": [
@@ -17400,6 +17479,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/mediation/default-mediator",
       "examples": [
@@ -17625,6 +17705,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/mediation/keylists",
       "examples": [
@@ -17909,6 +17990,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/mediation/keylists/{mediation_id}/send-keylist-query",
       "examples": [
@@ -18053,6 +18135,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/mediation/keylists/{mediation_id}/send-keylist-update",
       "examples": [
@@ -18250,6 +18333,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/mediation/request/{conn_id}",
       "examples": [
@@ -18583,6 +18667,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/mediation/requests",
       "examples": [
@@ -18903,6 +18988,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/mediation/requests/{mediation_id}",
       "examples": [
@@ -19095,6 +19181,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/mediation/requests/{mediation_id}",
       "examples": [
@@ -19306,6 +19393,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/mediation/requests/{mediation_id}/deny",
       "examples": [
@@ -19487,6 +19575,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/mediation/requests/{mediation_id}/grant",
       "examples": [
@@ -19631,6 +19720,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/mediation/update-keylist/{conn_id}",
       "examples": [
@@ -19780,6 +19870,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/mediation/{mediation_id}/default-mediator",
       "examples": [
@@ -19973,6 +20064,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/multitenancy/wallet",
       "examples": [
@@ -20157,6 +20249,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/multitenancy/wallet/{wallet_id}",
       "examples": [
@@ -20293,6 +20386,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/multitenancy/wallet/{wallet_id}",
       "examples": [
@@ -20471,6 +20565,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/multitenancy/wallet/{wallet_id}/remove",
       "examples": [
@@ -20602,6 +20697,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/multitenancy/wallet/{wallet_id}/token",
       "examples": [
@@ -20711,6 +20807,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/multitenancy/wallets",
       "examples": [
@@ -20920,6 +21017,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/out-of-band/create-invitation",
       "examples": [
@@ -21274,6 +21372,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/out-of-band/receive-invitation",
       "examples": [
@@ -22336,6 +22435,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/plugins",
       "examples": [
@@ -22431,6 +22531,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof-2.0/create-request",
       "examples": [
@@ -22759,6 +22860,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/present-proof-2.0/records",
       "examples": [
@@ -23080,6 +23182,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/present-proof-2.0/records/{pres_ex_id}",
       "examples": [
@@ -23264,6 +23367,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/present-proof-2.0/records/{pres_ex_id}",
       "examples": [
@@ -23459,6 +23563,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/present-proof-2.0/records/{pres_ex_id}/credentials",
       "examples": [
@@ -23629,6 +23734,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof-2.0/records/{pres_ex_id}/problem-report",
       "examples": [
@@ -23762,6 +23868,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof-2.0/records/{pres_ex_id}/send-presentation",
       "examples": [
@@ -23977,6 +24084,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof-2.0/records/{pres_ex_id}/send-request",
       "examples": [
@@ -24180,6 +24288,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof-2.0/records/{pres_ex_id}/verify-presentation",
       "examples": [
@@ -24365,6 +24474,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof-2.0/send-proposal",
       "examples": [
@@ -24576,6 +24686,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof-2.0/send-request",
       "examples": [
@@ -24787,6 +24898,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof/create-request",
       "examples": [
@@ -25303,6 +25415,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/present-proof/records",
       "examples": [
@@ -25630,6 +25743,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/present-proof/records/{pres_ex_id}",
       "examples": [
@@ -25817,6 +25931,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/present-proof/records/{pres_ex_id}",
       "examples": [
@@ -26012,6 +26127,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/present-proof/records/{pres_ex_id}/credentials",
       "examples": [
@@ -26182,6 +26298,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof/records/{pres_ex_id}/problem-report",
       "examples": [
@@ -26315,6 +26432,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof/records/{pres_ex_id}/send-presentation",
       "examples": [
@@ -26611,6 +26729,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof/records/{pres_ex_id}/send-request",
       "examples": [
@@ -26817,6 +26936,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof/records/{pres_ex_id}/verify-presentation",
       "examples": [
@@ -27005,6 +27125,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof/send-proposal",
       "examples": [
@@ -27377,6 +27498,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/present-proof/send-request",
       "examples": [
@@ -27770,6 +27892,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/resolver/resolve/{did}",
       "examples": [
@@ -27864,6 +27987,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/revocation/active-registry/{cred_def_id}",
       "examples": [
@@ -28073,6 +28197,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/revocation/clear-pending-revocations",
       "examples": [
@@ -28214,6 +28339,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/revocation/create-registry",
       "examples": [
@@ -28479,6 +28605,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/revocation/credential-record",
       "examples": [
@@ -28654,6 +28781,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/revocation/publish-revocations",
       "examples": [
@@ -28853,6 +28981,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/revocation/registries/created",
       "examples": [
@@ -28992,6 +29121,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "DELETE",
       "path": "/revocation/registry/delete-tails-file",
       "examples": [
@@ -29095,6 +29225,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/revocation/registry/{rev_reg_id}",
       "examples": [
@@ -29322,6 +29453,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "PATCH",
       "path": "/revocation/registry/{rev_reg_id}",
       "examples": [
@@ -29585,6 +29717,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/revocation/registry/{rev_reg_id}/definition",
       "examples": [
@@ -29862,6 +29995,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/revocation/registry/{rev_reg_id}/entry",
       "examples": [
@@ -30108,6 +30242,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/revocation/registry/{rev_reg_id}/fix-revocation-entry-state",
       "examples": [
@@ -30204,6 +30339,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/revocation/registry/{rev_reg_id}/issued",
       "examples": [
@@ -30297,6 +30433,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/revocation/registry/{rev_reg_id}/issued/details",
       "examples": [
@@ -30524,6 +30661,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/revocation/registry/{rev_reg_id}/issued/indy_recs",
       "examples": [
@@ -30654,6 +30792,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "PATCH",
       "path": "/revocation/registry/{rev_reg_id}/set-state",
       "examples": [
@@ -30860,6 +30999,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/revocation/registry/{rev_reg_id}/tails-file-less-deets",
       "examples": [],
@@ -30909,6 +31049,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/revocation/registry/{rev_reg_id}/tails-file",
       "examples": [],
@@ -30968,6 +31109,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "PUT",
       "path": "/revocation/registry/{rev_reg_id}/tails-file",
       "examples": [
@@ -31071,6 +31213,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/revocation/revoke",
       "examples": [
@@ -31271,6 +31414,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/schemas",
       "examples": [
@@ -31474,6 +31618,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/schemas/created",
       "examples": [
@@ -31609,6 +31754,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/schemas/{schema_id}",
       "examples": [
@@ -31754,6 +31900,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/schemas/{schema_id}/write_record",
       "examples": [
@@ -31881,6 +32028,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/shutdown",
       "examples": [
@@ -31954,6 +32102,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/status",
       "examples": [
@@ -32025,6 +32174,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/status/config",
       "examples": [
@@ -32081,6 +32231,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/status/live",
       "examples": [
@@ -32145,6 +32296,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/status/ready",
       "examples": [
@@ -32209,6 +32361,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/status/reset",
       "examples": [
@@ -32299,6 +32452,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/transaction/{tran_id}/resend",
       "examples": [
@@ -32536,6 +32690,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/transactions",
       "examples": [
@@ -33003,6 +33158,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/transactions/create-request",
       "examples": [
@@ -33317,6 +33473,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/transactions/{conn_id}/set-endorser-info",
       "examples": [
@@ -33477,6 +33634,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/transactions/{conn_id}/set-endorser-role",
       "examples": [
@@ -33578,6 +33736,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/transactions/{tran_id}",
       "examples": [
@@ -33832,6 +33991,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/transactions/{tran_id}/cancel",
       "examples": [
@@ -34108,6 +34268,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/transactions/{tran_id}/endorse",
       "examples": [
@@ -34373,6 +34534,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/transactions/{tran_id}/refuse",
       "examples": [
@@ -34627,6 +34789,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/transactions/{tran_id}/write",
       "examples": [
@@ -35016,6 +35179,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/wallet/did",
       "examples": [
@@ -35207,6 +35371,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/wallet/did/create",
       "examples": [
@@ -35335,6 +35500,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "PATCH",
       "path": "/wallet/did/local/rotate-keypair",
       "examples": [
@@ -35419,6 +35585,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/wallet/did/public",
       "examples": [
@@ -35591,6 +35758,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/wallet/did/public",
       "examples": [
@@ -35741,6 +35909,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/wallet/get-did-endpoint",
       "examples": [
@@ -35885,6 +36054,7 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/wallet/set-did-endpoint",
       "examples": [
@@ -35995,12 +36165,18 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "schema": {
-                    "type": "string"
-                  },
                   "generatedName": "AmlRecordAmlValue",
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "AmlRecordAmlValue",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
                   "groupName": [],
-                  "type": "primitive"
+                  "inline": true,
+                  "type": "nullable"
                 },
                 "generatedName": "AmlRecordAml",
                 "groupName": [],
@@ -37164,13 +37340,20 @@
                     "type": "primitive"
                   },
                   "value": {
-                    "description": "MIME type",
-                    "schema": {
-                      "type": "string"
-                    },
                     "generatedName": "AttributeMimeTypesResultResultsValue",
+                    "description": "MIME type",
+                    "value": {
+                      "description": "MIME type",
+                      "schema": {
+                        "type": "string"
+                      },
+                      "generatedName": "AttributeMimeTypesResultResultsValue",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
                     "groupName": [],
-                    "type": "primitive"
+                    "inline": true,
+                    "type": "nullable"
                   },
                   "generatedName": "AttributeMimeTypesResultResults",
                   "groupName": [],
@@ -37416,21 +37599,27 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "value": {
-                    "description": "Credential revocation identifier",
-                    "schema": {
-                      "pattern": "^[1-9][0-9]*$",
-                      "example": "12345",
-                      "type": "string"
-                    },
-                    "generatedName": "ClearPendingRevocationsRequestPurgeValueItem",
-                    "groupName": [],
-                    "type": "primitive"
-                  },
                   "generatedName": "ClearPendingRevocationsRequestPurgeValue",
+                  "value": {
+                    "value": {
+                      "description": "Credential revocation identifier",
+                      "schema": {
+                        "pattern": "^[1-9][0-9]*$",
+                        "example": "12345",
+                        "type": "string"
+                      },
+                      "generatedName": "ClearPendingRevocationsRequestPurgeValueItem",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "generatedName": "ClearPendingRevocationsRequestPurgeValue",
+                    "groupName": [],
+                    "inline": true,
+                    "type": "array"
+                  },
                   "groupName": [],
                   "inline": true,
-                  "type": "array"
+                  "type": "nullable"
                 },
                 "generatedName": "ClearPendingRevocationsRequestPurge",
                 "groupName": [],
@@ -43956,13 +44145,19 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "schema": {
-                    "example": "alice",
-                    "type": "string"
-                  },
                   "generatedName": "IndyCredInfoAttrsValue",
+                  "value": {
+                    "schema": {
+                      "example": "alice",
+                      "type": "string"
+                    },
+                    "generatedName": "IndyCredInfoAttrsValue",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
                   "groupName": [],
-                  "type": "primitive"
+                  "inline": true,
+                  "type": "nullable"
                 },
                 "generatedName": "IndyCredInfoAttrs",
                 "groupName": [],
@@ -44487,12 +44682,17 @@
               },
               "value": {
                 "generatedName": "IndyCredentialValuesValue",
-                "schema": "IndyCredential_values_value",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "IndyCredentialValuesValue",
+                  "schema": "IndyCredential_values_value",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "inline": true,
+                "type": "nullable"
               },
               "generatedName": "IndyCredentialValues",
               "title": "values",
@@ -44622,14 +44822,20 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "schema": {
-                    "pattern": "^[0-9]*$",
-                    "example": "0",
-                    "type": "string"
-                  },
                   "generatedName": "IndyEqProofMValue",
+                  "value": {
+                    "schema": {
+                      "pattern": "^[0-9]*$",
+                      "example": "0",
+                      "type": "string"
+                    },
+                    "generatedName": "IndyEqProofMValue",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
                   "groupName": [],
-                  "type": "primitive"
+                  "inline": true,
+                  "type": "nullable"
                 },
                 "generatedName": "IndyEqProofM",
                 "title": "m",
@@ -44684,14 +44890,20 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "schema": {
-                    "pattern": "^-?[0-9]*$",
-                    "example": "-1",
-                    "type": "string"
-                  },
                   "generatedName": "IndyEqProofRevealedAttrsValue",
+                  "value": {
+                    "schema": {
+                      "pattern": "^-?[0-9]*$",
+                      "example": "-1",
+                      "type": "string"
+                    },
+                    "generatedName": "IndyEqProofRevealedAttrsValue",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
                   "groupName": [],
-                  "type": "primitive"
+                  "inline": true,
+                  "type": "nullable"
                 },
                 "generatedName": "IndyEqProofRevealedAttrs",
                 "title": "revealed_attrs",
@@ -44836,14 +45048,20 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "schema": {
-                    "pattern": "^[0-9]*$",
-                    "example": "0",
-                    "type": "string"
-                  },
                   "generatedName": "IndyGeProofRValue",
+                  "value": {
+                    "schema": {
+                      "pattern": "^[0-9]*$",
+                      "example": "0",
+                      "type": "string"
+                    },
+                    "generatedName": "IndyGeProofRValue",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
                   "groupName": [],
-                  "type": "primitive"
+                  "inline": true,
+                  "type": "nullable"
                 },
                 "generatedName": "IndyGeProofR",
                 "title": "r",
@@ -44874,14 +45092,20 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "schema": {
-                    "pattern": "^[0-9]*$",
-                    "example": "0",
-                    "type": "string"
-                  },
                   "generatedName": "IndyGeProofTValue",
+                  "value": {
+                    "schema": {
+                      "pattern": "^[0-9]*$",
+                      "example": "0",
+                      "type": "string"
+                    },
+                    "generatedName": "IndyGeProofTValue",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
                   "groupName": [],
-                  "type": "primitive"
+                  "inline": true,
+                  "type": "nullable"
                 },
                 "generatedName": "IndyGeProofT",
                 "title": "t",
@@ -44912,14 +45136,20 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "schema": {
-                    "pattern": "^[0-9]*$",
-                    "example": "0",
-                    "type": "string"
-                  },
                   "generatedName": "IndyGeProofUValue",
+                  "value": {
+                    "schema": {
+                      "pattern": "^[0-9]*$",
+                      "example": "0",
+                      "type": "string"
+                    },
+                    "generatedName": "IndyGeProofUValue",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
                   "groupName": [],
-                  "type": "primitive"
+                  "inline": true,
+                  "type": "nullable"
                 },
                 "generatedName": "IndyGeProofU",
                 "title": "u",
@@ -45156,12 +45386,18 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "schema": {
-                    "type": "string"
-                  },
                   "generatedName": "IndyNonRevocProofCListValue",
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "IndyNonRevocProofCListValue",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
                   "groupName": [],
-                  "type": "primitive"
+                  "inline": true,
+                  "type": "nullable"
                 },
                 "generatedName": "IndyNonRevocProofCList",
                 "title": "c_list",
@@ -45191,12 +45427,18 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "schema": {
-                    "type": "string"
-                  },
                   "generatedName": "IndyNonRevocProofXListValue",
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "IndyNonRevocProofXListValue",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
                   "groupName": [],
-                  "type": "primitive"
+                  "inline": true,
+                  "type": "nullable"
                 },
                 "generatedName": "IndyNonRevocProofXList",
                 "title": "x_list",
@@ -45626,12 +45868,17 @@
               },
               "value": {
                 "generatedName": "IndyPresSpecRequestedAttributesValue",
-                "schema": "IndyRequestedCredsRequestedAttr",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "IndyPresSpecRequestedAttributesValue",
+                  "schema": "IndyRequestedCredsRequestedAttr",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "inline": true,
+                "type": "nullable"
               },
               "generatedName": "IndyPresSpecRequestedAttributes",
               "groupName": [],
@@ -45655,12 +45902,17 @@
               },
               "value": {
                 "generatedName": "IndyPresSpecRequestedPredicatesValue",
-                "schema": "IndyRequestedCredsRequestedPred",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "IndyPresSpecRequestedPredicatesValue",
+                  "schema": "IndyRequestedCredsRequestedPred",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "inline": true,
+                "type": "nullable"
               },
               "generatedName": "IndyPresSpecRequestedPredicates",
               "groupName": [],
@@ -45683,14 +45935,21 @@
                 "type": "primitive"
               },
               "value": {
-                "description": "Self-attested attribute values to use in requested-credentials structure for proof construction",
-                "schema": {
-                  "example": "self_attested_value",
-                  "type": "string"
-                },
                 "generatedName": "IndyPresSpecSelfAttestedAttributesValue",
+                "description": "Self-attested attribute values to use in requested-credentials structure for proof construction",
+                "value": {
+                  "description": "Self-attested attribute values to use in requested-credentials structure for proof construction",
+                  "schema": {
+                    "example": "self_attested_value",
+                    "type": "string"
+                  },
+                  "generatedName": "IndyPresSpecSelfAttestedAttributesValue",
+                  "groupName": [],
+                  "type": "primitive"
+                },
                 "groupName": [],
-                "type": "primitive"
+                "inline": true,
+                "type": "nullable"
               },
               "generatedName": "IndyPresSpecSelfAttestedAttributes",
               "groupName": [],
@@ -46353,13 +46612,19 @@
                     "type": "primitive"
                   },
                   "value": {
-                    "schema": {
-                      "example": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "type": "string"
-                    },
                     "generatedName": "IndyProofReqAttrSpecRestrictionsItemValue",
+                    "value": {
+                      "schema": {
+                        "example": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                        "type": "string"
+                      },
+                      "generatedName": "IndyProofReqAttrSpecRestrictionsItemValue",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
                     "groupName": [],
-                    "type": "primitive"
+                    "inline": true,
+                    "type": "nullable"
                   },
                   "generatedName": "IndyProofReqAttrSpecRestrictionsItem",
                   "groupName": [],
@@ -46581,13 +46846,19 @@
                     "type": "primitive"
                   },
                   "value": {
-                    "schema": {
-                      "example": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "type": "string"
-                    },
                     "generatedName": "IndyProofReqPredSpecRestrictionsItemValue",
+                    "value": {
+                      "schema": {
+                        "example": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                        "type": "string"
+                      },
+                      "generatedName": "IndyProofReqPredSpecRestrictionsItemValue",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
                     "groupName": [],
-                    "type": "primitive"
+                    "inline": true,
+                    "type": "nullable"
                   },
                   "generatedName": "IndyProofReqPredSpecRestrictionsItem",
                   "groupName": [],
@@ -46779,12 +47050,17 @@
               },
               "value": {
                 "generatedName": "IndyProofRequestRequestedAttributesValue",
-                "schema": "IndyProofReqAttrSpec",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "IndyProofRequestRequestedAttributesValue",
+                  "schema": "IndyProofReqAttrSpec",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "inline": true,
+                "type": "nullable"
               },
               "generatedName": "IndyProofRequestRequestedAttributes",
               "groupName": [],
@@ -46808,12 +47084,17 @@
               },
               "value": {
                 "generatedName": "IndyProofRequestRequestedPredicatesValue",
-                "schema": "IndyProofReqPredSpec",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
+                "value": {
+                  "generatedName": "IndyProofRequestRequestedPredicatesValue",
+                  "schema": "IndyProofReqPredSpec",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
                 },
-                "type": "reference"
+                "inline": true,
+                "type": "nullable"
               },
               "generatedName": "IndyProofRequestRequestedPredicates",
               "groupName": [],
@@ -46951,12 +47232,17 @@
                 },
                 "value": {
                   "generatedName": "IndyProofRequestedProofPredicatesValue",
-                  "schema": "IndyProofRequestedProofPredicate",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "IndyProofRequestedProofPredicatesValue",
+                    "schema": "IndyProofRequestedProofPredicate",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "inline": true,
+                  "type": "nullable"
                 },
                 "generatedName": "IndyProofRequestedProofPredicates",
                 "title": "predicates",
@@ -46993,12 +47279,17 @@
                   },
                   "value": {
                     "generatedName": "IndyProofRequestedProofRevealedAttrGroupsValue",
-                    "schema": "IndyProofRequestedProofRevealedAttrGroup",
-                    "source": {
-                      "file": "../openapi.yml",
-                      "type": "openapi"
+                    "value": {
+                      "generatedName": "IndyProofRequestedProofRevealedAttrGroupsValue",
+                      "schema": "IndyProofRequestedProofRevealedAttrGroup",
+                      "source": {
+                        "file": "../openapi.yml",
+                        "type": "openapi"
+                      },
+                      "type": "reference"
                     },
-                    "type": "reference"
+                    "inline": true,
+                    "type": "nullable"
                   },
                   "generatedName": "IndyProofRequestedProofRevealedAttrGroups",
                   "title": "revealed_attr_groups",
@@ -47037,12 +47328,17 @@
                   },
                   "value": {
                     "generatedName": "IndyProofRequestedProofRevealedAttrsValue",
-                    "schema": "IndyProofRequestedProofRevealedAttr",
-                    "source": {
-                      "file": "../openapi.yml",
-                      "type": "openapi"
+                    "value": {
+                      "generatedName": "IndyProofRequestedProofRevealedAttrsValue",
+                      "schema": "IndyProofRequestedProofRevealedAttr",
+                      "source": {
+                        "file": "../openapi.yml",
+                        "type": "openapi"
+                      },
+                      "type": "reference"
                     },
-                    "type": "reference"
+                    "inline": true,
+                    "type": "nullable"
                   },
                   "generatedName": "IndyProofRequestedProofRevealedAttrs",
                   "title": "revealed_attrs",
@@ -47300,12 +47596,17 @@
                 },
                 "value": {
                   "generatedName": "IndyProofRequestedProofRevealedAttrGroupValuesValue",
-                  "schema": "RawEncoded",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+                  "value": {
+                    "generatedName": "IndyProofRequestedProofRevealedAttrGroupValuesValue",
+                    "schema": "RawEncoded",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
                   },
-                  "type": "reference"
+                  "inline": true,
+                  "type": "nullable"
                 },
                 "generatedName": "IndyProofRequestedProofRevealedAttrGroupValues",
                 "title": "values",
@@ -52405,13 +52706,19 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "schema": {
-                    "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "type": "string"
-                  },
                   "generatedName": "PerformRequestParamsValue",
+                  "value": {
+                    "schema": {
+                      "example": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "type": "string"
+                    },
+                    "generatedName": "PerformRequestParamsValue",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
                   "groupName": [],
-                  "type": "primitive"
+                  "inline": true,
+                  "type": "nullable"
                 },
                 "generatedName": "PerformRequestParams",
                 "groupName": [],
@@ -53012,21 +53319,27 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "value": {
-                    "description": "Credential revocation identifier",
-                    "schema": {
-                      "pattern": "^[1-9][0-9]*$",
-                      "example": "12345",
-                      "type": "string"
-                    },
-                    "generatedName": "PublishRevocationsRrid2CridValueItem",
-                    "groupName": [],
-                    "type": "primitive"
-                  },
                   "generatedName": "PublishRevocationsRrid2CridValue",
+                  "value": {
+                    "value": {
+                      "description": "Credential revocation identifier",
+                      "schema": {
+                        "pattern": "^[1-9][0-9]*$",
+                        "example": "12345",
+                        "type": "string"
+                      },
+                      "generatedName": "PublishRevocationsRrid2CridValueItem",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
+                    "generatedName": "PublishRevocationsRrid2CridValue",
+                    "groupName": [],
+                    "inline": true,
+                    "type": "array"
+                  },
                   "groupName": [],
                   "inline": true,
-                  "type": "array"
+                  "type": "nullable"
                 },
                 "generatedName": "PublishRevocationsRrid2Crid",
                 "groupName": [],
@@ -56280,12 +56593,18 @@
                     "type": "primitive"
                   },
                   "value": {
-                    "schema": {
-                      "type": "string"
-                    },
                     "generatedName": "TransactionRecordFormatsItemValue",
+                    "value": {
+                      "schema": {
+                        "type": "string"
+                      },
+                      "generatedName": "TransactionRecordFormatsItemValue",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
                     "groupName": [],
-                    "type": "primitive"
+                    "inline": true,
+                    "type": "nullable"
                   },
                   "generatedName": "TransactionRecordFormatsItem",
                   "groupName": [],
@@ -65396,13 +65715,20 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "description": "Retrieval tag value",
-                  "schema": {
-                    "type": "string"
-                  },
                   "generatedName": "VcRecordCredTagsValue",
+                  "description": "Retrieval tag value",
+                  "value": {
+                    "description": "Retrieval tag value",
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "VcRecordCredTagsValue",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
                   "groupName": [],
-                  "type": "primitive"
+                  "inline": true,
+                  "type": "nullable"
                 },
                 "generatedName": "VcRecordCredTags",
                 "groupName": [],
@@ -65979,13 +66305,20 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "description": "Tag value",
-                  "schema": {
-                    "type": "string"
-                  },
                   "generatedName": "W3CCredentialsListRequestTagQueryValue",
+                  "description": "Tag value",
+                  "value": {
+                    "description": "Tag value",
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "W3CCredentialsListRequestTagQueryValue",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
                   "groupName": [],
-                  "type": "primitive"
+                  "inline": true,
+                  "type": "nullable"
                 },
                 "generatedName": "W3CCredentialsListRequestTagQuery",
                 "groupName": [],

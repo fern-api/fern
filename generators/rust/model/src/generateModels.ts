@@ -1,8 +1,10 @@
 import { RustFile } from "@fern-api/rust-base";
 import { AliasGenerator } from "./alias";
 import { EnumGenerator } from "./enum";
+import { InlinedRequestBodyGenerator } from "./inlined-request-body";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { StructGenerator } from "./object";
+import { QueryParameterRequestGenerator } from "./query-request";
 import { UndiscriminatedUnionGenerator, UnionGenerator } from "./union";
 
 export function generateModels({ context }: { context: ModelGeneratorContext }): RustFile[] {
@@ -39,6 +41,14 @@ export function generateModels({ context }: { context: ModelGeneratorContext }):
             files.push(file);
         }
     }
+
+    // Generate inlined request body types from services
+    const inlinedRequestBodyGenerator = new InlinedRequestBodyGenerator(context);
+    files.push(...inlinedRequestBodyGenerator.generateFiles());
+
+    // Generate query parameter request structs for query-only endpoints
+    const queryRequestGenerator = new QueryParameterRequestGenerator(context);
+    files.push(...queryRequestGenerator.generateFiles());
 
     return files;
 }

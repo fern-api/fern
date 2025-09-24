@@ -28,11 +28,18 @@ export class GeneratorAgentClient {
         return content.stdout;
     }
 
-    public async pushToGitHub<GitHubConfig>({ githubConfig }: { githubConfig: GitHubConfig }): Promise<string> {
+    public async pushToGitHub<GitHubConfig>({
+        githubConfig,
+        withPullRequest
+    }: {
+        githubConfig: GitHubConfig;
+        withPullRequest?: boolean;
+    }): Promise<string> {
         const githubConfigFilepath = await this.writeConfig({
             config: githubConfig
         });
-        const args = ["github", "push", "--config", githubConfigFilepath];
+        const cmd = withPullRequest ? "pr" : "push";
+        const args = ["github", cmd, "--config", githubConfigFilepath];
         const cli = await this.getOrInstall();
 
         const content = await cli(args);

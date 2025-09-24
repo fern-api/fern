@@ -10,7 +10,7 @@
           "base-path": "",
           "endpoints": {
             "search": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -196,7 +196,6 @@ service:
     search:
       path: /search
       method: GET
-      auth: false
       source:
         openapi: ../openapi.yml
       request:

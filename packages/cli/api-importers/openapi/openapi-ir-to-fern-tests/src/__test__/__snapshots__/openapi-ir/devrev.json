@@ -298,6 +298,7 @@
       "servers": [],
       "description": "Gets the download URL for the artifact.",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/artifacts.locate",
       "examples": [
@@ -550,6 +551,7 @@
       "servers": [],
       "description": "Creates an artifact and generates an upload URL for its data.\n",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/artifacts.prepare",
       "examples": [
@@ -827,6 +829,7 @@
       "servers": [],
       "description": "Creates a JWT corresponding to the requested token type for the\nauthenticated user.\n",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/auth-tokens.create",
       "examples": [
@@ -1106,6 +1109,7 @@
       "servers": [],
       "description": "Revokes the token that matches the given token ID issued under the\ngiven Dev organization.\n",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/auth-tokens.delete",
       "examples": [
@@ -1352,6 +1356,7 @@
       "servers": [],
       "description": "Gets the token metadata corresponding to the given token ID under the\ngiven Dev organization.\n",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/auth-tokens.get",
       "examples": [
@@ -1880,6 +1885,7 @@
       "servers": [],
       "description": "Gets the token metadata for all the tokens corresponding to the given\ntoken type issued for a given subject.\n",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/auth-tokens.list",
       "examples": [
@@ -2278,6 +2284,7 @@
       "servers": [],
       "description": "Revokes all the tokens that matches the given token type created by the\nauthenticated user.\n",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/auth-tokens.self.delete",
       "examples": [
@@ -2526,6 +2533,7 @@
       "servers": [],
       "description": "Updates token metadata of a token issued under a given Dev\norganization.\n",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/auth-tokens.update",
       "examples": [
@@ -2993,6 +3001,7 @@
       "servers": [],
       "description": "Creates a new enterprise authentication connection for a Dev\norganization. This authentication connection will not be enabled by\ndefault for the organization and the user will need to explicitly\nenable this. Keep in mind that at a time, only one authentication\nconnection can be enabled for a Dev organization. At present, only 5\nenterprise connections can be created by an organization.\n",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/dev-orgs.auth-connections.create",
       "examples": [
@@ -3302,6 +3311,7 @@
       "servers": [],
       "description": "Deletes an authentication connection. Only enterprise connections which\nare explicitly set up for a Dev organization can be deleted. Default\nconnections can not be deleted using this method.\n",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/dev-orgs.auth-connections.delete",
       "examples": [
@@ -3557,6 +3567,7 @@
       "servers": [],
       "description": "Retrieves the details for an authentication connection.",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/dev-orgs.auth-connections.get",
       "examples": [
@@ -3834,6 +3845,7 @@
       "servers": [],
       "description": "Lists all the authentication connections available for a Dev\norganization. This list will include both social and enterprise\nconnections which are either available by default or are explicitly\ncreated by the user.\n",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/dev-orgs.auth-connections.list",
       "examples": [
@@ -4130,6 +4142,7 @@
       "servers": [],
       "description": "Enable or disable an authentication connection for a Dev organization.\nCurrently, only 1 authentication connection can be enabled at a time.\nWhen a new authentication connection is enabled, the connection which\nis currently enabled for the Dev organization is automatically\ndisabled.\n",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/dev-orgs.auth-connections.toggle",
       "examples": [
@@ -4387,6 +4400,7 @@
       "servers": [],
       "description": "Updates an authentication connection.",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/dev-orgs.auth-connections.update",
       "examples": [
@@ -4820,6 +4834,7 @@
       "servers": [],
       "description": "Lists users within your organization.",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/dev-users.list",
       "examples": [
@@ -5227,6 +5242,7 @@
       "servers": [],
       "description": "Gets the authenticated user's information.",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/dev-users.self",
       "examples": [
@@ -5701,6 +5717,7 @@
       "servers": [],
       "description": "Creates new [part](https://devrev.ai/docs/product/parts).",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/parts.create",
       "examples": [
@@ -6264,6 +6281,7 @@
       "servers": [],
       "description": "Deletes a [part](https://devrev.ai/docs/product/parts).",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/parts.delete",
       "examples": [
@@ -6543,6 +6561,7 @@
       "servers": [],
       "description": "Gets a [part's](https://devrev.ai/docs/product/parts) information.\n",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/parts.get",
       "examples": [
@@ -7193,6 +7212,7 @@
       "servers": [],
       "description": "Lists a collection of [parts](https://devrev.ai/docs/product/parts).\n",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/parts.list",
       "examples": [
@@ -7666,6 +7686,7 @@
       "servers": [],
       "description": "Updates a [part's](https://devrev.ai/docs/product/parts) information.\n",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/parts.update",
       "examples": [
@@ -8196,6 +8217,7 @@
       "servers": [],
       "description": "Creates a Rev organization in the authenticated user's Dev\norganization.\n",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/rev-orgs.create",
       "examples": [
@@ -8653,6 +8675,7 @@
       "servers": [],
       "description": "Deletes the Rev organization.",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/rev-orgs.delete",
       "examples": [
@@ -8932,6 +8955,7 @@
       "servers": [],
       "description": "Retrieves the Rev organization's information.",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/rev-orgs.get",
       "examples": [
@@ -9595,6 +9619,7 @@
       "servers": [],
       "description": "Gets the list of Rev organizations' information belonging to the\nauthenticated user's Dev Organization which the user is also authorized\nto access.\n",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/rev-orgs.list",
       "examples": [
@@ -10039,6 +10064,7 @@
       "servers": [],
       "description": "Updates the Rev organization's information.",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/rev-orgs.update",
       "examples": [
@@ -10471,6 +10497,7 @@
       "servers": [],
       "description": "Creates a new tag, which is used to create associations between objects\nand a logical concept denoted by the tag's name.\n",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/tags.create",
       "examples": [
@@ -10926,6 +10953,7 @@
       "servers": [],
       "description": "Deletes a tag.",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/tags.delete",
       "examples": [
@@ -11205,6 +11233,7 @@
       "servers": [],
       "description": "Gets a tag's information.",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/tags.get",
       "examples": [
@@ -11679,6 +11708,7 @@
       "servers": [],
       "description": "Lists the available tags.",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/tags.list",
       "examples": [
@@ -12081,6 +12111,7 @@
       "servers": [],
       "description": "Updates a tag's information.",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/tags.update",
       "examples": [
@@ -12511,6 +12542,7 @@
       "servers": [],
       "description": "Creates a new entry on an object's timeline.",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/timeline-entries.create",
       "examples": [
@@ -13010,6 +13042,7 @@
       "servers": [],
       "description": "Gets an entry on an object's timeline.",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/timeline-entries.get",
       "examples": [
@@ -13559,6 +13592,7 @@
       "servers": [],
       "description": "Lists the timeline entries for an object.",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/timeline-entries.list",
       "examples": [
@@ -13979,6 +14013,7 @@
       "servers": [],
       "description": "Updates an entry on an object's timeline.",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/timeline-entries.update",
       "examples": [
@@ -14452,6 +14487,7 @@
       "servers": [],
       "description": "Creates a new webhook target.",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/webhooks.create",
       "examples": [
@@ -14908,6 +14944,7 @@
       "servers": [],
       "description": "Deletes the requested webhook.",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/webhooks.delete",
       "examples": [
@@ -15187,6 +15224,7 @@
       "servers": [],
       "description": "Gets the requested webhook's information.",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/webhooks.get",
       "examples": [
@@ -15598,6 +15636,7 @@
       "servers": [],
       "description": "Lists the webhooks.",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/webhooks.list",
       "examples": [
@@ -15959,6 +15998,7 @@
       "servers": [],
       "description": "Updates the requested webhook.",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/webhooks.update",
       "examples": [
@@ -16390,6 +16430,7 @@
       "servers": [],
       "description": "Creates new work ([issue](https://devrev.ai/docs/product/build),\n[ticket](https://devrev.ai/docs/product/support)) item.\n",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/works.create",
       "examples": [
@@ -17063,6 +17104,7 @@
       "servers": [],
       "description": "Deletes a work item.",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/works.delete",
       "examples": [
@@ -17558,6 +17600,7 @@
       "servers": [],
       "description": "Exports a collection of work items.",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/works.export",
       "examples": [
@@ -18078,6 +18121,7 @@
       "servers": [],
       "description": "Gets a work item's information.",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/works.get",
       "examples": [
@@ -18946,6 +18990,7 @@
       "servers": [],
       "description": "Lists a collection of work items.",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/works.list",
       "examples": [
@@ -19498,6 +19543,7 @@
       "servers": [],
       "description": "Updates a work item's information.",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/works.update",
       "examples": [

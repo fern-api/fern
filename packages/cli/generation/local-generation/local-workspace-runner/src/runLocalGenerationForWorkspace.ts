@@ -208,6 +208,7 @@ function getPublishConfig({
             repo: "",
             uri: generatorInvocation.raw.github.uri,
             token: generatorInvocation.raw.github.token,
+            mode: generatorInvocation.raw.github.mode,
             target: FernIr.PublishTarget.postman({
                 apiKey: "",
                 workspaceId: "",

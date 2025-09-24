@@ -24,6 +24,7 @@
     "requirement": "ALL",
     "schemes": [
       {
+        "key": "ApiKey",
         "name": {
           "name": {
             "originalName": "apiKey",
@@ -5824,13 +5825,19 @@
                   "type": "primitive"
                 },
                 "valueType": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "type": "double"
-                    }
+                  "container": {
+                    "optional": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "type": "double"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "optional"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "map"
               },
@@ -10972,13 +10979,19 @@
                   "type": "primitive"
                 },
                 "valueType": {
-                  "primitive": {
-                    "v1": "DOUBLE",
-                    "v2": {
-                      "type": "double"
-                    }
+                  "container": {
+                    "optional": {
+                      "primitive": {
+                        "v1": "DOUBLE",
+                        "v2": {
+                          "type": "double"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "optional"
                   },
-                  "type": "primitive"
+                  "type": "container"
                 },
                 "type": "map"
               },
@@ -11025,31 +11038,37 @@
                   "type": "primitive"
                 },
                 "valueType": {
-                  "name": {
-                    "originalName": "SeverityScoreSummary",
-                    "camelCase": {
-                      "unsafeName": "severityScoreSummary",
-                      "safeName": "severityScoreSummary"
+                  "container": {
+                    "optional": {
+                      "name": {
+                        "originalName": "SeverityScoreSummary",
+                        "camelCase": {
+                          "unsafeName": "severityScoreSummary",
+                          "safeName": "severityScoreSummary"
+                        },
+                        "snakeCase": {
+                          "unsafeName": "severity_score_summary",
+                          "safeName": "severity_score_summary"
+                        },
+                        "screamingSnakeCase": {
+                          "unsafeName": "SEVERITY_SCORE_SUMMARY",
+                          "safeName": "SEVERITY_SCORE_SUMMARY"
+                        },
+                        "pascalCase": {
+                          "unsafeName": "SeverityScoreSummary",
+                          "safeName": "SeverityScoreSummary"
+                        }
+                      },
+                      "fernFilepath": {
+                        "allParts": [],
+                        "packagePath": []
+                      },
+                      "typeId": "type_:SeverityScoreSummary",
+                      "type": "named"
                     },
-                    "snakeCase": {
-                      "unsafeName": "severity_score_summary",
-                      "safeName": "severity_score_summary"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "SEVERITY_SCORE_SUMMARY",
-                      "safeName": "SEVERITY_SCORE_SUMMARY"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "SeverityScoreSummary",
-                      "safeName": "SeverityScoreSummary"
-                    }
+                    "type": "optional"
                   },
-                  "fernFilepath": {
-                    "allParts": [],
-                    "packagePath": []
-                  },
-                  "typeId": "type_:SeverityScoreSummary",
-                  "type": "named"
+                  "type": "container"
                 },
                 "type": "map"
               },
@@ -19525,7 +19544,7 @@
             }
           },
           "displayName": "Upload an audio or video file which can be transcribed.",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
           "method": "POST",
@@ -19897,7 +19916,7 @@
             }
           },
           "displayName": "List transcripts",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
           "method": "GET",
@@ -20570,7 +20589,7 @@
             }
           },
           "displayName": "Create a transcript from an audio file",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
           "method": "POST",
@@ -22649,7 +22668,7 @@
             }
           },
           "displayName": "Get the transcript",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
           "method": "GET",
@@ -23010,7 +23029,7 @@
             }
           },
           "displayName": "Delete the transcript",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
           "method": "DELETE",
@@ -23371,7 +23390,7 @@
             }
           },
           "displayName": "Export transcript as SRT or VTT captions.",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
           "method": "GET",
@@ -23928,7 +23947,7 @@
             }
           },
           "displayName": "Get the transcript split by sentences",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
           "method": "GET",
@@ -24289,7 +24308,7 @@
             }
           },
           "displayName": "Get the transcript split by paragraphs",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
           "method": "GET",
@@ -24650,7 +24669,7 @@
             }
           },
           "displayName": "Search the given transcript for words, numbers, or phrases",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
           "method": "GET",
@@ -25121,7 +25140,7 @@
             }
           },
           "displayName": "Retrieves the redacted audio object containing the status and URL to the redacted audio.",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
           "method": "GET",
@@ -25544,7 +25563,7 @@
             }
           },
           "displayName": "Create a temporary authentication token for real-time transcription",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
           "method": "POST",
@@ -26016,7 +26035,7 @@
             }
           },
           "displayName": "Generate a custom summary from one or more transcripts.",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
           "method": "POST",
@@ -26709,7 +26728,7 @@
             }
           },
           "displayName": "Create answers to one or more questions about one or more transcripts.",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
           "method": "POST",
@@ -27420,7 +27439,7 @@
             }
           },
           "displayName": "Extract action items from one or more meeting transcripts.",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
           "method": "POST",
@@ -27782,7 +27801,7 @@
             }
           },
           "displayName": "Ask LeMUR to use one or more transcripts with a Custom Task to handle your specialized task.",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
           "method": "POST",
@@ -28469,7 +28488,7 @@
             }
           },
           "displayName": "Delete the data for a previously submitted LeMUR request.",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
           "method": "DELETE",
@@ -34246,8 +34265,11 @@
                 "type": "primitive"
               },
               "value": {
-                "value": "DOUBLE",
-                "type": "primitive"
+                "value": {
+                  "value": "DOUBLE",
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
               "type": "map"
             }
@@ -37797,8 +37819,11 @@
                 "type": "primitive"
               },
               "value": {
-                "value": "DOUBLE",
-                "type": "primitive"
+                "value": {
+                  "value": "DOUBLE",
+                  "type": "primitive"
+                },
+                "type": "optional"
               },
               "type": "map"
             }
@@ -37832,8 +37857,11 @@
                 "type": "primitive"
               },
               "value": {
-                "value": "type_:SeverityScoreSummary",
-                "type": "named"
+                "value": {
+                  "value": "type_:SeverityScoreSummary",
+                  "type": "named"
+                },
+                "type": "optional"
               },
               "type": "map"
             }
@@ -47754,7 +47782,7 @@
     "hasEndpointsInTree": true
   },
   "sdkConfig": {
-    "isAuthMandatory": true,
+    "isAuthMandatory": false,
     "hasStreamingEndpoints": false,
     "hasPaginatedEndpoints": false,
     "hasFileDownloadEndpoints": false,

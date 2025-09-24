@@ -5,7 +5,7 @@ use crate::v_2_problem_non_void_function_signature::NonVoidFunctionSignature;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct BasicCustomFiles {
     #[serde(rename = "methodName")]
     pub method_name: String,

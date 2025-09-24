@@ -10,7 +10,7 @@
           "base-path": "",
           "endpoints": {
             "list": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List",
               "docs": "",
               "examples": [
@@ -112,7 +112,6 @@
     list:
       path: /list
       method: GET
-      auth: false
       docs: ''
       source:
         openapi: ../openapi.yml

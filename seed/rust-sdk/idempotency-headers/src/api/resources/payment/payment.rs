@@ -1,4 +1,4 @@
-use crate::api::types::*;
+use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
@@ -9,13 +9,13 @@ pub struct PaymentClient {
 impl PaymentClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config)?,
+            http_client: HttpClient::new(config.clone())?,
         })
     }
 
     pub async fn create(
         &self,
-        request: &serde_json::Value,
+        request: &CreatePaymentRequest,
         options: Option<RequestOptions>,
     ) -> Result<uuid::Uuid, ApiError> {
         self.http_client

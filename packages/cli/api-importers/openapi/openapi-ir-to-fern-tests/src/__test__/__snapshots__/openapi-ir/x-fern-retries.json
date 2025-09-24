@@ -52,6 +52,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/status",
       "examples": [
@@ -122,6 +123,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/status2",
       "examples": [

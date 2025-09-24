@@ -10,7 +10,7 @@
           "base-path": "",
           "endpoints": {
             "chat": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Start a chat",
               "docs": "Create a chat while specifying the default retrieval parameters used by the prompt.",
               "examples": [
@@ -64,7 +64,7 @@
               },
             },
             "chat_stream": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Start a chat",
               "docs": "Create a chat while specifying the default retrieval parameters used by the prompt.",
               "examples": [
@@ -166,7 +166,6 @@
     chat_stream:
       path: /v2/chats
       method: POST
-      auth: false
       docs: >-
         Create a chat while specifying the default retrieval parameters used by
         the prompt.
@@ -201,7 +200,6 @@
     chat:
       path: /v2/chats
       method: POST
-      auth: false
       docs: >-
         Create a chat while specifying the default retrieval parameters used by
         the prompt.

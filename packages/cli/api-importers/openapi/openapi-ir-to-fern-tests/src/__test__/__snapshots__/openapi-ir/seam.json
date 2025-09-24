@@ -574,6 +574,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/access_codes/create",
       "examples": [
@@ -1308,6 +1322,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/access_codes/create_multiple",
       "examples": [
@@ -1708,6 +1736,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/access_codes/delete",
       "examples": [
@@ -1931,6 +1973,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/access_codes/generate_code",
       "examples": [
@@ -2326,6 +2382,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "access_token": []
+        },
+        {
+          "user_session": []
+        },
+        {
+          "client_session": []
+        }
+      ],
       "method": "POST",
       "path": "/access_codes/get",
       "examples": [
@@ -2721,6 +2791,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/access_codes/list",
       "examples": [
@@ -3069,6 +3153,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/access_codes/pull_backup_access_code",
       "examples": [
@@ -3789,6 +3887,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/access_codes/update",
       "examples": [
@@ -4012,6 +4124,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/action_attempts/get",
       "examples": [
@@ -4243,6 +4369,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/action_attempts/list",
       "examples": [
@@ -4577,6 +4714,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/client_sessions/create",
       "examples": [
@@ -4817,6 +4955,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/client_sessions/delete",
       "examples": [
@@ -5023,6 +5172,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/client_sessions/get",
       "examples": [
@@ -5382,6 +5545,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/client_sessions/get_or_create",
       "examples": [
@@ -5734,6 +5898,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/client_sessions/grant_access",
       "examples": [
@@ -6075,6 +6250,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/client_sessions/list",
       "examples": [
@@ -6320,6 +6506,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/client_sessions/revoke",
       "examples": [
@@ -6958,6 +7155,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/connect_webviews/create",
       "examples": [
@@ -7268,6 +7479,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/connect_webviews/delete",
       "examples": [
@@ -7451,6 +7673,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/connect_webviews/get",
       "examples": [
@@ -7704,35 +7940,41 @@
                     "type": "primitive"
                   },
                   "value": {
+                    "generatedName": "ConnectWebviewsListRequestCustomMetadataHasValue",
                     "value": {
-                      "generatedName": "ConnectWebviewsListRequestCustomMetadataHasValue",
-                      "schemas": [
-                        {
-                          "schema": {
-                            "type": "string"
+                      "value": {
+                        "generatedName": "ConnectWebviewsListRequestCustomMetadataHasValue",
+                        "schemas": [
+                          {
+                            "schema": {
+                              "type": "string"
+                            },
+                            "generatedName": "ConnectWebviewsListRequestCustomMetadataHasValue",
+                            "groupName": [],
+                            "type": "primitive"
                           },
-                          "generatedName": "ConnectWebviewsListRequestCustomMetadataHasValue",
-                          "groupName": [],
-                          "type": "primitive"
+                          {
+                            "schema": {
+                              "type": "boolean"
+                            },
+                            "generatedName": "ConnectWebviewsListRequestCustomMetadataHasValue",
+                            "groupName": [],
+                            "type": "primitive"
+                          }
+                        ],
+                        "groupName": [],
+                        "source": {
+                          "file": "../openapi.json",
+                          "type": "openapi"
                         },
-                        {
-                          "schema": {
-                            "type": "boolean"
-                          },
-                          "generatedName": "ConnectWebviewsListRequestCustomMetadataHasValue",
-                          "groupName": [],
-                          "type": "primitive"
-                        }
-                      ],
-                      "groupName": [],
-                      "source": {
-                        "file": "../openapi.json",
-                        "type": "openapi"
+                        "inline": true,
+                        "type": "undiscriminated"
                       },
-                      "inline": true,
-                      "type": "undiscriminated"
+                      "type": "oneOf"
                     },
-                    "type": "oneOf"
+                    "groupName": [],
+                    "inline": true,
+                    "type": "nullable"
                   },
                   "generatedName": "ConnectWebviewsListRequestCustomMetadataHas",
                   "groupName": [],
@@ -7875,6 +8117,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/connect_webviews/list",
       "examples": [
@@ -8003,11 +8259,7 @@
                                 "type": "string"
                               },
                               "value": {
-                                "value": {
-                                  "value": "value",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
+                                "type": "null"
                               }
                             }
                           ],
@@ -8210,6 +8462,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/connected_accounts/delete",
       "examples": [
@@ -8436,6 +8699,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/connected_accounts/get",
       "examples": [
@@ -8651,35 +8928,41 @@
                     "type": "primitive"
                   },
                   "value": {
+                    "generatedName": "ConnectedAccountsListRequestCustomMetadataHasValue",
                     "value": {
-                      "generatedName": "ConnectedAccountsListRequestCustomMetadataHasValue",
-                      "schemas": [
-                        {
-                          "schema": {
-                            "type": "string"
+                      "value": {
+                        "generatedName": "ConnectedAccountsListRequestCustomMetadataHasValue",
+                        "schemas": [
+                          {
+                            "schema": {
+                              "type": "string"
+                            },
+                            "generatedName": "ConnectedAccountsListRequestCustomMetadataHasValue",
+                            "groupName": [],
+                            "type": "primitive"
                           },
-                          "generatedName": "ConnectedAccountsListRequestCustomMetadataHasValue",
-                          "groupName": [],
-                          "type": "primitive"
+                          {
+                            "schema": {
+                              "type": "boolean"
+                            },
+                            "generatedName": "ConnectedAccountsListRequestCustomMetadataHasValue",
+                            "groupName": [],
+                            "type": "primitive"
+                          }
+                        ],
+                        "groupName": [],
+                        "source": {
+                          "file": "../openapi.json",
+                          "type": "openapi"
                         },
-                        {
-                          "schema": {
-                            "type": "boolean"
-                          },
-                          "generatedName": "ConnectedAccountsListRequestCustomMetadataHasValue",
-                          "groupName": [],
-                          "type": "primitive"
-                        }
-                      ],
-                      "groupName": [],
-                      "source": {
-                        "file": "../openapi.json",
-                        "type": "openapi"
+                        "inline": true,
+                        "type": "undiscriminated"
                       },
-                      "inline": true,
-                      "type": "undiscriminated"
+                      "type": "oneOf"
                     },
-                    "type": "oneOf"
+                    "groupName": [],
+                    "inline": true,
+                    "type": "nullable"
                   },
                   "generatedName": "ConnectedAccountsListRequestCustomMetadataHas",
                   "groupName": [],
@@ -8797,6 +9080,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/connected_accounts/list",
       "examples": [
@@ -8887,11 +9181,7 @@
                                 "type": "string"
                               },
                               "value": {
-                                "value": {
-                                  "value": "value",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
+                                "type": "null"
                               }
                             }
                           ],
@@ -9166,6 +9456,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/connected_accounts/update",
       "examples": [
@@ -9465,6 +9766,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/devices/delete",
       "examples": [
@@ -9672,6 +9984,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/devices/get",
       "examples": [
@@ -11756,35 +12082,41 @@
                     "type": "primitive"
                   },
                   "value": {
+                    "generatedName": "DevicesListRequestCustomMetadataHasValue",
                     "value": {
-                      "generatedName": "DevicesListRequestCustomMetadataHasValue",
-                      "schemas": [
-                        {
-                          "schema": {
-                            "type": "string"
+                      "value": {
+                        "generatedName": "DevicesListRequestCustomMetadataHasValue",
+                        "schemas": [
+                          {
+                            "schema": {
+                              "type": "string"
+                            },
+                            "generatedName": "DevicesListRequestCustomMetadataHasValue",
+                            "groupName": [],
+                            "type": "primitive"
                           },
-                          "generatedName": "DevicesListRequestCustomMetadataHasValue",
-                          "groupName": [],
-                          "type": "primitive"
+                          {
+                            "schema": {
+                              "type": "boolean"
+                            },
+                            "generatedName": "DevicesListRequestCustomMetadataHasValue",
+                            "groupName": [],
+                            "type": "primitive"
+                          }
+                        ],
+                        "groupName": [],
+                        "source": {
+                          "file": "../openapi.json",
+                          "type": "openapi"
                         },
-                        {
-                          "schema": {
-                            "type": "boolean"
-                          },
-                          "generatedName": "DevicesListRequestCustomMetadataHasValue",
-                          "groupName": [],
-                          "type": "primitive"
-                        }
-                      ],
-                      "groupName": [],
-                      "source": {
-                        "file": "../openapi.json",
-                        "type": "openapi"
+                        "inline": true,
+                        "type": "undiscriminated"
                       },
-                      "inline": true,
-                      "type": "undiscriminated"
+                      "type": "oneOf"
                     },
-                    "type": "oneOf"
+                    "groupName": [],
+                    "inline": true,
+                    "type": "nullable"
                   },
                   "generatedName": "DevicesListRequestCustomMetadataHas",
                   "groupName": [],
@@ -12026,6 +12358,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/devices/list",
       "examples": [
@@ -12216,11 +12562,7 @@
                                 "type": "string"
                               },
                               "value": {
-                                "value": {
-                                  "value": "value",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
+                                "type": "null"
                               }
                             }
                           ],
@@ -12477,6 +12819,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/devices/list_device_providers",
       "examples": [
@@ -12840,6 +13196,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/devices/update",
       "examples": [
@@ -13091,6 +13458,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/events/get",
       "examples": [
@@ -14179,6 +14560,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/events/list",
       "examples": [
@@ -14489,6 +14884,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/locks/get",
       "examples": [
@@ -17855,35 +18264,41 @@
                     "type": "primitive"
                   },
                   "value": {
+                    "generatedName": "LocksListRequestCustomMetadataHasValue",
                     "value": {
-                      "generatedName": "LocksListRequestCustomMetadataHasValue",
-                      "schemas": [
-                        {
-                          "schema": {
-                            "type": "string"
+                      "value": {
+                        "generatedName": "LocksListRequestCustomMetadataHasValue",
+                        "schemas": [
+                          {
+                            "schema": {
+                              "type": "string"
+                            },
+                            "generatedName": "LocksListRequestCustomMetadataHasValue",
+                            "groupName": [],
+                            "type": "primitive"
                           },
-                          "generatedName": "LocksListRequestCustomMetadataHasValue",
-                          "groupName": [],
-                          "type": "primitive"
+                          {
+                            "schema": {
+                              "type": "boolean"
+                            },
+                            "generatedName": "LocksListRequestCustomMetadataHasValue",
+                            "groupName": [],
+                            "type": "primitive"
+                          }
+                        ],
+                        "groupName": [],
+                        "source": {
+                          "file": "../openapi.json",
+                          "type": "openapi"
                         },
-                        {
-                          "schema": {
-                            "type": "boolean"
-                          },
-                          "generatedName": "LocksListRequestCustomMetadataHasValue",
-                          "groupName": [],
-                          "type": "primitive"
-                        }
-                      ],
-                      "groupName": [],
-                      "source": {
-                        "file": "../openapi.json",
-                        "type": "openapi"
+                        "inline": true,
+                        "type": "undiscriminated"
                       },
-                      "inline": true,
-                      "type": "undiscriminated"
+                      "type": "oneOf"
                     },
-                    "type": "oneOf"
+                    "groupName": [],
+                    "inline": true,
+                    "type": "nullable"
                   },
                   "generatedName": "LocksListRequestCustomMetadataHas",
                   "groupName": [],
@@ -18145,6 +18560,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/locks/list",
       "examples": [
@@ -18335,11 +18764,7 @@
                                 "type": "string"
                               },
                               "value": {
-                                "value": {
-                                  "value": "value",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
+                                "type": "null"
                               }
                             }
                           ],
@@ -18576,11 +19001,7 @@
                                 "type": "string"
                               },
                               "value": {
-                                "value": {
-                                  "value": "value",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
+                                "type": "null"
                               }
                             }
                           ],
@@ -18822,6 +19243,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/locks/lock_door",
       "examples": [
@@ -19065,6 +19500,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/locks/unlock_door",
       "examples": [
@@ -19288,6 +19737,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/networks/get",
       "examples": [
@@ -19491,6 +19951,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/networks/list",
       "examples": [
@@ -19685,6 +20156,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/phones/deactivate",
       "examples": [
@@ -19876,6 +20361,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/phones/list",
       "examples": [
@@ -20013,11 +20509,7 @@
                                 "type": "string"
                               },
                               "value": {
-                                "value": {
-                                  "value": "value",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
+                                "type": "null"
                               }
                             }
                           ],
@@ -20297,6 +20789,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/thermostats/cool",
       "examples": [
@@ -20544,6 +21050,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/thermostats/get",
       "examples": [
@@ -22059,6 +22579,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/thermostats/heat",
       "examples": [
@@ -22378,6 +22912,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/thermostats/heat_cool",
       "examples": [
@@ -23228,35 +23776,41 @@
                     "type": "primitive"
                   },
                   "value": {
+                    "generatedName": "ThermostatsListRequestCustomMetadataHasValue",
                     "value": {
-                      "generatedName": "ThermostatsListRequestCustomMetadataHasValue",
-                      "schemas": [
-                        {
-                          "schema": {
-                            "type": "string"
+                      "value": {
+                        "generatedName": "ThermostatsListRequestCustomMetadataHasValue",
+                        "schemas": [
+                          {
+                            "schema": {
+                              "type": "string"
+                            },
+                            "generatedName": "ThermostatsListRequestCustomMetadataHasValue",
+                            "groupName": [],
+                            "type": "primitive"
                           },
-                          "generatedName": "ThermostatsListRequestCustomMetadataHasValue",
-                          "groupName": [],
-                          "type": "primitive"
+                          {
+                            "schema": {
+                              "type": "boolean"
+                            },
+                            "generatedName": "ThermostatsListRequestCustomMetadataHasValue",
+                            "groupName": [],
+                            "type": "primitive"
+                          }
+                        ],
+                        "groupName": [],
+                        "source": {
+                          "file": "../openapi.json",
+                          "type": "openapi"
                         },
-                        {
-                          "schema": {
-                            "type": "boolean"
-                          },
-                          "generatedName": "ThermostatsListRequestCustomMetadataHasValue",
-                          "groupName": [],
-                          "type": "primitive"
-                        }
-                      ],
-                      "groupName": [],
-                      "source": {
-                        "file": "../openapi.json",
-                        "type": "openapi"
+                        "inline": true,
+                        "type": "undiscriminated"
                       },
-                      "inline": true,
-                      "type": "undiscriminated"
+                      "type": "oneOf"
                     },
-                    "type": "oneOf"
+                    "groupName": [],
+                    "inline": true,
+                    "type": "nullable"
                   },
                   "generatedName": "ThermostatsListRequestCustomMetadataHas",
                   "groupName": [],
@@ -23498,6 +24052,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "client_session": []
+        }
+      ],
       "method": "POST",
       "path": "/thermostats/list",
       "examples": [
@@ -23688,11 +24256,7 @@
                                 "type": "string"
                               },
                               "value": {
-                                "value": {
-                                  "value": "value",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
+                                "type": "null"
                               }
                             }
                           ],
@@ -23934,6 +24498,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/thermostats/off",
       "examples": [
@@ -24241,6 +24819,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/thermostats/set_fan_mode",
       "examples": [
@@ -24641,6 +25233,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "client_session": []
+        }
+      ],
       "method": "POST",
       "path": "/thermostats/update",
       "examples": [
@@ -24825,6 +25431,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/user_identities/add_acs_user",
       "examples": [
@@ -25099,6 +25716,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/user_identities/create",
       "examples": [
@@ -25317,6 +25945,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/user_identities/delete",
       "examples": [
@@ -25542,6 +26181,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/user_identities/get",
       "examples": [
@@ -25783,6 +26433,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/user_identities/grant_access_to_device",
       "examples": [
@@ -25981,6 +26642,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/user_identities/list",
       "examples": [
@@ -26246,6 +26921,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/user_identities/list_accessible_devices",
       "examples": [
@@ -26444,11 +27130,7 @@
                                 "type": "string"
                               },
                               "value": {
-                                "value": {
-                                  "value": "value",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
+                                "type": "null"
                               }
                             }
                           ],
@@ -26685,11 +27367,7 @@
                                 "type": "string"
                               },
                               "value": {
-                                "value": {
-                                  "value": "value",
-                                  "type": "string"
-                                },
-                                "type": "primitive"
+                                "type": "null"
                               }
                             }
                           ],
@@ -26914,6 +27592,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/user_identities/list_acs_systems",
       "examples": [
@@ -27257,6 +27949,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/user_identities/list_acs_users",
       "examples": [
@@ -27582,6 +28285,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/user_identities/remove_acs_user",
       "examples": [
@@ -27769,6 +28483,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/user_identities/revoke_access_to_device",
       "examples": [
@@ -28040,6 +28765,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/user_identities/update",
       "examples": [
@@ -28247,6 +28983,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/webhooks/create",
       "examples": [
@@ -28449,6 +29196,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/webhooks/delete",
       "examples": [
@@ -28631,6 +29389,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/webhooks/get",
       "examples": [
@@ -28816,6 +29585,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/webhooks/list",
       "examples": [
@@ -29030,6 +29810,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/webhooks/update",
       "examples": [
@@ -29340,6 +30131,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "pat_without_workspace": []
+        }
+      ],
       "method": "POST",
       "path": "/workspaces/create",
       "examples": [
@@ -29524,6 +30320,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "user_session": []
+        },
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        }
+      ],
       "method": "POST",
       "path": "/workspaces/get",
       "examples": [
@@ -29699,6 +30509,26 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "pat_without_workspace": []
+        },
+        {
+          "user_session": []
+        },
+        {
+          "user_session_without_workspace": []
+        },
+        {
+          "api_key": []
+        },
+        {
+          "client_session": []
+        }
+      ],
       "method": "POST",
       "path": "/workspaces/list",
       "examples": [
@@ -29876,6 +30706,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/workspaces/reset_sandbox",
       "examples": [
@@ -30119,6 +30960,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/access_codes/simulate/create_unmanaged_access_code",
       "examples": [
@@ -30484,6 +31339,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/access_codes/unmanaged/convert_to_managed",
       "examples": [
@@ -30687,6 +31556,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/access_codes/unmanaged/delete",
       "examples": [
@@ -30955,6 +31838,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/access_codes/unmanaged/get",
       "examples": [
@@ -31261,6 +32158,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/access_codes/unmanaged/list",
       "examples": [
@@ -31611,6 +32522,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/access_codes/unmanaged/update",
       "examples": [
@@ -31799,6 +32724,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/access_groups/add_user",
       "examples": [
@@ -31990,6 +32926,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/access_groups/get",
       "examples": [
@@ -32271,6 +33218,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/access_groups/list",
       "examples": [
@@ -32524,6 +33482,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/access_groups/list_users",
       "examples": [
@@ -32850,6 +33819,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/access_groups/remove_user",
       "examples": [
@@ -33044,6 +34024,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/credential_pools/list",
       "examples": [
@@ -33361,6 +34352,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/credential_provisioning_automations/launch",
       "examples": [
@@ -33606,6 +34608,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/credentials/assign",
       "examples": [
@@ -34341,6 +35354,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/credentials/create",
       "examples": [
@@ -34722,6 +35746,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/credentials/delete",
       "examples": [
@@ -34906,6 +35941,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/credentials/get",
       "examples": [
@@ -35308,6 +36354,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/credentials/list",
       "examples": [
@@ -35667,6 +36727,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/credentials/list_accessible_entrances",
       "examples": [
@@ -35976,6 +37047,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/credentials/unassign",
       "examples": [
@@ -36415,6 +37497,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/credentials/update",
       "examples": [
@@ -36810,6 +37903,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "access_token": []
+        },
+        {
+          "user_session": []
+        },
+        {
+          "client_session": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/entrances/get",
       "examples": [
@@ -37118,6 +38225,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/entrances/grant_access",
       "examples": [
@@ -37337,6 +38455,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/entrances/list",
       "examples": [
@@ -37652,6 +38784,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/entrances/list_credentials_with_access",
       "examples": [
@@ -38016,6 +39162,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/systems/get",
       "examples": [
@@ -38360,6 +39517,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/systems/list",
       "examples": [
@@ -38696,6 +39867,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/systems/list_compatible_credential_manager_acs_systems",
       "examples": [
@@ -39034,6 +40216,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/users/add_to_access_group",
       "examples": [
@@ -39407,6 +40600,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/users/create",
       "examples": [
@@ -39713,6 +40917,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/users/delete",
       "examples": [
@@ -39897,6 +41112,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/users/get",
       "examples": [
@@ -40292,6 +41518,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/users/list",
       "examples": [
@@ -40616,6 +41856,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/users/list_accessible_entrances",
       "examples": [
@@ -40908,6 +42162,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/users/remove_from_access_group",
       "examples": [
@@ -41081,6 +42346,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/users/revoke_access_to_all_entrances",
       "examples": [
@@ -41247,6 +42523,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/users/suspend",
       "examples": [
@@ -41413,6 +42700,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/users/unsuspend",
       "examples": [
@@ -41736,6 +43034,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/acs/users/update",
       "examples": [
@@ -41902,6 +43211,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/devices/simulate/connect",
       "examples": [
@@ -42068,6 +43388,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/devices/simulate/disconnect",
       "examples": [
@@ -42234,6 +43565,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/devices/simulate/remove",
       "examples": [
@@ -42442,6 +43784,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/devices/unmanaged/get",
       "examples": [
@@ -43503,35 +44859,41 @@
                     "type": "primitive"
                   },
                   "value": {
+                    "generatedName": "UnmanagedListRequestCustomMetadataHasValue",
                     "value": {
-                      "generatedName": "UnmanagedListRequestCustomMetadataHasValue",
-                      "schemas": [
-                        {
-                          "schema": {
-                            "type": "string"
+                      "value": {
+                        "generatedName": "UnmanagedListRequestCustomMetadataHasValue",
+                        "schemas": [
+                          {
+                            "schema": {
+                              "type": "string"
+                            },
+                            "generatedName": "UnmanagedListRequestCustomMetadataHasValue",
+                            "groupName": [],
+                            "type": "primitive"
                           },
-                          "generatedName": "UnmanagedListRequestCustomMetadataHasValue",
-                          "groupName": [],
-                          "type": "primitive"
+                          {
+                            "schema": {
+                              "type": "boolean"
+                            },
+                            "generatedName": "UnmanagedListRequestCustomMetadataHasValue",
+                            "groupName": [],
+                            "type": "primitive"
+                          }
+                        ],
+                        "groupName": [],
+                        "source": {
+                          "file": "../openapi.json",
+                          "type": "openapi"
                         },
-                        {
-                          "schema": {
-                            "type": "boolean"
-                          },
-                          "generatedName": "UnmanagedListRequestCustomMetadataHasValue",
-                          "groupName": [],
-                          "type": "primitive"
-                        }
-                      ],
-                      "groupName": [],
-                      "source": {
-                        "file": "../openapi.json",
-                        "type": "openapi"
+                        "inline": true,
+                        "type": "undiscriminated"
                       },
-                      "inline": true,
-                      "type": "undiscriminated"
+                      "type": "oneOf"
                     },
-                    "type": "oneOf"
+                    "groupName": [],
+                    "inline": true,
+                    "type": "nullable"
                   },
                   "generatedName": "UnmanagedListRequestCustomMetadataHas",
                   "groupName": [],
@@ -43773,6 +45135,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/devices/unmanaged/list",
       "examples": [
@@ -44138,6 +45511,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/devices/unmanaged/update",
       "examples": [
@@ -44451,6 +45835,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/noise_sensors/noise_thresholds/create",
       "examples": [
@@ -44777,6 +46172,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/noise_sensors/noise_thresholds/delete",
       "examples": [
@@ -45008,6 +46414,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/noise_sensors/noise_thresholds/get",
       "examples": [
@@ -45268,6 +46685,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/noise_sensors/noise_thresholds/list",
       "examples": [
@@ -45640,6 +47071,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/noise_sensors/noise_thresholds/update",
       "examples": [
@@ -45853,6 +47295,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/noise_sensors/simulate/trigger_noise_threshold",
       "examples": [
@@ -46323,6 +47776,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/phones/simulate/create_sandbox_phone",
       "examples": [
@@ -46983,6 +48447,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/thermostats/climate_setting_schedules/create",
       "examples": [
@@ -47288,6 +48766,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/thermostats/climate_setting_schedules/delete",
       "examples": [
@@ -47497,6 +48989,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/thermostats/climate_setting_schedules/get",
       "examples": [
@@ -47820,6 +49326,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "api_key": []
+        },
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        }
+      ],
       "method": "POST",
       "path": "/thermostats/climate_setting_schedules/list",
       "examples": [
@@ -48385,6 +49905,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/thermostats/climate_setting_schedules/update",
       "examples": [
@@ -48676,6 +50210,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/user_identities/enrollment_automations/delete",
       "examples": [
@@ -48860,6 +50405,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/user_identities/enrollment_automations/get",
       "examples": [
@@ -49250,6 +50809,17 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/user_identities/enrollment_automations/launch",
       "examples": [
@@ -49491,6 +51061,20 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "client_session": []
+        },
+        {
+          "pat_with_workspace": []
+        },
+        {
+          "console_session": []
+        },
+        {
+          "api_key": []
+        }
+      ],
       "method": "POST",
       "path": "/user_identities/enrollment_automations/list",
       "examples": [
@@ -55937,35 +57521,41 @@
                 "type": "primitive"
               },
               "value": {
+                "generatedName": "ConnectWebviewCustomMetadataValue",
                 "value": {
-                  "generatedName": "ConnectWebviewCustomMetadataValue",
-                  "schemas": [
-                    {
-                      "schema": {
-                        "type": "string"
+                  "value": {
+                    "generatedName": "ConnectWebviewCustomMetadataValue",
+                    "schemas": [
+                      {
+                        "schema": {
+                          "type": "string"
+                        },
+                        "generatedName": "ConnectWebviewCustomMetadataValue",
+                        "groupName": [],
+                        "type": "primitive"
                       },
-                      "generatedName": "ConnectWebviewCustomMetadataValue",
-                      "groupName": [],
-                      "type": "primitive"
+                      {
+                        "schema": {
+                          "type": "boolean"
+                        },
+                        "generatedName": "ConnectWebviewCustomMetadataValue",
+                        "groupName": [],
+                        "type": "primitive"
+                      }
+                    ],
+                    "groupName": [],
+                    "source": {
+                      "file": "../openapi.json",
+                      "type": "openapi"
                     },
-                    {
-                      "schema": {
-                        "type": "boolean"
-                      },
-                      "generatedName": "ConnectWebviewCustomMetadataValue",
-                      "groupName": [],
-                      "type": "primitive"
-                    }
-                  ],
-                  "groupName": [],
-                  "source": {
-                    "file": "../openapi.json",
-                    "type": "openapi"
+                    "inline": true,
+                    "type": "undiscriminated"
                   },
-                  "inline": true,
-                  "type": "undiscriminated"
+                  "type": "oneOf"
                 },
-                "type": "oneOf"
+                "groupName": [],
+                "inline": true,
+                "type": "nullable"
               },
               "generatedName": "ConnectWebviewCustomMetadata",
               "groupName": [],
@@ -56289,35 +57879,41 @@
                 "type": "primitive"
               },
               "value": {
+                "generatedName": "ConnectedAccountCustomMetadataValue",
                 "value": {
-                  "generatedName": "ConnectedAccountCustomMetadataValue",
-                  "schemas": [
-                    {
-                      "schema": {
-                        "type": "string"
+                  "value": {
+                    "generatedName": "ConnectedAccountCustomMetadataValue",
+                    "schemas": [
+                      {
+                        "schema": {
+                          "type": "string"
+                        },
+                        "generatedName": "ConnectedAccountCustomMetadataValue",
+                        "groupName": [],
+                        "type": "primitive"
                       },
-                      "generatedName": "ConnectedAccountCustomMetadataValue",
-                      "groupName": [],
-                      "type": "primitive"
+                      {
+                        "schema": {
+                          "type": "boolean"
+                        },
+                        "generatedName": "ConnectedAccountCustomMetadataValue",
+                        "groupName": [],
+                        "type": "primitive"
+                      }
+                    ],
+                    "groupName": [],
+                    "source": {
+                      "file": "../openapi.json",
+                      "type": "openapi"
                     },
-                    {
-                      "schema": {
-                        "type": "boolean"
-                      },
-                      "generatedName": "ConnectedAccountCustomMetadataValue",
-                      "groupName": [],
-                      "type": "primitive"
-                    }
-                  ],
-                  "groupName": [],
-                  "source": {
-                    "file": "../openapi.json",
-                    "type": "openapi"
+                    "inline": true,
+                    "type": "undiscriminated"
                   },
-                  "inline": true,
-                  "type": "undiscriminated"
+                  "type": "oneOf"
                 },
-                "type": "oneOf"
+                "groupName": [],
+                "inline": true,
+                "type": "nullable"
               },
               "generatedName": "ConnectedAccountCustomMetadata",
               "groupName": [],
@@ -60660,35 +62256,41 @@
                 "type": "primitive"
               },
               "value": {
+                "generatedName": "DeviceCustomMetadataValue",
                 "value": {
-                  "generatedName": "DeviceCustomMetadataValue",
-                  "schemas": [
-                    {
-                      "schema": {
-                        "type": "string"
+                  "value": {
+                    "generatedName": "DeviceCustomMetadataValue",
+                    "schemas": [
+                      {
+                        "schema": {
+                          "type": "string"
+                        },
+                        "generatedName": "DeviceCustomMetadataValue",
+                        "groupName": [],
+                        "type": "primitive"
                       },
-                      "generatedName": "DeviceCustomMetadataValue",
-                      "groupName": [],
-                      "type": "primitive"
+                      {
+                        "schema": {
+                          "type": "boolean"
+                        },
+                        "generatedName": "DeviceCustomMetadataValue",
+                        "groupName": [],
+                        "type": "primitive"
+                      }
+                    ],
+                    "groupName": [],
+                    "source": {
+                      "file": "../openapi.json",
+                      "type": "openapi"
                     },
-                    {
-                      "schema": {
-                        "type": "boolean"
-                      },
-                      "generatedName": "DeviceCustomMetadataValue",
-                      "groupName": [],
-                      "type": "primitive"
-                    }
-                  ],
-                  "groupName": [],
-                  "source": {
-                    "file": "../openapi.json",
-                    "type": "openapi"
+                    "inline": true,
+                    "type": "undiscriminated"
                   },
-                  "inline": true,
-                  "type": "undiscriminated"
+                  "type": "oneOf"
                 },
-                "type": "oneOf"
+                "groupName": [],
+                "inline": true,
+                "type": "nullable"
               },
               "generatedName": "DeviceCustomMetadata",
               "groupName": [],
@@ -65625,35 +67227,41 @@
                 "type": "primitive"
               },
               "value": {
+                "generatedName": "PhoneCustomMetadataValue",
                 "value": {
-                  "generatedName": "PhoneCustomMetadataValue",
-                  "schemas": [
-                    {
-                      "schema": {
-                        "type": "string"
+                  "value": {
+                    "generatedName": "PhoneCustomMetadataValue",
+                    "schemas": [
+                      {
+                        "schema": {
+                          "type": "string"
+                        },
+                        "generatedName": "PhoneCustomMetadataValue",
+                        "groupName": [],
+                        "type": "primitive"
                       },
-                      "generatedName": "PhoneCustomMetadataValue",
-                      "groupName": [],
-                      "type": "primitive"
+                      {
+                        "schema": {
+                          "type": "boolean"
+                        },
+                        "generatedName": "PhoneCustomMetadataValue",
+                        "groupName": [],
+                        "type": "primitive"
+                      }
+                    ],
+                    "groupName": [],
+                    "source": {
+                      "file": "../openapi.json",
+                      "type": "openapi"
                     },
-                    {
-                      "schema": {
-                        "type": "boolean"
-                      },
-                      "generatedName": "PhoneCustomMetadataValue",
-                      "groupName": [],
-                      "type": "primitive"
-                    }
-                  ],
-                  "groupName": [],
-                  "source": {
-                    "file": "../openapi.json",
-                    "type": "openapi"
+                    "inline": true,
+                    "type": "undiscriminated"
                   },
-                  "inline": true,
-                  "type": "undiscriminated"
+                  "type": "oneOf"
                 },
-                "type": "oneOf"
+                "groupName": [],
+                "inline": true,
+                "type": "nullable"
               },
               "generatedName": "PhoneCustomMetadata",
               "groupName": [],

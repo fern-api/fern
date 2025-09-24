@@ -42,7 +42,6 @@ service:
   base-path: ''
   endpoints:
     createPets:
-      auth: false
       display-name: Create a pet
       examples:
         - {}
@@ -51,7 +50,6 @@ service:
       source:
         openapi: openapi/openapi.yml
     listPets:
-      auth: false
       display-name: List all pets
       examples:
         - query-parameters:
@@ -78,7 +76,6 @@ service:
       source:
         openapi: openapi/openapi.yml
     showPetById:
-      auth: false
       display-name: Info for a specific pet
       examples:
         - path-parameters:
@@ -153,7 +150,6 @@ service:
   base-path: ''
   endpoints:
     createPets:
-      auth: false
       display-name: Create a pet
       examples:
         - headers:
@@ -163,7 +159,6 @@ service:
       source:
         openapi: openapi/openapi.yml
     listPets:
-      auth: false
       display-name: List all pets
       examples:
         - headers:
@@ -192,7 +187,6 @@ service:
       source:
         openapi: openapi/openapi.yml
     showPetById:
-      auth: false
       display-name: Info for a specific pet
       examples:
         - headers:
@@ -233,7 +227,6 @@ exports[`validate multi no endpoint > multiple-no-endpoint 1`] = `
   base-path: ''
   endpoints:
     list:
-      auth: false
       examples:
         - response:
             body: string
@@ -275,7 +268,6 @@ exports[`validate multi no endpoint asyncapi > multiple-no-endpoint-async 1`] = 
   base-path: ''
   endpoints:
     list:
-      auth: false
       examples:
         - response:
             body: string
@@ -360,7 +352,6 @@ exports[`validate multi with endpoint > multiple-with-endpoint 1`] = `
   base-path: ''
   endpoints:
     list:
-      auth: false
       examples:
         - response:
             body: string
@@ -410,7 +401,6 @@ exports[`validate multi with endpoint async > multiple-with-endpoint-async 1`] =
   base-path: ''
   endpoints:
     list:
-      auth: false
       examples:
         - response:
             body: string
@@ -567,7 +557,6 @@ service:
   base-path: ''
   endpoints:
     createPets:
-      auth: false
       display-name: Create a pet
       examples:
         - {}
@@ -576,7 +565,6 @@ service:
       source:
         openapi: openapi/petstore/openapi.yml
     listPets:
-      auth: false
       display-name: List all pets
       examples:
         - query-parameters:
@@ -605,7 +593,6 @@ service:
       source:
         openapi: openapi/petstore/openapi.yml
     showPetById:
-      auth: false
       display-name: Info for a specific pet
       examples:
         - path-parameters:
@@ -1296,7 +1283,9 @@ service:
   display-name: Bookings
   endpoints:
     create-booking:
-      auth: true
+      auth:
+        - OAuth2:
+            - write
       display-name: Create a booking
       docs: >-
         A booking is a temporary hold on a trip. It is not confirmed until the
@@ -1332,7 +1321,9 @@ service:
       source:
         openapi: openapi/trains/openapi.yml
     delete-booking:
-      auth: true
+      auth:
+        - OAuth2:
+            - write
       display-name: Delete a booking
       docs: Deletes a booking, cancelling the hold on the trip.
       errors:
@@ -1354,7 +1345,6 @@ service:
       source:
         openapi: openapi/trains/openapi.yml
     get-booking:
-      auth: true
       display-name: Get a booking
       docs: Returns the details of a specific booking.
       errors:
@@ -1390,7 +1380,6 @@ service:
       source:
         openapi: openapi/trains/openapi.yml
     get-bookings:
-      auth: true
       display-name: List existing bookings
       docs: Returns a list of all trip bookings by the authenticated user.
       errors:
@@ -1455,7 +1444,6 @@ service:
   display-name: Payments
   endpoints:
     create-booking-payment:
-      auth: true
       display-name: Pay for a Booking
       docs: >-
         A payment is an attempt to pay for the booking, which will confirm the
@@ -1663,7 +1651,6 @@ service:
   display-name: Stations
   endpoints:
     get-stations:
-      auth: true
       display-name: Get a list of train stations
       docs: Returns a list of all train stations in the system.
       errors:
@@ -1780,7 +1767,6 @@ service:
   display-name: Trips
   endpoints:
     get-trips:
-      auth: true
       display-name: Get available train trips
       docs: >-
         Returns a list of available train trips between the specified origin and
@@ -2140,7 +2126,6 @@ service:
     chat:
       audiences:
         - public
-      auth: true
       display-name: Chat
       docs: >
         Generates a text response to a user message.
@@ -2576,7 +2561,6 @@ service:
     chat:
       audiences:
         - v2-beta
-      auth: true
       display-name: Chat with the model
       docs: >
         Generates a message from the model in response to a provided
@@ -2730,7 +2714,6 @@ service:
   base-path: ''
   endpoints:
     createPets:
-      auth: false
       display-name: Create a pet
       examples:
         - {}
@@ -2739,7 +2722,6 @@ service:
       source:
         openapi: alpha_one.yml
     listPets:
-      auth: false
       display-name: List all pets
       examples:
         - query-parameters:
@@ -2763,7 +2745,6 @@ service:
       source:
         openapi: alpha_two.yml
     showPetById:
-      auth: false
       display-name: Info for a specific pet
       examples:
         - path-parameters:
@@ -2863,7 +2844,6 @@ exports[`validate single no endpoint > single-no-endpoint 1`] = `
   base-path: ''
   endpoints:
     list:
-      auth: false
       examples:
         - response:
             body: string
@@ -2904,7 +2884,6 @@ exports[`validate single no endpoint async > single-no-endpoint-async 1`] = `
   base-path: ''
   endpoints:
     list:
-      auth: false
       examples:
         - response:
             body: string
@@ -2984,7 +2963,6 @@ exports[`validate single with endpoint > single-with-endpoint 1`] = `
   base-path: ''
   endpoints:
     list:
-      auth: false
       examples:
         - response:
             body: string
@@ -3030,7 +3008,6 @@ exports[`validate single with endpoint async > single-with-endpoint-async 1`] = 
   base-path: ''
   endpoints:
     list:
-      auth: false
       examples:
         - response:
             body: string

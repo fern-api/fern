@@ -24,6 +24,7 @@
     "requirement": "ALL",
     "schemes": [
       {
+        "key": "BearerAuthScheme",
         "token": {
           "originalName": "token",
           "camelCase": {
@@ -13983,31 +13984,37 @@
                       "type": "primitive"
                     },
                     "valueType": {
-                      "name": {
-                        "originalName": "ActionBlockRead",
-                        "camelCase": {
-                          "unsafeName": "actionBlockRead",
-                          "safeName": "actionBlockRead"
+                      "container": {
+                        "optional": {
+                          "name": {
+                            "originalName": "ActionBlockRead",
+                            "camelCase": {
+                              "unsafeName": "actionBlockRead",
+                              "safeName": "actionBlockRead"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "action_block_read",
+                              "safeName": "action_block_read"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "ACTION_BLOCK_READ",
+                              "safeName": "ACTION_BLOCK_READ"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "ActionBlockRead",
+                              "safeName": "ActionBlockRead"
+                            }
+                          },
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "typeId": "type_:ActionBlockRead",
+                          "type": "named"
                         },
-                        "snakeCase": {
-                          "unsafeName": "action_block_read",
-                          "safeName": "action_block_read"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "ACTION_BLOCK_READ",
-                          "safeName": "ACTION_BLOCK_READ"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "ActionBlockRead",
-                          "safeName": "ActionBlockRead"
-                        }
+                        "type": "optional"
                       },
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "typeId": "type_:ActionBlockRead",
-                      "type": "named"
+                      "type": "container"
                     },
                     "type": "map"
                   },
@@ -14060,31 +14067,37 @@
                       "type": "primitive"
                     },
                     "valueType": {
-                      "name": {
-                        "originalName": "AttributeBlockRead",
-                        "camelCase": {
-                          "unsafeName": "attributeBlockRead",
-                          "safeName": "attributeBlockRead"
+                      "container": {
+                        "optional": {
+                          "name": {
+                            "originalName": "AttributeBlockRead",
+                            "camelCase": {
+                              "unsafeName": "attributeBlockRead",
+                              "safeName": "attributeBlockRead"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "attribute_block_read",
+                              "safeName": "attribute_block_read"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "ATTRIBUTE_BLOCK_READ",
+                              "safeName": "ATTRIBUTE_BLOCK_READ"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "AttributeBlockRead",
+                              "safeName": "AttributeBlockRead"
+                            }
+                          },
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "typeId": "type_:AttributeBlockRead",
+                          "type": "named"
                         },
-                        "snakeCase": {
-                          "unsafeName": "attribute_block_read",
-                          "safeName": "attribute_block_read"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "ATTRIBUTE_BLOCK_READ",
-                          "safeName": "ATTRIBUTE_BLOCK_READ"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "AttributeBlockRead",
-                          "safeName": "AttributeBlockRead"
-                        }
+                        "type": "optional"
                       },
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "typeId": "type_:AttributeBlockRead",
-                      "type": "named"
+                      "type": "container"
                     },
                     "type": "map"
                   },
@@ -14137,16 +14150,22 @@
                     },
                     "valueType": {
                       "container": {
-                        "list": {
-                          "primitive": {
-                            "v1": "STRING",
-                            "v2": {
-                              "type": "string"
-                            }
+                        "optional": {
+                          "container": {
+                            "list": {
+                              "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                  "type": "string"
+                                }
+                              },
+                              "type": "primitive"
+                            },
+                            "type": "list"
                           },
-                          "type": "primitive"
+                          "type": "container"
                         },
-                        "type": "list"
+                        "type": "optional"
                       },
                       "type": "container"
                     },
@@ -19533,6 +19552,11 @@
           },
           "displayName": "List Organizations",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -19811,6 +19835,11 @@
           },
           "displayName": "Create Organization",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -20146,6 +20175,11 @@
           },
           "displayName": "Get Organization",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -20338,6 +20372,11 @@
           },
           "displayName": "Delete Organization",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -20494,6 +20533,11 @@
           },
           "displayName": "Update Organization",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "PATCH",
           "path": {
@@ -20878,6 +20922,11 @@
           },
           "displayName": "Get Active Organization",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -21048,6 +21097,11 @@
           },
           "displayName": "List Projects",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -21326,6 +21380,11 @@
           },
           "displayName": "Create Project",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -21796,6 +21855,11 @@
           },
           "displayName": "Get Project",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -21988,6 +22052,11 @@
           },
           "displayName": "Delete Project",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -22144,6 +22213,11 @@
           },
           "displayName": "Update Project",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "PATCH",
           "path": {
@@ -22677,6 +22751,11 @@
           },
           "displayName": "Stats Environments",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -22949,6 +23028,11 @@
           },
           "displayName": "List Environments",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -23311,6 +23395,11 @@
           },
           "displayName": "Create Environment",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -23588,6 +23677,11 @@
           },
           "displayName": "Get Environment",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -23860,6 +23954,11 @@
           },
           "displayName": "Delete Environment",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -24096,6 +24195,11 @@
           },
           "displayName": "Update Environment",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "PATCH",
           "path": {
@@ -24707,6 +24811,11 @@
           },
           "displayName": "Copy Environment",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -25352,6 +25461,11 @@
           },
           "displayName": "List Resources",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -25964,6 +26078,11 @@
           },
           "displayName": "Create Resource",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -26368,31 +26487,37 @@
                       "type": "primitive"
                     },
                     "valueType": {
-                      "name": {
-                        "originalName": "ActionBlockEditable",
-                        "camelCase": {
-                          "unsafeName": "actionBlockEditable",
-                          "safeName": "actionBlockEditable"
+                      "container": {
+                        "optional": {
+                          "name": {
+                            "originalName": "ActionBlockEditable",
+                            "camelCase": {
+                              "unsafeName": "actionBlockEditable",
+                              "safeName": "actionBlockEditable"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "action_block_editable",
+                              "safeName": "action_block_editable"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "ACTION_BLOCK_EDITABLE",
+                              "safeName": "ACTION_BLOCK_EDITABLE"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "ActionBlockEditable",
+                              "safeName": "ActionBlockEditable"
+                            }
+                          },
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "typeId": "type_:ActionBlockEditable",
+                          "type": "named"
                         },
-                        "snakeCase": {
-                          "unsafeName": "action_block_editable",
-                          "safeName": "action_block_editable"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "ACTION_BLOCK_EDITABLE",
-                          "safeName": "ACTION_BLOCK_EDITABLE"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "ActionBlockEditable",
-                          "safeName": "ActionBlockEditable"
-                        }
+                        "type": "optional"
                       },
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "typeId": "type_:ActionBlockEditable",
-                      "type": "named"
+                      "type": "container"
                     },
                     "type": "map"
                   },
@@ -26441,31 +26566,37 @@
                           "type": "primitive"
                         },
                         "valueType": {
-                          "name": {
-                            "originalName": "AttributeBlockEditable",
-                            "camelCase": {
-                              "unsafeName": "attributeBlockEditable",
-                              "safeName": "attributeBlockEditable"
+                          "container": {
+                            "optional": {
+                              "name": {
+                                "originalName": "AttributeBlockEditable",
+                                "camelCase": {
+                                  "unsafeName": "attributeBlockEditable",
+                                  "safeName": "attributeBlockEditable"
+                                },
+                                "snakeCase": {
+                                  "unsafeName": "attribute_block_editable",
+                                  "safeName": "attribute_block_editable"
+                                },
+                                "screamingSnakeCase": {
+                                  "unsafeName": "ATTRIBUTE_BLOCK_EDITABLE",
+                                  "safeName": "ATTRIBUTE_BLOCK_EDITABLE"
+                                },
+                                "pascalCase": {
+                                  "unsafeName": "AttributeBlockEditable",
+                                  "safeName": "AttributeBlockEditable"
+                                }
+                              },
+                              "fernFilepath": {
+                                "allParts": [],
+                                "packagePath": []
+                              },
+                              "typeId": "type_:AttributeBlockEditable",
+                              "type": "named"
                             },
-                            "snakeCase": {
-                              "unsafeName": "attribute_block_editable",
-                              "safeName": "attribute_block_editable"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "ATTRIBUTE_BLOCK_EDITABLE",
-                              "safeName": "ATTRIBUTE_BLOCK_EDITABLE"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "AttributeBlockEditable",
-                              "safeName": "AttributeBlockEditable"
-                            }
+                            "type": "optional"
                           },
-                          "fernFilepath": {
-                            "allParts": [],
-                            "packagePath": []
-                          },
-                          "typeId": "type_:AttributeBlockEditable",
-                          "type": "named"
+                          "type": "container"
                         },
                         "type": "map"
                       },
@@ -26643,6 +26774,11 @@
           },
           "displayName": "Get Resource",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -26995,6 +27131,11 @@
           },
           "displayName": "Replace Resource",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "PUT",
           "path": {
@@ -27438,31 +27579,37 @@
                       "type": "primitive"
                     },
                     "valueType": {
-                      "name": {
-                        "originalName": "ActionBlockEditable",
-                        "camelCase": {
-                          "unsafeName": "actionBlockEditable",
-                          "safeName": "actionBlockEditable"
+                      "container": {
+                        "optional": {
+                          "name": {
+                            "originalName": "ActionBlockEditable",
+                            "camelCase": {
+                              "unsafeName": "actionBlockEditable",
+                              "safeName": "actionBlockEditable"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "action_block_editable",
+                              "safeName": "action_block_editable"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "ACTION_BLOCK_EDITABLE",
+                              "safeName": "ACTION_BLOCK_EDITABLE"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "ActionBlockEditable",
+                              "safeName": "ActionBlockEditable"
+                            }
+                          },
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "typeId": "type_:ActionBlockEditable",
+                          "type": "named"
                         },
-                        "snakeCase": {
-                          "unsafeName": "action_block_editable",
-                          "safeName": "action_block_editable"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "ACTION_BLOCK_EDITABLE",
-                          "safeName": "ACTION_BLOCK_EDITABLE"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "ActionBlockEditable",
-                          "safeName": "ActionBlockEditable"
-                        }
+                        "type": "optional"
                       },
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "typeId": "type_:ActionBlockEditable",
-                      "type": "named"
+                      "type": "container"
                     },
                     "type": "map"
                   },
@@ -27511,31 +27658,37 @@
                           "type": "primitive"
                         },
                         "valueType": {
-                          "name": {
-                            "originalName": "AttributeBlockEditable",
-                            "camelCase": {
-                              "unsafeName": "attributeBlockEditable",
-                              "safeName": "attributeBlockEditable"
+                          "container": {
+                            "optional": {
+                              "name": {
+                                "originalName": "AttributeBlockEditable",
+                                "camelCase": {
+                                  "unsafeName": "attributeBlockEditable",
+                                  "safeName": "attributeBlockEditable"
+                                },
+                                "snakeCase": {
+                                  "unsafeName": "attribute_block_editable",
+                                  "safeName": "attribute_block_editable"
+                                },
+                                "screamingSnakeCase": {
+                                  "unsafeName": "ATTRIBUTE_BLOCK_EDITABLE",
+                                  "safeName": "ATTRIBUTE_BLOCK_EDITABLE"
+                                },
+                                "pascalCase": {
+                                  "unsafeName": "AttributeBlockEditable",
+                                  "safeName": "AttributeBlockEditable"
+                                }
+                              },
+                              "fernFilepath": {
+                                "allParts": [],
+                                "packagePath": []
+                              },
+                              "typeId": "type_:AttributeBlockEditable",
+                              "type": "named"
                             },
-                            "snakeCase": {
-                              "unsafeName": "attribute_block_editable",
-                              "safeName": "attribute_block_editable"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "ATTRIBUTE_BLOCK_EDITABLE",
-                              "safeName": "ATTRIBUTE_BLOCK_EDITABLE"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "AttributeBlockEditable",
-                              "safeName": "AttributeBlockEditable"
-                            }
+                            "type": "optional"
                           },
-                          "fernFilepath": {
-                            "allParts": [],
-                            "packagePath": []
-                          },
-                          "typeId": "type_:AttributeBlockEditable",
-                          "type": "named"
+                          "type": "container"
                         },
                         "type": "map"
                       },
@@ -27713,6 +27866,11 @@
           },
           "displayName": "Delete Resource",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -28029,6 +28187,11 @@
           },
           "displayName": "Update Resource",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "PATCH",
           "path": {
@@ -28480,31 +28643,37 @@
                           "type": "primitive"
                         },
                         "valueType": {
-                          "name": {
-                            "originalName": "ActionBlockEditable",
-                            "camelCase": {
-                              "unsafeName": "actionBlockEditable",
-                              "safeName": "actionBlockEditable"
+                          "container": {
+                            "optional": {
+                              "name": {
+                                "originalName": "ActionBlockEditable",
+                                "camelCase": {
+                                  "unsafeName": "actionBlockEditable",
+                                  "safeName": "actionBlockEditable"
+                                },
+                                "snakeCase": {
+                                  "unsafeName": "action_block_editable",
+                                  "safeName": "action_block_editable"
+                                },
+                                "screamingSnakeCase": {
+                                  "unsafeName": "ACTION_BLOCK_EDITABLE",
+                                  "safeName": "ACTION_BLOCK_EDITABLE"
+                                },
+                                "pascalCase": {
+                                  "unsafeName": "ActionBlockEditable",
+                                  "safeName": "ActionBlockEditable"
+                                }
+                              },
+                              "fernFilepath": {
+                                "allParts": [],
+                                "packagePath": []
+                              },
+                              "typeId": "type_:ActionBlockEditable",
+                              "type": "named"
                             },
-                            "snakeCase": {
-                              "unsafeName": "action_block_editable",
-                              "safeName": "action_block_editable"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "ACTION_BLOCK_EDITABLE",
-                              "safeName": "ACTION_BLOCK_EDITABLE"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "ActionBlockEditable",
-                              "safeName": "ActionBlockEditable"
-                            }
+                            "type": "optional"
                           },
-                          "fernFilepath": {
-                            "allParts": [],
-                            "packagePath": []
-                          },
-                          "typeId": "type_:ActionBlockEditable",
-                          "type": "named"
+                          "type": "container"
                         },
                         "type": "map"
                       },
@@ -28557,31 +28726,37 @@
                           "type": "primitive"
                         },
                         "valueType": {
-                          "name": {
-                            "originalName": "AttributeBlockEditable",
-                            "camelCase": {
-                              "unsafeName": "attributeBlockEditable",
-                              "safeName": "attributeBlockEditable"
+                          "container": {
+                            "optional": {
+                              "name": {
+                                "originalName": "AttributeBlockEditable",
+                                "camelCase": {
+                                  "unsafeName": "attributeBlockEditable",
+                                  "safeName": "attributeBlockEditable"
+                                },
+                                "snakeCase": {
+                                  "unsafeName": "attribute_block_editable",
+                                  "safeName": "attribute_block_editable"
+                                },
+                                "screamingSnakeCase": {
+                                  "unsafeName": "ATTRIBUTE_BLOCK_EDITABLE",
+                                  "safeName": "ATTRIBUTE_BLOCK_EDITABLE"
+                                },
+                                "pascalCase": {
+                                  "unsafeName": "AttributeBlockEditable",
+                                  "safeName": "AttributeBlockEditable"
+                                }
+                              },
+                              "fernFilepath": {
+                                "allParts": [],
+                                "packagePath": []
+                              },
+                              "typeId": "type_:AttributeBlockEditable",
+                              "type": "named"
                             },
-                            "snakeCase": {
-                              "unsafeName": "attribute_block_editable",
-                              "safeName": "attribute_block_editable"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "ATTRIBUTE_BLOCK_EDITABLE",
-                              "safeName": "ATTRIBUTE_BLOCK_EDITABLE"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "AttributeBlockEditable",
-                              "safeName": "AttributeBlockEditable"
-                            }
+                            "type": "optional"
                           },
-                          "fernFilepath": {
-                            "allParts": [],
-                            "packagePath": []
-                          },
-                          "typeId": "type_:AttributeBlockEditable",
-                          "type": "named"
+                          "type": "container"
                         },
                         "type": "map"
                       },
@@ -28821,6 +28996,11 @@
           },
           "displayName": "List Resource Actions",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -29343,6 +29523,11 @@
           },
           "displayName": "Create Resource Action",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -29963,6 +30148,11 @@
           },
           "displayName": "Get Resource Action",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -30395,6 +30585,11 @@
           },
           "displayName": "Delete Resource Action",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -30791,6 +30986,11 @@
           },
           "displayName": "Update Resource Action",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "PATCH",
           "path": {
@@ -31518,6 +31718,11 @@
           },
           "displayName": "List Resource Action Groups",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -32040,6 +32245,11 @@
           },
           "displayName": "Create Resource Action Group",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -32709,6 +32919,11 @@
           },
           "displayName": "Get Resource Action Group",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -33141,6 +33356,11 @@
           },
           "displayName": "Delete Resource Action Group",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -33537,6 +33757,11 @@
           },
           "displayName": "Update Resource Action Group",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "PATCH",
           "path": {
@@ -34313,6 +34538,11 @@
           },
           "displayName": "List Resource Roles",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -34835,6 +35065,11 @@
           },
           "displayName": "Create Resource Role",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -35555,6 +35790,11 @@
           },
           "displayName": "Get Resource Role",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -35987,6 +36227,11 @@
           },
           "displayName": "Delete Resource Role",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -36383,6 +36628,11 @@
           },
           "displayName": "Update Resource Role",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "PATCH",
           "path": {
@@ -37148,6 +37398,11 @@
           },
           "displayName": "Assign Permissions to Role",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -37665,6 +37920,11 @@
           },
           "displayName": "Remove Permissions from Role",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -38181,6 +38441,11 @@
           },
           "displayName": "Get Resource Role Ancestors",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -38612,6 +38877,11 @@
           },
           "displayName": "Get Resource Role Descendants",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -39106,6 +39376,11 @@
           },
           "displayName": "List Resource Attributes",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -39628,6 +39903,11 @@
           },
           "displayName": "Create Resource Attribute",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -40065,6 +40345,11 @@
           },
           "displayName": "Get Resource Attribute",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -40497,6 +40782,11 @@
           },
           "displayName": "Delete Resource Attribute",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -41057,6 +41347,11 @@
           },
           "displayName": "Update Resource Attribute",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "PATCH",
           "path": {
@@ -41636,6 +41931,11 @@
           },
           "displayName": "List User Attributes",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -42123,6 +42423,11 @@
           },
           "displayName": "Create User Attribute",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -42536,6 +42841,11 @@
           },
           "displayName": "Get User Attribute",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -42998,6 +43308,11 @@
           },
           "displayName": "Delete User Attribute",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -43523,6 +43838,11 @@
           },
           "displayName": "Update User Attribute",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "PATCH",
           "path": {
@@ -44078,6 +44398,11 @@
           },
           "displayName": "List Roles",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -44644,6 +44969,11 @@
           },
           "displayName": "Create Role",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -45284,6 +45614,11 @@
           },
           "displayName": "Get Role",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -45636,6 +45971,11 @@
           },
           "displayName": "Delete Role",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -45952,6 +46292,11 @@
           },
           "displayName": "Update Role",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "PATCH",
           "path": {
@@ -46637,6 +46982,11 @@
           },
           "displayName": "Assign Permissions To Role",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -47074,6 +47424,11 @@
           },
           "displayName": "Remove Permissions From Role",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -47510,6 +47865,11 @@
           },
           "displayName": "Get Role Ancestors",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -47861,6 +48221,11 @@
           },
           "displayName": "Get Role Descendants",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -48275,6 +48640,11 @@
           },
           "displayName": "List Condition Sets",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -48904,6 +49274,11 @@
           },
           "displayName": "Create Condition Set",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -49644,6 +50019,11 @@
           },
           "displayName": "Get Condition Set",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -49996,6 +50376,11 @@
           },
           "displayName": "Delete Condition Set",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -50312,6 +50697,11 @@
           },
           "displayName": "Update Condition Set",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "PATCH",
           "path": {
@@ -50943,6 +51333,11 @@
           },
           "displayName": "Get Condition Set Ancestors",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -51465,6 +51860,11 @@
           },
           "displayName": "Get Condition Set Descendants",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -52049,6 +52449,11 @@
           },
           "displayName": "List Users",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -52575,6 +52980,11 @@
           },
           "displayName": "Create User",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -52932,6 +53342,11 @@
           },
           "displayName": "Get User",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -53283,6 +53698,11 @@
           },
           "displayName": "Replace User",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "PUT",
           "path": {
@@ -53720,6 +54140,11 @@
           },
           "displayName": "Delete User",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -54036,6 +54461,11 @@
           },
           "displayName": "Update User",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "PATCH",
           "path": {
@@ -54668,6 +55098,11 @@
           },
           "displayName": "Assign Role To User",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -55188,6 +55623,11 @@
           },
           "displayName": "Unassign Role From User",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -55733,6 +56173,11 @@
           },
           "displayName": "List Tenant Users",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -56339,6 +56784,11 @@
           },
           "displayName": "List Tenants",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -56905,6 +57355,11 @@
           },
           "displayName": "Create Tenant",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -57262,6 +57717,11 @@
           },
           "displayName": "Get Tenant",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -57614,6 +58074,11 @@
           },
           "displayName": "Delete Tenant",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -57930,6 +58395,11 @@
           },
           "displayName": "Update Tenant",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "PATCH",
           "path": {
@@ -58515,6 +58985,11 @@
           },
           "displayName": "Delete Tenant User",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -58973,6 +59448,11 @@
           },
           "displayName": "List Role Assignments",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -59550,6 +60030,11 @@
           },
           "displayName": "Assign Role",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -59907,6 +60392,11 @@
           },
           "displayName": "Unassign Role",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -60227,6 +60717,11 @@
           },
           "displayName": "Bulk Assign Role",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -60595,6 +61090,11 @@
           },
           "displayName": "Bulk Unassign Role",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -61026,6 +61526,11 @@
           },
           "displayName": "List Set Permissions",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -61603,6 +62108,11 @@
           },
           "displayName": "Assign Set Permissions",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -62177,6 +62687,11 @@
           },
           "displayName": "Unassign Set Permissions",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -62771,6 +63286,11 @@
           },
           "displayName": "List Resource Instances",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -63213,6 +63733,11 @@
           },
           "displayName": "Create Resource Instance",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -63753,6 +64278,11 @@
           },
           "displayName": "Get Resource Instance",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -64105,6 +64635,11 @@
           },
           "displayName": "Delete Resource Instance",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -64421,6 +64956,11 @@
           },
           "displayName": "Update Resource Instance",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "PATCH",
           "path": {
@@ -64979,6 +65519,11 @@
           },
           "displayName": "Bulk Create Users",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -65403,6 +65948,11 @@
           },
           "displayName": "Bulk Replace Users",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "PUT",
           "path": {
@@ -65827,6 +66377,11 @@
           },
           "displayName": "Bulk Delete Users",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -66233,6 +66788,11 @@
           },
           "displayName": "Bulk Create Tenants",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -66657,6 +67217,11 @@
           },
           "displayName": "Bulk Delete Tenants",
           "auth": true,
+          "security": [
+            {
+              "HTTPBearer": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -76820,8 +77385,11 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "value": "type_:ActionBlockRead",
-                  "type": "named"
+                  "value": {
+                    "value": "type_:ActionBlockRead",
+                    "type": "named"
+                  },
+                  "type": "optional"
                 },
                 "type": "map"
               },
@@ -76858,8 +77426,11 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "value": "type_:AttributeBlockRead",
-                  "type": "named"
+                  "value": {
+                    "value": "type_:AttributeBlockRead",
+                    "type": "named"
+                  },
+                  "type": "optional"
                 },
                 "type": "map"
               },
@@ -76897,10 +77468,13 @@
                 },
                 "value": {
                   "value": {
-                    "value": "STRING",
-                    "type": "primitive"
+                    "value": {
+                      "value": "STRING",
+                      "type": "primitive"
+                    },
+                    "type": "list"
                   },
-                  "type": "list"
+                  "type": "optional"
                 },
                 "type": "map"
               },
@@ -80467,6 +81041,7 @@
     "endpoints": {
       "endpoint_organizations.list_organizations": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -80700,6 +81275,7 @@
       },
       "endpoint_organizations.create_organization": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -80968,6 +81544,7 @@
       },
       "endpoint_organizations.get_organization": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -81097,6 +81674,7 @@
       },
       "endpoint_organizations.delete_organization": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -81226,6 +81804,7 @@
       },
       "endpoint_organizations.update_organization": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -81498,6 +82077,7 @@
       },
       "endpoint_organizations.get_active_organization": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -81598,6 +82178,7 @@
       },
       "endpoint_projects.list_projects": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -81831,6 +82412,7 @@
       },
       "endpoint_projects.create_project": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -82192,6 +82774,7 @@
       },
       "endpoint_projects.get_project": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -82321,6 +82904,7 @@
       },
       "endpoint_projects.delete_project": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -82450,6 +83034,7 @@
       },
       "endpoint_projects.update_project": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -82784,6 +83369,7 @@
       },
       "endpoint_environments.stats_environments": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -82941,6 +83527,7 @@
       },
       "endpoint_environments.list_environments": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -83203,6 +83790,7 @@
       },
       "endpoint_environments.create_environment": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -83339,6 +83927,7 @@
       },
       "endpoint_environments.get_environment": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -83496,6 +84085,7 @@
       },
       "endpoint_environments.delete_environment": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -83653,6 +84243,7 @@
       },
       "endpoint_environments.update_environment": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -84046,6 +84637,7 @@
       },
       "endpoint_environments.copy_environment": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -84368,6 +84960,7 @@
       },
       "endpoint_resources.list_resources": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -84751,6 +85344,7 @@
       },
       "endpoint_resources.create_resource": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -85114,8 +85708,11 @@
                     "type": "primitive"
                   },
                   "value": {
-                    "value": "type_:ActionBlockEditable",
-                    "type": "named"
+                    "value": {
+                      "value": "type_:ActionBlockEditable",
+                      "type": "named"
+                    },
+                    "type": "optional"
                   },
                   "type": "map"
                 }
@@ -85150,8 +85747,11 @@
                       "type": "primitive"
                     },
                     "value": {
-                      "value": "type_:AttributeBlockEditable",
-                      "type": "named"
+                      "value": {
+                        "value": "type_:AttributeBlockEditable",
+                        "type": "named"
+                      },
+                      "type": "optional"
                     },
                     "type": "map"
                   },
@@ -85174,6 +85774,7 @@
       },
       "endpoint_resources.get_resource": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -85359,6 +85960,7 @@
       },
       "endpoint_resources.replace_resource": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -85722,8 +86324,11 @@
                     "type": "primitive"
                   },
                   "value": {
-                    "value": "type_:ActionBlockEditable",
-                    "type": "named"
+                    "value": {
+                      "value": "type_:ActionBlockEditable",
+                      "type": "named"
+                    },
+                    "type": "optional"
                   },
                   "type": "map"
                 }
@@ -85758,8 +86363,11 @@
                       "type": "primitive"
                     },
                     "value": {
-                      "value": "type_:AttributeBlockEditable",
-                      "type": "named"
+                      "value": {
+                        "value": "type_:AttributeBlockEditable",
+                        "type": "named"
+                      },
+                      "type": "optional"
                     },
                     "type": "map"
                   },
@@ -85782,6 +86390,7 @@
       },
       "endpoint_resources.delete_resource": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -85967,6 +86576,7 @@
       },
       "endpoint_resources.update_resource": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -86334,8 +86944,11 @@
                       "type": "primitive"
                     },
                     "value": {
-                      "value": "type_:ActionBlockEditable",
-                      "type": "named"
+                      "value": {
+                        "value": "type_:ActionBlockEditable",
+                        "type": "named"
+                      },
+                      "type": "optional"
                     },
                     "type": "map"
                   },
@@ -86372,8 +86985,11 @@
                       "type": "primitive"
                     },
                     "value": {
-                      "value": "type_:AttributeBlockEditable",
-                      "type": "named"
+                      "value": {
+                        "value": "type_:AttributeBlockEditable",
+                        "type": "named"
+                      },
+                      "type": "optional"
                     },
                     "type": "map"
                   },
@@ -86396,6 +87012,7 @@
       },
       "endpoint_resourceActions.list_resource_actions": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -86714,6 +87331,7 @@
       },
       "endpoint_resourceActions.create_resource_action": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -87098,6 +87716,7 @@
       },
       "endpoint_resourceActions.get_resource_action": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -87311,6 +87930,7 @@
       },
       "endpoint_resourceActions.delete_resource_action": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -87524,6 +88144,7 @@
       },
       "endpoint_resourceActions.update_resource_action": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -87911,6 +88532,7 @@
       },
       "endpoint_resourceActionGroups.list_resource_action_groups": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -88229,6 +88851,7 @@
       },
       "endpoint_resourceActionGroups.create_resource_action_group": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -88647,6 +89270,7 @@
       },
       "endpoint_resourceActionGroups.get_resource_action_group": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -88860,6 +89484,7 @@
       },
       "endpoint_resourceActionGroups.delete_resource_action_group": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -89073,6 +89698,7 @@
       },
       "endpoint_resourceActionGroups.update_resource_action_group": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -89494,6 +90120,7 @@
       },
       "endpoint_resourceRoles.list_resource_roles": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -89812,6 +90439,7 @@
       },
       "endpoint_resourceRoles.create_resource_role": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -90264,6 +90892,7 @@
       },
       "endpoint_resourceRoles.get_resource_role": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -90477,6 +91106,7 @@
       },
       "endpoint_resourceRoles.delete_resource_role": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -90690,6 +91320,7 @@
       },
       "endpoint_resourceRoles.update_resource_role": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -91145,6 +91776,7 @@
       },
       "endpoint_resourceRoles.assign_permissions_to_resource_role": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -91365,6 +91997,7 @@
       },
       "endpoint_resourceRoles.remove_permissions_from_resource_role": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -91585,6 +92218,7 @@
       },
       "endpoint_resourceRoles.get_resource_role_ancestors": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -91798,6 +92432,7 @@
       },
       "endpoint_resourceRoles.get_resource_role_descendants": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -92011,6 +92646,7 @@
       },
       "endpoint_resourceAttributes.list_resource_attributes": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -92329,6 +92965,7 @@
       },
       "endpoint_resourceAttributes.create_resource_attribute": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -92521,6 +93158,7 @@
       },
       "endpoint_resourceAttributes.get_resource_attribute": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -92734,6 +93372,7 @@
       },
       "endpoint_resourceAttributes.delete_resource_attribute": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -93080,6 +93719,7 @@
       },
       "endpoint_resourceAttributes.update_resource_attribute": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -93300,6 +93940,7 @@
       },
       "endpoint_userAttributes.list_user_attributes": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -93621,6 +94262,7 @@
       },
       "endpoint_userAttributes.create_user_attribute": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -93909,6 +94551,7 @@
       },
       "endpoint_userAttributes.get_user_attribute": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -94196,6 +94839,7 @@
       },
       "endpoint_userAttributes.delete_user_attribute": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -94545,6 +95189,7 @@
       },
       "endpoint_userAttributes.update_user_attribute": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -94861,6 +95506,7 @@
       },
       "endpoint_roles.list_roles": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -95213,6 +95859,7 @@
       },
       "endpoint_roles.create_role": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -95637,6 +96284,7 @@
       },
       "endpoint_roles.get_role": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -95822,6 +96470,7 @@
       },
       "endpoint_roles.delete_role": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -96007,6 +96656,7 @@
       },
       "endpoint_roles.update_role": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -96434,6 +97084,7 @@
       },
       "endpoint_roles.assign_permissions_to_role": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -96626,6 +97277,7 @@
       },
       "endpoint_roles.remove_permissions_from_role": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -96818,6 +97470,7 @@
       },
       "endpoint_roles.get_role_ancestors": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -97003,6 +97656,7 @@
       },
       "endpoint_roles.get_role_descendants": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -97188,6 +97842,7 @@
       },
       "endpoint_conditionSets.list_condition_sets": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -97571,6 +98226,7 @@
       },
       "endpoint_conditionSets.create_condition_set": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -98051,6 +98707,7 @@
       },
       "endpoint_conditionSets.get_condition_set": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -98236,6 +98893,7 @@
       },
       "endpoint_conditionSets.delete_condition_set": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -98421,6 +99079,7 @@
       },
       "endpoint_conditionSets.update_condition_set": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -98811,6 +99470,7 @@
       },
       "endpoint_conditionSets.get_condition_set_ancestors": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -99129,6 +99789,7 @@
       },
       "endpoint_conditionSets.get_condition_set_descendants": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -99447,6 +100108,7 @@
       },
       "endpoint_users.list_users": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -99799,6 +100461,7 @@
       },
       "endpoint_users.create_user": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -99963,6 +100626,7 @@
       },
       "endpoint_users.get_user": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -100148,6 +100812,7 @@
       },
       "endpoint_users.replace_user": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -100340,6 +101005,7 @@
       },
       "endpoint_users.delete_user": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -100525,6 +101191,7 @@
       },
       "endpoint_users.update_user": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -100915,6 +101582,7 @@
       },
       "endpoint_users.assign_role_to_user": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -101231,6 +101899,7 @@
       },
       "endpoint_users.unassign_role_from_user": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -101547,6 +102216,7 @@
       },
       "endpoint_tenants.list_tenant_users": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -101927,6 +102597,7 @@
       },
       "endpoint_tenants.list_tenants": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -102279,6 +102950,7 @@
       },
       "endpoint_tenants.create_tenant": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -102443,6 +103115,7 @@
       },
       "endpoint_tenants.get_tenant": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -102628,6 +103301,7 @@
       },
       "endpoint_tenants.delete_tenant": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -102813,6 +103487,7 @@
       },
       "endpoint_tenants.update_tenant": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -103172,6 +103847,7 @@
       },
       "endpoint_tenants.delete_tenant_user": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -103385,6 +104061,7 @@
       },
       "endpoint_roleAssignments.list_role_assignments": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -103768,6 +104445,7 @@
       },
       "endpoint_roleAssignments.assign_role": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -103932,6 +104610,7 @@
       },
       "endpoint_roleAssignments.unassign_role": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -104096,6 +104775,7 @@
       },
       "endpoint_roleAssignments.bulk_assign_role": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -104263,6 +104943,7 @@
       },
       "endpoint_roleAssignments.bulk_unassign_role": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -104430,6 +105111,7 @@
       },
       "endpoint_conditionSetRules.list_set_permissions": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -104813,6 +105495,7 @@
       },
       "endpoint_conditionSetRules.assign_set_permissions": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -105191,6 +105874,7 @@
       },
       "endpoint_conditionSetRules.unassign_set_permissions": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -105569,6 +106253,7 @@
       },
       "endpoint_resourceInstances.list_resource_instances": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -105859,6 +106544,7 @@
       },
       "endpoint_resourceInstances.create_resource_instance": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -106215,6 +106901,7 @@
       },
       "endpoint_resourceInstances.get_resource_instance": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -106400,6 +107087,7 @@
       },
       "endpoint_resourceInstances.delete_resource_instance": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -106585,6 +107273,7 @@
       },
       "endpoint_resourceInstances.update_resource_instance": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -106882,6 +107571,7 @@
       },
       "endpoint_bulkOperations.bulk_create_users": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -107145,6 +107835,7 @@
       },
       "endpoint_bulkOperations.bulk_replace_users": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -107408,6 +108099,7 @@
       },
       "endpoint_bulkOperations.bulk_delete_users": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -107671,6 +108363,7 @@
       },
       "endpoint_bulkOperations.bulk_create_tenants": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -107934,6 +108627,7 @@
       },
       "endpoint_bulkOperations.bulk_delete_tenants": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {

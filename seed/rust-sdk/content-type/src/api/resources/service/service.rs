@@ -8,13 +8,13 @@ pub struct ServiceClient {
 impl ServiceClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config)?,
+            http_client: HttpClient::new(config.clone())?,
         })
     }
 
     pub async fn patch(
         &self,
-        request: &serde_json::Value,
+        request: &PatchProxyRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -31,7 +31,7 @@ impl ServiceClient {
     pub async fn patch_complex(
         &self,
         id: &String,
-        request: &serde_json::Value,
+        request: &PatchComplexRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -48,7 +48,7 @@ impl ServiceClient {
     pub async fn named_patch_with_mixed(
         &self,
         id: &String,
-        request: &serde_json::Value,
+        request: &NamedMixedPatchRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -64,7 +64,7 @@ impl ServiceClient {
 
     pub async fn optional_merge_patch_test(
         &self,
-        request: &serde_json::Value,
+        request: &OptionalMergePatchRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
@@ -81,7 +81,7 @@ impl ServiceClient {
     pub async fn regular_patch(
         &self,
         id: &String,
-        request: &serde_json::Value,
+        request: &RegularPatchRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client

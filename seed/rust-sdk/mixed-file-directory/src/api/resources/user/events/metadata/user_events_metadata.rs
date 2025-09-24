@@ -1,4 +1,4 @@
-use crate::api::types::*;
+use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::Method;
 
@@ -9,13 +9,13 @@ pub struct UserEventsMetadataClient {
 impl UserEventsMetadataClient {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
         Ok(Self {
-            http_client: HttpClient::new(config)?,
+            http_client: HttpClient::new(config.clone())?,
         })
     }
 
     pub async fn get_metadata(
         &self,
-        id: Option<Id>,
+        request: &GetMetadataQueryRequest,
         options: Option<RequestOptions>,
     ) -> Result<Metadata, ApiError> {
         self.http_client
@@ -23,7 +23,9 @@ impl UserEventsMetadataClient {
                 Method::GET,
                 "/users/events/metadata/",
                 None,
-                QueryBuilder::new().serialize("id", id).build(),
+                QueryBuilder::new()
+                    .serialize("id", request.id.clone())
+                    .build(),
                 options,
             )
             .await

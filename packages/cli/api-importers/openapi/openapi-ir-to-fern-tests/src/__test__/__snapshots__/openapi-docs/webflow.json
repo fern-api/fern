@@ -8823,7 +8823,13 @@ errors:
           "base-path": "",
           "endpoints": {
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "users:read",
+                  ],
+                },
+              ],
               "display-name": "List Access Groups",
               "docs": "Get a list of access groups for a site <br><br> Required scope | `users:read`",
               "errors": [
@@ -9059,7 +9065,9 @@ service:
     list:
       path: /sites/{site_id}/accessgroups
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - users:read
       docs: >-
         Get a list of access groups for a site <br><br> Required scope |
         `users:read`
@@ -9137,7 +9145,13 @@ service:
           "display-name": "Assets",
           "endpoints": {
             "create": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "assets:write",
+                  ],
+                },
+              ],
               "display-name": "Create Asset Metadata",
               "docs": "Create a new asset entry.  </br></br> This endpoint generates a response with the following information: `uploadUrl` and `uploadDetails`.  You can use these two properties to [upload the file to Amazon s3 by making a POST](https://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectPOST.html) request to the `uploadUrl` with the `uploadDetails` object as your header information in the request. </br></br>  Required scope | `assets:write`
 ",
@@ -9227,7 +9241,13 @@ service:
               },
             },
             "create-folder": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "assets:write",
+                  ],
+                },
+              ],
               "display-name": "Create Asset Folder",
               "docs": "Create an Asset Folder within a given site <br><br> Required scope | `assets:write`",
               "errors": [
@@ -9299,7 +9319,13 @@ service:
               },
             },
             "delete": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "assets:write",
+                  ],
+                },
+              ],
               "display-name": "Delete Asset",
               "docs": "Delete an Asset",
               "errors": [
@@ -9330,7 +9356,13 @@ service:
               },
             },
             "get": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "assets:read",
+                  ],
+                },
+              ],
               "display-name": "Get Asset",
               "docs": "Get an Asset </br></br> Required scope | `assets:read`",
               "errors": [
@@ -9392,7 +9424,13 @@ service:
               },
             },
             "get-folder": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "assets:read",
+                  ],
+                },
+              ],
               "display-name": "Get Asset Folder",
               "docs": "Get details about a specific Asset Folder <br><br> Required scope | `assets:read`",
               "errors": [
@@ -9442,7 +9480,13 @@ service:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "assets:read",
+                  ],
+                },
+              ],
               "display-name": "List Assets",
               "docs": "List assets for a given site </br></br> Required scope | `assets:read`",
               "errors": [
@@ -9506,7 +9550,13 @@ service:
               },
             },
             "list-folders": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "assets:read",
+                  ],
+                },
+              ],
               "display-name": "List Asset Folders",
               "docs": "List Asset Folders within a given site <br><br> Required scope | `assets:read`",
               "errors": [
@@ -9564,7 +9614,13 @@ service:
               },
             },
             "update": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "assets:write",
+                  ],
+                },
+              ],
               "display-name": "Update Asset",
               "docs": "Update an Asset </br></br> Required scope | `assets:write`",
               "errors": [
@@ -10579,7 +10635,9 @@ service:
     list:
       path: /sites/{site_id}/assets
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - assets:read
       docs: List assets for a given site </br></br> Required scope | `assets:read`
       source:
         openapi: ../openapi.yml
@@ -10628,7 +10686,9 @@ service:
     create:
       path: /sites/{site_id}/assets
       method: POST
-      auth: true
+      auth:
+        - OAuth2:
+            - assets:write
       docs: >
         Create a new asset entry.  </br></br> This endpoint generates a response
         with the following information: `uploadUrl` and `uploadDetails`.  You
@@ -10704,7 +10764,9 @@ service:
     get:
       path: /assets/{asset_id}
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - assets:read
       docs: Get an Asset </br></br> Required scope | `assets:read`
       source:
         openapi: ../openapi.yml
@@ -10750,7 +10812,9 @@ service:
     delete:
       path: /assets/{asset_id}
       method: DELETE
-      auth: true
+      auth:
+        - OAuth2:
+            - assets:write
       docs: Delete an Asset
       source:
         openapi: ../openapi.yml
@@ -10771,7 +10835,9 @@ service:
     update:
       path: /assets/{asset_id}
       method: PATCH
-      auth: true
+      auth:
+        - OAuth2:
+            - assets:write
       docs: Update an Asset </br></br> Required scope | `assets:write`
       source:
         openapi: ../openapi.yml
@@ -10827,7 +10893,9 @@ service:
     list-folders:
       path: /sites/{site_id}/asset_folders
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - assets:read
       docs: >-
         List Asset Folders within a given site <br><br> Required scope |
         `assets:read`
@@ -10869,7 +10937,9 @@ service:
     create-folder:
       path: /sites/{site_id}/asset_folders
       method: POST
-      auth: true
+      auth:
+        - OAuth2:
+            - assets:write
       docs: >-
         Create an Asset Folder within a given site <br><br> Required scope |
         `assets:write`
@@ -10922,7 +10992,9 @@ service:
     get-folder:
       path: /asset_folders/{asset_folder_id}
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - assets:read
       docs: >-
         Get details about a specific Asset Folder <br><br> Required scope |
         `assets:read`
@@ -10974,7 +11046,13 @@ service:
           "display-name": "Collections",
           "endpoints": {
             "create": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "cms:write",
+                  ],
+                },
+              ],
               "display-name": "Create Collection",
               "docs": "Create a Collection for a site. </br></br> Required scope | `cms:write`",
               "errors": [
@@ -11058,7 +11136,13 @@ service:
               },
             },
             "delete": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "cms:write",
+                  ],
+                },
+              ],
               "display-name": "Delete Collection Field",
               "docs": "Delete a custom field in a collection. This endpoint does not currently support bulk deletion. </br></br> Required scope | `cms:write`",
               "errors": [
@@ -11094,7 +11178,13 @@ service:
               },
             },
             "delete-collection": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "cms:write",
+                  ],
+                },
+              ],
               "display-name": "Delete Collection",
               "docs": "Delete a collection using its ID. </br></br> Required scope | `cms:write`",
               "errors": [
@@ -11125,7 +11215,13 @@ service:
               },
             },
             "get": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "cms:read",
+                  ],
+                },
+              ],
               "display-name": "Get Collection Details",
               "docs": "Get the full details of a collection from its ID. </br></br> Required scope | `cms:read`",
               "errors": [
@@ -11181,7 +11277,13 @@ service:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "cms:read",
+                  ],
+                },
+              ],
               "display-name": "List Collections",
               "docs": "List of all Collections within a Site. </br></br> Required scope | `cms:read`",
               "errors": [
@@ -11717,7 +11819,9 @@ service:
     list:
       path: /sites/{site_id}/collections
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - cms:read
       docs: >-
         List of all Collections within a Site. </br></br> Required scope |
         `cms:read`
@@ -11765,7 +11869,9 @@ service:
     create:
       path: /sites/{site_id}/collections
       method: POST
-      auth: true
+      auth:
+        - OAuth2:
+            - cms:write
       docs: Create a Collection for a site. </br></br> Required scope | `cms:write`
       source:
         openapi: ../openapi.yml
@@ -11823,7 +11929,9 @@ service:
     get:
       path: /collections/{collection_id}
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - cms:read
       docs: >-
         Get the full details of a collection from its ID. </br></br> Required
         scope | `cms:read`
@@ -11865,7 +11973,9 @@ service:
     delete-collection:
       path: /collections/{collection_id}
       method: DELETE
-      auth: true
+      auth:
+        - OAuth2:
+            - cms:write
       docs: >-
         Delete a collection using its ID. </br></br> Required scope |
         `cms:write`
@@ -11888,7 +11998,9 @@ service:
     delete:
       path: /collections/{collection_id}/fields/{field_id}
       method: DELETE
-      auth: true
+      auth:
+        - OAuth2:
+            - cms:write
       docs: >-
         Delete a custom field in a collection. This endpoint does not currently
         support bulk deletion. </br></br> Required scope | `cms:write`
@@ -11928,7 +12040,13 @@ service:
           "base-path": "",
           "endpoints": {
             "create": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "cms:write",
+                  ],
+                },
+              ],
               "display-name": "Create Collection Field",
               "docs": "Create a custom field in a collection.  </br></br> Slugs must be all lowercase letters without spaces. If you pass a string with uppercase letters and/or spaces to the "Slug" property, Webflow will convert the slug to lowercase and replace spaces with "-." </br></br> Only some field types can be created through the API.  This endpoint does not currently support bulk creation.  </br></br>  Required scope | `cms:write`
 ",
@@ -12009,7 +12127,13 @@ service:
               },
             },
             "update": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "cms:write",
+                  ],
+                },
+              ],
               "display-name": "Update Collection Field",
               "docs": "Update a custom field in a collection.  </br></br> Required scope | `cms:write`",
               "errors": [
@@ -12367,7 +12491,9 @@ service:
     create:
       path: /collections/{collection_id}/fields
       method: POST
-      auth: true
+      auth:
+        - OAuth2:
+            - cms:write
       docs: >
         Create a custom field in a collection.  </br></br> Slugs must be all
         lowercase letters without spaces. If you pass a string with uppercase
@@ -12430,7 +12556,9 @@ service:
     update:
       path: /collections/{collection_id}/fields/{field_id}
       method: PATCH
-      auth: true
+      auth:
+        - OAuth2:
+            - cms:write
       docs: >-
         Update a custom field in a collection.  </br></br> Required scope |
         `cms:write`
@@ -12500,7 +12628,13 @@ service:
           "base-path": "",
           "endpoints": {
             "create-item": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "CMS:write",
+                  ],
+                },
+              ],
               "display-name": "Create Collection Item",
               "docs": "<style>.rm-Markdown.markdown-body a{color: #146EF5 !important;}</style> Create Item in a Collection.</br></br> To create items across multiple locales, <a href="https://developers.webflow.com/data/reference/create-item-for-multiple-locales"> please use the bulk item endpoint.</a> </br></br> Required scope | <code>CMS:write</code>",
               "errors": [
@@ -12592,7 +12726,13 @@ service:
               },
             },
             "create-item-for-multiple-locales": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "cms:write",
+                  ],
+                },
+              ],
               "display-name": "Create Item for Multiple Locales",
               "docs": "Create single Item in a Collection with multiple corresponding locales. </br></br> Required scope | `CMS:write`",
               "errors": [
@@ -12677,7 +12817,13 @@ service:
               },
             },
             "create-item-live": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "CMS:write",
+                  ],
+                },
+              ],
               "display-name": "Create Live Collection Item",
               "docs": "Create live Item in a Collection. This Item will be published to the live site. </br></br> To create items across multiple locales, <a href="https://developers.webflow.com/data/reference/create-item-for-multiple-locales"> please use this endpoint.</a> </br></br> Required scope | `CMS:write`",
               "errors": [
@@ -12769,7 +12915,13 @@ service:
               },
             },
             "delete-item": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "CMS:write",
+                  ],
+                },
+              ],
               "display-name": "Delete Collection Item",
               "docs": "Delete an Item from a Collection. This endpoint does not currently support bulk deletion. </br></br> Required scope | `CMS:write`",
               "errors": [
@@ -12817,7 +12969,13 @@ service:
               },
             },
             "delete-item-live": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "CMS:write",
+                  ],
+                },
+              ],
               "display-name": "Delete Collection Item (Live)",
               "docs": "Remove a live item from the site. Removing a published item will unpublish the item from the live site and set it to draft. This endpoint does not currently support bulk deletion.</br></br> Required scope | `CMS:write`",
               "errors": [
@@ -12865,7 +13023,13 @@ service:
               },
             },
             "get-item": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "CMS:read",
+                  ],
+                },
+              ],
               "display-name": "Get Collection Item",
               "docs": "Get details of a selected Collection Item. </br></br> Required scope | `CMS:read`",
               "errors": [
@@ -12936,7 +13100,13 @@ service:
               },
             },
             "get-item-live": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "CMS:read",
+                  ],
+                },
+              ],
               "display-name": "Get Live Collection Item",
               "docs": "Get details of a selected Collection live Item. </br></br> Required scope | `CMS:read`",
               "errors": [
@@ -13007,7 +13177,13 @@ service:
               },
             },
             "list-items": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "CMS:read",
+                  ],
+                },
+              ],
               "display-name": "List Collection Items",
               "docs": "List of all Items within a Collection. </br></br> Required scope | `CMS:read`",
               "errors": [
@@ -13126,7 +13302,13 @@ service:
               },
             },
             "list-items-live": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "CMS:read",
+                  ],
+                },
+              ],
               "display-name": "List Live Collection Items",
               "docs": "List of all live Items within a Collection. </br></br> Required scope | `CMS:read`",
               "errors": [
@@ -13245,7 +13427,13 @@ service:
               },
             },
             "publish-item": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "cms:write",
+                  ],
+                },
+              ],
               "display-name": "Publish Collection Item",
               "docs": "Publish an item or multiple items. </br></br> Required scope | `cms:write`",
               "errors": [
@@ -13309,7 +13497,13 @@ service:
               },
             },
             "update-item": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "CMS:write",
+                  ],
+                },
+              ],
               "display-name": "Update Collection Item",
               "docs": "Update a selected Item in a Collection. </br></br> Required scope | `CMS:write`",
               "errors": [
@@ -13406,7 +13600,13 @@ service:
               },
             },
             "update-item-live": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "CMS:write",
+                  ],
+                },
+              ],
               "display-name": "Update Live Collection Item",
               "docs": "Update a selected live Item in a Collection. The updates for this Item will be published to the live site. </br></br> Required scope | `CMS:write`",
               "errors": [
@@ -14917,7 +15117,9 @@ service:
     list-items:
       path: /collections/{collection_id}/items
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - CMS:read
       docs: >-
         List of all Items within a Collection. </br></br> Required scope |
         `CMS:read`
@@ -15013,7 +15215,9 @@ service:
     create-item:
       path: /collections/{collection_id}/items
       method: POST
-      auth: true
+      auth:
+        - OAuth2:
+            - CMS:write
       docs: >-
         <style>.rm-Markdown.markdown-body a{color: #146EF5 !important;}</style>
         Create Item in a Collection.</br></br> To create items across multiple
@@ -15086,7 +15290,9 @@ service:
     list-items-live:
       path: /collections/{collection_id}/items/live
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - CMS:read
       docs: >-
         List of all live Items within a Collection. </br></br> Required scope |
         `CMS:read`
@@ -15182,7 +15388,9 @@ service:
     create-item-live:
       path: /collections/{collection_id}/items/live
       method: POST
-      auth: true
+      auth:
+        - OAuth2:
+            - CMS:write
       docs: >-
         Create live Item in a Collection. This Item will be published to the
         live site. </br></br> To create items across multiple locales, <a
@@ -15253,7 +15461,9 @@ service:
     create-item-for-multiple-locales:
       path: /collections/{collection_id}/items/bulk
       method: POST
-      auth: true
+      auth:
+        - OAuth2:
+            - cms:write
       docs: >-
         Create single Item in a Collection with multiple corresponding locales.
         </br></br> Required scope | `CMS:write`
@@ -15318,7 +15528,9 @@ service:
     get-item:
       path: /collections/{collection_id}/items/{item_id}
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - CMS:read
       docs: >-
         Get details of a selected Collection Item. </br></br> Required scope |
         `CMS:read`
@@ -15376,7 +15588,9 @@ service:
     delete-item:
       path: /collections/{collection_id}/items/{item_id}
       method: DELETE
-      auth: true
+      auth:
+        - OAuth2:
+            - CMS:write
       docs: >-
         Delete an Item from a Collection. This endpoint does not currently
         support bulk deletion. </br></br> Required scope | `CMS:write`
@@ -15415,7 +15629,9 @@ service:
     update-item:
       path: /collections/{collection_id}/items/{item_id}
       method: PATCH
-      auth: true
+      auth:
+        - OAuth2:
+            - CMS:write
       docs: >-
         Update a selected Item in a Collection. </br></br> Required scope |
         `CMS:write`
@@ -15488,7 +15704,9 @@ service:
     get-item-live:
       path: /collections/{collection_id}/items/{item_id}/live
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - CMS:read
       docs: >-
         Get details of a selected Collection live Item. </br></br> Required
         scope | `CMS:read`
@@ -15546,7 +15764,9 @@ service:
     delete-item-live:
       path: /collections/{collection_id}/items/{item_id}/live
       method: DELETE
-      auth: true
+      auth:
+        - OAuth2:
+            - CMS:write
       docs: >-
         Remove a live item from the site. Removing a published item will
         unpublish the item from the live site and set it to draft. This endpoint
@@ -15587,7 +15807,9 @@ service:
     update-item-live:
       path: /collections/{collection_id}/items/{item_id}/live
       method: PATCH
-      auth: true
+      auth:
+        - OAuth2:
+            - CMS:write
       docs: >-
         Update a selected live Item in a Collection. The updates for this Item
         will be published to the live site. </br></br> Required scope |
@@ -15661,7 +15883,9 @@ service:
     publish-item:
       path: /collections/{collection_id}/items/publish
       method: POST
-      auth: true
+      auth:
+        - OAuth2:
+            - cms:write
       docs: >-
         Publish an item or multiple items. </br></br> Required scope |
         `cms:write`
@@ -15716,7 +15940,13 @@ service:
           "base-path": "",
           "endpoints": {
             "get-settings": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "ecommerce:read",
+                  ],
+                },
+              ],
               "display-name": "Get Ecommerce Settings",
               "docs": "Retrieve ecommerce settings for a site.
 
@@ -15820,7 +16050,9 @@ service:
     get-settings:
       path: /sites/{site_id}/ecommerce/settings
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - ecommerce:read
       docs: |
         Retrieve ecommerce settings for a site.
 
@@ -15868,7 +16100,13 @@ service:
           "display-name": "Forms",
           "endpoints": {
             "get": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "forms:read",
+                  ],
+                },
+              ],
               "display-name": "Get Form Schema",
               "docs": "Get information about a given form</br></br> Required scope | `forms:read`",
               "errors": [
@@ -15937,7 +16175,13 @@ service:
               },
             },
             "get-submission": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "forms:read",
+                  ],
+                },
+              ],
               "display-name": "Get Form Submission",
               "docs": "Get information about a given form submission</br></br> Required scope | `forms:read`",
               "errors": [
@@ -15987,7 +16231,13 @@ service:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "forms:read",
+                  ],
+                },
+              ],
               "display-name": "List Forms",
               "docs": "List forms for a given site </br></br> Required scope | `forms:read`",
               "errors": [
@@ -16103,7 +16353,13 @@ service:
               },
             },
             "list-submissions": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "forms:read",
+                  ],
+                },
+              ],
               "display-name": "List Form Submissions",
               "docs": "List form submissions for a given form </br></br> Required scope | `forms:read`",
               "errors": [
@@ -16190,7 +16446,13 @@ service:
               },
             },
             "update-submission": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "forms:write",
+                  ],
+                },
+              ],
               "display-name": "Modify Form Submission",
               "docs": "Update hidden fields on a form submission</br></br> Required scope | `forms:write`",
               "errors": [
@@ -16334,7 +16596,7 @@ service:
               },
               "fields": {
                 "docs": "A collection of form field objects",
-                "type": "optional<map<string, FormsGetResponseFieldsValue>>",
+                "type": "optional<map<string, optional<FormsGetResponseFieldsValue>>>",
               },
               "formElementId": {
                 "docs": "The unique id of the Form element",
@@ -16502,7 +16764,7 @@ service:
               },
               "fields": {
                 "docs": "A collection of form field objects",
-                "type": "optional<map<string, FormsListResponseFormsItemFieldsValue>>",
+                "type": "optional<map<string, optional<FormsListResponseFormsItemFieldsValue>>>",
               },
               "formElementId": {
                 "docs": "The unique id of the Form element",
@@ -16852,7 +17114,7 @@ service:
         type: optional<datetime>
         docs: Date that the Form was last updated on
       fields:
-        type: optional<map<string, FormsListResponseFormsItemFieldsValue>>
+        type: optional<map<string, optional<FormsListResponseFormsItemFieldsValue>>>
         docs: A collection of form field objects
       responseSettings:
         type: optional<FormsListResponseFormsItemResponseSettings>
@@ -16965,7 +17227,7 @@ service:
         type: optional<datetime>
         docs: Date that the Form was last updated on
       fields:
-        type: optional<map<string, FormsGetResponseFieldsValue>>
+        type: optional<map<string, optional<FormsGetResponseFieldsValue>>>
         docs: A collection of form field objects
       responseSettings:
         type: optional<FormsGetResponseResponseSettings>
@@ -17136,7 +17398,9 @@ service:
     list:
       path: /sites/{site_id}/forms
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - forms:read
       docs: List forms for a given site </br></br> Required scope | `forms:read`
       source:
         openapi: ../openapi.yml
@@ -17223,7 +17487,9 @@ service:
     get:
       path: /forms/{form_id}
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - forms:read
       docs: >-
         Get information about a given form</br></br> Required scope |
         `forms:read`
@@ -17277,7 +17543,9 @@ service:
     list-submissions:
       path: /forms/{form_id}/submissions
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - forms:read
       docs: >-
         List form submissions for a given form </br></br> Required scope |
         `forms:read`
@@ -17342,7 +17610,9 @@ service:
     get-submission:
       path: /form_submissions/{form_submission_id}
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - forms:read
       docs: >-
         Get information about a given form submission</br></br> Required scope |
         `forms:read`
@@ -17380,7 +17650,9 @@ service:
     update-submission:
       path: /form_submissions/{form_submission_id}
       method: PATCH
-      auth: true
+      auth:
+        - OAuth2:
+            - forms:write
       docs: >-
         Update hidden fields on a form submission</br></br> Required scope |
         `forms:write`
@@ -17482,7 +17754,13 @@ webhooks:
           "display-name": "Inventory",
           "endpoints": {
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "ecommerce:read",
+                  ],
+                },
+              ],
               "display-name": "List Inventory",
               "docs": "List the current inventory levels for a particular SKU item.
 
@@ -17535,7 +17813,13 @@ Required scope | `ecommerce:read`
               },
             },
             "update": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "ecommerce:write",
+                  ],
+                },
+              ],
               "display-name": "Update Item Inventory",
               "docs": "Updates the current inventory levels for a particular SKU item. Updates may be given in one or two methods, absolutely or incrementally. Absolute updates are done by setting `quantity` directly. Incremental updates are by specifying the inventory delta in `updateQuantity` which is then added to the `quantity` stored on the server.
 
@@ -17846,7 +18130,9 @@ service:
     list:
       path: /collections/{collection_id}/items/{item_id}/inventory
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - ecommerce:read
       docs: |
         List the current inventory levels for a particular SKU item.
 
@@ -17885,7 +18171,9 @@ service:
     update:
       path: /collections/{collection_id}/items/{item_id}/inventory
       method: PATCH
-      auth: true
+      auth:
+        - OAuth2:
+            - ecommerce:write
       docs: >
         Updates the current inventory levels for a particular SKU item. Updates
         may be given in one or two methods, absolutely or incrementally.
@@ -18544,7 +18832,13 @@ webhooks:
           "display-name": "Orders",
           "endpoints": {
             "get": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "ecommerce:read",
+                  ],
+                },
+              ],
               "display-name": "Get Order",
               "docs": "Retrieve a single product by its id. All of its SKUs will also be retrieved.
 
@@ -18809,7 +19103,13 @@ Required scope | `ecommerce:read`
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "ecommerce:read",
+                  ],
+                },
+              ],
               "display-name": "List Orders",
               "docs": "List all orders created for a given site.
 
@@ -19268,7 +19568,13 @@ Required scope | `ecommerce:read`
               },
             },
             "refund": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "ecommerce:write",
+                  ],
+                },
+              ],
               "display-name": "Refund Order",
               "docs": "This API will reverse a Stripe charge and refund an order back to a
 customer. It will also set the order's status to `refunded`.
@@ -19551,7 +19857,13 @@ Required scope | `ecommerce:write`
               },
             },
             "update": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "ecommerce:write",
+                  ],
+                },
+              ],
               "display-name": "Update Order",
               "docs": "This API lets you update the fields, `comment`, `shippingProvider`, and/or `shippingTracking` for a given order. All three fields can be updated simultaneously or independently.
 
@@ -19844,7 +20156,13 @@ Required scope | `ecommerce:write`
               },
             },
             "update-fulfill": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "ecommerce:write",
+                  ],
+                },
+              ],
               "display-name": "Fulfill Order",
               "docs": "Updates an order's status to fulfilled
 
@@ -20126,7 +20444,13 @@ Required scope | `ecommerce:write`
               },
             },
             "update-unfulfill": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "ecommerce:write",
+                  ],
+                },
+              ],
               "display-name": "Unfulfill Order",
               "docs": "Updates an order's status to unfulfilled
 
@@ -34691,7 +35015,9 @@ service:
     list:
       path: /sites/{site_id}/orders
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - ecommerce:read
       docs: |
         List all orders created for a given site.
 
@@ -35062,7 +35388,9 @@ service:
     get:
       path: /sites/{site_id}/orders/{order_id}
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - ecommerce:read
       docs: >
         Retrieve a single product by its id. All of its SKUs will also be
         retrieved.
@@ -35278,7 +35606,9 @@ service:
     update:
       path: /sites/{site_id}/orders/{order_id}
       method: PATCH
-      auth: true
+      auth:
+        - OAuth2:
+            - ecommerce:write
       docs: >
         This API lets you update the fields, `comment`, `shippingProvider`,
         and/or `shippingTracking` for a given order. All three fields can be
@@ -35513,7 +35843,9 @@ service:
     update-fulfill:
       path: /sites/{site_id}/orders/{order_id}/fulfill
       method: POST
-      auth: true
+      auth:
+        - OAuth2:
+            - ecommerce:write
       docs: |
         Updates an order's status to fulfilled
 
@@ -35737,7 +36069,9 @@ service:
     update-unfulfill:
       path: /sites/{site_id}/orders/{order_id}/unfulfill
       method: POST
-      auth: true
+      auth:
+        - OAuth2:
+            - ecommerce:write
       docs: |
         Updates an order's status to unfulfilled
 
@@ -35951,7 +36285,9 @@ service:
     refund:
       path: /sites/{site_id}/orders/{order_id}/refund
       method: POST
-      auth: true
+      auth:
+        - OAuth2:
+            - ecommerce:write
       docs: |
         This API will reverse a Stripe charge and refund an order back to a
         customer. It will also set the order's status to `refunded`.
@@ -36557,7 +36893,13 @@ webhooks:
           "display-name": "Pages",
           "endpoints": {
             "get-content": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "page:read",
+                  ],
+                },
+              ],
               "display-name": "Get Page Content",
               "docs": "Get static content from a static page. </br> If you do not provide a Locale ID in your request, the response will return any content that can be localized from the Primary locale</br></br> Required scope | `pages:read`",
               "errors": [
@@ -36583,7 +36925,7 @@ webhooks:
                       "nodes": [
                         {
                           "attributes": {
-                            "key": "value",
+                            "key": null,
                           },
                           "id": "a245c12d-995b-55ee-5ec7-aa36a6cad623",
                           "text": {
@@ -36594,7 +36936,7 @@ webhooks:
                         },
                         {
                           "attributes": {
-                            "key": "value",
+                            "key": null,
                           },
                           "id": "a245c12d-995b-55ee-5ec7-aa36a6cad627",
                           "text": {
@@ -36604,7 +36946,7 @@ webhooks:
                         },
                         {
                           "attributes": {
-                            "key": "value",
+                            "key": null,
                           },
                           "id": "a245c12d-995b-55ee-5ec7-aa36a6cad629",
                           "image": {
@@ -36660,7 +37002,13 @@ webhooks:
               },
             },
             "get-metadata": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "page:read",
+                  ],
+                },
+              ],
               "display-name": "Get Page Metadata",
               "docs": "Get metadata information for a single page </br></br> Required scope | `pages:read`",
               "errors": [
@@ -36734,7 +37082,13 @@ webhooks:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "page:read",
+                  ],
+                },
+              ],
               "display-name": "List Pages",
               "docs": "List of all pages for a site </br></br> Required scope | `pages:read`",
               "errors": [
@@ -36851,7 +37205,13 @@ webhooks:
               },
             },
             "update-page-settings": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "page:write",
+                  ],
+                },
+              ],
               "display-name": "Update Page Metadata",
               "docs": "Update Page-level metadata, including SEO and Open Graph fields. </br></br> Required scope | `pages:write`",
               "errors": [
@@ -36960,7 +37320,13 @@ webhooks:
               },
             },
             "update-static-content": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "page:write",
+                  ],
+                },
+              ],
               "display-name": "Update Page Content",
               "docs": "This endpoint allows for updating static content on a static page within a secondary locale. It is designed specifically for localized pages and can handle up to 1000 nodes per request.
 <blockquote class="callout callout_info"><p><strong>Note:</strong>This endpoint is specifically for localized pages. Ensure that the locale specified is a valid secondary locale for the site.</p></blockquote>
@@ -37165,7 +37531,7 @@ Required scope | `pages:write`
             "properties": {
               "attributes": {
                 "docs": "The custom attributes of the node",
-                "type": "optional<map<string, string>>",
+                "type": "optional<map<string, optional<string>>>",
               },
               "id": {
                 "access": "read-only",
@@ -38291,7 +38657,7 @@ Required scope | `pages:write`
           attributes can be associated with the image for styling or other
           purposes.
       attributes:
-        type: optional<map<string, string>>
+        type: optional<map<string, optional<string>>>
         docs: The custom attributes of the node
     source:
       openapi: ../openapi.yml
@@ -38421,7 +38787,9 @@ service:
     list:
       path: /sites/{site_id}/pages
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - page:read
       docs: List of all pages for a site </br></br> Required scope | `pages:read`
       source:
         openapi: ../openapi.yml
@@ -38523,7 +38891,9 @@ service:
     get-metadata:
       path: /pages/{page_id}
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - page:read
       docs: >-
         Get metadata information for a single page </br></br> Required scope |
         `pages:read`
@@ -38586,7 +38956,9 @@ service:
     update-page-settings:
       path: /pages/{page_id}
       method: PUT
-      auth: true
+      auth:
+        - OAuth2:
+            - page:write
       docs: >-
         Update Page-level metadata, including SEO and Open Graph fields.
         </br></br> Required scope | `pages:write`
@@ -38677,7 +39049,9 @@ service:
     get-content:
       path: /pages/{page_id}/dom
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - page:read
       docs: >-
         Get static content from a static page. </br> If you do not provide a
         Locale ID in your request, the response will return any content that can
@@ -38734,7 +39108,7 @@ service:
                     html: <h1>The Hitchhiker's Guide to the Galaxy</h1>
                     text: The Hitchhiker's Guide to the Galaxy
                   attributes:
-                    key: value
+                    key: null
                 - id: a245c12d-995b-55ee-5ec7-aa36a6cad627
                   type: text
                   text:
@@ -38742,14 +39116,14 @@ service:
                       <div><h3>Don't Panic!</h3><p>Always know where your towel
                       is.</p></div>
                   attributes:
-                    key: value
+                    key: null
                 - id: a245c12d-995b-55ee-5ec7-aa36a6cad629
                   type: image
                   image:
                     alt: Marvin, the Paranoid Android
                     assetId: 659595234426a9fcbad57043
                   attributes:
-                    key: value
+                    key: null
               pagination:
                 limit: 3
                 offset: 0
@@ -38757,7 +39131,9 @@ service:
     update-static-content:
       path: /pages/{page_id}/dom
       method: POST
-      auth: true
+      auth:
+        - OAuth2:
+            - page:write
       docs: >
         This endpoint allows for updating static content on a static page within
         a secondary locale. It is designed specifically for localized pages and
@@ -38883,7 +39259,13 @@ webhooks:
           "base-path": "",
           "endpoints": {
             "delete-custom-code": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "custom_code:write",
+                  ],
+                },
+              ],
               "display-name": "Delete Custom Code",
               "docs": "Delete the custom code block that an app has created for a page </br></br>  In order to use the Custom Code APIs for Sites and Pages, Custom Code Scripts must first be registered  to a Site via the `registered_scripts` endpoints, and then applied to a Site or Page using the appropriate `custom_code` endpoints.  <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote> Required scope | `custom_code:write`
 ",
@@ -38915,7 +39297,13 @@ webhooks:
               },
             },
             "get-custom-code": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "custom_code:read",
+                  ],
+                },
+              ],
               "display-name": "Get Custom Code",
               "docs": "Get all registered scripts that have been applied to a specific Page.  </br></br>  In order to use the Custom Code APIs for Sites and Pages, Custom Code Scripts must first be registered  to a Site via the `registered_scripts` endpoints, and then applied to a Site or Page using the appropriate `custom_code` endpoints.  <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote> Required scope | `custom_code:read`
 ",
@@ -38968,7 +39356,13 @@ webhooks:
               },
             },
             "upsert-custom-code": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "custom_code:write",
+                  ],
+                },
+              ],
               "display-name": "Add/Update Custom Code",
               "docs": "Add a registered script to a Page.  </br></br>  In order to use the Custom Code APIs for Sites and Pages, Custom Code Scripts must first be registered  to a Site via the `registered_scripts` endpoints, and then applied to a Site or Page using the appropriate `custom_code` endpoints.  <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote> Required scope | `custom_code:write`
 ",
@@ -39367,7 +39761,9 @@ service:
     get-custom-code:
       path: /pages/{page_id}/custom_code
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - custom_code:read
       docs: >
         Get all registered scripts that have been applied to a specific Page. 
         </br></br>  In order to use the Custom Code APIs for Sites and Pages,
@@ -39411,7 +39807,9 @@ service:
     upsert-custom-code:
       path: /pages/{page_id}/custom_code
       method: PUT
-      auth: true
+      auth:
+        - OAuth2:
+            - custom_code:write
       docs: >
         Add a registered script to a Page.  </br></br>  In order to use the
         Custom Code APIs for Sites and Pages, Custom Code Scripts must first be
@@ -39477,7 +39875,9 @@ service:
     delete-custom-code:
       path: /pages/{page_id}/custom_code
       method: DELETE
-      auth: true
+      auth:
+        - OAuth2:
+            - custom_code:write
       docs: >
         Delete the custom code block that an app has created for a page
         </br></br>  In order to use the Custom Code APIs for Sites and Pages,
@@ -39519,7 +39919,13 @@ service:
           "base-path": "",
           "endpoints": {
             "create": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "ecommerce:write",
+                  ],
+                },
+              ],
               "display-name": "Create Product & SKU",
               "docs": "Creating a new Product involves creating both a Product and a SKU, since a Product Item has to have, at minimum, a single SKU.
 
@@ -39680,7 +40086,13 @@ Required scope | `ecommerce:write`",
               },
             },
             "create-sku": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "ecommerce:write",
+                  ],
+                },
+              ],
               "display-name": "Create SKU",
               "docs": "Create additional SKUs to cover every variant of your Product. The Default SKU already counts as one of the variants.
 
@@ -39778,7 +40190,13 @@ Required scope | `ecommerce:write`
               },
             },
             "get": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "ecommerce:read",
+                  ],
+                },
+              ],
               "display-name": "Get Product and SKUs",
               "docs": "Retrieve a single product by its id. All of its SKUs will also be retrieved.
 
@@ -39914,7 +40332,13 @@ Required scope | `ecommerce:read`
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "ecommerce:read",
+                  ],
+                },
+              ],
               "display-name": "List Products & SKUs",
               "docs": "Retrieve all products for a site. Use `limit` and `offset` to page through all products with subsequent requests. All SKUs for each product will also be fetched and returned. The `limit`, `offset` and `total` values represent Products only and do not include any SKUs.
 
@@ -40068,7 +40492,13 @@ Required scope | `ecommerce:read`
               },
             },
             "update": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "ecommerce:write",
+                  ],
+                },
+              ],
               "display-name": "Update Product",
               "docs": "Updating an existing Product will set the product type to `Advanced`. The product type is used to determine which Product and SKU fields are shown to users in the `Designer` and the `Editor`. Setting it to `Advanced` ensures that all Product and SKU fields will be shown. The product type can be edited in the `Designer` or the `Editor`.
 
@@ -40206,7 +40636,13 @@ Required scope | `ecommerce:write`
               },
             },
             "update-sku": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "ecommerce:write",
+                  ],
+                },
+              ],
               "display-name": "Update SKU",
               "docs": "Updating an existing SKU will set the product type to `Advanced` for the product associated with the SKU. The product type is used to determine which Product and SKU fields are shown to users in the `Designer` and the `Editor`. Setting it to `Advanced` ensures that all Product and SKU fields will be shown. The product type can be edited in the `Designer` or the `Editor`.
 
@@ -40630,7 +41066,7 @@ Required scope | `ecommerce:write`
               "sku-values": {
                 "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.
 ",
-                "type": "optional<map<string, string>>",
+                "type": "optional<map<string, optional<string>>>",
               },
               "slug": {
                 "docs": "URL structure of the Product in your site.",
@@ -41114,7 +41550,7 @@ Required scope | `ecommerce:write`
               "sku-values": {
                 "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.
 ",
-                "type": "optional<map<string, string>>",
+                "type": "optional<map<string, optional<string>>>",
               },
               "slug": {
                 "docs": "URL structure of the Product in your site.",
@@ -41323,7 +41759,7 @@ Required scope | `ecommerce:write`
               "sku-values": {
                 "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.
 ",
-                "type": "optional<map<string, string>>",
+                "type": "optional<map<string, optional<string>>>",
               },
               "slug": {
                 "docs": "URL structure of the Product in your site.",
@@ -41530,7 +41966,7 @@ Required scope | `ecommerce:write`
               "sku-values": {
                 "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.
 ",
-                "type": "optional<map<string, string>>",
+                "type": "optional<map<string, optional<string>>>",
               },
               "slug": {
                 "docs": "URL structure of the Product in your site.",
@@ -42014,7 +42450,7 @@ Required scope | `ecommerce:write`
               "sku-values": {
                 "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.
 ",
-                "type": "optional<map<string, string>>",
+                "type": "optional<map<string, optional<string>>>",
               },
               "slug": {
                 "docs": "URL structure of the Product in your site.",
@@ -42515,7 +42951,7 @@ Required scope | `ecommerce:write`
               "sku-values": {
                 "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.
 ",
-                "type": "optional<map<string, string>>",
+                "type": "optional<map<string, optional<string>>>",
               },
               "slug": {
                 "docs": "URL structure of the Product in your site.",
@@ -43015,7 +43451,7 @@ Required scope | `ecommerce:write`
               "sku-values": {
                 "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.
 ",
-                "type": "optional<map<string, string>>",
+                "type": "optional<map<string, optional<string>>>",
               },
               "slug": {
                 "docs": "URL structure of the Product in your site.",
@@ -43494,7 +43930,7 @@ Required scope | `ecommerce:write`
               "sku-values": {
                 "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.
 ",
-                "type": "optional<map<string, string>>",
+                "type": "optional<map<string, optional<string>>>",
               },
               "slug": {
                 "docs": "URL structure of the Product in your site.",
@@ -43691,7 +44127,7 @@ Required scope | `ecommerce:write`
               "sku-values": {
                 "docs": "A dictionary that maps a SKU property to a SKU value. The key of the dictionary is the SKU property ID, and the value is the SKU value ID.
 ",
-                "type": "optional<map<string, string>>",
+                "type": "optional<map<string, optional<string>>>",
               },
               "slug": {
                 "docs": "URL structure of the Product in your site.",
@@ -44108,7 +44544,7 @@ Required scope | `ecommerce:write`
     docs: Standard and Custom fields for a SKU
     properties:
       sku-values:
-        type: optional<map<string, string>>
+        type: optional<map<string, optional<string>>>
         docs: >
           A dictionary that maps a SKU property to a SKU value. The key of the
           dictionary is the SKU property ID, and the value is the SKU value ID.
@@ -44468,7 +44904,7 @@ Required scope | `ecommerce:write`
     docs: Standard and Custom fields for a SKU
     properties:
       sku-values:
-        type: optional<map<string, string>>
+        type: optional<map<string, optional<string>>>
         docs: >
           A dictionary that maps a SKU property to a SKU value. The key of the
           dictionary is the SKU property ID, and the value is the SKU value ID.
@@ -44806,7 +45242,7 @@ Required scope | `ecommerce:write`
     docs: Standard and Custom fields for a SKU
     properties:
       sku-values:
-        type: optional<map<string, string>>
+        type: optional<map<string, optional<string>>>
         docs: >
           A dictionary that maps a SKU property to a SKU value. The key of the
           dictionary is the SKU property ID, and the value is the SKU value ID.
@@ -45154,7 +45590,7 @@ Required scope | `ecommerce:write`
     docs: Standard and Custom fields for a SKU
     properties:
       sku-values:
-        type: optional<map<string, string>>
+        type: optional<map<string, optional<string>>>
         docs: >
           A dictionary that maps a SKU property to a SKU value. The key of the
           dictionary is the SKU property ID, and the value is the SKU value ID.
@@ -45511,7 +45947,7 @@ Required scope | `ecommerce:write`
     docs: Standard and Custom fields for a SKU
     properties:
       sku-values:
-        type: optional<map<string, string>>
+        type: optional<map<string, optional<string>>>
         docs: >
           A dictionary that maps a SKU property to a SKU value. The key of the
           dictionary is the SKU property ID, and the value is the SKU value ID.
@@ -45856,7 +46292,7 @@ Required scope | `ecommerce:write`
     docs: Standard and Custom fields for a SKU
     properties:
       sku-values:
-        type: optional<map<string, string>>
+        type: optional<map<string, optional<string>>>
         docs: >
           A dictionary that maps a SKU property to a SKU value. The key of the
           dictionary is the SKU property ID, and the value is the SKU value ID.
@@ -46004,7 +46440,7 @@ Required scope | `ecommerce:write`
     docs: Standard and Custom fields for a SKU
     properties:
       sku-values:
-        type: optional<map<string, string>>
+        type: optional<map<string, optional<string>>>
         docs: >
           A dictionary that maps a SKU property to a SKU value. The key of the
           dictionary is the SKU property ID, and the value is the SKU value ID.
@@ -46167,7 +46603,7 @@ Required scope | `ecommerce:write`
     docs: Standard and Custom fields for a SKU
     properties:
       sku-values:
-        type: optional<map<string, string>>
+        type: optional<map<string, optional<string>>>
         docs: >
           A dictionary that maps a SKU property to a SKU value. The key of the
           dictionary is the SKU property ID, and the value is the SKU value ID.
@@ -46315,7 +46751,7 @@ Required scope | `ecommerce:write`
     docs: Standard and Custom fields for a SKU
     properties:
       sku-values:
-        type: optional<map<string, string>>
+        type: optional<map<string, optional<string>>>
         docs: >
           A dictionary that maps a SKU property to a SKU value. The key of the
           dictionary is the SKU property ID, and the value is the SKU value ID.
@@ -46382,7 +46818,9 @@ service:
     list:
       path: /sites/{site_id}/products
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - ecommerce:read
       docs: >
         Retrieve all products for a site. Use `limit` and `offset` to page
         through all products with subsequent requests. All SKUs for each product
@@ -46493,7 +46931,9 @@ service:
     create:
       path: /sites/{site_id}/products
       method: POST
-      auth: true
+      auth:
+        - OAuth2:
+            - ecommerce:write
       docs: >-
         Creating a new Product involves creating both a Product and a SKU, since
         a Product Item has to have, at minimum, a single SKU.
@@ -46627,7 +47067,9 @@ service:
     get:
       path: /sites/{site_id}/products/{product_id}
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - ecommerce:read
       docs: >
         Retrieve a single product by its id. All of its SKUs will also be
         retrieved.
@@ -46723,7 +47165,9 @@ service:
     update:
       path: /sites/{site_id}/products/{product_id}
       method: PATCH
-      auth: true
+      auth:
+        - OAuth2:
+            - ecommerce:write
       docs: >
         Updating an existing Product will set the product type to `Advanced`.
         The product type is used to determine which Product and SKU fields are
@@ -46824,7 +47268,9 @@ service:
     create-sku:
       path: /sites/{site_id}/products/{product_id}/skus
       method: POST
-      auth: true
+      auth:
+        - OAuth2:
+            - ecommerce:write
       docs: >
         Create additional SKUs to cover every variant of your Product. The
         Default SKU already counts as one of the variants.
@@ -46902,7 +47348,9 @@ service:
     update-sku:
       path: /sites/{site_id}/products/{product_id}/skus/{sku_id}
       method: PATCH
-      auth: true
+      auth:
+        - OAuth2:
+            - ecommerce:write
       docs: >
         Updating an existing SKU will set the product type to `Advanced` for the
         product associated with the SKU. The product type is used to determine
@@ -47001,7 +47449,13 @@ service:
           "base-path": "",
           "endpoints": {
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "custom_code:read",
+                  ],
+                },
+              ],
               "display-name": "Get Registered Scripts",
               "docs": "List of scripts registered to a Site.  </br></br>  In order to use the Custom Code APIs for Sites and Pages, Custom Code Scripts must first be registered  to a Site via the `registered_scripts` endpoints, and then applied to a Site or Page using the appropriate `custom_code` endpoints.  Additionally, Scripts can be remotely hosted, or registered as inline snippets. <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote>     Required scope | `custom_code:read`
 ",
@@ -47072,7 +47526,13 @@ service:
               },
             },
             "register-hosted": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "custom_code:write",
+                  ],
+                },
+              ],
               "display-name": "Register Script - Hosted",
               "docs": "Add a script to a Site's Custom Code registry. </br></br>  In order to use the Custom Code APIs for Sites and Pages, Custom Code Scripts must first be registered  to a Site via the `registered_scripts` endpoints, and then applied to a Site or Page using the appropriate `custom_code` endpoints.  Additionally, Scripts can be remotely hosted, or registered as inline snippets.   <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote>     </br></br>  Required scope | `custom_code:write`
 ",
@@ -47160,7 +47620,13 @@ service:
               },
             },
             "register-inline": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "custom_code:write",
+                  ],
+                },
+              ],
               "display-name": "Register Script - Inline",
               "docs": "Add a script to a Site's Custom Code registry. Inline scripts can be between 1 and 2000 characters. </br></br>  In order to use the Custom Code APIs for Sites and Pages, Custom Code Scripts must first be registered  to a Site via the `registered_scripts` endpoints, and then applied to a Site or Page using the appropriate `custom_code` endpoints.  </br></br>  <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote>     Required scope | `custom_code:write`
 ",
@@ -47531,7 +47997,9 @@ service:
     list:
       path: /sites/{site_id}/registered_scripts
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - custom_code:read
       docs: >
         List of scripts registered to a Site.  </br></br>  In order to use the
         Custom Code APIs for Sites and Pages, Custom Code Scripts must first be
@@ -47591,7 +48059,9 @@ service:
     register-hosted:
       path: /sites/{site_id}/registered_scripts/hosted
       method: POST
-      auth: true
+      auth:
+        - OAuth2:
+            - custom_code:write
       docs: >
         Add a script to a Site's Custom Code registry. </br></br>  In order to
         use the Custom Code APIs for Sites and Pages, Custom Code Scripts must
@@ -47671,7 +48141,9 @@ service:
     register-inline:
       path: /sites/{site_id}/registered_scripts/inline
       method: POST
-      auth: true
+      auth:
+        - OAuth2:
+            - custom_code:write
       docs: >
         Add a script to a Site's Custom Code registry. Inline scripts can be
         between 1 and 2000 characters. </br></br>  In order to use the Custom
@@ -47761,7 +48233,13 @@ service:
           "display-name": "Sites",
           "endpoints": {
             "get": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "sites:read",
+                  ],
+                },
+              ],
               "display-name": "Get Site",
               "docs": "Get a site by site id </br></br>  Required scope | `sites:read`",
               "errors": [
@@ -47844,7 +48322,13 @@ service:
               },
             },
             "get-custom-domain": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "sites:read",
+                  ],
+                },
+              ],
               "display-name": "Get Custom Domains",
               "docs": "Get a list of all custom domains related to site. </br></br>  Required scope | `sites:read`",
               "errors": [
@@ -47894,7 +48378,13 @@ service:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "sites:read",
+                  ],
+                },
+              ],
               "display-name": "List Sites",
               "docs": "List of all sites the provided access token is able to access. </br></br> Required scope | `sites:read`",
               "errors": [
@@ -48052,7 +48542,13 @@ service:
               },
             },
             "publish": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "sites:write",
+                  ],
+                },
+              ],
               "display-name": "Publish site",
               "docs": "Publish a site to one more more domains. </br></br>  Required scope | `sites:write` <blockquote class="callout callout_info" theme="📘"><h2 class="callout-heading"><span class="callout-icon">📘</span><p>Endpoint-specific rate limit</p></h2><p>This endpoint has a limit of one successful publish queue per minute.</p></blockquote>",
               "errors": [
@@ -48955,7 +49451,9 @@ service:
     list:
       path: /sites
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - sites:read
       docs: >-
         List of all sites the provided access token is able to access.
         </br></br> Required scope | `sites:read`
@@ -49075,7 +49573,9 @@ service:
     get:
       path: /sites/{site_id}
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - sites:read
       docs: Get a site by site id </br></br>  Required scope | `sites:read`
       source:
         openapi: ../openapi.yml
@@ -49136,7 +49636,9 @@ service:
     get-custom-domain:
       path: /sites/{site_id}/custom_domains
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - sites:read
       docs: >-
         Get a list of all custom domains related to site. </br></br>  Required
         scope | `sites:read`
@@ -49170,7 +49672,9 @@ service:
     publish:
       path: /sites/{site_id}/publish
       method: POST
-      auth: true
+      auth:
+        - OAuth2:
+            - sites:write
       docs: >-
         Publish a site to one more more domains. </br></br>  Required scope |
         `sites:write` <blockquote class="callout callout_info" theme="📘"><h2
@@ -49252,7 +49756,13 @@ webhooks:
           "base-path": "",
           "endpoints": {
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "site_activity:read",
+                  ],
+                },
+              ],
               "display-name": "Get Site Activity Logs",
               "docs": "Retrieve Activity Logs for a specific Site. Requires Site to be on an Enterprise plan. </br></br>  Required scope | `site_activity:read`",
               "errors": [
@@ -49480,7 +49990,9 @@ service:
     list:
       path: /sites/{site_id}/activity_logs
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - site_activity:read
       docs: >-
         Retrieve Activity Logs for a specific Site. Requires Site to be on an
         Enterprise plan. </br></br>  Required scope | `site_activity:read`
@@ -49549,7 +50061,13 @@ service:
           "base-path": "",
           "endpoints": {
             "delete-custom-code": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "custom_code:write",
+                  ],
+                },
+              ],
               "display-name": "Delete Custom Code",
               "docs": "Delete the custom code block that an app created for a Site </br></br> <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote>     Required scope | `custom_code:write`
 ",
@@ -49581,7 +50099,13 @@ service:
               },
             },
             "get-custom-code": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "custom_code:read",
+                  ],
+                },
+              ],
               "display-name": "Get Custom Code",
               "docs": "Get all registered scripts that have been applied to a specific Site.  <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote>     Required scope | `custom_code:read`
 ",
@@ -49642,7 +50166,13 @@ service:
               },
             },
             "list-custom-code-blocks": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "custom_code:read",
+                  ],
+                },
+              ],
               "display-name": "List Custom Code Blocks",
               "docs": "Get all instances of Custom Code applied to a Site or Pages.  <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote>     Required scope | `custom_code:read`
 ",
@@ -49748,7 +50278,13 @@ service:
               },
             },
             "upsert-custom-code": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "custom_code:write",
+                  ],
+                },
+              ],
               "display-name": "Add/Update Custom Code",
               "docs": "Add a registered script to a Site.  </br></br>  In order to use the Custom Code APIs for Sites and Pages, Custom Code Scripts must first be registered  to a Site via the `registered_scripts` endpoints, and then applied to a Site or Page using the appropriate `custom_code` endpoints.  <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote>     Required scope | `custom_code:write`
 ",
@@ -50360,7 +50896,9 @@ service:
     get-custom-code:
       path: /sites/{site_id}/custom_code
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - custom_code:read
       docs: >
         Get all registered scripts that have been applied to a specific Site. 
         <blockquote class="callout callout_info" theme="📘">Access to this
@@ -50405,7 +50943,9 @@ service:
     upsert-custom-code:
       path: /sites/{site_id}/custom_code
       method: PUT
-      auth: true
+      auth:
+        - OAuth2:
+            - custom_code:write
       docs: >
         Add a registered script to a Site.  </br></br>  In order to use the
         Custom Code APIs for Sites and Pages, Custom Code Scripts must first be
@@ -50471,7 +51011,9 @@ service:
     delete-custom-code:
       path: /sites/{site_id}/custom_code
       method: DELETE
-      auth: true
+      auth:
+        - OAuth2:
+            - custom_code:write
       docs: >
         Delete the custom code block that an app created for a Site </br></br>
         <blockquote class="callout callout_info" theme="📘">Access to this
@@ -50497,7 +51039,9 @@ service:
     list-custom-code-blocks:
       path: /sites/{site_id}/custom_code/blocks
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - custom_code:read
       docs: >
         Get all instances of Custom Code applied to a Site or Pages. 
         <blockquote class="callout callout_info" theme="📘">Access to this
@@ -50586,7 +51130,13 @@ service:
           "base-path": "",
           "endpoints": {
             "authorized-by": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "authorized_user:read",
+                  ],
+                },
+              ],
               "display-name": "Get Authorization User Info",
               "docs": "Information about the Authorized User <br><br> Required Scope | `authorized_user:read`",
               "errors": [
@@ -50618,7 +51168,7 @@ service:
               },
             },
             "introspect": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get Authorization Info",
               "docs": "Information about the authorization token <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote>    
 ",
@@ -50853,7 +51403,9 @@ service:
     authorized-by:
       path: /token/authorized_by
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - authorized_user:read
       docs: >-
         Information about the Authorized User <br><br> Required Scope |
         `authorized_user:read`
@@ -50877,7 +51429,6 @@ service:
     introspect:
       path: /token/introspect
       method: GET
-      auth: true
       docs: >
         Information about the authorization token <blockquote class="callout
         callout_info" theme="📘">Access to this endpoint requires a bearer token
@@ -50930,7 +51481,13 @@ service:
           "base-path": "",
           "endpoints": {
             "delete": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "users:write",
+                  ],
+                },
+              ],
               "display-name": "Delete User",
               "docs": "Delete a User by ID <br><br> Required scope | `users:write`",
               "errors": [
@@ -50967,7 +51524,13 @@ service:
               },
             },
             "get": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "users:read",
+                  ],
+                },
+              ],
               "display-name": "Get User",
               "docs": "Get a User by ID <br><br> Required scope | `users:read`",
               "errors": [
@@ -51035,7 +51598,13 @@ service:
               },
             },
             "invite": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "users:write",
+                  ],
+                },
+              ],
               "display-name": "Create and Invite a User",
               "docs": "Create and invite a user with an email address. The user will be sent and invite via email, which they will need to accept in order to join paid Access Groups. <br><br> Required scope | `users:write`",
               "errors": [
@@ -51131,7 +51700,13 @@ service:
               },
             },
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "users:read",
+                  ],
+                },
+              ],
               "display-name": "List Users",
               "docs": "Get a list of users for a site <br><br> Required scope | `users:read`",
               "errors": [
@@ -51280,7 +51855,13 @@ Can be prefixed with a `-` to reverse the sort (ex. `-CreatedOn`)
               },
             },
             "update": {
-              "auth": true,
+              "auth": [
+                {
+                  "OAuth2": [
+                    "users:write",
+                  ],
+                },
+              ],
               "display-name": "Update User",
               "docs": "Update a User by ID <br><br> Required scope | `users:write`
 <aside class="notice">The <code>email</code> and <code>password</code> fields cannot be updated using this endpoint</aside>
@@ -53594,7 +54175,9 @@ service:
     list:
       path: /sites/{site_id}/users
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - users:read
       docs: Get a list of users for a site <br><br> Required scope | `users:read`
       source:
         openapi: ../openapi.yml
@@ -53700,7 +54283,9 @@ service:
     get:
       path: /sites/{site_id}/users/{user_id}
       method: GET
-      auth: true
+      auth:
+        - OAuth2:
+            - users:read
       docs: Get a User by ID <br><br> Required scope | `users:read`
       source:
         openapi: ../openapi.yml
@@ -53749,7 +54334,9 @@ service:
     delete:
       path: /sites/{site_id}/users/{user_id}
       method: DELETE
-      auth: true
+      auth:
+        - OAuth2:
+            - users:write
       docs: Delete a User by ID <br><br> Required scope | `users:write`
       source:
         openapi: ../openapi.yml
@@ -53775,7 +54362,9 @@ service:
     update:
       path: /sites/{site_id}/users/{user_id}
       method: PATCH
-      auth: true
+      auth:
+        - OAuth2:
+            - users:write
       docs: >
         Update a User by ID <br><br> Required scope | `users:write`
 
@@ -53849,7 +54438,9 @@ service:
     invite:
       path: /sites/{site_id}/users/invite
       method: POST
-      auth: true
+      auth:
+        - OAuth2:
+            - users:write
       docs: >-
         Create and invite a user with an email address. The user will be sent
         and invite via email, which they will need to accept in order to join
@@ -53989,7 +54580,7 @@ webhooks:
           "display-name": "Webhooks",
           "endpoints": {
             "create": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create Webhook",
               "docs": "Create a new Webhook, to be notified when Webflow resources change. Limit of 75 registrations per `triggerType`, per site. <blockquote class="callout callout_info" theme="📘">Access to this endpoint requires a bearer token from a <a href="https://developers.webflow.com/data/docs/getting-started-data-clients">Data Client App</a>.</blockquote>     Required scope | `sites:write`
 ",
@@ -54079,7 +54670,7 @@ webhooks:
               },
             },
             "delete": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Remove Webhook",
               "docs": "Remove a Webhook",
               "errors": [
@@ -54110,7 +54701,7 @@ webhooks:
               },
             },
             "get": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get Webhook",
               "docs": "Get a specific Webhook instance",
               "errors": [
@@ -54157,7 +54748,7 @@ webhooks:
               },
             },
             "list": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List Webhooks",
               "docs": "List all App-created Webhooks registered for a given site </br></br> Required scope | `sites:read`
 ",
@@ -55224,7 +55815,6 @@ service:
     list:
       path: /sites/{site_id}/webhooks
       method: GET
-      auth: true
       docs: >
         List all App-created Webhooks registered for a given site </br></br>
         Required scope | `sites:read`
@@ -55285,7 +55875,6 @@ service:
     create:
       path: /sites/{site_id}/webhooks
       method: POST
-      auth: true
       docs: >
         Create a new Webhook, to be notified when Webflow resources change.
         Limit of 75 registrations per `triggerType`, per site. <blockquote
@@ -55386,7 +55975,6 @@ service:
     get:
       path: /webhooks/{webhook_id}
       method: GET
-      auth: true
       docs: Get a specific Webhook instance
       source:
         openapi: ../openapi.yml
@@ -55420,7 +56008,6 @@ service:
     delete:
       path: /webhooks/{webhook_id}
       method: DELETE
-      auth: true
       docs: Remove a Webhook
       source:
         openapi: ../openapi.yml

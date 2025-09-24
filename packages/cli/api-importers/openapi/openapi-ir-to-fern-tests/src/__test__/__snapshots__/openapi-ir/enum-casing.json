@@ -37,6 +37,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/example",
       "examples": [
@@ -165,12 +166,18 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "schema": {
-                    "type": "string"
-                  },
                   "generatedName": "ExampleResponseCustomFieldsValue",
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "ExampleResponseCustomFieldsValue",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
                   "groupName": [],
-                  "type": "primitive"
+                  "inline": true,
+                  "type": "nullable"
                 },
                 "generatedName": "ExampleResponseCustomFields",
                 "groupName": [],

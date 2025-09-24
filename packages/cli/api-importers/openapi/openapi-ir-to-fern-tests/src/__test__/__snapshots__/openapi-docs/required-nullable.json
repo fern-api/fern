@@ -10,7 +10,7 @@
           "base-path": "",
           "endpoints": {
             "getFoo": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Get foo",
               "docs": undefined,
               "examples": [
@@ -90,7 +90,6 @@
     getFoo:
       path: /foo
       method: GET
-      auth: false
       source:
         openapi: ../openapi.json
       display-name: Get foo

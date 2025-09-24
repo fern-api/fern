@@ -24,6 +24,7 @@
     "requirement": "ALL",
     "schemes": [
       {
+        "key": "apiKeyAuth",
         "name": {
           "name": {
             "originalName": "apiKey",
@@ -9392,13 +9393,19 @@
                       "type": "primitive"
                     },
                     "valueType": {
-                      "primitive": {
-                        "v1": "DOUBLE",
-                        "v2": {
-                          "type": "double"
-                        }
+                      "container": {
+                        "optional": {
+                          "primitive": {
+                            "v1": "DOUBLE",
+                            "v2": {
+                              "type": "double"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "optional"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
                     "type": "map"
                   },
@@ -10660,13 +10667,19 @@
                       "type": "primitive"
                     },
                     "valueType": {
-                      "primitive": {
-                        "v1": "DOUBLE",
-                        "v2": {
-                          "type": "double"
-                        }
+                      "container": {
+                        "optional": {
+                          "primitive": {
+                            "v1": "DOUBLE",
+                            "v2": {
+                              "type": "double"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "optional"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
                     "type": "map"
                   },
@@ -13962,13 +13975,19 @@
                       "type": "primitive"
                     },
                     "valueType": {
-                      "primitive": {
-                        "v1": "DOUBLE",
-                        "v2": {
-                          "type": "double"
-                        }
+                      "container": {
+                        "optional": {
+                          "primitive": {
+                            "v1": "DOUBLE",
+                            "v2": {
+                              "type": "double"
+                            }
+                          },
+                          "type": "primitive"
+                        },
+                        "type": "optional"
                       },
-                      "type": "primitive"
+                      "type": "container"
                     },
                     "type": "map"
                   },
@@ -24291,6 +24310,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Base",
           "method": "GET",
@@ -24515,6 +24539,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Base",
           "method": "POST",
@@ -25049,6 +25078,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Base",
           "method": "GET",
@@ -25376,6 +25410,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Documents",
           "method": "POST",
@@ -25912,6 +25951,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Base",
           "method": "GET",
@@ -26075,6 +26119,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Base",
           "method": "POST",
@@ -26438,6 +26487,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Base",
           "method": "POST",
@@ -27043,6 +27097,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Base",
           "method": "POST",
@@ -27512,6 +27571,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Base",
           "method": "DELETE",
@@ -27780,6 +27844,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Base",
           "method": "POST",
@@ -28229,6 +28298,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Base",
           "method": "DELETE",
@@ -28461,6 +28535,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Predict",
           "method": "POST",
@@ -29081,6 +29160,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Predict",
           "method": "POST",
@@ -29500,6 +29584,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Predict",
           "method": "POST",
@@ -30002,6 +30091,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Predict",
           "method": "POST",
@@ -30503,6 +30597,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Predict",
           "method": "POST",
@@ -30956,6 +31055,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Predict",
           "method": "POST",
@@ -37875,8 +37979,11 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "value": "DOUBLE",
-                  "type": "primitive"
+                  "value": {
+                    "value": "DOUBLE",
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
                 "type": "map"
               },
@@ -38726,8 +38833,11 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "value": "DOUBLE",
-                  "type": "primitive"
+                  "value": {
+                    "value": "DOUBLE",
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
                 "type": "map"
               },
@@ -40975,8 +41085,11 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "value": "DOUBLE",
-                  "type": "primitive"
+                  "value": {
+                    "value": "DOUBLE",
+                    "type": "primitive"
+                  },
+                  "type": "optional"
                 },
                 "type": "map"
               },

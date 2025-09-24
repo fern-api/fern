@@ -10,7 +10,7 @@
           "base-path": "",
           "endpoints": {
             "submitFormData": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Submit form data",
               "docs": undefined,
               "examples": [
@@ -97,7 +97,6 @@ service:
     submitFormData:
       path: /submit
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: Submit form data

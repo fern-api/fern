@@ -144,6 +144,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "GET",
       "path": "/v3/transactions/{id}",
       "examples": [
@@ -556,6 +561,11 @@
       "servers": [],
       "description": "Deleting a transaction will also delete it from our systems. This operation is permanent.",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "DELETE",
       "path": "/v3/transactions/{id}",
       "examples": [
@@ -789,6 +799,11 @@
       "servers": [],
       "description": "Return a list of enriched transactions starting with the most recent one.",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "GET",
       "path": "/v3/transactions",
       "examples": [
@@ -1255,6 +1270,11 @@
       "servers": [],
       "description": "Enriches a list of transactions in synchronous fashion. The enriched transactions returned in\nthe order that they were submitted. Webhook events are not triggered for this operation. \n\nThis endpoint supports up to 1000 transactions. \n\nIf you want more throughput and live updates refer to the \n[async enrichment endpoint](../batches/post-batch).",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "POST",
       "path": "/v3/transactions",
       "examples": [
@@ -1699,6 +1719,11 @@
       "servers": [],
       "description": "Changes the account holder associated with the transaction. The old and new account holder must share the same categories",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "POST",
       "path": "/v3/transactions/{id}/assign",
       "examples": [
@@ -2243,6 +2268,11 @@
       "servers": [],
       "description": "Returns a list of submitted batches starting with the most recent one.",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "GET",
       "path": "/v3/batches",
       "examples": [
@@ -2463,6 +2493,11 @@
       "servers": [],
       "description": "Creates a batch of transactions and enriches it in an asynchronous fashion. A batch, representing the status of the \nenrichment progress is returned as a result of the submission. \n\nIn order to be notified on the status of the batch, you can setup [webhooks](../../../webhooks) and receive \nthe respective notifications. Alternatively, you can \n[poll](../../../enrichment/introduction/#viewing-the-progress-of-a-batch) for the status of the batch using its id.\n\nThis endpoints supports up to 24960 transactions.",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "POST",
       "path": "/v3/batches",
       "examples": [
@@ -2695,6 +2730,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "GET",
       "path": "/v3/batches/{id}",
       "examples": [
@@ -2872,6 +2912,11 @@
       "servers": [],
       "description": "Returns the results of the enrichment request. The resulting enriched transactions are returned in the same order they were submitted. Results are available after the batch has finished processing.",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "GET",
       "path": "/v3/batches/{id}/results",
       "examples": [
@@ -3365,6 +3410,11 @@
       "servers": [],
       "description": "Return a list of submitted bank statements starting with the most recent one.",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "GET",
       "path": "/v3/bank_statements",
       "examples": [
@@ -3606,6 +3656,11 @@
       "servers": [],
       "description": "Upload a PDF file and queue it for extraction.",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "POST",
       "path": "/v3/bank_statements",
       "examples": [
@@ -3796,6 +3851,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "GET",
       "path": "/v3/bank_statements/{id}",
       "examples": [
@@ -3974,6 +4034,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "DELETE",
       "path": "/v3/bank_statements/{id}",
       "examples": [
@@ -4091,6 +4156,11 @@
       "servers": [],
       "description": "Extracts account holder, bank and account information extracted from the first page of the bank statement, which is typically available before the full results. This is a synchronous call.\n\nComplete guide: [Overview](../../../bank-statements)",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "POST",
       "path": "/v3/bank_statements/{id}/overview",
       "examples": [
@@ -4351,6 +4421,11 @@
       "servers": [],
       "description": "Return the extracted account information and associated transactions from a bank statement PDF. The results are accessible once the statement's status is `completed`.",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "GET",
       "path": "/v3/bank_statements/{id}/results",
       "examples": [
@@ -4607,6 +4682,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "GET",
       "path": "/v3/account_holders/{id}",
       "examples": [
@@ -4751,6 +4831,11 @@
       "servers": [],
       "description": "Deletes all of the transactions in the account holder's history. This operation is permanent and irreversible",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "DELETE",
       "path": "/v3/account_holders/{id}",
       "examples": [
@@ -4958,6 +5043,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "GET",
       "path": "/v3/account_holders",
       "examples": [
@@ -5168,6 +5258,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "POST",
       "path": "/v3/account_holders",
       "examples": [
@@ -5342,6 +5437,11 @@
       "servers": [],
       "description": "Identifies and categorizes recurring patterns found in the transaction history of the account holder, such as periodic payments or subscriptions. These patterns are called recurrence groups.",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "POST",
       "path": "/v3/account_holders/{id}/recurring_groups",
       "examples": [
@@ -5592,6 +5692,11 @@
       "servers": [],
       "description": "List all webhooks",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "GET",
       "path": "/v3/webhooks",
       "examples": [
@@ -5773,6 +5878,11 @@
       "servers": [],
       "description": "Create a webhook to be called when certain events occur.",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "POST",
       "path": "/v3/webhooks",
       "examples": [
@@ -5957,6 +6067,11 @@
       "servers": [],
       "description": "Retrieve a webhook",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "GET",
       "path": "/v3/webhooks/{id}",
       "examples": [
@@ -6124,6 +6239,11 @@
       "servers": [],
       "description": "Delete a webhook",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "DELETE",
       "path": "/v3/webhooks/{id}",
       "examples": [
@@ -6261,6 +6381,11 @@
       "servers": [],
       "description": "Update a webhook. Fields that aren't specified in the body will remain unchanged",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "PATCH",
       "path": "/v3/webhooks/{id}",
       "examples": [
@@ -6422,6 +6547,11 @@
       "servers": [],
       "description": "Get the current personalization ruleset.",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "GET",
       "path": "/v3/rules",
       "examples": [
@@ -6572,6 +6702,11 @@
       "servers": [],
       "description": "Set the personalization ruleset.",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "POST",
       "path": "/v3/rules",
       "examples": [
@@ -6740,6 +6875,11 @@
       "servers": [],
       "description": "Append a rule to the personalization ruleset.",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "POST",
       "path": "/v3/rules/append",
       "examples": [
@@ -6888,6 +7028,11 @@
       "servers": [],
       "description": "Delete the rule at the specified index from the personalization ruleset.",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "DELETE",
       "path": "/v3/rules/{index}",
       "examples": [
@@ -7054,6 +7199,11 @@
       "servers": [],
       "description": "Modify an existing rule at the specified index on the ruleset.",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "PATCH",
       "path": "/v3/rules/{index}",
       "examples": [
@@ -7318,6 +7468,11 @@
       "servers": [],
       "description": "List all reports",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "GET",
       "path": "/v3/reports",
       "examples": [
@@ -7550,6 +7705,11 @@
       "servers": [],
       "description": "Report a transaction with incorrect fields.",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "POST",
       "path": "/v3/reports",
       "examples": [
@@ -7759,6 +7919,11 @@
       "servers": [],
       "description": "Retrieve a report",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "GET",
       "path": "/v3/reports/{id}",
       "examples": [
@@ -7929,6 +8094,11 @@
       "servers": [],
       "description": "Delete a report",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "DELETE",
       "path": "/v3/reports/{id}",
       "examples": [
@@ -8033,6 +8203,11 @@
       "servers": [],
       "description": "Retrieves the set of categories. Category sets are different per account holder type.",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "GET",
       "path": "/v3/categories/{account_holder_type}",
       "examples": [
@@ -8345,6 +8520,11 @@
       "servers": [],
       "description": "Sets a custom set of categories. Transactions that don't match a category will be categorized `not enough information` regardless of whether it is present in the set.",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "POST",
       "path": "/v3/categories/{account_holder_type}",
       "examples": [
@@ -8590,6 +8770,11 @@
       "servers": [],
       "description": "Resets the set of categories of the specified account holder type to the original values.",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "POST",
       "path": "/v3/categories/{account_holder_type}/reset",
       "examples": [
@@ -8972,6 +9157,11 @@
       "servers": [],
       "description": "Resolves a query into an entity by querying our entity resolution system. \n    The parameters `name` and `website` are mutually exclusive. Calls to this endpoint using \n    the `name` parameter are billed the same way transactions are.",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "GET",
       "path": "/v3/entities/lookup",
       "examples": [
@@ -9184,6 +9374,11 @@
       "servers": [],
       "description": "Retrieve more information about an entity by using its unique ID.",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "GET",
       "path": "/v3/entities/{id}",
       "examples": [

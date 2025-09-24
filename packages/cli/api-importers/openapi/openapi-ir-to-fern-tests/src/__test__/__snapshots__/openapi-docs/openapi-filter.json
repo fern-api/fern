@@ -59,7 +59,7 @@
               },
               "custom_attributes": {
                 "docs": "A hash of key/value pairs containing any other data about the company you want Intercom to store.",
-                "type": "optional<map<string, string>>",
+                "type": "optional<map<string, optional<string>>>",
               },
               "industry": {
                 "docs": "The industry that this company operates in.",
@@ -193,7 +193,7 @@ types:
         type: optional<string>
         docs: The industry that this company operates in.
       custom_attributes:
-        type: optional<map<string, string>>
+        type: optional<map<string, optional<string>>>
         docs: >-
           A hash of key/value pairs containing any other data about the company
           you want Intercom to store.
@@ -261,7 +261,7 @@ types:
           "display-name": "Companies",
           "endpoints": {
             "createOrUpdateCompany": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create or Update a company",
               "docs": "You can create or update a company.
 
@@ -429,7 +429,7 @@ Companies are looked up via `company_id` in a `POST` request, if not found via `
               },
               "custom_attributes": {
                 "docs": "The custom attributes you have set on the company.",
-                "type": "optional<map<string, string>>",
+                "type": "optional<map<string, optional<string>>>",
               },
               "id": {
                 "docs": "The Intercom defined id representing the company.",
@@ -556,7 +556,6 @@ service:
     createOrUpdateCompany:
       path: /companies
       method: POST
-      auth: true
       docs: >
         You can create or update a company.
 
@@ -761,7 +760,7 @@ types:
         type: optional<integer>
         docs: The number of users in the company.
       custom_attributes:
-        type: optional<map<string, string>>
+        type: optional<map<string, optional<string>>>
         docs: The custom attributes you have set on the company.
       tags:
         type: optional<CompanyTags>

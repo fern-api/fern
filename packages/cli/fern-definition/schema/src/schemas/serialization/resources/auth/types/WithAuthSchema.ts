@@ -6,6 +6,7 @@ import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { ApiAuthSchema } from "./ApiAuthSchema";
+import { AuthSchemeKey } from "./AuthSchemeKey";
 import { AuthSchemeDeclarationSchema } from "./AuthSchemeDeclarationSchema";
 
 export const WithAuthSchema: core.serialization.ObjectSchema<
@@ -13,12 +14,12 @@ export const WithAuthSchema: core.serialization.ObjectSchema<
     FernDefinition.WithAuthSchema
 > = core.serialization.object({
     auth: ApiAuthSchema.optional(),
-    "auth-schemes": core.serialization.record(core.serialization.string(), AuthSchemeDeclarationSchema).optional(),
+    "auth-schemes": core.serialization.record(AuthSchemeKey, AuthSchemeDeclarationSchema).optional(),
 });
 
 export declare namespace WithAuthSchema {
     export interface Raw {
         auth?: ApiAuthSchema.Raw | null;
-        "auth-schemes"?: Record<string, AuthSchemeDeclarationSchema.Raw> | null;
+        "auth-schemes"?: Record<AuthSchemeKey.Raw, AuthSchemeDeclarationSchema.Raw> | null;
     }
 }

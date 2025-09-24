@@ -429,6 +429,7 @@
       "servers": [],
       "description": "You can create or update a company.\n\nCompanies will be only visible in Intercom when there is at least one associated user.\n\nCompanies are looked up via `company_id` in a `POST` request, if not found via `company_id`, the new company will be created, if found, that company will be updated.\n\n{% admonition type=\"attention\" name=\"Using `company_id`\" %}\n  You can set a unique `company_id` value when creating a company. However, it is not possible to update `company_id`. Be sure to set a unique value once upon creation of the company.\n{% /admonition %}\n",
       "authed": true,
+      "security": [],
       "method": "POST",
       "path": "/companies",
       "examples": [
@@ -7704,12 +7705,18 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "schema": {
-                    "type": "string"
-                  },
                   "generatedName": "CompanyCustomAttributesValue",
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "CompanyCustomAttributesValue",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
                   "groupName": [],
-                  "type": "primitive"
+                  "inline": true,
+                  "type": "nullable"
                 },
                 "generatedName": "CompanyCustomAttributes",
                 "groupName": [],
@@ -15374,12 +15381,18 @@
                     "type": "primitive"
                   },
                   "value": {
-                    "schema": {
-                      "type": "string"
-                    },
                     "generatedName": "CreateOrUpdateCompanyRequestCustomAttributesValue",
+                    "value": {
+                      "schema": {
+                        "type": "string"
+                      },
+                      "generatedName": "CreateOrUpdateCompanyRequestCustomAttributesValue",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
                     "groupName": [],
-                    "type": "primitive"
+                    "inline": true,
+                    "type": "nullable"
                   },
                   "generatedName": "CreateOrUpdateCompanyRequestCustomAttributes",
                   "groupName": [],
@@ -16370,40 +16383,46 @@
           "type": "primitive"
         },
         "value": {
+          "generatedName": "CustomAttributesValue",
           "value": {
-            "generatedName": "CustomAttributesValue",
-            "schemas": [
-              {
-                "schema": {
-                  "type": "string"
-                },
-                "generatedName": "CustomAttributesValue",
-                "groupName": [],
-                "type": "primitive"
-              },
-              {
-                "generatedName": "CustomAttributesValueOne",
-                "value": {
-                  "generatedName": "CustomAttributesValueOne",
-                  "schema": "custom_object_instance",
-                  "source": {
-                    "file": "../openapi.yml",
-                    "type": "openapi"
+            "value": {
+              "generatedName": "CustomAttributesValue",
+              "schemas": [
+                {
+                  "schema": {
+                    "type": "string"
                   },
-                  "type": "reference"
+                  "generatedName": "CustomAttributesValue",
+                  "groupName": [],
+                  "type": "primitive"
                 },
-                "type": "nullable"
-              }
-            ],
-            "groupName": [],
-            "source": {
-              "file": "../openapi.yml",
-              "type": "openapi"
+                {
+                  "generatedName": "CustomAttributesValueOne",
+                  "value": {
+                    "generatedName": "CustomAttributesValueOne",
+                    "schema": "custom_object_instance",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
+                  },
+                  "type": "nullable"
+                }
+              ],
+              "groupName": [],
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "inline": true,
+              "type": "undiscriminated"
             },
-            "inline": true,
-            "type": "undiscriminated"
+            "type": "oneOf"
           },
-          "type": "oneOf"
+          "groupName": [],
+          "inline": true,
+          "type": "nullable"
         },
         "generatedName": "CustomAttributes",
         "title": "Custom Attributes",
@@ -16507,12 +16526,18 @@
                     "type": "primitive"
                   },
                   "value": {
-                    "schema": {
-                      "type": "string"
-                    },
                     "generatedName": "CustomObjectInstanceCustomAttributesValue",
+                    "value": {
+                      "schema": {
+                        "type": "string"
+                      },
+                      "generatedName": "CustomObjectInstanceCustomAttributesValue",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
                     "groupName": [],
-                    "type": "primitive"
+                    "inline": true,
+                    "type": "nullable"
                   },
                   "generatedName": "CustomObjectInstanceCustomAttributes",
                   "groupName": [],
@@ -17365,12 +17390,18 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "schema": {
-                    "type": "string"
-                  },
                   "generatedName": "DataEventMetadataValue",
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "DataEventMetadataValue",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
                   "groupName": [],
-                  "type": "primitive"
+                  "inline": true,
+                  "type": "nullable"
                 },
                 "generatedName": "DataEventMetadata",
                 "groupName": [],
@@ -25753,66 +25784,72 @@
           "type": "primitive"
         },
         "value": {
+          "generatedName": "TicketCustomAttributesValue",
           "value": {
-            "generatedName": "TicketCustomAttributesValue",
-            "schemas": [
-              {
-                "generatedName": "TicketCustomAttributesValue",
-                "value": {
+            "value": {
+              "generatedName": "TicketCustomAttributesValue",
+              "schemas": [
+                {
+                  "generatedName": "TicketCustomAttributesValue",
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "TicketCustomAttributesValue",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "groupName": [],
+                  "type": "nullable"
+                },
+                {
                   "schema": {
-                    "type": "string"
+                    "type": "double"
                   },
                   "generatedName": "TicketCustomAttributesValue",
                   "groupName": [],
                   "type": "primitive"
                 },
-                "groupName": [],
-                "type": "nullable"
-              },
-              {
-                "schema": {
-                  "type": "double"
-                },
-                "generatedName": "TicketCustomAttributesValue",
-                "groupName": [],
-                "type": "primitive"
-              },
-              {
-                "schema": {
-                  "type": "boolean"
-                },
-                "generatedName": "TicketCustomAttributesValue",
-                "groupName": [],
-                "type": "primitive"
-              },
-              {
-                "value": {
+                {
+                  "schema": {
+                    "type": "boolean"
+                  },
                   "generatedName": "TicketCustomAttributesValue",
-                  "type": "unknown"
+                  "groupName": [],
+                  "type": "primitive"
                 },
-                "generatedName": "TicketCustomAttributesValue",
-                "groupName": [],
-                "type": "array"
+                {
+                  "value": {
+                    "generatedName": "TicketCustomAttributesValue",
+                    "type": "unknown"
+                  },
+                  "generatedName": "TicketCustomAttributesValue",
+                  "groupName": [],
+                  "type": "array"
+                },
+                {
+                  "generatedName": "TicketCustomAttributesValueFour",
+                  "schema": "file_attribute",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                }
+              ],
+              "groupName": [],
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
               },
-              {
-                "generatedName": "TicketCustomAttributesValueFour",
-                "schema": "file_attribute",
-                "source": {
-                  "file": "../openapi.yml",
-                  "type": "openapi"
-                },
-                "type": "reference"
-              }
-            ],
-            "groupName": [],
-            "source": {
-              "file": "../openapi.yml",
-              "type": "openapi"
+              "inline": true,
+              "type": "undiscriminated"
             },
-            "inline": true,
-            "type": "undiscriminated"
+            "type": "oneOf"
           },
-          "type": "oneOf"
+          "groupName": [],
+          "inline": true,
+          "type": "nullable"
         },
         "generatedName": "TicketCustomAttributes",
         "title": "Ticket Attributes",
@@ -26808,57 +26845,63 @@
           "type": "primitive"
         },
         "value": {
+          "generatedName": "TicketRequestCustomAttributesValue",
           "value": {
-            "generatedName": "TicketRequestCustomAttributesValue",
-            "schemas": [
-              {
-                "generatedName": "TicketRequestCustomAttributesValue",
-                "value": {
+            "value": {
+              "generatedName": "TicketRequestCustomAttributesValue",
+              "schemas": [
+                {
+                  "generatedName": "TicketRequestCustomAttributesValue",
+                  "value": {
+                    "schema": {
+                      "type": "string"
+                    },
+                    "generatedName": "TicketRequestCustomAttributesValue",
+                    "groupName": [],
+                    "type": "primitive"
+                  },
+                  "groupName": [],
+                  "type": "nullable"
+                },
+                {
                   "schema": {
-                    "type": "string"
+                    "type": "double"
                   },
                   "generatedName": "TicketRequestCustomAttributesValue",
                   "groupName": [],
                   "type": "primitive"
                 },
-                "groupName": [],
-                "type": "nullable"
-              },
-              {
-                "schema": {
-                  "type": "double"
-                },
-                "generatedName": "TicketRequestCustomAttributesValue",
-                "groupName": [],
-                "type": "primitive"
-              },
-              {
-                "schema": {
-                  "type": "boolean"
-                },
-                "generatedName": "TicketRequestCustomAttributesValue",
-                "groupName": [],
-                "type": "primitive"
-              },
-              {
-                "value": {
+                {
+                  "schema": {
+                    "type": "boolean"
+                  },
                   "generatedName": "TicketRequestCustomAttributesValue",
-                  "type": "unknown"
+                  "groupName": [],
+                  "type": "primitive"
                 },
-                "generatedName": "TicketRequestCustomAttributesValue",
-                "groupName": [],
-                "type": "array"
-              }
-            ],
-            "groupName": [],
-            "source": {
-              "file": "../openapi.yml",
-              "type": "openapi"
+                {
+                  "value": {
+                    "generatedName": "TicketRequestCustomAttributesValue",
+                    "type": "unknown"
+                  },
+                  "generatedName": "TicketRequestCustomAttributesValue",
+                  "groupName": [],
+                  "type": "array"
+                }
+              ],
+              "groupName": [],
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "inline": true,
+              "type": "undiscriminated"
             },
-            "inline": true,
-            "type": "undiscriminated"
+            "type": "oneOf"
           },
-          "type": "oneOf"
+          "groupName": [],
+          "inline": true,
+          "type": "nullable"
         },
         "generatedName": "TicketRequestCustomAttributes",
         "title": "Ticket Attributes",
@@ -30492,12 +30535,18 @@
                     "type": "primitive"
                   },
                   "value": {
-                    "schema": {
-                      "type": "string"
-                    },
                     "generatedName": "VisitorCustomAttributesValue",
+                    "value": {
+                      "schema": {
+                        "type": "string"
+                      },
+                      "generatedName": "VisitorCustomAttributesValue",
+                      "groupName": [],
+                      "type": "primitive"
+                    },
                     "groupName": [],
-                    "type": "primitive"
+                    "inline": true,
+                    "type": "nullable"
                   },
                   "generatedName": "VisitorCustomAttributes",
                   "groupName": [],

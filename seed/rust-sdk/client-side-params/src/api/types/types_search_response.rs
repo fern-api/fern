@@ -1,7 +1,7 @@
 use crate::types_resource::Resource;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct SearchResponse {
     pub results: Vec<Resource>,
     #[serde(skip_serializing_if = "Option::is_none")]

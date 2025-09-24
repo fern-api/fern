@@ -867,16 +867,22 @@
                     },
                     "valueType": {
                       "container": {
-                        "list": {
-                          "primitive": {
-                            "v1": "STRING",
-                            "v2": {
-                              "type": "string"
-                            }
+                        "optional": {
+                          "container": {
+                            "list": {
+                              "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                  "type": "string"
+                                }
+                              },
+                              "type": "primitive"
+                            },
+                            "type": "list"
                           },
-                          "type": "primitive"
+                          "type": "container"
                         },
-                        "type": "list"
+                        "type": "optional"
                       },
                       "type": "container"
                     },
@@ -930,31 +936,37 @@
                       "type": "primitive"
                     },
                     "valueType": {
-                      "name": {
-                        "originalName": "JsonschemaSchema",
-                        "camelCase": {
-                          "unsafeName": "jsonschemaSchema",
-                          "safeName": "jsonschemaSchema"
+                      "container": {
+                        "optional": {
+                          "name": {
+                            "originalName": "JsonschemaSchema",
+                            "camelCase": {
+                              "unsafeName": "jsonschemaSchema",
+                              "safeName": "jsonschemaSchema"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "jsonschema_schema",
+                              "safeName": "jsonschema_schema"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "JSONSCHEMA_SCHEMA",
+                              "safeName": "JSONSCHEMA_SCHEMA"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "JsonschemaSchema",
+                              "safeName": "JsonschemaSchema"
+                            }
+                          },
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "typeId": "type_:JsonschemaSchema",
+                          "type": "named"
                         },
-                        "snakeCase": {
-                          "unsafeName": "jsonschema_schema",
-                          "safeName": "jsonschema_schema"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "JSONSCHEMA_SCHEMA",
-                          "safeName": "JSONSCHEMA_SCHEMA"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "JsonschemaSchema",
-                          "safeName": "JsonschemaSchema"
-                        }
+                        "type": "optional"
                       },
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "typeId": "type_:JsonschemaSchema",
-                      "type": "named"
+                      "type": "container"
                     },
                     "type": "map"
                   },
@@ -2158,31 +2170,37 @@
                       "type": "primitive"
                     },
                     "valueType": {
-                      "name": {
-                        "originalName": "JsonschemaSchema",
-                        "camelCase": {
-                          "unsafeName": "jsonschemaSchema",
-                          "safeName": "jsonschemaSchema"
+                      "container": {
+                        "optional": {
+                          "name": {
+                            "originalName": "JsonschemaSchema",
+                            "camelCase": {
+                              "unsafeName": "jsonschemaSchema",
+                              "safeName": "jsonschemaSchema"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "jsonschema_schema",
+                              "safeName": "jsonschema_schema"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "JSONSCHEMA_SCHEMA",
+                              "safeName": "JSONSCHEMA_SCHEMA"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "JsonschemaSchema",
+                              "safeName": "JsonschemaSchema"
+                            }
+                          },
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "typeId": "type_:JsonschemaSchema",
+                          "type": "named"
                         },
-                        "snakeCase": {
-                          "unsafeName": "jsonschema_schema",
-                          "safeName": "jsonschema_schema"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "JSONSCHEMA_SCHEMA",
-                          "safeName": "JSONSCHEMA_SCHEMA"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "JsonschemaSchema",
-                          "safeName": "JsonschemaSchema"
-                        }
+                        "type": "optional"
                       },
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "typeId": "type_:JsonschemaSchema",
-                      "type": "named"
+                      "type": "container"
                     },
                     "type": "map"
                   },
@@ -3510,10 +3528,13 @@
                 },
                 "value": {
                   "value": {
-                    "value": "STRING",
-                    "type": "primitive"
+                    "value": {
+                      "value": "STRING",
+                      "type": "primitive"
+                    },
+                    "type": "list"
                   },
-                  "type": "list"
+                  "type": "optional"
                 },
                 "type": "map"
               },
@@ -3550,8 +3571,11 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "value": "type_:JsonschemaSchema",
-                  "type": "named"
+                  "value": {
+                    "value": "type_:JsonschemaSchema",
+                    "type": "named"
+                  },
+                  "type": "optional"
                 },
                 "type": "map"
               },
@@ -4339,8 +4363,11 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "value": "type_:JsonschemaSchema",
-                  "type": "named"
+                  "value": {
+                    "value": "type_:JsonschemaSchema",
+                    "type": "named"
+                  },
+                  "type": "optional"
                 },
                 "type": "map"
               },
