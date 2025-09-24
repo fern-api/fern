@@ -1,7 +1,7 @@
 imports:
-  commons: ../commons.yml
+  commons: ./commons.yml
   endpoints: ./endpoints.yml
-  environment: ../environment.yml
+  environment: ./environment.yml
   types: ./types.yml
   variables: ./variables.yml
 types:

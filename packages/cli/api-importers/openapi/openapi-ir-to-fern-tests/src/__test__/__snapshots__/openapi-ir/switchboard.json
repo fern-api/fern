@@ -81,7 +81,28 @@
         {
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": "x-session-id",
+              "value": {
+                "value": {
+                  "value": "x-session-id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "x-call-type",
+              "value": {
+                "value": {
+                  "value": "x-call-type",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "codeSamples": [],
           "type": "full"
         }
@@ -2043,6 +2064,13 @@
           "pathParameters": [],
           "queryParameters": [
             {
+              "name": "status",
+              "value": {
+                "value": "awaiting_capacity",
+                "type": "enum"
+              }
+            },
+            {
               "name": "offset",
               "value": {
                 "value": {
@@ -3606,6 +3634,26 @@
             }
           ],
           "queryParameters": [
+            {
+              "name": "includeNavigationBar",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "disableResize",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
             {
               "name": "Screen resolution",
               "value": {

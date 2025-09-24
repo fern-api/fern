@@ -5,7 +5,7 @@
 import * as serializers from "../../../../../index";
 import * as FernIr from "../../../../../../api/index";
 import * as core from "../../../../../../core";
-import { Name } from "../../../../commons/types/Name";
+import { Name } from "../../commons/types/Name";
 
 export const OAuth: core.serialization.ObjectSchema<serializers.dynamic.OAuth.Raw, FernIr.dynamic.OAuth> =
     core.serialization.objectWithoutOptionalProperties({

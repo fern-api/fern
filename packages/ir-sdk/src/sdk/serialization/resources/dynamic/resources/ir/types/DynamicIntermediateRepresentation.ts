@@ -5,11 +5,11 @@
 import * as serializers from "../../../../../index";
 import * as FernIr from "../../../../../../api/index";
 import * as core from "../../../../../../core";
-import { TypeId } from "../../../../commons/types/TypeId";
+import { TypeId } from "../../commons/types/TypeId";
 import { NamedType } from "../../types/types/NamedType";
-import { EndpointId } from "../../../../commons/types/EndpointId";
+import { EndpointId } from "../../commons/types/EndpointId";
 import { Endpoint } from "../../endpoints/types/Endpoint";
-import { EnvironmentsConfig } from "../../../../environment/types/EnvironmentsConfig";
+import { EnvironmentsConfig } from "../../environment/types/EnvironmentsConfig";
 import { NamedParameter } from "../../types/types/NamedParameter";
 import { VariableDeclaration } from "../../variables/types/VariableDeclaration";
 import { GeneratorConfig } from "./GeneratorConfig";

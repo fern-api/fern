@@ -6,5 +6,5 @@ import * as FernIr from "../../../../../index";
 
 export interface EnumType {
     declaration: FernIr.dynamic.Declaration;
-    values: FernIr.NameAndWireValue[];
+    values: FernIr.dynamic.NameAndWireValue[];
 }

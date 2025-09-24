@@ -29,6 +29,9 @@
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "limit": 1.1,
+                  },
                   "response": {
                     "body": {
                       "users": [
@@ -119,7 +122,9 @@ service:
         type: GetUsersResponse
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            limit: 1.1
+          response:
             body:
               users:
                 - id: id

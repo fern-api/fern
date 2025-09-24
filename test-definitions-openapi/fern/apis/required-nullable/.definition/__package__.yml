@@ -1,0 +1,36 @@
+types:
+  Foo:
+    properties:
+      bar: optional<string>
+      nullable_bar: optional<nullable<string>>
+      nullable_required_bar: optional<nullable<string>>
+      required_bar: string
+    source:
+      openapi: openapi.json
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getFoo:
+      auth: false
+      display-name: Get foo
+      examples:
+        - response:
+            body:
+              key: value
+      method: GET
+      path: /foo
+      request:
+        name: GetFooRequest
+        query-parameters:
+          baz:
+            docs: An optional baz
+            type: optional<nullable<string>>
+      response:
+        docs: successful operation
+        status-code: 200
+        type: unknown
+      source:
+        openapi: openapi.json
+  source:
+    openapi: openapi.json

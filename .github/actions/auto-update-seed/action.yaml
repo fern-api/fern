@@ -10,50 +10,36 @@ inputs:
   generator-path:
     description: The path to the source code of the generator (e.g., generators/go, generators/ruby)
     required: true
-  language-name:
-    description: The name of the language (e.g., go, ruby)
-    required: true
   skip-scripts:
     description: Whether to skip running scripts during seed generation
     required: false
     default: "false"
+  fixtures-to-run:
+    description: Specific fixtures to run. If not supplied, will run all fixtures. Note - for multiple fixtures at once, separate by space, not comma.
+    required: false
+    default: ""
   allow-unexpected-failures:
     description: Whether to allow unexpected failures during seed generation
     required: false
     default: "false"
+  index:
+    description: The matrix strategy index of the job (to differentiate when parallelizing jobs)
+    required: false
+    default: "0"
   cache-disabled:
     description: "Whether to skip caching and always regenerate"
     required: false
     default: "true"
-  create-artifacts:
-    description: "Whether or not to create artifacts for the seed changes"
-    required: true
-  create-pr:
-    description: "Whether or not to create a PR with changes"
-    required: true
-  secret-fern-github-pat:
-    description: "GitHub Access Token for Fern"
-    required: true
-  secret-pr-bot-gh-pat:
-    description: "GitHub Access Token for PR Bot"
-    required: true
 
 runs:
   using: "composite"
   steps:
-    - name: Validate update options
-      shell: bash
-      run: |
-        if [[ "${{ inputs.create-artifacts }}" == "${{ inputs.create-pr }}" ]]; then
-          echo "Invalid seed update settings. One and only one update method must be enabled."
-          exit 1
-        fi
-
     - name: Run seed
       uses: ./.github/actions/cached-seed
       with:
         generator-name: ${{ inputs.generator-name }}
         generator-path: ${{ inputs.generator-path }}
+        fixtures-to-run: ${{ inputs.fixtures-to-run }}
         validate-git-diff: false
         allow-unexpected-failures: ${{ inputs.allow-unexpected-failures }}
         skip-scripts: ${{ inputs.skip-scripts }}
@@ -79,57 +65,14 @@ runs:
       if: steps.check-changes.outputs.seed-changes-generated == 'true' && inputs.create-artifacts == 'true'
       shell: bash
       run: |
-        git diff --staged > seed-${{ inputs.generator-name }}.patch
+        git diff --staged > seed-${{ inputs.generator-name }}-${{ inputs.index }}.patch
 
     # Upload patch files as artifacts to be applied and committed by caller when all of seed is up to date
     - name: Upload Seed Artifacts
       if: steps.check-changes.outputs.seed-changes-generated == 'true' && inputs.create-artifacts == 'true'
       uses: actions/upload-artifact@v4
       with:
-        name: seed-${{ inputs.generator-name }}.patch
-        path: seed-${{ inputs.generator-name }}.patch
+        name: seed-${{ inputs.generator-name }}-${{ inputs.index }}.patch
+        path: seed-${{ inputs.generator-name }}-${{ inputs.index }}.patch
         if-no-files-found: error
         retention-days: 7
-
-    # Create PR, approve and set to merge all at generator level
-    - name: Create Pull Request
-      if: steps.check-changes.outputs.seed-changes-generated == 'true' && inputs.create-pr == 'true'
-      id: cpr
-      uses: peter-evans/create-pull-request@v5
-      with:
-        token: ${{ inputs.secret-fern-github-pat }}
-        commit-message: "chore(${{ inputs.language-name }}): update ${{ inputs.generator-name }} seed"
-        title: "chore(${{ inputs.language-name }}): update ${{ inputs.generator-name }} seed"
-        branch: update-${{ inputs.generator-name }}-seed
-        body: "Auto-generated PR, triggered by GitHub event: ${{ github.event_name }} from branch: ${{ github.ref_name }}.\nGitHub workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-        delete-branch: true
-        labels: |
-          seed
-          language/${{ inputs.language-name }}
-
-    - name: Log PR Creation Failure
-      if: steps.cpr.outputs.pull-request-operation != 'created' && inputs.create-pr  == 'true'
-      shell: bash
-      run: |
-        echo "PR was not created, likely due to no diff for the generated seed output"
-
-    - name: Log PR Creation Details
-      if: steps.cpr.outputs.pull-request-operation == 'created' && inputs.create-pr  == 'true'
-      shell: bash
-      run: |
-        echo "PR Created: ${{ steps.cpr.outputs.pull-request-url }}"
-
-    - name: Enable Pull Request Automerge
-      if: steps.cpr.outputs.pull-request-operation == 'created' && inputs.create-pr  == 'true'
-      uses: peter-evans/enable-pull-request-automerge@v3
-      with:
-        token: ${{ inputs.secret-fern-github-pat }}
-        pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-        merge-method: squash
-
-    - name: Approve PR
-      if: steps.cpr.outputs.pull-request-operation == 'created' && inputs.create-pr  == 'true'
-      uses: ./.github/actions/auto-approve
-      with:
-        approver-gh-token: ${{ inputs.secret-pr-bot-gh-pat }}
-        pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}

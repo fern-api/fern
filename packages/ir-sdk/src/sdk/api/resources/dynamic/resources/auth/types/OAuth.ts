@@ -5,6 +5,6 @@
 import * as FernIr from "../../../../../index";
 
 export interface OAuth {
-    clientId: FernIr.Name;
-    clientSecret: FernIr.Name;
+    clientId: FernIr.dynamic.Name;
+    clientSecret: FernIr.dynamic.Name;
 }
