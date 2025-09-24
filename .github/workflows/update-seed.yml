@@ -1293,16 +1293,15 @@ jobs:
         run: |
           git apply artifacts/*.patch
 
-      # CHRISM - avoid for now during testing
-      # - name: Add and Commit Changes
-      #   id: commit-changes
-      #   uses: EndBug/add-and-commit@v9
-      #   if: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES == 'true' }}
-      #   with:
-      #     add: "seed/*"
-      #     push: true
-      #     fetch: false
-      #     message: "Automated update of seed files"
+      - name: Add and Commit Changes
+        id: commit-changes
+        uses: EndBug/add-and-commit@v9
+        if: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES == 'true' }}
+        with:
+          add: "seed/*"
+          push: true
+          fetch: false
+          message: "Automated update of seed files"
 
   # Use always() to ensure this runs even if stages from needs are skipped.
   # Add check back to make sure it doesn't run for failures or cancellations.
