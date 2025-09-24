@@ -368,6 +368,12 @@ fixtures:
     - customConfig:
         shouldGenerateWebsocketClients: true
       outputFolder: websockets
+  any-auth:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        generateEndpointMetadata: true
+      outputFolder: generate-endpoint-metadata
 scripts:
   - docker: fernapi/ts-seed
     commands:

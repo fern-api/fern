@@ -2,7 +2,7 @@ use crate::nullable_optional_deserialization_test_request::DeserializationTestRe
 use chrono::{DateTime, NaiveDate, Utc};
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct DeserializationTestResponse {
     pub echo: DeserializationTestRequest,
     #[serde(rename = "processedAt")]

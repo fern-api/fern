@@ -1,7 +1,7 @@
 use crate::types_user::User;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PaginatedUserResponse {
     pub users: Vec<User>,
     pub start: i32,

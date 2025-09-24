@@ -127,7 +127,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     signature,
                     endpoint,
                     subpackage,
-                    errorDecoder,
+                    errorDecoder: undefined, // Do not need to build the error decoder here since its built globally for all endpoint errors
                     rawClient: false
                 })
             );
@@ -182,7 +182,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     signature,
                     endpoint,
                     subpackage,
-                    errorDecoder,
+                    errorDecoder: undefined, // Do not need to build the error decoder here since its built globally for all endpoint errors
                     rawClient: false,
                     encodeQuery: false
                 })
@@ -297,7 +297,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     signature,
                     endpoint,
                     subpackage,
-                    errorDecoder,
+                    errorDecoder: undefined, // Do not need to build the error decoder here since its built globally for all endpoint errors
                     rawClient: true
                 })
             );

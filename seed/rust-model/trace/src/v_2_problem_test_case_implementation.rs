@@ -2,7 +2,7 @@ use crate::v_2_problem_test_case_implementation_description::TestCaseImplementat
 use crate::v_2_problem_test_case_function::TestCaseFunction;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct TestCaseImplementation {
     pub description: TestCaseImplementationDescription,
     pub function: TestCaseFunction,

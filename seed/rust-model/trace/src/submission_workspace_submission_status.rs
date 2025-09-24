@@ -3,7 +3,7 @@ use crate::submission_running_submission_state::RunningSubmissionState;
 use crate::submission_workspace_run_details::WorkspaceRunDetails;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "type")]
 pub enum WorkspaceSubmissionStatus {
         Stopped,

@@ -24,18 +24,6 @@ var (
 	//go:embed sdk/client/client_test.go.tmpl
 	clientTestFile string
 
-	//go:embed sdk/internal/caller.go
-	callerFile string
-
-	//go:embed sdk/internal/caller_test.go
-	callerTestFile string
-
-	//go:embed sdk/internal/error_decoder.go
-	errorDecoderFile string
-
-	//go:embed sdk/internal/error_decoder_test.go
-	errorDecoderTestFile string
-
 	//go:embed sdk/internal/explicit_fields.go
 	explicitFieldsFile string
 
@@ -72,12 +60,6 @@ var (
 	//go:embed sdk/core/page.go
 	pageFile string
 
-	//go:embed sdk/internal/pager.go
-	pagerFile string
-
-	//go:embed sdk/internal/pager_test.go
-	pagerTestFile string
-
 	//go:embed sdk/utils/pointer.go
 	pointerFile string
 
@@ -87,17 +69,8 @@ var (
 	//go:embed sdk/internal/query_test.go
 	queryTestFile string
 
-	//go:embed sdk/internal/retrier.go
-	retrierFile string
-
-	//go:embed sdk/internal/retrier_test.go
-	retrierTestFile string
-
 	//go:embed sdk/core/stream.go
 	streamFile string
-
-	//go:embed sdk/internal/streamer.go
-	streamerFile string
 )
 
 // WriteOptionalHelpers writes the Optional[T] helper functions.
@@ -1120,7 +1093,7 @@ func (f *fileWriter) WriteClient(
 		// Include the error decoder, if any.
 		if len(endpoint.Errors) > 0 {
 			if errorDiscriminationByPropertyStrategy == nil {
-				f.P("errorCodes := internal.ErrorCodes{")
+				f.P("errorCodes := ErrorCodes{")
 				for _, responseError := range endpoint.Errors {
 					var errorType string
 					errorDeclaration := f.errors[responseError.Error.ErrorId]
