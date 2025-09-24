@@ -22,7 +22,6 @@ export class DocComment extends AstNode {
     private readonly description?: string;
     private readonly parameters: DocComment.Parameter[];
     private readonly returns?: string;
-    private readonly errors: string[];
     private readonly examples: string[];
 
     public constructor({ summary, description, parameters, returns, errors, examples }: DocComment.Args) {
@@ -34,7 +33,6 @@ export class DocComment extends AstNode {
             description: this.sanitizeText(param.description)
         }));
         this.returns = returns ? this.sanitizeText(returns) : undefined;
-        this.errors = (errors ?? []).map((e) => this.sanitizeText(e));
         this.examples = (examples ?? []).map((e) => this.sanitizeText(e));
     }
 
@@ -117,10 +115,13 @@ export class DocComment extends AstNode {
      * Sanitizes text content to ensure it doesn't break Rust doc comment syntax.
      */
     private sanitizeText(text: string): string {
-        return text
-            .replace(/\r\n/g, "\n")
-            .replace(/\r/g, "\n")
-            .replace(/\x00/g, "") // Remove null bytes
-            .trim();
+        return (
+            text
+                .replace(/\r\n/g, "\n")
+                .replace(/\r/g, "\n")
+                // biome-ignore lint/suspicious/noControlCharactersInRegex: allow
+                .replace(/\x00/g, "") // Remove null bytes
+                .trim()
+        );
     }
 }
