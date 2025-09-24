@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.12.2
+  changelogEntry:
+    - summary: |
+        Fix small inconsistencies in dynamic snippets logic blocking wire test generation
+      type: fix
+  createdAt: "2025-09-24"
+  irVersion: 59
+
 - version: 1.12.1
   changelogEntry:
     - summary: |
