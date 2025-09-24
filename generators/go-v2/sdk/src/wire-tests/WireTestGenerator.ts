@@ -205,7 +205,7 @@ export class WireTestGenerator {
         endpoint,
         errorCase
     }: {
-        endpoint: FernIr.dynamic.Endpoint;
+        endpoint: HttpEndpoint;
         errorCase?: boolean;
     }): go.AstNode[] {
         const ENDPOINT_STUB_NAME = "stub";
@@ -335,7 +335,7 @@ export class WireTestGenerator {
                     SdkGeneratorContext.chainMethods(
                         go.invokeFunc({
                             func: go.typeReference({
-                                name: endpoint.location.method.toLowerCase().replace(/^./, (c) => c.toUpperCase()),
+                                name: endpoint.method.toLowerCase().replace(/^./, (c) => c.toUpperCase()),
                                 importPath: "github.com/wiremock/go-wiremock"
                             }),
                             arguments_: [
@@ -350,8 +350,8 @@ export class WireTestGenerator {
                             ],
                             multiline: false
                         }),
-                        ...(endpoint.request.type === "inlined" && endpoint.request.queryParameters
-                            ? endpoint.request.queryParameters
+                        ...(endpoint.requestBody?.type === "inlinedRequestBody"
+                            ? endpoint.queryParameters
                                   //Exclude optional since it appears that optional query params do not automatically get mocked in the dynamic snippet invocation (for now)
                                   .filter(
                                       (queryParameter: FernIr.dynamic.NamedParameter) =>
