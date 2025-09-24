@@ -1639,13 +1639,13 @@ func (f *fileWriter) getPaginationInfo(
 			PageIsOptional:            pageIsOptional,
 			SetPageRequestParameter:   `queryParams.Set("` + wireValue + `", fmt.Sprintf("%v", ` + value + `))`,
 			Results:                   pagination.Cursor.Results,
-			ResultsPropertyPath:       responsePropertyPathToFullPathString("response", pagination.Cursor.Results.PropertyPath),
-			ResultsNilCheck:           responsePropertyPathToNilCheck("response", pagination.Cursor.Results.PropertyPath),
+			ResultsPropertyPath:       responsePropertyPathToFullPathString("response", extractNamesFromPropertyPath(pagination.Cursor.Results.PropertyPath)),
+			ResultsNilCheck:           responsePropertyPathToNilCheck("response", extractNamesFromPropertyPath(pagination.Cursor.Results.PropertyPath)),
 			ResultsSingleGoType:       typeReferenceToGoType(resultsSingleType, f.types, scope, f.baseImportPath, "", false),
 			ResultsGoType:             typeReferenceToGoType(pagination.Cursor.Results.Property.ValueType, f.types, scope, f.baseImportPath, "", false),
 			NextCursor:                pagination.Cursor.Next,
-			NextCursorPropertyPath:    responsePropertyPathToFullPathString("response", pagination.Cursor.Next.PropertyPath),
-			NextCursorNilCheck:        responsePropertyPathToNilCheck("response", pagination.Cursor.Next.PropertyPath),
+			NextCursorPropertyPath:    responsePropertyPathToFullPathString("response", extractNamesFromPropertyPath(pagination.Cursor.Next.PropertyPath)),
+			NextCursorNilCheck:        responsePropertyPathToNilCheck("response", extractNamesFromPropertyPath(pagination.Cursor.Next.PropertyPath)),
 			NextCursorGoType:          typeReferenceToGoType(pagination.Cursor.Next.Property.ValueType, f.types, scope, f.baseImportPath, "", false),
 			NextCursorIsOptional:      nextCursorIsOptional,
 		}, nil
@@ -1686,8 +1686,8 @@ func (f *fileWriter) getPaginationInfo(
 			PageIsInteger:             pageIsInteger,
 			SetPageRequestParameter:   `queryParams.Set("` + wireValue + `", fmt.Sprintf("%v", ` + value + `))`,
 			Results:                   pagination.Offset.Results,
-			ResultsPropertyPath:       responsePropertyPathToFullPathString("response", pagination.Offset.Results.PropertyPath),
-			ResultsNilCheck:           responsePropertyPathToNilCheck("response", pagination.Offset.Results.PropertyPath),
+			ResultsPropertyPath:       responsePropertyPathToFullPathString("response", extractNamesFromPropertyPath(pagination.Offset.Results.PropertyPath)),
+			ResultsNilCheck:           responsePropertyPathToNilCheck("response", extractNamesFromPropertyPath(pagination.Offset.Results.PropertyPath)),
 			ResultsGoType:             typeReferenceToGoType(pagination.Offset.Results.Property.ValueType, f.types, scope, f.baseImportPath, "", false),
 			ResultsSingleGoType:       typeReferenceToGoType(resultsSingleType, f.types, scope, f.baseImportPath, "", false),
 		}, nil
@@ -1739,6 +1739,15 @@ func singleTypeReferenceFromResponseProperty(responseProperty *ir.ResponseProper
 		return nil, fmt.Errorf("unsupported pagination results type %q", valueType.Type)
 	}
 	return nil, nil
+}
+
+// extractNamesFromPropertyPath extracts the Name field from each PropertyPathItem.
+func extractNamesFromPropertyPath(propertyPath []*ir.PropertyPathItem) []*common.Name {
+	names := make([]*common.Name, len(propertyPath))
+	for i, item := range propertyPath {
+		names[i] = item.Name
+	}
+	return names
 }
 
 // responsePropertyPathToString returns if condition that ensures we don't accidentally
