@@ -299,7 +299,7 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ruby-sdk) }}
-    
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -331,13 +331,13 @@ jobs:
     needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.ruby-v2 == 'true' ||  needs.changes.outputs.seed == 'true' }}
     runs-on: ubuntu-latest
-    
+
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ruby-sdk-v2) }}
-    
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -374,7 +374,7 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.pydantic) }}
-    
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -411,7 +411,7 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.python-sdk) }}
-    
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -448,7 +448,7 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.fastapi) }}
-    
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -485,7 +485,7 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.openapi) }}
-    
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -522,7 +522,7 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.postman) }}
-    
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -559,7 +559,7 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-sdk) }}
-    
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -596,7 +596,7 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-model) }}
-    
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -633,7 +633,7 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-spring) }}
-    
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -670,7 +670,7 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ts-sdk) }}
-    
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -707,7 +707,7 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ts-express) }}
-    
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -744,7 +744,7 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-fiber) }}
-    
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -781,7 +781,7 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-model) }}
-    
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -818,7 +818,7 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-sdk) }}
-    
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -855,7 +855,7 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.csharp-model) }}
-    
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -892,7 +892,7 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.csharp-sdk) }}
-    
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -929,7 +929,7 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.php-model) }}
-    
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -966,7 +966,7 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.php-sdk) }}
-    
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -1003,7 +1003,7 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.swift-sdk) }}
-    
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -1040,7 +1040,7 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.rust-model) }}
-    
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -1077,7 +1077,7 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.rust-sdk) }}
-    
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -1375,7 +1375,6 @@ jobs:
         if: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES == 'true' }}
         run: |
           git apply artifacts/${{ matrix.sdk-name }}-*.patch
-  
 
       # Create PR, approve and set to merge per generator
       - name: Create Pull Request
