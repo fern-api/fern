@@ -16,7 +16,7 @@ final class HTTPClient: Sendable {
         contentType requestContentType: HTTP.ContentType = .applicationJson,
         headers requestHeaders: [String: String?] = [:],
         queryParams requestQueryParams: [String: QueryParameter?] = [:],
-        body requestBody: (any Encodable)? = nil,
+        body requestBody: Any? = nil,
         requestOptions: RequestOptions? = nil
     ) async throws {
         _ = try await performRequest(
@@ -38,15 +38,19 @@ final class HTTPClient: Sendable {
         contentType requestContentType: HTTP.ContentType = .applicationJson,
         headers requestHeaders: [String: String?] = [:],
         queryParams requestQueryParams: [String: QueryParameter?] = [:],
-        body requestBody: (any Encodable)? = nil,
+        body requestBody: Any? = nil,
         requestOptions: RequestOptions? = nil,
         responseType: T.Type
     ) async throws -> T {
         let requestBody: HTTP.RequestBody? = requestBody.map { body in
-            if let data = body as? Data {
+            if let multipartData = body as? MultipartFormData {
+                return .multipartFormData(multipartData)
+            } else if let data = body as? Data {
                 return .data(data)
+            } else if let encodable = body as? any Encodable {
+                return .jsonEncodable(encodable)
             } else {
-                return .jsonEncodable(body)
+                preconditionFailure("Unsupported body type: \(type(of: body))")
             }
         }
 
@@ -111,6 +115,7 @@ final class HTTPClient: Sendable {
 
         // Set headers
         let headers = try await buildRequestHeaders(
+            requestBody: requestBody,
             requestContentType: requestContentType,
             requestHeaders: requestHeaders,
             requestOptions: requestOptions
@@ -161,12 +166,18 @@ final class HTTPClient: Sendable {
     }
 
     private func buildRequestHeaders(
+        requestBody: HTTP.RequestBody?,
         requestContentType: HTTP.ContentType,
         requestHeaders: [String: String?],
         requestOptions: RequestOptions? = nil
     ) async throws -> [String: String] {
         var headers = clientConfig.headers ?? [:]
-        headers["Content-Type"] = requestContentType.rawValue
+
+        headers["Content-Type"] = buildContentTypeHeader(
+            requestBody: requestBody,
+            requestContentType: requestContentType
+        )
+
         if let headerAuth = clientConfig.headerAuth {
             headers[headerAuth.header] = requestOptions?.apiKey ?? headerAuth.key
         }
@@ -185,6 +196,23 @@ final class HTTPClient: Sendable {
             headers[key] = value
         }
         return headers
+    }
+
+    private func buildContentTypeHeader(
+        requestBody: HTTP.RequestBody?,
+        requestContentType: HTTP.ContentType,
+    ) -> String {
+        var contentType = requestContentType.rawValue
+        if let requestBody, case .multipartFormData(let multipartData) = requestBody {
+            if contentType != HTTP.ContentType.multipartFormData.rawValue {
+                preconditionFailure(
+                    "The content type for multipart form data requests must be multipart/form-data - this indicates an unexpected error in the SDK."
+                )
+            }
+            // Multipart form data content type must include the boundary
+            contentType = "\(contentType); boundary=\(multipartData.boundary)"
+        }
+        return contentType
     }
 
     private func getBearerAuthToken(_ requestOptions: RequestOptions?) async throws -> String? {
@@ -213,6 +241,8 @@ final class HTTPClient: Sendable {
             }
         case .data(let dataBody):
             return dataBody
+        case .multipartFormData(let multipartData):
+            return multipartData.data()
         }
     }
 

@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.2.1
+  createdAt: "2025-09-23"
+  changelogEntry:
+    - type: chore
+      summary: Add request parameter type generation support
+  irVersion: 59
+
 - version: 0.2.0
   createdAt: "2025-09-20"
   changelogEntry:

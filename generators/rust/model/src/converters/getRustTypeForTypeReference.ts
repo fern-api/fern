@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { rust } from "@fern-api/rust-codegen";
 import { PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api";
+import { isFloatingPointType } from "../utils/primitiveTypeUtils";
 
 export function generateRustTypeForTypeReference(typeReference: TypeReference): rust.Type {
     switch (typeReference.type) {
@@ -23,11 +24,21 @@ export function generateRustTypeForTypeReference(typeReference: TypeReference): 
                     ),
                 set: (setType) => {
                     // Rust doesn't have a built-in Set, use HashSet
+                    const elementType = isFloatingPointType(setType)
+                        ? rust.Type.reference(
+                              rust.reference({
+                                  name: "OrderedFloat",
+                                  module: "ordered_float",
+                                  genericArgs: [generateRustTypeForTypeReference(setType)]
+                              })
+                          )
+                        : generateRustTypeForTypeReference(setType);
+
                     return rust.Type.reference(
                         rust.reference({
                             name: "HashSet",
                             module: "std::collections",
-                            genericArgs: [generateRustTypeForTypeReference(setType)]
+                            genericArgs: [elementType]
                         })
                     );
                 },

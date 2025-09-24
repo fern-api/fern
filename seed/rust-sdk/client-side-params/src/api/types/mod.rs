@@ -1,3 +1,12 @@
+pub mod get_client_query_request;
+pub mod get_connection_query_request;
+pub mod get_resource_query_request;
+pub mod get_user_by_id_query_request;
+pub mod list_clients_query_request;
+pub mod list_connections_query_request;
+pub mod list_resources_query_request;
+pub mod list_users_query_request;
+pub mod search_resources_request;
 pub mod types_client;
 pub mod types_connection;
 pub mod types_create_user_request;
@@ -9,6 +18,15 @@ pub mod types_search_response;
 pub mod types_update_user_request;
 pub mod types_user;
 
+pub use get_client_query_request::*;
+pub use get_connection_query_request::*;
+pub use get_resource_query_request::*;
+pub use get_user_by_id_query_request::*;
+pub use list_clients_query_request::*;
+pub use list_connections_query_request::*;
+pub use list_resources_query_request::*;
+pub use list_users_query_request::*;
+pub use search_resources_request::*;
 pub use types_client::*;
 pub use types_connection::*;
 pub use types_create_user_request::*;

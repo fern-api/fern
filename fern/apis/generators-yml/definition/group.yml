@@ -75,6 +75,8 @@ types:
     properties:
       uri: string
       token: string
+      mode: optional<literal<"pull-request">>
+      license: optional<license.GithubLicenseSchema>
 
   GeneratorSnippetsSchema:
     properties:

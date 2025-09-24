@@ -1,3 +1,5 @@
+pub mod filter_by_role_query_request;
+pub mod list_users_query_request;
 pub mod nullable_optional_address;
 pub mod nullable_optional_complex_profile;
 pub mod nullable_optional_create_user_request;
@@ -17,7 +19,13 @@ pub mod nullable_optional_user_profile;
 pub mod nullable_optional_user_response;
 pub mod nullable_optional_user_role;
 pub mod nullable_optional_user_status;
+pub mod search_request;
+pub mod search_users_query_request;
+pub mod update_complex_profile_request;
+pub mod update_tags_request;
 
+pub use filter_by_role_query_request::*;
+pub use list_users_query_request::*;
 pub use nullable_optional_address::*;
 pub use nullable_optional_complex_profile::*;
 pub use nullable_optional_create_user_request::*;
@@ -37,3 +45,7 @@ pub use nullable_optional_user_profile::*;
 pub use nullable_optional_user_response::*;
 pub use nullable_optional_user_role::*;
 pub use nullable_optional_user_status::*;
+pub use search_request::*;
+pub use search_users_query_request::*;
+pub use update_complex_profile_request::*;
+pub use update_tags_request::*;

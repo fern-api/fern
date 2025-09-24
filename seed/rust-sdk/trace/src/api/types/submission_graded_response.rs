@@ -3,7 +3,7 @@ use crate::submission_test_case_result_with_stdout::TestCaseResultWithStdout;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct GradedResponse {
     #[serde(rename = "submissionId")]
     pub submission_id: SubmissionId,

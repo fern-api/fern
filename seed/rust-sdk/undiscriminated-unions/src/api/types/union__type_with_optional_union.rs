@@ -1,7 +1,7 @@
 use crate::union__my_union::MyUnion;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct TypeWithOptionalUnion {
     #[serde(rename = "myUnion")]
     #[serde(skip_serializing_if = "Option::is_none")]

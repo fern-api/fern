@@ -1,7 +1,7 @@
 use crate::types_client::Client;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct PaginatedClientResponse {
     pub start: i32,
     pub limit: i32,

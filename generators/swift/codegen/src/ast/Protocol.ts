@@ -7,7 +7,8 @@ export const Protocol = {
     Equatable: "Equatable",
     Error: "Error",
     Hashable: "Hashable",
-    Sendable: "Sendable"
+    Sendable: "Sendable",
+    MultipartFormDataConvertible: "MultipartFormDataConvertible"
 } as const;
 
 export type Protocol = (typeof Protocol)[keyof typeof Protocol];

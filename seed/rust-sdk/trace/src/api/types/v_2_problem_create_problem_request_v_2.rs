@@ -6,7 +6,7 @@ use crate::v_2_problem_test_case_v_2::TestCaseV2;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct CreateProblemRequestV2 {
     #[serde(rename = "problemName")]
     pub problem_name: String,
