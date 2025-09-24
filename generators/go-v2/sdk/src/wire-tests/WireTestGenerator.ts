@@ -77,11 +77,10 @@ export class WireTestGenerator {
                     this.context.logger.warn(`No snippet found for endpoint ${endpoint.id}`);
                     return null;
                 }
-                const endpointTestCaseCodeBlock = this.generateEndpointTestMethod(endpoint, snippet);
-                // const [endpointTestCaseCodeBlock, endpointImports] = this.parseEndpointTestCaseSnippet(snippet);
-                // for (const [importName, importPath] of endpointImports.entries()) {
-                //     imports.set(importName, importPath);
-                // }
+                const [endpointTestCaseCodeBlock, endpointImports] = this.generateEndpointTestMethod(endpoint, snippet);
+                for (const [importName, importPath] of endpointImports.entries()) {
+                    imports.set(importName, importPath);
+                }
 
                 return endpointTestCaseCodeBlock;
             })
@@ -89,6 +88,9 @@ export class WireTestGenerator {
 
         const serviceTestFileContent = go
             .codeblock((writer) => {
+                for (const [_, importPath] of imports.entries()) {
+                    writer.addImport(importPath);
+                }
                 // this.writeImports(writer, imports);
                 writer.writeNewLineIfLastLineNot();
                 writer.writeLine();
@@ -120,12 +122,15 @@ export class WireTestGenerator {
         return response.snippet;
     }
 
-    private generateEndpointTestMethod(endpoint: HttpEndpoint, snippet: string): go.CodeBlock {
+    private generateEndpointTestMethod(endpoint: HttpEndpoint, snippet: string): [go.CodeBlock, Map<string, string>] {
         const clientCall = this.parseClientCall(snippet);
-        return go.codeblock((writer) => {
+        const imports = this.parseImportsFromSnippet(snippet);
+        const testFunctionName = this.parseTestFunctionName(snippet);
+
+        const testMethod = go.codeblock((writer) => {
             writer.writeNode(
                 go.func({
-                    name: "Test" + this.getTestMethodName(endpoint) + "WithWireMock",
+                    name: testFunctionName,
                     parameters: [
                         go.parameter({
                             name: "t",
@@ -141,12 +146,14 @@ export class WireTestGenerator {
                         writer.writeLine();
                         writer.writeNode(this.constructWiremockTestClient({ endpoint, snippet }));
                         writer.writeLine();
-                        writer.writeNode(this.callClientMethodAndAssert({ endpoint, snippet }));
+                        writer.writeNode(this.callClientMethodAndAssert({ clientCall, endpoint, snippet }));
                     })
                 })
             );
             writer.writeNewLineIfLastLineNot();
         });
+
+        return [testMethod, imports];
     }
 
     private parseClientCall(snippet: string): string {
@@ -200,6 +207,110 @@ export class WireTestGenerator {
         // Extract the client call lines
         const clientCallLines = lines.slice(clientCallStartIndex, clientCallEndIndex + 1);
         return clientCallLines.join("\n");
+    }
+
+    private parseClientConstructor(snippet: string): string {
+        const lines = snippet.split("\n");
+
+        // Find the line that starts with client constructor (e.g., "client := client.NewWithOptions")
+        let constructorStartIndex = -1;
+        for (let i = 0; i < lines.length; i++) {
+            const trimmedLine = lines[i]?.trim() ?? "";
+            if (trimmedLine.includes("client :=") && trimmedLine.includes("client.")) {
+                constructorStartIndex = i;
+                break;
+            }
+        }
+
+        if (constructorStartIndex === -1) {
+            return ""; // No client constructor found
+        }
+
+        // Track parentheses to find the end of the constructor call
+        let parenCount = 0;
+        let constructorEndIndex = -1;
+        let foundOpenParen = false;
+
+        for (let i = constructorStartIndex; i < lines.length; i++) {
+            const line = lines[i] ?? "";
+
+            for (let j = 0; j < line.length; j++) {
+                const char = line[j];
+                if (char === "(") {
+                    parenCount++;
+                    foundOpenParen = true;
+                } else if (char === ")") {
+                    parenCount--;
+                    if (foundOpenParen && parenCount === 0) {
+                        constructorEndIndex = i;
+                        break;
+                    }
+                }
+            }
+
+            if (constructorEndIndex !== -1) {
+                break;
+            }
+        }
+
+        if (constructorEndIndex === -1) {
+            return ""; // No matching closing parenthesis found
+        }
+
+        // Extract the constructor lines
+        const constructorLines = lines.slice(constructorStartIndex, constructorEndIndex + 1);
+        return constructorLines.join("\n");
+    }
+
+    private parseTestFunctionName(snippet: string): string {
+        const lines = snippet.split("\n");
+
+        // Find the line that starts with "func Test"
+        for (let i = 0; i < lines.length; i++) {
+            const trimmedLine = lines[i]?.trim() ?? "";
+            if (trimmedLine.startsWith("func Test")) {
+                // Extract the method name from "func TestMethodName("
+                const match = trimmedLine.match(/^func (Test.*?)(?:\s*\(|$)/);
+                if (match && match[1]) {
+                    return match[1];
+                }
+            }
+        }
+
+        return ""; // No test method found
+    }
+
+    private parseImportsFromSnippet(snippet: string): Map<string, string> {
+        const imports = new Map<string, string>();
+        const lines = snippet.split("\n");
+
+        let inImportBlock = false;
+
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i]?.trim() ?? "";
+
+            // Parse import statements
+            if (line === "import (") {
+                inImportBlock = true;
+                continue;
+            }
+
+            if (inImportBlock) {
+                if (line === ")") {
+                    inImportBlock = false;
+                    continue;
+                }
+
+                // Parse import with alias: alias "path"
+                const importMatch = line.match(/^(\w+)\s+"([^"]+)"/);
+                if (importMatch && importMatch[1] && importMatch[2]) {
+                    const [, alias, path] = importMatch;
+                    imports.set(alias, path);
+                }
+            }
+        }
+
+        return imports;
     }
 
     private buildWiremockTestSetup({
@@ -383,7 +494,9 @@ export class WireTestGenerator {
                                               name: "Matching",
                                               importPath: "github.com/wiremock/go-wiremock"
                                           }),
-                                          arguments_: [go.TypeInstantiation.string(".+")],
+                                          arguments_: [
+                                              this.resolvePathParamValue(endpoint, pathParameter.name.originalName)
+                                          ],
                                           multiline: false
                                       })
                                   ]
@@ -472,16 +585,19 @@ export class WireTestGenerator {
         endpoint: HttpEndpoint;
         snippet: string;
     }): go.CodeBlock {
+        const clientConstructor = this.parseClientConstructor(snippet);
+
         return go.codeblock((writer) => {
-            writer.write(`${CLIENT_VAR_NAME} := `);
-            writer.writeNode(this.getRootClientFuncInvocation(this.getWiremockTestConstructorArgs()));
+            writer.write(clientConstructor);
         });
     }
 
     private callClientMethodAndAssert({
+        clientCall,
         endpoint,
         snippet
     }: {
+        clientCall: string;
         endpoint: HttpEndpoint;
         snippet: string;
     }): go.CodeBlock {
@@ -491,23 +607,7 @@ export class WireTestGenerator {
 
             // Call the method and capture response and error
             // writer.write("_, invocationErr := ");
-            writer.writeNode(
-                go.invokeMethod({
-                    on: go.codeblock(CLIENT_VAR_NAME),
-                    method: this.getMethod({ endpoint }),
-                    arguments_: [
-                        go.invokeFunc({
-                            func: go.typeReference({
-                                name: "TODO",
-                                importPath: "context"
-                            }),
-                            arguments_: [],
-                            multiline: false
-                        }),
-                        ...this.getMethodArgs({ endpoint, snippet })
-                    ]
-                })
-            );
+            writer.write(clientCall);
             writer.writeLine();
             writer.writeLine();
 
@@ -648,6 +748,8 @@ export class WireTestGenerator {
         return [testMethodContent, imports];
     }
 
+    private resolvePathParamValue(endpoint: HttpEndpoint, pathParameterName: string): string {}
+
     private writeImports(writer: go.Writer, imports: Map<string, string>): void {
         const standardLibraryImports: string[] = [];
         const externalImports: Array<[string, string]> = [];
@@ -778,7 +880,7 @@ export class WireTestGenerator {
 
     private buildFullPath(endpoint: HttpEndpoint): string {
         const parts = endpoint.fullPath.parts;
-        let fullPath = endpoint.fullPath.head;
+        let fullPath = "/" + endpoint.fullPath.head;
 
         for (const part of parts) {
             if (part.pathParameter) {
