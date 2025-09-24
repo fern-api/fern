@@ -95,9 +95,16 @@ export function constructCasingsGenerator({
             const finalCamelCaseName = generateSafeAndUnsafeString(opts?.casingOverrides?.camel ?? camelCaseName);
             const finalPascalCaseName = generateSafeAndUnsafeString(opts?.casingOverrides?.pascal ?? pascalCaseName);
             const finalSnakeCaseName = generateSafeAndUnsafeString(opts?.casingOverrides?.snake ?? snakeCaseName);
-            const finalScreamingSnakeCaseName = generateSafeAndUnsafeString(opts?.casingOverrides?.["screaming-snake"] ?? snakeCaseName.toUpperCase());
+            const finalScreamingSnakeCaseName = generateSafeAndUnsafeString(
+                opts?.casingOverrides?.["screaming-snake"] ?? snakeCaseName.toUpperCase()
+            );
 
-            if (finalCamelCaseName.safeName === naiveCamelCaseName && finalPascalCaseName.safeName === naivePascalCaseName && finalSnakeCaseName.safeName === naiveSnakeCaseName && finalScreamingSnakeCaseName.safeName === naiveScreamingSnakeCaseName) {
+            if (
+                finalCamelCaseName.safeName === naiveCamelCaseName &&
+                finalPascalCaseName.safeName === naivePascalCaseName &&
+                finalSnakeCaseName.safeName === naiveSnakeCaseName &&
+                finalScreamingSnakeCaseName.safeName === naiveScreamingSnakeCaseName
+            ) {
                 // If all the variations are trivially derivable, simply return the original name
                 return name;
             }

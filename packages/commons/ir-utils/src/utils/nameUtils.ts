@@ -15,21 +15,21 @@ export const expandName = (name: Name): DeconflictedName => {
         originalName: name,
         camelCase: {
             unsafeName: camelCaseName,
-            safeName: camelCaseName,
+            safeName: camelCaseName
         },
         pascalCase: {
             unsafeName: pascalCaseName,
-            safeName: pascalCaseName,
+            safeName: pascalCaseName
         },
         snakeCase: {
             unsafeName: snakeCaseName,
-            safeName: snakeCaseName,
+            safeName: snakeCaseName
         },
         screamingSnakeCase: {
             unsafeName: screamingSnakeCaseName,
-            safeName: screamingSnakeCaseName,
-        },
-    }
+            safeName: screamingSnakeCaseName
+        }
+    };
 };
 
 export const getOriginalName = (name: Name) => {

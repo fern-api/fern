@@ -28,6 +28,7 @@ import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload";
 import { visitNavigationAst } from "./visitNavigationAst";
 import { wrapWithHttps } from "./wrapWithHttps";
+import { expandName } from "@fern-api/ir-utils";
 
 dayjs.extend(utc);
 
@@ -61,7 +62,7 @@ const defaultUploadFiles: UploadFilesFn = (files) => {
 let apiCounter = 0;
 const defaultRegisterApi: RegisterApiFn = async ({ ir }) => {
     apiCounter++;
-    return `${ir.apiName.snakeCase.unsafeName}-${apiCounter}`;
+    return `${expandName(ir.apiName).snakeCase.unsafeName}-${apiCounter}`;
 };
 
 export class DocsDefinitionResolver {

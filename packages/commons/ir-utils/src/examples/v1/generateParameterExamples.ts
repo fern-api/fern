@@ -74,7 +74,7 @@ export function generateHeaderExamples(
         }
 
         const generatedExample = generateTypeReferenceExample({
-                fieldName: getOriginalName(h.name.name),
+            fieldName: getOriginalName(h.name.name),
             currentDepth: 0,
             maxDepth: options.maxDepth ?? 1,
             typeDeclarations: options.typeDeclarations,

@@ -17,6 +17,7 @@ import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig";
 import { pollJobAndReportStatus } from "./pollJobAndReportStatus";
 import { RemoteTaskHandler } from "./RemoteTaskHandler";
 import { SourceUploader } from "./SourceUploader";
+import { getOriginalName } from "@fern-api/ir-utils";
 
 export async function runRemoteGenerationForGenerator({
     projectConfig,
@@ -105,7 +106,7 @@ export async function runRemoteGenerationForGenerator({
     });
     const response = await fdr.api.v1.register.registerApiDefinition({
         orgId: FdrAPI.OrgId(organization),
-        apiId: FdrAPI.ApiId(ir.apiName.originalName),
+        apiId: FdrAPI.ApiId(getOriginalName(ir.apiName)),
         definition: apiDefinition,
         sources: sources.length > 0 ? convertToFdrApiDefinitionSources(sources) : undefined
     });

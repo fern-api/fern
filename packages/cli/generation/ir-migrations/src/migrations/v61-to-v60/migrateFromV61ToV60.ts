@@ -74,10 +74,13 @@ export const V61_TO_V60_MIGRATION: IrMigration<
     migrateBackwards: (
         v61: IrVersions.V61.IntermediateRepresentation
     ): IrVersions.V60.ir.IntermediateRepresentation => {
-        const raw = V61SerializerWithV60Names.IntermediateRepresentation.jsonOrThrow(v61);
+        const raw = V61SerializerWithV60Names.IntermediateRepresentation.jsonOrThrow(v61, {
+            unrecognizedObjectKeys: "strip",
+            skipValidation: true
+        });
         return IrSerialization.V60.IntermediateRepresentation.parseOrThrow(raw, {
             unrecognizedObjectKeys: "strip",
             skipValidation: true
-        })
+        });
     }
 };
