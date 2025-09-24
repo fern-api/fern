@@ -25,6 +25,10 @@ inputs:
     description: Whether to allow unexpected failures during seed generation
     required: false
     default: "false"
+  index:
+    description: The matrix strategy index of the job (to differentiate when parallelizing jobs)
+    required: false
+    default: "0"
   cache-disabled:
     description: "Whether to skip caching and always regenerate"
     required: false
@@ -84,14 +88,14 @@ runs:
       if: steps.check-changes.outputs.seed-changes-generated == 'true' && inputs.create-artifacts == 'true'
       shell: bash
       run: |
-        git diff --staged > seed-${{ inputs.generator-name }}-${{ strategy.job-index }}.patch
+        git diff --staged > seed-${{ inputs.generator-name }}-${{ inputs.index }}.patch
 
     # Upload patch files as artifacts to be applied and committed by caller when all of seed is up to date
     - name: Upload Seed Artifacts
       if: steps.check-changes.outputs.seed-changes-generated == 'true' && inputs.create-artifacts == 'true'
       uses: actions/upload-artifact@v4
       with:
-        name: seed-${{ inputs.generator-name }}.patch
+        name: seed-${{ inputs.generator-name }}-${{ inputs.index }}.patch
         path: seed-${{ inputs.generator-name }}.patch
         if-no-files-found: error
         retention-days: 7
