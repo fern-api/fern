@@ -7716,7 +7716,7 @@
                   },
                   "groupName": [],
                   "inline": true,
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "generatedName": "CompanyCustomAttributes",
                 "groupName": [],
@@ -15392,7 +15392,7 @@
                     },
                     "groupName": [],
                     "inline": true,
-                    "type": "nullable"
+                    "type": "optional"
                   },
                   "generatedName": "CreateOrUpdateCompanyRequestCustomAttributes",
                   "groupName": [],
@@ -16422,7 +16422,7 @@
           },
           "groupName": [],
           "inline": true,
-          "type": "nullable"
+          "type": "optional"
         },
         "generatedName": "CustomAttributes",
         "title": "Custom Attributes",
@@ -16537,7 +16537,7 @@
                     },
                     "groupName": [],
                     "inline": true,
-                    "type": "nullable"
+                    "type": "optional"
                   },
                   "generatedName": "CustomObjectInstanceCustomAttributes",
                   "groupName": [],
@@ -17401,7 +17401,7 @@
                   },
                   "groupName": [],
                   "inline": true,
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "generatedName": "DataEventMetadata",
                 "groupName": [],
@@ -25849,7 +25849,7 @@
           },
           "groupName": [],
           "inline": true,
-          "type": "nullable"
+          "type": "optional"
         },
         "generatedName": "TicketCustomAttributes",
         "title": "Ticket Attributes",
@@ -26901,7 +26901,7 @@
           },
           "groupName": [],
           "inline": true,
-          "type": "nullable"
+          "type": "optional"
         },
         "generatedName": "TicketRequestCustomAttributes",
         "title": "Ticket Attributes",
@@ -30546,7 +30546,7 @@
                     },
                     "groupName": [],
                     "inline": true,
-                    "type": "nullable"
+                    "type": "optional"
                   },
                   "generatedName": "VisitorCustomAttributes",
                   "groupName": [],

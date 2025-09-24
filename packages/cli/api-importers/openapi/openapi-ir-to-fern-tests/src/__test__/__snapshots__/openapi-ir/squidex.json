@@ -254,17 +254,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "id": {
@@ -3047,17 +3037,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "name": {
@@ -3480,17 +3460,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "contributorId": {
@@ -3810,17 +3780,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "contributorId": {
@@ -4107,17 +4067,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "contributorId": {
@@ -4432,17 +4382,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "contributorId": {
@@ -7978,17 +7918,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "fieldId": {
@@ -8089,17 +8019,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -8858,17 +8778,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "fieldId": {
@@ -8969,17 +8879,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -9613,17 +9513,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "fieldId": {
@@ -9724,17 +9614,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -10381,17 +10261,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "fieldId": {
@@ -10492,17 +10362,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -11175,17 +11035,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "fieldId": {
@@ -11286,17 +11136,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -12008,17 +11848,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "fieldId": {
@@ -12119,17 +11949,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -12766,17 +12586,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "fieldId": {
@@ -12877,17 +12687,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -13625,17 +13425,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "fieldId": {
@@ -13736,17 +13526,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -14409,17 +14189,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "fieldId": {
@@ -14520,17 +14290,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -15168,17 +14928,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "fieldId": {
@@ -15279,17 +15029,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -15953,17 +15693,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "fieldId": {
@@ -16064,17 +15794,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -16712,17 +16432,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "fieldId": {
@@ -16823,17 +16533,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -17497,17 +17197,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "fieldId": {
@@ -17608,17 +17298,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -18256,17 +17936,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "fieldId": {
@@ -18367,17 +18037,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -19041,17 +18701,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "fieldId": {
@@ -19152,17 +18802,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -19800,17 +19440,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "fieldId": {
@@ -19911,17 +19541,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -20585,17 +20205,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "fieldId": {
@@ -20696,17 +20306,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -21344,17 +20944,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "fieldId": {
@@ -21455,17 +21045,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -22129,17 +21709,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "fieldId": {
@@ -22240,17 +21810,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -22545,17 +22105,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "id": {
@@ -22649,17 +22199,7 @@
                           "type": "object"
                         },
                         "previewUrls": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "fieldsInLists": {
@@ -22712,17 +22252,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -23391,17 +22921,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "fieldId": {
@@ -23502,17 +23022,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -24083,17 +23593,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "fieldId": {
@@ -24194,17 +23694,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -24846,17 +24336,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "fieldId": {
@@ -24957,17 +24437,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -25814,17 +25284,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "fieldId": {
@@ -25925,17 +25385,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -26569,17 +26019,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "fieldId": {
@@ -26680,17 +26120,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -27026,17 +26456,7 @@
           "queryParameters": [],
           "headers": [],
           "request": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "type": "null"
-                }
-              }
-            ],
+            "value": [],
             "type": "map"
           },
           "response": {
@@ -27334,17 +26754,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "fieldId": {
@@ -27445,17 +26855,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -28089,17 +27489,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "fieldId": {
@@ -28200,17 +27590,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -28844,17 +28224,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "fieldId": {
@@ -28955,17 +28325,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -29576,17 +28936,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "fieldId": {
@@ -29687,17 +29037,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -30308,17 +29648,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "fieldId": {
@@ -30419,17 +29749,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -30584,7 +29904,7 @@
               "type": "reference"
             },
             "inline": true,
-            "type": "nullable"
+            "type": "optional"
           },
           "generatedName": "RulesGetActionsResponse",
           "groupName": [],
@@ -30946,17 +30266,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "id": {
@@ -34747,17 +34057,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "id": {
@@ -37917,17 +37217,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "isStopped": {
@@ -39326,17 +38616,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "id": {
@@ -39373,20 +38653,6 @@
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
-                        "referenceData": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
                               }
                             }
                           ],
@@ -39507,17 +38773,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -39994,17 +39250,7 @@
           ],
           "headers": [],
           "request": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "type": "null"
-                }
-              }
-            ],
+            "value": [],
             "type": "map"
           },
           "response": {
@@ -40059,17 +39305,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "id": {
@@ -40106,20 +39342,6 @@
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
-                        "referenceData": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
                               }
                             }
                           ],
@@ -40240,17 +39462,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -40685,17 +39897,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "id": {
@@ -40732,20 +39934,6 @@
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
-                        "referenceData": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
                               }
                             }
                           ],
@@ -40866,17 +40054,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -41482,17 +40660,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "fieldId": {
@@ -41593,17 +40761,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -42075,17 +41233,7 @@
           ],
           "headers": [],
           "request": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "type": "null"
-                }
-              }
-            ],
+            "value": [],
             "type": "map"
           },
           "response": {
@@ -42140,17 +41288,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "id": {
@@ -42187,20 +41325,6 @@
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
-                        "referenceData": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
                               }
                             }
                           ],
@@ -42321,17 +41445,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -42739,17 +41853,7 @@
           "queryParameters": [],
           "headers": [],
           "request": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "type": "null"
-                }
-              }
-            ],
+            "value": [],
             "type": "map"
           },
           "response": {
@@ -42804,17 +41908,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "id": {
@@ -42851,20 +41945,6 @@
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
-                        "referenceData": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
                               }
                             }
                           ],
@@ -42985,17 +42065,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -43685,17 +42755,7 @@
           "queryParameters": [],
           "headers": [],
           "request": {
-            "value": [
-              {
-                "key": {
-                  "value": "key",
-                  "type": "string"
-                },
-                "value": {
-                  "type": "null"
-                }
-              }
-            ],
+            "value": [],
             "type": "map"
           },
           "response": {
@@ -43750,17 +42810,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "id": {
@@ -43797,20 +42847,6 @@
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
-                        "referenceData": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
                               }
                             }
                           ],
@@ -43931,17 +42967,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -44588,17 +43614,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "id": {
@@ -44635,20 +43651,6 @@
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
-                        "referenceData": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
                               }
                             }
                           ],
@@ -44769,17 +43771,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -45210,17 +44202,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "id": {
@@ -45257,20 +44239,6 @@
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
-                        "referenceData": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
                               }
                             }
                           ],
@@ -45391,17 +44359,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -45958,17 +44916,7 @@
               "datas": {
                 "value": [
                   {
-                    "value": [
-                      {
-                        "key": {
-                          "value": "key",
-                          "type": "string"
-                        },
-                        "value": {
-                          "type": "null"
-                        }
-                      }
-                    ],
+                    "value": [],
                     "type": "map"
                   }
                 ],
@@ -46704,17 +45652,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "id": {
@@ -46751,20 +45689,6 @@
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
-                        "referenceData": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
                               }
                             }
                           ],
@@ -46885,17 +45809,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -47335,17 +46249,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "id": {
@@ -47382,20 +46286,6 @@
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
-                        "referenceData": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
                               }
                             }
                           ],
@@ -47516,17 +46406,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -47966,17 +46846,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "id": {
@@ -48013,20 +46883,6 @@
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
-                        "referenceData": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
                               }
                             }
                           ],
@@ -48147,17 +47003,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -48597,17 +47443,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "id": {
@@ -48644,20 +47480,6 @@
                                   "type": "string"
                                 },
                                 "type": "primitive"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
-                        "referenceData": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
                               }
                             }
                           ],
@@ -48778,17 +47600,7 @@
                             {
                               "properties": {
                                 "_links": {
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "value": "key",
-                                        "type": "string"
-                                      },
-                                      "value": {
-                                        "type": "null"
-                                      }
-                                    }
-                                  ],
+                                  "value": [],
                                   "type": "map"
                                 },
                                 "fieldId": {
@@ -51328,17 +50140,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "id": {
@@ -52970,17 +51772,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "id": {
@@ -53022,17 +51814,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "id": {
@@ -54240,7 +53022,7 @@
             },
             "groupName": [],
             "inline": true,
-            "type": "nullable"
+            "type": "optional"
           },
           "generatedName": "AssetsGetTagsResponse",
           "groupName": [],
@@ -54459,7 +53241,7 @@
             },
             "groupName": [],
             "inline": true,
-            "type": "nullable"
+            "type": "optional"
           },
           "generatedName": "AssetsPutTagResponse",
           "groupName": [],
@@ -55053,17 +53835,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "id": {
@@ -56074,17 +54846,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "id": {
@@ -59908,17 +58670,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "id": {
@@ -60242,17 +58994,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "id": {
@@ -60594,17 +59336,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "id": {
@@ -60923,17 +59655,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "id": {
@@ -61185,17 +59907,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "contributorId": {
@@ -61516,17 +60228,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "contributorId": {
@@ -61814,17 +60516,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "contributorId": {
@@ -62140,17 +60832,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "contributorId": {
@@ -63209,17 +61891,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "iso2Code": {
@@ -63533,17 +62205,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "iso2Code": {
@@ -63875,17 +62537,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "iso2Code": {
@@ -64194,17 +62846,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "iso2Code": {
@@ -64447,17 +63089,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "name": {
@@ -64792,17 +63424,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "name": {
@@ -65331,17 +63953,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "name": {
@@ -65671,17 +64283,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "name": {
@@ -68687,17 +67289,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "id": {
@@ -68713,20 +67305,6 @@
                             "type": "string"
                           },
                           "type": "primitive"
-                        },
-                        "steps": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
-                          "type": "map"
                         },
                         "schemaIds": {
                           "value": [
@@ -69030,17 +67608,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "id": {
@@ -69056,20 +67624,6 @@
                             "type": "string"
                           },
                           "type": "primitive"
-                        },
-                        "steps": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
-                          "type": "map"
                         },
                         "schemaIds": {
                           "value": [
@@ -69345,17 +67899,7 @@
           "request": {
             "properties": {
               "steps": {
-                "value": [
-                  {
-                    "key": {
-                      "value": "key",
-                      "type": "string"
-                    },
-                    "value": {
-                      "type": "null"
-                    }
-                  }
-                ],
+                "value": [],
                 "type": "map"
               },
               "initial": {
@@ -69413,17 +67957,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "id": {
@@ -69439,20 +67973,6 @@
                             "type": "string"
                           },
                           "type": "primitive"
-                        },
-                        "steps": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
-                          "type": "map"
                         },
                         "schemaIds": {
                           "value": [
@@ -69751,17 +68271,7 @@
                     {
                       "properties": {
                         "_links": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
+                          "value": [],
                           "type": "map"
                         },
                         "id": {
@@ -69777,20 +68287,6 @@
                             "type": "string"
                           },
                           "type": "primitive"
-                        },
-                        "steps": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
-                          "type": "map"
                         },
                         "schemaIds": {
                           "value": [
@@ -70608,7 +69104,7 @@
             "type": "reference"
           },
           "inline": true,
-          "type": "nullable"
+          "type": "optional"
         },
         "generatedName": "ContentData",
         "groupName": [],
@@ -71825,7 +70321,7 @@
           },
           "groupName": [],
           "inline": true,
-          "type": "nullable"
+          "type": "optional"
         },
         "generatedName": "LocalizedValueOfReadonlyListOfString",
         "groupName": [],
@@ -71971,16 +70467,22 @@
         "value": {
           "generatedName": "LocalizedValueOfNullableBooleanValue",
           "value": {
-            "schema": {
-              "type": "boolean"
-            },
             "generatedName": "LocalizedValueOfNullableBooleanValue",
+            "value": {
+              "schema": {
+                "type": "boolean"
+              },
+              "generatedName": "LocalizedValueOfNullableBooleanValue",
+              "groupName": [],
+              "type": "primitive"
+            },
             "groupName": [],
-            "type": "primitive"
+            "inline": true,
+            "type": "nullable"
           },
           "groupName": [],
           "inline": true,
-          "type": "nullable"
+          "type": "optional"
         },
         "generatedName": "LocalizedValueOfNullableBoolean",
         "groupName": [],
@@ -72375,16 +70877,22 @@
         "value": {
           "generatedName": "LocalizedValueOfNullableInstantValue",
           "value": {
-            "schema": {
-              "type": "datetime"
-            },
             "generatedName": "LocalizedValueOfNullableInstantValue",
+            "value": {
+              "schema": {
+                "type": "datetime"
+              },
+              "generatedName": "LocalizedValueOfNullableInstantValue",
+              "groupName": [],
+              "type": "primitive"
+            },
             "groupName": [],
-            "type": "primitive"
+            "inline": true,
+            "type": "nullable"
           },
           "groupName": [],
           "inline": true,
-          "type": "nullable"
+          "type": "optional"
         },
         "generatedName": "LocalizedValueOfNullableInstant",
         "groupName": [],
@@ -72722,16 +71230,22 @@
         "value": {
           "generatedName": "LocalizedValueOfNullableDoubleValue",
           "value": {
-            "schema": {
-              "type": "double"
-            },
             "generatedName": "LocalizedValueOfNullableDoubleValue",
+            "value": {
+              "schema": {
+                "type": "double"
+              },
+              "generatedName": "LocalizedValueOfNullableDoubleValue",
+              "groupName": [],
+              "type": "primitive"
+            },
             "groupName": [],
-            "type": "primitive"
+            "inline": true,
+            "type": "nullable"
           },
           "groupName": [],
           "inline": true,
-          "type": "nullable"
+          "type": "optional"
         },
         "generatedName": "LocalizedValueOfNullableDouble",
         "groupName": [],
@@ -73496,7 +72010,7 @@
           },
           "groupName": [],
           "inline": true,
-          "type": "nullable"
+          "type": "optional"
         },
         "generatedName": "LocalizedValueOfString",
         "groupName": [],
@@ -73992,7 +72506,7 @@
                   "type": "reference"
                 },
                 "inline": true,
-                "type": "nullable"
+                "type": "optional"
               },
               "generatedName": "ResourceLinks",
               "groupName": [],
@@ -76478,7 +74992,7 @@
                 },
                 "groupName": [],
                 "inline": true,
-                "type": "nullable"
+                "type": "optional"
               },
               "generatedName": "CallsUsageDtoDtoDetails",
               "groupName": [],
@@ -77061,7 +75575,7 @@
                 },
                 "groupName": [],
                 "inline": true,
-                "type": "nullable"
+                "type": "optional"
               },
               "generatedName": "SchemaDtoPreviewUrls",
               "groupName": [],
@@ -78166,7 +76680,7 @@
                     },
                     "groupName": [],
                     "inline": true,
-                    "type": "nullable"
+                    "type": "optional"
                   },
                   "generatedName": "UpsertSchemaDtoPreviewUrls",
                   "groupName": [],
@@ -78819,7 +77333,7 @@
           },
           "groupName": [],
           "inline": true,
-          "type": "nullable"
+          "type": "optional"
         },
         "generatedName": "ConfigurePreviewUrlsDto",
         "groupName": [],
@@ -83202,7 +81716,7 @@
           },
           "groupName": [],
           "inline": true,
-          "type": "nullable"
+          "type": "optional"
         },
         "generatedName": "ExposedValues",
         "groupName": [],
@@ -88402,7 +86916,7 @@
                     "type": "reference"
                   },
                   "inline": true,
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "generatedName": "WorkflowDtoSteps",
                 "groupName": [],
@@ -88506,7 +87020,7 @@
                     "type": "reference"
                   },
                   "inline": true,
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "generatedName": "WorkflowStepDtoTransitions",
                 "groupName": [],
@@ -88807,7 +87321,7 @@
                   "type": "reference"
                 },
                 "inline": true,
-                "type": "nullable"
+                "type": "optional"
               },
               "generatedName": "UpdateWorkflowDtoSteps",
               "groupName": [],

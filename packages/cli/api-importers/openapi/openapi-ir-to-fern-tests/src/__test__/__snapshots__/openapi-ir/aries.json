@@ -36176,7 +36176,7 @@
                   },
                   "groupName": [],
                   "inline": true,
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "generatedName": "AmlRecordAml",
                 "groupName": [],
@@ -37353,7 +37353,7 @@
                     },
                     "groupName": [],
                     "inline": true,
-                    "type": "nullable"
+                    "type": "optional"
                   },
                   "generatedName": "AttributeMimeTypesResultResults",
                   "groupName": [],
@@ -37619,7 +37619,7 @@
                   },
                   "groupName": [],
                   "inline": true,
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "generatedName": "ClearPendingRevocationsRequestPurge",
                 "groupName": [],
@@ -44157,7 +44157,7 @@
                   },
                   "groupName": [],
                   "inline": true,
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "generatedName": "IndyCredInfoAttrs",
                 "groupName": [],
@@ -44692,7 +44692,7 @@
                   "type": "reference"
                 },
                 "inline": true,
-                "type": "nullable"
+                "type": "optional"
               },
               "generatedName": "IndyCredentialValues",
               "title": "values",
@@ -44835,7 +44835,7 @@
                   },
                   "groupName": [],
                   "inline": true,
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "generatedName": "IndyEqProofM",
                 "title": "m",
@@ -44903,7 +44903,7 @@
                   },
                   "groupName": [],
                   "inline": true,
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "generatedName": "IndyEqProofRevealedAttrs",
                 "title": "revealed_attrs",
@@ -45061,7 +45061,7 @@
                   },
                   "groupName": [],
                   "inline": true,
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "generatedName": "IndyGeProofR",
                 "title": "r",
@@ -45105,7 +45105,7 @@
                   },
                   "groupName": [],
                   "inline": true,
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "generatedName": "IndyGeProofT",
                 "title": "t",
@@ -45149,7 +45149,7 @@
                   },
                   "groupName": [],
                   "inline": true,
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "generatedName": "IndyGeProofU",
                 "title": "u",
@@ -45397,7 +45397,7 @@
                   },
                   "groupName": [],
                   "inline": true,
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "generatedName": "IndyNonRevocProofCList",
                 "title": "c_list",
@@ -45438,7 +45438,7 @@
                   },
                   "groupName": [],
                   "inline": true,
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "generatedName": "IndyNonRevocProofXList",
                 "title": "x_list",
@@ -45878,7 +45878,7 @@
                   "type": "reference"
                 },
                 "inline": true,
-                "type": "nullable"
+                "type": "optional"
               },
               "generatedName": "IndyPresSpecRequestedAttributes",
               "groupName": [],
@@ -45912,7 +45912,7 @@
                   "type": "reference"
                 },
                 "inline": true,
-                "type": "nullable"
+                "type": "optional"
               },
               "generatedName": "IndyPresSpecRequestedPredicates",
               "groupName": [],
@@ -45949,7 +45949,7 @@
                 },
                 "groupName": [],
                 "inline": true,
-                "type": "nullable"
+                "type": "optional"
               },
               "generatedName": "IndyPresSpecSelfAttestedAttributes",
               "groupName": [],
@@ -46624,7 +46624,7 @@
                     },
                     "groupName": [],
                     "inline": true,
-                    "type": "nullable"
+                    "type": "optional"
                   },
                   "generatedName": "IndyProofReqAttrSpecRestrictionsItem",
                   "groupName": [],
@@ -46858,7 +46858,7 @@
                     },
                     "groupName": [],
                     "inline": true,
-                    "type": "nullable"
+                    "type": "optional"
                   },
                   "generatedName": "IndyProofReqPredSpecRestrictionsItem",
                   "groupName": [],
@@ -47060,7 +47060,7 @@
                   "type": "reference"
                 },
                 "inline": true,
-                "type": "nullable"
+                "type": "optional"
               },
               "generatedName": "IndyProofRequestRequestedAttributes",
               "groupName": [],
@@ -47094,7 +47094,7 @@
                   "type": "reference"
                 },
                 "inline": true,
-                "type": "nullable"
+                "type": "optional"
               },
               "generatedName": "IndyProofRequestRequestedPredicates",
               "groupName": [],
@@ -47242,7 +47242,7 @@
                     "type": "reference"
                   },
                   "inline": true,
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "generatedName": "IndyProofRequestedProofPredicates",
                 "title": "predicates",
@@ -47289,7 +47289,7 @@
                       "type": "reference"
                     },
                     "inline": true,
-                    "type": "nullable"
+                    "type": "optional"
                   },
                   "generatedName": "IndyProofRequestedProofRevealedAttrGroups",
                   "title": "revealed_attr_groups",
@@ -47338,7 +47338,7 @@
                       "type": "reference"
                     },
                     "inline": true,
-                    "type": "nullable"
+                    "type": "optional"
                   },
                   "generatedName": "IndyProofRequestedProofRevealedAttrs",
                   "title": "revealed_attrs",
@@ -47606,7 +47606,7 @@
                     "type": "reference"
                   },
                   "inline": true,
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "generatedName": "IndyProofRequestedProofRevealedAttrGroupValues",
                 "title": "values",
@@ -52718,7 +52718,7 @@
                   },
                   "groupName": [],
                   "inline": true,
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "generatedName": "PerformRequestParams",
                 "groupName": [],
@@ -53339,7 +53339,7 @@
                   },
                   "groupName": [],
                   "inline": true,
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "generatedName": "PublishRevocationsRrid2Crid",
                 "groupName": [],
@@ -56604,7 +56604,7 @@
                     },
                     "groupName": [],
                     "inline": true,
-                    "type": "nullable"
+                    "type": "optional"
                   },
                   "generatedName": "TransactionRecordFormatsItem",
                   "groupName": [],
@@ -65728,7 +65728,7 @@
                   },
                   "groupName": [],
                   "inline": true,
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "generatedName": "VcRecordCredTags",
                 "groupName": [],
@@ -66318,7 +66318,7 @@
                   },
                   "groupName": [],
                   "inline": true,
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "generatedName": "W3CCredentialsListRequestTagQuery",
                 "groupName": [],

@@ -1106,7 +1106,7 @@
               },
               "details": {
                 "docs": "The statistics by date and group.",
-                "type": "map<string, list<CallsUsagePerDateDto>>",
+                "type": "map<string, optional<list<CallsUsagePerDateDto>>>",
               },
               "monthBytes": {
                 "docs": "The total number of bytes transferred this month.",
@@ -1369,7 +1369,7 @@
               "openapi": "../openapi.json",
             },
           },
-          "ConfigurePreviewUrlsDto": "map<string, string>",
+          "ConfigurePreviewUrlsDto": "map<string, optional<string>>",
           "ContentChangedRuleTriggerDto": {
             "docs": undefined,
             "inline": undefined,
@@ -1391,7 +1391,7 @@
               "openapi": "../openapi.json",
             },
           },
-          "ContentData": "map<string, ContentFieldData>",
+          "ContentData": "map<string, optional<ContentFieldData>>",
           "ContentDto": {
             "docs": undefined,
             "extends": [
@@ -2000,7 +2000,7 @@
               "openapi": "../openapi.json",
             },
           },
-          "ExposedValues": "map<string, string>",
+          "ExposedValues": "map<string, optional<string>>",
           "FastlyRuleActionDto": {
             "docs": undefined,
             "inline": undefined,
@@ -2349,11 +2349,11 @@
               "openapi": "../openapi.json",
             },
           },
-          "LocalizedValueOfNullableBoolean": "map<string, boolean>",
-          "LocalizedValueOfNullableDouble": "map<string, double>",
-          "LocalizedValueOfNullableInstant": "map<string, datetime>",
-          "LocalizedValueOfReadonlyListOfString": "map<string, list<string>>",
-          "LocalizedValueOfString": "map<string, string>",
+          "LocalizedValueOfNullableBoolean": "map<string, optional<boolean>>",
+          "LocalizedValueOfNullableDouble": "map<string, optional<double>>",
+          "LocalizedValueOfNullableInstant": "map<string, optional<datetime>>",
+          "LocalizedValueOfReadonlyListOfString": "map<string, optional<list<string>>>",
+          "LocalizedValueOfString": "map<string, optional<string>>",
           "LogDownloadDto": {
             "docs": undefined,
             "inline": undefined,
@@ -2921,7 +2921,7 @@
             "properties": {
               "_links": {
                 "docs": "The links.",
-                "type": "map<string, ResourceLink>",
+                "type": "map<string, optional<ResourceLink>>",
               },
             },
             "source": {
@@ -3512,7 +3512,7 @@
               },
               "previewUrls": {
                 "docs": "The preview Urls.",
-                "type": "map<string, string>",
+                "type": "map<string, optional<string>>",
               },
               "properties": {
                 "docs": "The schema properties.",
@@ -4437,7 +4437,7 @@
               },
               "previewUrls": {
                 "docs": "The optional preview urls.",
-                "type": "optional<map<string, string>>",
+                "type": "optional<map<string, optional<string>>>",
               },
               "properties": {
                 "docs": "The optional properties.",
@@ -4711,7 +4711,7 @@
               },
               "steps": {
                 "docs": "The workflow steps.",
-                "type": "optional<map<string, WorkflowStepDto>>",
+                "type": "optional<map<string, optional<WorkflowStepDto>>>",
               },
             },
             "source": {
@@ -4740,7 +4740,7 @@
               },
               "transitions": {
                 "docs": "The transitions.",
-                "type": "optional<map<string, WorkflowTransitionDto>>",
+                "type": "optional<map<string, optional<WorkflowTransitionDto>>>",
               },
               "validate": {
                 "docs": "True if the content should be validated when moving to this step.",
@@ -4971,7 +4971,7 @@ types:
       - Resource
     source:
       openapi: ../openapi.json
-  ContentData: map<string, ContentFieldData>
+  ContentData: map<string, optional<ContentFieldData>>
   ContentFieldData: map<string, unknown>
   ScheduleJobDto:
     properties:
@@ -5169,7 +5169,7 @@ types:
     docs: ''
     source:
       openapi: ../openapi.json
-  LocalizedValueOfReadonlyListOfString: map<string, list<string>>
+  LocalizedValueOfReadonlyListOfString: map<string, optional<list<string>>>
   AssetType:
     enum:
       - Unknown
@@ -5195,7 +5195,7 @@ types:
         docs: The editor that is used to manage this field.
     source:
       openapi: ../openapi.json
-  LocalizedValueOfNullableBoolean: map<string, boolean>
+  LocalizedValueOfNullableBoolean: map<string, optional<boolean>>
   BooleanFieldEditor:
     enum:
       - Checkbox
@@ -5251,7 +5251,7 @@ types:
         docs: The calculated default value for the field value.
     source:
       openapi: ../openapi.json
-  LocalizedValueOfNullableInstant: map<string, datetime>
+  LocalizedValueOfNullableInstant: map<string, optional<datetime>>
   DateTimeFieldEditor:
     enum:
       - Date
@@ -5313,7 +5313,7 @@ types:
         docs: The editor that is used to manage this field.
     source:
       openapi: ../openapi.json
-  LocalizedValueOfNullableDouble: map<string, double>
+  LocalizedValueOfNullableDouble: map<string, optional<double>>
   NumberFieldEditor:
     enum:
       - Input
@@ -5427,7 +5427,7 @@ types:
         docs: The editor that is used to manage this field.
     source:
       openapi: ../openapi.json
-  LocalizedValueOfString: map<string, string>
+  LocalizedValueOfString: map<string, optional<string>>
   StringContentType:
     enum:
       - Unspecified
@@ -5524,7 +5524,7 @@ types:
   Resource:
     properties:
       _links:
-        type: map<string, ResourceLink>
+        type: map<string, optional<ResourceLink>>
         docs: The links.
     source:
       openapi: ../openapi.json
@@ -5884,7 +5884,7 @@ types:
         type: double
         docs: The average duration in milliseconds.
       details:
-        type: map<string, list<CallsUsagePerDateDto>>
+        type: map<string, optional<list<CallsUsagePerDateDto>>>
         docs: The statistics by date and group.
     source:
       openapi: ../openapi.json
@@ -6007,7 +6007,7 @@ types:
         type: SchemaScriptsDto
         docs: The scripts.
       previewUrls:
-        type: map<string, string>
+        type: map<string, optional<string>>
         docs: The preview Urls.
       fieldsInLists:
         docs: The name of fields that are used in content lists.
@@ -6168,7 +6168,7 @@ types:
         type: optional<list<UpsertSchemaFieldDto>>
         docs: Optional fields.
       previewUrls:
-        type: optional<map<string, string>>
+        type: optional<map<string, optional<string>>>
         docs: The optional preview urls.
       fieldRules:
         type: optional<list<FieldRuleDto>>
@@ -6231,7 +6231,7 @@ types:
         docs: The field properties.
     source:
       openapi: ../openapi.json
-  ConfigurePreviewUrlsDto: map<string, string>
+  ConfigurePreviewUrlsDto: map<string, optional<string>>
   RuleElementDto:
     properties:
       description:
@@ -7105,7 +7105,7 @@ types:
           minLength: 1
     source:
       openapi: ../openapi.json
-  ExposedValues: map<string, string>
+  ExposedValues: map<string, optional<string>>
   FeaturesDto:
     properties:
       features:
@@ -7778,7 +7778,7 @@ types:
         type: optional<string>
         docs: The name of the workflow.
       steps:
-        type: optional<map<string, WorkflowStepDto>>
+        type: optional<map<string, optional<WorkflowStepDto>>>
         docs: The workflow steps.
       schemaIds:
         type: optional<list<string>>
@@ -7793,7 +7793,7 @@ types:
   WorkflowStepDto:
     properties:
       transitions:
-        type: optional<map<string, WorkflowTransitionDto>>
+        type: optional<map<string, optional<WorkflowTransitionDto>>>
         docs: The transitions.
       color:
         type: optional<string>
@@ -7905,9 +7905,7 @@ types:
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "allowAnonymous": true,
                           "apiCallsLimit": 1000000,
                           "apiTrafficLimit": 1000000,
@@ -7978,9 +7976,7 @@ types:
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "contributorEmail": "contributorEmail",
                           "contributorId": "contributorId",
                           "contributorName": "contributorName",
@@ -8114,9 +8110,7 @@ types:
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "englishName": "englishName",
                           "fallback": [
                             "fallback",
@@ -8184,9 +8178,7 @@ types:
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "contributorEmail": "contributorEmail",
                           "contributorId": "contributorId",
                           "contributorName": "contributorName",
@@ -8248,9 +8240,7 @@ types:
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "isDefaultRole": true,
                           "name": "name",
                           "numClients": 1,
@@ -8324,18 +8314,13 @@ types:
                       ],
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "id": "id",
                           "initial": "initial",
                           "name": "name",
                           "schemaIds": [
                             "schemaIds",
                           ],
-                          "steps": {
-                            "key": null,
-                          },
                         },
                       ],
                     },
@@ -8574,9 +8559,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "allowAnonymous": true,
                           "apiCallsLimit": 1000000,
                           "apiTrafficLimit": 1000000,
@@ -8641,9 +8624,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "contributorEmail": "contributorEmail",
                           "contributorId": "contributorId",
                           "contributorName": "contributorName",
@@ -8729,9 +8710,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "englishName": "englishName",
                           "fallback": [
                             "fallback",
@@ -8837,9 +8816,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "isDefaultRole": true,
                           "name": "name",
                           "numClients": 1,
@@ -9037,18 +9014,13 @@ You will retrieve all apps, where you are assigned as a contributor.",
                       ],
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "id": "id",
                           "initial": "initial",
                           "name": "name",
                           "schemaIds": [
                             "schemaIds",
                           ],
-                          "steps": {
-                            "key": null,
-                          },
                         },
                       ],
                     },
@@ -9194,9 +9166,7 @@ The client secret is auto generated on the server and returned. The client does 
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "allowAnonymous": true,
                           "apiCallsLimit": 1000000,
                           "apiTrafficLimit": 1000000,
@@ -9286,9 +9256,7 @@ The client secret is auto generated on the server and returned. The client does 
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "contributorEmail": "contributorEmail",
                           "contributorId": "contributorId",
                           "contributorName": "contributorName",
@@ -9356,9 +9324,7 @@ The client secret is auto generated on the server and returned. The client does 
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "englishName": "englishName",
                           "fallback": [
                             "fallback",
@@ -9445,9 +9411,7 @@ The client secret is auto generated on the server and returned. The client does 
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "isDefaultRole": true,
                           "name": "name",
                           "numClients": 1,
@@ -9540,18 +9504,13 @@ The client secret is auto generated on the server and returned. The client does 
                       ],
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "id": "id",
                           "initial": "initial",
                           "name": "name",
                           "schemaIds": [
                             "schemaIds",
                           ],
-                          "steps": {
-                            "key": null,
-                          },
                         },
                       ],
                     },
@@ -9901,9 +9860,7 @@ The client secret is auto generated on the server and returned. The client does 
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "allowAnonymous": true,
                           "apiCallsLimit": 1000000,
                           "apiTrafficLimit": 1000000,
@@ -10009,9 +9966,7 @@ The client secret is auto generated on the server and returned. The client does 
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "englishName": "englishName",
                           "fallback": [
                             "fallback",
@@ -10107,9 +10062,7 @@ The client secret is auto generated on the server and returned. The client does 
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "isDefaultRole": true,
                           "name": "name",
                           "numClients": 1,
@@ -10298,9 +10251,7 @@ The client secret is auto generated on the server and returned. The client does 
                   },
                   "request": {
                     "initial": "initial",
-                    "steps": {
-                      "key": null,
-                    },
+                    "steps": {},
                   },
                   "response": {
                     "body": {
@@ -10316,18 +10267,13 @@ The client secret is auto generated on the server and returned. The client does 
                       ],
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "id": "id",
                           "initial": "initial",
                           "name": "name",
                           "schemaIds": [
                             "schemaIds",
                           ],
-                          "steps": {
-                            "key": null,
-                          },
                         },
                       ],
                     },
@@ -10370,7 +10316,7 @@ The client secret is auto generated on the server and returned. The client does 
                     },
                     "steps": {
                       "docs": "The workflow steps.",
-                      "type": "map<string, root.WorkflowStepDto>",
+                      "type": "map<string, optional<root.WorkflowStepDto>>",
                     },
                   },
                 },
@@ -10618,8 +10564,7 @@ service:
                   method: method
                   metadata: metadata
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   id: id
                   secret: secret
                   name: name
@@ -10677,8 +10622,7 @@ service:
                   method: method
                   metadata: metadata
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   id: id
                   secret: secret
                   name: name
@@ -10751,8 +10695,7 @@ service:
                   method: method
                   metadata: metadata
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   id: id
                   secret: secret
                   name: name
@@ -10799,8 +10742,7 @@ service:
                   method: method
                   metadata: metadata
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   id: id
                   secret: secret
                   name: name
@@ -10839,8 +10781,7 @@ service:
                   method: method
                   metadata: metadata
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   contributorId: contributorId
                   contributorName: contributorName
                   contributorEmail: contributorEmail
@@ -10885,8 +10826,7 @@ service:
                   method: method
                   metadata: metadata
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   contributorId: contributorId
                   contributorName: contributorName
                   contributorEmail: contributorEmail
@@ -10925,8 +10865,7 @@ service:
                   method: method
                   metadata: metadata
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   contributorId: contributorId
                   contributorName: contributorName
                   contributorEmail: contributorEmail
@@ -10970,8 +10909,7 @@ service:
                   method: method
                   metadata: metadata
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   contributorId: contributorId
                   contributorName: contributorName
                   contributorEmail: contributorEmail
@@ -11126,8 +11064,7 @@ service:
                   method: method
                   metadata: metadata
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   iso2Code: iso2Code
                   englishName: englishName
                   fallback:
@@ -11178,8 +11115,7 @@ service:
                   method: method
                   metadata: metadata
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   iso2Code: iso2Code
                   englishName: englishName
                   fallback:
@@ -11237,8 +11173,7 @@ service:
                   method: method
                   metadata: metadata
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   iso2Code: iso2Code
                   englishName: englishName
                   fallback:
@@ -11281,8 +11216,7 @@ service:
                   method: method
                   metadata: metadata
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   iso2Code: iso2Code
                   englishName: englishName
                   fallback:
@@ -11320,8 +11254,7 @@ service:
                   method: method
                   metadata: metadata
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   name: name
                   numClients: 1
                   numContributors: 1
@@ -11374,8 +11307,7 @@ service:
                   method: method
                   metadata: metadata
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   name: name
                   numClients: 1
                   numContributors: 1
@@ -11460,8 +11392,7 @@ service:
                   method: method
                   metadata: metadata
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   name: name
                   numClients: 1
                   numContributors: 1
@@ -11506,8 +11437,7 @@ service:
                   method: method
                   metadata: metadata
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   name: name
                   numClients: 1
                   numContributors: 1
@@ -11976,12 +11906,9 @@ service:
                   method: method
                   metadata: metadata
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   id: id
                   name: name
-                  steps:
-                    key: null
                   schemaIds:
                     - schemaIds
                   initial: initial
@@ -12031,12 +11958,9 @@ service:
                   method: method
                   metadata: metadata
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   id: id
                   name: name
-                  steps:
-                    key: null
                   schemaIds:
                     - schemaIds
                   initial: initial
@@ -12066,7 +11990,7 @@ service:
               type: optional<string>
               docs: The name of the workflow.
             steps:
-              type: map<string, root.WorkflowStepDto>
+              type: map<string, optional<root.WorkflowStepDto>>
               docs: The workflow steps.
             schemaIds:
               type: optional<list<string>>
@@ -12090,8 +12014,7 @@ service:
             app: app
             id: id
           request:
-            steps:
-              key: null
+            steps: {}
             initial: initial
           response:
             body:
@@ -12101,12 +12024,9 @@ service:
                   method: method
                   metadata: metadata
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   id: id
                   name: name
-                  steps:
-                    key: null
                   schemaIds:
                     - schemaIds
                   initial: initial
@@ -12148,12 +12068,9 @@ service:
                   method: method
                   metadata: metadata
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   id: id
                   name: name
-                  steps:
-                    key: null
                   schemaIds:
                     - schemaIds
                   initial: initial
@@ -12664,9 +12581,7 @@ service:
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "folderName": "folderName",
                           "id": "id",
                           "parentId": "parentId",
@@ -12675,9 +12590,7 @@ service:
                       ],
                       "path": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "folderName": "folderName",
                           "id": "id",
                           "parentId": "parentId",
@@ -12759,9 +12672,7 @@ service:
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "_meta": {
                             "isDuplicate": "isDuplicate",
                           },
@@ -12880,9 +12791,7 @@ service:
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "_meta": {
                             "isDuplicate": "isDuplicate",
                           },
@@ -12978,7 +12887,7 @@ service:
               "response": {
                 "docs": "Assets tags returned.",
                 "status-code": 200,
-                "type": "map<string, integer>",
+                "type": "map<string, optional<integer>>",
               },
               "source": {
                 "openapi": "../openapi.json",
@@ -13831,7 +13740,7 @@ service:
               "response": {
                 "docs": "Asset tag renamed and new tags returned.",
                 "status-code": 200,
-                "type": "map<string, integer>",
+                "type": "map<string, optional<integer>>",
               },
               "source": {
                 "openapi": "../openapi.json",
@@ -14031,15 +13940,13 @@ service:
                   metadata: metadata
               total: 1000000
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   id: id
                   parentId: parentId
                   folderName: folderName
                   version: 1000000
               path:
-                - _links:
-                    key: null
+                - _links: {}
                   id: id
                   parentId: parentId
                   folderName: folderName
@@ -14233,7 +14140,7 @@ service:
       display-name: Get assets tags.
       response:
         docs: Assets tags returned.
-        type: map<string, integer>
+        type: map<string, optional<integer>>
         status-code: 200
       errors:
         - root.NotFoundError
@@ -14272,7 +14179,7 @@ service:
         content-type: application/json
       response:
         docs: Asset tag renamed and new tags returned.
-        type: map<string, integer>
+        type: map<string, optional<integer>>
         status-code: 200
       errors:
         - root.BadRequestError
@@ -14352,8 +14259,7 @@ service:
                   metadata: metadata
               total: 1000000
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   id: id
                   parentId: parentId
                   fileName: fileName
@@ -14498,8 +14404,7 @@ service:
                   metadata: metadata
               total: 1000000
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   id: id
                   parentId: parentId
                   fileName: fileName
@@ -15130,9 +15035,7 @@ service:
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "handledAssets": 1,
                           "handledEvents": 1,
                           "id": "id",
@@ -15411,8 +15314,7 @@ service:
                   method: method
                   metadata: metadata
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   id: id
                   started: '2024-01-15T09:30:00Z'
                   stopped: '2024-01-15T09:30:00Z'
@@ -16147,9 +16049,7 @@ service:
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "created": "2024-01-15T09:30:00Z",
                           "createdBy": "createdBy",
                           "data": {
@@ -16162,14 +16062,9 @@ service:
                           "lastModifiedBy": "lastModifiedBy",
                           "newStatus": "newStatus",
                           "newStatusColor": "newStatusColor",
-                          "referenceData": {
-                            "key": null,
-                          },
                           "referenceFields": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -16336,9 +16231,7 @@ service:
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "created": "2024-01-15T09:30:00Z",
                           "createdBy": "createdBy",
                           "data": {
@@ -16351,14 +16244,9 @@ service:
                           "lastModifiedBy": "lastModifiedBy",
                           "newStatus": "newStatus",
                           "newStatusColor": "newStatusColor",
-                          "referenceData": {
-                            "key": null,
-                          },
                           "referenceFields": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -16463,9 +16351,7 @@ service:
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "created": "2024-01-15T09:30:00Z",
                           "createdBy": "createdBy",
                           "data": {
@@ -16478,14 +16364,9 @@ service:
                           "lastModifiedBy": "lastModifiedBy",
                           "newStatus": "newStatus",
                           "newStatusColor": "newStatusColor",
-                          "referenceData": {
-                            "key": null,
-                          },
                           "referenceFields": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -16607,9 +16488,7 @@ service:
                       },
                       "referenceFields": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "fieldId": 1000000,
                           "isDisabled": true,
                           "isHidden": true,
@@ -16617,9 +16496,7 @@ service:
                           "name": "name",
                           "nested": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -16826,9 +16703,7 @@ service:
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "created": "2024-01-15T09:30:00Z",
                           "createdBy": "createdBy",
                           "data": {
@@ -16841,14 +16716,9 @@ service:
                           "lastModifiedBy": "lastModifiedBy",
                           "newStatus": "newStatus",
                           "newStatusColor": "newStatusColor",
-                          "referenceData": {
-                            "key": null,
-                          },
                           "referenceFields": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -16960,9 +16830,7 @@ service:
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "created": "2024-01-15T09:30:00Z",
                           "createdBy": "createdBy",
                           "data": {
@@ -16975,14 +16843,9 @@ service:
                           "lastModifiedBy": "lastModifiedBy",
                           "newStatus": "newStatus",
                           "newStatusColor": "newStatusColor",
-                          "referenceData": {
-                            "key": null,
-                          },
                           "referenceFields": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -17087,9 +16950,7 @@ service:
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "created": "2024-01-15T09:30:00Z",
                           "createdBy": "createdBy",
                           "data": {
@@ -17102,14 +16963,9 @@ service:
                           "lastModifiedBy": "lastModifiedBy",
                           "newStatus": "newStatus",
                           "newStatusColor": "newStatusColor",
-                          "referenceData": {
-                            "key": null,
-                          },
                           "referenceFields": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -17223,9 +17079,7 @@ service:
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "created": "2024-01-15T09:30:00Z",
                           "createdBy": "createdBy",
                           "data": {
@@ -17238,14 +17092,9 @@ service:
                           "lastModifiedBy": "lastModifiedBy",
                           "newStatus": "newStatus",
                           "newStatusColor": "newStatusColor",
-                          "referenceData": {
-                            "key": null,
-                          },
                           "referenceFields": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -17348,9 +17197,7 @@ service:
                     "id": "id",
                     "schema": "schema",
                   },
-                  "request": {
-                    "key": null,
-                  },
+                  "request": {},
                   "response": {
                     "body": {
                       "_links": {
@@ -17362,9 +17209,7 @@ service:
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "created": "2024-01-15T09:30:00Z",
                           "createdBy": "createdBy",
                           "data": {
@@ -17377,14 +17222,9 @@ service:
                           "lastModifiedBy": "lastModifiedBy",
                           "newStatus": "newStatus",
                           "newStatusColor": "newStatusColor",
-                          "referenceData": {
-                            "key": null,
-                          },
                           "referenceFields": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -17486,9 +17326,7 @@ service:
                     "publish": true,
                     "status": "status",
                   },
-                  "request": {
-                    "key": null,
-                  },
+                  "request": {},
                   "response": {
                     "body": {
                       "_links": {
@@ -17500,9 +17338,7 @@ service:
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "created": "2024-01-15T09:30:00Z",
                           "createdBy": "createdBy",
                           "data": {
@@ -17515,14 +17351,9 @@ service:
                           "lastModifiedBy": "lastModifiedBy",
                           "newStatus": "newStatus",
                           "newStatusColor": "newStatusColor",
-                          "referenceData": {
-                            "key": null,
-                          },
                           "referenceFields": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -17633,9 +17464,7 @@ service:
                   },
                   "request": {
                     "datas": [
-                      {
-                        "key": null,
-                      },
+                      {},
                     ],
                   },
                   "response": {
@@ -17735,9 +17564,7 @@ service:
                     "publish": true,
                     "status": "status",
                   },
-                  "request": {
-                    "key": null,
-                  },
+                  "request": {},
                   "response": {
                     "body": {
                       "_links": {
@@ -17749,9 +17576,7 @@ service:
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "created": "2024-01-15T09:30:00Z",
                           "createdBy": "createdBy",
                           "data": {
@@ -17764,14 +17589,9 @@ service:
                           "lastModifiedBy": "lastModifiedBy",
                           "newStatus": "newStatus",
                           "newStatusColor": "newStatusColor",
-                          "referenceData": {
-                            "key": null,
-                          },
                           "referenceFields": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -17884,9 +17704,7 @@ service:
                     "id": "id",
                     "schema": "schema",
                   },
-                  "request": {
-                    "key": null,
-                  },
+                  "request": {},
                   "response": {
                     "body": {
                       "_links": {
@@ -17898,9 +17716,7 @@ service:
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "created": "2024-01-15T09:30:00Z",
                           "createdBy": "createdBy",
                           "data": {
@@ -17913,14 +17729,9 @@ service:
                           "lastModifiedBy": "lastModifiedBy",
                           "newStatus": "newStatus",
                           "newStatusColor": "newStatusColor",
-                          "referenceData": {
-                            "key": null,
-                          },
                           "referenceFields": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -18032,9 +17843,7 @@ service:
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "created": "2024-01-15T09:30:00Z",
                           "createdBy": "createdBy",
                           "data": {
@@ -18047,14 +17856,9 @@ service:
                           "lastModifiedBy": "lastModifiedBy",
                           "newStatus": "newStatus",
                           "newStatusColor": "newStatusColor",
-                          "referenceData": {
-                            "key": null,
-                          },
                           "referenceFields": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -18217,15 +18021,12 @@ service:
                   metadata: metadata
               total: 1000000
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   id: id
                   createdBy: createdBy
                   lastModifiedBy: lastModifiedBy
                   data:
                     key: value
-                  referenceData:
-                    key: null
                   created: '2024-01-15T09:30:00Z'
                   lastModified: '2024-01-15T09:30:00Z'
                   status: status
@@ -18243,8 +18044,7 @@ service:
                   schemaName: schemaName
                   schemaDisplayName: schemaDisplayName
                   referenceFields:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -18315,8 +18115,7 @@ service:
             status: status
             id: id
             publish: true
-          request:
-            key: null
+          request: {}
           response:
             body:
               _links:
@@ -18326,15 +18125,12 @@ service:
                   metadata: metadata
               total: 1000000
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   id: id
                   createdBy: createdBy
                   lastModifiedBy: lastModifiedBy
                   data:
                     key: value
-                  referenceData:
-                    key: null
                   created: '2024-01-15T09:30:00Z'
                   lastModified: '2024-01-15T09:30:00Z'
                   status: status
@@ -18352,8 +18148,7 @@ service:
                   schemaName: schemaName
                   schemaDisplayName: schemaDisplayName
                   referenceFields:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -18418,15 +18213,12 @@ service:
                   metadata: metadata
               total: 1000000
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   id: id
                   createdBy: createdBy
                   lastModifiedBy: lastModifiedBy
                   data:
                     key: value
-                  referenceData:
-                    key: null
                   created: '2024-01-15T09:30:00Z'
                   lastModified: '2024-01-15T09:30:00Z'
                   status: status
@@ -18444,8 +18236,7 @@ service:
                   schemaName: schemaName
                   schemaDisplayName: schemaDisplayName
                   referenceFields:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -18541,8 +18332,7 @@ service:
               schemaName: schemaName
               schemaDisplayName: schemaDisplayName
               referenceFields:
-                - _links:
-                    key: null
+                - _links: {}
                   fieldId: 1000000
                   name: name
                   isHidden: true
@@ -18560,8 +18350,7 @@ service:
                     editorUrl: null
                     tags: null
                   nested:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -18632,8 +18421,7 @@ service:
             status: status
             patch: true
             publish: true
-          request:
-            key: null
+          request: {}
           response:
             body:
               _links:
@@ -18643,15 +18431,12 @@ service:
                   metadata: metadata
               total: 1000000
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   id: id
                   createdBy: createdBy
                   lastModifiedBy: lastModifiedBy
                   data:
                     key: value
-                  referenceData:
-                    key: null
                   created: '2024-01-15T09:30:00Z'
                   lastModified: '2024-01-15T09:30:00Z'
                   status: status
@@ -18669,8 +18454,7 @@ service:
                   schemaName: schemaName
                   schemaDisplayName: schemaDisplayName
                   referenceFields:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -18730,8 +18514,7 @@ service:
             app: app
             schema: schema
             id: id
-          request:
-            key: null
+          request: {}
           response:
             body:
               _links:
@@ -18741,15 +18524,12 @@ service:
                   metadata: metadata
               total: 1000000
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   id: id
                   createdBy: createdBy
                   lastModifiedBy: lastModifiedBy
                   data:
                     key: value
-                  referenceData:
-                    key: null
                   created: '2024-01-15T09:30:00Z'
                   lastModified: '2024-01-15T09:30:00Z'
                   status: status
@@ -18767,8 +18547,7 @@ service:
                   schemaName: schemaName
                   schemaDisplayName: schemaDisplayName
                   referenceFields:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -18871,8 +18650,7 @@ service:
             app: app
             schema: schema
             id: id
-          request:
-            key: null
+          request: {}
           response:
             body:
               _links:
@@ -18882,15 +18660,12 @@ service:
                   metadata: metadata
               total: 1000000
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   id: id
                   createdBy: createdBy
                   lastModifiedBy: lastModifiedBy
                   data:
                     key: value
-                  referenceData:
-                    key: null
                   created: '2024-01-15T09:30:00Z'
                   lastModified: '2024-01-15T09:30:00Z'
                   status: status
@@ -18908,8 +18683,7 @@ service:
                   schemaName: schemaName
                   schemaDisplayName: schemaDisplayName
                   referenceFields:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -19011,15 +18785,12 @@ service:
                   metadata: metadata
               total: 1000000
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   id: id
                   createdBy: createdBy
                   lastModifiedBy: lastModifiedBy
                   data:
                     key: value
-                  referenceData:
-                    key: null
                   created: '2024-01-15T09:30:00Z'
                   lastModified: '2024-01-15T09:30:00Z'
                   status: status
@@ -19037,8 +18808,7 @@ service:
                   schemaName: schemaName
                   schemaDisplayName: schemaDisplayName
                   referenceFields:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -19110,15 +18880,12 @@ service:
                   metadata: metadata
               total: 1000000
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   id: id
                   createdBy: createdBy
                   lastModifiedBy: lastModifiedBy
                   data:
                     key: value
-                  referenceData:
-                    key: null
                   created: '2024-01-15T09:30:00Z'
                   lastModified: '2024-01-15T09:30:00Z'
                   status: status
@@ -19136,8 +18903,7 @@ service:
                   schemaName: schemaName
                   schemaDisplayName: schemaDisplayName
                   referenceFields:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -19246,7 +19012,7 @@ service:
             schema: schema
           request:
             datas:
-              - key: null
+              - {}
           response:
             body:
               - error:
@@ -19396,15 +19162,12 @@ service:
                   metadata: metadata
               total: 1000000
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   id: id
                   createdBy: createdBy
                   lastModifiedBy: lastModifiedBy
                   data:
                     key: value
-                  referenceData:
-                    key: null
                   created: '2024-01-15T09:30:00Z'
                   lastModified: '2024-01-15T09:30:00Z'
                   status: status
@@ -19422,8 +19185,7 @@ service:
                   schemaName: schemaName
                   schemaDisplayName: schemaDisplayName
                   referenceFields:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -19489,15 +19251,12 @@ service:
                   metadata: metadata
               total: 1000000
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   id: id
                   createdBy: createdBy
                   lastModifiedBy: lastModifiedBy
                   data:
                     key: value
-                  referenceData:
-                    key: null
                   created: '2024-01-15T09:30:00Z'
                   lastModified: '2024-01-15T09:30:00Z'
                   status: status
@@ -19515,8 +19274,7 @@ service:
                   schemaName: schemaName
                   schemaDisplayName: schemaDisplayName
                   referenceFields:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -19582,15 +19340,12 @@ service:
                   metadata: metadata
               total: 1000000
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   id: id
                   createdBy: createdBy
                   lastModifiedBy: lastModifiedBy
                   data:
                     key: value
-                  referenceData:
-                    key: null
                   created: '2024-01-15T09:30:00Z'
                   lastModified: '2024-01-15T09:30:00Z'
                   status: status
@@ -19608,8 +19363,7 @@ service:
                   schemaName: schemaName
                   schemaDisplayName: schemaDisplayName
                   referenceFields:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -19675,15 +19429,12 @@ service:
                   metadata: metadata
               total: 1000000
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   id: id
                   createdBy: createdBy
                   lastModifiedBy: lastModifiedBy
                   data:
                     key: value
-                  referenceData:
-                    key: null
                   created: '2024-01-15T09:30:00Z'
                   lastModified: '2024-01-15T09:30:00Z'
                   status: status
@@ -19701,8 +19452,7 @@ service:
                   schemaName: schemaName
                   schemaDisplayName: schemaDisplayName
                   referenceFields:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -19866,9 +19616,7 @@ service:
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "count": 1,
                           "error": "error",
                           "isResetting": true,
@@ -20100,8 +19848,7 @@ service:
                   method: method
                   metadata: metadata
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   isStopped: true
                   isResetting: true
                   count: 1
@@ -21818,7 +21565,7 @@ service:
               "response": {
                 "docs": "Rule actions returned.",
                 "status-code": 200,
-                "type": "map<string, root.RuleElementDto>",
+                "type": "map<string, optional<root.RuleElementDto>>",
               },
               "source": {
                 "openapi": "../openapi.json",
@@ -21925,9 +21672,7 @@ service:
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "created": "2024-01-15T09:30:00Z",
                           "description": "description",
                           "eventName": "eventName",
@@ -22011,9 +21756,7 @@ service:
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "action": {
                             "actionType": "Algolia",
                             "apiKey": "apiKey",
@@ -22573,7 +22316,7 @@ service:
       display-name: Get supported rule actions.
       response:
         docs: Rule actions returned.
-        type: map<string, root.RuleElementDto>
+        type: map<string, optional<root.RuleElementDto>>
         status-code: 200
       errors:
         - root.InternalServerError
@@ -22624,8 +22367,7 @@ service:
                   method: method
                   metadata: metadata
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   id: id
                   createdBy: createdBy
                   lastModifiedBy: lastModifiedBy
@@ -23171,8 +22913,7 @@ service:
                   metadata: metadata
               total: 1000000
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   id: id
                   created: '2024-01-15T09:30:00Z'
                   description: description
@@ -23345,9 +23086,7 @@ service:
                       ],
                       "fields": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "fieldId": 1000000,
                           "isDisabled": true,
                           "isHidden": true,
@@ -23355,9 +23094,7 @@ service:
                           "name": "name",
                           "nested": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -23500,9 +23237,7 @@ service:
                       ],
                       "fields": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "fieldId": 1000000,
                           "isDisabled": true,
                           "isHidden": true,
@@ -23510,9 +23245,7 @@ service:
                           "name": "name",
                           "nested": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -23698,9 +23431,7 @@ service:
                       ],
                       "fields": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "fieldId": 1000000,
                           "isDisabled": true,
                           "isHidden": true,
@@ -23708,9 +23439,7 @@ service:
                           "name": "name",
                           "nested": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -23853,9 +23582,7 @@ service:
                       ],
                       "fields": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "fieldId": 1000000,
                           "isDisabled": true,
                           "isHidden": true,
@@ -23863,9 +23590,7 @@ service:
                           "name": "name",
                           "nested": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -24011,9 +23736,7 @@ service:
                       ],
                       "fields": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "fieldId": 1000000,
                           "isDisabled": true,
                           "isHidden": true,
@@ -24021,9 +23744,7 @@ service:
                           "name": "name",
                           "nested": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -24166,9 +23887,7 @@ service:
                       ],
                       "fields": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "fieldId": 1000000,
                           "isDisabled": true,
                           "isHidden": true,
@@ -24176,9 +23895,7 @@ service:
                           "name": "name",
                           "nested": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -24322,9 +24039,7 @@ service:
                       ],
                       "fields": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "fieldId": 1000000,
                           "isDisabled": true,
                           "isHidden": true,
@@ -24332,9 +24047,7 @@ service:
                           "name": "name",
                           "nested": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -24459,9 +24172,7 @@ service:
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "category": "category",
                           "created": "2024-01-15T09:30:00Z",
                           "createdBy": "createdBy",
@@ -24473,9 +24184,7 @@ service:
                           ],
                           "fields": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -24507,9 +24216,7 @@ service:
                           "lastModified": "2024-01-15T09:30:00Z",
                           "lastModifiedBy": "lastModifiedBy",
                           "name": "name",
-                          "previewUrls": {
-                            "key": null,
-                          },
+                          "previewUrls": {},
                           "properties": {
                             "validateOnPublish": true,
                           },
@@ -24583,9 +24290,7 @@ service:
                       ],
                       "fields": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "fieldId": 1000000,
                           "isDisabled": true,
                           "isHidden": true,
@@ -24593,9 +24298,7 @@ service:
                           "name": "name",
                           "nested": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -24738,9 +24441,7 @@ service:
                       ],
                       "fields": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "fieldId": 1000000,
                           "isDisabled": true,
                           "isHidden": true,
@@ -24748,9 +24449,7 @@ service:
                           "name": "name",
                           "nested": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -24896,9 +24595,7 @@ service:
                       ],
                       "fields": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "fieldId": 1000000,
                           "isDisabled": true,
                           "isHidden": true,
@@ -24906,9 +24603,7 @@ service:
                           "name": "name",
                           "nested": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -25051,9 +24746,7 @@ service:
                       ],
                       "fields": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "fieldId": 1000000,
                           "isDisabled": true,
                           "isHidden": true,
@@ -25061,9 +24754,7 @@ service:
                           "name": "name",
                           "nested": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -25223,9 +24914,7 @@ service:
                       ],
                       "fields": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "fieldId": 1000000,
                           "isDisabled": true,
                           "isHidden": true,
@@ -25233,9 +24922,7 @@ service:
                           "name": "name",
                           "nested": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -25392,9 +25079,7 @@ service:
                       ],
                       "fields": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "fieldId": 1000000,
                           "isDisabled": true,
                           "isHidden": true,
@@ -25402,9 +25087,7 @@ service:
                           "name": "name",
                           "nested": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -25554,9 +25237,7 @@ service:
                       ],
                       "fields": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "fieldId": 1000000,
                           "isDisabled": true,
                           "isHidden": true,
@@ -25564,9 +25245,7 @@ service:
                           "name": "name",
                           "nested": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -25732,9 +25411,7 @@ service:
                       ],
                       "fields": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "fieldId": 1000000,
                           "isDisabled": true,
                           "isHidden": true,
@@ -25742,9 +25419,7 @@ service:
                           "name": "name",
                           "nested": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -25882,9 +25557,7 @@ service:
                       ],
                       "fields": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "fieldId": 1000000,
                           "isDisabled": true,
                           "isHidden": true,
@@ -25892,9 +25565,7 @@ service:
                           "name": "name",
                           "nested": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -26060,9 +25731,7 @@ service:
                       ],
                       "fields": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "fieldId": 1000000,
                           "isDisabled": true,
                           "isHidden": true,
@@ -26070,9 +25739,7 @@ service:
                           "name": "name",
                           "nested": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -26232,9 +25899,7 @@ service:
                       ],
                       "fields": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "fieldId": 1000000,
                           "isDisabled": true,
                           "isHidden": true,
@@ -26242,9 +25907,7 @@ service:
                           "name": "name",
                           "nested": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -26399,9 +26062,7 @@ service:
                       ],
                       "fields": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "fieldId": 1000000,
                           "isDisabled": true,
                           "isHidden": true,
@@ -26409,9 +26070,7 @@ service:
                           "name": "name",
                           "nested": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -26535,9 +26194,7 @@ service:
                     "app": "app",
                     "schema": "schema",
                   },
-                  "request": {
-                    "key": null,
-                  },
+                  "request": {},
                   "response": {
                     "body": {
                       "_links": {
@@ -26559,9 +26216,7 @@ service:
                       ],
                       "fields": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "fieldId": 1000000,
                           "isDisabled": true,
                           "isHidden": true,
@@ -26569,9 +26224,7 @@ service:
                           "name": "name",
                           "nested": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -26713,9 +26366,7 @@ service:
                       ],
                       "fields": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "fieldId": 1000000,
                           "isDisabled": true,
                           "isHidden": true,
@@ -26723,9 +26374,7 @@ service:
                           "name": "name",
                           "nested": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -26880,9 +26529,7 @@ service:
                       ],
                       "fields": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "fieldId": 1000000,
                           "isDisabled": true,
                           "isHidden": true,
@@ -26890,9 +26537,7 @@ service:
                           "name": "name",
                           "nested": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -27085,9 +26730,7 @@ service:
                       ],
                       "fields": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "fieldId": 1000000,
                           "isDisabled": true,
                           "isHidden": true,
@@ -27095,9 +26738,7 @@ service:
                           "name": "name",
                           "nested": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -27243,9 +26884,7 @@ service:
                       ],
                       "fields": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "fieldId": 1000000,
                           "isDisabled": true,
                           "isHidden": true,
@@ -27253,9 +26892,7 @@ service:
                           "name": "name",
                           "nested": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -27415,9 +27052,7 @@ service:
                       ],
                       "fields": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "fieldId": 1000000,
                           "isDisabled": true,
                           "isHidden": true,
@@ -27425,9 +27060,7 @@ service:
                           "name": "name",
                           "nested": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -27584,9 +27217,7 @@ service:
                       ],
                       "fields": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "fieldId": 1000000,
                           "isDisabled": true,
                           "isHidden": true,
@@ -27594,9 +27225,7 @@ service:
                           "name": "name",
                           "nested": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -27738,9 +27367,7 @@ service:
                       ],
                       "fields": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "fieldId": 1000000,
                           "isDisabled": true,
                           "isHidden": true,
@@ -27748,9 +27375,7 @@ service:
                           "name": "name",
                           "nested": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -27893,9 +27518,7 @@ service:
                       ],
                       "fields": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "fieldId": 1000000,
                           "isDisabled": true,
                           "isHidden": true,
@@ -27903,9 +27526,7 @@ service:
                           "name": "name",
                           "nested": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -28050,9 +27671,7 @@ service:
                       ],
                       "fields": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "fieldId": 1000000,
                           "isDisabled": true,
                           "isHidden": true,
@@ -28060,9 +27679,7 @@ service:
                           "name": "name",
                           "nested": [
                             {
-                              "_links": {
-                                "key": null,
-                              },
+                              "_links": {},
                               "fieldId": 1000000,
                               "isDisabled": true,
                               "isHidden": true,
@@ -28258,8 +27875,7 @@ service:
                   field: field
                   condition: condition
               fields:
-                - _links:
-                    key: null
+                - _links: {}
                   fieldId: 1000000
                   name: name
                   isHidden: true
@@ -28277,8 +27893,7 @@ service:
                     editorUrl: null
                     tags: null
                   nested:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -28387,8 +28002,7 @@ service:
                   field: field
                   condition: condition
               fields:
-                - _links:
-                    key: null
+                - _links: {}
                   fieldId: 1000000
                   name: name
                   isHidden: true
@@ -28406,8 +28020,7 @@ service:
                     editorUrl: null
                     tags: null
                   nested:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -28508,8 +28121,7 @@ service:
                   field: field
                   condition: condition
               fields:
-                - _links:
-                    key: null
+                - _links: {}
                   fieldId: 1000000
                   name: name
                   isHidden: true
@@ -28527,8 +28139,7 @@ service:
                     editorUrl: null
                     tags: null
                   nested:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -28623,8 +28234,7 @@ service:
                   field: field
                   condition: condition
               fields:
-                - _links:
-                    key: null
+                - _links: {}
                   fieldId: 1000000
                   name: name
                   isHidden: true
@@ -28642,8 +28252,7 @@ service:
                     editorUrl: null
                     tags: null
                   nested:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -28742,8 +28351,7 @@ service:
                   field: field
                   condition: condition
               fields:
-                - _links:
-                    key: null
+                - _links: {}
                   fieldId: 1000000
                   name: name
                   isHidden: true
@@ -28761,8 +28369,7 @@ service:
                     editorUrl: null
                     tags: null
                   nested:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -28869,8 +28476,7 @@ service:
                   field: field
                   condition: condition
               fields:
-                - _links:
-                    key: null
+                - _links: {}
                   fieldId: 1000000
                   name: name
                   isHidden: true
@@ -28888,8 +28494,7 @@ service:
                     editorUrl: null
                     tags: null
                   nested:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -28982,8 +28587,7 @@ service:
                   field: field
                   condition: condition
               fields:
-                - _links:
-                    key: null
+                - _links: {}
                   fieldId: 1000000
                   name: name
                   isHidden: true
@@ -29001,8 +28605,7 @@ service:
                     editorUrl: null
                     tags: null
                   nested:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -29113,8 +28716,7 @@ service:
                   field: field
                   condition: condition
               fields:
-                - _links:
-                    key: null
+                - _links: {}
                   fieldId: 1000000
                   name: name
                   isHidden: true
@@ -29132,8 +28734,7 @@ service:
                     editorUrl: null
                     tags: null
                   nested:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -29230,8 +28831,7 @@ service:
                   field: field
                   condition: condition
               fields:
-                - _links:
-                    key: null
+                - _links: {}
                   fieldId: 1000000
                   name: name
                   isHidden: true
@@ -29249,8 +28849,7 @@ service:
                     editorUrl: null
                     tags: null
                   nested:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -29344,8 +28943,7 @@ service:
                   field: field
                   condition: condition
               fields:
-                - _links:
-                    key: null
+                - _links: {}
                   fieldId: 1000000
                   name: name
                   isHidden: true
@@ -29363,8 +28961,7 @@ service:
                     editorUrl: null
                     tags: null
                   nested:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -29462,8 +29059,7 @@ service:
                   field: field
                   condition: condition
               fields:
-                - _links:
-                    key: null
+                - _links: {}
                   fieldId: 1000000
                   name: name
                   isHidden: true
@@ -29481,8 +29077,7 @@ service:
                     editorUrl: null
                     tags: null
                   nested:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -29578,8 +29173,7 @@ service:
                   field: field
                   condition: condition
               fields:
-                - _links:
-                    key: null
+                - _links: {}
                   fieldId: 1000000
                   name: name
                   isHidden: true
@@ -29597,8 +29191,7 @@ service:
                     editorUrl: null
                     tags: null
                   nested:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -29698,8 +29291,7 @@ service:
                   field: field
                   condition: condition
               fields:
-                - _links:
-                    key: null
+                - _links: {}
                   fieldId: 1000000
                   name: name
                   isHidden: true
@@ -29717,8 +29309,7 @@ service:
                     editorUrl: null
                     tags: null
                   nested:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -29814,8 +29405,7 @@ service:
                   field: field
                   condition: condition
               fields:
-                - _links:
-                    key: null
+                - _links: {}
                   fieldId: 1000000
                   name: name
                   isHidden: true
@@ -29833,8 +29423,7 @@ service:
                     editorUrl: null
                     tags: null
                   nested:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -29934,8 +29523,7 @@ service:
                   field: field
                   condition: condition
               fields:
-                - _links:
-                    key: null
+                - _links: {}
                   fieldId: 1000000
                   name: name
                   isHidden: true
@@ -29953,8 +29541,7 @@ service:
                     editorUrl: null
                     tags: null
                   nested:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -30050,8 +29637,7 @@ service:
                   field: field
                   condition: condition
               fields:
-                - _links:
-                    key: null
+                - _links: {}
                   fieldId: 1000000
                   name: name
                   isHidden: true
@@ -30069,8 +29655,7 @@ service:
                     editorUrl: null
                     tags: null
                   nested:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -30170,8 +29755,7 @@ service:
                   field: field
                   condition: condition
               fields:
-                - _links:
-                    key: null
+                - _links: {}
                   fieldId: 1000000
                   name: name
                   isHidden: true
@@ -30189,8 +29773,7 @@ service:
                     editorUrl: null
                     tags: null
                   nested:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -30286,8 +29869,7 @@ service:
                   field: field
                   condition: condition
               fields:
-                - _links:
-                    key: null
+                - _links: {}
                   fieldId: 1000000
                   name: name
                   isHidden: true
@@ -30305,8 +29887,7 @@ service:
                     editorUrl: null
                     tags: null
                   nested:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -30406,8 +29987,7 @@ service:
                   field: field
                   condition: condition
               fields:
-                - _links:
-                    key: null
+                - _links: {}
                   fieldId: 1000000
                   name: name
                   isHidden: true
@@ -30425,8 +30005,7 @@ service:
                     editorUrl: null
                     tags: null
                   nested:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -30473,8 +30052,7 @@ service:
                   method: method
                   metadata: metadata
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   id: id
                   createdBy: createdBy
                   lastModifiedBy: lastModifiedBy
@@ -30489,8 +30067,7 @@ service:
                   lastModified: '2024-01-15T09:30:00Z'
                   version: 1000000
                   scripts: {}
-                  previewUrls:
-                    key: null
+                  previewUrls: {}
                   fieldsInLists:
                     - fieldsInLists
                   fieldsInReferences:
@@ -30499,8 +30076,7 @@ service:
                     - action: Disable
                       field: field
                   fields:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -30611,8 +30187,7 @@ service:
                   field: field
                   condition: condition
               fields:
-                - _links:
-                    key: null
+                - _links: {}
                   fieldId: 1000000
                   name: name
                   isHidden: true
@@ -30630,8 +30205,7 @@ service:
                     editorUrl: null
                     tags: null
                   nested:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -30719,8 +30293,7 @@ service:
                   field: field
                   condition: condition
               fields:
-                - _links:
-                    key: null
+                - _links: {}
                   fieldId: 1000000
                   name: name
                   isHidden: true
@@ -30738,8 +30311,7 @@ service:
                     editorUrl: null
                     tags: null
                   nested:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -30862,8 +30434,7 @@ service:
                   field: field
                   condition: condition
               fields:
-                - _links:
-                    key: null
+                - _links: {}
                   fieldId: 1000000
                   name: name
                   isHidden: true
@@ -30881,8 +30452,7 @@ service:
                     editorUrl: null
                     tags: null
                   nested:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -31012,8 +30582,7 @@ service:
                   field: field
                   condition: condition
               fields:
-                - _links:
-                    key: null
+                - _links: {}
                   fieldId: 1000000
                   name: name
                   isHidden: true
@@ -31031,8 +30600,7 @@ service:
                     editorUrl: null
                     tags: null
                   nested:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -31130,8 +30698,7 @@ service:
                   field: field
                   condition: condition
               fields:
-                - _links:
-                    key: null
+                - _links: {}
                   fieldId: 1000000
                   name: name
                   isHidden: true
@@ -31149,8 +30716,7 @@ service:
                     editorUrl: null
                     tags: null
                   nested:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -31197,8 +30763,7 @@ service:
         - path-parameters:
             app: app
             schema: schema
-          request:
-            key: null
+          request: {}
           response:
             body:
               _links:
@@ -31244,8 +30809,7 @@ service:
                   field: field
                   condition: condition
               fields:
-                - _links:
-                    key: null
+                - _links: {}
                   fieldId: 1000000
                   name: name
                   isHidden: true
@@ -31263,8 +30827,7 @@ service:
                     editorUrl: null
                     tags: null
                   nested:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -31357,8 +30920,7 @@ service:
                   field: field
                   condition: condition
               fields:
-                - _links:
-                    key: null
+                - _links: {}
                   fieldId: 1000000
                   name: name
                   isHidden: true
@@ -31376,8 +30938,7 @@ service:
                     editorUrl: null
                     tags: null
                   nested:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -31475,8 +31036,7 @@ service:
                   field: field
                   condition: condition
               fields:
-                - _links:
-                    key: null
+                - _links: {}
                   fieldId: 1000000
                   name: name
                   isHidden: true
@@ -31494,8 +31054,7 @@ service:
                     editorUrl: null
                     tags: null
                   nested:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -31584,8 +31143,7 @@ service:
                   field: field
                   condition: condition
               fields:
-                - _links:
-                    key: null
+                - _links: {}
                   fieldId: 1000000
                   name: name
                   isHidden: true
@@ -31603,8 +31161,7 @@ service:
                     editorUrl: null
                     tags: null
                   nested:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -31693,8 +31250,7 @@ service:
                   field: field
                   condition: condition
               fields:
-                - _links:
-                    key: null
+                - _links: {}
                   fieldId: 1000000
                   name: name
                   isHidden: true
@@ -31712,8 +31268,7 @@ service:
                     editorUrl: null
                     tags: null
                   nested:
-                    - _links:
-                        key: null
+                    - _links: {}
                       fieldId: 1000000
                       name: name
                       isHidden: true
@@ -32574,9 +32129,7 @@ service:
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "contributorEmail": "contributorEmail",
                           "contributorId": "contributorId",
                           "contributorName": "contributorName",
@@ -32642,9 +32195,7 @@ service:
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "contributorEmail": "contributorEmail",
                           "contributorId": "contributorId",
                           "contributorName": "contributorName",
@@ -32707,9 +32258,7 @@ service:
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "contributorEmail": "contributorEmail",
                           "contributorId": "contributorId",
                           "contributorName": "contributorName",
@@ -32876,9 +32425,7 @@ You will retrieve all teams, where you are assigned as a contributor.",
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "contributorEmail": "contributorEmail",
                           "contributorId": "contributorId",
                           "contributorName": "contributorName",
@@ -33107,8 +32654,7 @@ service:
                   method: method
                   metadata: metadata
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   contributorId: contributorId
                   contributorName: contributorName
                   contributorEmail: contributorEmail
@@ -33153,8 +32699,7 @@ service:
                   method: method
                   metadata: metadata
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   contributorId: contributorId
                   contributorName: contributorName
                   contributorEmail: contributorEmail
@@ -33193,8 +32738,7 @@ service:
                   method: method
                   metadata: metadata
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   contributorId: contributorId
                   contributorName: contributorName
                   contributorEmail: contributorEmail
@@ -33238,8 +32782,7 @@ service:
                   method: method
                   metadata: metadata
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   contributorId: contributorId
                   contributorName: contributorName
                   contributorEmail: contributorEmail
@@ -33497,9 +33040,7 @@ service:
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "description": "description",
                           "isStarter": true,
                           "name": "name",
@@ -33557,8 +33098,7 @@ service:
                   method: method
                   metadata: metadata
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   name: name
                   title: title
                   description: description
@@ -33889,9 +33429,7 @@ service:
                       },
                       "items": [
                         {
-                          "_links": {
-                            "key": null,
-                          },
+                          "_links": {},
                           "displayName": "displayName",
                           "email": "email",
                           "id": "id",
@@ -34315,8 +33853,7 @@ service:
                   metadata: metadata
               total: 1000000
               items:
-                - _links:
-                    key: null
+                - _links: {}
                   id: id
                   email: email
                   displayName: displayName

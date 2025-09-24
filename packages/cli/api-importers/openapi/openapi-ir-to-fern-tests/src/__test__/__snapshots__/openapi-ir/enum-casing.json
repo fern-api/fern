@@ -177,7 +177,7 @@
                   },
                   "groupName": [],
                   "inline": true,
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "generatedName": "ExampleResponseCustomFields",
                 "groupName": [],

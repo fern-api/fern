@@ -6181,70 +6181,76 @@
             "type": {
               "container": {
                 "list": {
-                  "name": {
-                    "originalName": "TursoValue",
-                    "camelCase": {
-                      "unsafeName": "tursoValue",
-                      "safeName": "tursoValue"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "turso_value",
-                      "safeName": "turso_value"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "TURSO_VALUE",
-                      "safeName": "TURSO_VALUE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "TursoValue",
-                      "safeName": "TursoValue"
-                    }
-                  },
-                  "fernFilepath": {
-                    "allParts": [
-                      {
-                        "originalName": "sqlite",
+                  "container": {
+                    "optional": {
+                      "name": {
+                        "originalName": "TursoValue",
                         "camelCase": {
-                          "unsafeName": "sqlite",
-                          "safeName": "sqlite"
+                          "unsafeName": "tursoValue",
+                          "safeName": "tursoValue"
                         },
                         "snakeCase": {
-                          "unsafeName": "sqlite",
-                          "safeName": "sqlite"
+                          "unsafeName": "turso_value",
+                          "safeName": "turso_value"
                         },
                         "screamingSnakeCase": {
-                          "unsafeName": "SQLITE",
-                          "safeName": "SQLITE"
+                          "unsafeName": "TURSO_VALUE",
+                          "safeName": "TURSO_VALUE"
                         },
                         "pascalCase": {
-                          "unsafeName": "Sqlite",
-                          "safeName": "Sqlite"
+                          "unsafeName": "TursoValue",
+                          "safeName": "TursoValue"
                         }
-                      }
-                    ],
-                    "packagePath": [],
-                    "file": {
-                      "originalName": "sqlite",
-                      "camelCase": {
-                        "unsafeName": "sqlite",
-                        "safeName": "sqlite"
                       },
-                      "snakeCase": {
-                        "unsafeName": "sqlite",
-                        "safeName": "sqlite"
+                      "fernFilepath": {
+                        "allParts": [
+                          {
+                            "originalName": "sqlite",
+                            "camelCase": {
+                              "unsafeName": "sqlite",
+                              "safeName": "sqlite"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "sqlite",
+                              "safeName": "sqlite"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "SQLITE",
+                              "safeName": "SQLITE"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "Sqlite",
+                              "safeName": "Sqlite"
+                            }
+                          }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                          "originalName": "sqlite",
+                          "camelCase": {
+                            "unsafeName": "sqlite",
+                            "safeName": "sqlite"
+                          },
+                          "snakeCase": {
+                            "unsafeName": "sqlite",
+                            "safeName": "sqlite"
+                          },
+                          "screamingSnakeCase": {
+                            "unsafeName": "SQLITE",
+                            "safeName": "SQLITE"
+                          },
+                          "pascalCase": {
+                            "unsafeName": "Sqlite",
+                            "safeName": "Sqlite"
+                          }
+                        }
                       },
-                      "screamingSnakeCase": {
-                        "unsafeName": "SQLITE",
-                        "safeName": "SQLITE"
-                      },
-                      "pascalCase": {
-                        "unsafeName": "Sqlite",
-                        "safeName": "Sqlite"
-                      }
-                    }
+                      "typeId": "type_sqlite:TursoValue",
+                      "type": "named"
+                    },
+                    "type": "optional"
                   },
-                  "typeId": "type_sqlite:TursoValue",
-                  "type": "named"
+                  "type": "container"
                 },
                 "type": "list"
               },
@@ -6264,70 +6270,76 @@
                   "type": "primitive"
                 },
                 "valueType": {
-                  "name": {
-                    "originalName": "TursoValue",
-                    "camelCase": {
-                      "unsafeName": "tursoValue",
-                      "safeName": "tursoValue"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "turso_value",
-                      "safeName": "turso_value"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "TURSO_VALUE",
-                      "safeName": "TURSO_VALUE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "TursoValue",
-                      "safeName": "TursoValue"
-                    }
-                  },
-                  "fernFilepath": {
-                    "allParts": [
-                      {
-                        "originalName": "sqlite",
+                  "container": {
+                    "optional": {
+                      "name": {
+                        "originalName": "TursoValue",
                         "camelCase": {
-                          "unsafeName": "sqlite",
-                          "safeName": "sqlite"
+                          "unsafeName": "tursoValue",
+                          "safeName": "tursoValue"
                         },
                         "snakeCase": {
-                          "unsafeName": "sqlite",
-                          "safeName": "sqlite"
+                          "unsafeName": "turso_value",
+                          "safeName": "turso_value"
                         },
                         "screamingSnakeCase": {
-                          "unsafeName": "SQLITE",
-                          "safeName": "SQLITE"
+                          "unsafeName": "TURSO_VALUE",
+                          "safeName": "TURSO_VALUE"
                         },
                         "pascalCase": {
-                          "unsafeName": "Sqlite",
-                          "safeName": "Sqlite"
+                          "unsafeName": "TursoValue",
+                          "safeName": "TursoValue"
                         }
-                      }
-                    ],
-                    "packagePath": [],
-                    "file": {
-                      "originalName": "sqlite",
-                      "camelCase": {
-                        "unsafeName": "sqlite",
-                        "safeName": "sqlite"
                       },
-                      "snakeCase": {
-                        "unsafeName": "sqlite",
-                        "safeName": "sqlite"
+                      "fernFilepath": {
+                        "allParts": [
+                          {
+                            "originalName": "sqlite",
+                            "camelCase": {
+                              "unsafeName": "sqlite",
+                              "safeName": "sqlite"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "sqlite",
+                              "safeName": "sqlite"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "SQLITE",
+                              "safeName": "SQLITE"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "Sqlite",
+                              "safeName": "Sqlite"
+                            }
+                          }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                          "originalName": "sqlite",
+                          "camelCase": {
+                            "unsafeName": "sqlite",
+                            "safeName": "sqlite"
+                          },
+                          "snakeCase": {
+                            "unsafeName": "sqlite",
+                            "safeName": "sqlite"
+                          },
+                          "screamingSnakeCase": {
+                            "unsafeName": "SQLITE",
+                            "safeName": "SQLITE"
+                          },
+                          "pascalCase": {
+                            "unsafeName": "Sqlite",
+                            "safeName": "Sqlite"
+                          }
+                        }
                       },
-                      "screamingSnakeCase": {
-                        "unsafeName": "SQLITE",
-                        "safeName": "SQLITE"
-                      },
-                      "pascalCase": {
-                        "unsafeName": "Sqlite",
-                        "safeName": "Sqlite"
-                      }
-                    }
+                      "typeId": "type_sqlite:TursoValue",
+                      "type": "named"
+                    },
+                    "type": "optional"
                   },
-                  "typeId": "type_sqlite:TursoValue",
-                  "type": "named"
+                  "type": "container"
                 },
                 "type": "map"
               },
@@ -28050,8 +28062,11 @@
         "types": [
           {
             "value": {
-              "value": "type_sqlite:TursoValue",
-              "type": "named"
+              "value": {
+                "value": "type_sqlite:TursoValue",
+                "type": "named"
+              },
+              "type": "optional"
             },
             "type": "list"
           },
@@ -28061,8 +28076,11 @@
               "type": "primitive"
             },
             "value": {
-              "value": "type_sqlite:TursoValue",
-              "type": "named"
+              "value": {
+                "value": "type_sqlite:TursoValue",
+                "type": "named"
+              },
+              "type": "optional"
             },
             "type": "map"
           }

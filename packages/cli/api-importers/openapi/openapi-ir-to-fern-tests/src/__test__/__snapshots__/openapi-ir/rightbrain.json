@@ -65866,7 +65866,7 @@
                 },
                 "groupName": [],
                 "inline": true,
-                "type": "nullable"
+                "type": "optional"
               },
               "generatedName": "TaskCreateOutputFormat",
               "title": "Output Format",
@@ -67060,7 +67060,7 @@
                 },
                 "groupName": [],
                 "inline": true,
-                "type": "nullable"
+                "type": "optional"
               },
               "generatedName": "TaskRevisionOutputFormat",
               "title": "Output Format",
@@ -67588,7 +67588,7 @@
                     },
                     "groupName": [],
                     "inline": true,
-                    "type": "nullable"
+                    "type": "optional"
                   },
                   "generatedName": "TaskUpdateOutputFormat",
                   "groupName": [],

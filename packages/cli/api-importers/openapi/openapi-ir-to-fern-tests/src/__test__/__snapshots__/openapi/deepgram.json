@@ -2380,7 +2380,7 @@ errors:
             "docs": undefined,
             "inline": true,
             "properties": {
-              "properties": "optional<map<string, SettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValue>>",
+              "properties": "optional<map<string, optional<SettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValue>>>",
               "required": "optional<list<string>>",
               "type": "optional<string>",
             },
@@ -2906,7 +2906,7 @@ types:
       type: optional<string>
       properties: >-
         optional<map<string,
-        SettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValue>>
+        optional<SettingsConfigurationAgentThinkFunctionsItemParametersPropertiesValue>>>
       required: optional<list<string>>
     source:
       openapi: ../asyncapi.yml

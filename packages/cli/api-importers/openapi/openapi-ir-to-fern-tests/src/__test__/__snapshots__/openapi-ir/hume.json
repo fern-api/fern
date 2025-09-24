@@ -6303,7 +6303,7 @@
                     },
                     "groupName": [],
                     "inline": true,
-                    "type": "nullable"
+                    "type": "optional"
                   },
                   "groupName": [],
                   "type": "map"

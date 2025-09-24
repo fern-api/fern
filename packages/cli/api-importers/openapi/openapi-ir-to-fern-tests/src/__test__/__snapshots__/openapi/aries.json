@@ -96,7 +96,7 @@
             "inline": undefined,
             "properties": {
               "aml": {
-                "type": "optional<map<string, string>>",
+                "type": "optional<map<string, optional<string>>>",
               },
               "amlContext": {
                 "type": "optional<string>",
@@ -441,7 +441,7 @@
             "inline": undefined,
             "properties": {
               "results": {
-                "type": "optional<map<string, string>>",
+                "type": "optional<map<string, optional<string>>>",
               },
             },
             "source": {
@@ -2115,7 +2115,7 @@
             "properties": {
               "attrs": {
                 "docs": "Attribute names and value",
-                "type": "optional<map<string, string>>",
+                "type": "optional<map<string, optional<string>>>",
               },
               "cred_def_id": {
                 "docs": "Credential definition identifier",
@@ -2303,7 +2303,7 @@
               },
               "values": {
                 "docs": "Credential attributes",
-                "type": "map<string, IndyCredentialValuesValue>",
+                "type": "map<string, optional<IndyCredentialValuesValue>>",
               },
               "witness": {
                 "docs": "Witness for revocation proof",
@@ -2357,7 +2357,7 @@
                 },
               },
               "m": {
-                "type": "optional<map<string, string>>",
+                "type": "optional<map<string, optional<string>>>",
               },
               "m2": {
                 "type": "optional<string>",
@@ -2369,7 +2369,7 @@
                 },
               },
               "revealed_attrs": {
-                "type": "optional<map<string, string>>",
+                "type": "optional<map<string, optional<string>>>",
               },
               "v": {
                 "type": "optional<string>",
@@ -2411,13 +2411,13 @@
                 "type": "optional<IndyGEProofPred>",
               },
               "r": {
-                "type": "optional<map<string, string>>",
+                "type": "optional<map<string, optional<string>>>",
               },
               "t": {
-                "type": "optional<map<string, string>>",
+                "type": "optional<map<string, optional<string>>>",
               },
               "u": {
-                "type": "optional<map<string, string>>",
+                "type": "optional<map<string, optional<string>>>",
               },
             },
             "source": {
@@ -2496,10 +2496,10 @@
             "inline": undefined,
             "properties": {
               "c_list": {
-                "type": "optional<map<string, string>>",
+                "type": "optional<map<string, optional<string>>>",
               },
               "x_list": {
-                "type": "optional<map<string, string>>",
+                "type": "optional<map<string, optional<string>>>",
               },
             },
             "source": {
@@ -2648,15 +2648,15 @@
             "properties": {
               "requested_attributes": {
                 "docs": "Nested object mapping proof request attribute referents to requested-attribute specifiers",
-                "type": "map<string, IndyRequestedCredsRequestedAttr>",
+                "type": "map<string, optional<IndyRequestedCredsRequestedAttr>>",
               },
               "requested_predicates": {
                 "docs": "Nested object mapping proof request predicate referents to requested-predicate specifiers",
-                "type": "map<string, IndyRequestedCredsRequestedPred>",
+                "type": "map<string, optional<IndyRequestedCredsRequestedPred>>",
               },
               "self_attested_attributes": {
                 "docs": "Self-attested attributes to build into proof",
-                "type": "map<string, string>",
+                "type": "map<string, optional<string>>",
               },
               "trace": {
                 "docs": "Whether to trace event (default false)",
@@ -2829,7 +2829,7 @@
               },
               "restrictions": {
                 "docs": "If present, credential must satisfy one of given restrictions: specify schema_id, schema_issuer_did, schema_name, schema_version, issuer_did, cred_def_id, and/or attr::<attribute-name>::value where <attribute-name> represents a credential attribute name",
-                "type": "optional<list<map<string, string>>>",
+                "type": "optional<list<map<string, optional<string>>>>",
               },
             },
             "source": {
@@ -2888,7 +2888,7 @@
               },
               "restrictions": {
                 "docs": "If present, credential must satisfy one of given restrictions: specify schema_id, schema_issuer_did, schema_name, schema_version, issuer_did, cred_def_id, and/or attr::<attribute-name>::value where <attribute-name> represents a credential attribute name",
-                "type": "optional<list<map<string, string>>>",
+                "type": "optional<list<map<string, optional<string>>>>",
               },
             },
             "source": {
@@ -2974,11 +2974,11 @@
               },
               "requested_attributes": {
                 "docs": "Requested attribute specifications of proof request",
-                "type": "map<string, IndyProofReqAttrSpec>",
+                "type": "map<string, optional<IndyProofReqAttrSpec>>",
               },
               "requested_predicates": {
                 "docs": "Requested predicate specifications of proof request",
-                "type": "map<string, IndyProofReqPredSpec>",
+                "type": "map<string, optional<IndyProofReqPredSpec>>",
               },
               "version": {
                 "docs": "Proof request version",
@@ -3032,15 +3032,15 @@
             "properties": {
               "predicates": {
                 "docs": "Proof requested proof predicates.",
-                "type": "optional<map<string, IndyProofRequestedProofPredicate>>",
+                "type": "optional<map<string, optional<IndyProofRequestedProofPredicate>>>",
               },
               "revealed_attr_groups": {
                 "docs": "Proof requested proof revealed attribute groups",
-                "type": "optional<map<string, IndyProofRequestedProofRevealedAttrGroup>>",
+                "type": "optional<map<string, optional<IndyProofRequestedProofRevealedAttrGroup>>>",
               },
               "revealed_attrs": {
                 "docs": "Proof requested proof revealed attributes",
-                "type": "optional<map<string, IndyProofRequestedProofRevealedAttr>>",
+                "type": "optional<map<string, optional<IndyProofRequestedProofRevealedAttr>>>",
               },
               "self_attested_attrs": {
                 "docs": "Proof requested proof self-attested attributes",
@@ -3105,7 +3105,7 @@
               },
               "values": {
                 "docs": "Indy proof requested proof revealed attr groups group value",
-                "type": "optional<map<string, RawEncoded>>",
+                "type": "optional<map<string, optional<RawEncoded>>>",
               },
             },
             "source": {
@@ -4445,7 +4445,7 @@
             "properties": {
               "rrid2crid": {
                 "docs": "Credential revocation ids by revocation registry id",
-                "type": "optional<map<string, list<string>>>",
+                "type": "optional<map<string, optional<list<string>>>>",
               },
             },
             "source": {
@@ -5149,7 +5149,7 @@
                 "type": "optional<boolean>",
               },
               "formats": {
-                "type": "optional<list<map<string, string>>>",
+                "type": "optional<list<map<string, optional<string>>>>",
               },
               "messages_attach": {
                 "type": "optional<list<TransactionRecordMessagesAttachItem>>",
@@ -6966,7 +6966,7 @@
                 "type": "optional<list<string>>",
               },
               "cred_tags": {
-                "type": "optional<map<string, string>>",
+                "type": "optional<map<string, optional<string>>>",
               },
               "cred_value": {
                 "docs": "(JSON-serializable) credential value",
@@ -7283,7 +7283,7 @@ types:
   AMLRecord:
     properties:
       aml:
-        type: optional<map<string, string>>
+        type: optional<map<string, optional<string>>>
       amlContext:
         type: optional<string>
       version:
@@ -7479,7 +7479,7 @@ types:
   AttributeMimeTypesResult:
     properties:
       results:
-        type: optional<map<string, string>>
+        type: optional<map<string, optional<string>>>
     source:
       openapi: ../openapi.yml
   BasicMessageModuleResponse: map<string, unknown>
@@ -8531,7 +8531,7 @@ types:
   IndyCredInfo:
     properties:
       attrs:
-        type: optional<map<string, string>>
+        type: optional<map<string, optional<string>>>
         docs: Attribute names and value
       cred_def_id:
         type: optional<string>
@@ -8664,7 +8664,7 @@ types:
         type: IndyCredentialSignatureCorrectnessProof
         docs: Credential signature correctness proof
       values:
-        type: map<string, IndyCredentialValuesValue>
+        type: map<string, optional<IndyCredentialValuesValue>>
         docs: Credential attributes
       witness:
         type: optional<witness>
@@ -8682,13 +8682,13 @@ types:
         validation:
           pattern: ^[0-9]*$
       m:
-        type: optional<map<string, string>>
+        type: optional<map<string, optional<string>>>
       m2:
         type: optional<string>
         validation:
           pattern: ^[0-9]*$
       revealed_attrs:
-        type: optional<map<string, string>>
+        type: optional<map<string, optional<string>>>
       v:
         type: optional<string>
         validation:
@@ -8708,11 +8708,11 @@ types:
       predicate:
         type: optional<IndyGEProofPred>
       r:
-        type: optional<map<string, string>>
+        type: optional<map<string, optional<string>>>
       t:
-        type: optional<map<string, string>>
+        type: optional<map<string, optional<string>>>
       u:
-        type: optional<map<string, string>>
+        type: optional<map<string, optional<string>>>
     source:
       openapi: ../openapi.yml
   IndyGeProofPredPType:
@@ -8758,9 +8758,9 @@ types:
   IndyNonRevocProof:
     properties:
       c_list:
-        type: optional<map<string, string>>
+        type: optional<map<string, optional<string>>>
       x_list:
-        type: optional<map<string, string>>
+        type: optional<map<string, optional<string>>>
     source:
       openapi: ../openapi.yml
   IndyNonRevocationInterval:
@@ -8843,17 +8843,17 @@ types:
   IndyPresSpec:
     properties:
       requested_attributes:
-        type: map<string, IndyRequestedCredsRequestedAttr>
+        type: map<string, optional<IndyRequestedCredsRequestedAttr>>
         docs: >-
           Nested object mapping proof request attribute referents to
           requested-attribute specifiers
       requested_predicates:
-        type: map<string, IndyRequestedCredsRequestedPred>
+        type: map<string, optional<IndyRequestedCredsRequestedPred>>
         docs: >-
           Nested object mapping proof request predicate referents to
           requested-predicate specifiers
       self_attested_attributes:
-        type: map<string, string>
+        type: map<string, optional<string>>
         docs: Self-attested attributes to build into proof
       trace:
         type: optional<boolean>
@@ -8945,7 +8945,7 @@ types:
       non_revoked:
         type: optional<IndyProofReqAttrSpecNonRevoked>
       restrictions:
-        type: optional<list<map<string, string>>>
+        type: optional<list<map<string, optional<string>>>>
         docs: >-
           If present, credential must satisfy one of given restrictions: specify
           schema_id, schema_issuer_did, schema_name, schema_version, issuer_did,
@@ -8995,7 +8995,7 @@ types:
         type: integer
         docs: Threshold value
       restrictions:
-        type: optional<list<map<string, string>>>
+        type: optional<list<map<string, optional<string>>>>
         docs: >-
           If present, credential must satisfy one of given restrictions: specify
           schema_id, schema_issuer_did, schema_name, schema_version, issuer_did,
@@ -9030,10 +9030,10 @@ types:
         validation:
           pattern: ^[1-9][0-9]*$
       requested_attributes:
-        type: map<string, IndyProofReqAttrSpec>
+        type: map<string, optional<IndyProofReqAttrSpec>>
         docs: Requested attribute specifications of proof request
       requested_predicates:
-        type: map<string, IndyProofReqPredSpec>
+        type: map<string, optional<IndyProofReqPredSpec>>
         docs: Requested predicate specifications of proof request
       version:
         type: optional<string>
@@ -9071,13 +9071,15 @@ types:
   IndyProofRequestedProof:
     properties:
       predicates:
-        type: optional<map<string, IndyProofRequestedProofPredicate>>
+        type: optional<map<string, optional<IndyProofRequestedProofPredicate>>>
         docs: Proof requested proof predicates.
       revealed_attr_groups:
-        type: optional<map<string, IndyProofRequestedProofRevealedAttrGroup>>
+        type: >-
+          optional<map<string,
+          optional<IndyProofRequestedProofRevealedAttrGroup>>>
         docs: Proof requested proof revealed attribute groups
       revealed_attrs:
-        type: optional<map<string, IndyProofRequestedProofRevealedAttr>>
+        type: optional<map<string, optional<IndyProofRequestedProofRevealedAttr>>>
         docs: Proof requested proof revealed attributes
       self_attested_attrs:
         type: optional<IndyProofRequestedProofSelfAttestedAttrs>
@@ -9115,7 +9117,7 @@ types:
         type: optional<integer>
         docs: Sub-proof index
       values:
-        type: optional<map<string, RawEncoded>>
+        type: optional<map<string, optional<RawEncoded>>>
         docs: Indy proof requested proof revealed attr groups group value
     source:
       openapi: ../openapi.yml
@@ -9962,7 +9964,7 @@ types:
   PublishRevocations:
     properties:
       rrid2crid:
-        type: optional<map<string, list<string>>>
+        type: optional<map<string, optional<list<string>>>>
         docs: Credential revocation ids by revocation registry id
     source:
       openapi: ../openapi.yml
@@ -10407,7 +10409,7 @@ types:
         type: optional<boolean>
         docs: If True, Endorser will write the transaction after endorsing it
       formats:
-        type: optional<list<map<string, string>>>
+        type: optional<list<map<string, optional<string>>>>
       messages_attach:
         type: optional<list<TransactionRecordMessagesAttachItem>>
       meta_data:
@@ -11453,7 +11455,7 @@ types:
       contexts:
         type: optional<list<string>>
       cred_tags:
-        type: optional<map<string, string>>
+        type: optional<map<string, optional<string>>>
       cred_value:
         type: optional<VcRecordCredValue>
         docs: (JSON-serializable) credential value
@@ -11874,7 +11876,7 @@ types:
                     },
                     "params": {
                       "docs": "Input parameter values",
-                      "type": "optional<map<string, string>>",
+                      "type": "optional<map<string, optional<string>>>",
                     },
                   },
                 },
@@ -12052,7 +12054,7 @@ service:
               type: optional<string>
               docs: Menu option name
             params:
-              type: optional<map<string, string>>
+              type: optional<map<string, optional<string>>>
               docs: Input parameter values
         content-type: application/json
       response:
@@ -14907,7 +14909,7 @@ docs: Credential definition operations
                     },
                     "tag_query": {
                       "docs": "Tag filter",
-                      "type": "optional<map<string, string>>",
+                      "type": "optional<map<string, optional<string>>>",
                     },
                     "types": {
                       "type": "optional<list<string>>",
@@ -15233,7 +15235,7 @@ service:
               type: optional<list<string>>
               docs: Subject identifiers, all of which to match
             tag_query:
-              type: optional<map<string, string>>
+              type: optional<map<string, optional<string>>>
               docs: Tag filter
             types:
               type: optional<list<string>>
@@ -28190,7 +28192,7 @@ docs: did resolver interface.
                   "properties": {
                     "purge": {
                       "docs": "Credential revocation ids by revocation registry id: omit for all, specify null or empty list for all pending per revocation registry",
-                      "type": "optional<map<string, list<string>>>",
+                      "type": "optional<map<string, optional<list<string>>>>",
                     },
                   },
                 },
@@ -29351,7 +29353,7 @@ service:
         body:
           properties:
             purge:
-              type: optional<map<string, list<string>>>
+              type: optional<map<string, optional<list<string>>>>
               docs: >-
                 Credential revocation ids by revocation registry id: omit for
                 all, specify null or empty list for all pending per revocation

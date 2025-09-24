@@ -22731,7 +22731,7 @@ docs: Endpoints relating to Location objects
             "inline": true,
             "properties": {
               "_object": "optional<string>",
-              "data": "optional<list<root.Place>>",
+              "data": "optional<list<optional<root.Place>>>",
               "next": "optional<string>",
               "prev": "optional<string>",
               "total_count": "optional<integer>",
@@ -22757,7 +22757,7 @@ docs: Endpoints relating to Location objects
       prev: optional<string>
       next: optional<string>
       total_count: optional<integer>
-      data: optional<list<root.Place>>
+      data: optional<list<optional<root.Place>>>
     source:
       openapi: ../openapi.yml
     inline: true

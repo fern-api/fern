@@ -48785,20 +48785,6 @@
                           },
                           "type": "primitive"
                         },
-                        "env": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
                         "updated_at": {
                           "value": {
                             "value": "2024-01-15T09:30:00Z",
@@ -48931,7 +48917,7 @@
                     },
                     "groupName": [],
                     "inline": true,
-                    "type": "nullable"
+                    "type": "optional"
                   },
                   "generatedName": "CreateTransformationRequestEnv",
                   "groupName": [],
@@ -49296,7 +49282,7 @@
                     },
                     "groupName": [],
                     "inline": true,
-                    "type": "nullable"
+                    "type": "optional"
                   },
                   "generatedName": "UpsertTransformationRequestEnv",
                   "groupName": [],
@@ -49897,7 +49883,7 @@
                     },
                     "groupName": [],
                     "inline": true,
-                    "type": "nullable"
+                    "type": "optional"
                   },
                   "generatedName": "UpdateTransformationRequestEnv",
                   "groupName": [],
@@ -50342,7 +50328,7 @@
                           },
                           "groupName": [],
                           "inline": true,
-                          "type": "nullable"
+                          "type": "optional"
                         },
                         "generatedName": "TestTransformationRequestRequestHeaders",
                         "groupName": [],
@@ -60998,16 +60984,22 @@
                           "value": {
                             "generatedName": "ShortEventDataHeadersOneValue",
                             "value": {
-                              "schema": {
-                                "type": "string"
-                              },
                               "generatedName": "ShortEventDataHeadersOneValue",
+                              "value": {
+                                "schema": {
+                                  "type": "string"
+                                },
+                                "generatedName": "ShortEventDataHeadersOneValue",
+                                "groupName": [],
+                                "type": "primitive"
+                              },
                               "groupName": [],
-                              "type": "primitive"
+                              "inline": true,
+                              "type": "nullable"
                             },
                             "groupName": [],
                             "inline": true,
-                            "type": "nullable"
+                            "type": "optional"
                           },
                           "generatedName": "ShortEventDataHeadersOne",
                           "groupName": [],
@@ -61702,16 +61694,22 @@
                                   "value": {
                                     "generatedName": "EventDataHeadersOneValue",
                                     "value": {
-                                      "schema": {
-                                        "type": "string"
-                                      },
                                       "generatedName": "EventDataHeadersOneValue",
+                                      "value": {
+                                        "schema": {
+                                          "type": "string"
+                                        },
+                                        "generatedName": "EventDataHeadersOneValue",
+                                        "groupName": [],
+                                        "type": "primitive"
+                                      },
                                       "groupName": [],
-                                      "type": "primitive"
+                                      "inline": true,
+                                      "type": "nullable"
                                     },
                                     "groupName": [],
                                     "inline": true,
-                                    "type": "nullable"
+                                    "type": "optional"
                                   },
                                   "generatedName": "EventDataHeadersOne",
                                   "groupName": [],
@@ -66633,16 +66631,22 @@
                                   "value": {
                                     "generatedName": "RequestDataHeadersOneValue",
                                     "value": {
-                                      "schema": {
-                                        "type": "string"
-                                      },
                                       "generatedName": "RequestDataHeadersOneValue",
+                                      "value": {
+                                        "schema": {
+                                          "type": "string"
+                                        },
+                                        "generatedName": "RequestDataHeadersOneValue",
+                                        "groupName": [],
+                                        "type": "primitive"
+                                      },
                                       "groupName": [],
-                                      "type": "primitive"
+                                      "inline": true,
+                                      "type": "nullable"
                                     },
                                     "groupName": [],
                                     "inline": true,
-                                    "type": "nullable"
+                                    "type": "optional"
                                   },
                                   "generatedName": "RequestDataHeadersOne",
                                   "groupName": [],
@@ -67783,7 +67787,7 @@
                             },
                             "groupName": [],
                             "inline": true,
-                            "type": "nullable"
+                            "type": "optional"
                           },
                           "generatedName": "TransformFullTransformationEnv",
                           "groupName": [],
@@ -68773,7 +68777,7 @@
                     },
                     "groupName": [],
                     "inline": true,
-                    "type": "nullable"
+                    "type": "optional"
                   },
                   "generatedName": "TransformationEnv",
                   "groupName": [],

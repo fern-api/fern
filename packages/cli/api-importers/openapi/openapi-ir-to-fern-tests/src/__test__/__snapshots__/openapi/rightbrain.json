@@ -2460,7 +2460,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
               },
               "output_format": {
                 "docs": "This gives control over the structure of how the Task responds. Supports shorthand notation or an object with `type` can be specified for each attribute. In most instances, the LLM will be able to generate the desired output into the relevant property, but an optional `description` can be passed to provide it with additional context.",
-                "type": "map<string, TaskRevisionOutputFormatValue>",
+                "type": "map<string, optional<TaskRevisionOutputFormatValue>>",
               },
               "rag": {
                 "audiences": [
@@ -4134,7 +4134,7 @@ types:
         type: optional<TaskLLMConfig>
         docs: Specific configuration parameters for the LLM model.
       output_format:
-        type: map<string, TaskRevisionOutputFormatValue>
+        type: map<string, optional<TaskRevisionOutputFormatValue>>
         docs: >-
           This gives control over the structure of how the Task responds.
           Supports shorthand notation or an object with `type` can be specified
@@ -21735,7 +21735,7 @@ service:
                     },
                     "output_format": {
                       "docs": "This gives control over the structure of how the Task responds. Supports shorthand notation or an object with `type` can be specified for each attribute. In most instances, the LLM will be able to generate the desired output into the relevant property, but an optional `description` can be passed to provide it with additional context.",
-                      "type": "map<string, TaskCreateOutputFormatValue>",
+                      "type": "map<string, optional<TaskCreateOutputFormatValue>>",
                     },
                     "rag": {
                       "audiences": [
@@ -21890,7 +21890,7 @@ service:
                     },
                     "output_format": {
                       "docs": "This gives control over the structure of how the Task responds. Supports shorthand notation or an object with `type` can be specified for each attribute. In most instances, the LLM will be able to generate the desired output into the relevant property, but an optional `description` can be passed to provide it with additional context.",
-                      "type": "optional<map<string, TaskUpdateOutputFormatValue>>",
+                      "type": "optional<map<string, optional<TaskUpdateOutputFormatValue>>>",
                     },
                     "rag": {
                       "audiences": [
@@ -23116,7 +23116,7 @@ service:
               type: optional<root.TaskLLMConfig>
               docs: Specific configuration parameters for the LLM model.
             output_format:
-              type: map<string, TaskCreateOutputFormatValue>
+              type: map<string, optional<TaskCreateOutputFormatValue>>
               docs: >-
                 This gives control over the structure of how the Task responds.
                 Supports shorthand notation or an object with `type` can be
@@ -23360,7 +23360,7 @@ service:
               type: optional<root.TaskLLMConfig>
               docs: Specific configuration parameters for the LLM model.
             output_format:
-              type: optional<map<string, TaskUpdateOutputFormatValue>>
+              type: optional<map<string, optional<TaskUpdateOutputFormatValue>>>
               docs: >-
                 This gives control over the structure of how the Task responds.
                 Supports shorthand notation or an object with `type` can be

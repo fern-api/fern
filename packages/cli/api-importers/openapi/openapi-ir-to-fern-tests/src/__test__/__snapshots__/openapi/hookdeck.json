@@ -910,7 +910,7 @@
             "inline": undefined,
             "properties": {
               "count": "optional<integer>",
-              "models": "optional<list<EventAttempt>>",
+              "models": "optional<list<optional<EventAttempt>>>",
               "pagination": "optional<SeekPagination>",
             },
             "source": {
@@ -964,7 +964,7 @@
             },
             "union": [
               "string",
-              "map<string, string>",
+              "map<string, optional<string>>",
             ],
           },
           "EventDataParsedQuery": {
@@ -1673,7 +1673,7 @@
             },
             "union": [
               "string",
-              "map<string, string>",
+              "map<string, optional<string>>",
             ],
           },
           "RequestDataParsedQuery": {
@@ -1851,7 +1851,7 @@
             "inline": undefined,
             "properties": {
               "count": "optional<integer>",
-              "models": "optional<list<Ruleset>>",
+              "models": "optional<list<optional<Ruleset>>>",
               "pagination": "optional<SeekPagination>",
             },
             "source": {
@@ -1970,7 +1970,7 @@
             },
             "union": [
               "string",
-              "map<string, string>",
+              "map<string, optional<string>>",
             ],
           },
           "ShortEventDataParsedQuery": {
@@ -2141,7 +2141,7 @@
               },
               "env": {
                 "docs": "A key-value object of environment variables to encrypt and expose to your transformation code",
-                "type": "optional<map<string, string>>",
+                "type": "optional<map<string, optional<string>>>",
               },
               "name": {
                 "docs": "The unique name of the transformation",
@@ -2197,7 +2197,7 @@
               "encrypted_env": "optional<string>",
               "env": {
                 "docs": "Key-value environment variables to be passed to the transformation",
-                "type": "optional<map<string, string>>",
+                "type": "optional<map<string, optional<string>>>",
               },
               "id": {
                 "docs": "ID of the transformation",
@@ -2912,7 +2912,7 @@ types:
     properties:
       pagination: optional<SeekPagination>
       count: optional<integer>
-      models: optional<list<EventAttempt>>
+      models: optional<list<optional<EventAttempt>>>
     source:
       openapi: ../openapi.yml
   ShortEventDataParsedQueryOne:
@@ -2932,7 +2932,7 @@ types:
     discriminated: false
     union:
       - string
-      - map<string, string>
+      - map<string, optional<string>>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -3025,7 +3025,7 @@ types:
     discriminated: false
     union:
       - string
-      - map<string, string>
+      - map<string, optional<string>>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -3728,7 +3728,7 @@ types:
     discriminated: false
     union:
       - string
-      - map<string, string>
+      - map<string, optional<string>>
     source:
       openapi: ../openapi.yml
     inline: true
@@ -3944,7 +3944,7 @@ types:
         type: string
         docs: A string representation of your JavaScript (ES6) code to run
       env:
-        type: optional<map<string, string>>
+        type: optional<map<string, optional<string>>>
         docs: >-
           A key-value object of environment variables to encrypt and expose to
           your transformation code
@@ -4026,7 +4026,7 @@ types:
     properties:
       pagination: optional<SeekPagination>
       count: optional<integer>
-      models: optional<list<Ruleset>>
+      models: optional<list<optional<Ruleset>>>
     source:
       openapi: ../openapi.yml
   SourceIntegration:
@@ -4121,7 +4121,7 @@ types:
       encrypted_env: optional<string>
       iv: optional<string>
       env:
-        type: optional<map<string, string>>
+        type: optional<map<string, optional<string>>>
         docs: Key-value environment variables to be passed to the transformation
       updated_at:
         type: datetime
@@ -19218,7 +19218,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                     },
                     "env": {
                       "docs": "Key-value environment variables to be passed to the transformation",
-                      "type": "optional<map<string, CreateTransformationRequestEnvValue>>",
+                      "type": "optional<map<string, optional<CreateTransformationRequestEnvValue>>>",
                     },
                     "name": {
                       "docs": "A unique, human-friendly name for the transformation",
@@ -19521,9 +19521,6 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                           "code": "code",
                           "created_at": "2024-01-15T09:30:00Z",
                           "encrypted_env": "encrypted_env",
-                          "env": {
-                            "key": null,
-                          },
                           "id": "id",
                           "iv": "iv",
                           "name": "name",
@@ -19732,7 +19729,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                     },
                     "env": {
                       "docs": "Key-value environment variables to be passed to the transformation",
-                      "type": "optional<map<string, UpdateTransformationRequestEnvValue>>",
+                      "type": "optional<map<string, optional<UpdateTransformationRequestEnvValue>>>",
                     },
                     "name": {
                       "docs": "A unique, human-friendly name for the transformation",
@@ -19804,7 +19801,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
                     },
                     "env": {
                       "docs": "Key-value environment variables to be passed to the transformation",
-                      "type": "optional<map<string, UpsertTransformationRequestEnvValue>>",
+                      "type": "optional<map<string, optional<UpsertTransformationRequestEnvValue>>>",
                     },
                     "name": {
                       "docs": "A unique, human-friendly name for the transformation",
@@ -19901,7 +19898,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
               },
               "headers": {
                 "docs": "Headers of the request",
-                "type": "map<string, string>",
+                "type": "map<string, optional<string>>",
               },
               "parsed_query": {
                 "docs": "JSON representation of the query params",
@@ -20039,7 +20036,7 @@ docs: A source represents any third party that sends webhooks to Hookdeck.
     docs: Request input to use for the transformation execution
     properties:
       headers:
-        type: map<string, string>
+        type: map<string, optional<string>>
         docs: Headers of the request
       body:
         type: optional<TestTransformationRequestRequestBody>
@@ -20143,8 +20140,6 @@ service:
                   code: code
                   encrypted_env: encrypted_env
                   iv: iv
-                  env:
-                    key: null
                   updated_at: '2024-01-15T09:30:00Z'
                   created_at: '2024-01-15T09:30:00Z'
     createTransformation:
@@ -20168,7 +20163,9 @@ service:
               type: string
               docs: JavaScript code to be executed
             env:
-              type: optional<map<string, CreateTransformationRequestEnvValue>>
+              type: >-
+                optional<map<string,
+                optional<CreateTransformationRequestEnvValue>>>
               docs: >-
                 Key-value environment variables to be passed to the
                 transformation
@@ -20217,7 +20214,9 @@ service:
               type: string
               docs: JavaScript code to be executed
             env:
-              type: optional<map<string, UpsertTransformationRequestEnvValue>>
+              type: >-
+                optional<map<string,
+                optional<UpsertTransformationRequestEnvValue>>>
               docs: >-
                 Key-value environment variables to be passed to the
                 transformation
@@ -20298,7 +20297,9 @@ service:
               type: optional<string>
               docs: JavaScript code to be executed
             env:
-              type: optional<map<string, UpdateTransformationRequestEnvValue>>
+              type: >-
+                optional<map<string,
+                optional<UpdateTransformationRequestEnvValue>>>
               docs: >-
                 Key-value environment variables to be passed to the
                 transformation

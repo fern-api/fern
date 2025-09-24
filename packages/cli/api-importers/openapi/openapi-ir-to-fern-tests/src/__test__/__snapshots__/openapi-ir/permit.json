@@ -4923,20 +4923,6 @@
                             }
                           ],
                           "type": "map"
-                        },
-                        "action_groups": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
-                          "type": "map"
                         }
                       },
                       "type": "object"
@@ -5138,38 +5124,7 @@
                 "type": "primitive"
               },
               "actions": {
-                "value": [
-                  {
-                    "key": {
-                      "value": "clone",
-                      "type": "string"
-                    },
-                    "value": {
-                      "properties": {},
-                      "type": "object"
-                    }
-                  },
-                  {
-                    "key": {
-                      "value": "read",
-                      "type": "string"
-                    },
-                    "value": {
-                      "properties": {},
-                      "type": "object"
-                    }
-                  },
-                  {
-                    "key": {
-                      "value": "push",
-                      "type": "string"
-                    },
-                    "value": {
-                      "properties": {},
-                      "type": "object"
-                    }
-                  }
-                ],
+                "value": [],
                 "type": "map"
               },
               "attributes": {
@@ -6313,17 +6268,7 @@
                 "type": "primitive"
               },
               "actions": {
-                "value": [
-                  {
-                    "key": {
-                      "value": "key",
-                      "type": "string"
-                    },
-                    "value": {
-                      "type": "null"
-                    }
-                  }
-                ],
+                "value": [],
                 "type": "map"
               }
             },
@@ -22531,20 +22476,6 @@
                             }
                           ],
                           "type": "map"
-                        },
-                        "action_groups": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
-                              }
-                            }
-                          ],
-                          "type": "map"
                         }
                       },
                       "type": "object"
@@ -23180,20 +23111,6 @@
                                   }
                                 },
                                 "type": "object"
-                              }
-                            }
-                          ],
-                          "type": "map"
-                        },
-                        "action_groups": {
-                          "value": [
-                            {
-                              "key": {
-                                "value": "key",
-                                "type": "string"
-                              },
-                              "value": {
-                                "type": "null"
                               }
                             }
                           ],
@@ -40257,7 +40174,7 @@
                   "type": "reference"
                 },
                 "inline": true,
-                "type": "nullable"
+                "type": "optional"
               },
               "generatedName": "ResourceCreateActions",
               "title": "Actions",
@@ -40297,7 +40214,7 @@
                     "type": "reference"
                   },
                   "inline": true,
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "generatedName": "ResourceCreateAttributes",
                 "title": "Attributes",
@@ -40945,7 +40862,7 @@
                     "type": "reference"
                   },
                   "inline": true,
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "generatedName": "ResourceReadActions",
                 "title": "Actions",
@@ -40988,7 +40905,7 @@
                     "type": "reference"
                   },
                   "inline": true,
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "generatedName": "ResourceReadAttributes",
                 "title": "Attributes",
@@ -41036,7 +40953,7 @@
                   },
                   "groupName": [],
                   "inline": true,
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "generatedName": "ResourceReadActionGroups",
                 "title": "Action Groups",
@@ -41155,7 +41072,7 @@
                   "type": "reference"
                 },
                 "inline": true,
-                "type": "nullable"
+                "type": "optional"
               },
               "generatedName": "ResourceReplaceActions",
               "title": "Actions",
@@ -41195,7 +41112,7 @@
                     "type": "reference"
                   },
                   "inline": true,
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "generatedName": "ResourceReplaceAttributes",
                 "title": "Attributes",
@@ -41991,7 +41908,7 @@
                     "type": "reference"
                   },
                   "inline": true,
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "generatedName": "ResourceUpdateActions",
                 "title": "Actions",
@@ -42034,7 +41951,7 @@
                     "type": "reference"
                   },
                   "inline": true,
-                  "type": "nullable"
+                  "type": "optional"
                 },
                 "generatedName": "ResourceUpdateAttributes",
                 "title": "Attributes",

@@ -486,7 +486,7 @@ The closing day of the month for the loan.
               },
               "fees": {
                 "docs": "Breakdown of the fees applied to the loan.",
-                "type": "optional<list<AccountsLoanDataFees>>",
+                "type": "optional<list<optional<AccountsLoanDataFees>>>",
               },
               "interest_rate": {
                 "availability": "deprecated",
@@ -624,7 +624,7 @@ In our documentation example, we use `{endpoint}` as a placeholder value. In pro
               },
               "results": {
                 "docs": "An array of Account objects.",
-                "type": "optional<list<Account>>",
+                "type": "optional<list<optional<Account>>>",
               },
             },
             "source": {
@@ -5460,7 +5460,7 @@ Please note that other currencies other than in the list above may be returned.
               },
               "instruments": {
                 "docs": "An array of instruments that fall into the investment portfolio.",
-                "type": "optional<list<InvestmentsPortfolioInstrument>>",
+                "type": "optional<list<optional<InvestmentsPortfolioInstrument>>>",
               },
               "name": {
                 "docs": "The name of the portfolio, as given in the institution.
@@ -5504,7 +5504,7 @@ Please note that other currencies other than in the list above may be returned.
               },
               "fees": {
                 "docs": "An array of fees that apply to the instrument.",
-                "type": "optional<list<InvestmentsPortfolioInstrumentFees>>",
+                "type": "optional<list<optional<InvestmentsPortfolioInstrumentFees>>>",
               },
               "id": {
                 "docs": "Belvo's unique ID for the current instrument.",
@@ -5518,7 +5518,7 @@ Please note that other currencies other than in the list above may be returned.
               },
               "interest_rates": {
                 "docs": "An array of interest rates that apply to the instrument.",
-                "type": "optional<list<InvestmentsPortfolioInstrumentInterestRate>>",
+                "type": "optional<list<optional<InvestmentsPortfolioInstrumentInterestRate>>>",
               },
               "name": {
                 "docs": "The name of the instrument, as given by the institution.",
@@ -5555,7 +5555,7 @@ Please note that other currencies other than in the list above may be returned.
 
 For example, the due date, the liquidity date, the previdencia type, and so on.
 ",
-                "type": "optional<list<InvestmentsPortfolioInstrumentRedemptionConditions>>",
+                "type": "optional<list<optional<InvestmentsPortfolioInstrumentRedemptionConditions>>>",
               },
               "subtype": {
                 "docs": "The subtype for the instrument, as given by the institution.",
@@ -9239,7 +9239,7 @@ Based on the frequency, you can infer how many days until the next charge will o
               "payment_type": "optional<EnumRecurringExpensePaymentType>",
               "transactions": {
                 "docs": "An array of minified transaction objects used to evaluate the recurring expense. If no transactions were found, we return an empty array.",
-                "type": "list<RecurringExpenseSourceTransaction>",
+                "type": "list<optional<RecurringExpenseSourceTransaction>>",
               },
             },
             "source": {
@@ -13446,7 +13446,7 @@ types:
         type: optional<list<AccountsLoanDataInterestRate>>
         docs: Breakdown of the interest applied to the loan.
       fees:
-        type: optional<list<AccountsLoanDataFees>>
+        type: optional<list<optional<AccountsLoanDataFees>>>
         docs: Breakdown of the fees applied to the loan.
       number_of_installments_total:
         type: optional<integer>
@@ -13702,7 +13702,7 @@ types:
           The URL to the previous page of results. If there is no previous page,
           the value is `null`.
       results:
-        type: optional<list<Account>>
+        type: optional<list<optional<Account>>>
         docs: An array of Account objects.
     source:
       openapi: ../openapi.yml
@@ -17365,7 +17365,7 @@ types:
           An array of minified transaction objects used to evaluate the
           recurring expense. If no transactions were found, we return an empty
           array.
-        type: list<RecurringExpenseSourceTransaction>
+        type: list<optional<RecurringExpenseSourceTransaction>>
       frequency: EnumRecurringExpenseFrequency
       average_transaction_amount:
         type: float
@@ -17572,7 +17572,8 @@ types:
         validation:
           format: date
       redemption_conditions:
-        type: optional<list<InvestmentsPortfolioInstrumentRedemptionConditions>>
+        type: >-
+          optional<list<optional<InvestmentsPortfolioInstrumentRedemptionConditions>>>
         docs: >
           An array of conditions that apply to the instrument in order to
           retrieve the final value.
@@ -17581,10 +17582,10 @@ types:
           For example, the due date, the liquidity date, the previdencia type,
           and so on.
       fees:
-        type: optional<list<InvestmentsPortfolioInstrumentFees>>
+        type: optional<list<optional<InvestmentsPortfolioInstrumentFees>>>
         docs: An array of fees that apply to the instrument.
       interest_rates:
-        type: optional<list<InvestmentsPortfolioInstrumentInterestRate>>
+        type: optional<list<optional<InvestmentsPortfolioInstrumentInterestRate>>>
         docs: An array of interest rates that apply to the instrument.
     source:
       openapi: ../openapi.yml
@@ -17638,7 +17639,7 @@ types:
           Please note that other currencies other than in the list above may be
           returned.
       instruments:
-        type: optional<list<InvestmentsPortfolioInstrument>>
+        type: optional<list<optional<InvestmentsPortfolioInstrument>>>
         docs: An array of instruments that fall into the investment portfolio.
     source:
       openapi: ../openapi.yml
@@ -24699,7 +24700,7 @@ client.connect()
               "response": {
                 "docs": "Ok (when `save_data=false`)",
                 "status-code": 200,
-                "type": "list<root.Account>",
+                "type": "list<optional<root.Account>>",
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -25587,7 +25588,7 @@ client.connect()
               "response": {
                 "docs": "Ok (when `save_data=false`)",
                 "status-code": 200,
-                "type": "list<root.Account>",
+                "type": "list<optional<root.Account>>",
               },
               "source": {
                 "openapi": "../openapi.yml",
@@ -26019,7 +26020,7 @@ service:
         content-type: application/json
       response:
         docs: Ok (when `save_data=false`)
-        type: list<root.Account>
+        type: list<optional<root.Account>>
         status-code: 200
       errors:
         - root.BadRequestError
@@ -26749,7 +26750,7 @@ service:
         content-type: application/json
       response:
         docs: Ok (when `save_data=false`)
-        type: list<root.Account>
+        type: list<optional<root.Account>>
         status-code: 200
       errors:
         - root.BadRequestError

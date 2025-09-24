@@ -1462,7 +1462,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "inline": undefined,
             "properties": {
               "frequency_penalty": "double",
-              "logit_bias": "optional<map<string, double>>",
+              "logit_bias": "optional<map<string, optional<double>>>",
               "max_tokens": "integer",
               "presence_penalty": "double",
               "stop": "optional<list<string>>",
@@ -1614,7 +1614,7 @@ Used to submit feedback regarding the quality of previously generated completion
               "logprob": "optional<double>",
               "text_offset": "integer",
               "token": "string",
-              "top_logprobs": "optional<map<string, double>>",
+              "top_logprobs": "optional<map<string, optional<double>>>",
             },
             "source": {
               "openapi": "../openapi.yml",
@@ -1875,7 +1875,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "inline": undefined,
             "properties": {
               "frequency_penalty": "double",
-              "logit_bias": "optional<map<string, double>>",
+              "logit_bias": "optional<map<string, optional<double>>>",
               "max_tokens": "integer",
               "presence_penalty": "double",
               "stop": "optional<list<string>>",
@@ -3765,7 +3765,7 @@ types:
       top_p: double
       frequency_penalty: double
       presence_penalty: double
-      logit_bias: optional<map<string, double>>
+      logit_bias: optional<map<string, optional<double>>>
       stop: optional<list<string>>
       top_k: optional<double>
     source:
@@ -3864,7 +3864,7 @@ types:
     properties:
       token: string
       logprob: optional<double>
-      top_logprobs: optional<map<string, double>>
+      top_logprobs: optional<map<string, optional<double>>>
       text_offset: integer
     source:
       openapi: ../openapi.yml
@@ -4026,7 +4026,7 @@ types:
       top_k: optional<double>
       frequency_penalty: double
       presence_penalty: double
-      logit_bias: optional<map<string, double>>
+      logit_bias: optional<map<string, optional<double>>>
     source:
       openapi: ../openapi.yml
   RegisterPromptPrompt:
@@ -5501,9 +5501,6 @@ Used to retrieve a model version given its ID.
                         ],
                         "parameters": {
                           "frequency_penalty": 1.1,
-                          "logit_bias": {
-                            "key": null,
-                          },
                           "max_tokens": 1,
                           "presence_penalty": 1.1,
                           "stop": [
@@ -5613,8 +5610,6 @@ service:
                   top_p: 1.1
                   frequency_penalty: 1.1
                   presence_penalty: 1.1
-                  logit_bias:
-                    key: null
                   stop:
                     - stop
                   top_k: 1.1

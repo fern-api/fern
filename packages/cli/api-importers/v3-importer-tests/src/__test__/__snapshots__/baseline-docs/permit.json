@@ -13984,31 +13984,37 @@
                       "type": "primitive"
                     },
                     "valueType": {
-                      "name": {
-                        "originalName": "ActionBlockRead",
-                        "camelCase": {
-                          "unsafeName": "actionBlockRead",
-                          "safeName": "actionBlockRead"
+                      "container": {
+                        "optional": {
+                          "name": {
+                            "originalName": "ActionBlockRead",
+                            "camelCase": {
+                              "unsafeName": "actionBlockRead",
+                              "safeName": "actionBlockRead"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "action_block_read",
+                              "safeName": "action_block_read"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "ACTION_BLOCK_READ",
+                              "safeName": "ACTION_BLOCK_READ"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "ActionBlockRead",
+                              "safeName": "ActionBlockRead"
+                            }
+                          },
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "typeId": "type_:ActionBlockRead",
+                          "type": "named"
                         },
-                        "snakeCase": {
-                          "unsafeName": "action_block_read",
-                          "safeName": "action_block_read"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "ACTION_BLOCK_READ",
-                          "safeName": "ACTION_BLOCK_READ"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "ActionBlockRead",
-                          "safeName": "ActionBlockRead"
-                        }
+                        "type": "optional"
                       },
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "typeId": "type_:ActionBlockRead",
-                      "type": "named"
+                      "type": "container"
                     },
                     "type": "map"
                   },
@@ -14061,31 +14067,37 @@
                       "type": "primitive"
                     },
                     "valueType": {
-                      "name": {
-                        "originalName": "AttributeBlockRead",
-                        "camelCase": {
-                          "unsafeName": "attributeBlockRead",
-                          "safeName": "attributeBlockRead"
+                      "container": {
+                        "optional": {
+                          "name": {
+                            "originalName": "AttributeBlockRead",
+                            "camelCase": {
+                              "unsafeName": "attributeBlockRead",
+                              "safeName": "attributeBlockRead"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "attribute_block_read",
+                              "safeName": "attribute_block_read"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "ATTRIBUTE_BLOCK_READ",
+                              "safeName": "ATTRIBUTE_BLOCK_READ"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "AttributeBlockRead",
+                              "safeName": "AttributeBlockRead"
+                            }
+                          },
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "typeId": "type_:AttributeBlockRead",
+                          "type": "named"
                         },
-                        "snakeCase": {
-                          "unsafeName": "attribute_block_read",
-                          "safeName": "attribute_block_read"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "ATTRIBUTE_BLOCK_READ",
-                          "safeName": "ATTRIBUTE_BLOCK_READ"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "AttributeBlockRead",
-                          "safeName": "AttributeBlockRead"
-                        }
+                        "type": "optional"
                       },
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "typeId": "type_:AttributeBlockRead",
-                      "type": "named"
+                      "type": "container"
                     },
                     "type": "map"
                   },
@@ -14138,16 +14150,22 @@
                     },
                     "valueType": {
                       "container": {
-                        "list": {
-                          "primitive": {
-                            "v1": "STRING",
-                            "v2": {
-                              "type": "string"
-                            }
+                        "optional": {
+                          "container": {
+                            "list": {
+                              "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                  "type": "string"
+                                }
+                              },
+                              "type": "primitive"
+                            },
+                            "type": "list"
                           },
-                          "type": "primitive"
+                          "type": "container"
                         },
-                        "type": "list"
+                        "type": "optional"
                       },
                       "type": "container"
                     },
@@ -38589,31 +38607,37 @@
                       "type": "primitive"
                     },
                     "valueType": {
-                      "name": {
-                        "originalName": "ActionBlockEditable",
-                        "camelCase": {
-                          "unsafeName": "actionBlockEditable",
-                          "safeName": "actionBlockEditable"
+                      "container": {
+                        "optional": {
+                          "name": {
+                            "originalName": "ActionBlockEditable",
+                            "camelCase": {
+                              "unsafeName": "actionBlockEditable",
+                              "safeName": "actionBlockEditable"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "action_block_editable",
+                              "safeName": "action_block_editable"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "ACTION_BLOCK_EDITABLE",
+                              "safeName": "ACTION_BLOCK_EDITABLE"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "ActionBlockEditable",
+                              "safeName": "ActionBlockEditable"
+                            }
+                          },
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "typeId": "type_:ActionBlockEditable",
+                          "type": "named"
                         },
-                        "snakeCase": {
-                          "unsafeName": "action_block_editable",
-                          "safeName": "action_block_editable"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "ACTION_BLOCK_EDITABLE",
-                          "safeName": "ACTION_BLOCK_EDITABLE"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "ActionBlockEditable",
-                          "safeName": "ActionBlockEditable"
-                        }
+                        "type": "optional"
                       },
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "typeId": "type_:ActionBlockEditable",
-                      "type": "named"
+                      "type": "container"
                     },
                     "type": "map"
                   },
@@ -38662,31 +38686,37 @@
                           "type": "primitive"
                         },
                         "valueType": {
-                          "name": {
-                            "originalName": "AttributeBlockEditable",
-                            "camelCase": {
-                              "unsafeName": "attributeBlockEditable",
-                              "safeName": "attributeBlockEditable"
+                          "container": {
+                            "optional": {
+                              "name": {
+                                "originalName": "AttributeBlockEditable",
+                                "camelCase": {
+                                  "unsafeName": "attributeBlockEditable",
+                                  "safeName": "attributeBlockEditable"
+                                },
+                                "snakeCase": {
+                                  "unsafeName": "attribute_block_editable",
+                                  "safeName": "attribute_block_editable"
+                                },
+                                "screamingSnakeCase": {
+                                  "unsafeName": "ATTRIBUTE_BLOCK_EDITABLE",
+                                  "safeName": "ATTRIBUTE_BLOCK_EDITABLE"
+                                },
+                                "pascalCase": {
+                                  "unsafeName": "AttributeBlockEditable",
+                                  "safeName": "AttributeBlockEditable"
+                                }
+                              },
+                              "fernFilepath": {
+                                "allParts": [],
+                                "packagePath": []
+                              },
+                              "typeId": "type_:AttributeBlockEditable",
+                              "type": "named"
                             },
-                            "snakeCase": {
-                              "unsafeName": "attribute_block_editable",
-                              "safeName": "attribute_block_editable"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "ATTRIBUTE_BLOCK_EDITABLE",
-                              "safeName": "ATTRIBUTE_BLOCK_EDITABLE"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "AttributeBlockEditable",
-                              "safeName": "AttributeBlockEditable"
-                            }
+                            "type": "optional"
                           },
-                          "fernFilepath": {
-                            "allParts": [],
-                            "packagePath": []
-                          },
-                          "typeId": "type_:AttributeBlockEditable",
-                          "type": "named"
+                          "type": "container"
                         },
                         "type": "map"
                       },
@@ -39669,31 +39699,37 @@
                       "type": "primitive"
                     },
                     "valueType": {
-                      "name": {
-                        "originalName": "ActionBlockEditable",
-                        "camelCase": {
-                          "unsafeName": "actionBlockEditable",
-                          "safeName": "actionBlockEditable"
+                      "container": {
+                        "optional": {
+                          "name": {
+                            "originalName": "ActionBlockEditable",
+                            "camelCase": {
+                              "unsafeName": "actionBlockEditable",
+                              "safeName": "actionBlockEditable"
+                            },
+                            "snakeCase": {
+                              "unsafeName": "action_block_editable",
+                              "safeName": "action_block_editable"
+                            },
+                            "screamingSnakeCase": {
+                              "unsafeName": "ACTION_BLOCK_EDITABLE",
+                              "safeName": "ACTION_BLOCK_EDITABLE"
+                            },
+                            "pascalCase": {
+                              "unsafeName": "ActionBlockEditable",
+                              "safeName": "ActionBlockEditable"
+                            }
+                          },
+                          "fernFilepath": {
+                            "allParts": [],
+                            "packagePath": []
+                          },
+                          "typeId": "type_:ActionBlockEditable",
+                          "type": "named"
                         },
-                        "snakeCase": {
-                          "unsafeName": "action_block_editable",
-                          "safeName": "action_block_editable"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "ACTION_BLOCK_EDITABLE",
-                          "safeName": "ACTION_BLOCK_EDITABLE"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "ActionBlockEditable",
-                          "safeName": "ActionBlockEditable"
-                        }
+                        "type": "optional"
                       },
-                      "fernFilepath": {
-                        "allParts": [],
-                        "packagePath": []
-                      },
-                      "typeId": "type_:ActionBlockEditable",
-                      "type": "named"
+                      "type": "container"
                     },
                     "type": "map"
                   },
@@ -39742,31 +39778,37 @@
                           "type": "primitive"
                         },
                         "valueType": {
-                          "name": {
-                            "originalName": "AttributeBlockEditable",
-                            "camelCase": {
-                              "unsafeName": "attributeBlockEditable",
-                              "safeName": "attributeBlockEditable"
+                          "container": {
+                            "optional": {
+                              "name": {
+                                "originalName": "AttributeBlockEditable",
+                                "camelCase": {
+                                  "unsafeName": "attributeBlockEditable",
+                                  "safeName": "attributeBlockEditable"
+                                },
+                                "snakeCase": {
+                                  "unsafeName": "attribute_block_editable",
+                                  "safeName": "attribute_block_editable"
+                                },
+                                "screamingSnakeCase": {
+                                  "unsafeName": "ATTRIBUTE_BLOCK_EDITABLE",
+                                  "safeName": "ATTRIBUTE_BLOCK_EDITABLE"
+                                },
+                                "pascalCase": {
+                                  "unsafeName": "AttributeBlockEditable",
+                                  "safeName": "AttributeBlockEditable"
+                                }
+                              },
+                              "fernFilepath": {
+                                "allParts": [],
+                                "packagePath": []
+                              },
+                              "typeId": "type_:AttributeBlockEditable",
+                              "type": "named"
                             },
-                            "snakeCase": {
-                              "unsafeName": "attribute_block_editable",
-                              "safeName": "attribute_block_editable"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "ATTRIBUTE_BLOCK_EDITABLE",
-                              "safeName": "ATTRIBUTE_BLOCK_EDITABLE"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "AttributeBlockEditable",
-                              "safeName": "AttributeBlockEditable"
-                            }
+                            "type": "optional"
                           },
-                          "fernFilepath": {
-                            "allParts": [],
-                            "packagePath": []
-                          },
-                          "typeId": "type_:AttributeBlockEditable",
-                          "type": "named"
+                          "type": "container"
                         },
                         "type": "map"
                       },
@@ -40721,31 +40763,37 @@
                           "type": "primitive"
                         },
                         "valueType": {
-                          "name": {
-                            "originalName": "ActionBlockEditable",
-                            "camelCase": {
-                              "unsafeName": "actionBlockEditable",
-                              "safeName": "actionBlockEditable"
+                          "container": {
+                            "optional": {
+                              "name": {
+                                "originalName": "ActionBlockEditable",
+                                "camelCase": {
+                                  "unsafeName": "actionBlockEditable",
+                                  "safeName": "actionBlockEditable"
+                                },
+                                "snakeCase": {
+                                  "unsafeName": "action_block_editable",
+                                  "safeName": "action_block_editable"
+                                },
+                                "screamingSnakeCase": {
+                                  "unsafeName": "ACTION_BLOCK_EDITABLE",
+                                  "safeName": "ACTION_BLOCK_EDITABLE"
+                                },
+                                "pascalCase": {
+                                  "unsafeName": "ActionBlockEditable",
+                                  "safeName": "ActionBlockEditable"
+                                }
+                              },
+                              "fernFilepath": {
+                                "allParts": [],
+                                "packagePath": []
+                              },
+                              "typeId": "type_:ActionBlockEditable",
+                              "type": "named"
                             },
-                            "snakeCase": {
-                              "unsafeName": "action_block_editable",
-                              "safeName": "action_block_editable"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "ACTION_BLOCK_EDITABLE",
-                              "safeName": "ACTION_BLOCK_EDITABLE"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "ActionBlockEditable",
-                              "safeName": "ActionBlockEditable"
-                            }
+                            "type": "optional"
                           },
-                          "fernFilepath": {
-                            "allParts": [],
-                            "packagePath": []
-                          },
-                          "typeId": "type_:ActionBlockEditable",
-                          "type": "named"
+                          "type": "container"
                         },
                         "type": "map"
                       },
@@ -40798,31 +40846,37 @@
                           "type": "primitive"
                         },
                         "valueType": {
-                          "name": {
-                            "originalName": "AttributeBlockEditable",
-                            "camelCase": {
-                              "unsafeName": "attributeBlockEditable",
-                              "safeName": "attributeBlockEditable"
+                          "container": {
+                            "optional": {
+                              "name": {
+                                "originalName": "AttributeBlockEditable",
+                                "camelCase": {
+                                  "unsafeName": "attributeBlockEditable",
+                                  "safeName": "attributeBlockEditable"
+                                },
+                                "snakeCase": {
+                                  "unsafeName": "attribute_block_editable",
+                                  "safeName": "attribute_block_editable"
+                                },
+                                "screamingSnakeCase": {
+                                  "unsafeName": "ATTRIBUTE_BLOCK_EDITABLE",
+                                  "safeName": "ATTRIBUTE_BLOCK_EDITABLE"
+                                },
+                                "pascalCase": {
+                                  "unsafeName": "AttributeBlockEditable",
+                                  "safeName": "AttributeBlockEditable"
+                                }
+                              },
+                              "fernFilepath": {
+                                "allParts": [],
+                                "packagePath": []
+                              },
+                              "typeId": "type_:AttributeBlockEditable",
+                              "type": "named"
                             },
-                            "snakeCase": {
-                              "unsafeName": "attribute_block_editable",
-                              "safeName": "attribute_block_editable"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "ATTRIBUTE_BLOCK_EDITABLE",
-                              "safeName": "ATTRIBUTE_BLOCK_EDITABLE"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "AttributeBlockEditable",
-                              "safeName": "AttributeBlockEditable"
-                            }
+                            "type": "optional"
                           },
-                          "fernFilepath": {
-                            "allParts": [],
-                            "packagePath": []
-                          },
-                          "typeId": "type_:AttributeBlockEditable",
-                          "type": "named"
+                          "type": "container"
                         },
                         "type": "map"
                       },
@@ -89451,8 +89505,11 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "value": "type_:ActionBlockRead",
-                  "type": "named"
+                  "value": {
+                    "value": "type_:ActionBlockRead",
+                    "type": "named"
+                  },
+                  "type": "optional"
                 },
                 "type": "map"
               },
@@ -89489,8 +89546,11 @@
                   "type": "primitive"
                 },
                 "value": {
-                  "value": "type_:AttributeBlockRead",
-                  "type": "named"
+                  "value": {
+                    "value": "type_:AttributeBlockRead",
+                    "type": "named"
+                  },
+                  "type": "optional"
                 },
                 "type": "map"
               },
@@ -89528,10 +89588,13 @@
                 },
                 "value": {
                   "value": {
-                    "value": "STRING",
-                    "type": "primitive"
+                    "value": {
+                      "value": "STRING",
+                      "type": "primitive"
+                    },
+                    "type": "list"
                   },
-                  "type": "list"
+                  "type": "optional"
                 },
                 "type": "map"
               },
@@ -97765,8 +97828,11 @@
                     "type": "primitive"
                   },
                   "value": {
-                    "value": "type_:ActionBlockEditable",
-                    "type": "named"
+                    "value": {
+                      "value": "type_:ActionBlockEditable",
+                      "type": "named"
+                    },
+                    "type": "optional"
                   },
                   "type": "map"
                 }
@@ -97801,8 +97867,11 @@
                       "type": "primitive"
                     },
                     "value": {
-                      "value": "type_:AttributeBlockEditable",
-                      "type": "named"
+                      "value": {
+                        "value": "type_:AttributeBlockEditable",
+                        "type": "named"
+                      },
+                      "type": "optional"
                     },
                     "type": "map"
                   },
@@ -98375,8 +98444,11 @@
                     "type": "primitive"
                   },
                   "value": {
-                    "value": "type_:ActionBlockEditable",
-                    "type": "named"
+                    "value": {
+                      "value": "type_:ActionBlockEditable",
+                      "type": "named"
+                    },
+                    "type": "optional"
                   },
                   "type": "map"
                 }
@@ -98411,8 +98483,11 @@
                       "type": "primitive"
                     },
                     "value": {
-                      "value": "type_:AttributeBlockEditable",
-                      "type": "named"
+                      "value": {
+                        "value": "type_:AttributeBlockEditable",
+                        "type": "named"
+                      },
+                      "type": "optional"
                     },
                     "type": "map"
                   },
@@ -98989,8 +99064,11 @@
                       "type": "primitive"
                     },
                     "value": {
-                      "value": "type_:ActionBlockEditable",
-                      "type": "named"
+                      "value": {
+                        "value": "type_:ActionBlockEditable",
+                        "type": "named"
+                      },
+                      "type": "optional"
                     },
                     "type": "map"
                   },
@@ -99027,8 +99105,11 @@
                       "type": "primitive"
                     },
                     "value": {
-                      "value": "type_:AttributeBlockEditable",
-                      "type": "named"
+                      "value": {
+                        "value": "type_:AttributeBlockEditable",
+                        "type": "named"
+                      },
+                      "type": "optional"
                     },
                     "type": "map"
                   },

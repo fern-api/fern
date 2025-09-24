@@ -1627,31 +1627,11 @@
                               "type": "object"
                             },
                             "summary": {
-                              "value": [
-                                {
-                                  "key": {
-                                    "value": "key",
-                                    "type": "string"
-                                  },
-                                  "value": {
-                                    "type": "null"
-                                  }
-                                }
-                              ],
+                              "value": [],
                               "type": "map"
                             },
                             "severity_score_summary": {
-                              "value": [
-                                {
-                                  "key": {
-                                    "value": "key",
-                                    "type": "string"
-                                  },
-                                  "value": {
-                                    "type": "null"
-                                  }
-                                }
-                              ],
+                              "value": [],
                               "type": "map"
                             }
                           },
@@ -2736,31 +2716,11 @@
                               "type": "object"
                             },
                             "summary": {
-                              "value": [
-                                {
-                                  "key": {
-                                    "value": "key",
-                                    "type": "string"
-                                  },
-                                  "value": {
-                                    "type": "null"
-                                  }
-                                }
-                              ],
+                              "value": [],
                               "type": "map"
                             },
                             "severity_score_summary": {
-                              "value": [
-                                {
-                                  "key": {
-                                    "value": "key",
-                                    "type": "string"
-                                  },
-                                  "value": {
-                                    "type": "null"
-                                  }
-                                }
-                              ],
+                              "value": [],
                               "type": "map"
                             }
                           },
@@ -3845,31 +3805,11 @@
                               "type": "object"
                             },
                             "summary": {
-                              "value": [
-                                {
-                                  "key": {
-                                    "value": "key",
-                                    "type": "string"
-                                  },
-                                  "value": {
-                                    "type": "null"
-                                  }
-                                }
-                              ],
+                              "value": [],
                               "type": "map"
                             },
                             "severity_score_summary": {
-                              "value": [
-                                {
-                                  "key": {
-                                    "value": "key",
-                                    "type": "string"
-                                  },
-                                  "value": {
-                                    "type": "null"
-                                  }
-                                }
-                              ],
+                              "value": [],
                               "type": "map"
                             }
                           },
@@ -10703,7 +10643,7 @@
                           },
                           "groupName": [],
                           "inline": true,
-                          "type": "nullable"
+                          "type": "optional"
                         },
                         "generatedName": "TranscriptIabCategoriesResultSummary",
                         "groupName": [],
@@ -12012,7 +11952,7 @@
                 },
                 "groupName": [],
                 "inline": true,
-                "type": "nullable"
+                "type": "optional"
               },
               "generatedName": "ContentSafetyLabelResultSummary",
               "groupName": [],
@@ -12046,7 +11986,7 @@
                   "type": "reference"
                 },
                 "inline": true,
-                "type": "nullable"
+                "type": "optional"
               },
               "generatedName": "ContentSafetyLabelResultSeverityScoreSummary",
               "groupName": [],

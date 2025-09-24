@@ -234,11 +234,11 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
               },
               "severity_score_summary": {
                 "docs": "A summary of the Content Moderation severity results for the entire audio file",
-                "type": "map<string, SeverityScoreSummary>",
+                "type": "map<string, optional<SeverityScoreSummary>>",
               },
               "summary": {
                 "docs": "A summary of the Content Moderation confidence results for the entire audio file",
-                "type": "map<string, double>",
+                "type": "map<string, optional<double>>",
               },
               "text": {
                 "docs": "The transcript of the section flagged by the Content Moderation model",
@@ -1634,7 +1634,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
               },
               "summary": {
                 "docs": "The overall relevance of topic to the entire audio file",
-                "type": "map<string, double>",
+                "type": "map<string, optional<double>>",
               },
             },
             "source": {
@@ -2430,7 +2430,7 @@ types:
         docs: An array of results for the Topic Detection model.
         type: list<TopicDetectionResult>
       summary:
-        type: map<string, double>
+        type: map<string, optional<double>>
         docs: The overall relevance of topic to the entire audio file
     source:
       openapi: ../openapi.yml
@@ -2993,12 +2993,12 @@ types:
         type: Timestamp
         docs: Timestamp information for the section
       summary:
-        type: map<string, double>
+        type: map<string, optional<double>>
         docs: >-
           A summary of the Content Moderation confidence results for the entire
           audio file
       severity_score_summary:
-        type: map<string, SeverityScoreSummary>
+        type: map<string, optional<SeverityScoreSummary>>
         docs: >-
           A summary of the Content Moderation severity results for the entire
           audio file
@@ -4294,12 +4294,8 @@ docs: Real-time transcription
                             ],
                             "sentences_idx_end": 1,
                             "sentences_idx_start": 1,
-                            "severity_score_summary": {
-                              "key": null,
-                            },
-                            "summary": {
-                              "key": null,
-                            },
+                            "severity_score_summary": {},
+                            "summary": {},
                             "text": "text",
                             "timestamp": {
                               "end": 1,
@@ -4513,12 +4509,8 @@ docs: Real-time transcription
                             ],
                             "sentences_idx_end": 1,
                             "sentences_idx_start": 1,
-                            "severity_score_summary": {
-                              "key": null,
-                            },
-                            "summary": {
-                              "key": null,
-                            },
+                            "severity_score_summary": {},
+                            "summary": {},
                             "text": "text",
                             "timestamp": {
                               "end": 1,
@@ -4720,12 +4712,8 @@ docs: Real-time transcription
                             ],
                             "sentences_idx_end": 1,
                             "sentences_idx_start": 1,
-                            "severity_score_summary": {
-                              "key": null,
-                            },
-                            "summary": {
-                              "key": null,
-                            },
+                            "severity_score_summary": {},
+                            "summary": {},
                             "text": "text",
                             "timestamp": {
                               "end": 1,
@@ -5433,10 +5421,8 @@ service:
                     timestamp:
                       start: 1
                       end: 1
-                    summary:
-                      key: null
-                    severity_score_summary:
-                      key: null
+                    summary: {}
+                    severity_score_summary: {}
               iab_categories: true
               iab_categories_result:
                 status: success
@@ -5581,10 +5567,8 @@ service:
                     timestamp:
                       start: 1
                       end: 1
-                    summary:
-                      key: null
-                    severity_score_summary:
-                      key: null
+                    summary: {}
+                    severity_score_summary: {}
               iab_categories: true
               iab_categories_result:
                 status: success
@@ -5727,10 +5711,8 @@ service:
                     timestamp:
                       start: 1
                       end: 1
-                    summary:
-                      key: null
-                    severity_score_summary:
-                      key: null
+                    summary: {}
+                    severity_score_summary: {}
               iab_categories: true
               iab_categories_result:
                 status: success
