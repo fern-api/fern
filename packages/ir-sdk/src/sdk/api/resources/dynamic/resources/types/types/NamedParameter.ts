@@ -8,4 +8,6 @@ export interface NamedParameter {
     name: FernIr.dynamic.NameAndWireValue;
     typeReference: FernIr.dynamic.TypeReference;
     propertyAccess: FernIr.dynamic.ObjectPropertyAccess | undefined;
+    /** If set, this parameter references a variable defined at the client level */
+    variable: string | undefined;
 }
