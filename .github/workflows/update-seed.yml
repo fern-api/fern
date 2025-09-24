@@ -287,7 +287,7 @@ jobs:
           language-name: ruby
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
-          index: ${{ matrix.index }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -328,7 +328,7 @@ jobs:
           language-name: ruby
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
-          index: ${{ matrix.index }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -370,7 +370,7 @@ jobs:
           language-name: ruby
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
-          index: ${{ matrix.index }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -411,7 +411,7 @@ jobs:
           language-name: python
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
-          index: ${{ matrix.index }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -452,7 +452,7 @@ jobs:
           language-name: python
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
-          index: ${{ matrix.index }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -493,7 +493,7 @@ jobs:
           language-name: python
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
-          index: ${{ matrix.index }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -534,7 +534,7 @@ jobs:
           language-name: openapi
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
-          index: ${{ matrix.index }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -575,7 +575,7 @@ jobs:
           language-name: postman
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
-          index: ${{ matrix.index }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -616,7 +616,7 @@ jobs:
           language-name: java
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
-          index: ${{ matrix.index }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -657,7 +657,7 @@ jobs:
           language-name: java
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
-          index: ${{ matrix.index }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -698,7 +698,7 @@ jobs:
           language-name: java
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
-          index: ${{ matrix.index }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -739,7 +739,7 @@ jobs:
           language-name: typescript
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
-          index: ${{ matrix.index }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -780,7 +780,7 @@ jobs:
           language-name: typescript
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
-          index: ${{ matrix.index }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -821,7 +821,7 @@ jobs:
           language-name: go
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
-          index: ${{ matrix.index }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -862,7 +862,7 @@ jobs:
           language-name: go
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
-          index: ${{ matrix.index }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -903,7 +903,7 @@ jobs:
           language-name: go
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
-          index: ${{ matrix.index }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -944,7 +944,7 @@ jobs:
           language-name: csharp
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
-          index: ${{ matrix.index }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -985,7 +985,7 @@ jobs:
           language-name: csharp
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
-          index: ${{ matrix.index }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -1026,7 +1026,7 @@ jobs:
           language-name: php
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
-          index: ${{ matrix.index }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -1067,7 +1067,7 @@ jobs:
           language-name: php
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
-          index: ${{ matrix.index }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -1108,7 +1108,7 @@ jobs:
           language-name: swift
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
-          index: ${{ matrix.index }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -1149,7 +1149,7 @@ jobs:
           language-name: rust
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
-          index: ${{ matrix.index }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
@@ -1190,7 +1190,7 @@ jobs:
           language-name: rust
           allow-unexpected-failures: true
           fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
-          index: ${{ matrix.index }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
           create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
           create-pr: ${{ needs.setup.outputs.create-pr }}
