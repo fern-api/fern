@@ -141,7 +141,12 @@ export class StructGenerator {
             name: this.typeDeclaration.name.name.pascalCase.unsafeName,
             visibility: PUBLIC,
             attributes: this.generateStructAttributes(),
-            fields
+            fields,
+            docs: this.typeDeclaration.docs
+                ? rust.docComment({
+                      summary: this.typeDeclaration.docs
+                  })
+                : undefined
         });
     }
 
@@ -175,7 +180,12 @@ export class StructGenerator {
             name: fieldName,
             type: fieldType,
             visibility: PUBLIC,
-            attributes: fieldAttributes
+            attributes: fieldAttributes,
+            docs: property.docs
+                ? rust.docComment({
+                      summary: property.docs
+                  })
+                : undefined
         });
     }
 

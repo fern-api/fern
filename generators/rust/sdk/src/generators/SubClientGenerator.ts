@@ -306,7 +306,14 @@ export class SubClientGenerator {
             ${requestBody},
             ${this.buildQueryParameters(endpoint)},
             options,
-        ).await`
+        ).await`,
+            docs: endpoint.docs
+                ? rust.docComment({
+                      summary: endpoint.docs,
+                      parameters: this.extractParameterDocs(params, endpoint),
+                      returns: this.getReturnTypeDescription(endpoint)
+                  })
+                : undefined
         };
     }
 
@@ -1294,5 +1301,64 @@ export class SubClientGenerator {
             });
         }
         return "per_page"; // Default fallback
+    }
+
+    // Helper methods for documentation generation
+    private extractParameterDocs(
+        _params: EndpointParameter[],
+        endpoint: HttpEndpoint
+    ): { name: string; description: string }[] {
+        const paramDocs: { name: string; description: string }[] = [];
+
+        // Add path parameter docs
+        endpoint.allPathParameters.forEach((pathParam) => {
+            if (pathParam.docs) {
+                paramDocs.push({
+                    name: pathParam.name.snakeCase.safeName,
+                    description: pathParam.docs
+                });
+            }
+        });
+
+        // Add query parameter docs
+        endpoint.queryParameters.forEach((queryParam) => {
+            if (queryParam.docs) {
+                paramDocs.push({
+                    name: queryParam.name.name.snakeCase.safeName,
+                    description: queryParam.docs
+                });
+            }
+        });
+
+        // Add request body docs
+        if (endpoint.requestBody?.docs) {
+            paramDocs.push({
+                name: "request",
+                description: endpoint.requestBody.docs
+            });
+        }
+
+        // Always document the options parameter
+        paramDocs.push({
+            name: "options",
+            description: "Additional request options such as headers, timeout, etc."
+        });
+
+        return paramDocs;
+    }
+
+    private getReturnTypeDescription(endpoint: HttpEndpoint): string {
+        if (endpoint.response?.body) {
+            return endpoint.response.body._visit({
+                json: () => "JSON response from the API",
+                fileDownload: () => "Downloaded file as bytes",
+                text: () => "Text response",
+                bytes: () => "Raw bytes response",
+                streaming: () => "Streaming response",
+                streamParameter: () => "Stream parameter response",
+                _other: () => "API response"
+            });
+        }
+        return "Empty response";
     }
 }
