@@ -66,6 +66,7 @@ export class Migration {
     ): Promise<
         core.WithRawResponse<core.APIResponse<SeedTrace.Migration[], SeedTrace.migration.getAttemptedMigrations.Error>>
     > {
+        const _metadata: core.EndpointMetadata = { security: undefined };
         const { "admin-key-header": adminKeyHeader } = request;
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
@@ -90,6 +91,7 @@ export class Migration {
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
+            endpointMetadata: _metadata,
         });
         if (_response.ok) {
             return {

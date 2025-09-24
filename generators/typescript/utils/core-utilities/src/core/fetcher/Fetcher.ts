@@ -9,8 +9,7 @@ import { getResponseBody } from "./getResponseBody";
 import { makeRequest } from "./makeRequest";
 import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse";
 import { requestWithRetries } from "./requestWithRetries";
-import { Supplier } from "./Supplier";
-import { TokenSupplier } from "./TokenSupplier";
+import { EndpointSupplier } from "./EndpointSupplier";
 
 export type FetchFunction = <R = unknown>(args: Fetcher.Args) => Promise<APIResponse<R, Fetcher.Error>>;
 
@@ -19,10 +18,7 @@ export declare namespace Fetcher {
         url: string;
         method: string;
         contentType?: string;
-        headers?: Record<
-            string,
-            string | Supplier<string | null | undefined> | TokenSupplier<string | null | undefined> | null | undefined
-        >;
+        headers?: Record<string, string | EndpointSupplier<string | null | undefined> | null | undefined>;
         queryParameters?: Record<string, unknown>;
         body?: unknown;
         timeoutMs?: number;
@@ -70,7 +66,7 @@ async function getHeaders(args: Fetcher.Args): Promise<Record<string, string>> {
     }
 
     for (const [key, value] of Object.entries(args.headers)) {
-        const result = await Supplier.get(value);
+        const result = await EndpointSupplier.get(value, { endpointMetadata: args.endpointMetadata ?? {} });
         if (typeof result === "string") {
             newHeaders[key] = result;
             continue;

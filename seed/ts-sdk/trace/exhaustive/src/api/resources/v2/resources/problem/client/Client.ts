@@ -65,6 +65,7 @@ export class Problem {
             core.APIResponse<SeedTrace.v2.LightweightProblemInfoV2[], SeedTrace.v2.problem.getLightweightProblems.Error>
         >
     > {
+        const _metadata: core.EndpointMetadata = { security: undefined };
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -87,6 +88,7 @@ export class Problem {
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
+            endpointMetadata: _metadata,
         });
         if (_response.ok) {
             return {
@@ -131,6 +133,7 @@ export class Problem {
     ): Promise<
         core.WithRawResponse<core.APIResponse<SeedTrace.v2.ProblemInfoV2[], SeedTrace.v2.problem.getProblems.Error>>
     > {
+        const _metadata: core.EndpointMetadata = { security: undefined };
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -153,6 +156,7 @@ export class Problem {
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
+            endpointMetadata: _metadata,
         });
         if (_response.ok) {
             return {
@@ -200,6 +204,7 @@ export class Problem {
     ): Promise<
         core.WithRawResponse<core.APIResponse<SeedTrace.v2.ProblemInfoV2, SeedTrace.v2.problem.getLatestProblem.Error>>
     > {
+        const _metadata: core.EndpointMetadata = { security: undefined };
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -222,6 +227,7 @@ export class Problem {
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
+            endpointMetadata: _metadata,
         });
         if (_response.ok) {
             return {
@@ -274,6 +280,7 @@ export class Problem {
     ): Promise<
         core.WithRawResponse<core.APIResponse<SeedTrace.v2.ProblemInfoV2, SeedTrace.v2.problem.getProblemVersion.Error>>
     > {
+        const _metadata: core.EndpointMetadata = { security: undefined };
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -296,6 +303,7 @@ export class Problem {
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
+            endpointMetadata: _metadata,
         });
         if (_response.ok) {
             return {

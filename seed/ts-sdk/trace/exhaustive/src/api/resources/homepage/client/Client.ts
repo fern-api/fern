@@ -59,6 +59,7 @@ export class Homepage {
     ): Promise<
         core.WithRawResponse<core.APIResponse<SeedTrace.ProblemId[], SeedTrace.homepage.getHomepageProblems.Error>>
     > {
+        const _metadata: core.EndpointMetadata = { security: undefined };
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -81,6 +82,7 @@ export class Homepage {
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
+            endpointMetadata: _metadata,
         });
         if (_response.ok) {
             return {
@@ -122,6 +124,7 @@ export class Homepage {
         request: SeedTrace.ProblemId[],
         requestOptions?: Homepage.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.homepage.setHomepageProblems.Error>>> {
+        const _metadata: core.EndpointMetadata = { security: undefined };
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -147,6 +150,7 @@ export class Homepage {
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
+            endpointMetadata: _metadata,
         });
         if (_response.ok) {
             return {

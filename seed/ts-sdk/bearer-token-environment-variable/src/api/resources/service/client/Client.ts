@@ -11,7 +11,7 @@ export declare namespace Service {
         environment: core.Supplier<string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
-        apiKey?: core.TokenSupplier<core.BearerToken | undefined>;
+        apiKey?: core.Supplier<core.BearerToken | undefined>;
         /** Override the X-API-Version header */
         version?: "1.0.0";
         /** Additional headers to include in requests. */
@@ -54,11 +54,10 @@ export class Service {
     }
 
     private async __getWithBearerToken(requestOptions?: Service.RequestOptions): Promise<core.WithRawResponse<string>> {
-        var _metadata = {};
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(_metadata),
+                Authorization: await this._getAuthorizationHeader(),
                 "X-API-Version": requestOptions?.version ?? "1.0.0",
             }),
             requestOptions?.headers,
@@ -75,7 +74,6 @@ export class Service {
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
-            endpointMetadata: _metadata,
         });
         if (_response.ok) {
             return { data: _response.body as string, rawResponse: _response.rawResponse };
@@ -108,9 +106,8 @@ export class Service {
         }
     }
 
-    protected async _getAuthorizationHeader(endpointMetadata: core.EndpointMetadata): Promise<string> {
-        const bearer =
-            (await core.TokenSupplier.get(this._options.apiKey, endpointMetadata)) ?? process?.env["COURIER_API_KEY"];
+    protected async _getAuthorizationHeader(): Promise<string> {
+        const bearer = (await core.Supplier.get(this._options.apiKey)) ?? process?.env["COURIER_API_KEY"];
         if (bearer == null) {
             throw new errors.SeedBearerTokenEnvironmentVariableError({
                 message:

@@ -14,7 +14,7 @@ import {
     getRequestOptionsParameter,
     getTimeoutExpression
 } from "./utils/requestOptionsParameter";
-import { generatedEndpointMetadata } from "./utils/generateEndpointMetadata";
+import { generateEndpointMetadata } from "./utils/generateEndpointMetadata";
 
 export declare namespace GeneratedFileDownloadEndpointImplementation {
     export interface Init {
@@ -29,21 +29,23 @@ export declare namespace GeneratedFileDownloadEndpointImplementation {
         omitUndefined: boolean;
         streamType: "wrapper" | "web";
         fileResponseType: "stream" | "binary-response";
+        generateEndpointMetadata: boolean;
     }
 }
 
 export class GeneratedFileDownloadEndpointImplementation implements GeneratedEndpointImplementation {
     public readonly endpoint: HttpEndpoint;
-    public response: GeneratedEndpointResponse;
-    private generatedSdkClientClass: GeneratedSdkClientClassImpl;
-    private includeCredentialsOnCrossOriginRequests: boolean;
-    private defaultTimeoutInSeconds: number | "infinity" | undefined;
-    private request: GeneratedEndpointRequest;
-    private includeSerdeLayer: boolean;
-    private retainOriginalCasing: boolean;
-    private omitUndefined: boolean;
-    private streamType: "wrapper" | "web";
+    public readonly response: GeneratedEndpointResponse;
+    private readonly generatedSdkClientClass: GeneratedSdkClientClassImpl;
+    private readonly includeCredentialsOnCrossOriginRequests: boolean;
+    private readonly defaultTimeoutInSeconds: number | "infinity" | undefined;
+    private readonly request: GeneratedEndpointRequest;
+    private readonly includeSerdeLayer: boolean;
+    private readonly retainOriginalCasing: boolean;
+    private readonly omitUndefined: boolean;
+    private readonly streamType: "wrapper" | "web";
     private readonly fileResponseType: "stream" | "binary-response";
+    private readonly generateEndpointMetadata: boolean;
 
     constructor({
         endpoint,
@@ -56,7 +58,8 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         retainOriginalCasing,
         omitUndefined,
         streamType,
-        fileResponseType
+        fileResponseType,
+        generateEndpointMetadata
     }: GeneratedFileDownloadEndpointImplementation.Init) {
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
@@ -69,6 +72,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         this.omitUndefined = omitUndefined;
         this.streamType = streamType;
         this.fileResponseType = fileResponseType;
+        this.generateEndpointMetadata = generateEndpointMetadata;
     }
     public isPaginated(context: SdkContext): boolean {
         return false;
@@ -155,7 +159,12 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
 
     public getStatements(context: SdkContext): ts.Statement[] {
         return [
-            ...generatedEndpointMetadata(),
+            ...(this.generateEndpointMetadata
+                ? generateEndpointMetadata({
+                      httpEndpoint: this.endpoint,
+                      context
+                  })
+                : []),
             ...this.getRequestBuilderStatements(context),
             ...this.invokeFetcher(context),
             ...this.response.getReturnResponseStatements(context)
@@ -219,7 +228,9 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
                         assertNever(this.fileResponseType);
                 }
             })(),
-            endpointMetadata: this.generatedSdkClientClass.getReferenceToMetadataForTokenSupplier()
+            endpointMetadata: this.generateEndpointMetadata
+                ? this.generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier()
+                : undefined
         };
 
         return [

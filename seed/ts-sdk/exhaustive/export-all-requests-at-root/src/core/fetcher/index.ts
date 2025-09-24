@@ -7,3 +7,5 @@ export { HttpResponsePromise } from "./HttpResponsePromise.js";
 export type { RawResponse, WithRawResponse } from "./RawResponse.js";
 export { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse.js";
 export { Supplier } from "./Supplier.js";
+export { EndpointSupplier } from "./EndpointSupplier.js";
+export { EndpointMetadata } from "./EndpointMetadata.js";

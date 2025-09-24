@@ -13,7 +13,7 @@ import {
     REQUEST_OPTIONS_PARAMETER_NAME
 } from "../utils/requestOptionsParameter";
 import { GeneratedEndpointResponse } from "./endpoint-response/GeneratedEndpointResponse";
-import { generatedEndpointMetadata } from "../utils/generateEndpointMetadata";
+import { generateEndpointMetadata } from "../utils/generateEndpointMetadata";
 
 export declare namespace GeneratedDefaultEndpointImplementation {
     export interface Init {
@@ -26,6 +26,7 @@ export declare namespace GeneratedDefaultEndpointImplementation {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         omitUndefined: boolean;
+        generateEndpointMetadata: boolean;
     }
 }
 
@@ -34,13 +35,14 @@ const EXAMPLE_PREFIX = "    ";
 export class GeneratedDefaultEndpointImplementation implements GeneratedEndpointImplementation {
     public readonly endpoint: HttpEndpoint;
     public readonly response: GeneratedEndpointResponse;
-    private generatedSdkClientClass: GeneratedSdkClientClassImpl;
-    private includeCredentialsOnCrossOriginRequests: boolean;
-    private defaultTimeoutInSeconds: number | "infinity" | undefined;
-    private request: GeneratedEndpointRequest;
-    private includeSerdeLayer: boolean;
-    private retainOriginalCasing: boolean;
-    private omitUndefined: boolean;
+    private readonly generatedSdkClientClass: GeneratedSdkClientClassImpl;
+    private readonly includeCredentialsOnCrossOriginRequests: boolean;
+    private readonly defaultTimeoutInSeconds: number | "infinity" | undefined;
+    private readonly request: GeneratedEndpointRequest;
+    private readonly includeSerdeLayer: boolean;
+    private readonly retainOriginalCasing: boolean;
+    private readonly omitUndefined: boolean;
+    private readonly generateEndpointMetadata: boolean;
 
     constructor({
         endpoint,
@@ -51,7 +53,8 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         request,
         includeSerdeLayer,
         retainOriginalCasing,
-        omitUndefined
+        omitUndefined,
+        generateEndpointMetadata
     }: GeneratedDefaultEndpointImplementation.Init) {
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
@@ -62,6 +65,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
         this.omitUndefined = omitUndefined;
+        this.generateEndpointMetadata = generateEndpointMetadata;
     }
 
     public isPaginated(context: SdkContext): boolean {
@@ -299,7 +303,12 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
     public getStatements(context: SdkContext): ts.Statement[] {
         const listFnName = "list";
         const body = [
-            ...generatedEndpointMetadata(),
+            ...(this.generateEndpointMetadata
+                ? generateEndpointMetadata({
+                      httpEndpoint: this.endpoint,
+                      context
+                  })
+                : []),
             ...this.request.getBuildRequestStatements(context),
             ...this.invokeFetcherAndReturnResponse(context)
         ];
@@ -472,7 +481,9 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             }),
 
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
-            endpointMetadata: this.generatedSdkClientClass.getReferenceToMetadataForTokenSupplier()
+            endpointMetadata: this.generateEndpointMetadata
+                ? this.generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier()
+                : undefined
         };
 
         if (this.endpoint.response?.body?.type === "text") {

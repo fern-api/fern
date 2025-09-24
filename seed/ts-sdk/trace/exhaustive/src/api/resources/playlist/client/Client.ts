@@ -72,6 +72,7 @@ export class Playlist {
         request: SeedTrace.CreatePlaylistRequest,
         requestOptions?: Playlist.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<SeedTrace.Playlist, SeedTrace.playlist.createPlaylist.Error>>> {
+        const _metadata: core.EndpointMetadata = { security: [{ bearer: [] }] };
         const { datetime, optionalDatetime, body: _body } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams["datetime"] = datetime;
@@ -104,6 +105,7 @@ export class Playlist {
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
+            endpointMetadata: _metadata,
         });
         if (_response.ok) {
             return {
@@ -156,6 +158,7 @@ export class Playlist {
         request: SeedTrace.GetPlaylistsRequest,
         requestOptions?: Playlist.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<SeedTrace.Playlist[], SeedTrace.playlist.getPlaylists.Error>>> {
+        const _metadata: core.EndpointMetadata = { security: [{ bearer: [] }] };
         const { limit, otherField, multiLineDocs, optionalMultipleField, multipleField } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
@@ -200,6 +203,7 @@ export class Playlist {
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
+            endpointMetadata: _metadata,
         });
         if (_response.ok) {
             return {
@@ -246,6 +250,7 @@ export class Playlist {
         playlistId: SeedTrace.PlaylistId,
         requestOptions?: Playlist.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<SeedTrace.Playlist, SeedTrace.playlist.getPlaylist.Error>>> {
+        const _metadata: core.EndpointMetadata = { security: undefined };
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -268,6 +273,7 @@ export class Playlist {
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
+            endpointMetadata: _metadata,
         });
         if (_response.ok) {
             return {
@@ -341,6 +347,7 @@ export class Playlist {
     ): Promise<
         core.WithRawResponse<core.APIResponse<SeedTrace.Playlist | undefined, SeedTrace.playlist.updatePlaylist.Error>>
     > {
+        const _metadata: core.EndpointMetadata = { security: [{ bearer: [] }] };
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -366,6 +373,7 @@ export class Playlist {
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
+            endpointMetadata: _metadata,
         });
         if (_response.ok) {
             return {
@@ -426,6 +434,7 @@ export class Playlist {
         playlistId: SeedTrace.PlaylistId,
         requestOptions?: Playlist.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.playlist.deletePlaylist.Error>>> {
+        const _metadata: core.EndpointMetadata = { security: [{ bearer: [] }] };
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -448,6 +457,7 @@ export class Playlist {
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
+            endpointMetadata: _metadata,
         });
         if (_response.ok) {
             return {

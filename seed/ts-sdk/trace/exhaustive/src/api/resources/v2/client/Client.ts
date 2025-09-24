@@ -69,6 +69,7 @@ export class V2 {
     private async __test(
         requestOptions?: V2.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.v2.test.Error>>> {
+        const _metadata: core.EndpointMetadata = { security: undefined };
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -89,6 +90,7 @@ export class V2 {
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
+            endpointMetadata: _metadata,
         });
         if (_response.ok) {
             return {

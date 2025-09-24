@@ -95,7 +95,12 @@ export interface Fetcher {
         get: (supplier: ts.Expression) => ts.Expression;
     };
 
-    readonly TokenSupplier: {
+    readonly EndpointSupplier: {
+        _getReferenceToType: (suppliedType: ts.TypeNode) => ts.TypeNode;
+        get: (supplier: ts.Expression, metadata: ts.Expression) => ts.Expression;
+    };
+
+    readonly SupplierOrEndpointSupplier: {
         _getReferenceToType: (suppliedType: ts.TypeNode) => ts.TypeNode;
         get: (supplier: ts.Expression, metadata: ts.Expression) => ts.Expression;
     };
@@ -407,6 +412,21 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         )
     };
 
+    public SupplierOrEndpointSupplier = {
+        _getReferenceToType: (suppliedType: ts.TypeNode): ts.TypeNode => {
+            if (this.generateEndpointMetadata) {
+                return this.EndpointSupplier._getReferenceToType(suppliedType);
+            }
+            return this.Supplier._getReferenceToType(suppliedType);
+        },
+        get: (supplier: ts.Expression, metadata: ts.Expression): ts.Expression => {
+            if (this.generateEndpointMetadata) {
+                return this.EndpointSupplier.get(supplier, metadata);
+            }
+            return this.Supplier.get(supplier);
+        }
+    };
+
     public Supplier = {
         _getReferenceToType: this.withExportedName("Supplier", (Supplier) => (suppliedType: ts.TypeNode) => {
             return ts.factory.createTypeReferenceNode(Supplier.getEntityName(), [suppliedType]);
@@ -423,19 +443,22 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         })
     };
 
-    public TokenSupplier = {
-        _getReferenceToType: this.withExportedName("TokenSupplier", (TokenSupplier) => (suppliedType: ts.TypeNode) => {
-            return ts.factory.createTypeReferenceNode(TokenSupplier.getEntityName(), [suppliedType]);
-        }),
+    public EndpointSupplier = {
+        _getReferenceToType: this.withExportedName(
+            "EndpointSupplier",
+            (EndpointSupplier) => (suppliedType: ts.TypeNode) => {
+                return ts.factory.createTypeReferenceNode(EndpointSupplier.getEntityName(), [suppliedType]);
+            }
+        ),
 
         get: this.withExportedName(
-            "TokenSupplier",
-            (TokenSupplier) => (tokenSupplier: ts.Expression, metadata: ts.Expression) => {
+            "EndpointSupplier",
+            (EndpointSupplier) => (endpointSupplier: ts.Expression, metadata: ts.Expression) => {
                 return ts.factory.createAwaitExpression(
                     ts.factory.createCallExpression(
-                        ts.factory.createPropertyAccessExpression(TokenSupplier.getExpression(), "get"),
+                        ts.factory.createPropertyAccessExpression(EndpointSupplier.getExpression(), "get"),
                         undefined,
-                        [tokenSupplier, metadata]
+                        [endpointSupplier, metadata]
                     )
                 );
             }
