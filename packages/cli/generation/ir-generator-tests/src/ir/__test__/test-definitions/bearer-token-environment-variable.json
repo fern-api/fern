@@ -358,7 +358,8 @@
                         "value": "1.0.0"
                     }
                 },
-                "propertyAccess": null
+                "propertyAccess": null,
+                "variable": null
             }
         ],
         "endpoints": {

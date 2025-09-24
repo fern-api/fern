@@ -164,7 +164,8 @@
                     "typeReference": {
                         "type": "unknown"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false

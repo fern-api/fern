@@ -286,7 +286,8 @@ export class DynamicSnippetsConverter {
                     return DynamicSnippets.FileUploadRequestBodyProperty.bodyProperty({
                         name: property.name,
                         typeReference: this.convertTypeReference(property.valueType),
-                        propertyAccess: property.propertyAccess
+                        propertyAccess: property.propertyAccess,
+                        variable: undefined
                     });
                 default:
                     assertNever(property);
@@ -320,7 +321,8 @@ export class DynamicSnippetsConverter {
                 wireValue: pathParameter.name.originalName
             },
             typeReference: this.convertTypeReference(pathParameter.valueType),
-            propertyAccess: undefined
+            propertyAccess: undefined,
+            variable: pathParameter.variable
         }));
     }
 
@@ -335,7 +337,8 @@ export class DynamicSnippetsConverter {
                 wireValue: property.name.wireValue
             },
             typeReference: this.convertTypeReference(property.valueType),
-            propertyAccess: property.propertyAccess
+            propertyAccess: property.propertyAccess,
+            variable: undefined
         }));
     }
 
@@ -350,7 +353,8 @@ export class DynamicSnippetsConverter {
                 wireValue: parameter.name.wireValue
             },
             typeReference: this.convertTypeReference(parameter.valueType),
-            propertyAccess: undefined
+            propertyAccess: undefined,
+            variable: undefined
         }));
     }
 
@@ -371,7 +375,8 @@ export class DynamicSnippetsConverter {
                     wireValue: queryParameter.name.wireValue
                 },
                 typeReference,
-                propertyAccess: undefined
+                propertyAccess: undefined,
+                variable: undefined
             });
         }
         return parameters;
@@ -647,7 +652,8 @@ export class DynamicSnippetsConverter {
                     header: {
                         name: scheme.name,
                         typeReference: this.convertTypeReference(scheme.valueType),
-                        propertyAccess: undefined
+                        propertyAccess: undefined,
+                        variable: undefined
                     }
                 });
             case "oauth":
