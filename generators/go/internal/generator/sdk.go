@@ -9,6 +9,7 @@ import (
 
 	"github.com/fern-api/fern-go/internal/ast"
 	"github.com/fern-api/fern-go/internal/fern/ir"
+	"github.com/fern-api/fern-go/internal/fern/ir/common"
 	"github.com/fern-api/fern-go/internal/gospec"
 	generatorexec "github.com/fern-api/generator-exec-go"
 )
@@ -923,9 +924,9 @@ func (f *fileWriter) WriteClient(
 	serviceHeaders []*ir.HttpHeader,
 	idempotencyHeaders []*ir.HttpHeader,
 	subpackages []*ir.Subpackage,
-	environmentsConfig *ir.EnvironmentsConfig,
+	environmentsConfig *common.EnvironmentsConfig,
 	errorDiscriminationStrategy *ir.ErrorDiscriminationStrategy,
-	fernFilepath *ir.FernFilepath,
+	fernFilepath *common.FernFilepath,
 	rootClientInstantiation *ast.AssignStmt,
 	inlinePathParameters bool,
 	inlineFileProperties bool,
@@ -1578,7 +1579,7 @@ func getStreamingInfo(
 
 type paginationInfo struct {
 	Type                      string
-	PageName                  *ir.Name
+	PageName                  *common.Name
 	PageNilCheck              string
 	PageGoType                string
 	PageZeroValue             string
@@ -1705,7 +1706,7 @@ func valueTypeFromRequestPropertyValue(requestPropertyValue *ir.RequestPropertyV
 	return nil
 }
 
-func nameAndWireValueFromRequestPropertyValue(requestPropertyValue *ir.RequestPropertyValue) *ir.NameAndWireValue {
+func nameAndWireValueFromRequestPropertyValue(requestPropertyValue *ir.RequestPropertyValue) *common.NameAndWireValue {
 	switch requestPropertyValue.Type {
 	case "query":
 		return requestPropertyValue.Query.Name
@@ -1744,7 +1745,7 @@ func singleTypeReferenceFromResponseProperty(responseProperty *ir.ResponseProper
 // cause a nil-dereference when accessing a response property path.
 //
 // Note that when we support method getters, we can simplify this.
-func responsePropertyPathToNilCheck(variable string, propertyPath []*ir.Name) string {
+func responsePropertyPathToNilCheck(variable string, propertyPath []*common.Name) string {
 	if len(propertyPath) == 0 {
 		return ""
 	}
@@ -1764,7 +1765,7 @@ func responsePropertyPathToNilCheck(variable string, propertyPath []*ir.Name) st
 // responsePropertyPathToFullPathString returns the string used to access the response property.
 //
 // Note that when we support method getters, we can simplify this.
-func responsePropertyPathToFullPathString(variable string, propertyPath []*ir.Name) string {
+func responsePropertyPathToFullPathString(variable string, propertyPath []*common.Name) string {
 	if len(propertyPath) == 0 {
 		return variable + "."
 	}
@@ -1779,7 +1780,7 @@ func responsePropertyPathToFullPathString(variable string, propertyPath []*ir.Na
 // endpoints.
 func NewGeneratedClient(
 	f *fileWriter,
-	fernFilepath *ir.FernFilepath,
+	fernFilepath *common.FernFilepath,
 	endpoints []*ir.HttpEndpoint,
 	rootClientInstantiation *ast.AssignStmt,
 ) (*GeneratedClient, error) {
@@ -1815,7 +1816,7 @@ func NewGeneratedClient(
 
 func newGeneratedEndpoint(
 	f *fileWriter,
-	fernFilepath *ir.FernFilepath,
+	fernFilepath *common.FernFilepath,
 	rootClientInstantiation *ast.AssignStmt,
 	endpoint *ir.HttpEndpoint,
 	example *ir.ExampleEndpointCall,
@@ -1854,17 +1855,17 @@ func fullPathForEndpoint(endpoint *ir.HttpEndpoint) string {
 	return fmt.Sprintf("/%s", strings.Join(components, "/"))
 }
 
-func irMethodToGeneratorExecMethod(method ir.HttpMethod) generatorexec.EndpointMethod {
+func irMethodToGeneratorExecMethod(method common.HttpMethod) generatorexec.EndpointMethod {
 	switch method {
-	case ir.HttpMethodGet:
+	case common.HttpMethodGet:
 		return generatorexec.EndpointMethodGet
-	case ir.HttpMethodPost:
+	case common.HttpMethodPost:
 		return generatorexec.EndpointMethodPost
-	case ir.HttpMethodPut:
+	case common.HttpMethodPut:
 		return generatorexec.EndpointMethodPut
-	case ir.HttpMethodPatch:
+	case common.HttpMethodPatch:
 		return generatorexec.EndpointMethodPatch
-	case ir.HttpMethodDelete:
+	case common.HttpMethodDelete:
 		return generatorexec.EndpointMethodDelete
 	}
 	return 0
@@ -1872,7 +1873,7 @@ func irMethodToGeneratorExecMethod(method ir.HttpMethod) generatorexec.EndpointM
 
 func newEndpointSnippet(
 	f *fileWriter,
-	fernFilepath *ir.FernFilepath,
+	fernFilepath *common.FernFilepath,
 	rootClientInstantiation *ast.AssignStmt,
 	endpoint *ir.HttpEndpoint,
 	example *ir.ExampleEndpointCall,
@@ -1920,7 +1921,7 @@ func newEndpointSnippet(
 }
 
 func getEndpointMethodName(
-	fernFilepath *ir.FernFilepath,
+	fernFilepath *common.FernFilepath,
 	endpoint *ir.HttpEndpoint,
 ) string {
 	var packageElements []string
@@ -1939,7 +1940,7 @@ func getEndpointMethodName(
 
 func getEndpointParameters(
 	f *fileWriter,
-	fernFilepath *ir.FernFilepath,
+	fernFilepath *common.FernFilepath,
 	endpoint *ir.HttpEndpoint,
 	example *ir.ExampleEndpointCall,
 ) []ast.Expr {
@@ -2156,7 +2157,7 @@ func generatedClientInstantiation(
 		parameters = append(parameters, generatedEnvironment.Option)
 	}
 	rootImportPath := baseImportPath
-	rootImportPath = packagePathToImportPath(baseImportPath, packagePathForClient(new(ir.FernFilepath)))
+	rootImportPath = packagePathToImportPath(baseImportPath, packagePathForClient(new(common.FernFilepath)))
 	constructorName := fmt.Sprintf("New%s", exportedClientName)
 	if clientConstructorNameOverride != "" {
 		constructorName = clientConstructorNameOverride
@@ -2178,7 +2179,7 @@ func generatedClientInstantiation(
 }
 
 type filePropertyInfo struct {
-	Key         *ir.NameAndWireValue
+	Key         *common.NameAndWireValue
 	IsOptional  bool
 	IsArray     bool
 	ContentType string
@@ -2216,7 +2217,7 @@ func filePropertyToInfo(fileProperty *ir.FileProperty) (*filePropertyInfo, error
 // All of the fields are pre-formatted so that they can all be simple
 // strings.
 type endpoint struct {
-	Name                        *ir.Name
+	Name                        *common.Name
 	Docs                        *string
 	ImportPath                  string
 	OptionsParameterName        string
@@ -2260,9 +2261,9 @@ type signatureParameter struct {
 
 // signatureForEndpoint returns a signature template for the given endpoint.
 func (f *fileWriter) endpointFromIR(
-	fernFilepath *ir.FernFilepath,
+	fernFilepath *common.FernFilepath,
 	irEndpoint *ir.HttpEndpoint,
-	irEnvironmentsConfig *ir.EnvironmentsConfig,
+	irEnvironmentsConfig *common.EnvironmentsConfig,
 	errorDiscriminationStrategy *ir.ErrorDiscriminationStrategy,
 	serviceHeaders []*ir.HttpHeader,
 	idempotencyHeaders []*ir.HttpHeader,
@@ -2650,7 +2651,7 @@ type GeneratedEnvironment struct {
 }
 
 // WriteEnvironments writes the environment constants.
-func (f *fileWriter) WriteEnvironments(environmentsConfig *ir.EnvironmentsConfig, useCore bool) (*GeneratedEnvironment, error) {
+func (f *fileWriter) WriteEnvironments(environmentsConfig *common.EnvironmentsConfig, useCore bool) (*GeneratedEnvironment, error) {
 	return environmentsToEnvironmentsVariable(environmentsConfig, f, useCore)
 }
 
@@ -2743,7 +2744,7 @@ func (f *fileWriter) WriteError(errorDeclaration *ir.ErrorDeclaration) error {
 
 // getImportPathForRequestType returns the appropriate import path for request types
 // based on the exportAllRequestsAtRoot configuration.
-func getImportPathForRequestType(f *fileWriter, fernFilepath *ir.FernFilepath) string {
+func getImportPathForRequestType(f *fileWriter, fernFilepath *common.FernFilepath) string {
 	// Use the root package import path when exportAllRequestsAtRoot is enabled,
 	// otherwise use the service's filepath
 	if f.exportAllRequestsAtRoot && f.filename == inlinedRequestsFilename {
@@ -2755,7 +2756,7 @@ func getImportPathForRequestType(f *fileWriter, fernFilepath *ir.FernFilepath) s
 
 // WriteRequestType writes a type dedicated to the in-lined request (if any).
 func (f *fileWriter) WriteRequestType(
-	fernFilepath *ir.FernFilepath,
+	fernFilepath *common.FernFilepath,
 	endpoint *ir.HttpEndpoint,
 	serviceHeaders []*ir.HttpHeader,
 	idempotencyHeaders []*ir.HttpHeader,
@@ -3018,7 +3019,7 @@ func (f *fileWriter) WriteRequestType(
 }
 
 func environmentsToEnvironmentsVariable(
-	environmentsConfig *ir.EnvironmentsConfig,
+	environmentsConfig *common.EnvironmentsConfig,
 	writer *fileWriter,
 	useCore bool,
 ) (*GeneratedEnvironment, error) {
@@ -3068,11 +3069,11 @@ func environmentsToEnvironmentsVariable(
 // environmentURL is used to generate deterministic results (i.e. by iterating
 // over a sorted list rather than a map).
 type environmentURL struct {
-	ID  ir.EnvironmentBaseUrlId
-	URL ir.EnvironmentUrl
+	ID  common.EnvironmentBaseUrlId
+	URL common.EnvironmentUrl
 }
 
-func environmentURLMapToSortedSlice(urls map[ir.EnvironmentBaseUrlId]ir.EnvironmentUrl) []*environmentURL {
+func environmentURLMapToSortedSlice(urls map[common.EnvironmentBaseUrlId]common.EnvironmentUrl) []*environmentURL {
 	result := make([]*environmentURL, 0, len(urls))
 	for id, url := range urls {
 		result = append(
@@ -3089,12 +3090,12 @@ func environmentURLMapToSortedSlice(urls map[ir.EnvironmentBaseUrlId]ir.Environm
 
 type environmentsDeclarationVisitor struct {
 	value      ast.Expr
-	types      map[ir.TypeId]*ir.TypeDeclaration
+	types      map[common.TypeId]*ir.TypeDeclaration
 	writer     *fileWriter
 	importPath string
 }
 
-func (e *environmentsDeclarationVisitor) VisitSingleBaseUrl(url *ir.SingleBaseUrlEnvironments) error {
+func (e *environmentsDeclarationVisitor) VisitSingleBaseUrl(url *common.SingleBaseUrlEnvironments) error {
 	for i, environment := range url.Environments {
 		if i == 0 {
 			e.value = ast.NewImportedReference(
@@ -3108,8 +3109,8 @@ func (e *environmentsDeclarationVisitor) VisitSingleBaseUrl(url *ir.SingleBaseUr
 	return nil
 }
 
-func (e *environmentsDeclarationVisitor) VisitMultipleBaseUrls(url *ir.MultipleBaseUrlsEnvironments) error {
-	baseURLs := make(map[ir.EnvironmentBaseUrlId]string)
+func (e *environmentsDeclarationVisitor) VisitMultipleBaseUrls(url *common.MultipleBaseUrlsEnvironments) error {
+	baseURLs := make(map[common.EnvironmentBaseUrlId]string)
 	for _, baseURL := range url.BaseUrls {
 		baseURLs[baseURL.Id] = baseURL.Name.PascalCase.UnsafeName
 	}
@@ -3131,19 +3132,19 @@ func (e *environmentsDeclarationVisitor) VisitMultipleBaseUrls(url *ir.MultipleB
 }
 
 type environmentsValueVisitor struct {
-	types  map[ir.TypeId]*ir.TypeDeclaration
+	types  map[common.TypeId]*ir.TypeDeclaration
 	writer *fileWriter
 }
 
-func (e *environmentsValueVisitor) VisitSingleBaseUrl(url *ir.SingleBaseUrlEnvironments) error {
+func (e *environmentsValueVisitor) VisitSingleBaseUrl(url *common.SingleBaseUrlEnvironments) error {
 	for _, environment := range url.Environments {
 		e.writer.P(environment.Name.PascalCase.UnsafeName, fmt.Sprintf(": %q,", environment.Url))
 	}
 	return nil
 }
 
-func (e *environmentsValueVisitor) VisitMultipleBaseUrls(url *ir.MultipleBaseUrlsEnvironments) error {
-	baseURLs := make(map[ir.EnvironmentBaseUrlId]string)
+func (e *environmentsValueVisitor) VisitMultipleBaseUrls(url *common.MultipleBaseUrlsEnvironments) error {
+	baseURLs := make(map[common.EnvironmentBaseUrlId]string)
 	for _, baseURL := range url.BaseUrls {
 		baseURLs[baseURL.Id] = baseURL.Name.PascalCase.UnsafeName
 	}
@@ -3162,7 +3163,7 @@ func (e *environmentsValueVisitor) VisitMultipleBaseUrls(url *ir.MultipleBaseUrl
 	return nil
 }
 
-func environmentURLFromID(environmentsConfig *ir.EnvironmentsConfig, id ir.EnvironmentBaseUrlId) (ir.EnvironmentUrl, error) {
+func environmentURLFromID(environmentsConfig *common.EnvironmentsConfig, id common.EnvironmentBaseUrlId) (common.EnvironmentUrl, error) {
 	if environmentsConfig == nil {
 		return "", nil
 	}
@@ -3176,11 +3177,11 @@ func environmentURLFromID(environmentsConfig *ir.EnvironmentsConfig, id ir.Envir
 }
 
 type environmentsURLVisitor struct {
-	value ir.EnvironmentUrl
-	id    ir.EnvironmentBaseUrlId
+	value common.EnvironmentUrl
+	id    common.EnvironmentBaseUrlId
 }
 
-func (e *environmentsURLVisitor) VisitSingleBaseUrl(url *ir.SingleBaseUrlEnvironments) error {
+func (e *environmentsURLVisitor) VisitSingleBaseUrl(url *common.SingleBaseUrlEnvironments) error {
 	for _, environment := range url.Environments {
 		if environment.Id == e.id {
 			e.value = environment.Url
@@ -3190,7 +3191,7 @@ func (e *environmentsURLVisitor) VisitSingleBaseUrl(url *ir.SingleBaseUrlEnviron
 	return nil
 }
 
-func (e *environmentsURLVisitor) VisitMultipleBaseUrls(url *ir.MultipleBaseUrlsEnvironments) error {
+func (e *environmentsURLVisitor) VisitMultipleBaseUrls(url *common.MultipleBaseUrlsEnvironments) error {
 	for _, environment := range url.Environments {
 		for id, environmentURL := range environment.Urls {
 			if id == e.id {
@@ -3245,7 +3246,7 @@ type requestBodyVisitor struct {
 	baseImportPath string
 	importPath     string
 	scope          *gospec.Scope
-	types          map[ir.TypeId]*ir.TypeDeclaration
+	types          map[common.TypeId]*ir.TypeDeclaration
 	writer         *fileWriter
 
 	// Configurable
@@ -3387,22 +3388,22 @@ func inlinedRequestBodyPropertiesToObjectTypeDeclaration(bodyProperties []*ir.Fi
 	}
 }
 
-// irMethodToMethodEnum maps the given ir.HttpMethod to the net/http equivalent.
+// irMethodToMethodEnum maps the given common.HttpMethod to the net/http equivalent.
 // Note this returns the string representation of the net/http constant (e.g.
 // "http.MethodGet"), not the value the constant points to (e.g. "GET").
-func irMethodToMethodEnum(method ir.HttpMethod) string {
+func irMethodToMethodEnum(method common.HttpMethod) string {
 	switch method {
-	case ir.HttpMethodGet:
+	case common.HttpMethodGet:
 		return "http.MethodGet"
-	case ir.HttpMethodPost:
+	case common.HttpMethodPost:
 		return "http.MethodPost"
-	case ir.HttpMethodPut:
+	case common.HttpMethodPut:
 		return "http.MethodPut"
-	case ir.HttpMethodPatch:
+	case common.HttpMethodPatch:
 		return "http.MethodPatch"
-	case ir.HttpMethodDelete:
+	case common.HttpMethodDelete:
 		return "http.MethodDelete"
-	case ir.HttpMethodHead:
+	case common.HttpMethodHead:
 		return "http.MethodHead"
 	}
 	return ""
@@ -3417,7 +3418,7 @@ type valueTypeFormat struct {
 	IsIterable  bool
 }
 
-func formatForValueType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) *valueTypeFormat {
+func formatForValueType(typeReference *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration) *valueTypeFormat {
 	var (
 		prefix      string
 		suffix      string
@@ -3449,13 +3450,13 @@ func formatForValueType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir
 			prefix = "*"
 		}
 		switch primitive.V1 {
-		case ir.PrimitiveTypeV1DateTime:
+		case common.PrimitiveTypeV1DateTime:
 			prefix = ""
 			suffix = ".Format(time.RFC3339)"
-		case ir.PrimitiveTypeV1Date:
+		case common.PrimitiveTypeV1Date:
 			prefix = ""
 			suffix = `.Format("2006-01-02")`
-		case ir.PrimitiveTypeV1Base64:
+		case common.PrimitiveTypeV1Base64:
 			prefix = "base64.StdEncoding.EncodeToString(" + prefix
 			suffix = ")"
 		}
@@ -3536,7 +3537,7 @@ func typeReferenceFromStreamingResponse(
 	case "sse":
 		return streamingResponse.Sse.Payload, nil
 	case "text":
-		return ir.NewTypeReferenceFromPrimitive(&ir.PrimitiveType{V1: ir.PrimitiveTypeV1String}), nil
+		return ir.NewTypeReferenceFromPrimitive(&ir.PrimitiveType{V1: common.PrimitiveTypeV1String}), nil
 	}
 	return nil, fmt.Errorf("unsupported streaming response type: %s", streamingResponse.Type)
 }
@@ -3601,12 +3602,12 @@ func maybePrimitive(typeReference *ir.TypeReference) *ir.PrimitiveType {
 
 // isPrimitiveInteger returns true if the given primitive type is an integer.
 func isPrimitiveInteger(primitive *ir.PrimitiveType) bool {
-	return primitive.V1 == ir.PrimitiveTypeV1Integer || primitive.V1 == ir.PrimitiveTypeV1Uint || primitive.V1 == ir.PrimitiveTypeV1Uint64 || primitive.V1 == ir.PrimitiveTypeV1Long
+	return primitive.V1 == common.PrimitiveTypeV1Integer || primitive.V1 == common.PrimitiveTypeV1Uint || primitive.V1 == common.PrimitiveTypeV1Uint64 || primitive.V1 == common.PrimitiveTypeV1Long
 }
 
 // maybeLiteral recurses into the given value type, returning its underlying literal
 // value, if any.
-func maybeLiteral(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) *ir.Literal {
+func maybeLiteral(typeReference *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration) *ir.Literal {
 	if typeReference.Named != nil {
 		typeDeclaration := types[typeReference.Named.TypeId]
 		if typeDeclaration.Shape.Alias != nil {
@@ -3625,7 +3626,7 @@ func maybeLiteral(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeD
 }
 
 // isLiteralType returns true if the given type reference is a literal.
-func isLiteralType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) bool {
+func isLiteralType(typeReference *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration) bool {
 	if typeReference.Named != nil {
 		typeDeclaration := types[typeReference.Named.TypeId]
 		return typeDeclaration.Shape.Alias != nil && isLiteralType(typeDeclaration.Shape.Alias.AliasOf, types)
@@ -3650,7 +3651,7 @@ func getOptionalOrNullableContainer(valueType *ir.TypeReference) *ir.TypeReferen
 }
 
 // isOptionalType returns true if the given type reference is an optional.
-func isOptionalType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) bool {
+func isOptionalType(typeReference *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration) bool {
 	if typeReference.Named != nil {
 		typeDeclaration := types[typeReference.Named.TypeId]
 		return typeDeclaration.Shape.Alias != nil && isOptionalType(typeDeclaration.Shape.Alias.AliasOf, types)
@@ -3659,7 +3660,7 @@ func isOptionalType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.Typ
 }
 
 // maybeIterableType returns the given type reference's iterable type, if any.
-func maybeIterableType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) *ir.TypeReference {
+func maybeIterableType(typeReference *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration) *ir.TypeReference {
 	if typeReference.Named != nil {
 		typeDeclaration := types[typeReference.Named.TypeId]
 		if typeDeclaration.Shape.Alias != nil {
@@ -3686,7 +3687,7 @@ func maybeIterableType(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.
 //
 // Container types like lists, maps, and sets are already nil-able, so they don't
 // require a dereference prefix.
-func needsOptionalDereference(optionalTypeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) bool {
+func needsOptionalDereference(optionalTypeReference *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration) bool {
 	if optionalTypeReference.Named != nil {
 		typeDeclaration := types[optionalTypeReference.Named.TypeId]
 		if typeDeclaration.Shape.Alias != nil {
@@ -3701,11 +3702,11 @@ func needsOptionalDereference(optionalTypeReference *ir.TypeReference, types map
 }
 
 // shouldGenerateHeader returns true if the given header should be generated.
-func shouldGenerateHeader(header *ir.HttpHeader, types map[ir.TypeId]*ir.TypeDeclaration) bool {
+func shouldGenerateHeader(header *ir.HttpHeader, types map[common.TypeId]*ir.TypeDeclaration) bool {
 	return header.Env != nil || !isLiteralType((header.ValueType), types)
 }
 
 // shouldGenerateHeaderAuthScheme returns true if the given header auth scheme should be generated.
-func shouldGenerateHeaderAuthScheme(auth *ir.HeaderAuthScheme, types map[ir.TypeId]*ir.TypeDeclaration) bool {
+func shouldGenerateHeaderAuthScheme(auth *ir.HeaderAuthScheme, types map[common.TypeId]*ir.TypeDeclaration) bool {
 	return auth.HeaderEnvVar != nil || !isLiteralType(auth.ValueType, types)
 }

@@ -7887,6 +7887,22 @@ type TypeReference struct {
 	Unknown   interface{}
 }
 
+func NewTypeReferenceFromContainer(value *ContainerType) *TypeReference {
+	return &TypeReference{Type: "container", Container: value}
+}
+
+func NewTypeReferenceFromNamed(value *NamedType) *TypeReference {
+	return &TypeReference{Type: "named", Named: value}
+}
+
+func NewTypeReferenceFromPrimitive(value *PrimitiveType) *TypeReference {
+	return &TypeReference{Type: "primitive", Primitive: value}
+}
+
+func NewTypeReferenceFromUnknown(value interface{}) *TypeReference {
+	return &TypeReference{Type: "unknown", Unknown: value}
+}
+
 func (t *TypeReference) GetType() string {
 	if t == nil {
 		return ""

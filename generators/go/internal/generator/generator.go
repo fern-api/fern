@@ -14,6 +14,7 @@ import (
 	"github.com/fern-api/fern-go/internal/coordinator"
 	"github.com/fern-api/fern-go/internal/fern/ir"
 	fernir "github.com/fern-api/fern-go/internal/fern/ir"
+	"github.com/fern-api/fern-go/internal/fern/ir/common"
 	gov2 "github.com/fern-api/fern-go/internal/generator/v2"
 	generatorexec "github.com/fern-api/generator-exec-go"
 )
@@ -66,7 +67,7 @@ type File struct {
 // must maintain their original definition, so we persist that here.
 type SubpackageToGenerate struct {
 	Subpackage           *fernir.Subpackage
-	OriginalFernFilepath *fernir.FernFilepath
+	OriginalFernFilepath *common.FernFilepath
 }
 
 // NewSubpackagesToGenerate returns a slice of subpackages to generate from the given IR.
@@ -80,14 +81,14 @@ func NewSubpackagesToGenerate(ir *fernir.IntermediateRepresentation) []*Subpacka
 			//
 			// We do this by updating the FernFilepath for the subpackage
 			// and service (if any).
-			irSubpackage.FernFilepath = &fernir.FernFilepath{
+			irSubpackage.FernFilepath = &common.FernFilepath{
 				AllParts:    irSubpackage.FernFilepath.AllParts,
 				PackagePath: append(irSubpackage.FernFilepath.PackagePath, irSubpackage.FernFilepath.File),
 				File:        nil,
 			}
 			if irSubpackage.Service != nil {
 				irService := ir.Services[*irSubpackage.Service]
-				irService.Name.FernFilepath = &fernir.FernFilepath{
+				irService.Name.FernFilepath = &common.FernFilepath{
 					AllParts:    irService.Name.FernFilepath.AllParts,
 					PackagePath: append(irService.Name.FernFilepath.PackagePath, irService.Name.FernFilepath.File),
 					File:        nil,
@@ -247,16 +248,16 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			// the types reference it from the appropriate location.
 			typeDecl := ir.Types[leafType]
 
-			var packagePathElement *fernir.Name
+			var packagePathElement *common.Name
 			if packagePath := typeDecl.Name.FernFilepath.PackagePath; len(packagePath) > 0 {
 				packagePathElement = packagePath[len(packagePath)-1]
 			}
 
-			newFernFilepath := &fernir.FernFilepath{
-				AllParts: []*fernir.Name{
+			newFernFilepath := &common.FernFilepath{
+				AllParts: []*common.Name{
 					commonPackageElement,
 				},
-				PackagePath: []*fernir.Name{
+				PackagePath: []*common.Name{
 					commonPackageElement,
 				},
 				File: commonPackageElement,
@@ -761,7 +762,7 @@ func (g *Generator) generateRootService(
 	irService *fernir.HttpService,
 	irSubpackages []*fernir.Subpackage,
 	rootClientInstantiation *ast.AssignStmt,
-	originalFernFilepath *fernir.FernFilepath,
+	originalFernFilepath *common.FernFilepath,
 	rootPackageName string,
 ) (*File, *GeneratedClient, error) {
 	fileInfo := fileInfoForRootService(irService.Name.FernFilepath, rootPackageName)
@@ -812,7 +813,7 @@ func (g *Generator) generateService(
 	irService *fernir.HttpService,
 	irSubpackages []*fernir.Subpackage,
 	rootClientInstantiation *ast.AssignStmt,
-	originalFernFilepath *fernir.FernFilepath,
+	originalFernFilepath *common.FernFilepath,
 ) (*File, *GeneratedClient, error) {
 	fileInfo := fileInfoForService(irService.Name.FernFilepath)
 	writer := newFileWriter(
@@ -865,7 +866,7 @@ func (g *Generator) generateServiceWithoutEndpoints(
 	irSubpackage *fernir.Subpackage,
 	irSubpackages []*fernir.Subpackage,
 	rootClientInstantiation *ast.AssignStmt,
-	originalFernFilepath *fernir.FernFilepath,
+	originalFernFilepath *common.FernFilepath,
 ) (*File, error) {
 	fileInfo := fileInfoForService(irSubpackage.FernFilepath)
 	writer := newFileWriter(
@@ -910,7 +911,7 @@ func (g *Generator) generateServiceWithoutEndpoints(
 // any endpoints) for the root package.
 func (g *Generator) generateRootServiceWithoutEndpoints(
 	ir *fernir.IntermediateRepresentation,
-	fernFilepath *fernir.FernFilepath,
+	fernFilepath *common.FernFilepath,
 	irSubpackages []*fernir.Subpackage,
 	rootClientInstantiation *ast.AssignStmt,
 	rootPackageName string,
@@ -1003,7 +1004,7 @@ func maybeWriteSnippets(
 		},
 	)
 	snippets := &generatorexec.Snippets{
-		Types:     make(map[ir.TypeId]string),
+		Types:     make(map[common.TypeId]string),
 		Endpoints: endpoints,
 	}
 	bytes, err := json.MarshalIndent(snippets, "", "    ")
@@ -1073,7 +1074,7 @@ func readIR(irFilename string) (*fernir.IntermediateRepresentation, error) {
 
 // declaredTypeNamesForTypeIDs resolves the set of typeIDs to their respective
 // declared type names.
-func declaredTypeNamesForTypeIDs(ir *fernir.IntermediateRepresentation, typeIDs []fernir.TypeId) []*fernir.DeclaredTypeName {
+func declaredTypeNamesForTypeIDs(ir *fernir.IntermediateRepresentation, typeIDs []common.TypeId) []*fernir.DeclaredTypeName {
 	result := make([]*fernir.DeclaredTypeName, 0, len(typeIDs))
 	for _, typeDecl := range ir.Types {
 		result = append(result, typeDecl.Name)
@@ -1524,7 +1525,7 @@ func fileInfoForEnvironments(rootPackageName string, generatedNames map[string]s
 	}, false
 }
 
-func fileInfoForType(rootPackageName string, fernFilepath *fernir.FernFilepath) fileInfo {
+func fileInfoForType(rootPackageName string, fernFilepath *common.FernFilepath) fileInfo {
 	var packages []string
 	for _, packageName := range fernFilepath.PackagePath {
 		packages = append(packages, strings.ToLower(packageName.CamelCase.SafeName))
@@ -1545,7 +1546,7 @@ func fileInfoForType(rootPackageName string, fernFilepath *fernir.FernFilepath) 
 	}
 }
 
-func fileInfoForPackageDocs(fernFilepath *fernir.FernFilepath) *fileInfo {
+func fileInfoForPackageDocs(fernFilepath *common.FernFilepath) *fileInfo {
 	packagePath := packagePathForDocs(fernFilepath)
 	return &fileInfo{
 		filename:    filepath.Join(append(packagePath, "doc.go")...),
@@ -1553,14 +1554,14 @@ func fileInfoForPackageDocs(fernFilepath *fernir.FernFilepath) *fileInfo {
 	}
 }
 
-func fileInfoForRootService(fernFilepath *fernir.FernFilepath, rootPackageName string) *fileInfo {
+func fileInfoForRootService(fernFilepath *common.FernFilepath, rootPackageName string) *fileInfo {
 	return &fileInfo{
 		filename:    "client.go",
 		packageName: rootPackageName,
 	}
 }
 
-func fileInfoForService(fernFilepath *fernir.FernFilepath) *fileInfo {
+func fileInfoForService(fernFilepath *common.FernFilepath) *fileInfo {
 	packagePath := packagePathForClient(fernFilepath)
 	return &fileInfo{
 		filename:    filepath.Join(append(packagePath, "client.go")...),
@@ -1568,7 +1569,7 @@ func fileInfoForService(fernFilepath *fernir.FernFilepath) *fileInfo {
 	}
 }
 
-func fileInfoForPackage(rootPackageName string, fernFilepath *fernir.FernFilepath) *fileInfo {
+func fileInfoForPackage(rootPackageName string, fernFilepath *common.FernFilepath) *fileInfo {
 	var packages []string
 	for _, packageName := range fernFilepath.PackagePath {
 		packages = append(packages, strings.ToLower(packageName.CamelCase.SafeName))
@@ -1656,7 +1657,7 @@ func fileUploadHasFileProperties(fileUpload *fernir.FileUploadRequest) bool {
 	return false
 }
 
-func packagePathForDocs(fernFilepath *fernir.FernFilepath) []string {
+func packagePathForDocs(fernFilepath *common.FernFilepath) []string {
 	var packages []string
 	for _, packageName := range fernFilepath.PackagePath {
 		packages = append(packages, strings.ToLower(packageName.CamelCase.SafeName))
@@ -1668,7 +1669,7 @@ func packagePathForDocs(fernFilepath *fernir.FernFilepath) []string {
 	return append(packages, directory)
 }
 
-func packagePathForClient(fernFilepath *fernir.FernFilepath) []string {
+func packagePathForClient(fernFilepath *common.FernFilepath) []string {
 	var packages []string
 	for _, packageName := range fernFilepath.PackagePath {
 		packages = append(packages, strings.ToLower(packageName.CamelCase.SafeName))
@@ -1682,7 +1683,7 @@ func packagePathForClient(fernFilepath *fernir.FernFilepath) []string {
 
 type typeToGenerate struct {
 	ID           string
-	FernFilepath *fernir.FernFilepath
+	FernFilepath *common.FernFilepath
 
 	// Exactly one of these will be non-nil.
 	TypeDeclaration *fernir.TypeDeclaration
@@ -1693,7 +1694,7 @@ type typeToGenerate struct {
 // fileInfoToTypes consolidates all of the given types based on the file they will be generated into.
 func fileInfoToTypes(
 	rootPackageName string,
-	irTypes map[fernir.TypeId]*fernir.TypeDeclaration,
+	irTypes map[common.TypeId]*fernir.TypeDeclaration,
 	irServices map[fernir.ServiceId]*fernir.HttpService,
 	irServiceTypeReferenceInfo *fernir.ServiceTypeReferenceInfo,
 	inlinePathParameters bool,
@@ -1810,8 +1811,8 @@ func fileInfoToTypes(
 }
 
 func shouldSetFileInfoToMatchService(
-	typeFernFilepath *fernir.FernFilepath,
-	serviceFernFilepath *fernir.FernFilepath,
+	typeFernFilepath *common.FernFilepath,
+	serviceFernFilepath *common.FernFilepath,
 ) bool {
 	if serviceFernFilepath.File == nil || typeFernFilepath.File != nil {
 		// If the service is a root client or the type is already defined
@@ -1827,7 +1828,7 @@ func shouldSetFileInfoToMatchService(
 	return !isReservedFilename(filename)
 }
 
-func packagePathIsEqual(a, b *fernir.FernFilepath) bool {
+func packagePathIsEqual(a, b *common.FernFilepath) bool {
 	if len(a.PackagePath) != len(b.PackagePath) {
 		return false
 	}
@@ -1876,7 +1877,7 @@ func stringSetToSortedSlice(set map[string]struct{}) []string {
 }
 
 // zeroValueForTypeReference returns the zero value for the given type reference.
-func zeroValueForTypeReference(typeReference *fernir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) string {
+func zeroValueForTypeReference(typeReference *fernir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration) string {
 	if typeReference.Container != nil && typeReference.Container.Literal != nil {
 		return zeroValueForLiteral(typeReference.Container.Literal)
 	}
@@ -1905,19 +1906,19 @@ func zeroValueForLiteral(literal *fernir.Literal) string {
 	return "nil"
 }
 
-func zeroValueForPrimitive(primitive fernir.PrimitiveTypeV1) string {
+func zeroValueForPrimitive(primitive common.PrimitiveTypeV1) string {
 	switch primitive {
-	case fernir.PrimitiveTypeV1String, fernir.PrimitiveTypeV1BigInteger:
+	case common.PrimitiveTypeV1String, common.PrimitiveTypeV1BigInteger:
 		return `""`
-	case fernir.PrimitiveTypeV1Integer, fernir.PrimitiveTypeV1Long, fernir.PrimitiveTypeV1Uint, fernir.PrimitiveTypeV1Uint64, fernir.PrimitiveTypeV1Float, fernir.PrimitiveTypeV1Double:
+	case common.PrimitiveTypeV1Integer, common.PrimitiveTypeV1Long, common.PrimitiveTypeV1Uint, common.PrimitiveTypeV1Uint64, common.PrimitiveTypeV1Float, common.PrimitiveTypeV1Double:
 		return "0"
-	case fernir.PrimitiveTypeV1Boolean:
+	case common.PrimitiveTypeV1Boolean:
 		return "false"
-	case fernir.PrimitiveTypeV1DateTime, fernir.PrimitiveTypeV1Date:
+	case common.PrimitiveTypeV1DateTime, common.PrimitiveTypeV1Date:
 		return "time.Time{}"
-	case fernir.PrimitiveTypeV1Uuid:
+	case common.PrimitiveTypeV1Uuid:
 		return "uuid.Nil"
-	case fernir.PrimitiveTypeV1Base64:
+	case common.PrimitiveTypeV1Base64:
 		return "nil"
 	}
 	return "nil"
