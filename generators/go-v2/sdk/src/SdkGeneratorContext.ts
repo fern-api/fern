@@ -352,6 +352,13 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         });
     }
 
+    public getTestingTypeReference(): go.TypeReference {
+        return go.typeReference({
+            name: "T",
+            importPath: "testing"
+        });
+    }
+
     public callBytesNewBuffer(): go.FuncInvocation {
         return go.invokeFunc({
             func: go.typeReference({ name: "NewBuffer", importPath: "bytes" }),
@@ -799,5 +806,25 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             }
         }
         return false;
+    }
+
+    public static chainMethods(
+        baseFunc: go.FuncInvocation,
+        ...methods: Omit<go.MethodInvocation.Args, "on">[]
+    ): go.MethodInvocation {
+        if (methods.length === 0) {
+            throw new Error("Must have methods to chain");
+        }
+
+        let current: go.AstNode = baseFunc;
+        for (const method of methods) {
+            current = go.invokeMethod({
+                on: current,
+                method: method.method,
+                arguments_: method.arguments_,
+                multiline: method.multiline
+            });
+        }
+        return current as go.MethodInvocation;
     }
 }
