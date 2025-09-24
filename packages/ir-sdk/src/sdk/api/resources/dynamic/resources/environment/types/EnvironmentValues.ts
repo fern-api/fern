@@ -16,4 +16,4 @@ import * as FernIr from "../../../../../index";
  *     "s3": "https://staging.s3.aws.com"
  *   }
  */
-export type EnvironmentValues = FernIr.EnvironmentId | FernIr.dynamic.MultipleEnvironmentUrlValues;
+export type EnvironmentValues = FernIr.dynamic.EnvironmentId | FernIr.dynamic.MultipleEnvironmentUrlValues;

@@ -5,8 +5,8 @@
 import * as serializers from "../../../../../index";
 import * as FernIr from "../../../../../../api/index";
 import * as core from "../../../../../../core";
-import { NameAndWireValue } from "../../../../commons/types/NameAndWireValue";
-import { ObjectPropertyAccess } from "../../../../types/types/ObjectPropertyAccess";
+import { NameAndWireValue } from "../../commons/types/NameAndWireValue";
+import { ObjectPropertyAccess } from "./ObjectPropertyAccess";
 
 export const NamedParameter: core.serialization.ObjectSchema<
     serializers.dynamic.NamedParameter.Raw,

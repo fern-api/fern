@@ -5,7 +5,7 @@
 import * as serializers from "../../../../../index";
 import * as FernIr from "../../../../../../api/index";
 import * as core from "../../../../../../core";
-import { HttpMethod } from "../../../../http/types/HttpMethod";
+import { HttpMethod } from "../../http/types/HttpMethod";
 
 export const EndpointLocation: core.serialization.ObjectSchema<
     serializers.dynamic.EndpointLocation.Raw,
