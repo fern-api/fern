@@ -6,6 +6,7 @@ use crate::nullable_optional_address::Address;
 use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 
+/// Test object with nullable enums, unions, and arrays
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ComplexProfile {
     pub id: String,

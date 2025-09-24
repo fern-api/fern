@@ -1,8 +1,9 @@
 use crate::types_identity::Identity;
-use chrono::{DateTime, NaiveDate, Utc};
+use chrono::{DateTime, Utc};
 use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 
+/// User object similar to Auth0 users
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct User {
     pub user_id: String,
@@ -14,8 +15,8 @@ pub struct User {
     pub phone_number: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub phone_verified: Option<bool>,
-    pub created_at: chrono::DateTime<chrono::Utc>,
-    pub updated_at: chrono::DateTime<chrono::Utc>,
+    pub created_at: DateTime<Utc>,
+    pub updated_at: DateTime<Utc>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub identities: Option<Vec<Identity>>,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -33,7 +34,7 @@ pub struct User {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub last_ip: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub last_login: Option<chrono::DateTime<chrono::Utc>>,
+    pub last_login: Option<DateTime<Utc>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub logins_count: Option<i32>,
     #[serde(skip_serializing_if = "Option::is_none")]

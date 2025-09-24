@@ -3,9 +3,9 @@ use chrono::{DateTime, NaiveDate, Utc};
 use std::collections::HashMap;
 use ordered_float::OrderedFloat;
 use uuid::Uuid;
-use serde_json::Value;
 use serde::{Deserialize, Serialize};
 
+/// Exercises all of the built-in types.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Type {
     pub one: i32,
@@ -13,8 +13,8 @@ pub struct Type {
     pub three: String,
     pub four: bool,
     pub five: i64,
-    pub six: chrono::DateTime<chrono::Utc>,
-    pub seven: chrono::NaiveDate,
+    pub six: DateTime<Utc>,
+    pub seven: NaiveDate,
     pub eight: uuid::Uuid,
     pub nine: String,
     pub ten: Vec<i32>,
@@ -33,7 +33,7 @@ pub struct Type {
     pub twentytwo: f32,
     pub twentythree: num_bigint::BigInt,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub twentyfour: Option<chrono::DateTime<chrono::Utc>>,
+    pub twentyfour: Option<DateTime<Utc>>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub twentyfive: Option<chrono::NaiveDate>,
+    pub twentyfive: Option<NaiveDate>,
 }
