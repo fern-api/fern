@@ -8,13 +8,13 @@ import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { getReadableTypeNode } from "../getReadableTypeNode";
 import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse";
 import { buildUrl } from "./utils/buildUrl";
+import { generateEndpointMetadata } from "./utils/generateEndpointMetadata";
 import {
     getAbortSignalExpression,
     getMaxRetriesExpression,
     getRequestOptionsParameter,
     getTimeoutExpression
 } from "./utils/requestOptionsParameter";
-import { generateEndpointMetadata } from "./utils/generateEndpointMetadata";
 
 export declare namespace GeneratedFileDownloadEndpointImplementation {
     export interface Init {

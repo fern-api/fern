@@ -79,7 +79,6 @@ export class SeedPropertyAccessClient {
         request: SeedPropertyAccess.User,
         requestOptions?: SeedPropertyAccessClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedPropertyAccess.User>> {
-        const _metadata: core.EndpointMetadata = { security: undefined };
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -96,7 +95,6 @@ export class SeedPropertyAccessClient {
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
-            endpointMetadata: _metadata,
         });
         if (_response.ok) {
             return { data: _response.body as SeedPropertyAccess.User, rawResponse: _response.rawResponse };

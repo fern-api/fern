@@ -81,7 +81,6 @@ export class SeedAliasClient {
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
-            endpointMetadata: _metadata,
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };

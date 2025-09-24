@@ -5,6 +5,7 @@ import { ts } from "ts-morph";
 import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpointRequest";
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";
 import { buildUrl } from "../utils/buildUrl";
+import { generateEndpointMetadata } from "../utils/generateEndpointMetadata";
 import {
     getAbortSignalExpression,
     getMaxRetriesExpression,
@@ -13,7 +14,6 @@ import {
     REQUEST_OPTIONS_PARAMETER_NAME
 } from "../utils/requestOptionsParameter";
 import { GeneratedEndpointResponse } from "./endpoint-response/GeneratedEndpointResponse";
-import { generateEndpointMetadata } from "../utils/generateEndpointMetadata";
 
 export declare namespace GeneratedDefaultEndpointImplementation {
     export interface Init {
