@@ -553,9 +553,10 @@ export class EndpointSnippetGenerator {
         this.context.errors.unscope();
 
         this.context.errors.scope(Scope.RequestBody);
-        const requestArg: go.AstNode | undefined = request.body != null
-            ? this.getBodyRequestArg({ body: request.body, value: snippet.requestBody })
-            : undefined;
+        const requestArg: go.AstNode | undefined =
+            request.body != null
+                ? this.getBodyRequestArg({ body: request.body, value: snippet.requestBody })
+                : undefined;
         this.context.errors.unscope();
 
         return { otherArgs, requestArg };
@@ -629,18 +630,22 @@ export class EndpointSnippetGenerator {
             otherArgs.push(...filePropertyInfo.fileFields.map((field) => field.value));
         }
 
-        const requestArg: go.AstNode | undefined = this.context.needsRequestParameter({ request, inlinePathParameters, inlineFileProperties })
+        const requestArg: go.AstNode | undefined = this.context.needsRequestParameter({
+            request,
+            inlinePathParameters,
+            inlineFileProperties
+        })
             ? this.getInlinedRequestArg({
-                request,
-                snippet,
-                pathParameterFields: this.context.includePathParametersInWrappedRequest({
-                    request,
-                    inlinePathParameters
-                })
-                    ? pathParameterFields
-                    : [],
-                filePropertyInfo
-            })
+                  request,
+                  snippet,
+                  pathParameterFields: this.context.includePathParametersInWrappedRequest({
+                      request,
+                      inlinePathParameters
+                  })
+                      ? pathParameterFields
+                      : [],
+                  filePropertyInfo
+              })
             : undefined;
         return { otherArgs, requestArg };
     }
@@ -801,7 +806,6 @@ export class EndpointSnippetGenerator {
 
         return fields;
     }
-
 
     private getPathParameters({
         namedParameters,
