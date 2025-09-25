@@ -921,7 +921,7 @@ export class WireTestGenerator {
                 "additionalProperties": true
             }`;
 
-        return schema.trim().replace(/\s+/g, " ");
+        return schema.trim(); //** .replace(/\s+/g, " ") */
     }
 
     private getJsonSchemaType(valueType: TypeReference): string {
