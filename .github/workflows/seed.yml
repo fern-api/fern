@@ -43,6 +43,11 @@ jobs:
         run: |
           echo "Current directory: $(pwd)"
 
+      - name: Echo level
+        id: echo-level
+        run: |
+          echo "LS: $(ls -l)"
+
       - name: Get test matrix
         id: get-test-matrix
         run: |
