@@ -13670,7 +13670,8 @@
                             "type": "primitive",
                             "value": "STRING"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -13699,7 +13700,8 @@
                             "type": "primitive",
                             "value": "INTEGER"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -13798,7 +13800,8 @@
                             "type": "primitive",
                             "value": "STRING"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -13897,7 +13900,8 @@
                             "type": "primitive",
                             "value": "STRING"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false

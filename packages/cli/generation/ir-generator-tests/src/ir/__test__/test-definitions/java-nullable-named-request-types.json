@@ -2219,7 +2219,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -2251,7 +2252,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -2283,7 +2285,8 @@
                                 "value": "INTEGER"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -2347,7 +2350,8 @@
                                 "value": "BOOLEAN"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -2443,7 +2447,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ],
                     "queryParameters": [],
@@ -2581,7 +2586,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ],
                     "queryParameters": [],
@@ -2619,7 +2625,8 @@
                                         "value": "STRING"
                                     }
                                 },
-                                "propertyAccess": null
+                                "propertyAccess": null,
+                                "variable": null
                             },
                             {
                                 "name": {
@@ -2651,7 +2658,8 @@
                                         "value": "STRING"
                                     }
                                 },
-                                "propertyAccess": null
+                                "propertyAccess": null,
+                                "variable": null
                             },
                             {
                                 "name": {
@@ -2683,7 +2691,8 @@
                                         "value": "INTEGER"
                                     }
                                 },
-                                "propertyAccess": null
+                                "propertyAccess": null,
+                                "variable": null
                             }
                         ]
                     },

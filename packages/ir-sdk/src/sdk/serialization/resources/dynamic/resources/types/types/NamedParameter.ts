@@ -15,6 +15,7 @@ export const NamedParameter: core.serialization.ObjectSchema<
     name: NameAndWireValue,
     typeReference: core.serialization.lazy(() => serializers.dynamic.TypeReference),
     propertyAccess: ObjectPropertyAccess.optional(),
+    variable: core.serialization.string().optional(),
 });
 
 export declare namespace NamedParameter {
@@ -22,5 +23,6 @@ export declare namespace NamedParameter {
         name: NameAndWireValue.Raw;
         typeReference: serializers.dynamic.TypeReference.Raw;
         propertyAccess?: ObjectPropertyAccess.Raw | null;
+        variable?: string | null;
     }
 }

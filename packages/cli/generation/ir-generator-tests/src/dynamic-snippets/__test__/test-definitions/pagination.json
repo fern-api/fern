@@ -57,7 +57,8 @@
                         "type": "named",
                         "value": "type_:UsernamePage"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -121,7 +122,8 @@
                             "value": "STRING"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -153,7 +155,8 @@
                             "value": "STRING"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -332,7 +335,8 @@
                             "value": "type_complex:MultipleFilterSearchRequestOperator"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -364,7 +368,8 @@
                             "value": "type_complex:MultipleFilterSearchRequestValue"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -662,7 +667,8 @@
                             "value": "STRING"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -694,7 +700,8 @@
                             "value": "type_complex:SingleFilterSearchRequestOperator"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -726,7 +733,8 @@
                             "value": "STRING"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -1117,7 +1125,8 @@
                             "value": "type_complex:StartingAfterPaging"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -1146,7 +1155,8 @@
                         "type": "named",
                         "value": "type_complex:SearchRequestQuery"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -1248,7 +1258,8 @@
                             "value": "type_complex:Conversation"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -1280,7 +1291,8 @@
                             "value": "type_complex:CursorPages"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -1309,7 +1321,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -1341,7 +1354,8 @@
                             "value": "conversation.list"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -1443,7 +1457,8 @@
                             "value": "type_complex:StartingAfterPaging"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -1475,7 +1490,8 @@
                             "value": "INTEGER"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -1507,7 +1523,8 @@
                             "value": "INTEGER"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -1539,7 +1556,8 @@
                             "value": "INTEGER"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -1571,7 +1589,8 @@
                             "value": "pages"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -1670,7 +1689,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -1702,7 +1722,8 @@
                             "value": "STRING"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -1801,7 +1822,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -2094,7 +2116,8 @@
                             "value": "INTEGER"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -2235,7 +2258,8 @@
                             "value": "STRING"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -2376,7 +2400,8 @@
                             "value": "type_inline-users/inline-users:User"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -2514,7 +2539,8 @@
                         "type": "named",
                         "value": "type_inline-users/inline-users:UserListContainer"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -2546,7 +2572,8 @@
                             "value": "UUID"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -2690,7 +2717,8 @@
                             }
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -2828,7 +2856,8 @@
                         "type": "named",
                         "value": "type_inline-users/inline-users:UserOptionalListContainer"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -2860,7 +2889,8 @@
                             "value": "UUID"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -3001,7 +3031,8 @@
                             "value": "STRING"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -3139,7 +3170,8 @@
                         "type": "named",
                         "value": "type_inline-users/inline-users:UserListContainer"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -3171,7 +3203,8 @@
                             "value": "UUID"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -3200,7 +3233,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -3338,7 +3372,8 @@
                         "type": "named",
                         "value": "type_inline-users/inline-users:UserOptionalListContainer"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -3370,7 +3405,8 @@
                             "value": "UUID"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -3399,7 +3435,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -3540,7 +3577,8 @@
                             "value": "BOOLEAN"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -3572,7 +3610,8 @@
                             "value": "type_inline-users/inline-users:Page"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -3601,7 +3640,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -3630,7 +3670,8 @@
                         "type": "named",
                         "value": "type_inline-users/inline-users:Users"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -3768,7 +3809,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -3797,7 +3839,8 @@
                         "type": "named",
                         "value": "type_inline-users/inline-users:Users"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -3935,7 +3978,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -3967,7 +4011,8 @@
                             "value": "type_inline-users/inline-users:NextPage"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -3996,7 +4041,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -4025,7 +4071,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -4163,7 +4210,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -4192,7 +4240,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -4333,7 +4382,8 @@
                             "value": "type_inline-users/inline-users:User"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -4471,7 +4521,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -4500,7 +4551,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -4715,7 +4767,8 @@
                             "value": "INTEGER"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -4817,7 +4870,8 @@
                             "value": "STRING"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -4919,7 +4973,8 @@
                             "value": "type_users:User"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -5018,7 +5073,8 @@
                         "type": "named",
                         "value": "type_users:UserListContainer"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -5050,7 +5106,8 @@
                             "value": "UUID"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -5155,7 +5212,8 @@
                             }
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -5254,7 +5312,8 @@
                         "type": "named",
                         "value": "type_users:UserOptionalListContainer"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -5286,7 +5345,8 @@
                             "value": "UUID"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -5388,7 +5448,8 @@
                             "value": "STRING"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -5487,7 +5548,8 @@
                         "type": "named",
                         "value": "type_users:UserListContainer"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -5519,7 +5581,8 @@
                             "value": "UUID"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -5548,7 +5611,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -5647,7 +5711,8 @@
                         "type": "named",
                         "value": "type_users:UserOptionalListContainer"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -5679,7 +5744,8 @@
                             "value": "UUID"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -5708,7 +5774,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -5810,7 +5877,8 @@
                             "value": "BOOLEAN"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -5842,7 +5910,8 @@
                             "value": "type_users:Page"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -5871,7 +5940,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -5903,7 +5973,8 @@
                             "value": "type_users:User"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -6002,7 +6073,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -6034,7 +6106,8 @@
                             "value": "type_users:User"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -6133,7 +6206,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -6165,7 +6239,8 @@
                             "value": "type_users:NextPage"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -6194,7 +6269,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -6223,7 +6299,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -6322,7 +6399,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -6351,7 +6429,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -6450,7 +6529,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -6479,7 +6559,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -6608,7 +6689,8 @@
                             "type": "primitive",
                             "value": "STRING"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "body": {
@@ -6891,7 +6973,8 @@
                                 "value": "INTEGER"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -6923,7 +7006,8 @@
                                 "value": "INTEGER"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -6955,7 +7039,8 @@
                                 "value": "type_inline-users/inline-users:Order"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -6987,7 +7072,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "headers": [],
@@ -7269,7 +7355,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "headers": [],
@@ -7555,7 +7642,8 @@
                                     "value": "type_inline-users/inline-users:WithCursor"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ]
                 },
@@ -7836,7 +7924,8 @@
                                 "value": "INTEGER"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -7868,7 +7957,8 @@
                                 "value": "INTEGER"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -7900,7 +7990,8 @@
                                 "value": "type_inline-users/inline-users:Order"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -7932,7 +8023,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "headers": [],
@@ -8214,7 +8306,8 @@
                                 "value": "DOUBLE"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -8246,7 +8339,8 @@
                                 "value": "DOUBLE"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -8278,7 +8372,8 @@
                                 "value": "type_inline-users/inline-users:Order"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -8310,7 +8405,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "headers": [],
@@ -8596,7 +8692,8 @@
                                     "value": "type_inline-users/inline-users:WithPage"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ]
                 },
@@ -8877,7 +8974,8 @@
                                 "value": "INTEGER"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -8909,7 +9007,8 @@
                                 "value": "INTEGER"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -8941,7 +9040,8 @@
                                 "value": "type_inline-users/inline-users:Order"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "headers": [],
@@ -9223,7 +9323,8 @@
                                 "value": "INTEGER"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -9255,7 +9356,8 @@
                                 "value": "INTEGER"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -9287,7 +9389,8 @@
                                 "value": "type_inline-users/inline-users:Order"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "headers": [],
@@ -9569,7 +9672,8 @@
                                 "value": "UUID"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "headers": [],
@@ -9851,7 +9955,8 @@
                                 "value": "UUID"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "headers": [],
@@ -10133,7 +10238,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "headers": [],
@@ -10415,7 +10521,8 @@
                                 "value": "INTEGER"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "headers": [],
@@ -10619,7 +10726,8 @@
                                 "value": "INTEGER"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -10651,7 +10759,8 @@
                                 "value": "INTEGER"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -10683,7 +10792,8 @@
                                 "value": "type_users:Order"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -10715,7 +10825,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "headers": [],
@@ -10919,7 +11030,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "headers": [],
@@ -11127,7 +11239,8 @@
                                     "value": "type_users:WithCursor"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ]
                 },
@@ -11330,7 +11443,8 @@
                                 "value": "INTEGER"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -11362,7 +11476,8 @@
                                 "value": "INTEGER"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -11394,7 +11509,8 @@
                                 "value": "type_users:Order"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -11426,7 +11542,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "headers": [],
@@ -11630,7 +11747,8 @@
                                 "value": "DOUBLE"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -11662,7 +11780,8 @@
                                 "value": "DOUBLE"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -11694,7 +11813,8 @@
                                 "value": "type_users:Order"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -11726,7 +11846,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "headers": [],
@@ -11934,7 +12055,8 @@
                                     "value": "type_users:WithPage"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ]
                 },
@@ -12137,7 +12259,8 @@
                                 "value": "INTEGER"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -12169,7 +12292,8 @@
                                 "value": "INTEGER"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -12201,7 +12325,8 @@
                                 "value": "type_users:Order"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "headers": [],
@@ -12405,7 +12530,8 @@
                                 "value": "INTEGER"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -12437,7 +12563,8 @@
                                 "value": "INTEGER"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -12469,7 +12596,8 @@
                                 "value": "type_users:Order"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "headers": [],
@@ -12673,7 +12801,8 @@
                                 "value": "UUID"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "headers": [],
@@ -12877,7 +13006,8 @@
                                 "value": "UUID"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "headers": [],
@@ -13081,7 +13211,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "headers": [],
@@ -13285,7 +13416,8 @@
                                 "value": "INTEGER"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "headers": [],
