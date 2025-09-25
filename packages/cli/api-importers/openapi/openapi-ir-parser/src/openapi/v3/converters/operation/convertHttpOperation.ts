@@ -71,8 +71,11 @@ export function convertHttpOperation({
 
         // If there's a path parameter listed only in the URL, add it to the list
         const reorderedPathParameters: PathParameterWithExample[] = [];
+        const usedParams = new Set<string>();
+
         for (const paramName of paramNamesInUrlOrder) {
             const urlParam = urlParams.get(paramName);
+            usedParams.add(paramName);
 
             if (urlParam) {
                 reorderedPathParameters.push(urlParam);
@@ -102,6 +105,13 @@ export function convertHttpOperation({
                     }),
                     description: undefined
                 });
+            }
+        }
+
+        // Add any remaining path parameters that don't appear in the URL at the end
+        for (const param of convertedParameters.pathParameters) {
+            if (!usedParams.has(param.name)) {
+                reorderedPathParameters.push(param);
             }
         }
 
