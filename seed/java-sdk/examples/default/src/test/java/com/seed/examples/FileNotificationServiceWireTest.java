@@ -3,6 +3,7 @@ package com.seed.examples;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.examples.SeedExamplesClient;
+import com.seed.examples.core.ObjectMappers;
 import com.seed.examples.resources.types.types.Exception;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -15,7 +16,7 @@ import org.junit.jupiter.api.Test;
 public class FileNotificationServiceWireTest {
     private MockWebServer server;
     private SeedExamplesClient client;
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private ObjectMapper objectMapper = ObjectMappers.JSON_MAPPER;
     @BeforeEach
     public void setup() throws Exception {
         server = new MockWebServer();

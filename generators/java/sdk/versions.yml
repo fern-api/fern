@@ -1,3 +1,12 @@
+- version: 3.6.1
+  changelogEntry:
+    - summary: |
+        Fixed wire tests failing with InvalidDefinitionException for Optional<T> serialization by using
+        the configured ObjectMappers.JSON_MAPPER instead of plain ObjectMapper.
+      type: fix
+  createdAt: "2025-09-25"
+  irVersion: 60
+
 - version: 3.6.0
   changelogEntry:
     - summary: |
