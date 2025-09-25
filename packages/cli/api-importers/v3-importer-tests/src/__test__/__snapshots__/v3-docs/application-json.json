@@ -12,49 +12,13 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "Data",
-          "camelCase": {
-            "unsafeName": "data",
-            "safeName": "data"
-          },
-          "snakeCase": {
-            "unsafeName": "data",
-            "safeName": "data"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "DATA",
-            "safeName": "DATA"
-          },
-          "pascalCase": {
-            "unsafeName": "Data",
-            "safeName": "Data"
-          }
-        }
+        "name": "Data"
       },
       "shape": {
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "foo",
-                "camelCase": {
-                  "unsafeName": "foo",
-                  "safeName": "foo"
-                },
-                "snakeCase": {
-                  "unsafeName": "foo",
-                  "safeName": "foo"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "FOO",
-                  "safeName": "FOO"
-                },
-                "pascalCase": {
-                  "unsafeName": "Foo",
-                  "safeName": "Foo"
-                }
-              },
+              "name": "foo",
               "wireValue": "foo"
             },
             "valueType": {
@@ -82,25 +46,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "bar",
-                "camelCase": {
-                  "unsafeName": "bar",
-                  "safeName": "bar"
-                },
-                "snakeCase": {
-                  "unsafeName": "bar",
-                  "safeName": "bar"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BAR",
-                  "safeName": "BAR"
-                },
-                "pascalCase": {
-                  "unsafeName": "Bar",
-                  "safeName": "Bar"
-                }
-              },
+              "name": "bar",
               "wireValue": "bar"
             },
             "valueType": {
@@ -183,25 +129,7 @@
           },
           "audiences": [],
           "id": "endpoint_.getVndFernUserJsonVersion1",
-          "name": {
-            "originalName": "getVndFernUserJsonVersion1",
-            "camelCase": {
-              "unsafeName": "getVndFernUserJsonVersion1",
-              "safeName": "getVndFernUserJsonVersion1"
-            },
-            "snakeCase": {
-              "unsafeName": "get_vnd_fern_user_json_version_1",
-              "safeName": "get_vnd_fern_user_json_version_1"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GET_VND_FERN_USER_JSON_VERSION_1",
-              "safeName": "GET_VND_FERN_USER_JSON_VERSION_1"
-            },
-            "pascalCase": {
-              "unsafeName": "GetVndFernUserJsonVersion1",
-              "safeName": "GetVndFernUserJsonVersion1"
-            }
-          },
+          "name": "getVndFernUserJsonVersion1",
           "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
@@ -212,25 +140,7 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": {
-                    "originalName": "Data",
-                    "camelCase": {
-                      "unsafeName": "data",
-                      "safeName": "data"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "data",
-                      "safeName": "data"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "DATA",
-                      "safeName": "DATA"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Data",
-                      "safeName": "Data"
-                    }
-                  },
+                  "name": "Data",
                   "typeId": "Data",
                   "inline": false,
                   "type": "named"
@@ -288,25 +198,7 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": {
-                        "originalName": "Data",
-                        "camelCase": {
-                          "unsafeName": "data",
-                          "safeName": "data"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "data",
-                          "safeName": "data"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "DATA",
-                          "safeName": "DATA"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "Data",
-                          "safeName": "Data"
-                        }
-                      },
+                      "name": "Data",
                       "typeId": "Data",
                       "inline": false,
                       "type": "named"
@@ -353,25 +245,7 @@
           },
           "audiences": [],
           "id": "endpoint_.getApplicationJson",
-          "name": {
-            "originalName": "getApplicationJson",
-            "camelCase": {
-              "unsafeName": "getApplicationJson",
-              "safeName": "getApplicationJson"
-            },
-            "snakeCase": {
-              "unsafeName": "get_application_json",
-              "safeName": "get_application_json"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GET_APPLICATION_JSON",
-              "safeName": "GET_APPLICATION_JSON"
-            },
-            "pascalCase": {
-              "unsafeName": "GetApplicationJson",
-              "safeName": "GetApplicationJson"
-            }
-          },
+          "name": "getApplicationJson",
           "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
@@ -382,25 +256,7 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": {
-                    "originalName": "Data",
-                    "camelCase": {
-                      "unsafeName": "data",
-                      "safeName": "data"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "data",
-                      "safeName": "data"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "DATA",
-                      "safeName": "DATA"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Data",
-                      "safeName": "Data"
-                    }
-                  },
+                  "name": "Data",
                   "typeId": "Data",
                   "inline": false,
                   "type": "named"
@@ -458,25 +314,7 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": {
-                        "originalName": "Data",
-                        "camelCase": {
-                          "unsafeName": "data",
-                          "safeName": "data"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "data",
-                          "safeName": "data"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "DATA",
-                          "safeName": "DATA"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "Data",
-                          "safeName": "Data"
-                        }
-                      },
+                      "name": "Data",
                       "typeId": "Data",
                       "inline": false,
                       "type": "named"
@@ -540,46 +378,10 @@
       "sdkVersion": ""
     }
   },
-  "apiName": {
-    "originalName": "",
-    "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
-    }
-  },
+  "apiName": "",
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceId",
-          "safeName": "errorInstanceId"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceId",
-          "safeName": "ErrorInstanceId"
-        }
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   }

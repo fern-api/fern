@@ -2,18 +2,6 @@
   "selfHosted": false,
   "apiName": {
     "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
     "pascalCase": {
       "unsafeName": "API",
       "safeName": "API"
@@ -29,25 +17,7 @@
   "types": {
     "type_:Error": {
       "name": {
-        "name": {
-          "originalName": "Error",
-          "camelCase": {
-            "unsafeName": "error",
-            "safeName": "error"
-          },
-          "snakeCase": {
-            "unsafeName": "error",
-            "safeName": "error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "ERROR",
-            "safeName": "ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "Error",
-            "safeName": "Error"
-          }
-        },
+        "name": "Error",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -60,25 +30,7 @@
           {
             "docs": "Error message",
             "name": {
-              "name": {
-                "originalName": "error",
-                "camelCase": {
-                  "unsafeName": "error",
-                  "safeName": "error"
-                },
-                "snakeCase": {
-                  "unsafeName": "error",
-                  "safeName": "error"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ERROR",
-                  "safeName": "ERROR"
-                },
-                "pascalCase": {
-                  "unsafeName": "Error",
-                  "safeName": "Error"
-                }
-              },
+              "name": "error",
               "wireValue": "error"
             },
             "valueType": {
@@ -97,25 +49,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "status",
-                "camelCase": {
-                  "unsafeName": "status",
-                  "safeName": "status"
-                },
-                "snakeCase": {
-                  "unsafeName": "status",
-                  "safeName": "status"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "STATUS",
-                  "safeName": "STATUS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Status",
-                  "safeName": "Status"
-                }
-              },
+              "name": "status",
               "wireValue": "status"
             },
             "valueType": {
@@ -155,25 +89,7 @@
   "errors": {
     "error_:ListRequestBadRequestError": {
       "name": {
-        "name": {
-          "originalName": "ListRequestBadRequestError",
-          "camelCase": {
-            "unsafeName": "listRequestBadRequestError",
-            "safeName": "listRequestBadRequestError"
-          },
-          "snakeCase": {
-            "unsafeName": "list_request_bad_request_error",
-            "safeName": "list_request_bad_request_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "LIST_REQUEST_BAD_REQUEST_ERROR",
-            "safeName": "LIST_REQUEST_BAD_REQUEST_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "ListRequestBadRequestError",
-            "safeName": "ListRequestBadRequestError"
-          }
-        },
+        "name": "ListRequestBadRequestError",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -181,49 +97,13 @@
         "errorId": "error_:ListRequestBadRequestError"
       },
       "discriminantValue": {
-        "name": {
-          "originalName": "ListRequestBadRequestError",
-          "camelCase": {
-            "unsafeName": "listRequestBadRequestError",
-            "safeName": "listRequestBadRequestError"
-          },
-          "snakeCase": {
-            "unsafeName": "list_request_bad_request_error",
-            "safeName": "list_request_bad_request_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "LIST_REQUEST_BAD_REQUEST_ERROR",
-            "safeName": "LIST_REQUEST_BAD_REQUEST_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "ListRequestBadRequestError",
-            "safeName": "ListRequestBadRequestError"
-          }
-        },
+        "name": "ListRequestBadRequestError",
         "wireValue": "ListRequestBadRequestError"
       },
       "docs": "Bad Request",
       "statusCode": 400,
       "type": {
-        "name": {
-          "originalName": "Error",
-          "camelCase": {
-            "unsafeName": "error",
-            "safeName": "error"
-          },
-          "snakeCase": {
-            "unsafeName": "error",
-            "safeName": "error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "ERROR",
-            "safeName": "ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "Error",
-            "safeName": "Error"
-          }
-        },
+        "name": "Error",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -244,49 +124,13 @@
                   "allParts": [],
                   "packagePath": []
                 },
-                "name": {
-                  "originalName": "Error",
-                  "camelCase": {
-                    "unsafeName": "error",
-                    "safeName": "error"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "error",
-                    "safeName": "error"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ERROR",
-                    "safeName": "ERROR"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Error",
-                    "safeName": "Error"
-                  }
-                }
+                "name": "Error"
               },
               "shape": {
                 "properties": [
                   {
                     "name": {
-                      "name": {
-                        "originalName": "error",
-                        "camelCase": {
-                          "unsafeName": "error",
-                          "safeName": "error"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "error",
-                          "safeName": "error"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "ERROR",
-                          "safeName": "ERROR"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "Error",
-                          "safeName": "Error"
-                        }
-                      },
+                      "name": "error",
                       "wireValue": "error"
                     },
                     "value": {
@@ -307,25 +151,7 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": {
-                        "originalName": "Error",
-                        "camelCase": {
-                          "unsafeName": "error",
-                          "safeName": "error"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "error",
-                          "safeName": "error"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "ERROR",
-                          "safeName": "ERROR"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "Error",
-                          "safeName": "Error"
-                        }
-                      }
+                      "name": "Error"
                     }
                   }
                 ],
@@ -342,25 +168,7 @@
     },
     "error_:ListRequestUnauthorizedError": {
       "name": {
-        "name": {
-          "originalName": "ListRequestUnauthorizedError",
-          "camelCase": {
-            "unsafeName": "listRequestUnauthorizedError",
-            "safeName": "listRequestUnauthorizedError"
-          },
-          "snakeCase": {
-            "unsafeName": "list_request_unauthorized_error",
-            "safeName": "list_request_unauthorized_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "LIST_REQUEST_UNAUTHORIZED_ERROR",
-            "safeName": "LIST_REQUEST_UNAUTHORIZED_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "ListRequestUnauthorizedError",
-            "safeName": "ListRequestUnauthorizedError"
-          }
-        },
+        "name": "ListRequestUnauthorizedError",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -368,49 +176,13 @@
         "errorId": "error_:ListRequestUnauthorizedError"
       },
       "discriminantValue": {
-        "name": {
-          "originalName": "ListRequestUnauthorizedError",
-          "camelCase": {
-            "unsafeName": "listRequestUnauthorizedError",
-            "safeName": "listRequestUnauthorizedError"
-          },
-          "snakeCase": {
-            "unsafeName": "list_request_unauthorized_error",
-            "safeName": "list_request_unauthorized_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "LIST_REQUEST_UNAUTHORIZED_ERROR",
-            "safeName": "LIST_REQUEST_UNAUTHORIZED_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "ListRequestUnauthorizedError",
-            "safeName": "ListRequestUnauthorizedError"
-          }
-        },
+        "name": "ListRequestUnauthorizedError",
         "wireValue": "ListRequestUnauthorizedError"
       },
       "docs": "Unauthorized",
       "statusCode": 401,
       "type": {
-        "name": {
-          "originalName": "Error",
-          "camelCase": {
-            "unsafeName": "error",
-            "safeName": "error"
-          },
-          "snakeCase": {
-            "unsafeName": "error",
-            "safeName": "error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "ERROR",
-            "safeName": "ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "Error",
-            "safeName": "Error"
-          }
-        },
+        "name": "Error",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -431,49 +203,13 @@
                   "allParts": [],
                   "packagePath": []
                 },
-                "name": {
-                  "originalName": "Error",
-                  "camelCase": {
-                    "unsafeName": "error",
-                    "safeName": "error"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "error",
-                    "safeName": "error"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ERROR",
-                    "safeName": "ERROR"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Error",
-                    "safeName": "Error"
-                  }
-                }
+                "name": "Error"
               },
               "shape": {
                 "properties": [
                   {
                     "name": {
-                      "name": {
-                        "originalName": "error",
-                        "camelCase": {
-                          "unsafeName": "error",
-                          "safeName": "error"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "error",
-                          "safeName": "error"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "ERROR",
-                          "safeName": "ERROR"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "Error",
-                          "safeName": "Error"
-                        }
-                      },
+                      "name": "error",
                       "wireValue": "error"
                     },
                     "value": {
@@ -494,25 +230,7 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": {
-                        "originalName": "Error",
-                        "camelCase": {
-                          "unsafeName": "error",
-                          "safeName": "error"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "error",
-                          "safeName": "error"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "ERROR",
-                          "safeName": "ERROR"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "Error",
-                          "safeName": "Error"
-                        }
-                      }
+                      "name": "Error"
                     }
                   }
                 ],
@@ -529,25 +247,7 @@
     },
     "error_:ListRequestNotFoundError": {
       "name": {
-        "name": {
-          "originalName": "ListRequestNotFoundError",
-          "camelCase": {
-            "unsafeName": "listRequestNotFoundError",
-            "safeName": "listRequestNotFoundError"
-          },
-          "snakeCase": {
-            "unsafeName": "list_request_not_found_error",
-            "safeName": "list_request_not_found_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "LIST_REQUEST_NOT_FOUND_ERROR",
-            "safeName": "LIST_REQUEST_NOT_FOUND_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "ListRequestNotFoundError",
-            "safeName": "ListRequestNotFoundError"
-          }
-        },
+        "name": "ListRequestNotFoundError",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -555,49 +255,13 @@
         "errorId": "error_:ListRequestNotFoundError"
       },
       "discriminantValue": {
-        "name": {
-          "originalName": "ListRequestNotFoundError",
-          "camelCase": {
-            "unsafeName": "listRequestNotFoundError",
-            "safeName": "listRequestNotFoundError"
-          },
-          "snakeCase": {
-            "unsafeName": "list_request_not_found_error",
-            "safeName": "list_request_not_found_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "LIST_REQUEST_NOT_FOUND_ERROR",
-            "safeName": "LIST_REQUEST_NOT_FOUND_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "ListRequestNotFoundError",
-            "safeName": "ListRequestNotFoundError"
-          }
-        },
+        "name": "ListRequestNotFoundError",
         "wireValue": "ListRequestNotFoundError"
       },
       "docs": "Not Found",
       "statusCode": 404,
       "type": {
-        "name": {
-          "originalName": "Error",
-          "camelCase": {
-            "unsafeName": "error",
-            "safeName": "error"
-          },
-          "snakeCase": {
-            "unsafeName": "error",
-            "safeName": "error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "ERROR",
-            "safeName": "ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "Error",
-            "safeName": "Error"
-          }
-        },
+        "name": "Error",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -618,49 +282,13 @@
                   "allParts": [],
                   "packagePath": []
                 },
-                "name": {
-                  "originalName": "Error",
-                  "camelCase": {
-                    "unsafeName": "error",
-                    "safeName": "error"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "error",
-                    "safeName": "error"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ERROR",
-                    "safeName": "ERROR"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Error",
-                    "safeName": "Error"
-                  }
-                }
+                "name": "Error"
               },
               "shape": {
                 "properties": [
                   {
                     "name": {
-                      "name": {
-                        "originalName": "error",
-                        "camelCase": {
-                          "unsafeName": "error",
-                          "safeName": "error"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "error",
-                          "safeName": "error"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "ERROR",
-                          "safeName": "ERROR"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "Error",
-                          "safeName": "Error"
-                        }
-                      },
+                      "name": "error",
                       "wireValue": "error"
                     },
                     "value": {
@@ -681,25 +309,7 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": {
-                        "originalName": "Error",
-                        "camelCase": {
-                          "unsafeName": "error",
-                          "safeName": "error"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "error",
-                          "safeName": "error"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "ERROR",
-                          "safeName": "ERROR"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "Error",
-                          "safeName": "Error"
-                        }
-                      }
+                      "name": "Error"
                     }
                   }
                 ],
@@ -716,25 +326,7 @@
     },
     "error_:ListRequestInternalServerError": {
       "name": {
-        "name": {
-          "originalName": "ListRequestInternalServerError",
-          "camelCase": {
-            "unsafeName": "listRequestInternalServerError",
-            "safeName": "listRequestInternalServerError"
-          },
-          "snakeCase": {
-            "unsafeName": "list_request_internal_server_error",
-            "safeName": "list_request_internal_server_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "LIST_REQUEST_INTERNAL_SERVER_ERROR",
-            "safeName": "LIST_REQUEST_INTERNAL_SERVER_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "ListRequestInternalServerError",
-            "safeName": "ListRequestInternalServerError"
-          }
-        },
+        "name": "ListRequestInternalServerError",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -742,49 +334,13 @@
         "errorId": "error_:ListRequestInternalServerError"
       },
       "discriminantValue": {
-        "name": {
-          "originalName": "ListRequestInternalServerError",
-          "camelCase": {
-            "unsafeName": "listRequestInternalServerError",
-            "safeName": "listRequestInternalServerError"
-          },
-          "snakeCase": {
-            "unsafeName": "list_request_internal_server_error",
-            "safeName": "list_request_internal_server_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "LIST_REQUEST_INTERNAL_SERVER_ERROR",
-            "safeName": "LIST_REQUEST_INTERNAL_SERVER_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "ListRequestInternalServerError",
-            "safeName": "ListRequestInternalServerError"
-          }
-        },
+        "name": "ListRequestInternalServerError",
         "wireValue": "ListRequestInternalServerError"
       },
       "docs": "Internal Server Error",
       "statusCode": 500,
       "type": {
-        "name": {
-          "originalName": "Error",
-          "camelCase": {
-            "unsafeName": "error",
-            "safeName": "error"
-          },
-          "snakeCase": {
-            "unsafeName": "error",
-            "safeName": "error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "ERROR",
-            "safeName": "ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "Error",
-            "safeName": "Error"
-          }
-        },
+        "name": "Error",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -805,49 +361,13 @@
                   "allParts": [],
                   "packagePath": []
                 },
-                "name": {
-                  "originalName": "Error",
-                  "camelCase": {
-                    "unsafeName": "error",
-                    "safeName": "error"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "error",
-                    "safeName": "error"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ERROR",
-                    "safeName": "ERROR"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Error",
-                    "safeName": "Error"
-                  }
-                }
+                "name": "Error"
               },
               "shape": {
                 "properties": [
                   {
                     "name": {
-                      "name": {
-                        "originalName": "error",
-                        "camelCase": {
-                          "unsafeName": "error",
-                          "safeName": "error"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "error",
-                          "safeName": "error"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "ERROR",
-                          "safeName": "ERROR"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "Error",
-                          "safeName": "Error"
-                        }
-                      },
+                      "name": "error",
                       "wireValue": "error"
                     },
                     "value": {
@@ -868,25 +388,7 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": {
-                        "originalName": "Error",
-                        "camelCase": {
-                          "unsafeName": "error",
-                          "safeName": "error"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "error",
-                          "safeName": "error"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "ERROR",
-                          "safeName": "ERROR"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "Error",
-                          "safeName": "Error"
-                        }
-                      }
+                      "name": "Error"
                     }
                   }
                 ],
@@ -925,25 +427,7 @@
       "endpoints": [
         {
           "id": "endpoint_.list",
-          "name": {
-            "originalName": "list",
-            "camelCase": {
-              "unsafeName": "list",
-              "safeName": "list"
-            },
-            "snakeCase": {
-              "unsafeName": "list",
-              "safeName": "list"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "LIST",
-              "safeName": "LIST"
-            },
-            "pascalCase": {
-              "unsafeName": "List",
-              "safeName": "List"
-            }
-          },
+          "name": "list",
           "auth": false,
           "idempotent": false,
           "method": "GET",
@@ -981,25 +465,7 @@
           "errors": [
             {
               "error": {
-                "name": {
-                  "originalName": "ListRequestBadRequestError",
-                  "camelCase": {
-                    "unsafeName": "listRequestBadRequestError",
-                    "safeName": "listRequestBadRequestError"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "list_request_bad_request_error",
-                    "safeName": "list_request_bad_request_error"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LIST_REQUEST_BAD_REQUEST_ERROR",
-                    "safeName": "LIST_REQUEST_BAD_REQUEST_ERROR"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "ListRequestBadRequestError",
-                    "safeName": "ListRequestBadRequestError"
-                  }
-                },
+                "name": "ListRequestBadRequestError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
@@ -1009,25 +475,7 @@
             },
             {
               "error": {
-                "name": {
-                  "originalName": "ListRequestUnauthorizedError",
-                  "camelCase": {
-                    "unsafeName": "listRequestUnauthorizedError",
-                    "safeName": "listRequestUnauthorizedError"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "list_request_unauthorized_error",
-                    "safeName": "list_request_unauthorized_error"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LIST_REQUEST_UNAUTHORIZED_ERROR",
-                    "safeName": "LIST_REQUEST_UNAUTHORIZED_ERROR"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "ListRequestUnauthorizedError",
-                    "safeName": "ListRequestUnauthorizedError"
-                  }
-                },
+                "name": "ListRequestUnauthorizedError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
@@ -1037,25 +485,7 @@
             },
             {
               "error": {
-                "name": {
-                  "originalName": "ListRequestNotFoundError",
-                  "camelCase": {
-                    "unsafeName": "listRequestNotFoundError",
-                    "safeName": "listRequestNotFoundError"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "list_request_not_found_error",
-                    "safeName": "list_request_not_found_error"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LIST_REQUEST_NOT_FOUND_ERROR",
-                    "safeName": "LIST_REQUEST_NOT_FOUND_ERROR"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "ListRequestNotFoundError",
-                    "safeName": "ListRequestNotFoundError"
-                  }
-                },
+                "name": "ListRequestNotFoundError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
@@ -1065,25 +495,7 @@
             },
             {
               "error": {
-                "name": {
-                  "originalName": "ListRequestInternalServerError",
-                  "camelCase": {
-                    "unsafeName": "listRequestInternalServerError",
-                    "safeName": "listRequestInternalServerError"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "list_request_internal_server_error",
-                    "safeName": "list_request_internal_server_error"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LIST_REQUEST_INTERNAL_SERVER_ERROR",
-                    "safeName": "LIST_REQUEST_INTERNAL_SERVER_ERROR"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "ListRequestInternalServerError",
-                    "safeName": "ListRequestInternalServerError"
-                  }
-                },
+                "name": "ListRequestInternalServerError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
@@ -1106,14 +518,6 @@
           "unsafeName": "errorInstanceID",
           "safeName": "errorInstanceID"
         },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
         "pascalCase": {
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
@@ -1128,25 +532,7 @@
       "environments": [
         {
           "id": "Default",
-          "name": {
-            "originalName": "Default",
-            "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default"
-            },
-            "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
-            },
-            "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
-            }
-          },
+          "name": "Default",
           "url": "https://api.test.com"
         }
       ],
@@ -1177,6 +563,10 @@
               "unsafeName": "error",
               "safeName": "error"
             },
+            "pascalCase": {
+              "unsafeName": "Error",
+              "safeName": "Error"
+            },
             "snakeCase": {
               "unsafeName": "error",
               "safeName": "error"
@@ -1184,10 +574,6 @@
             "screamingSnakeCase": {
               "unsafeName": "ERROR",
               "safeName": "ERROR"
-            },
-            "pascalCase": {
-              "unsafeName": "Error",
-              "safeName": "Error"
             }
           },
           "fernFilepath": {
@@ -1204,6 +590,10 @@
                   "unsafeName": "error",
                   "safeName": "error"
                 },
+                "pascalCase": {
+                  "unsafeName": "Error",
+                  "safeName": "Error"
+                },
                 "snakeCase": {
                   "unsafeName": "error",
                   "safeName": "error"
@@ -1211,10 +601,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "ERROR",
                   "safeName": "ERROR"
-                },
-                "pascalCase": {
-                  "unsafeName": "Error",
-                  "safeName": "Error"
                 }
               },
               "wireValue": "error"
@@ -1232,6 +618,10 @@
                   "unsafeName": "status",
                   "safeName": "status"
                 },
+                "pascalCase": {
+                  "unsafeName": "Status",
+                  "safeName": "Status"
+                },
                 "snakeCase": {
                   "unsafeName": "status",
                   "safeName": "status"
@@ -1239,10 +629,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "STATUS",
                   "safeName": "STATUS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Status",
-                  "safeName": "Status"
                 }
               },
               "wireValue": "status"
@@ -1273,6 +659,10 @@
               "unsafeName": "list",
               "safeName": "list"
             },
+            "pascalCase": {
+              "unsafeName": "List",
+              "safeName": "List"
+            },
             "snakeCase": {
               "unsafeName": "list",
               "safeName": "list"
@@ -1280,10 +670,6 @@
             "screamingSnakeCase": {
               "unsafeName": "LIST",
               "safeName": "LIST"
-            },
-            "pascalCase": {
-              "unsafeName": "List",
-              "safeName": "List"
             }
           },
           "fernFilepath": {
@@ -1318,6 +704,10 @@
                 "unsafeName": "default",
                 "safeName": "default"
               },
+              "pascalCase": {
+                "unsafeName": "Default",
+                "safeName": "Default"
+              },
               "snakeCase": {
                 "unsafeName": "default",
                 "safeName": "default"
@@ -1325,10 +715,6 @@
               "screamingSnakeCase": {
                 "unsafeName": "DEFAULT",
                 "safeName": "DEFAULT"
-              },
-              "pascalCase": {
-                "unsafeName": "Default",
-                "safeName": "Default"
               }
             },
             "url": "https://api.test.com"

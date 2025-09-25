@@ -2,18 +2,6 @@
   "selfHosted": false,
   "apiName": {
     "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
     "pascalCase": {
       "unsafeName": "API",
       "safeName": "API"
@@ -29,25 +17,7 @@
   "types": {
     "type_:UnionJob": {
       "name": {
-        "name": {
-          "originalName": "UnionJob",
-          "camelCase": {
-            "unsafeName": "unionJob",
-            "safeName": "unionJob"
-          },
-          "snakeCase": {
-            "unsafeName": "union_job",
-            "safeName": "union_job"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "UNION_JOB",
-            "safeName": "UNION_JOB"
-          },
-          "pascalCase": {
-            "unsafeName": "UnionJob",
-            "safeName": "UnionJob"
-          }
-        },
+        "name": "UnionJob",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -56,25 +26,7 @@
       },
       "shape": {
         "discriminant": {
-          "name": {
-            "originalName": "type",
-            "camelCase": {
-              "unsafeName": "type",
-              "safeName": "type"
-            },
-            "snakeCase": {
-              "unsafeName": "type",
-              "safeName": "type"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "TYPE",
-              "safeName": "TYPE"
-            },
-            "pascalCase": {
-              "unsafeName": "Type",
-              "safeName": "Type"
-            }
-          },
+          "name": "type",
           "wireValue": "type"
         },
         "extends": [],
@@ -82,48 +34,12 @@
         "types": [
           {
             "discriminantValue": {
-              "name": {
-                "originalName": "EMBEDDING_GENERATION",
-                "camelCase": {
-                  "unsafeName": "embeddingGeneration",
-                  "safeName": "embeddingGeneration"
-                },
-                "snakeCase": {
-                  "unsafeName": "embedding_generation",
-                  "safeName": "embedding_generation"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "EMBEDDING_GENERATION",
-                  "safeName": "EMBEDDING_GENERATION"
-                },
-                "pascalCase": {
-                  "unsafeName": "EmbeddingGeneration",
-                  "safeName": "EmbeddingGeneration"
-                }
-              },
+              "name": "EMBEDDING_GENERATION",
               "wireValue": "EMBEDDING_GENERATION"
             },
             "shape": {
               "name": {
-                "name": {
-                  "originalName": "value",
-                  "camelCase": {
-                    "unsafeName": "value",
-                    "safeName": "value"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "value",
-                    "safeName": "value"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "VALUE",
-                    "safeName": "VALUE"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Value",
-                    "safeName": "Value"
-                  }
-                },
+                "name": "value",
                 "wireValue": "value"
               },
               "type": {
@@ -134,48 +50,12 @@
           },
           {
             "discriminantValue": {
-              "name": {
-                "originalName": "INFERENCE",
-                "camelCase": {
-                  "unsafeName": "inference",
-                  "safeName": "inference"
-                },
-                "snakeCase": {
-                  "unsafeName": "inference",
-                  "safeName": "inference"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "INFERENCE",
-                  "safeName": "INFERENCE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Inference",
-                  "safeName": "Inference"
-                }
-              },
+              "name": "INFERENCE",
               "wireValue": "INFERENCE"
             },
             "shape": {
               "name": {
-                "name": {
-                  "originalName": "value",
-                  "camelCase": {
-                    "unsafeName": "value",
-                    "safeName": "value"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "value",
-                    "safeName": "value"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "VALUE",
-                    "safeName": "VALUE"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Value",
-                    "safeName": "Value"
-                  }
-                },
+                "name": "value",
                 "wireValue": "value"
               },
               "type": {
@@ -186,48 +66,12 @@
           },
           {
             "discriminantValue": {
-              "name": {
-                "originalName": "TL_INFERENCE",
-                "camelCase": {
-                  "unsafeName": "tlInference",
-                  "safeName": "tlInference"
-                },
-                "snakeCase": {
-                  "unsafeName": "tl_inference",
-                  "safeName": "tl_inference"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "TL_INFERENCE",
-                  "safeName": "TL_INFERENCE"
-                },
-                "pascalCase": {
-                  "unsafeName": "TlInference",
-                  "safeName": "TlInference"
-                }
-              },
+              "name": "TL_INFERENCE",
               "wireValue": "TL_INFERENCE"
             },
             "shape": {
               "name": {
-                "name": {
-                  "originalName": "value",
-                  "camelCase": {
-                    "unsafeName": "value",
-                    "safeName": "value"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "value",
-                    "safeName": "value"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "VALUE",
-                    "safeName": "VALUE"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Value",
-                    "safeName": "Value"
-                  }
-                },
+                "name": "value",
                 "wireValue": "value"
               },
               "type": {
@@ -238,48 +82,12 @@
           },
           {
             "discriminantValue": {
-              "name": {
-                "originalName": "TRAINING",
-                "camelCase": {
-                  "unsafeName": "training",
-                  "safeName": "training"
-                },
-                "snakeCase": {
-                  "unsafeName": "training",
-                  "safeName": "training"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "TRAINING",
-                  "safeName": "TRAINING"
-                },
-                "pascalCase": {
-                  "unsafeName": "Training",
-                  "safeName": "Training"
-                }
-              },
+              "name": "TRAINING",
               "wireValue": "TRAINING"
             },
             "shape": {
               "name": {
-                "name": {
-                  "originalName": "value",
-                  "camelCase": {
-                    "unsafeName": "value",
-                    "safeName": "value"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "value",
-                    "safeName": "value"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "VALUE",
-                    "safeName": "VALUE"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Value",
-                    "safeName": "Value"
-                  }
-                },
+                "name": "value",
                 "wireValue": "value"
               },
               "type": {
@@ -308,14 +116,6 @@
         "camelCase": {
           "unsafeName": "errorInstanceID",
           "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
         },
         "pascalCase": {
           "unsafeName": "ErrorInstanceID",
@@ -349,6 +149,10 @@
               "unsafeName": "unionJob",
               "safeName": "unionJob"
             },
+            "pascalCase": {
+              "unsafeName": "UnionJob",
+              "safeName": "UnionJob"
+            },
             "snakeCase": {
               "unsafeName": "union_job",
               "safeName": "union_job"
@@ -356,10 +160,6 @@
             "screamingSnakeCase": {
               "unsafeName": "UNION_JOB",
               "safeName": "UNION_JOB"
-            },
-            "pascalCase": {
-              "unsafeName": "UnionJob",
-              "safeName": "UnionJob"
             }
           },
           "fernFilepath": {
@@ -374,6 +174,10 @@
               "unsafeName": "type",
               "safeName": "type"
             },
+            "pascalCase": {
+              "unsafeName": "Type",
+              "safeName": "Type"
+            },
             "snakeCase": {
               "unsafeName": "type",
               "safeName": "type"
@@ -381,10 +185,6 @@
             "screamingSnakeCase": {
               "unsafeName": "TYPE",
               "safeName": "TYPE"
-            },
-            "pascalCase": {
-              "unsafeName": "Type",
-              "safeName": "Type"
             }
           },
           "wireValue": "type"
@@ -401,6 +201,10 @@
                   "unsafeName": "embeddingGeneration",
                   "safeName": "embeddingGeneration"
                 },
+                "pascalCase": {
+                  "unsafeName": "EmbeddingGeneration",
+                  "safeName": "EmbeddingGeneration"
+                },
                 "snakeCase": {
                   "unsafeName": "embedding_generation",
                   "safeName": "embedding_generation"
@@ -408,10 +212,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "EMBEDDING_GENERATION",
                   "safeName": "EMBEDDING_GENERATION"
-                },
-                "pascalCase": {
-                  "unsafeName": "EmbeddingGeneration",
-                  "safeName": "EmbeddingGeneration"
                 }
               },
               "wireValue": "EMBEDDING_GENERATION"
@@ -429,6 +229,10 @@
                   "unsafeName": "inference",
                   "safeName": "inference"
                 },
+                "pascalCase": {
+                  "unsafeName": "Inference",
+                  "safeName": "Inference"
+                },
                 "snakeCase": {
                   "unsafeName": "inference",
                   "safeName": "inference"
@@ -436,10 +240,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "INFERENCE",
                   "safeName": "INFERENCE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Inference",
-                  "safeName": "Inference"
                 }
               },
               "wireValue": "INFERENCE"
@@ -457,6 +257,10 @@
                   "unsafeName": "tlInference",
                   "safeName": "tlInference"
                 },
+                "pascalCase": {
+                  "unsafeName": "TlInference",
+                  "safeName": "TlInference"
+                },
                 "snakeCase": {
                   "unsafeName": "tl_inference",
                   "safeName": "tl_inference"
@@ -464,10 +268,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "TL_INFERENCE",
                   "safeName": "TL_INFERENCE"
-                },
-                "pascalCase": {
-                  "unsafeName": "TlInference",
-                  "safeName": "TlInference"
                 }
               },
               "wireValue": "TL_INFERENCE"
@@ -485,6 +285,10 @@
                   "unsafeName": "training",
                   "safeName": "training"
                 },
+                "pascalCase": {
+                  "unsafeName": "Training",
+                  "safeName": "Training"
+                },
                 "snakeCase": {
                   "unsafeName": "training",
                   "safeName": "training"
@@ -492,10 +296,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "TRAINING",
                   "safeName": "TRAINING"
-                },
-                "pascalCase": {
-                  "unsafeName": "Training",
-                  "safeName": "Training"
                 }
               },
               "wireValue": "TRAINING"

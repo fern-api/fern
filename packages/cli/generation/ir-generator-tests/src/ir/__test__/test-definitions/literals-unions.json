@@ -2,25 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": {
-        "originalName": "literals-unions",
-        "camelCase": {
-            "unsafeName": "literalsUnions",
-            "safeName": "literalsUnions"
-        },
-        "snakeCase": {
-            "unsafeName": "literals_unions",
-            "safeName": "literals_unions"
-        },
-        "screamingSnakeCase": {
-            "unsafeName": "LITERALS_UNIONS",
-            "safeName": "LITERALS_UNIONS"
-        },
-        "pascalCase": {
-            "unsafeName": "LiteralsUnions",
-            "safeName": "LiteralsUnions"
-        }
-    },
+    "apiName": "literals-unions",
     "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
@@ -34,67 +16,13 @@
         "type_literals:LiteralString": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "LiteralString",
-                    "camelCase": {
-                        "unsafeName": "literalString",
-                        "safeName": "literalString"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "literal_string",
-                        "safeName": "literal_string"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "LITERAL_STRING",
-                        "safeName": "LITERAL_STRING"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "LiteralString",
-                        "safeName": "LiteralString"
-                    }
-                },
+                "name": "LiteralString",
                 "fernFilepath": {
                     "allParts": [
-                        {
-                            "originalName": "literals",
-                            "camelCase": {
-                                "unsafeName": "literals",
-                                "safeName": "literals"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "literals",
-                                "safeName": "literals"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "LITERALS",
-                                "safeName": "LITERALS"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Literals",
-                                "safeName": "Literals"
-                            }
-                        }
+                        "literals"
                     ],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "literals",
-                        "camelCase": {
-                            "unsafeName": "literals",
-                            "safeName": "literals"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "literals",
-                            "safeName": "literals"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "LITERALS",
-                            "safeName": "LITERALS"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Literals",
-                            "safeName": "Literals"
-                        }
-                    }
+                    "file": "literals"
                 },
                 "displayName": null,
                 "typeId": "type_literals:LiteralString"
@@ -137,67 +65,13 @@
         "type_literals:UnionOverLiteral": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "UnionOverLiteral",
-                    "camelCase": {
-                        "unsafeName": "unionOverLiteral",
-                        "safeName": "unionOverLiteral"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "union_over_literal",
-                        "safeName": "union_over_literal"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "UNION_OVER_LITERAL",
-                        "safeName": "UNION_OVER_LITERAL"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "UnionOverLiteral",
-                        "safeName": "UnionOverLiteral"
-                    }
-                },
+                "name": "UnionOverLiteral",
                 "fernFilepath": {
                     "allParts": [
-                        {
-                            "originalName": "literals",
-                            "camelCase": {
-                                "unsafeName": "literals",
-                                "safeName": "literals"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "literals",
-                                "safeName": "literals"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "LITERALS",
-                                "safeName": "LITERALS"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Literals",
-                                "safeName": "Literals"
-                            }
-                        }
+                        "literals"
                     ],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "literals",
-                        "camelCase": {
-                            "unsafeName": "literals",
-                            "safeName": "literals"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "literals",
-                            "safeName": "literals"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "LITERALS",
-                            "safeName": "LITERALS"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Literals",
-                            "safeName": "Literals"
-                        }
-                    }
+                    "file": "literals"
                 },
                 "displayName": null,
                 "typeId": "type_literals:UnionOverLiteral"
@@ -222,67 +96,13 @@
                     {
                         "type": {
                             "_type": "named",
-                            "name": {
-                                "originalName": "LiteralString",
-                                "camelCase": {
-                                    "unsafeName": "literalString",
-                                    "safeName": "literalString"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "literal_string",
-                                    "safeName": "literal_string"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "LITERAL_STRING",
-                                    "safeName": "LITERAL_STRING"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "LiteralString",
-                                    "safeName": "LiteralString"
-                                }
-                            },
+                            "name": "LiteralString",
                             "fernFilepath": {
                                 "allParts": [
-                                    {
-                                        "originalName": "literals",
-                                        "camelCase": {
-                                            "unsafeName": "literals",
-                                            "safeName": "literals"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "literals",
-                                            "safeName": "literals"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "LITERALS",
-                                            "safeName": "LITERALS"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Literals",
-                                            "safeName": "Literals"
-                                        }
-                                    }
+                                    "literals"
                                 ],
                                 "packagePath": [],
-                                "file": {
-                                    "originalName": "literals",
-                                    "camelCase": {
-                                        "unsafeName": "literals",
-                                        "safeName": "literals"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "literals",
-                                        "safeName": "literals"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "LITERALS",
-                                        "safeName": "LITERALS"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Literals",
-                                        "safeName": "Literals"
-                                    }
-                                }
+                                "file": "literals"
                             },
                             "displayName": "Literal String",
                             "typeId": "type_literals:LiteralString",
@@ -318,14 +138,8 @@
                     "unsafeName": "errorInstanceID",
                     "safeName": "errorInstanceID"
                 },
-                "snakeCase": {
-                    "unsafeName": "error_instance_id",
-                    "safeName": "error_instance_id"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "ERROR_INSTANCE_ID",
-                    "safeName": "ERROR_INSTANCE_ID"
-                },
+                "snakeCase": null,
+                "screamingSnakeCase": null,
                 "pascalCase": {
                     "unsafeName": "ErrorInstanceID",
                     "safeName": "ErrorInstanceID"
@@ -518,68 +332,14 @@
     "audiences": null,
     "subpackages": {
         "subpackage_literals": {
-            "name": {
-                "originalName": "literals",
-                "camelCase": {
-                    "unsafeName": "literals",
-                    "safeName": "literals"
-                },
-                "snakeCase": {
-                    "unsafeName": "literals",
-                    "safeName": "literals"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "LITERALS",
-                    "safeName": "LITERALS"
-                },
-                "pascalCase": {
-                    "unsafeName": "Literals",
-                    "safeName": "Literals"
-                }
-            },
+            "name": "literals",
             "displayName": null,
             "fernFilepath": {
                 "allParts": [
-                    {
-                        "originalName": "literals",
-                        "camelCase": {
-                            "unsafeName": "literals",
-                            "safeName": "literals"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "literals",
-                            "safeName": "literals"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "LITERALS",
-                            "safeName": "LITERALS"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Literals",
-                            "safeName": "Literals"
-                        }
-                    }
+                    "literals"
                 ],
                 "packagePath": [],
-                "file": {
-                    "originalName": "literals",
-                    "camelCase": {
-                        "unsafeName": "literals",
-                        "safeName": "literals"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "literals",
-                        "safeName": "literals"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "LITERALS",
-                        "safeName": "LITERALS"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Literals",
-                        "safeName": "Literals"
-                    }
-                }
+                "file": "literals"
             },
             "service": null,
             "types": [

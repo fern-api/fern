@@ -2,18 +2,6 @@
   "selfHosted": false,
   "apiName": {
     "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
     "pascalCase": {
       "unsafeName": "API",
       "safeName": "API"
@@ -29,25 +17,7 @@
   "types": {
     "type_:Metadata": {
       "name": {
-        "name": {
-          "originalName": "Metadata",
-          "camelCase": {
-            "unsafeName": "metadata",
-            "safeName": "metadata"
-          },
-          "snakeCase": {
-            "unsafeName": "metadata",
-            "safeName": "metadata"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "METADATA",
-            "safeName": "METADATA"
-          },
-          "pascalCase": {
-            "unsafeName": "Metadata",
-            "safeName": "Metadata"
-          }
-        },
+        "name": "Metadata",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -69,25 +39,7 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "MetadataValue",
-                    "camelCase": {
-                      "unsafeName": "metadataValue",
-                      "safeName": "metadataValue"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "metadata_value",
-                      "safeName": "metadata_value"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "METADATA_VALUE",
-                      "safeName": "METADATA_VALUE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "MetadataValue",
-                      "safeName": "MetadataValue"
-                    }
-                  },
+                  "name": "MetadataValue",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -117,25 +69,7 @@
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "MetadataValue",
-                    "camelCase": {
-                      "unsafeName": "metadataValue",
-                      "safeName": "metadataValue"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "metadata_value",
-                      "safeName": "metadata_value"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "METADATA_VALUE",
-                      "safeName": "METADATA_VALUE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "MetadataValue",
-                      "safeName": "MetadataValue"
-                    }
-                  },
+                  "name": "MetadataValue",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -171,25 +105,7 @@
     },
     "type_:MetadataValue": {
       "name": {
-        "name": {
-          "originalName": "MetadataValue",
-          "camelCase": {
-            "unsafeName": "metadataValue",
-            "safeName": "metadataValue"
-          },
-          "snakeCase": {
-            "unsafeName": "metadata_value",
-            "safeName": "metadata_value"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "METADATA_VALUE",
-            "safeName": "METADATA_VALUE"
-          },
-          "pascalCase": {
-            "unsafeName": "MetadataValue",
-            "safeName": "MetadataValue"
-          }
-        },
+        "name": "MetadataValue",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -272,14 +188,6 @@
           "unsafeName": "errorInstanceID",
           "safeName": "errorInstanceID"
         },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
         "pascalCase": {
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
@@ -313,6 +221,10 @@
               "unsafeName": "metadata",
               "safeName": "metadata"
             },
+            "pascalCase": {
+              "unsafeName": "Metadata",
+              "safeName": "Metadata"
+            },
             "snakeCase": {
               "unsafeName": "metadata",
               "safeName": "metadata"
@@ -320,10 +232,6 @@
             "screamingSnakeCase": {
               "unsafeName": "METADATA",
               "safeName": "METADATA"
-            },
-            "pascalCase": {
-              "unsafeName": "Metadata",
-              "safeName": "Metadata"
             }
           },
           "fernFilepath": {
@@ -355,6 +263,10 @@
               "unsafeName": "metadataValue",
               "safeName": "metadataValue"
             },
+            "pascalCase": {
+              "unsafeName": "MetadataValue",
+              "safeName": "MetadataValue"
+            },
             "snakeCase": {
               "unsafeName": "metadata_value",
               "safeName": "metadata_value"
@@ -362,10 +274,6 @@
             "screamingSnakeCase": {
               "unsafeName": "METADATA_VALUE",
               "safeName": "METADATA_VALUE"
-            },
-            "pascalCase": {
-              "unsafeName": "MetadataValue",
-              "safeName": "MetadataValue"
             }
           },
           "fernFilepath": {

@@ -356,25 +356,7 @@ exports[`migrateFromV38ToV37 > snapshot 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "completions",
-              "unsafeName": "completions",
-            },
-            "originalName": "completions",
-            "pascalCase": {
-              "safeName": "Completions",
-              "unsafeName": "Completions",
-            },
-            "screamingSnakeCase": {
-              "safeName": "COMPLETIONS",
-              "unsafeName": "COMPLETIONS",
-            },
-            "snakeCase": {
-              "safeName": "completions",
-              "unsafeName": "completions",
-            },
-          },
+          "file": "completions",
           "packagePath": [],
         },
       },
@@ -407,25 +389,7 @@ exports[`migrateFromV38ToV37 > snapshot 1`] = `
             },
           },
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "completions",
-            "unsafeName": "completions",
-          },
-          "originalName": "completions",
-          "pascalCase": {
-            "safeName": "Completions",
-            "unsafeName": "Completions",
-          },
-          "screamingSnakeCase": {
-            "safeName": "COMPLETIONS",
-            "unsafeName": "COMPLETIONS",
-          },
-          "snakeCase": {
-            "safeName": "completions",
-            "unsafeName": "completions",
-          },
-        },
+        "file": "completions",
         "packagePath": [],
       },
       "hasEndpointsInTree": true,
@@ -486,25 +450,7 @@ exports[`migrateFromV38ToV37 > snapshot 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "completions",
-              "unsafeName": "completions",
-            },
-            "originalName": "completions",
-            "pascalCase": {
-              "safeName": "Completions",
-              "unsafeName": "Completions",
-            },
-            "screamingSnakeCase": {
-              "safeName": "COMPLETIONS",
-              "unsafeName": "COMPLETIONS",
-            },
-            "snakeCase": {
-              "safeName": "completions",
-              "unsafeName": "completions",
-            },
-          },
+          "file": "completions",
           "packagePath": [],
         },
         "name": {

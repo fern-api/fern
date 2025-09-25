@@ -12,25 +12,7 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "Metadata",
-          "camelCase": {
-            "unsafeName": "metadata",
-            "safeName": "metadata"
-          },
-          "snakeCase": {
-            "unsafeName": "metadata",
-            "safeName": "metadata"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "METADATA",
-            "safeName": "METADATA"
-          },
-          "pascalCase": {
-            "unsafeName": "Metadata",
-            "safeName": "Metadata"
-          }
-        }
+        "name": "Metadata"
       },
       "shape": {
         "aliasOf": {
@@ -49,25 +31,7 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "name": {
-                "originalName": "MetadataValue",
-                "camelCase": {
-                  "unsafeName": "metadataValue",
-                  "safeName": "metadataValue"
-                },
-                "snakeCase": {
-                  "unsafeName": "metadata_value",
-                  "safeName": "metadata_value"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "METADATA_VALUE",
-                  "safeName": "METADATA_VALUE"
-                },
-                "pascalCase": {
-                  "unsafeName": "MetadataValue",
-                  "safeName": "MetadataValue"
-                }
-              },
+              "name": "MetadataValue",
               "typeId": "MetadataValue",
               "inline": false,
               "type": "named"
@@ -92,25 +56,7 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "name": {
-                "originalName": "MetadataValue",
-                "camelCase": {
-                  "unsafeName": "metadataValue",
-                  "safeName": "metadataValue"
-                },
-                "snakeCase": {
-                  "unsafeName": "metadata_value",
-                  "safeName": "metadata_value"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "METADATA_VALUE",
-                  "safeName": "METADATA_VALUE"
-                },
-                "pascalCase": {
-                  "unsafeName": "MetadataValue",
-                  "safeName": "MetadataValue"
-                }
-              },
+              "name": "MetadataValue",
               "typeId": "MetadataValue",
               "inline": false,
               "type": "named"
@@ -139,25 +85,7 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "MetadataValue",
-          "camelCase": {
-            "unsafeName": "metadataValue",
-            "safeName": "metadataValue"
-          },
-          "snakeCase": {
-            "unsafeName": "metadata_value",
-            "safeName": "metadata_value"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "METADATA_VALUE",
-            "safeName": "METADATA_VALUE"
-          },
-          "pascalCase": {
-            "unsafeName": "MetadataValue",
-            "safeName": "MetadataValue"
-          }
-        }
+        "name": "MetadataValue"
       },
       "shape": {
         "members": [
@@ -261,46 +189,10 @@
       "sdkVersion": ""
     }
   },
-  "apiName": {
-    "originalName": "",
-    "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
-    }
-  },
+  "apiName": "",
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceId",
-          "safeName": "errorInstanceId"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceId",
-          "safeName": "ErrorInstanceId"
-        }
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   }

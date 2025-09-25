@@ -1,23 +1,5 @@
 {
-  "apiName": {
-    "originalName": "",
-    "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
-    }
-  },
+  "apiName": "",
   "selfHosted": false,
   "auth": {
     "requirement": "ALL",
@@ -32,25 +14,7 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaMetadata",
-          "camelCase": {
-            "unsafeName": "uploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaMetadata",
-            "safeName": "uploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaMetadata"
-          },
-          "snakeCase": {
-            "unsafeName": "upload_with_content_type_post_request_body_content_multipart_form_data_schema_metadata",
-            "safeName": "upload_with_content_type_post_request_body_content_multipart_form_data_schema_metadata"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "UPLOAD_WITH_CONTENT_TYPE_POST_REQUEST_BODY_CONTENT_MULTIPART_FORM_DATA_SCHEMA_METADATA",
-            "safeName": "UPLOAD_WITH_CONTENT_TYPE_POST_REQUEST_BODY_CONTENT_MULTIPART_FORM_DATA_SCHEMA_METADATA"
-          },
-          "pascalCase": {
-            "unsafeName": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaMetadata",
-            "safeName": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaMetadata"
-          }
-        }
+        "name": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaMetadata"
       },
       "shape": {
         "properties": [],
@@ -78,49 +42,13 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaData",
-          "camelCase": {
-            "unsafeName": "uploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaData",
-            "safeName": "uploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaData"
-          },
-          "snakeCase": {
-            "unsafeName": "upload_with_content_type_post_request_body_content_multipart_form_data_schema_data",
-            "safeName": "upload_with_content_type_post_request_body_content_multipart_form_data_schema_data"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "UPLOAD_WITH_CONTENT_TYPE_POST_REQUEST_BODY_CONTENT_MULTIPART_FORM_DATA_SCHEMA_DATA",
-            "safeName": "UPLOAD_WITH_CONTENT_TYPE_POST_REQUEST_BODY_CONTENT_MULTIPART_FORM_DATA_SCHEMA_DATA"
-          },
-          "pascalCase": {
-            "unsafeName": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaData",
-            "safeName": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaData"
-          }
-        }
+        "name": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaData"
       },
       "shape": {
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "datum",
-                "camelCase": {
-                  "unsafeName": "datum",
-                  "safeName": "datum"
-                },
-                "snakeCase": {
-                  "unsafeName": "datum",
-                  "safeName": "datum"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "DATUM",
-                  "safeName": "DATUM"
-                },
-                "pascalCase": {
-                  "unsafeName": "Datum",
-                  "safeName": "Datum"
-                }
-              },
+              "name": "datum",
               "wireValue": "datum"
             },
             "valueType": {
@@ -166,25 +94,7 @@
   },
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceId",
-          "safeName": "errorInstanceId"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceId",
-          "safeName": "ErrorInstanceId"
-        }
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   },
@@ -227,64 +137,16 @@
           },
           "audiences": [],
           "id": "endpoint_.upload-file",
-          "name": {
-            "originalName": "upload-file",
-            "camelCase": {
-              "unsafeName": "uploadFile",
-              "safeName": "uploadFile"
-            },
-            "snakeCase": {
-              "unsafeName": "upload_file",
-              "safeName": "upload_file"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "UPLOAD_FILE",
-              "safeName": "UPLOAD_FILE"
-            },
-            "pascalCase": {
-              "unsafeName": "UploadFile",
-              "safeName": "UploadFile"
-            }
-          },
+          "name": "upload-file",
           "requestBody": {
             "contentType": "multipart/form-data",
-            "name": {
-              "originalName": "upload-file_Request",
-              "camelCase": {
-                "unsafeName": "uploadFileRequest",
-                "safeName": "uploadFileRequest"
-              },
-              "snakeCase": {
-                "unsafeName": "upload_file_request",
-                "safeName": "upload_file_request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "UPLOAD_FILE_REQUEST",
-                "safeName": "UPLOAD_FILE_REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "UploadFileRequest",
-                "safeName": "UploadFileRequest"
-              }
-            },
+            "name": "upload-file_Request",
             "properties": [
               {
                 "value": {
                   "key": {
                     "name": {
                       "originalName": "file",
-                      "camelCase": {
-                        "unsafeName": "file",
-                        "safeName": "file"
-                      },
-                      "snakeCase": {
-                        "unsafeName": "file",
-                        "safeName": "file"
-                      },
-                      "screamingSnakeCase": {
-                        "unsafeName": "FILE",
-                        "safeName": "FILE"
-                      },
                       "pascalCase": {
                         "unsafeName": "File",
                         "safeName": "File_"
@@ -302,25 +164,7 @@
               {
                 "value": {
                   "key": {
-                    "name": {
-                      "originalName": "maybe_file",
-                      "camelCase": {
-                        "unsafeName": "maybeFile",
-                        "safeName": "maybeFile"
-                      },
-                      "snakeCase": {
-                        "unsafeName": "maybe_file",
-                        "safeName": "maybe_file"
-                      },
-                      "screamingSnakeCase": {
-                        "unsafeName": "MAYBE_FILE",
-                        "safeName": "MAYBE_FILE"
-                      },
-                      "pascalCase": {
-                        "unsafeName": "MaybeFile",
-                        "safeName": "MaybeFile"
-                      }
-                    },
+                    "name": "maybe_file",
                     "wireValue": "maybe_file"
                   },
                   "isOptional": true,
@@ -345,43 +189,13 @@
             "requestBodies": [
               {
                 "contentType": "multipart/form-data",
-                "name": {
-                  "originalName": "upload-file_Request",
-                  "camelCase": {
-                    "unsafeName": "uploadFileRequest",
-                    "safeName": "uploadFileRequest"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "upload_file_request",
-                    "safeName": "upload_file_request"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "UPLOAD_FILE_REQUEST",
-                    "safeName": "UPLOAD_FILE_REQUEST"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "UploadFileRequest",
-                    "safeName": "UploadFileRequest"
-                  }
-                },
+                "name": "upload-file_Request",
                 "properties": [
                   {
                     "value": {
                       "key": {
                         "name": {
                           "originalName": "file",
-                          "camelCase": {
-                            "unsafeName": "file",
-                            "safeName": "file"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "file",
-                            "safeName": "file"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "FILE",
-                            "safeName": "FILE"
-                          },
                           "pascalCase": {
                             "unsafeName": "File",
                             "safeName": "File_"
@@ -399,25 +213,7 @@
                   {
                     "value": {
                       "key": {
-                        "name": {
-                          "originalName": "maybe_file",
-                          "camelCase": {
-                            "unsafeName": "maybeFile",
-                            "safeName": "maybeFile"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "maybe_file",
-                            "safeName": "maybe_file"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "MAYBE_FILE",
-                            "safeName": "MAYBE_FILE"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "MaybeFile",
-                            "safeName": "MaybeFile"
-                          }
-                        },
+                        "name": "maybe_file",
                         "wireValue": "maybe_file"
                       },
                       "isOptional": true,
@@ -488,69 +284,15 @@
           },
           "audiences": [],
           "id": "endpoint_.upload-list",
-          "name": {
-            "originalName": "upload-list",
-            "camelCase": {
-              "unsafeName": "uploadList",
-              "safeName": "uploadList"
-            },
-            "snakeCase": {
-              "unsafeName": "upload_list",
-              "safeName": "upload_list"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "UPLOAD_LIST",
-              "safeName": "UPLOAD_LIST"
-            },
-            "pascalCase": {
-              "unsafeName": "UploadList",
-              "safeName": "UploadList"
-            }
-          },
+          "name": "upload-list",
           "requestBody": {
             "contentType": "multipart/form-data",
-            "name": {
-              "originalName": "upload-list_Request",
-              "camelCase": {
-                "unsafeName": "uploadListRequest",
-                "safeName": "uploadListRequest"
-              },
-              "snakeCase": {
-                "unsafeName": "upload_list_request",
-                "safeName": "upload_list_request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "UPLOAD_LIST_REQUEST",
-                "safeName": "UPLOAD_LIST_REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "UploadListRequest",
-                "safeName": "UploadListRequest"
-              }
-            },
+            "name": "upload-list_Request",
             "properties": [
               {
                 "value": {
                   "key": {
-                    "name": {
-                      "originalName": "list_file",
-                      "camelCase": {
-                        "unsafeName": "listFile",
-                        "safeName": "listFile"
-                      },
-                      "snakeCase": {
-                        "unsafeName": "list_file",
-                        "safeName": "list_file"
-                      },
-                      "screamingSnakeCase": {
-                        "unsafeName": "LIST_FILE",
-                        "safeName": "LIST_FILE"
-                      },
-                      "pascalCase": {
-                        "unsafeName": "ListFile",
-                        "safeName": "ListFile"
-                      }
-                    },
+                    "name": "list_file",
                     "wireValue": "list_file"
                   },
                   "isOptional": false,
@@ -562,25 +304,7 @@
               {
                 "value": {
                   "key": {
-                    "name": {
-                      "originalName": "maybe_list_file",
-                      "camelCase": {
-                        "unsafeName": "maybeListFile",
-                        "safeName": "maybeListFile"
-                      },
-                      "snakeCase": {
-                        "unsafeName": "maybe_list_file",
-                        "safeName": "maybe_list_file"
-                      },
-                      "screamingSnakeCase": {
-                        "unsafeName": "MAYBE_LIST_FILE",
-                        "safeName": "MAYBE_LIST_FILE"
-                      },
-                      "pascalCase": {
-                        "unsafeName": "MaybeListFile",
-                        "safeName": "MaybeListFile"
-                      }
-                    },
+                    "name": "maybe_list_file",
                     "wireValue": "maybe_list_file"
                   },
                   "isOptional": true,
@@ -606,48 +330,12 @@
             "requestBodies": [
               {
                 "contentType": "multipart/form-data",
-                "name": {
-                  "originalName": "upload-list_Request",
-                  "camelCase": {
-                    "unsafeName": "uploadListRequest",
-                    "safeName": "uploadListRequest"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "upload_list_request",
-                    "safeName": "upload_list_request"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "UPLOAD_LIST_REQUEST",
-                    "safeName": "UPLOAD_LIST_REQUEST"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "UploadListRequest",
-                    "safeName": "UploadListRequest"
-                  }
-                },
+                "name": "upload-list_Request",
                 "properties": [
                   {
                     "value": {
                       "key": {
-                        "name": {
-                          "originalName": "list_file",
-                          "camelCase": {
-                            "unsafeName": "listFile",
-                            "safeName": "listFile"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "list_file",
-                            "safeName": "list_file"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "LIST_FILE",
-                            "safeName": "LIST_FILE"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "ListFile",
-                            "safeName": "ListFile"
-                          }
-                        },
+                        "name": "list_file",
                         "wireValue": "list_file"
                       },
                       "isOptional": false,
@@ -659,25 +347,7 @@
                   {
                     "value": {
                       "key": {
-                        "name": {
-                          "originalName": "maybe_list_file",
-                          "camelCase": {
-                            "unsafeName": "maybeListFile",
-                            "safeName": "maybeListFile"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "maybe_list_file",
-                            "safeName": "maybe_list_file"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "MAYBE_LIST_FILE",
-                            "safeName": "MAYBE_LIST_FILE"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "MaybeListFile",
-                            "safeName": "MaybeListFile"
-                          }
-                        },
+                        "name": "maybe_list_file",
                         "wireValue": "maybe_list_file"
                       },
                       "isOptional": true,
@@ -751,64 +421,16 @@
           },
           "audiences": [],
           "id": "endpoint_.upload-with-content-type",
-          "name": {
-            "originalName": "upload-with-content-type",
-            "camelCase": {
-              "unsafeName": "uploadWithContentType",
-              "safeName": "uploadWithContentType"
-            },
-            "snakeCase": {
-              "unsafeName": "upload_with_content_type",
-              "safeName": "upload_with_content_type"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "UPLOAD_WITH_CONTENT_TYPE",
-              "safeName": "UPLOAD_WITH_CONTENT_TYPE"
-            },
-            "pascalCase": {
-              "unsafeName": "UploadWithContentType",
-              "safeName": "UploadWithContentType"
-            }
-          },
+          "name": "upload-with-content-type",
           "requestBody": {
             "contentType": "multipart/form-data",
-            "name": {
-              "originalName": "upload-with-content-type_Request",
-              "camelCase": {
-                "unsafeName": "uploadWithContentTypeRequest",
-                "safeName": "uploadWithContentTypeRequest"
-              },
-              "snakeCase": {
-                "unsafeName": "upload_with_content_type_request",
-                "safeName": "upload_with_content_type_request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "UPLOAD_WITH_CONTENT_TYPE_REQUEST",
-                "safeName": "UPLOAD_WITH_CONTENT_TYPE_REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "UploadWithContentTypeRequest",
-                "safeName": "UploadWithContentTypeRequest"
-              }
-            },
+            "name": "upload-with-content-type_Request",
             "properties": [
               {
                 "value": {
                   "key": {
                     "name": {
                       "originalName": "file",
-                      "camelCase": {
-                        "unsafeName": "file",
-                        "safeName": "file"
-                      },
-                      "snakeCase": {
-                        "unsafeName": "file",
-                        "safeName": "file"
-                      },
-                      "screamingSnakeCase": {
-                        "unsafeName": "FILE",
-                        "safeName": "FILE"
-                      },
                       "pascalCase": {
                         "unsafeName": "File",
                         "safeName": "File_"
@@ -826,25 +448,7 @@
               {
                 "value": {
                   "key": {
-                    "name": {
-                      "originalName": "maybe_file",
-                      "camelCase": {
-                        "unsafeName": "maybeFile",
-                        "safeName": "maybeFile"
-                      },
-                      "snakeCase": {
-                        "unsafeName": "maybe_file",
-                        "safeName": "maybe_file"
-                      },
-                      "screamingSnakeCase": {
-                        "unsafeName": "MAYBE_FILE",
-                        "safeName": "MAYBE_FILE"
-                      },
-                      "pascalCase": {
-                        "unsafeName": "MaybeFile",
-                        "safeName": "MaybeFile"
-                      }
-                    },
+                    "name": "maybe_file",
                     "wireValue": "maybe_file"
                   },
                   "isOptional": true,
@@ -856,25 +460,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "metadata",
-                    "camelCase": {
-                      "unsafeName": "metadata",
-                      "safeName": "metadata"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "metadata",
-                      "safeName": "metadata"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "METADATA",
-                      "safeName": "METADATA"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Metadata",
-                      "safeName": "Metadata"
-                    }
-                  },
+                  "name": "metadata",
                   "wireValue": "metadata"
                 },
                 "valueType": {
@@ -884,25 +470,7 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": {
-                        "originalName": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaMetadata",
-                        "camelCase": {
-                          "unsafeName": "uploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaMetadata",
-                          "safeName": "uploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaMetadata"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "upload_with_content_type_post_request_body_content_multipart_form_data_schema_metadata",
-                          "safeName": "upload_with_content_type_post_request_body_content_multipart_form_data_schema_metadata"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "UPLOAD_WITH_CONTENT_TYPE_POST_REQUEST_BODY_CONTENT_MULTIPART_FORM_DATA_SCHEMA_METADATA",
-                          "safeName": "UPLOAD_WITH_CONTENT_TYPE_POST_REQUEST_BODY_CONTENT_MULTIPART_FORM_DATA_SCHEMA_METADATA"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaMetadata",
-                          "safeName": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaMetadata"
-                        }
-                      },
+                      "name": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaMetadata",
                       "typeId": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaMetadata",
                       "inline": false,
                       "type": "named"
@@ -924,25 +492,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "data",
-                    "camelCase": {
-                      "unsafeName": "data",
-                      "safeName": "data"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "data",
-                      "safeName": "data"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "DATA",
-                      "safeName": "DATA"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Data",
-                      "safeName": "Data"
-                    }
-                  },
+                  "name": "data",
                   "wireValue": "data"
                 },
                 "valueType": {
@@ -952,25 +502,7 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": {
-                        "originalName": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaData",
-                        "camelCase": {
-                          "unsafeName": "uploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaData",
-                          "safeName": "uploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaData"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "upload_with_content_type_post_request_body_content_multipart_form_data_schema_data",
-                          "safeName": "upload_with_content_type_post_request_body_content_multipart_form_data_schema_data"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "UPLOAD_WITH_CONTENT_TYPE_POST_REQUEST_BODY_CONTENT_MULTIPART_FORM_DATA_SCHEMA_DATA",
-                          "safeName": "UPLOAD_WITH_CONTENT_TYPE_POST_REQUEST_BODY_CONTENT_MULTIPART_FORM_DATA_SCHEMA_DATA"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaData",
-                          "safeName": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaData"
-                        }
-                      },
+                      "name": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaData",
                       "typeId": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaData",
                       "inline": false,
                       "type": "named"
@@ -1004,43 +536,13 @@
             "requestBodies": [
               {
                 "contentType": "multipart/form-data",
-                "name": {
-                  "originalName": "upload-with-content-type_Request",
-                  "camelCase": {
-                    "unsafeName": "uploadWithContentTypeRequest",
-                    "safeName": "uploadWithContentTypeRequest"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "upload_with_content_type_request",
-                    "safeName": "upload_with_content_type_request"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "UPLOAD_WITH_CONTENT_TYPE_REQUEST",
-                    "safeName": "UPLOAD_WITH_CONTENT_TYPE_REQUEST"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "UploadWithContentTypeRequest",
-                    "safeName": "UploadWithContentTypeRequest"
-                  }
-                },
+                "name": "upload-with-content-type_Request",
                 "properties": [
                   {
                     "value": {
                       "key": {
                         "name": {
                           "originalName": "file",
-                          "camelCase": {
-                            "unsafeName": "file",
-                            "safeName": "file"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "file",
-                            "safeName": "file"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "FILE",
-                            "safeName": "FILE"
-                          },
                           "pascalCase": {
                             "unsafeName": "File",
                             "safeName": "File_"
@@ -1058,25 +560,7 @@
                   {
                     "value": {
                       "key": {
-                        "name": {
-                          "originalName": "maybe_file",
-                          "camelCase": {
-                            "unsafeName": "maybeFile",
-                            "safeName": "maybeFile"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "maybe_file",
-                            "safeName": "maybe_file"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "MAYBE_FILE",
-                            "safeName": "MAYBE_FILE"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "MaybeFile",
-                            "safeName": "MaybeFile"
-                          }
-                        },
+                        "name": "maybe_file",
                         "wireValue": "maybe_file"
                       },
                       "isOptional": true,
@@ -1088,25 +572,7 @@
                   },
                   {
                     "name": {
-                      "name": {
-                        "originalName": "metadata",
-                        "camelCase": {
-                          "unsafeName": "metadata",
-                          "safeName": "metadata"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "metadata",
-                          "safeName": "metadata"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "METADATA",
-                          "safeName": "METADATA"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "Metadata",
-                          "safeName": "Metadata"
-                        }
-                      },
+                      "name": "metadata",
                       "wireValue": "metadata"
                     },
                     "valueType": {
@@ -1116,25 +582,7 @@
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": {
-                            "originalName": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaMetadata",
-                            "camelCase": {
-                              "unsafeName": "uploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaMetadata",
-                              "safeName": "uploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaMetadata"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "upload_with_content_type_post_request_body_content_multipart_form_data_schema_metadata",
-                              "safeName": "upload_with_content_type_post_request_body_content_multipart_form_data_schema_metadata"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "UPLOAD_WITH_CONTENT_TYPE_POST_REQUEST_BODY_CONTENT_MULTIPART_FORM_DATA_SCHEMA_METADATA",
-                              "safeName": "UPLOAD_WITH_CONTENT_TYPE_POST_REQUEST_BODY_CONTENT_MULTIPART_FORM_DATA_SCHEMA_METADATA"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaMetadata",
-                              "safeName": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaMetadata"
-                            }
-                          },
+                          "name": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaMetadata",
                           "typeId": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaMetadata",
                           "inline": false,
                           "type": "named"
@@ -1156,25 +604,7 @@
                   },
                   {
                     "name": {
-                      "name": {
-                        "originalName": "data",
-                        "camelCase": {
-                          "unsafeName": "data",
-                          "safeName": "data"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "data",
-                          "safeName": "data"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "DATA",
-                          "safeName": "DATA"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "Data",
-                          "safeName": "Data"
-                        }
-                      },
+                      "name": "data",
                       "wireValue": "data"
                     },
                     "valueType": {
@@ -1184,25 +614,7 @@
                             "allParts": [],
                             "packagePath": []
                           },
-                          "name": {
-                            "originalName": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaData",
-                            "camelCase": {
-                              "unsafeName": "uploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaData",
-                              "safeName": "uploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaData"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "upload_with_content_type_post_request_body_content_multipart_form_data_schema_data",
-                              "safeName": "upload_with_content_type_post_request_body_content_multipart_form_data_schema_data"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "UPLOAD_WITH_CONTENT_TYPE_POST_REQUEST_BODY_CONTENT_MULTIPART_FORM_DATA_SCHEMA_DATA",
-                              "safeName": "UPLOAD_WITH_CONTENT_TYPE_POST_REQUEST_BODY_CONTENT_MULTIPART_FORM_DATA_SCHEMA_DATA"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaData",
-                              "safeName": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaData"
-                            }
-                          },
+                          "name": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaData",
                           "typeId": "UploadWithContentTypePostRequestBodyContentMultipartFormDataSchemaData",
                           "inline": false,
                           "type": "named"

@@ -2,25 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": {
-        "originalName": "file-download",
-        "camelCase": {
-            "unsafeName": "fileDownload",
-            "safeName": "fileDownload"
-        },
-        "snakeCase": {
-            "unsafeName": "file_download",
-            "safeName": "file_download"
-        },
-        "screamingSnakeCase": {
-            "unsafeName": "FILE_DOWNLOAD",
-            "safeName": "FILE_DOWNLOAD"
-        },
-        "pascalCase": {
-            "unsafeName": "FileDownload",
-            "safeName": "FileDownload"
-        }
-    },
+    "apiName": "file-download",
     "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
@@ -38,46 +20,10 @@
             "name": {
                 "fernFilepath": {
                     "allParts": [
-                        {
-                            "originalName": "service",
-                            "camelCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "service",
-                                "safeName": "service"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "SERVICE",
-                                "safeName": "SERVICE"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Service",
-                                "safeName": "Service"
-                            }
-                        }
+                        "service"
                     ],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "service",
-                        "camelCase": {
-                            "unsafeName": "service",
-                            "safeName": "service"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "service",
-                            "safeName": "service"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "SERVICE",
-                            "safeName": "SERVICE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Service",
-                            "safeName": "Service"
-                        }
-                    }
+                    "file": "service"
                 }
             },
             "displayName": null,
@@ -97,25 +43,7 @@
             "endpoints": [
                 {
                     "id": "endpoint_service.simple",
-                    "name": {
-                        "originalName": "simple",
-                        "camelCase": {
-                            "unsafeName": "simple",
-                            "safeName": "simple"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "simple",
-                            "safeName": "simple"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "SIMPLE",
-                            "safeName": "SIMPLE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Simple",
-                            "safeName": "Simple"
-                        }
-                    },
+                    "name": "simple",
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -181,25 +109,7 @@
                 },
                 {
                     "id": "endpoint_service.downloadFile",
-                    "name": {
-                        "originalName": "downloadFile",
-                        "camelCase": {
-                            "unsafeName": "downloadFile",
-                            "safeName": "downloadFile"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "download_file",
-                            "safeName": "download_file"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "DOWNLOAD_FILE",
-                            "safeName": "DOWNLOAD_FILE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "DownloadFile",
-                            "safeName": "DownloadFile"
-                        }
-                    },
+                    "name": "downloadFile",
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -256,14 +166,8 @@
                     "unsafeName": "errorInstanceID",
                     "safeName": "errorInstanceID"
                 },
-                "snakeCase": {
-                    "unsafeName": "error_instance_id",
-                    "safeName": "error_instance_id"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "ERROR_INSTANCE_ID",
-                    "safeName": "ERROR_INSTANCE_ID"
-                },
+                "snakeCase": null,
+                "screamingSnakeCase": null,
                 "pascalCase": {
                     "unsafeName": "ErrorInstanceID",
                     "safeName": "ErrorInstanceID"
@@ -462,68 +366,14 @@
     "audiences": null,
     "subpackages": {
         "subpackage_service": {
-            "name": {
-                "originalName": "service",
-                "camelCase": {
-                    "unsafeName": "service",
-                    "safeName": "service"
-                },
-                "snakeCase": {
-                    "unsafeName": "service",
-                    "safeName": "service"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "SERVICE",
-                    "safeName": "SERVICE"
-                },
-                "pascalCase": {
-                    "unsafeName": "Service",
-                    "safeName": "Service"
-                }
-            },
+            "name": "service",
             "displayName": null,
             "fernFilepath": {
                 "allParts": [
-                    {
-                        "originalName": "service",
-                        "camelCase": {
-                            "unsafeName": "service",
-                            "safeName": "service"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "service",
-                            "safeName": "service"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "SERVICE",
-                            "safeName": "SERVICE"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Service",
-                            "safeName": "Service"
-                        }
-                    }
+                    "service"
                 ],
                 "packagePath": [],
-                "file": {
-                    "originalName": "service",
-                    "camelCase": {
-                        "unsafeName": "service",
-                        "safeName": "service"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "service",
-                        "safeName": "service"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "SERVICE",
-                        "safeName": "SERVICE"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Service",
-                        "safeName": "Service"
-                    }
-                }
+                "file": "service"
             },
             "service": "service_service",
             "types": [],

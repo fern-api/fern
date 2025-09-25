@@ -2,18 +2,6 @@
   "selfHosted": false,
   "apiName": {
     "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
     "pascalCase": {
       "unsafeName": "API",
       "safeName": "API"
@@ -29,25 +17,7 @@
   "types": {
     "type_:GetStatusResponse": {
       "name": {
-        "name": {
-          "originalName": "GetStatusResponse",
-          "camelCase": {
-            "unsafeName": "getStatusResponse",
-            "safeName": "getStatusResponse"
-          },
-          "snakeCase": {
-            "unsafeName": "get_status_response",
-            "safeName": "get_status_response"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "GET_STATUS_RESPONSE",
-            "safeName": "GET_STATUS_RESPONSE"
-          },
-          "pascalCase": {
-            "unsafeName": "GetStatusResponse",
-            "safeName": "GetStatusResponse"
-          }
-        },
+        "name": "GetStatusResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -59,25 +29,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "message",
-                "camelCase": {
-                  "unsafeName": "message",
-                  "safeName": "message"
-                },
-                "snakeCase": {
-                  "unsafeName": "message",
-                  "safeName": "message"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "MESSAGE",
-                  "safeName": "MESSAGE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Message",
-                  "safeName": "Message"
-                }
-              },
+              "name": "message",
               "wireValue": "message"
             },
             "valueType": {
@@ -137,25 +89,7 @@
       "endpoints": [
         {
           "id": "endpoint_.getStatus",
-          "name": {
-            "originalName": "getStatus",
-            "camelCase": {
-              "unsafeName": "getStatus",
-              "safeName": "getStatus"
-            },
-            "snakeCase": {
-              "unsafeName": "get_status",
-              "safeName": "get_status"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GET_STATUS",
-              "safeName": "GET_STATUS"
-            },
-            "pascalCase": {
-              "unsafeName": "GetStatus",
-              "safeName": "GetStatus"
-            }
-          },
+          "name": "getStatus",
           "auth": false,
           "idempotent": false,
           "method": "GET",
@@ -176,25 +110,7 @@
               "value": {
                 "docs": "OK response",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "GetStatusResponse",
-                    "camelCase": {
-                      "unsafeName": "getStatusResponse",
-                      "safeName": "getStatusResponse"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "get_status_response",
-                      "safeName": "get_status_response"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "GET_STATUS_RESPONSE",
-                      "safeName": "GET_STATUS_RESPONSE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "GetStatusResponse",
-                      "safeName": "GetStatusResponse"
-                    }
-                  },
+                  "name": "GetStatusResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -222,14 +138,6 @@
         "camelCase": {
           "unsafeName": "errorInstanceID",
           "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
         },
         "pascalCase": {
           "unsafeName": "ErrorInstanceID",
@@ -265,6 +173,10 @@
               "unsafeName": "getStatusResponse",
               "safeName": "getStatusResponse"
             },
+            "pascalCase": {
+              "unsafeName": "GetStatusResponse",
+              "safeName": "GetStatusResponse"
+            },
             "snakeCase": {
               "unsafeName": "get_status_response",
               "safeName": "get_status_response"
@@ -272,10 +184,6 @@
             "screamingSnakeCase": {
               "unsafeName": "GET_STATUS_RESPONSE",
               "safeName": "GET_STATUS_RESPONSE"
-            },
-            "pascalCase": {
-              "unsafeName": "GetStatusResponse",
-              "safeName": "GetStatusResponse"
             }
           },
           "fernFilepath": {
@@ -292,6 +200,10 @@
                   "unsafeName": "message",
                   "safeName": "message"
                 },
+                "pascalCase": {
+                  "unsafeName": "Message",
+                  "safeName": "Message"
+                },
                 "snakeCase": {
                   "unsafeName": "message",
                   "safeName": "message"
@@ -299,10 +211,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "MESSAGE",
                   "safeName": "MESSAGE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Message",
-                  "safeName": "Message"
                 }
               },
               "wireValue": "message"
@@ -330,6 +238,10 @@
               "unsafeName": "getStatus",
               "safeName": "getStatus"
             },
+            "pascalCase": {
+              "unsafeName": "GetStatus",
+              "safeName": "GetStatus"
+            },
             "snakeCase": {
               "unsafeName": "get_status",
               "safeName": "get_status"
@@ -337,10 +249,6 @@
             "screamingSnakeCase": {
               "unsafeName": "GET_STATUS",
               "safeName": "GET_STATUS"
-            },
-            "pascalCase": {
-              "unsafeName": "GetStatus",
-              "safeName": "GetStatus"
             }
           },
           "fernFilepath": {

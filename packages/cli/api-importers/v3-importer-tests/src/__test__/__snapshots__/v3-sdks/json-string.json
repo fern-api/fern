@@ -12,49 +12,13 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "User",
-          "camelCase": {
-            "unsafeName": "user",
-            "safeName": "user"
-          },
-          "snakeCase": {
-            "unsafeName": "user",
-            "safeName": "user"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "USER",
-            "safeName": "USER"
-          },
-          "pascalCase": {
-            "unsafeName": "User",
-            "safeName": "User"
-          }
-        }
+        "name": "User"
       },
       "shape": {
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "id",
-                "camelCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "snakeCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
-                "pascalCase": {
-                  "unsafeName": "Id",
-                  "safeName": "Id"
-                }
-              },
+              "name": "id",
               "wireValue": "id"
             },
             "valueType": {
@@ -84,25 +48,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "metadata",
-                "camelCase": {
-                  "unsafeName": "metadata",
-                  "safeName": "metadata"
-                },
-                "snakeCase": {
-                  "unsafeName": "metadata",
-                  "safeName": "metadata"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "METADATA",
-                  "safeName": "METADATA"
-                },
-                "pascalCase": {
-                  "unsafeName": "Metadata",
-                  "safeName": "Metadata"
-                }
-              },
+              "name": "metadata",
               "wireValue": "metadata"
             },
             "valueType": {
@@ -186,46 +132,10 @@
       "sdkVersion": ""
     }
   },
-  "apiName": {
-    "originalName": "",
-    "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
-    }
-  },
+  "apiName": "",
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceId",
-          "safeName": "errorInstanceId"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceId",
-          "safeName": "ErrorInstanceId"
-        }
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   }

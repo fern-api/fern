@@ -12,49 +12,13 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema",
-          "camelCase": {
-            "unsafeName": "searchWithObjectUnionGetRequestBodyContentApplicationJsonSchema",
-            "safeName": "searchWithObjectUnionGetRequestBodyContentApplicationJsonSchema"
-          },
-          "snakeCase": {
-            "unsafeName": "search_with_object_union_get_request_body_content_application_json_schema",
-            "safeName": "search_with_object_union_get_request_body_content_application_json_schema"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "SEARCH_WITH_OBJECT_UNION_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA",
-            "safeName": "SEARCH_WITH_OBJECT_UNION_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA"
-          },
-          "pascalCase": {
-            "unsafeName": "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema",
-            "safeName": "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema"
-          }
-        }
+        "name": "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema"
       },
       "shape": {
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "foo",
-                "camelCase": {
-                  "unsafeName": "foo",
-                  "safeName": "foo"
-                },
-                "snakeCase": {
-                  "unsafeName": "foo",
-                  "safeName": "foo"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "FOO",
-                  "safeName": "FOO"
-                },
-                "pascalCase": {
-                  "unsafeName": "Foo",
-                  "safeName": "Foo"
-                }
-              },
+              "name": "foo",
               "wireValue": "foo"
             },
             "valueType": {
@@ -82,25 +46,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "bar",
-                "camelCase": {
-                  "unsafeName": "bar",
-                  "safeName": "bar"
-                },
-                "snakeCase": {
-                  "unsafeName": "bar",
-                  "safeName": "bar"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BAR",
-                  "safeName": "BAR"
-                },
-                "pascalCase": {
-                  "unsafeName": "Bar",
-                  "safeName": "Bar"
-                }
-              },
+              "name": "bar",
               "wireValue": "bar"
             },
             "valueType": {
@@ -183,25 +129,7 @@
           },
           "audiences": [],
           "id": "endpoint_.getSearchWithArrayUnion",
-          "name": {
-            "originalName": "getSearchWithArrayUnion",
-            "camelCase": {
-              "unsafeName": "getSearchWithArrayUnion",
-              "safeName": "getSearchWithArrayUnion"
-            },
-            "snakeCase": {
-              "unsafeName": "get_search_with_array_union",
-              "safeName": "get_search_with_array_union"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GET_SEARCH_WITH_ARRAY_UNION",
-              "safeName": "GET_SEARCH_WITH_ARRAY_UNION"
-            },
-            "pascalCase": {
-              "unsafeName": "GetSearchWithArrayUnion",
-              "safeName": "GetSearchWithArrayUnion"
-            }
-          },
+          "name": "getSearchWithArrayUnion",
           "requestBody": {
             "contentType": "application/json",
             "requestBodyType": {
@@ -382,25 +310,7 @@
           },
           "audiences": [],
           "id": "endpoint_.getSearchWithObjectUnion",
-          "name": {
-            "originalName": "getSearchWithObjectUnion",
-            "camelCase": {
-              "unsafeName": "getSearchWithObjectUnion",
-              "safeName": "getSearchWithObjectUnion"
-            },
-            "snakeCase": {
-              "unsafeName": "get_search_with_object_union",
-              "safeName": "get_search_with_object_union"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GET_SEARCH_WITH_OBJECT_UNION",
-              "safeName": "GET_SEARCH_WITH_OBJECT_UNION"
-            },
-            "pascalCase": {
-              "unsafeName": "GetSearchWithObjectUnion",
-              "safeName": "GetSearchWithObjectUnion"
-            }
-          },
+          "name": "getSearchWithObjectUnion",
           "requestBody": {
             "contentType": "application/json",
             "requestBodyType": {
@@ -410,25 +320,7 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": {
-                    "originalName": "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema",
-                    "camelCase": {
-                      "unsafeName": "searchWithObjectUnionGetRequestBodyContentApplicationJsonSchema",
-                      "safeName": "searchWithObjectUnionGetRequestBodyContentApplicationJsonSchema"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "search_with_object_union_get_request_body_content_application_json_schema",
-                      "safeName": "search_with_object_union_get_request_body_content_application_json_schema"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "SEARCH_WITH_OBJECT_UNION_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA",
-                      "safeName": "SEARCH_WITH_OBJECT_UNION_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema",
-                      "safeName": "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema"
-                    }
-                  },
+                  "name": "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema",
                   "typeId": "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema",
                   "inline": false,
                   "type": "named"
@@ -456,25 +348,7 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": {
-                        "originalName": "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema",
-                        "camelCase": {
-                          "unsafeName": "searchWithObjectUnionGetRequestBodyContentApplicationJsonSchema",
-                          "safeName": "searchWithObjectUnionGetRequestBodyContentApplicationJsonSchema"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "search_with_object_union_get_request_body_content_application_json_schema",
-                          "safeName": "search_with_object_union_get_request_body_content_application_json_schema"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "SEARCH_WITH_OBJECT_UNION_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA",
-                          "safeName": "SEARCH_WITH_OBJECT_UNION_GET_REQUEST_BODY_CONTENT_APPLICATION_JSON_SCHEMA"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema",
-                          "safeName": "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema"
-                        }
-                      },
+                      "name": "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema",
                       "typeId": "SearchWithObjectUnionGetRequestBodyContentApplicationJsonSchema",
                       "inline": false,
                       "type": "named"
@@ -614,46 +488,10 @@
       "sdkVersion": ""
     }
   },
-  "apiName": {
-    "originalName": "",
-    "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
-    }
-  },
+  "apiName": "",
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceId",
-          "safeName": "errorInstanceId"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceId",
-          "safeName": "ErrorInstanceId"
-        }
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   }

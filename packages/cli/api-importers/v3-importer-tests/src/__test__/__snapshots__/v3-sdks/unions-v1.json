@@ -12,25 +12,7 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "Shape",
-          "camelCase": {
-            "unsafeName": "shape",
-            "safeName": "shape"
-          },
-          "snakeCase": {
-            "unsafeName": "shape",
-            "safeName": "shape"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "SHAPE",
-            "safeName": "SHAPE"
-          },
-          "pascalCase": {
-            "unsafeName": "Shape",
-            "safeName": "Shape"
-          }
-        }
+        "name": "Shape"
       },
       "shape": {
         "members": [
@@ -40,25 +22,7 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "name": {
-                "originalName": "Triangle",
-                "camelCase": {
-                  "unsafeName": "triangle",
-                  "safeName": "triangle"
-                },
-                "snakeCase": {
-                  "unsafeName": "triangle",
-                  "safeName": "triangle"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "TRIANGLE",
-                  "safeName": "TRIANGLE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Triangle",
-                  "safeName": "Triangle"
-                }
-              },
+              "name": "Triangle",
               "typeId": "Triangle",
               "inline": false,
               "displayName": "Triangle",
@@ -71,25 +35,7 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "name": {
-                "originalName": "Square",
-                "camelCase": {
-                  "unsafeName": "square",
-                  "safeName": "square"
-                },
-                "snakeCase": {
-                  "unsafeName": "square",
-                  "safeName": "square"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "SQUARE",
-                  "safeName": "SQUARE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Square",
-                  "safeName": "Square"
-                }
-              },
+              "name": "Square",
               "typeId": "Square",
               "inline": false,
               "displayName": "Square",
@@ -121,49 +67,13 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "TriangleType",
-          "camelCase": {
-            "unsafeName": "triangleType",
-            "safeName": "triangleType"
-          },
-          "snakeCase": {
-            "unsafeName": "triangle_type",
-            "safeName": "triangle_type"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "TRIANGLE_TYPE",
-            "safeName": "TRIANGLE_TYPE"
-          },
-          "pascalCase": {
-            "unsafeName": "TriangleType",
-            "safeName": "TriangleType"
-          }
-        }
+        "name": "TriangleType"
       },
       "shape": {
         "values": [
           {
             "name": {
-              "name": {
-                "originalName": "triangle",
-                "camelCase": {
-                  "unsafeName": "triangle",
-                  "safeName": "triangle"
-                },
-                "snakeCase": {
-                  "unsafeName": "triangle",
-                  "safeName": "triangle"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "TRIANGLE",
-                  "safeName": "TRIANGLE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Triangle",
-                  "safeName": "Triangle"
-                }
-              },
+              "name": "triangle",
               "wireValue": "triangle"
             }
           }
@@ -188,25 +98,7 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "Triangle",
-          "camelCase": {
-            "unsafeName": "triangle",
-            "safeName": "triangle"
-          },
-          "snakeCase": {
-            "unsafeName": "triangle",
-            "safeName": "triangle"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "TRIANGLE",
-            "safeName": "TRIANGLE"
-          },
-          "pascalCase": {
-            "unsafeName": "Triangle",
-            "safeName": "Triangle"
-          }
-        }
+        "name": "Triangle"
       },
       "shape": {
         "properties": [
@@ -221,14 +113,6 @@
                 "snakeCase": {
                   "unsafeName": "type",
                   "safeName": "type_"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "TYPE",
-                  "safeName": "TYPE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Type",
-                  "safeName": "Type"
                 }
               },
               "wireValue": "type"
@@ -238,25 +122,7 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "name": {
-                "originalName": "TriangleType",
-                "camelCase": {
-                  "unsafeName": "triangleType",
-                  "safeName": "triangleType"
-                },
-                "snakeCase": {
-                  "unsafeName": "triangle_type",
-                  "safeName": "triangle_type"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "TRIANGLE_TYPE",
-                  "safeName": "TRIANGLE_TYPE"
-                },
-                "pascalCase": {
-                  "unsafeName": "TriangleType",
-                  "safeName": "TriangleType"
-                }
-              },
+              "name": "TriangleType",
               "typeId": "TriangleType",
               "inline": false,
               "type": "named"
@@ -270,25 +136,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "base",
-                "camelCase": {
-                  "unsafeName": "base",
-                  "safeName": "base"
-                },
-                "snakeCase": {
-                  "unsafeName": "base",
-                  "safeName": "base"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BASE",
-                  "safeName": "BASE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Base",
-                  "safeName": "Base"
-                }
-              },
+              "name": "base",
               "wireValue": "base"
             },
             "valueType": {
@@ -310,25 +158,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "height",
-                "camelCase": {
-                  "unsafeName": "height",
-                  "safeName": "height"
-                },
-                "snakeCase": {
-                  "unsafeName": "height",
-                  "safeName": "height"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "HEIGHT",
-                  "safeName": "HEIGHT"
-                },
-                "pascalCase": {
-                  "unsafeName": "Height",
-                  "safeName": "Height"
-                }
-              },
+              "name": "height",
               "wireValue": "height"
             },
             "valueType": {
@@ -376,49 +206,13 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "SquareType",
-          "camelCase": {
-            "unsafeName": "squareType",
-            "safeName": "squareType"
-          },
-          "snakeCase": {
-            "unsafeName": "square_type",
-            "safeName": "square_type"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "SQUARE_TYPE",
-            "safeName": "SQUARE_TYPE"
-          },
-          "pascalCase": {
-            "unsafeName": "SquareType",
-            "safeName": "SquareType"
-          }
-        }
+        "name": "SquareType"
       },
       "shape": {
         "values": [
           {
             "name": {
-              "name": {
-                "originalName": "square",
-                "camelCase": {
-                  "unsafeName": "square",
-                  "safeName": "square"
-                },
-                "snakeCase": {
-                  "unsafeName": "square",
-                  "safeName": "square"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "SQUARE",
-                  "safeName": "SQUARE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Square",
-                  "safeName": "Square"
-                }
-              },
+              "name": "square",
               "wireValue": "square"
             }
           }
@@ -443,25 +237,7 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "Square",
-          "camelCase": {
-            "unsafeName": "square",
-            "safeName": "square"
-          },
-          "snakeCase": {
-            "unsafeName": "square",
-            "safeName": "square"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "SQUARE",
-            "safeName": "SQUARE"
-          },
-          "pascalCase": {
-            "unsafeName": "Square",
-            "safeName": "Square"
-          }
-        }
+        "name": "Square"
       },
       "shape": {
         "properties": [
@@ -476,14 +252,6 @@
                 "snakeCase": {
                   "unsafeName": "type",
                   "safeName": "type_"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "TYPE",
-                  "safeName": "TYPE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Type",
-                  "safeName": "Type"
                 }
               },
               "wireValue": "type"
@@ -493,25 +261,7 @@
                 "allParts": [],
                 "packagePath": []
               },
-              "name": {
-                "originalName": "SquareType",
-                "camelCase": {
-                  "unsafeName": "squareType",
-                  "safeName": "squareType"
-                },
-                "snakeCase": {
-                  "unsafeName": "square_type",
-                  "safeName": "square_type"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "SQUARE_TYPE",
-                  "safeName": "SQUARE_TYPE"
-                },
-                "pascalCase": {
-                  "unsafeName": "SquareType",
-                  "safeName": "SquareType"
-                }
-              },
+              "name": "SquareType",
               "typeId": "SquareType",
               "inline": false,
               "type": "named"
@@ -525,25 +275,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "sideLength",
-                "camelCase": {
-                  "unsafeName": "sideLength",
-                  "safeName": "sideLength"
-                },
-                "snakeCase": {
-                  "unsafeName": "side_length",
-                  "safeName": "side_length"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "SIDE_LENGTH",
-                  "safeName": "SIDE_LENGTH"
-                },
-                "pascalCase": {
-                  "unsafeName": "SideLength",
-                  "safeName": "SideLength"
-                }
-              },
+              "name": "sideLength",
               "wireValue": "sideLength"
             },
             "valueType": {
@@ -624,46 +356,10 @@
       "sdkVersion": ""
     }
   },
-  "apiName": {
-    "originalName": "",
-    "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
-    }
-  },
+  "apiName": "",
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceId",
-          "safeName": "errorInstanceId"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceId",
-          "safeName": "ErrorInstanceId"
-        }
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   }

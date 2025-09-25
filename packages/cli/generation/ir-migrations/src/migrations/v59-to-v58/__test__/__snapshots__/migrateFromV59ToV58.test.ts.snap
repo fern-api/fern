@@ -1252,7 +1252,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-explicit 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "b6ae4d38",
+                "id": "73c36a05",
                 "name": null,
                 "queryParameters": [],
                 "request": {
@@ -1527,25 +1527,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-explicit 1`] = `
                                       },
                                     },
                                   ],
-                                  "file": {
-                                    "camelCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                    "originalName": "auth",
-                                    "pascalCase": {
-                                      "safeName": "Auth",
-                                      "unsafeName": "Auth",
-                                    },
-                                    "screamingSnakeCase": {
-                                      "safeName": "AUTH",
-                                      "unsafeName": "AUTH",
-                                    },
-                                    "snakeCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                  },
+                                  "file": "auth",
                                   "packagePath": [],
                                 },
                                 "name": {
@@ -1629,25 +1611,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-explicit 1`] = `
                                       },
                                     },
                                   ],
-                                  "file": {
-                                    "camelCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                    "originalName": "auth",
-                                    "pascalCase": {
-                                      "safeName": "Auth",
-                                      "unsafeName": "Auth",
-                                    },
-                                    "screamingSnakeCase": {
-                                      "safeName": "AUTH",
-                                      "unsafeName": "AUTH",
-                                    },
-                                    "snakeCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                  },
+                                  "file": "auth",
                                   "packagePath": [],
                                 },
                                 "name": {
@@ -1729,25 +1693,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-explicit 1`] = `
                                       },
                                     },
                                   ],
-                                  "file": {
-                                    "camelCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                    "originalName": "auth",
-                                    "pascalCase": {
-                                      "safeName": "Auth",
-                                      "unsafeName": "Auth",
-                                    },
-                                    "screamingSnakeCase": {
-                                      "safeName": "AUTH",
-                                      "unsafeName": "AUTH",
-                                    },
-                                    "snakeCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                  },
+                                  "file": "auth",
                                   "packagePath": [],
                                 },
                                 "name": {
@@ -1832,25 +1778,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-explicit 1`] = `
                                 },
                               },
                             ],
-                            "file": {
-                              "camelCase": {
-                                "safeName": "auth",
-                                "unsafeName": "auth",
-                              },
-                              "originalName": "auth",
-                              "pascalCase": {
-                                "safeName": "Auth",
-                                "unsafeName": "Auth",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "AUTH",
-                                "unsafeName": "AUTH",
-                              },
-                              "snakeCase": {
-                                "safeName": "auth",
-                                "unsafeName": "auth",
-                              },
-                            },
+                            "file": "auth",
                             "packagePath": [],
                           },
                           "name": {
@@ -2200,25 +2128,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-explicit 1`] = `
                         },
                       },
                     ],
-                    "file": {
-                      "camelCase": {
-                        "safeName": "auth",
-                        "unsafeName": "auth",
-                      },
-                      "originalName": "auth",
-                      "pascalCase": {
-                        "safeName": "Auth",
-                        "unsafeName": "Auth",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "AUTH",
-                        "unsafeName": "AUTH",
-                      },
-                      "snakeCase": {
-                        "safeName": "auth",
-                        "unsafeName": "auth",
-                      },
-                    },
+                    "file": "auth",
                     "packagePath": [],
                   },
                   "inline": null,
@@ -2332,7 +2242,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-explicit 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "471ddf53",
+                "id": "a8667c89",
                 "name": null,
                 "queryParameters": [],
                 "request": {
@@ -2645,25 +2555,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-explicit 1`] = `
                                       },
                                     },
                                   ],
-                                  "file": {
-                                    "camelCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                    "originalName": "auth",
-                                    "pascalCase": {
-                                      "safeName": "Auth",
-                                      "unsafeName": "Auth",
-                                    },
-                                    "screamingSnakeCase": {
-                                      "safeName": "AUTH",
-                                      "unsafeName": "AUTH",
-                                    },
-                                    "snakeCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                  },
+                                  "file": "auth",
                                   "packagePath": [],
                                 },
                                 "name": {
@@ -2747,25 +2639,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-explicit 1`] = `
                                       },
                                     },
                                   ],
-                                  "file": {
-                                    "camelCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                    "originalName": "auth",
-                                    "pascalCase": {
-                                      "safeName": "Auth",
-                                      "unsafeName": "Auth",
-                                    },
-                                    "screamingSnakeCase": {
-                                      "safeName": "AUTH",
-                                      "unsafeName": "AUTH",
-                                    },
-                                    "snakeCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                  },
+                                  "file": "auth",
                                   "packagePath": [],
                                 },
                                 "name": {
@@ -2847,25 +2721,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-explicit 1`] = `
                                       },
                                     },
                                   ],
-                                  "file": {
-                                    "camelCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                    "originalName": "auth",
-                                    "pascalCase": {
-                                      "safeName": "Auth",
-                                      "unsafeName": "Auth",
-                                    },
-                                    "screamingSnakeCase": {
-                                      "safeName": "AUTH",
-                                      "unsafeName": "AUTH",
-                                    },
-                                    "snakeCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                  },
+                                  "file": "auth",
                                   "packagePath": [],
                                 },
                                 "name": {
@@ -2950,25 +2806,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-explicit 1`] = `
                                 },
                               },
                             ],
-                            "file": {
-                              "camelCase": {
-                                "safeName": "auth",
-                                "unsafeName": "auth",
-                              },
-                              "originalName": "auth",
-                              "pascalCase": {
-                                "safeName": "Auth",
-                                "unsafeName": "Auth",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "AUTH",
-                                "unsafeName": "AUTH",
-                              },
-                              "snakeCase": {
-                                "safeName": "auth",
-                                "unsafeName": "auth",
-                              },
-                            },
+                            "file": "auth",
                             "packagePath": [],
                           },
                           "name": {
@@ -3360,25 +3198,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-explicit 1`] = `
                         },
                       },
                     ],
-                    "file": {
-                      "camelCase": {
-                        "safeName": "auth",
-                        "unsafeName": "auth",
-                      },
-                      "originalName": "auth",
-                      "pascalCase": {
-                        "safeName": "Auth",
-                        "unsafeName": "Auth",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "AUTH",
-                        "unsafeName": "AUTH",
-                      },
-                      "snakeCase": {
-                        "safeName": "auth",
-                        "unsafeName": "auth",
-                      },
-                    },
+                    "file": "auth",
                     "packagePath": [],
                   },
                   "inline": null,
@@ -3507,25 +3327,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-explicit 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "auth",
-              "unsafeName": "auth",
-            },
-            "originalName": "auth",
-            "pascalCase": {
-              "safeName": "Auth",
-              "unsafeName": "Auth",
-            },
-            "screamingSnakeCase": {
-              "safeName": "AUTH",
-              "unsafeName": "AUTH",
-            },
-            "snakeCase": {
-              "safeName": "auth",
-              "unsafeName": "auth",
-            },
-          },
+          "file": "auth",
           "packagePath": [],
         },
       },
@@ -3674,23 +3476,14 @@ exports[`migrateFromV59ToV58 > inferred-auth-explicit 1`] = `
             },
           ],
           "file": {
-            "camelCase": {
-              "safeName": "api",
-              "unsafeName": "api",
-            },
+            "camelCase": null,
             "originalName": "api",
             "pascalCase": {
               "safeName": "API",
               "unsafeName": "API",
             },
-            "screamingSnakeCase": {
-              "safeName": "API",
-              "unsafeName": "API",
-            },
-            "snakeCase": {
-              "safeName": "api",
-              "unsafeName": "api",
-            },
+            "screamingSnakeCase": null,
+            "snakeCase": null,
           },
           "packagePath": [
             {
@@ -3860,23 +3653,14 @@ exports[`migrateFromV59ToV58 > inferred-auth-explicit 1`] = `
             },
           ],
           "file": {
-            "camelCase": {
-              "safeName": "api",
-              "unsafeName": "api",
-            },
+            "camelCase": null,
             "originalName": "api",
             "pascalCase": {
               "safeName": "API",
               "unsafeName": "API",
             },
-            "screamingSnakeCase": {
-              "safeName": "API",
-              "unsafeName": "API",
-            },
-            "snakeCase": {
-              "safeName": "api",
-              "unsafeName": "api",
-            },
+            "screamingSnakeCase": null,
+            "snakeCase": null,
           },
           "packagePath": [
             {
@@ -4026,25 +3810,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-explicit 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "simple",
-              "unsafeName": "simple",
-            },
-            "originalName": "simple",
-            "pascalCase": {
-              "safeName": "Simple",
-              "unsafeName": "Simple",
-            },
-            "screamingSnakeCase": {
-              "safeName": "SIMPLE",
-              "unsafeName": "SIMPLE",
-            },
-            "snakeCase": {
-              "safeName": "simple",
-              "unsafeName": "simple",
-            },
-          },
+          "file": "simple",
           "packagePath": [],
         },
       },
@@ -4082,25 +3848,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-explicit 1`] = `
             },
           },
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "auth",
-            "unsafeName": "auth",
-          },
-          "originalName": "auth",
-          "pascalCase": {
-            "safeName": "Auth",
-            "unsafeName": "Auth",
-          },
-          "screamingSnakeCase": {
-            "safeName": "AUTH",
-            "unsafeName": "AUTH",
-          },
-          "snakeCase": {
-            "safeName": "auth",
-            "unsafeName": "auth",
-          },
-        },
+        "file": "auth",
         "packagePath": [],
       },
       "hasEndpointsInTree": true,
@@ -4334,23 +4082,14 @@ exports[`migrateFromV59ToV58 > inferred-auth-explicit 1`] = `
           },
         ],
         "file": {
-          "camelCase": {
-            "safeName": "api",
-            "unsafeName": "api",
-          },
+          "camelCase": null,
           "originalName": "api",
           "pascalCase": {
             "safeName": "API",
             "unsafeName": "API",
           },
-          "screamingSnakeCase": {
-            "safeName": "API",
-            "unsafeName": "API",
-          },
-          "snakeCase": {
-            "safeName": "api",
-            "unsafeName": "api",
-          },
+          "screamingSnakeCase": null,
+          "snakeCase": null,
         },
         "packagePath": [
           {
@@ -4447,23 +4186,14 @@ exports[`migrateFromV59ToV58 > inferred-auth-explicit 1`] = `
           },
         ],
         "file": {
-          "camelCase": {
-            "safeName": "api",
-            "unsafeName": "api",
-          },
+          "camelCase": null,
           "originalName": "api",
           "pascalCase": {
             "safeName": "API",
             "unsafeName": "API",
           },
-          "screamingSnakeCase": {
-            "safeName": "API",
-            "unsafeName": "API",
-          },
-          "snakeCase": {
-            "safeName": "api",
-            "unsafeName": "api",
-          },
+          "screamingSnakeCase": null,
+          "snakeCase": null,
         },
         "packagePath": [
           {
@@ -4540,25 +4270,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-explicit 1`] = `
             },
           },
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "simple",
-            "unsafeName": "simple",
-          },
-          "originalName": "simple",
-          "pascalCase": {
-            "safeName": "Simple",
-            "unsafeName": "Simple",
-          },
-          "screamingSnakeCase": {
-            "safeName": "SIMPLE",
-            "unsafeName": "SIMPLE",
-          },
-          "snakeCase": {
-            "safeName": "simple",
-            "unsafeName": "simple",
-          },
-        },
+        "file": "simple",
         "packagePath": [],
       },
       "hasEndpointsInTree": true,
@@ -4623,25 +4335,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-explicit 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "auth",
-              "unsafeName": "auth",
-            },
-            "originalName": "auth",
-            "pascalCase": {
-              "safeName": "Auth",
-              "unsafeName": "Auth",
-            },
-            "screamingSnakeCase": {
-              "safeName": "AUTH",
-              "unsafeName": "AUTH",
-            },
-            "snakeCase": {
-              "safeName": "auth",
-              "unsafeName": "auth",
-            },
-          },
+          "file": "auth",
           "packagePath": [],
         },
         "name": {
@@ -6069,7 +5763,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-implicit 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "b6ae4d38",
+                "id": "73c36a05",
                 "name": null,
                 "queryParameters": [],
                 "request": {
@@ -6344,25 +6038,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-implicit 1`] = `
                                       },
                                     },
                                   ],
-                                  "file": {
-                                    "camelCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                    "originalName": "auth",
-                                    "pascalCase": {
-                                      "safeName": "Auth",
-                                      "unsafeName": "Auth",
-                                    },
-                                    "screamingSnakeCase": {
-                                      "safeName": "AUTH",
-                                      "unsafeName": "AUTH",
-                                    },
-                                    "snakeCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                  },
+                                  "file": "auth",
                                   "packagePath": [],
                                 },
                                 "name": {
@@ -6446,25 +6122,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-implicit 1`] = `
                                       },
                                     },
                                   ],
-                                  "file": {
-                                    "camelCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                    "originalName": "auth",
-                                    "pascalCase": {
-                                      "safeName": "Auth",
-                                      "unsafeName": "Auth",
-                                    },
-                                    "screamingSnakeCase": {
-                                      "safeName": "AUTH",
-                                      "unsafeName": "AUTH",
-                                    },
-                                    "snakeCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                  },
+                                  "file": "auth",
                                   "packagePath": [],
                                 },
                                 "name": {
@@ -6546,25 +6204,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-implicit 1`] = `
                                       },
                                     },
                                   ],
-                                  "file": {
-                                    "camelCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                    "originalName": "auth",
-                                    "pascalCase": {
-                                      "safeName": "Auth",
-                                      "unsafeName": "Auth",
-                                    },
-                                    "screamingSnakeCase": {
-                                      "safeName": "AUTH",
-                                      "unsafeName": "AUTH",
-                                    },
-                                    "snakeCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                  },
+                                  "file": "auth",
                                   "packagePath": [],
                                 },
                                 "name": {
@@ -6649,25 +6289,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-implicit 1`] = `
                                 },
                               },
                             ],
-                            "file": {
-                              "camelCase": {
-                                "safeName": "auth",
-                                "unsafeName": "auth",
-                              },
-                              "originalName": "auth",
-                              "pascalCase": {
-                                "safeName": "Auth",
-                                "unsafeName": "Auth",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "AUTH",
-                                "unsafeName": "AUTH",
-                              },
-                              "snakeCase": {
-                                "safeName": "auth",
-                                "unsafeName": "auth",
-                              },
-                            },
+                            "file": "auth",
                             "packagePath": [],
                           },
                           "name": {
@@ -7017,25 +6639,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-implicit 1`] = `
                         },
                       },
                     ],
-                    "file": {
-                      "camelCase": {
-                        "safeName": "auth",
-                        "unsafeName": "auth",
-                      },
-                      "originalName": "auth",
-                      "pascalCase": {
-                        "safeName": "Auth",
-                        "unsafeName": "Auth",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "AUTH",
-                        "unsafeName": "AUTH",
-                      },
-                      "snakeCase": {
-                        "safeName": "auth",
-                        "unsafeName": "auth",
-                      },
-                    },
+                    "file": "auth",
                     "packagePath": [],
                   },
                   "inline": null,
@@ -7149,7 +6753,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-implicit 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "471ddf53",
+                "id": "a8667c89",
                 "name": null,
                 "queryParameters": [],
                 "request": {
@@ -7462,25 +7066,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-implicit 1`] = `
                                       },
                                     },
                                   ],
-                                  "file": {
-                                    "camelCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                    "originalName": "auth",
-                                    "pascalCase": {
-                                      "safeName": "Auth",
-                                      "unsafeName": "Auth",
-                                    },
-                                    "screamingSnakeCase": {
-                                      "safeName": "AUTH",
-                                      "unsafeName": "AUTH",
-                                    },
-                                    "snakeCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                  },
+                                  "file": "auth",
                                   "packagePath": [],
                                 },
                                 "name": {
@@ -7564,25 +7150,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-implicit 1`] = `
                                       },
                                     },
                                   ],
-                                  "file": {
-                                    "camelCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                    "originalName": "auth",
-                                    "pascalCase": {
-                                      "safeName": "Auth",
-                                      "unsafeName": "Auth",
-                                    },
-                                    "screamingSnakeCase": {
-                                      "safeName": "AUTH",
-                                      "unsafeName": "AUTH",
-                                    },
-                                    "snakeCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                  },
+                                  "file": "auth",
                                   "packagePath": [],
                                 },
                                 "name": {
@@ -7664,25 +7232,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-implicit 1`] = `
                                       },
                                     },
                                   ],
-                                  "file": {
-                                    "camelCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                    "originalName": "auth",
-                                    "pascalCase": {
-                                      "safeName": "Auth",
-                                      "unsafeName": "Auth",
-                                    },
-                                    "screamingSnakeCase": {
-                                      "safeName": "AUTH",
-                                      "unsafeName": "AUTH",
-                                    },
-                                    "snakeCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                  },
+                                  "file": "auth",
                                   "packagePath": [],
                                 },
                                 "name": {
@@ -7767,25 +7317,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-implicit 1`] = `
                                 },
                               },
                             ],
-                            "file": {
-                              "camelCase": {
-                                "safeName": "auth",
-                                "unsafeName": "auth",
-                              },
-                              "originalName": "auth",
-                              "pascalCase": {
-                                "safeName": "Auth",
-                                "unsafeName": "Auth",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "AUTH",
-                                "unsafeName": "AUTH",
-                              },
-                              "snakeCase": {
-                                "safeName": "auth",
-                                "unsafeName": "auth",
-                              },
-                            },
+                            "file": "auth",
                             "packagePath": [],
                           },
                           "name": {
@@ -8177,25 +7709,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-implicit 1`] = `
                         },
                       },
                     ],
-                    "file": {
-                      "camelCase": {
-                        "safeName": "auth",
-                        "unsafeName": "auth",
-                      },
-                      "originalName": "auth",
-                      "pascalCase": {
-                        "safeName": "Auth",
-                        "unsafeName": "Auth",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "AUTH",
-                        "unsafeName": "AUTH",
-                      },
-                      "snakeCase": {
-                        "safeName": "auth",
-                        "unsafeName": "auth",
-                      },
-                    },
+                    "file": "auth",
                     "packagePath": [],
                   },
                   "inline": null,
@@ -8324,25 +7838,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-implicit 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "auth",
-              "unsafeName": "auth",
-            },
-            "originalName": "auth",
-            "pascalCase": {
-              "safeName": "Auth",
-              "unsafeName": "Auth",
-            },
-            "screamingSnakeCase": {
-              "safeName": "AUTH",
-              "unsafeName": "AUTH",
-            },
-            "snakeCase": {
-              "safeName": "auth",
-              "unsafeName": "auth",
-            },
-          },
+          "file": "auth",
           "packagePath": [],
         },
       },
@@ -8491,23 +7987,14 @@ exports[`migrateFromV59ToV58 > inferred-auth-implicit 1`] = `
             },
           ],
           "file": {
-            "camelCase": {
-              "safeName": "api",
-              "unsafeName": "api",
-            },
+            "camelCase": null,
             "originalName": "api",
             "pascalCase": {
               "safeName": "API",
               "unsafeName": "API",
             },
-            "screamingSnakeCase": {
-              "safeName": "API",
-              "unsafeName": "API",
-            },
-            "snakeCase": {
-              "safeName": "api",
-              "unsafeName": "api",
-            },
+            "screamingSnakeCase": null,
+            "snakeCase": null,
           },
           "packagePath": [
             {
@@ -8677,23 +8164,14 @@ exports[`migrateFromV59ToV58 > inferred-auth-implicit 1`] = `
             },
           ],
           "file": {
-            "camelCase": {
-              "safeName": "api",
-              "unsafeName": "api",
-            },
+            "camelCase": null,
             "originalName": "api",
             "pascalCase": {
               "safeName": "API",
               "unsafeName": "API",
             },
-            "screamingSnakeCase": {
-              "safeName": "API",
-              "unsafeName": "API",
-            },
-            "snakeCase": {
-              "safeName": "api",
-              "unsafeName": "api",
-            },
+            "screamingSnakeCase": null,
+            "snakeCase": null,
           },
           "packagePath": [
             {
@@ -8843,25 +8321,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-implicit 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "simple",
-              "unsafeName": "simple",
-            },
-            "originalName": "simple",
-            "pascalCase": {
-              "safeName": "Simple",
-              "unsafeName": "Simple",
-            },
-            "screamingSnakeCase": {
-              "safeName": "SIMPLE",
-              "unsafeName": "SIMPLE",
-            },
-            "snakeCase": {
-              "safeName": "simple",
-              "unsafeName": "simple",
-            },
-          },
+          "file": "simple",
           "packagePath": [],
         },
       },
@@ -8899,25 +8359,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-implicit 1`] = `
             },
           },
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "auth",
-            "unsafeName": "auth",
-          },
-          "originalName": "auth",
-          "pascalCase": {
-            "safeName": "Auth",
-            "unsafeName": "Auth",
-          },
-          "screamingSnakeCase": {
-            "safeName": "AUTH",
-            "unsafeName": "AUTH",
-          },
-          "snakeCase": {
-            "safeName": "auth",
-            "unsafeName": "auth",
-          },
-        },
+        "file": "auth",
         "packagePath": [],
       },
       "hasEndpointsInTree": true,
@@ -9151,23 +8593,14 @@ exports[`migrateFromV59ToV58 > inferred-auth-implicit 1`] = `
           },
         ],
         "file": {
-          "camelCase": {
-            "safeName": "api",
-            "unsafeName": "api",
-          },
+          "camelCase": null,
           "originalName": "api",
           "pascalCase": {
             "safeName": "API",
             "unsafeName": "API",
           },
-          "screamingSnakeCase": {
-            "safeName": "API",
-            "unsafeName": "API",
-          },
-          "snakeCase": {
-            "safeName": "api",
-            "unsafeName": "api",
-          },
+          "screamingSnakeCase": null,
+          "snakeCase": null,
         },
         "packagePath": [
           {
@@ -9264,23 +8697,14 @@ exports[`migrateFromV59ToV58 > inferred-auth-implicit 1`] = `
           },
         ],
         "file": {
-          "camelCase": {
-            "safeName": "api",
-            "unsafeName": "api",
-          },
+          "camelCase": null,
           "originalName": "api",
           "pascalCase": {
             "safeName": "API",
             "unsafeName": "API",
           },
-          "screamingSnakeCase": {
-            "safeName": "API",
-            "unsafeName": "API",
-          },
-          "snakeCase": {
-            "safeName": "api",
-            "unsafeName": "api",
-          },
+          "screamingSnakeCase": null,
+          "snakeCase": null,
         },
         "packagePath": [
           {
@@ -9357,25 +8781,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-implicit 1`] = `
             },
           },
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "simple",
-            "unsafeName": "simple",
-          },
-          "originalName": "simple",
-          "pascalCase": {
-            "safeName": "Simple",
-            "unsafeName": "Simple",
-          },
-          "screamingSnakeCase": {
-            "safeName": "SIMPLE",
-            "unsafeName": "SIMPLE",
-          },
-          "snakeCase": {
-            "safeName": "simple",
-            "unsafeName": "simple",
-          },
-        },
+        "file": "simple",
         "packagePath": [],
       },
       "hasEndpointsInTree": true,
@@ -9440,25 +8846,7 @@ exports[`migrateFromV59ToV58 > inferred-auth-implicit 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "auth",
-              "unsafeName": "auth",
-            },
-            "originalName": "auth",
-            "pascalCase": {
-              "safeName": "Auth",
-              "unsafeName": "Auth",
-            },
-            "screamingSnakeCase": {
-              "safeName": "AUTH",
-              "unsafeName": "AUTH",
-            },
-            "snakeCase": {
-              "safeName": "auth",
-              "unsafeName": "auth",
-            },
-          },
+          "file": "auth",
           "packagePath": [],
         },
         "name": {

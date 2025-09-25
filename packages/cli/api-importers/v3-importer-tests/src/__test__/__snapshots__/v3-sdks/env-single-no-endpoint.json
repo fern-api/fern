@@ -76,25 +76,7 @@
           },
           "audiences": [],
           "id": "endpoint_.list",
-          "name": {
-            "originalName": "list",
-            "camelCase": {
-              "unsafeName": "list",
-              "safeName": "list"
-            },
-            "snakeCase": {
-              "unsafeName": "list",
-              "safeName": "list"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "LIST",
-              "safeName": "LIST"
-            },
-            "pascalCase": {
-              "unsafeName": "List",
-              "safeName": "List"
-            }
-          },
+          "name": "list",
           "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
@@ -200,25 +182,7 @@
       "environments": [
         {
           "id": "Prod",
-          "name": {
-            "originalName": "Prod",
-            "camelCase": {
-              "unsafeName": "prod",
-              "safeName": "prod"
-            },
-            "snakeCase": {
-              "unsafeName": "prod",
-              "safeName": "prod"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "PROD",
-              "safeName": "PROD"
-            },
-            "pascalCase": {
-              "unsafeName": "Prod",
-              "safeName": "Prod"
-            }
-          },
+          "name": "Prod",
           "url": "http://prod.api.com"
         }
       ],
@@ -248,46 +212,10 @@
       "sdkVersion": ""
     }
   },
-  "apiName": {
-    "originalName": "",
-    "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
-    }
-  },
+  "apiName": "",
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceId",
-          "safeName": "errorInstanceId"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceId",
-          "safeName": "ErrorInstanceId"
-        }
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   }

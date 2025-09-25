@@ -2,25 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": {
-        "originalName": "objects-with-imports",
-        "camelCase": {
-            "unsafeName": "objectsWithImports",
-            "safeName": "objectsWithImports"
-        },
-        "snakeCase": {
-            "unsafeName": "objects_with_imports",
-            "safeName": "objects_with_imports"
-        },
-        "screamingSnakeCase": {
-            "unsafeName": "OBJECTS_WITH_IMPORTS",
-            "safeName": "OBJECTS_WITH_IMPORTS"
-        },
-        "pascalCase": {
-            "unsafeName": "ObjectsWithImports",
-            "safeName": "ObjectsWithImports"
-        }
-    },
+    "apiName": "objects-with-imports",
     "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
@@ -38,46 +20,10 @@
             "name": {
                 "fernFilepath": {
                     "allParts": [
-                        {
-                            "originalName": "optional",
-                            "camelCase": {
-                                "unsafeName": "optional",
-                                "safeName": "optional"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "optional",
-                                "safeName": "optional"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "OPTIONAL",
-                                "safeName": "OPTIONAL"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Optional",
-                                "safeName": "Optional"
-                            }
-                        }
+                        "optional"
                     ],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "optional",
-                        "camelCase": {
-                            "unsafeName": "optional",
-                            "safeName": "optional"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "optional",
-                            "safeName": "optional"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "OPTIONAL",
-                            "safeName": "OPTIONAL"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Optional",
-                            "safeName": "Optional"
-                        }
-                    }
+                    "file": "optional"
                 }
             },
             "displayName": null,
@@ -97,25 +43,7 @@
             "endpoints": [
                 {
                     "id": "endpoint_optional.sendOptionalBody",
-                    "name": {
-                        "originalName": "sendOptionalBody",
-                        "camelCase": {
-                            "unsafeName": "sendOptionalBody",
-                            "safeName": "sendOptionalBody"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "send_optional_body",
-                            "safeName": "send_optional_body"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "SEND_OPTIONAL_BODY",
-                            "safeName": "SEND_OPTIONAL_BODY"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "SendOptionalBody",
-                            "safeName": "SendOptionalBody"
-                        }
-                    },
+                    "name": "sendOptionalBody",
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -205,25 +133,7 @@
                                 "v2Examples": null
                             }
                         },
-                        "requestParameterName": {
-                            "originalName": "request",
-                            "camelCase": {
-                                "unsafeName": "request",
-                                "safeName": "request"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "request",
-                                "safeName": "request"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "REQUEST",
-                                "safeName": "REQUEST"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Request",
-                                "safeName": "Request"
-                            }
-                        },
+                        "requestParameterName": "request",
                         "streamParameter": null
                     },
                     "response": {
@@ -336,14 +246,8 @@
                     "unsafeName": "errorInstanceID",
                     "safeName": "errorInstanceID"
                 },
-                "snakeCase": {
-                    "unsafeName": "error_instance_id",
-                    "safeName": "error_instance_id"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "ERROR_INSTANCE_ID",
-                    "safeName": "ERROR_INSTANCE_ID"
-                },
+                "snakeCase": null,
+                "screamingSnakeCase": null,
                 "pascalCase": {
                     "unsafeName": "ErrorInstanceID",
                     "safeName": "ErrorInstanceID"
@@ -477,68 +381,14 @@
     "audiences": null,
     "subpackages": {
         "subpackage_optional": {
-            "name": {
-                "originalName": "optional",
-                "camelCase": {
-                    "unsafeName": "optional",
-                    "safeName": "optional"
-                },
-                "snakeCase": {
-                    "unsafeName": "optional",
-                    "safeName": "optional"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "OPTIONAL",
-                    "safeName": "OPTIONAL"
-                },
-                "pascalCase": {
-                    "unsafeName": "Optional",
-                    "safeName": "Optional"
-                }
-            },
+            "name": "optional",
             "displayName": null,
             "fernFilepath": {
                 "allParts": [
-                    {
-                        "originalName": "optional",
-                        "camelCase": {
-                            "unsafeName": "optional",
-                            "safeName": "optional"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "optional",
-                            "safeName": "optional"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "OPTIONAL",
-                            "safeName": "OPTIONAL"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Optional",
-                            "safeName": "Optional"
-                        }
-                    }
+                    "optional"
                 ],
                 "packagePath": [],
-                "file": {
-                    "originalName": "optional",
-                    "camelCase": {
-                        "unsafeName": "optional",
-                        "safeName": "optional"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "optional",
-                        "safeName": "optional"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "OPTIONAL",
-                        "safeName": "OPTIONAL"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Optional",
-                        "safeName": "Optional"
-                    }
-                }
+                "file": "optional"
             },
             "service": "service_optional",
             "types": [],

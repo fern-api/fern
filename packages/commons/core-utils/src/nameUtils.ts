@@ -42,21 +42,17 @@ export const expandNameAndWireValue = (nameAndWireValue: NameAndWireValue): Expa
 export const expandName = (name: Name): ExpandedName => {
     const originalName = getOriginalName(name);
     const camelCaseName = camelCase(originalName);
-    const pascalCaseName = upperFirst(camelCaseName);
     const snakeCaseName = snakeCase(originalName);
     const screamingSnakeCaseName = snakeCaseName.toUpperCase();
+    const pascalCaseName = upperFirst(camelCaseName);
 
     if (typeof name !== "string") {
-        const { camelCase, pascalCase, snakeCase, screamingSnakeCase } = name;
+        const { camelCase, snakeCase, screamingSnakeCase, pascalCase } = name;
         return {
             originalName,
             camelCase: camelCase ?? {
                 unsafeName: camelCaseName,
                 safeName: camelCaseName
-            },
-            pascalCase: pascalCase ?? {
-                unsafeName: pascalCaseName,
-                safeName: pascalCaseName
             },
             snakeCase: snakeCase ?? {
                 unsafeName: snakeCaseName,
@@ -65,6 +61,10 @@ export const expandName = (name: Name): ExpandedName => {
             screamingSnakeCase: screamingSnakeCase ?? {
                 unsafeName: screamingSnakeCaseName,
                 safeName: screamingSnakeCaseName
+            },
+            pascalCase: pascalCase ?? {
+                unsafeName: pascalCaseName,
+                safeName: pascalCaseName
             }
         };
     }
@@ -75,10 +75,6 @@ export const expandName = (name: Name): ExpandedName => {
             unsafeName: camelCaseName,
             safeName: camelCaseName
         },
-        pascalCase: {
-            unsafeName: pascalCaseName,
-            safeName: pascalCaseName
-        },
         snakeCase: {
             unsafeName: snakeCaseName,
             safeName: snakeCaseName
@@ -86,7 +82,11 @@ export const expandName = (name: Name): ExpandedName => {
         screamingSnakeCase: {
             unsafeName: screamingSnakeCaseName,
             safeName: screamingSnakeCaseName
-        }
+        },
+        pascalCase: {
+            unsafeName: pascalCaseName,
+            safeName: pascalCaseName
+        },
     };
 };
 

@@ -1478,7 +1478,7 @@
                   },
                 ],
                 "endpointPathParameters": [],
-                "id": "415ca04d",
+                "id": "d4a9a722",
                 "name": null,
                 "queryParameters": [],
                 "request": {
@@ -1753,25 +1753,7 @@
                                       },
                                     },
                                   ],
-                                  "file": {
-                                    "camelCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                    "originalName": "auth",
-                                    "pascalCase": {
-                                      "safeName": "Auth",
-                                      "unsafeName": "Auth",
-                                    },
-                                    "screamingSnakeCase": {
-                                      "safeName": "AUTH",
-                                      "unsafeName": "AUTH",
-                                    },
-                                    "snakeCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                  },
+                                  "file": "auth",
                                   "packagePath": [],
                                 },
                                 "name": {
@@ -1856,25 +1838,7 @@
                                       },
                                     },
                                   ],
-                                  "file": {
-                                    "camelCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                    "originalName": "auth",
-                                    "pascalCase": {
-                                      "safeName": "Auth",
-                                      "unsafeName": "Auth",
-                                    },
-                                    "screamingSnakeCase": {
-                                      "safeName": "AUTH",
-                                      "unsafeName": "AUTH",
-                                    },
-                                    "snakeCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                  },
+                                  "file": "auth",
                                   "packagePath": [],
                                 },
                                 "name": {
@@ -1957,25 +1921,7 @@
                                       },
                                     },
                                   ],
-                                  "file": {
-                                    "camelCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                    "originalName": "auth",
-                                    "pascalCase": {
-                                      "safeName": "Auth",
-                                      "unsafeName": "Auth",
-                                    },
-                                    "screamingSnakeCase": {
-                                      "safeName": "AUTH",
-                                      "unsafeName": "AUTH",
-                                    },
-                                    "snakeCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                  },
+                                  "file": "auth",
                                   "packagePath": [],
                                 },
                                 "name": {
@@ -2061,25 +2007,7 @@
                                 },
                               },
                             ],
-                            "file": {
-                              "camelCase": {
-                                "safeName": "auth",
-                                "unsafeName": "auth",
-                              },
-                              "originalName": "auth",
-                              "pascalCase": {
-                                "safeName": "Auth",
-                                "unsafeName": "Auth",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "AUTH",
-                                "unsafeName": "AUTH",
-                              },
-                              "snakeCase": {
-                                "safeName": "auth",
-                                "unsafeName": "auth",
-                              },
-                            },
+                            "file": "auth",
                             "packagePath": [],
                           },
                           "name": {
@@ -2472,25 +2400,7 @@
                         },
                       },
                     ],
-                    "file": {
-                      "camelCase": {
-                        "safeName": "auth",
-                        "unsafeName": "auth",
-                      },
-                      "originalName": "auth",
-                      "pascalCase": {
-                        "safeName": "Auth",
-                        "unsafeName": "Auth",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "AUTH",
-                        "unsafeName": "AUTH",
-                      },
-                      "snakeCase": {
-                        "safeName": "auth",
-                        "unsafeName": "auth",
-                      },
-                    },
+                    "file": "auth",
                     "packagePath": [],
                   },
                   "inline": null,
@@ -2641,7 +2551,7 @@
                   },
                 ],
                 "endpointPathParameters": [],
-                "id": "37bb72ea",
+                "id": "78168488",
                 "name": null,
                 "queryParameters": [],
                 "request": {
@@ -2954,25 +2864,7 @@
                                       },
                                     },
                                   ],
-                                  "file": {
-                                    "camelCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                    "originalName": "auth",
-                                    "pascalCase": {
-                                      "safeName": "Auth",
-                                      "unsafeName": "Auth",
-                                    },
-                                    "screamingSnakeCase": {
-                                      "safeName": "AUTH",
-                                      "unsafeName": "AUTH",
-                                    },
-                                    "snakeCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                  },
+                                  "file": "auth",
                                   "packagePath": [],
                                 },
                                 "name": {
@@ -3057,25 +2949,7 @@
                                       },
                                     },
                                   ],
-                                  "file": {
-                                    "camelCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                    "originalName": "auth",
-                                    "pascalCase": {
-                                      "safeName": "Auth",
-                                      "unsafeName": "Auth",
-                                    },
-                                    "screamingSnakeCase": {
-                                      "safeName": "AUTH",
-                                      "unsafeName": "AUTH",
-                                    },
-                                    "snakeCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                  },
+                                  "file": "auth",
                                   "packagePath": [],
                                 },
                                 "name": {
@@ -3158,25 +3032,7 @@
                                       },
                                     },
                                   ],
-                                  "file": {
-                                    "camelCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                    "originalName": "auth",
-                                    "pascalCase": {
-                                      "safeName": "Auth",
-                                      "unsafeName": "Auth",
-                                    },
-                                    "screamingSnakeCase": {
-                                      "safeName": "AUTH",
-                                      "unsafeName": "AUTH",
-                                    },
-                                    "snakeCase": {
-                                      "safeName": "auth",
-                                      "unsafeName": "auth",
-                                    },
-                                  },
+                                  "file": "auth",
                                   "packagePath": [],
                                 },
                                 "name": {
@@ -3262,25 +3118,7 @@
                                 },
                               },
                             ],
-                            "file": {
-                              "camelCase": {
-                                "safeName": "auth",
-                                "unsafeName": "auth",
-                              },
-                              "originalName": "auth",
-                              "pascalCase": {
-                                "safeName": "Auth",
-                                "unsafeName": "Auth",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "AUTH",
-                                "unsafeName": "AUTH",
-                              },
-                              "snakeCase": {
-                                "safeName": "auth",
-                                "unsafeName": "auth",
-                              },
-                            },
+                            "file": "auth",
                             "packagePath": [],
                           },
                           "name": {
@@ -3715,25 +3553,7 @@
                         },
                       },
                     ],
-                    "file": {
-                      "camelCase": {
-                        "safeName": "auth",
-                        "unsafeName": "auth",
-                      },
-                      "originalName": "auth",
-                      "pascalCase": {
-                        "safeName": "Auth",
-                        "unsafeName": "Auth",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "AUTH",
-                        "unsafeName": "AUTH",
-                      },
-                      "snakeCase": {
-                        "safeName": "auth",
-                        "unsafeName": "auth",
-                      },
-                    },
+                    "file": "auth",
                     "packagePath": [],
                   },
                   "inline": null,
@@ -3862,25 +3682,7 @@
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "auth",
-              "unsafeName": "auth",
-            },
-            "originalName": "auth",
-            "pascalCase": {
-              "safeName": "Auth",
-              "unsafeName": "Auth",
-            },
-            "screamingSnakeCase": {
-              "safeName": "AUTH",
-              "unsafeName": "AUTH",
-            },
-            "snakeCase": {
-              "safeName": "auth",
-              "unsafeName": "auth",
-            },
-          },
+          "file": "auth",
           "packagePath": [],
         },
       },
@@ -4029,23 +3831,14 @@
             },
           ],
           "file": {
-            "camelCase": {
-              "safeName": "api",
-              "unsafeName": "api",
-            },
+            "camelCase": null,
             "originalName": "api",
             "pascalCase": {
               "safeName": "API",
               "unsafeName": "API",
             },
-            "screamingSnakeCase": {
-              "safeName": "API",
-              "unsafeName": "API",
-            },
-            "snakeCase": {
-              "safeName": "api",
-              "unsafeName": "api",
-            },
+            "screamingSnakeCase": null,
+            "snakeCase": null,
           },
           "packagePath": [
             {
@@ -4215,23 +4008,14 @@
             },
           ],
           "file": {
-            "camelCase": {
-              "safeName": "api",
-              "unsafeName": "api",
-            },
+            "camelCase": null,
             "originalName": "api",
             "pascalCase": {
               "safeName": "API",
               "unsafeName": "API",
             },
-            "screamingSnakeCase": {
-              "safeName": "API",
-              "unsafeName": "API",
-            },
-            "snakeCase": {
-              "safeName": "api",
-              "unsafeName": "api",
-            },
+            "screamingSnakeCase": null,
+            "snakeCase": null,
           },
           "packagePath": [
             {
@@ -4381,25 +4165,7 @@
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "simple",
-              "unsafeName": "simple",
-            },
-            "originalName": "simple",
-            "pascalCase": {
-              "safeName": "Simple",
-              "unsafeName": "Simple",
-            },
-            "screamingSnakeCase": {
-              "safeName": "SIMPLE",
-              "unsafeName": "SIMPLE",
-            },
-            "snakeCase": {
-              "safeName": "simple",
-              "unsafeName": "simple",
-            },
-          },
+          "file": "simple",
           "packagePath": [],
         },
       },
@@ -4437,25 +4203,7 @@
             },
           },
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "auth",
-            "unsafeName": "auth",
-          },
-          "originalName": "auth",
-          "pascalCase": {
-            "safeName": "Auth",
-            "unsafeName": "Auth",
-          },
-          "screamingSnakeCase": {
-            "safeName": "AUTH",
-            "unsafeName": "AUTH",
-          },
-          "snakeCase": {
-            "safeName": "auth",
-            "unsafeName": "auth",
-          },
-        },
+        "file": "auth",
         "packagePath": [],
       },
       "hasEndpointsInTree": true,
@@ -4689,23 +4437,14 @@
           },
         ],
         "file": {
-          "camelCase": {
-            "safeName": "api",
-            "unsafeName": "api",
-          },
+          "camelCase": null,
           "originalName": "api",
           "pascalCase": {
             "safeName": "API",
             "unsafeName": "API",
           },
-          "screamingSnakeCase": {
-            "safeName": "API",
-            "unsafeName": "API",
-          },
-          "snakeCase": {
-            "safeName": "api",
-            "unsafeName": "api",
-          },
+          "screamingSnakeCase": null,
+          "snakeCase": null,
         },
         "packagePath": [
           {
@@ -4802,23 +4541,14 @@
           },
         ],
         "file": {
-          "camelCase": {
-            "safeName": "api",
-            "unsafeName": "api",
-          },
+          "camelCase": null,
           "originalName": "api",
           "pascalCase": {
             "safeName": "API",
             "unsafeName": "API",
           },
-          "screamingSnakeCase": {
-            "safeName": "API",
-            "unsafeName": "API",
-          },
-          "snakeCase": {
-            "safeName": "api",
-            "unsafeName": "api",
-          },
+          "screamingSnakeCase": null,
+          "snakeCase": null,
         },
         "packagePath": [
           {
@@ -4895,25 +4625,7 @@
             },
           },
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "simple",
-            "unsafeName": "simple",
-          },
-          "originalName": "simple",
-          "pascalCase": {
-            "safeName": "Simple",
-            "unsafeName": "Simple",
-          },
-          "screamingSnakeCase": {
-            "safeName": "SIMPLE",
-            "unsafeName": "SIMPLE",
-          },
-          "snakeCase": {
-            "safeName": "simple",
-            "unsafeName": "simple",
-          },
-        },
+        "file": "simple",
         "packagePath": [],
       },
       "hasEndpointsInTree": true,
@@ -4978,25 +4690,7 @@
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "auth",
-              "unsafeName": "auth",
-            },
-            "originalName": "auth",
-            "pascalCase": {
-              "safeName": "Auth",
-              "unsafeName": "Auth",
-            },
-            "screamingSnakeCase": {
-              "safeName": "AUTH",
-              "unsafeName": "AUTH",
-            },
-            "snakeCase": {
-              "safeName": "auth",
-              "unsafeName": "auth",
-            },
-          },
+          "file": "auth",
           "packagePath": [],
         },
         "name": {

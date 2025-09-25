@@ -222,25 +222,7 @@ exports[`migrateFromV40ToV39 > snapshot 1`] = `
                                   },
                                 },
                               ],
-                              "file": {
-                                "camelCase": {
-                                  "safeName": "user",
-                                  "unsafeName": "user",
-                                },
-                                "originalName": "user",
-                                "pascalCase": {
-                                  "safeName": "User",
-                                  "unsafeName": "User",
-                                },
-                                "screamingSnakeCase": {
-                                  "safeName": "USER",
-                                  "unsafeName": "USER",
-                                },
-                                "snakeCase": {
-                                  "safeName": "user",
-                                  "unsafeName": "user",
-                                },
-                              },
+                              "file": "user",
                               "packagePath": [],
                             },
                             "name": {
@@ -304,25 +286,7 @@ exports[`migrateFromV40ToV39 > snapshot 1`] = `
                             },
                           },
                         ],
-                        "file": {
-                          "camelCase": {
-                            "safeName": "user",
-                            "unsafeName": "user",
-                          },
-                          "originalName": "user",
-                          "pascalCase": {
-                            "safeName": "User",
-                            "unsafeName": "User",
-                          },
-                          "screamingSnakeCase": {
-                            "safeName": "USER",
-                            "unsafeName": "USER",
-                          },
-                          "snakeCase": {
-                            "safeName": "user",
-                            "unsafeName": "user",
-                          },
-                        },
+                        "file": "user",
                         "packagePath": [],
                       },
                       "name": {
@@ -473,25 +437,7 @@ exports[`migrateFromV40ToV39 > snapshot 1`] = `
                       },
                     },
                   ],
-                  "file": {
-                    "camelCase": {
-                      "safeName": "user",
-                      "unsafeName": "user",
-                    },
-                    "originalName": "user",
-                    "pascalCase": {
-                      "safeName": "User",
-                      "unsafeName": "User",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "USER",
-                      "unsafeName": "USER",
-                    },
-                    "snakeCase": {
-                      "safeName": "user",
-                      "unsafeName": "user",
-                    },
-                  },
+                  "file": "user",
                   "packagePath": [],
                 },
                 "name": {
@@ -606,25 +552,7 @@ exports[`migrateFromV40ToV39 > snapshot 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "user",
-              "unsafeName": "user",
-            },
-            "originalName": "user",
-            "pascalCase": {
-              "safeName": "User",
-              "unsafeName": "User",
-            },
-            "screamingSnakeCase": {
-              "safeName": "USER",
-              "unsafeName": "USER",
-            },
-            "snakeCase": {
-              "safeName": "user",
-              "unsafeName": "user",
-            },
-          },
+          "file": "user",
           "packagePath": [],
         },
       },
@@ -657,25 +585,7 @@ exports[`migrateFromV40ToV39 > snapshot 1`] = `
             },
           },
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "user",
-            "unsafeName": "user",
-          },
-          "originalName": "user",
-          "pascalCase": {
-            "safeName": "User",
-            "unsafeName": "User",
-          },
-          "screamingSnakeCase": {
-            "safeName": "USER",
-            "unsafeName": "USER",
-          },
-          "snakeCase": {
-            "safeName": "user",
-            "unsafeName": "user",
-          },
-        },
+        "file": "user",
         "packagePath": [],
       },
       "hasEndpointsInTree": true,
@@ -736,25 +646,7 @@ exports[`migrateFromV40ToV39 > snapshot 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "user",
-              "unsafeName": "user",
-            },
-            "originalName": "user",
-            "pascalCase": {
-              "safeName": "User",
-              "unsafeName": "User",
-            },
-            "screamingSnakeCase": {
-              "safeName": "USER",
-              "unsafeName": "USER",
-            },
-            "snakeCase": {
-              "safeName": "user",
-              "unsafeName": "user",
-            },
-          },
+          "file": "user",
           "packagePath": [],
         },
         "name": {

@@ -2,18 +2,6 @@
   "selfHosted": false,
   "apiName": {
     "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
     "pascalCase": {
       "unsafeName": "API",
       "safeName": "API"
@@ -29,25 +17,7 @@
   "types": {
     "type_:PostSubmitResponse": {
       "name": {
-        "name": {
-          "originalName": "PostSubmitResponse",
-          "camelCase": {
-            "unsafeName": "postSubmitResponse",
-            "safeName": "postSubmitResponse"
-          },
-          "snakeCase": {
-            "unsafeName": "post_submit_response",
-            "safeName": "post_submit_response"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "POST_SUBMIT_RESPONSE",
-            "safeName": "POST_SUBMIT_RESPONSE"
-          },
-          "pascalCase": {
-            "unsafeName": "PostSubmitResponse",
-            "safeName": "PostSubmitResponse"
-          }
-        },
+        "name": "PostSubmitResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -59,25 +29,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "status",
-                "camelCase": {
-                  "unsafeName": "status",
-                  "safeName": "status"
-                },
-                "snakeCase": {
-                  "unsafeName": "status",
-                  "safeName": "status"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "STATUS",
-                  "safeName": "STATUS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Status",
-                  "safeName": "Status"
-                }
-              },
+              "name": "status",
               "wireValue": "status"
             },
             "valueType": {
@@ -102,25 +54,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "message",
-                "camelCase": {
-                  "unsafeName": "message",
-                  "safeName": "message"
-                },
-                "snakeCase": {
-                  "unsafeName": "message",
-                  "safeName": "message"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "MESSAGE",
-                  "safeName": "MESSAGE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Message",
-                  "safeName": "Message"
-                }
-              },
+              "name": "message",
               "wireValue": "message"
             },
             "valueType": {
@@ -180,25 +114,7 @@
       "endpoints": [
         {
           "id": "endpoint_.submitFormData",
-          "name": {
-            "originalName": "submitFormData",
-            "camelCase": {
-              "unsafeName": "submitFormData",
-              "safeName": "submitFormData"
-            },
-            "snakeCase": {
-              "unsafeName": "submit_form_data",
-              "safeName": "submit_form_data"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "SUBMIT_FORM_DATA",
-              "safeName": "SUBMIT_FORM_DATA"
-            },
-            "pascalCase": {
-              "unsafeName": "SubmitFormData",
-              "safeName": "SubmitFormData"
-            }
-          },
+          "name": "submitFormData",
           "displayName": "Submit form data",
           "auth": false,
           "idempotent": false,
@@ -216,50 +132,14 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "PostSubmitRequest",
-              "camelCase": {
-                "unsafeName": "postSubmitRequest",
-                "safeName": "postSubmitRequest"
-              },
-              "snakeCase": {
-                "unsafeName": "post_submit_request",
-                "safeName": "post_submit_request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "POST_SUBMIT_REQUEST",
-                "safeName": "POST_SUBMIT_REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "PostSubmitRequest",
-                "safeName": "PostSubmitRequest"
-              }
-            },
+            "name": "PostSubmitRequest",
             "extends": [],
             "contentType": "application/x-www-form-urlencoded",
             "properties": [
               {
                 "docs": "The user's username",
                 "name": {
-                  "name": {
-                    "originalName": "username",
-                    "camelCase": {
-                      "unsafeName": "username",
-                      "safeName": "username"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "username",
-                      "safeName": "username"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "USERNAME",
-                      "safeName": "USERNAME"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Username",
-                      "safeName": "Username"
-                    }
-                  },
+                  "name": "username",
                   "wireValue": "username"
                 },
                 "valueType": {
@@ -279,25 +159,7 @@
               {
                 "docs": "The user's email address",
                 "name": {
-                  "name": {
-                    "originalName": "email",
-                    "camelCase": {
-                      "unsafeName": "email",
-                      "safeName": "email"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "email",
-                      "safeName": "email"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "EMAIL",
-                      "safeName": "EMAIL"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Email",
-                      "safeName": "Email"
-                    }
-                  },
+                  "name": "email",
                   "wireValue": "email"
                 },
                 "valueType": {
@@ -324,92 +186,20 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "PostSubmitRequest",
-                "camelCase": {
-                  "unsafeName": "postSubmitRequest",
-                  "safeName": "postSubmitRequest"
-                },
-                "snakeCase": {
-                  "unsafeName": "post_submit_request",
-                  "safeName": "post_submit_request"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "POST_SUBMIT_REQUEST",
-                  "safeName": "POST_SUBMIT_REQUEST"
-                },
-                "pascalCase": {
-                  "unsafeName": "PostSubmitRequest",
-                  "safeName": "PostSubmitRequest"
-                }
-              },
-              "bodyKey": {
-                "originalName": "body",
-                "camelCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "snakeCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BODY",
-                  "safeName": "BODY"
-                },
-                "pascalCase": {
-                  "unsafeName": "Body",
-                  "safeName": "Body"
-                }
-              },
+              "wrapperName": "PostSubmitRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request",
-              "camelCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "snakeCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "REQUEST",
-                "safeName": "REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "Request",
-                "safeName": "Request"
-              }
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Successful operation",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "PostSubmitResponse",
-                    "camelCase": {
-                      "unsafeName": "postSubmitResponse",
-                      "safeName": "postSubmitResponse"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "post_submit_response",
-                      "safeName": "post_submit_response"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "POST_SUBMIT_RESPONSE",
-                      "safeName": "POST_SUBMIT_RESPONSE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "PostSubmitResponse",
-                      "safeName": "PostSubmitResponse"
-                    }
-                  },
+                  "name": "PostSubmitResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -437,14 +227,6 @@
         "camelCase": {
           "unsafeName": "errorInstanceID",
           "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
         },
         "pascalCase": {
           "unsafeName": "ErrorInstanceID",
@@ -480,6 +262,10 @@
               "unsafeName": "postSubmitResponse",
               "safeName": "postSubmitResponse"
             },
+            "pascalCase": {
+              "unsafeName": "PostSubmitResponse",
+              "safeName": "PostSubmitResponse"
+            },
             "snakeCase": {
               "unsafeName": "post_submit_response",
               "safeName": "post_submit_response"
@@ -487,10 +273,6 @@
             "screamingSnakeCase": {
               "unsafeName": "POST_SUBMIT_RESPONSE",
               "safeName": "POST_SUBMIT_RESPONSE"
-            },
-            "pascalCase": {
-              "unsafeName": "PostSubmitResponse",
-              "safeName": "PostSubmitResponse"
             }
           },
           "fernFilepath": {
@@ -507,6 +289,10 @@
                   "unsafeName": "status",
                   "safeName": "status"
                 },
+                "pascalCase": {
+                  "unsafeName": "Status",
+                  "safeName": "Status"
+                },
                 "snakeCase": {
                   "unsafeName": "status",
                   "safeName": "status"
@@ -514,10 +300,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "STATUS",
                   "safeName": "STATUS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Status",
-                  "safeName": "Status"
                 }
               },
               "wireValue": "status"
@@ -538,6 +320,10 @@
                   "unsafeName": "message",
                   "safeName": "message"
                 },
+                "pascalCase": {
+                  "unsafeName": "Message",
+                  "safeName": "Message"
+                },
                 "snakeCase": {
                   "unsafeName": "message",
                   "safeName": "message"
@@ -545,10 +331,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "MESSAGE",
                   "safeName": "MESSAGE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Message",
-                  "safeName": "Message"
                 }
               },
               "wireValue": "message"
@@ -576,6 +358,10 @@
               "unsafeName": "submitFormData",
               "safeName": "submitFormData"
             },
+            "pascalCase": {
+              "unsafeName": "SubmitFormData",
+              "safeName": "SubmitFormData"
+            },
             "snakeCase": {
               "unsafeName": "submit_form_data",
               "safeName": "submit_form_data"
@@ -583,10 +369,6 @@
             "screamingSnakeCase": {
               "unsafeName": "SUBMIT_FORM_DATA",
               "safeName": "SUBMIT_FORM_DATA"
-            },
-            "pascalCase": {
-              "unsafeName": "SubmitFormData",
-              "safeName": "SubmitFormData"
             }
           },
           "fernFilepath": {
@@ -606,6 +388,10 @@
                 "unsafeName": "postSubmitRequest",
                 "safeName": "postSubmitRequest"
               },
+              "pascalCase": {
+                "unsafeName": "PostSubmitRequest",
+                "safeName": "PostSubmitRequest"
+              },
               "snakeCase": {
                 "unsafeName": "post_submit_request",
                 "safeName": "post_submit_request"
@@ -613,10 +399,6 @@
               "screamingSnakeCase": {
                 "unsafeName": "POST_SUBMIT_REQUEST",
                 "safeName": "POST_SUBMIT_REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "PostSubmitRequest",
-                "safeName": "PostSubmitRequest"
               }
             },
             "fernFilepath": {
@@ -637,6 +419,10 @@
                       "unsafeName": "username",
                       "safeName": "username"
                     },
+                    "pascalCase": {
+                      "unsafeName": "Username",
+                      "safeName": "Username"
+                    },
                     "snakeCase": {
                       "unsafeName": "username",
                       "safeName": "username"
@@ -644,10 +430,6 @@
                     "screamingSnakeCase": {
                       "unsafeName": "USERNAME",
                       "safeName": "USERNAME"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Username",
-                      "safeName": "Username"
                     }
                   },
                   "wireValue": "username"
@@ -665,6 +447,10 @@
                       "unsafeName": "email",
                       "safeName": "email"
                     },
+                    "pascalCase": {
+                      "unsafeName": "Email",
+                      "safeName": "Email"
+                    },
                     "snakeCase": {
                       "unsafeName": "email",
                       "safeName": "email"
@@ -672,10 +458,6 @@
                     "screamingSnakeCase": {
                       "unsafeName": "EMAIL",
                       "safeName": "EMAIL"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Email",
-                      "safeName": "Email"
                     }
                   },
                   "wireValue": "email"

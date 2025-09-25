@@ -2,18 +2,6 @@
   "selfHosted": false,
   "apiName": {
     "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
     "pascalCase": {
       "unsafeName": "API",
       "safeName": "API"
@@ -29,25 +17,7 @@
   "types": {
     "type_:User": {
       "name": {
-        "name": {
-          "originalName": "User",
-          "camelCase": {
-            "unsafeName": "user",
-            "safeName": "user"
-          },
-          "snakeCase": {
-            "unsafeName": "user",
-            "safeName": "user"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "USER",
-            "safeName": "USER"
-          },
-          "pascalCase": {
-            "unsafeName": "User",
-            "safeName": "User"
-          }
-        },
+        "name": "User",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -61,18 +31,6 @@
             "name": {
               "name": {
                 "originalName": "id",
-                "camelCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "snakeCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
                 "pascalCase": {
                   "unsafeName": "ID",
                   "safeName": "ID"
@@ -105,25 +63,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "metadata",
-                "camelCase": {
-                  "unsafeName": "metadata",
-                  "safeName": "metadata"
-                },
-                "snakeCase": {
-                  "unsafeName": "metadata",
-                  "safeName": "metadata"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "METADATA",
-                  "safeName": "METADATA"
-                },
-                "pascalCase": {
-                  "unsafeName": "Metadata",
-                  "safeName": "Metadata"
-                }
-              },
+              "name": "metadata",
               "wireValue": "metadata"
             },
             "valueType": {
@@ -163,14 +103,6 @@
           "unsafeName": "errorInstanceID",
           "safeName": "errorInstanceID"
         },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
         "pascalCase": {
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
@@ -203,6 +135,10 @@
               "unsafeName": "user",
               "safeName": "user"
             },
+            "pascalCase": {
+              "unsafeName": "User",
+              "safeName": "User"
+            },
             "snakeCase": {
               "unsafeName": "user",
               "safeName": "user"
@@ -210,10 +146,6 @@
             "screamingSnakeCase": {
               "unsafeName": "USER",
               "safeName": "USER"
-            },
-            "pascalCase": {
-              "unsafeName": "User",
-              "safeName": "User"
             }
           },
           "fernFilepath": {
@@ -230,15 +162,15 @@
                   "unsafeName": "id",
                   "safeName": "id"
                 },
+                "pascalCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
                 "snakeCase": {
                   "unsafeName": "id",
                   "safeName": "id"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
-                "pascalCase": {
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
@@ -261,6 +193,10 @@
                   "unsafeName": "metadata",
                   "safeName": "metadata"
                 },
+                "pascalCase": {
+                  "unsafeName": "Metadata",
+                  "safeName": "Metadata"
+                },
                 "snakeCase": {
                   "unsafeName": "metadata",
                   "safeName": "metadata"
@@ -268,10 +204,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "METADATA",
                   "safeName": "METADATA"
-                },
-                "pascalCase": {
-                  "unsafeName": "Metadata",
-                  "safeName": "Metadata"
                 }
               },
               "wireValue": "metadata"

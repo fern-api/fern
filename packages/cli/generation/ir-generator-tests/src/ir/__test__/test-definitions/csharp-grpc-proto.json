@@ -4,18 +4,9 @@
     "apiVersion": null,
     "apiName": {
         "originalName": "api",
-        "camelCase": {
-            "unsafeName": "api",
-            "safeName": "api"
-        },
-        "snakeCase": {
-            "unsafeName": "api",
-            "safeName": "api"
-        },
-        "screamingSnakeCase": {
-            "unsafeName": "API",
-            "safeName": "API"
-        },
+        "camelCase": null,
+        "snakeCase": null,
+        "screamingSnakeCase": null,
         "pascalCase": {
             "unsafeName": "API",
             "safeName": "API"
@@ -41,14 +32,8 @@
                     "unsafeName": "errorInstanceID",
                     "safeName": "errorInstanceID"
                 },
-                "snakeCase": {
-                    "unsafeName": "error_instance_id",
-                    "safeName": "error_instance_id"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "ERROR_INSTANCE_ID",
-                    "safeName": "ERROR_INSTANCE_ID"
-                },
+                "snakeCase": null,
+                "screamingSnakeCase": null,
                 "pascalCase": {
                     "unsafeName": "ErrorInstanceID",
                     "safeName": "ErrorInstanceID"

@@ -135,25 +135,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "generalErrors",
-              "unsafeName": "generalErrors",
-            },
-            "originalName": "general-errors",
-            "pascalCase": {
-              "safeName": "GeneralErrors",
-              "unsafeName": "GeneralErrors",
-            },
-            "screamingSnakeCase": {
-              "safeName": "GENERAL_ERRORS",
-              "unsafeName": "GENERAL_ERRORS",
-            },
-            "snakeCase": {
-              "safeName": "general_errors",
-              "unsafeName": "general_errors",
-            },
-          },
+          "file": "general-errors",
           "packagePath": [],
         },
         "name": {
@@ -204,25 +186,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "generalErrors",
-              "unsafeName": "generalErrors",
-            },
-            "originalName": "general-errors",
-            "pascalCase": {
-              "safeName": "GeneralErrors",
-              "unsafeName": "GeneralErrors",
-            },
-            "screamingSnakeCase": {
-              "safeName": "GENERAL_ERRORS",
-              "unsafeName": "GENERAL_ERRORS",
-            },
-            "snakeCase": {
-              "safeName": "general_errors",
-              "unsafeName": "general_errors",
-            },
-          },
+          "file": "general-errors",
           "packagePath": [],
         },
         "inline": undefined,
@@ -316,25 +280,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "enum",
-              "unsafeName": "enum",
-            },
-            "originalName": "enum",
-            "pascalCase": {
-              "safeName": "Enum",
-              "unsafeName": "Enum",
-            },
-            "screamingSnakeCase": {
-              "safeName": "ENUM",
-              "unsafeName": "ENUM",
-            },
-            "snakeCase": {
-              "safeName": "enum",
-              "unsafeName": "enum",
-            },
-          },
+          "file": "enum",
           "packagePath": [
             {
               "camelCase": {
@@ -424,25 +370,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "enum",
-              "unsafeName": "enum",
-            },
-            "originalName": "enum",
-            "pascalCase": {
-              "safeName": "Enum",
-              "unsafeName": "Enum",
-            },
-            "screamingSnakeCase": {
-              "safeName": "ENUM",
-              "unsafeName": "ENUM",
-            },
-            "snakeCase": {
-              "safeName": "enum",
-              "unsafeName": "enum",
-            },
-          },
+          "file": "enum",
           "packagePath": [
             {
               "camelCase": {
@@ -556,25 +484,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "object",
-              "unsafeName": "object",
-            },
-            "originalName": "object",
-            "pascalCase": {
-              "safeName": "Object",
-              "unsafeName": "Object",
-            },
-            "screamingSnakeCase": {
-              "safeName": "OBJECT",
-              "unsafeName": "OBJECT",
-            },
-            "snakeCase": {
-              "safeName": "object",
-              "unsafeName": "object",
-            },
-          },
+          "file": "object",
           "packagePath": [
             {
               "camelCase": {
@@ -664,25 +574,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "object",
-              "unsafeName": "object",
-            },
-            "originalName": "object",
-            "pascalCase": {
-              "safeName": "Object",
-              "unsafeName": "Object",
-            },
-            "screamingSnakeCase": {
-              "safeName": "OBJECT",
-              "unsafeName": "OBJECT",
-            },
-            "snakeCase": {
-              "safeName": "object",
-              "unsafeName": "object",
-            },
-          },
+          "file": "object",
           "packagePath": [
             {
               "camelCase": {
@@ -796,25 +688,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "object",
-              "unsafeName": "object",
-            },
-            "originalName": "object",
-            "pascalCase": {
-              "safeName": "Object",
-              "unsafeName": "Object",
-            },
-            "screamingSnakeCase": {
-              "safeName": "OBJECT",
-              "unsafeName": "OBJECT",
-            },
-            "snakeCase": {
-              "safeName": "object",
-              "unsafeName": "object",
-            },
-          },
+          "file": "object",
           "packagePath": [
             {
               "camelCase": {
@@ -904,25 +778,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "object",
-              "unsafeName": "object",
-            },
-            "originalName": "object",
-            "pascalCase": {
-              "safeName": "Object",
-              "unsafeName": "Object",
-            },
-            "screamingSnakeCase": {
-              "safeName": "OBJECT",
-              "unsafeName": "OBJECT",
-            },
-            "snakeCase": {
-              "safeName": "object",
-              "unsafeName": "object",
-            },
-          },
+          "file": "object",
           "packagePath": [
             {
               "camelCase": {
@@ -1036,25 +892,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "object",
-              "unsafeName": "object",
-            },
-            "originalName": "object",
-            "pascalCase": {
-              "safeName": "Object",
-              "unsafeName": "Object",
-            },
-            "screamingSnakeCase": {
-              "safeName": "OBJECT",
-              "unsafeName": "OBJECT",
-            },
-            "snakeCase": {
-              "safeName": "object",
-              "unsafeName": "object",
-            },
-          },
+          "file": "object",
           "packagePath": [
             {
               "camelCase": {
@@ -1144,25 +982,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "object",
-              "unsafeName": "object",
-            },
-            "originalName": "object",
-            "pascalCase": {
-              "safeName": "Object",
-              "unsafeName": "Object",
-            },
-            "screamingSnakeCase": {
-              "safeName": "OBJECT",
-              "unsafeName": "OBJECT",
-            },
-            "snakeCase": {
-              "safeName": "object",
-              "unsafeName": "object",
-            },
-          },
+          "file": "object",
           "packagePath": [
             {
               "camelCase": {
@@ -1276,25 +1096,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "object",
-              "unsafeName": "object",
-            },
-            "originalName": "object",
-            "pascalCase": {
-              "safeName": "Object",
-              "unsafeName": "Object",
-            },
-            "screamingSnakeCase": {
-              "safeName": "OBJECT",
-              "unsafeName": "OBJECT",
-            },
-            "snakeCase": {
-              "safeName": "object",
-              "unsafeName": "object",
-            },
-          },
+          "file": "object",
           "packagePath": [
             {
               "camelCase": {
@@ -1384,25 +1186,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "object",
-              "unsafeName": "object",
-            },
-            "originalName": "object",
-            "pascalCase": {
-              "safeName": "Object",
-              "unsafeName": "Object",
-            },
-            "screamingSnakeCase": {
-              "safeName": "OBJECT",
-              "unsafeName": "OBJECT",
-            },
-            "snakeCase": {
-              "safeName": "object",
-              "unsafeName": "object",
-            },
-          },
+          "file": "object",
           "packagePath": [
             {
               "camelCase": {
@@ -1516,25 +1300,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "union",
-              "unsafeName": "union",
-            },
-            "originalName": "union",
-            "pascalCase": {
-              "safeName": "Union",
-              "unsafeName": "Union",
-            },
-            "screamingSnakeCase": {
-              "safeName": "UNION",
-              "unsafeName": "UNION",
-            },
-            "snakeCase": {
-              "safeName": "union",
-              "unsafeName": "union",
-            },
-          },
+          "file": "union",
           "packagePath": [
             {
               "camelCase": {
@@ -1624,25 +1390,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "union",
-              "unsafeName": "union",
-            },
-            "originalName": "union",
-            "pascalCase": {
-              "safeName": "Union",
-              "unsafeName": "Union",
-            },
-            "screamingSnakeCase": {
-              "safeName": "UNION",
-              "unsafeName": "UNION",
-            },
-            "snakeCase": {
-              "safeName": "union",
-              "unsafeName": "union",
-            },
-          },
+          "file": "union",
           "packagePath": [
             {
               "camelCase": {
@@ -1975,25 +1723,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                         },
                       },
                     ],
-                    "file": {
-                      "camelCase": {
-                        "safeName": "object",
-                        "unsafeName": "object",
-                      },
-                      "originalName": "object",
-                      "pascalCase": {
-                        "safeName": "Object",
-                        "unsafeName": "Object",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "OBJECT",
-                        "unsafeName": "OBJECT",
-                      },
-                      "snakeCase": {
-                        "safeName": "object",
-                        "unsafeName": "object",
-                      },
-                    },
+                    "file": "object",
                     "packagePath": [
                       {
                         "camelCase": {
@@ -2097,25 +1827,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                         },
                       },
                     ],
-                    "file": {
-                      "camelCase": {
-                        "safeName": "object",
-                        "unsafeName": "object",
-                      },
-                      "originalName": "object",
-                      "pascalCase": {
-                        "safeName": "Object",
-                        "unsafeName": "Object",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "OBJECT",
-                        "unsafeName": "OBJECT",
-                      },
-                      "snakeCase": {
-                        "safeName": "object",
-                        "unsafeName": "object",
-                      },
-                    },
+                    "file": "object",
                     "packagePath": [
                       {
                         "camelCase": {
@@ -2240,25 +1952,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                           },
                         },
                       ],
-                      "file": {
-                        "camelCase": {
-                          "safeName": "object",
-                          "unsafeName": "object",
-                        },
-                        "originalName": "object",
-                        "pascalCase": {
-                          "safeName": "Object",
-                          "unsafeName": "Object",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "OBJECT",
-                          "unsafeName": "OBJECT",
-                        },
-                        "snakeCase": {
-                          "safeName": "object",
-                          "unsafeName": "object",
-                        },
-                      },
+                      "file": "object",
                       "packagePath": [
                         {
                           "camelCase": {
@@ -2525,25 +2219,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                         },
                       },
                     ],
-                    "file": {
-                      "camelCase": {
-                        "safeName": "object",
-                        "unsafeName": "object",
-                      },
-                      "originalName": "object",
-                      "pascalCase": {
-                        "safeName": "Object",
-                        "unsafeName": "Object",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "OBJECT",
-                        "unsafeName": "OBJECT",
-                      },
-                      "snakeCase": {
-                        "safeName": "object",
-                        "unsafeName": "object",
-                      },
-                    },
+                    "file": "object",
                     "packagePath": [
                       {
                         "camelCase": {
@@ -2647,25 +2323,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                         },
                       },
                     ],
-                    "file": {
-                      "camelCase": {
-                        "safeName": "object",
-                        "unsafeName": "object",
-                      },
-                      "originalName": "object",
-                      "pascalCase": {
-                        "safeName": "Object",
-                        "unsafeName": "Object",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "OBJECT",
-                        "unsafeName": "OBJECT",
-                      },
-                      "snakeCase": {
-                        "safeName": "object",
-                        "unsafeName": "object",
-                      },
-                    },
+                    "file": "object",
                     "packagePath": [
                       {
                         "camelCase": {
@@ -2790,25 +2448,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                           },
                         },
                       ],
-                      "file": {
-                        "camelCase": {
-                          "safeName": "object",
-                          "unsafeName": "object",
-                        },
-                        "originalName": "object",
-                        "pascalCase": {
-                          "safeName": "Object",
-                          "unsafeName": "Object",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "OBJECT",
-                          "unsafeName": "OBJECT",
-                        },
-                        "snakeCase": {
-                          "safeName": "object",
-                          "unsafeName": "object",
-                        },
-                      },
+                      "file": "object",
                       "packagePath": [
                         {
                           "camelCase": {
@@ -3091,25 +2731,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                         },
                       },
                     ],
-                    "file": {
-                      "camelCase": {
-                        "safeName": "object",
-                        "unsafeName": "object",
-                      },
-                      "originalName": "object",
-                      "pascalCase": {
-                        "safeName": "Object",
-                        "unsafeName": "Object",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "OBJECT",
-                        "unsafeName": "OBJECT",
-                      },
-                      "snakeCase": {
-                        "safeName": "object",
-                        "unsafeName": "object",
-                      },
-                    },
+                    "file": "object",
                     "packagePath": [
                       {
                         "camelCase": {
@@ -3217,25 +2839,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                         },
                       },
                     ],
-                    "file": {
-                      "camelCase": {
-                        "safeName": "object",
-                        "unsafeName": "object",
-                      },
-                      "originalName": "object",
-                      "pascalCase": {
-                        "safeName": "Object",
-                        "unsafeName": "Object",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "OBJECT",
-                        "unsafeName": "OBJECT",
-                      },
-                      "snakeCase": {
-                        "safeName": "object",
-                        "unsafeName": "object",
-                      },
-                    },
+                    "file": "object",
                     "packagePath": [
                       {
                         "camelCase": {
@@ -3364,25 +2968,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                           },
                         },
                       ],
-                      "file": {
-                        "camelCase": {
-                          "safeName": "object",
-                          "unsafeName": "object",
-                        },
-                        "originalName": "object",
-                        "pascalCase": {
-                          "safeName": "Object",
-                          "unsafeName": "Object",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "OBJECT",
-                          "unsafeName": "OBJECT",
-                        },
-                        "snakeCase": {
-                          "safeName": "object",
-                          "unsafeName": "object",
-                        },
-                      },
+                      "file": "object",
                       "packagePath": [
                         {
                           "camelCase": {
@@ -3479,25 +3065,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "container",
-              "unsafeName": "container",
-            },
-            "originalName": "container",
-            "pascalCase": {
-              "safeName": "Container",
-              "unsafeName": "Container",
-            },
-            "screamingSnakeCase": {
-              "safeName": "CONTAINER",
-              "unsafeName": "CONTAINER",
-            },
-            "snakeCase": {
-              "safeName": "container",
-              "unsafeName": "container",
-            },
-          },
+          "file": "container",
           "packagePath": [
             {
               "camelCase": {
@@ -3628,25 +3196,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     },
                   },
                 ],
-                "file": {
-                  "camelCase": {
-                    "safeName": "enum",
-                    "unsafeName": "enum",
-                  },
-                  "originalName": "enum",
-                  "pascalCase": {
-                    "safeName": "Enum",
-                    "unsafeName": "Enum",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "ENUM",
-                    "unsafeName": "ENUM",
-                  },
-                  "snakeCase": {
-                    "safeName": "enum",
-                    "unsafeName": "enum",
-                  },
-                },
+                "file": "enum",
                 "packagePath": [
                   {
                     "camelCase": {
@@ -3744,25 +3294,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     },
                   },
                 ],
-                "file": {
-                  "camelCase": {
-                    "safeName": "enum",
-                    "unsafeName": "enum",
-                  },
-                  "originalName": "enum",
-                  "pascalCase": {
-                    "safeName": "Enum",
-                    "unsafeName": "Enum",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "ENUM",
-                    "unsafeName": "ENUM",
-                  },
-                  "snakeCase": {
-                    "safeName": "enum",
-                    "unsafeName": "enum",
-                  },
-                },
+                "file": "enum",
                 "packagePath": [
                   {
                     "camelCase": {
@@ -3881,25 +3413,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                       },
                     },
                   ],
-                  "file": {
-                    "camelCase": {
-                      "safeName": "enum",
-                      "unsafeName": "enum",
-                    },
-                    "originalName": "enum",
-                    "pascalCase": {
-                      "safeName": "Enum",
-                      "unsafeName": "Enum",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "ENUM",
-                      "unsafeName": "ENUM",
-                    },
-                    "snakeCase": {
-                      "safeName": "enum",
-                      "unsafeName": "enum",
-                    },
-                  },
+                  "file": "enum",
                   "packagePath": [
                     {
                       "camelCase": {
@@ -3994,25 +3508,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "enum",
-              "unsafeName": "enum",
-            },
-            "originalName": "enum",
-            "pascalCase": {
-              "safeName": "Enum",
-              "unsafeName": "Enum",
-            },
-            "screamingSnakeCase": {
-              "safeName": "ENUM",
-              "unsafeName": "ENUM",
-            },
-            "snakeCase": {
-              "safeName": "enum",
-              "unsafeName": "enum",
-            },
-          },
+          "file": "enum",
           "packagePath": [
             {
               "camelCase": {
@@ -4052,7 +3548,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         {
           "allPathParameters": [
             {
-              "availability": undefined,
               "docs": undefined,
               "location": "ENDPOINT",
               "name": {
@@ -4137,7 +3632,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
           },
           "pathParameters": [
             {
-              "availability": undefined,
               "docs": undefined,
               "location": "ENDPOINT",
               "name": {
@@ -4278,25 +3772,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     },
                   },
                 ],
-                "file": {
-                  "camelCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                  "originalName": "object",
-                  "pascalCase": {
-                    "safeName": "Object",
-                    "unsafeName": "Object",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "OBJECT",
-                    "unsafeName": "OBJECT",
-                  },
-                  "snakeCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                },
+                "file": "object",
                 "packagePath": [
                   {
                     "camelCase": {
@@ -4394,25 +3870,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     },
                   },
                 ],
-                "file": {
-                  "camelCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                  "originalName": "object",
-                  "pascalCase": {
-                    "safeName": "Object",
-                    "unsafeName": "Object",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "OBJECT",
-                    "unsafeName": "OBJECT",
-                  },
-                  "snakeCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                },
+                "file": "object",
                 "packagePath": [
                   {
                     "camelCase": {
@@ -4531,25 +3989,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                       },
                     },
                   ],
-                  "file": {
-                    "camelCase": {
-                      "safeName": "object",
-                      "unsafeName": "object",
-                    },
-                    "originalName": "object",
-                    "pascalCase": {
-                      "safeName": "Object",
-                      "unsafeName": "Object",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "OBJECT",
-                      "unsafeName": "OBJECT",
-                    },
-                    "snakeCase": {
-                      "safeName": "object",
-                      "unsafeName": "object",
-                    },
-                  },
+                  "file": "object",
                   "packagePath": [
                     {
                       "camelCase": {
@@ -4603,7 +4043,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         {
           "allPathParameters": [
             {
-              "availability": undefined,
               "docs": undefined,
               "location": "ENDPOINT",
               "name": {
@@ -4688,7 +4127,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
           },
           "pathParameters": [
             {
-              "availability": undefined,
               "docs": undefined,
               "location": "ENDPOINT",
               "name": {
@@ -4772,25 +4210,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     },
                   },
                 ],
-                "file": {
-                  "camelCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                  "originalName": "object",
-                  "pascalCase": {
-                    "safeName": "Object",
-                    "unsafeName": "Object",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "OBJECT",
-                    "unsafeName": "OBJECT",
-                  },
-                  "snakeCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                },
+                "file": "object",
                 "packagePath": [
                   {
                     "camelCase": {
@@ -4888,25 +4308,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     },
                   },
                 ],
-                "file": {
-                  "camelCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                  "originalName": "object",
-                  "pascalCase": {
-                    "safeName": "Object",
-                    "unsafeName": "Object",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "OBJECT",
-                    "unsafeName": "OBJECT",
-                  },
-                  "snakeCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                },
+                "file": "object",
                 "packagePath": [
                   {
                     "camelCase": {
@@ -5025,25 +4427,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                       },
                     },
                   ],
-                  "file": {
-                    "camelCase": {
-                      "safeName": "object",
-                      "unsafeName": "object",
-                    },
-                    "originalName": "object",
-                    "pascalCase": {
-                      "safeName": "Object",
-                      "unsafeName": "Object",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "OBJECT",
-                      "unsafeName": "OBJECT",
-                    },
-                    "snakeCase": {
-                      "safeName": "object",
-                      "unsafeName": "object",
-                    },
-                  },
+                  "file": "object",
                   "packagePath": [
                     {
                       "camelCase": {
@@ -5097,7 +4481,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         {
           "allPathParameters": [
             {
-              "availability": undefined,
               "docs": undefined,
               "location": "ENDPOINT",
               "name": {
@@ -5182,7 +4565,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
           },
           "pathParameters": [
             {
-              "availability": undefined,
               "docs": undefined,
               "location": "ENDPOINT",
               "name": {
@@ -5266,25 +4648,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     },
                   },
                 ],
-                "file": {
-                  "camelCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                  "originalName": "object",
-                  "pascalCase": {
-                    "safeName": "Object",
-                    "unsafeName": "Object",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "OBJECT",
-                    "unsafeName": "OBJECT",
-                  },
-                  "snakeCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                },
+                "file": "object",
                 "packagePath": [
                   {
                     "camelCase": {
@@ -5382,25 +4746,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     },
                   },
                 ],
-                "file": {
-                  "camelCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                  "originalName": "object",
-                  "pascalCase": {
-                    "safeName": "Object",
-                    "unsafeName": "Object",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "OBJECT",
-                    "unsafeName": "OBJECT",
-                  },
-                  "snakeCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                },
+                "file": "object",
                 "packagePath": [
                   {
                     "camelCase": {
@@ -5519,25 +4865,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                       },
                     },
                   ],
-                  "file": {
-                    "camelCase": {
-                      "safeName": "object",
-                      "unsafeName": "object",
-                    },
-                    "originalName": "object",
-                    "pascalCase": {
-                      "safeName": "Object",
-                      "unsafeName": "Object",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "OBJECT",
-                      "unsafeName": "OBJECT",
-                    },
-                    "snakeCase": {
-                      "safeName": "object",
-                      "unsafeName": "object",
-                    },
-                  },
+                  "file": "object",
                   "packagePath": [
                     {
                       "camelCase": {
@@ -5591,7 +4919,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         {
           "allPathParameters": [
             {
-              "availability": undefined,
               "docs": undefined,
               "location": "ENDPOINT",
               "name": {
@@ -5676,7 +5003,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
           },
           "pathParameters": [
             {
-              "availability": undefined,
               "docs": undefined,
               "location": "ENDPOINT",
               "name": {
@@ -5768,23 +5094,14 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             },
           ],
           "file": {
-            "camelCase": {
-              "safeName": "httpMethods",
-              "unsafeName": "httpMethods",
-            },
+            "camelCase": null,
             "originalName": "http-methods",
             "pascalCase": {
               "safeName": "HTTPMethods",
               "unsafeName": "HTTPMethods",
             },
-            "screamingSnakeCase": {
-              "safeName": "HTTP_METHODS",
-              "unsafeName": "HTTP_METHODS",
-            },
-            "snakeCase": {
-              "safeName": "http_methods",
-              "unsafeName": "http_methods",
-            },
+            "screamingSnakeCase": null,
+            "snakeCase": null,
           },
           "packagePath": [
             {
@@ -5916,25 +5233,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     },
                   },
                 ],
-                "file": {
-                  "camelCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                  "originalName": "object",
-                  "pascalCase": {
-                    "safeName": "Object",
-                    "unsafeName": "Object",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "OBJECT",
-                    "unsafeName": "OBJECT",
-                  },
-                  "snakeCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                },
+                "file": "object",
                 "packagePath": [
                   {
                     "camelCase": {
@@ -6032,25 +5331,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     },
                   },
                 ],
-                "file": {
-                  "camelCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                  "originalName": "object",
-                  "pascalCase": {
-                    "safeName": "Object",
-                    "unsafeName": "Object",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "OBJECT",
-                    "unsafeName": "OBJECT",
-                  },
-                  "snakeCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                },
+                "file": "object",
                 "packagePath": [
                   {
                     "camelCase": {
@@ -6169,25 +5450,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                       },
                     },
                   ],
-                  "file": {
-                    "camelCase": {
-                      "safeName": "object",
-                      "unsafeName": "object",
-                    },
-                    "originalName": "object",
-                    "pascalCase": {
-                      "safeName": "Object",
-                      "unsafeName": "Object",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "OBJECT",
-                      "unsafeName": "OBJECT",
-                    },
-                    "snakeCase": {
-                      "safeName": "object",
-                      "unsafeName": "object",
-                    },
-                  },
+                  "file": "object",
                   "packagePath": [
                     {
                       "camelCase": {
@@ -6332,25 +5595,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     },
                   },
                 ],
-                "file": {
-                  "camelCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                  "originalName": "object",
-                  "pascalCase": {
-                    "safeName": "Object",
-                    "unsafeName": "Object",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "OBJECT",
-                    "unsafeName": "OBJECT",
-                  },
-                  "snakeCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                },
+                "file": "object",
                 "packagePath": [
                   {
                     "camelCase": {
@@ -6448,25 +5693,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     },
                   },
                 ],
-                "file": {
-                  "camelCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                  "originalName": "object",
-                  "pascalCase": {
-                    "safeName": "Object",
-                    "unsafeName": "Object",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "OBJECT",
-                    "unsafeName": "OBJECT",
-                  },
-                  "snakeCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                },
+                "file": "object",
                 "packagePath": [
                   {
                     "camelCase": {
@@ -6585,25 +5812,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                       },
                     },
                   ],
-                  "file": {
-                    "camelCase": {
-                      "safeName": "object",
-                      "unsafeName": "object",
-                    },
-                    "originalName": "object",
-                    "pascalCase": {
-                      "safeName": "Object",
-                      "unsafeName": "Object",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "OBJECT",
-                      "unsafeName": "OBJECT",
-                    },
-                    "snakeCase": {
-                      "safeName": "object",
-                      "unsafeName": "object",
-                    },
-                  },
+                  "file": "object",
                   "packagePath": [
                     {
                       "camelCase": {
@@ -6748,25 +5957,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     },
                   },
                 ],
-                "file": {
-                  "camelCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                  "originalName": "object",
-                  "pascalCase": {
-                    "safeName": "Object",
-                    "unsafeName": "Object",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "OBJECT",
-                    "unsafeName": "OBJECT",
-                  },
-                  "snakeCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                },
+                "file": "object",
                 "packagePath": [
                   {
                     "camelCase": {
@@ -6864,25 +6055,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     },
                   },
                 ],
-                "file": {
-                  "camelCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                  "originalName": "object",
-                  "pascalCase": {
-                    "safeName": "Object",
-                    "unsafeName": "Object",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "OBJECT",
-                    "unsafeName": "OBJECT",
-                  },
-                  "snakeCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                },
+                "file": "object",
                 "packagePath": [
                   {
                     "camelCase": {
@@ -7001,25 +6174,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                       },
                     },
                   ],
-                  "file": {
-                    "camelCase": {
-                      "safeName": "object",
-                      "unsafeName": "object",
-                    },
-                    "originalName": "object",
-                    "pascalCase": {
-                      "safeName": "Object",
-                      "unsafeName": "Object",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "OBJECT",
-                      "unsafeName": "OBJECT",
-                    },
-                    "snakeCase": {
-                      "safeName": "object",
-                      "unsafeName": "object",
-                    },
-                  },
+                  "file": "object",
                   "packagePath": [
                     {
                       "camelCase": {
@@ -7164,25 +6319,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     },
                   },
                 ],
-                "file": {
-                  "camelCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                  "originalName": "object",
-                  "pascalCase": {
-                    "safeName": "Object",
-                    "unsafeName": "Object",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "OBJECT",
-                    "unsafeName": "OBJECT",
-                  },
-                  "snakeCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                },
+                "file": "object",
                 "packagePath": [
                   {
                     "camelCase": {
@@ -7280,25 +6417,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     },
                   },
                 ],
-                "file": {
-                  "camelCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                  "originalName": "object",
-                  "pascalCase": {
-                    "safeName": "Object",
-                    "unsafeName": "Object",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "OBJECT",
-                    "unsafeName": "OBJECT",
-                  },
-                  "snakeCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                },
+                "file": "object",
                 "packagePath": [
                   {
                     "camelCase": {
@@ -7417,25 +6536,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                       },
                     },
                   ],
-                  "file": {
-                    "camelCase": {
-                      "safeName": "object",
-                      "unsafeName": "object",
-                    },
-                    "originalName": "object",
-                    "pascalCase": {
-                      "safeName": "Object",
-                      "unsafeName": "Object",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "OBJECT",
-                      "unsafeName": "OBJECT",
-                    },
-                    "snakeCase": {
-                      "safeName": "object",
-                      "unsafeName": "object",
-                    },
-                  },
+                  "file": "object",
                   "packagePath": [
                     {
                       "camelCase": {
@@ -7530,25 +6631,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "object",
-              "unsafeName": "object",
-            },
-            "originalName": "object",
-            "pascalCase": {
-              "safeName": "Object",
-              "unsafeName": "Object",
-            },
-            "screamingSnakeCase": {
-              "safeName": "OBJECT",
-              "unsafeName": "OBJECT",
-            },
-            "snakeCase": {
-              "safeName": "object",
-              "unsafeName": "object",
-            },
-          },
+          "file": "object",
           "packagePath": [
             {
               "camelCase": {
@@ -7588,7 +6671,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         {
           "allPathParameters": [
             {
-              "availability": undefined,
               "docs": undefined,
               "location": "ENDPOINT",
               "name": {
@@ -7673,7 +6755,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
           },
           "pathParameters": [
             {
-              "availability": undefined,
               "docs": undefined,
               "location": "ENDPOINT",
               "name": {
@@ -8101,7 +7182,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         {
           "allPathParameters": [
             {
-              "availability": undefined,
               "docs": undefined,
               "location": "ENDPOINT",
               "name": {
@@ -8186,7 +7266,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
           },
           "pathParameters": [
             {
-              "availability": undefined,
               "docs": undefined,
               "location": "ENDPOINT",
               "name": {
@@ -8330,7 +7409,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
         {
           "allPathParameters": [
             {
-              "availability": undefined,
               "docs": undefined,
               "location": "ENDPOINT",
               "name": {
@@ -8415,7 +7493,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
           },
           "pathParameters": [
             {
-              "availability": undefined,
               "docs": undefined,
               "location": "ENDPOINT",
               "name": {
@@ -8547,25 +7624,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "params",
-              "unsafeName": "params",
-            },
-            "originalName": "params",
-            "pascalCase": {
-              "safeName": "Params",
-              "unsafeName": "Params",
-            },
-            "screamingSnakeCase": {
-              "safeName": "PARAMS",
-              "unsafeName": "PARAMS",
-            },
-            "snakeCase": {
-              "safeName": "params",
-              "unsafeName": "params",
-            },
-          },
+          "file": "params",
           "packagePath": [
             {
               "camelCase": {
@@ -9528,25 +8587,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "primitive",
-              "unsafeName": "primitive",
-            },
-            "originalName": "primitive",
-            "pascalCase": {
-              "safeName": "Primitive",
-              "unsafeName": "Primitive",
-            },
-            "screamingSnakeCase": {
-              "safeName": "PRIMITIVE",
-              "unsafeName": "PRIMITIVE",
-            },
-            "snakeCase": {
-              "safeName": "primitive",
-              "unsafeName": "primitive",
-            },
-          },
+          "file": "primitive",
           "packagePath": [
             {
               "camelCase": {
@@ -9677,25 +8718,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     },
                   },
                 ],
-                "file": {
-                  "camelCase": {
-                    "safeName": "union",
-                    "unsafeName": "union",
-                  },
-                  "originalName": "union",
-                  "pascalCase": {
-                    "safeName": "Union",
-                    "unsafeName": "Union",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "UNION",
-                    "unsafeName": "UNION",
-                  },
-                  "snakeCase": {
-                    "safeName": "union",
-                    "unsafeName": "union",
-                  },
-                },
+                "file": "union",
                 "packagePath": [
                   {
                     "camelCase": {
@@ -9793,25 +8816,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     },
                   },
                 ],
-                "file": {
-                  "camelCase": {
-                    "safeName": "union",
-                    "unsafeName": "union",
-                  },
-                  "originalName": "union",
-                  "pascalCase": {
-                    "safeName": "Union",
-                    "unsafeName": "Union",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "UNION",
-                    "unsafeName": "UNION",
-                  },
-                  "snakeCase": {
-                    "safeName": "union",
-                    "unsafeName": "union",
-                  },
-                },
+                "file": "union",
                 "packagePath": [
                   {
                     "camelCase": {
@@ -9930,25 +8935,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                       },
                     },
                   ],
-                  "file": {
-                    "camelCase": {
-                      "safeName": "union",
-                      "unsafeName": "union",
-                    },
-                    "originalName": "union",
-                    "pascalCase": {
-                      "safeName": "Union",
-                      "unsafeName": "Union",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "UNION",
-                      "unsafeName": "UNION",
-                    },
-                    "snakeCase": {
-                      "safeName": "union",
-                      "unsafeName": "union",
-                    },
-                  },
+                  "file": "union",
                   "packagePath": [
                     {
                       "camelCase": {
@@ -10043,25 +9030,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "union",
-              "unsafeName": "union",
-            },
-            "originalName": "union",
-            "pascalCase": {
-              "safeName": "Union",
-              "unsafeName": "Union",
-            },
-            "screamingSnakeCase": {
-              "safeName": "UNION",
-              "unsafeName": "UNION",
-            },
-            "snakeCase": {
-              "safeName": "union",
-              "unsafeName": "union",
-            },
-          },
+          "file": "union",
           "packagePath": [
             {
               "camelCase": {
@@ -10135,25 +9104,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                       },
                     },
                   ],
-                  "file": {
-                    "camelCase": {
-                      "safeName": "generalErrors",
-                      "unsafeName": "generalErrors",
-                    },
-                    "originalName": "general-errors",
-                    "pascalCase": {
-                      "safeName": "GeneralErrors",
-                      "unsafeName": "GeneralErrors",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "GENERAL_ERRORS",
-                      "unsafeName": "GENERAL_ERRORS",
-                    },
-                    "snakeCase": {
-                      "safeName": "general_errors",
-                      "unsafeName": "general_errors",
-                    },
-                  },
+                  "file": "general-errors",
                   "packagePath": [],
                 },
                 "name": {
@@ -10384,25 +9335,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                         },
                       },
                     ],
-                    "file": {
-                      "camelCase": {
-                        "safeName": "object",
-                        "unsafeName": "object",
-                      },
-                      "originalName": "object",
-                      "pascalCase": {
-                        "safeName": "Object",
-                        "unsafeName": "Object",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "OBJECT",
-                        "unsafeName": "OBJECT",
-                      },
-                      "snakeCase": {
-                        "safeName": "object",
-                        "unsafeName": "object",
-                      },
-                    },
+                    "file": "object",
                     "packagePath": [
                       {
                         "camelCase": {
@@ -10502,25 +9435,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     },
                   },
                 ],
-                "file": {
-                  "camelCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                  "originalName": "object",
-                  "pascalCase": {
-                    "safeName": "Object",
-                    "unsafeName": "Object",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "OBJECT",
-                    "unsafeName": "OBJECT",
-                  },
-                  "snakeCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                },
+                "file": "object",
                 "packagePath": [
                   {
                     "camelCase": {
@@ -10660,25 +9575,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "inlinedRequests",
-              "unsafeName": "inlinedRequests",
-            },
-            "originalName": "inlined-requests",
-            "pascalCase": {
-              "safeName": "InlinedRequests",
-              "unsafeName": "InlinedRequests",
-            },
-            "screamingSnakeCase": {
-              "safeName": "INLINED_REQUESTS",
-              "unsafeName": "INLINED_REQUESTS",
-            },
-            "snakeCase": {
-              "safeName": "inlined_requests",
-              "unsafeName": "inlined_requests",
-            },
-          },
+          "file": "inlined-requests",
           "packagePath": [],
         },
       },
@@ -10732,25 +9629,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                       },
                     },
                   ],
-                  "file": {
-                    "camelCase": {
-                      "safeName": "generalErrors",
-                      "unsafeName": "generalErrors",
-                    },
-                    "originalName": "general-errors",
-                    "pascalCase": {
-                      "safeName": "GeneralErrors",
-                      "unsafeName": "GeneralErrors",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "GENERAL_ERRORS",
-                      "unsafeName": "GENERAL_ERRORS",
-                    },
-                    "snakeCase": {
-                      "safeName": "general_errors",
-                      "unsafeName": "general_errors",
-                    },
-                  },
+                  "file": "general-errors",
                   "packagePath": [],
                 },
                 "name": {
@@ -10885,25 +9764,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "noAuth",
-              "unsafeName": "noAuth",
-            },
-            "originalName": "no-auth",
-            "pascalCase": {
-              "safeName": "NoAuth",
-              "unsafeName": "NoAuth",
-            },
-            "screamingSnakeCase": {
-              "safeName": "NO_AUTH",
-              "unsafeName": "NO_AUTH",
-            },
-            "snakeCase": {
-              "safeName": "no_auth",
-              "unsafeName": "no_auth",
-            },
-          },
+          "file": "no-auth",
           "packagePath": [],
         },
       },
@@ -11014,25 +9875,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     },
                   },
                 ],
-                "file": {
-                  "camelCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                  "originalName": "object",
-                  "pascalCase": {
-                    "safeName": "Object",
-                    "unsafeName": "Object",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "OBJECT",
-                    "unsafeName": "OBJECT",
-                  },
-                  "snakeCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                },
+                "file": "object",
                 "packagePath": [
                   {
                     "camelCase": {
@@ -11108,25 +9951,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "noReqBody",
-              "unsafeName": "noReqBody",
-            },
-            "originalName": "no-req-body",
-            "pascalCase": {
-              "safeName": "NoReqBody",
-              "unsafeName": "NoReqBody",
-            },
-            "screamingSnakeCase": {
-              "safeName": "NO_REQ_BODY",
-              "unsafeName": "NO_REQ_BODY",
-            },
-            "snakeCase": {
-              "safeName": "no_req_body",
-              "unsafeName": "no_req_body",
-            },
-          },
+          "file": "no-req-body",
           "packagePath": [],
         },
       },
@@ -11368,25 +10193,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "reqWithHeaders",
-              "unsafeName": "reqWithHeaders",
-            },
-            "originalName": "req-with-headers",
-            "pascalCase": {
-              "safeName": "ReqWithHeaders",
-              "unsafeName": "ReqWithHeaders",
-            },
-            "screamingSnakeCase": {
-              "safeName": "REQ_WITH_HEADERS",
-              "unsafeName": "REQ_WITH_HEADERS",
-            },
-            "snakeCase": {
-              "safeName": "req_with_headers",
-              "unsafeName": "req_with_headers",
-            },
-          },
+          "file": "req-with-headers",
           "packagePath": [],
         },
       },
@@ -11523,25 +10330,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             },
           },
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "container",
-            "unsafeName": "container",
-          },
-          "originalName": "container",
-          "pascalCase": {
-            "safeName": "Container",
-            "unsafeName": "Container",
-          },
-          "screamingSnakeCase": {
-            "safeName": "CONTAINER",
-            "unsafeName": "CONTAINER",
-          },
-          "snakeCase": {
-            "safeName": "container",
-            "unsafeName": "container",
-          },
-        },
+        "file": "container",
         "packagePath": [
           {
             "camelCase": {
@@ -11636,25 +10425,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             },
           },
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "enum",
-            "unsafeName": "enum",
-          },
-          "originalName": "enum",
-          "pascalCase": {
-            "safeName": "Enum",
-            "unsafeName": "Enum",
-          },
-          "screamingSnakeCase": {
-            "safeName": "ENUM",
-            "unsafeName": "ENUM",
-          },
-          "snakeCase": {
-            "safeName": "enum",
-            "unsafeName": "enum",
-          },
-        },
+        "file": "enum",
         "packagePath": [
           {
             "camelCase": {
@@ -11750,23 +10521,14 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
           },
         ],
         "file": {
-          "camelCase": {
-            "safeName": "httpMethods",
-            "unsafeName": "httpMethods",
-          },
+          "camelCase": null,
           "originalName": "http-methods",
           "pascalCase": {
             "safeName": "HTTPMethods",
             "unsafeName": "HTTPMethods",
           },
-          "screamingSnakeCase": {
-            "safeName": "HTTP_METHODS",
-            "unsafeName": "HTTP_METHODS",
-          },
-          "snakeCase": {
-            "safeName": "http_methods",
-            "unsafeName": "http_methods",
-          },
+          "screamingSnakeCase": null,
+          "snakeCase": null,
         },
         "packagePath": [
           {
@@ -11862,25 +10624,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             },
           },
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "object",
-            "unsafeName": "object",
-          },
-          "originalName": "object",
-          "pascalCase": {
-            "safeName": "Object",
-            "unsafeName": "Object",
-          },
-          "screamingSnakeCase": {
-            "safeName": "OBJECT",
-            "unsafeName": "OBJECT",
-          },
-          "snakeCase": {
-            "safeName": "object",
-            "unsafeName": "object",
-          },
-        },
+        "file": "object",
         "packagePath": [
           {
             "camelCase": {
@@ -11975,25 +10719,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             },
           },
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "params",
-            "unsafeName": "params",
-          },
-          "originalName": "params",
-          "pascalCase": {
-            "safeName": "Params",
-            "unsafeName": "Params",
-          },
-          "screamingSnakeCase": {
-            "safeName": "PARAMS",
-            "unsafeName": "PARAMS",
-          },
-          "snakeCase": {
-            "safeName": "params",
-            "unsafeName": "params",
-          },
-        },
+        "file": "params",
         "packagePath": [
           {
             "camelCase": {
@@ -12088,25 +10814,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             },
           },
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "primitive",
-            "unsafeName": "primitive",
-          },
-          "originalName": "primitive",
-          "pascalCase": {
-            "safeName": "Primitive",
-            "unsafeName": "Primitive",
-          },
-          "screamingSnakeCase": {
-            "safeName": "PRIMITIVE",
-            "unsafeName": "PRIMITIVE",
-          },
-          "snakeCase": {
-            "safeName": "primitive",
-            "unsafeName": "primitive",
-          },
-        },
+        "file": "primitive",
         "packagePath": [
           {
             "camelCase": {
@@ -12201,25 +10909,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             },
           },
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "union",
-            "unsafeName": "union",
-          },
-          "originalName": "union",
-          "pascalCase": {
-            "safeName": "Union",
-            "unsafeName": "Union",
-          },
-          "screamingSnakeCase": {
-            "safeName": "UNION",
-            "unsafeName": "UNION",
-          },
-          "snakeCase": {
-            "safeName": "union",
-            "unsafeName": "union",
-          },
-        },
+        "file": "union",
         "packagePath": [
           {
             "camelCase": {
@@ -12297,25 +10987,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             },
           },
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "generalErrors",
-            "unsafeName": "generalErrors",
-          },
-          "originalName": "general-errors",
-          "pascalCase": {
-            "safeName": "GeneralErrors",
-            "unsafeName": "GeneralErrors",
-          },
-          "screamingSnakeCase": {
-            "safeName": "GENERAL_ERRORS",
-            "unsafeName": "GENERAL_ERRORS",
-          },
-          "snakeCase": {
-            "safeName": "general_errors",
-            "unsafeName": "general_errors",
-          },
-        },
+        "file": "general-errors",
         "packagePath": [],
       },
       "hasEndpointsInTree": false,
@@ -12373,25 +11045,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             },
           },
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "inlinedRequests",
-            "unsafeName": "inlinedRequests",
-          },
-          "originalName": "inlined-requests",
-          "pascalCase": {
-            "safeName": "InlinedRequests",
-            "unsafeName": "InlinedRequests",
-          },
-          "screamingSnakeCase": {
-            "safeName": "INLINED_REQUESTS",
-            "unsafeName": "INLINED_REQUESTS",
-          },
-          "snakeCase": {
-            "safeName": "inlined_requests",
-            "unsafeName": "inlined_requests",
-          },
-        },
+        "file": "inlined-requests",
         "packagePath": [],
       },
       "hasEndpointsInTree": true,
@@ -12447,25 +11101,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             },
           },
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "noAuth",
-            "unsafeName": "noAuth",
-          },
-          "originalName": "no-auth",
-          "pascalCase": {
-            "safeName": "NoAuth",
-            "unsafeName": "NoAuth",
-          },
-          "screamingSnakeCase": {
-            "safeName": "NO_AUTH",
-            "unsafeName": "NO_AUTH",
-          },
-          "snakeCase": {
-            "safeName": "no_auth",
-            "unsafeName": "no_auth",
-          },
-        },
+        "file": "no-auth",
         "packagePath": [],
       },
       "hasEndpointsInTree": true,
@@ -12521,25 +11157,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             },
           },
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "noReqBody",
-            "unsafeName": "noReqBody",
-          },
-          "originalName": "no-req-body",
-          "pascalCase": {
-            "safeName": "NoReqBody",
-            "unsafeName": "NoReqBody",
-          },
-          "screamingSnakeCase": {
-            "safeName": "NO_REQ_BODY",
-            "unsafeName": "NO_REQ_BODY",
-          },
-          "snakeCase": {
-            "safeName": "no_req_body",
-            "unsafeName": "no_req_body",
-          },
-        },
+        "file": "no-req-body",
         "packagePath": [],
       },
       "hasEndpointsInTree": true,
@@ -12595,25 +11213,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             },
           },
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "reqWithHeaders",
-            "unsafeName": "reqWithHeaders",
-          },
-          "originalName": "req-with-headers",
-          "pascalCase": {
-            "safeName": "ReqWithHeaders",
-            "unsafeName": "ReqWithHeaders",
-          },
-          "screamingSnakeCase": {
-            "safeName": "REQ_WITH_HEADERS",
-            "unsafeName": "REQ_WITH_HEADERS",
-          },
-          "snakeCase": {
-            "safeName": "req_with_headers",
-            "unsafeName": "req_with_headers",
-          },
-        },
+        "file": "req-with-headers",
         "packagePath": [],
       },
       "hasEndpointsInTree": true,
@@ -12770,25 +11370,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             },
           },
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "enum",
-            "unsafeName": "enum",
-          },
-          "originalName": "enum",
-          "pascalCase": {
-            "safeName": "Enum",
-            "unsafeName": "Enum",
-          },
-          "screamingSnakeCase": {
-            "safeName": "ENUM",
-            "unsafeName": "ENUM",
-          },
-          "snakeCase": {
-            "safeName": "enum",
-            "unsafeName": "enum",
-          },
-        },
+        "file": "enum",
         "packagePath": [
           {
             "camelCase": {
@@ -12890,25 +11472,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             },
           },
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "object",
-            "unsafeName": "object",
-          },
-          "originalName": "object",
-          "pascalCase": {
-            "safeName": "Object",
-            "unsafeName": "Object",
-          },
-          "screamingSnakeCase": {
-            "safeName": "OBJECT",
-            "unsafeName": "OBJECT",
-          },
-          "snakeCase": {
-            "safeName": "object",
-            "unsafeName": "object",
-          },
-        },
+        "file": "object",
         "packagePath": [
           {
             "camelCase": {
@@ -13010,25 +11574,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             },
           },
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "union",
-            "unsafeName": "union",
-          },
-          "originalName": "union",
-          "pascalCase": {
-            "safeName": "Union",
-            "unsafeName": "Union",
-          },
-          "screamingSnakeCase": {
-            "safeName": "UNION",
-            "unsafeName": "UNION",
-          },
-          "snakeCase": {
-            "safeName": "union",
-            "unsafeName": "union",
-          },
-        },
+        "file": "union",
         "packagePath": [
           {
             "camelCase": {
@@ -13115,25 +11661,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "generalErrors",
-              "unsafeName": "generalErrors",
-            },
-            "originalName": "general-errors",
-            "pascalCase": {
-              "safeName": "GeneralErrors",
-              "unsafeName": "GeneralErrors",
-            },
-            "screamingSnakeCase": {
-              "safeName": "GENERAL_ERRORS",
-              "unsafeName": "GENERAL_ERRORS",
-            },
-            "snakeCase": {
-              "safeName": "general_errors",
-              "unsafeName": "general_errors",
-            },
-          },
+          "file": "general-errors",
           "packagePath": [],
         },
         "name": {
@@ -13257,25 +11785,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "enum",
-              "unsafeName": "enum",
-            },
-            "originalName": "enum",
-            "pascalCase": {
-              "safeName": "Enum",
-              "unsafeName": "Enum",
-            },
-            "screamingSnakeCase": {
-              "safeName": "ENUM",
-              "unsafeName": "ENUM",
-            },
-            "snakeCase": {
-              "safeName": "enum",
-              "unsafeName": "enum",
-            },
-          },
+          "file": "enum",
           "packagePath": [
             {
               "camelCase": {
@@ -13495,25 +12005,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "object",
-              "unsafeName": "object",
-            },
-            "originalName": "object",
-            "pascalCase": {
-              "safeName": "Object",
-              "unsafeName": "Object",
-            },
-            "screamingSnakeCase": {
-              "safeName": "OBJECT",
-              "unsafeName": "OBJECT",
-            },
-            "snakeCase": {
-              "safeName": "object",
-              "unsafeName": "object",
-            },
-          },
+          "file": "object",
           "packagePath": [
             {
               "camelCase": {
@@ -13600,25 +12092,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
             ],
-            "file": {
-              "camelCase": {
-                "safeName": "object",
-                "unsafeName": "object",
-              },
-              "originalName": "object",
-              "pascalCase": {
-                "safeName": "Object",
-                "unsafeName": "Object",
-              },
-              "screamingSnakeCase": {
-                "safeName": "OBJECT",
-                "unsafeName": "OBJECT",
-              },
-              "snakeCase": {
-                "safeName": "object",
-                "unsafeName": "object",
-              },
-            },
+            "file": "object",
             "packagePath": [
               {
                 "camelCase": {
@@ -13797,25 +12271,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                         },
                       },
                     ],
-                    "file": {
-                      "camelCase": {
-                        "safeName": "object",
-                        "unsafeName": "object",
-                      },
-                      "originalName": "object",
-                      "pascalCase": {
-                        "safeName": "Object",
-                        "unsafeName": "Object",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "OBJECT",
-                        "unsafeName": "OBJECT",
-                      },
-                      "snakeCase": {
-                        "safeName": "object",
-                        "unsafeName": "object",
-                      },
-                    },
+                    "file": "object",
                     "packagePath": [
                       {
                         "camelCase": {
@@ -13918,25 +12374,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "object",
-              "unsafeName": "object",
-            },
-            "originalName": "object",
-            "pascalCase": {
-              "safeName": "Object",
-              "unsafeName": "Object",
-            },
-            "screamingSnakeCase": {
-              "safeName": "OBJECT",
-              "unsafeName": "OBJECT",
-            },
-            "snakeCase": {
-              "safeName": "object",
-              "unsafeName": "object",
-            },
-          },
+          "file": "object",
           "packagePath": [
             {
               "camelCase": {
@@ -14023,25 +12461,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
             ],
-            "file": {
-              "camelCase": {
-                "safeName": "object",
-                "unsafeName": "object",
-              },
-              "originalName": "object",
-              "pascalCase": {
-                "safeName": "Object",
-                "unsafeName": "Object",
-              },
-              "screamingSnakeCase": {
-                "safeName": "OBJECT",
-                "unsafeName": "OBJECT",
-              },
-              "snakeCase": {
-                "safeName": "object",
-                "unsafeName": "object",
-              },
-            },
+            "file": "object",
             "packagePath": [
               {
                 "camelCase": {
@@ -14210,25 +12630,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     },
                   },
                 ],
-                "file": {
-                  "camelCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                  "originalName": "object",
-                  "pascalCase": {
-                    "safeName": "Object",
-                    "unsafeName": "Object",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "OBJECT",
-                    "unsafeName": "OBJECT",
-                  },
-                  "snakeCase": {
-                    "safeName": "object",
-                    "unsafeName": "object",
-                  },
-                },
+                "file": "object",
                 "packagePath": [
                   {
                     "camelCase": {
@@ -14329,25 +12731,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "object",
-              "unsafeName": "object",
-            },
-            "originalName": "object",
-            "pascalCase": {
-              "safeName": "Object",
-              "unsafeName": "Object",
-            },
-            "screamingSnakeCase": {
-              "safeName": "OBJECT",
-              "unsafeName": "OBJECT",
-            },
-            "snakeCase": {
-              "safeName": "object",
-              "unsafeName": "object",
-            },
-          },
+          "file": "object",
           "packagePath": [
             {
               "camelCase": {
@@ -15003,25 +13387,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "object",
-              "unsafeName": "object",
-            },
-            "originalName": "object",
-            "pascalCase": {
-              "safeName": "Object",
-              "unsafeName": "Object",
-            },
-            "screamingSnakeCase": {
-              "safeName": "OBJECT",
-              "unsafeName": "OBJECT",
-            },
-            "snakeCase": {
-              "safeName": "object",
-              "unsafeName": "object",
-            },
-          },
+          "file": "object",
           "packagePath": [
             {
               "camelCase": {
@@ -15165,25 +13531,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "union",
-              "unsafeName": "union",
-            },
-            "originalName": "union",
-            "pascalCase": {
-              "safeName": "Union",
-              "unsafeName": "Union",
-            },
-            "screamingSnakeCase": {
-              "safeName": "UNION",
-              "unsafeName": "UNION",
-            },
-            "snakeCase": {
-              "safeName": "union",
-              "unsafeName": "union",
-            },
-          },
+          "file": "union",
           "packagePath": [
             {
               "camelCase": {
@@ -15270,25 +13618,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
             ],
-            "file": {
-              "camelCase": {
-                "safeName": "union",
-                "unsafeName": "union",
-              },
-              "originalName": "union",
-              "pascalCase": {
-                "safeName": "Union",
-                "unsafeName": "Union",
-              },
-              "screamingSnakeCase": {
-                "safeName": "UNION",
-                "unsafeName": "UNION",
-              },
-              "snakeCase": {
-                "safeName": "union",
-                "unsafeName": "union",
-              },
-            },
+            "file": "union",
             "packagePath": [
               {
                 "camelCase": {
@@ -15374,25 +13704,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
             ],
-            "file": {
-              "camelCase": {
-                "safeName": "union",
-                "unsafeName": "union",
-              },
-              "originalName": "union",
-              "pascalCase": {
-                "safeName": "Union",
-                "unsafeName": "Union",
-              },
-              "screamingSnakeCase": {
-                "safeName": "UNION",
-                "unsafeName": "UNION",
-              },
-              "snakeCase": {
-                "safeName": "union",
-                "unsafeName": "union",
-              },
-            },
+            "file": "union",
             "packagePath": [
               {
                 "camelCase": {
@@ -15495,7 +13807,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "shape": {
               "_type": "samePropertiesAsObject",
               "_visit": [Function],
-              "default": undefined,
               "displayName": undefined,
               "fernFilepath": {
                 "allParts": [
@@ -15538,25 +13849,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     },
                   },
                 ],
-                "file": {
-                  "camelCase": {
-                    "safeName": "union",
-                    "unsafeName": "union",
-                  },
-                  "originalName": "union",
-                  "pascalCase": {
-                    "safeName": "Union",
-                    "unsafeName": "Union",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "UNION",
-                    "unsafeName": "UNION",
-                  },
-                  "snakeCase": {
-                    "safeName": "union",
-                    "unsafeName": "union",
-                  },
-                },
+                "file": "union",
                 "packagePath": [
                   {
                     "camelCase": {
@@ -15579,7 +13872,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                   },
                 ],
               },
-              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "dog",
@@ -15600,7 +13892,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
               "propertiesType": "samePropertiesAsObject",
-              "type": "named",
               "typeId": "type_types/union:Dog",
             },
           },
@@ -15633,7 +13924,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
             "shape": {
               "_type": "samePropertiesAsObject",
               "_visit": [Function],
-              "default": undefined,
               "displayName": undefined,
               "fernFilepath": {
                 "allParts": [
@@ -15676,25 +13966,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                     },
                   },
                 ],
-                "file": {
-                  "camelCase": {
-                    "safeName": "union",
-                    "unsafeName": "union",
-                  },
-                  "originalName": "union",
-                  "pascalCase": {
-                    "safeName": "Union",
-                    "unsafeName": "Union",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "UNION",
-                    "unsafeName": "UNION",
-                  },
-                  "snakeCase": {
-                    "safeName": "union",
-                    "unsafeName": "union",
-                  },
-                },
+                "file": "union",
                 "packagePath": [
                   {
                     "camelCase": {
@@ -15717,7 +13989,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                   },
                 ],
               },
-              "inline": undefined,
               "name": {
                 "camelCase": {
                   "safeName": "cat",
@@ -15738,7 +14009,6 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
                 },
               },
               "propertiesType": "samePropertiesAsObject",
-              "type": "named",
               "typeId": "type_types/union:Cat",
             },
           },
@@ -15795,25 +14065,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "union",
-              "unsafeName": "union",
-            },
-            "originalName": "union",
-            "pascalCase": {
-              "safeName": "Union",
-              "unsafeName": "Union",
-            },
-            "screamingSnakeCase": {
-              "safeName": "UNION",
-              "unsafeName": "UNION",
-            },
-            "snakeCase": {
-              "safeName": "union",
-              "unsafeName": "union",
-            },
-          },
+          "file": "union",
           "packagePath": [
             {
               "camelCase": {
@@ -15995,25 +14247,7 @@ exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "union",
-              "unsafeName": "union",
-            },
-            "originalName": "union",
-            "pascalCase": {
-              "safeName": "Union",
-              "unsafeName": "Union",
-            },
-            "screamingSnakeCase": {
-              "safeName": "UNION",
-              "unsafeName": "UNION",
-            },
-            "snakeCase": {
-              "safeName": "union",
-              "unsafeName": "union",
-            },
-          },
+          "file": "union",
           "packagePath": [
             {
               "camelCase": {
