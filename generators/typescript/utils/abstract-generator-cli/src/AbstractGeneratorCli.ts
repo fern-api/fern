@@ -4,26 +4,23 @@ import {
     NopGeneratorNotificationService,
     parseGeneratorConfig,
     parseIR,
-    type ResolvedGithubConfig,
     type RawGithubConfig,
+    type ResolvedGithubConfig,
     resolveGitHubConfig
 } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
+import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { FernIr, serialization } from "@fern-fern/ir-sdk";
 import { AuthScheme, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { constructNpmPackage, NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
-import tmp from "tmp-promise";
 import { writeFile } from "fs/promises";
-import { createLoggingExecutable } from "@fern-api/logging-execa";
-
-
-
+import { tmpdir } from "os";
+import tmp from "tmp-promise";
 import { publishPackage } from "./publishPackage";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows";
-import { tmpdir } from "os";
 
 const OUTPUT_ZIP_FILENAME = "output.zip";
 
@@ -251,7 +248,11 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
         }
     }
 
-    private async pushToGihub(ir: IntermediateRepresentation, sourceDirectory: string, logger: Logger): Promise<string> {
+    private async pushToGihub(
+        ir: IntermediateRepresentation,
+        sourceDirectory: string,
+        logger: Logger
+    ): Promise<string> {
         const rawGithubConfig = this.getRawGitHubConfig({ ir, sourceDirectory });
         const githubConfig = resolveGitHubConfig({ rawGithubConfig, logger });
         const file = await tmp.file();
@@ -262,10 +263,15 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
         const loggingExecutable = createLoggingExecutable("generator-cli", { cwd: process.cwd(), logger });
         const content = await loggingExecutable(args);
         return content.stdout;
-
     }
 
-    public getRawGitHubConfig({ ir, sourceDirectory }: { ir: IntermediateRepresentation, sourceDirectory: string }): RawGithubConfig {
+    public getRawGitHubConfig({
+        ir,
+        sourceDirectory
+    }: {
+        ir: IntermediateRepresentation;
+        sourceDirectory: string;
+    }): RawGithubConfig {
         return {
             sourceDirectory,
             type: ir.publishConfig?.type,

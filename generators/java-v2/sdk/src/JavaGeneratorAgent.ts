@@ -42,9 +42,7 @@ export class JavaGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorConte
         return FernGeneratorCli.Language.Java;
     }
 
-    public getGitHubConfig(
-        args: AbstractGeneratorAgent.GitHubConfigArgs<SdkGeneratorContext>
-    ): RawGithubConfig {
+    public getGitHubConfig(args: AbstractGeneratorAgent.GitHubConfigArgs<SdkGeneratorContext>): RawGithubConfig {
         return {
             sourceDirectory: "/fern/output",
             type: this.publishConfig?.type,

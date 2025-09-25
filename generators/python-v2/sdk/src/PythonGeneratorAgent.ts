@@ -33,9 +33,7 @@ export class PythonGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCon
         return FernGeneratorCli.Language.Python;
     }
 
-    public getGitHubConfig(
-        args: AbstractGeneratorAgent.GitHubConfigArgs<SdkGeneratorContext>
-    ): RawGithubConfig {
+    public getGitHubConfig(args: AbstractGeneratorAgent.GitHubConfigArgs<SdkGeneratorContext>): RawGithubConfig {
         return {
             sourceDirectory: "fern/output",
             type: this.publishConfig?.type,

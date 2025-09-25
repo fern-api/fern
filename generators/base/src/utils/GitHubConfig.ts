@@ -21,7 +21,13 @@ export interface ResolvedGithubConfig {
     mode?: "pull-request";
 }
 
-export function resolveGitHubConfig({rawGithubConfig, logger}: {rawGithubConfig: RawGithubConfig, logger: Logger}): ResolvedGithubConfig {
+export function resolveGitHubConfig({
+    rawGithubConfig,
+    logger
+}: {
+    rawGithubConfig: RawGithubConfig;
+    logger: Logger;
+}): ResolvedGithubConfig {
     if (rawGithubConfig.type == null) {
         logger.error("Publishing config is missing");
         throw new Error("Publishing config is required for GitHub actions");
@@ -43,5 +49,5 @@ export function resolveGitHubConfig({rawGithubConfig, logger}: {rawGithubConfig:
         token: rawGithubConfig.token,
         branch: rawGithubConfig.branch,
         mode: rawGithubConfig.mode
-    }
+    };
 }

@@ -44,9 +44,7 @@ export class GoGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorContext
         return FernGeneratorCli.Language.Go;
     }
 
-    public getGitHubConfig(
-        args: AbstractGeneratorAgent.GitHubConfigArgs<SdkGeneratorContext>
-    ): RawGithubConfig {
+    public getGitHubConfig(args: AbstractGeneratorAgent.GitHubConfigArgs<SdkGeneratorContext>): RawGithubConfig {
         return {
             sourceDirectory: "/fern/output",
             type: this.publishConfig?.type,
