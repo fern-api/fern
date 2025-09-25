@@ -17,12 +17,12 @@
 package com.fern.java.client.generators;
 
 import com.fern.ir.model.auth.AuthScheme;
+import com.fern.ir.model.auth.AuthSchemeKey;
 import com.fern.ir.model.auth.BasicAuthScheme;
 import com.fern.ir.model.auth.BearerAuthScheme;
 import com.fern.ir.model.auth.HeaderAuthScheme;
 import com.fern.ir.model.auth.InferredAuthScheme;
 import com.fern.ir.model.auth.OAuthScheme;
-import com.fern.ir.model.auth.AuthSchemeKey;
 import com.fern.ir.model.commons.NameAndWireValue;
 import com.fern.ir.model.http.HttpHeader;
 import com.fern.ir.model.ir.ApiVersionScheme;
