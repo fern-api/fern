@@ -3,7 +3,10 @@ import {
     GeneratorNotificationService,
     NopGeneratorNotificationService,
     parseGeneratorConfig,
-    parseIR
+    parseIR,
+    type ResolvedGithubConfig,
+    type RawGithubConfig,
+    resolveGitHubConfig
 } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
@@ -12,6 +15,11 @@ import { FernIr, serialization } from "@fern-fern/ir-sdk";
 import { AuthScheme, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { constructNpmPackage, NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
+import tmp from "tmp-promise";
+import { writeFile } from "fs/promises";
+import { createLoggingExecutable } from "@fern-api/logging-execa";
+
+
 
 import { publishPackage } from "./publishPackage";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows";
@@ -144,6 +152,9 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         zipFilename: OUTPUT_ZIP_FILENAME,
                         unzipOutput: options?.unzipOutput
                     });
+                    if (ir.selfHosted) {
+                        await this.pushToGihub(ir, destinationPath, logger);
+                    }
                 },
                 downloadFiles: async () => {
                     if (this.shouldGenerateFullProject(ir)) {
@@ -230,6 +241,30 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             default:
                 assertNever(publishConfig);
         }
+    }
+
+    private async pushToGihub(ir: IntermediateRepresentation, sourceDirectory: string, logger: Logger): Promise<string> {
+        const rawGithubConfig = this.getRawGitHubConfig({ ir, sourceDirectory });
+        const githubConfig = resolveGitHubConfig({ rawGithubConfig, logger });
+        const file = await tmp.file();
+        await writeFile(file.path, JSON.stringify(githubConfig));
+        const filePath = AbsoluteFilePath.of(file.path);
+        const cmd = githubConfig.mode === "pull-request" ? "pr" : "push";
+        const args = ["github", cmd, "--config", filePath];
+        const loggingExecutable = createLoggingExecutable("generator-cli", { cwd: process.cwd(), logger });
+        const content = await loggingExecutable(args);
+        return content.stdout;
+
+    }
+
+    public getRawGitHubConfig({ ir, sourceDirectory }: { ir: IntermediateRepresentation, sourceDirectory: string }): RawGithubConfig {
+        return {
+            sourceDirectory,
+            type: ir.publishConfig?.type,
+            uri: ir.publishConfig?.type === "github" ? ir.publishConfig.uri : undefined,
+            token: ir.publishConfig?.type === "github" ? ir.publishConfig.token : undefined,
+            mode: ir.publishConfig?.type === "github" ? ir.publishConfig.mode : undefined
+        };
     }
 }
 

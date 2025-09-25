@@ -7,8 +7,7 @@ import path from "path";
 
 import { GeneratorAgentClient } from "./GeneratorAgentClient";
 import { ReferenceConfigBuilder } from "./reference";
-import { RawGithubConfig, ResolvedGithubConfig } from "./utils";
-import { isNonNullish } from "@fern-api/core-utils";
+import { RawGithubConfig, resolveGitHubConfig } from "./utils";
 
 const FEATURES_CONFIG_PATHS = [
     "/assets/features.yml",
@@ -82,7 +81,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
      */
     public async pushToGitHub({ context }: { context: GeneratorContext }): Promise<string> {
         const rawGithubConfig = this.getGitHubConfig({ context });
-        const githubConfig = this.resolveGitHubConfig(rawGithubConfig);
+        const githubConfig = resolveGitHubConfig({ rawGithubConfig, logger: this.logger });
         return this.cli.pushToGitHub({ githubConfig, withPullRequest: githubConfig.mode === "pull-request" });
     }
 
@@ -112,32 +111,6 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
     protected abstract getGitHubConfig(
         args: AbstractGeneratorAgent.GitHubConfigArgs<GeneratorContext>
     ): RawGithubConfig;
-
-    private resolveGitHubConfig(rawConfig: RawGithubConfig): ResolvedGithubConfig {
-
-        if (rawConfig.type == null) {
-            this.logger.error("Publishing config is missing");
-            throw new Error("Publishing config is required for GitHub actions");
-        }
-
-        if (rawConfig.type !== "github") {
-            this.logger.error(`Publishing type ${rawConfig.type} is not supported`);
-            throw new Error("Only GitHub publishing is supported");
-        }
-
-        if (!(isNonNullish(rawConfig.uri) && isNonNullish(rawConfig.token))) {
-            this.logger.error("GitHub URI or token is missing in publishing config");
-            throw new Error("GitHub URI and token are required in publishing config");
-        }
-
-        return {
-            sourceDirectory: rawConfig.sourceDirectory,
-            uri: rawConfig.uri,
-            token: rawConfig.token,
-            branch: rawConfig.branch,
-            mode: rawConfig.mode
-        }
-    }
 
     private async readFeatureConfig(): Promise<FernGeneratorCli.FeatureConfig> {
         this.logger.debug("Reading feature configuration ...");
