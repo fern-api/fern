@@ -4,7 +4,10 @@
 
 import * as FernIr from "../../../index";
 
-/**
- * When a name requires no deconfliction and all casings are trivially derivable, it will simply be a string (originalName).
- */
-export type Name = string | FernIr.DeconflictedName;
+export interface Name {
+    originalName: string;
+    camelCase: FernIr.SafeAndUnsafeString;
+    pascalCase: FernIr.SafeAndUnsafeString;
+    snakeCase: FernIr.SafeAndUnsafeString;
+    screamingSnakeCase: FernIr.SafeAndUnsafeString;
+}

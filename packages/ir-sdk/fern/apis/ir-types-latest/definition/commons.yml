@@ -15,14 +15,8 @@ types:
       file: optional<Name>
 
   # names
+
   Name:
-    docs: |
-      When a name requires no deconfliction and all casings are trivially derivable, it will simply be a string (originalName).
-    discriminated: false
-    union:
-      - string
-      - DeconflictedName
-  DeconflictedName:
     properties:
       originalName: string
       camelCase: SafeAndUnsafeString

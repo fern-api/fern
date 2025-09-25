@@ -5,11 +5,23 @@
 import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
-import { DeconflictedName } from "./DeconflictedName";
+import { SafeAndUnsafeString } from "./SafeAndUnsafeString";
 
-export const Name: core.serialization.Schema<serializers.Name.Raw, FernIr.Name> =
-    core.serialization.undiscriminatedUnion([core.serialization.string(), DeconflictedName]);
+export const Name: core.serialization.ObjectSchema<serializers.Name.Raw, FernIr.Name> =
+    core.serialization.objectWithoutOptionalProperties({
+        originalName: core.serialization.string(),
+        camelCase: SafeAndUnsafeString,
+        pascalCase: SafeAndUnsafeString,
+        snakeCase: SafeAndUnsafeString,
+        screamingSnakeCase: SafeAndUnsafeString,
+    });
 
 export declare namespace Name {
-    export type Raw = string | DeconflictedName.Raw;
+    export interface Raw {
+        originalName: string;
+        camelCase: SafeAndUnsafeString.Raw;
+        pascalCase: SafeAndUnsafeString.Raw;
+        snakeCase: SafeAndUnsafeString.Raw;
+        screamingSnakeCase: SafeAndUnsafeString.Raw;
+    }
 }
