@@ -1,18 +1,58 @@
-import { DeconflictedName, Name } from "@fern-api/ir-sdk";
+import { Name } from "@fern-api/ir-sdk";
 import { camelCase, snakeCase, upperFirst } from "lodash-es";
 
-export const expandName = (name: Name): DeconflictedName => {
-    if (typeof name !== "string") {
-        return name;
-    }
+export type ExpandedName = {
+    originalName: string;
+    camelCase: {
+        unsafeName: string;
+        safeName: string;
+    };
+    pascalCase: {
+        unsafeName: string;
+        safeName: string;
+    };
+    snakeCase: {
+        unsafeName: string;
+        safeName: string;
+    };
+    screamingSnakeCase: {
+        unsafeName: string;
+        safeName: string;
+    };
+};
 
-    const camelCaseName = camelCase(name);
+export const expandName = (name: Name): ExpandedName => {
+    const originalName = getOriginalName(name);
+    const camelCaseName = camelCase(originalName);
     const pascalCaseName = upperFirst(camelCaseName);
-    const snakeCaseName = snakeCase(name);
+    const snakeCaseName = snakeCase(originalName);
     const screamingSnakeCaseName = snakeCaseName.toUpperCase();
 
+    if (typeof name !== "string") {
+        const { camelCase, pascalCase, snakeCase, screamingSnakeCase } = name;
+        return {
+            originalName,
+            camelCase: camelCase ?? {
+                unsafeName: camelCaseName,
+                safeName: camelCaseName
+            },
+            pascalCase: pascalCase ?? {
+                unsafeName: pascalCaseName,
+                safeName: pascalCaseName
+            },
+            snakeCase: snakeCase ?? {
+                unsafeName: snakeCaseName,
+                safeName: snakeCaseName
+            },
+            screamingSnakeCase: screamingSnakeCase ?? {
+                unsafeName: screamingSnakeCaseName,
+                safeName: screamingSnakeCaseName
+            }
+        }
+    }
+
     return {
-        originalName: name,
+        originalName,
         camelCase: {
             unsafeName: camelCaseName,
             safeName: camelCaseName

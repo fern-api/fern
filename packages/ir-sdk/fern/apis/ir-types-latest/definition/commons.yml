@@ -17,12 +17,21 @@ types:
   # names
 
   Name:
+    docs: |
+      When a name requires no deconfliction and all casings are trivially derivable, it will simply be a string (originalName).
+    discriminated: false
+    union:
+      - string
+      - CasedName
+  CasedName:
+    docs: |
+      When a name requires special casing, it will be an object with all the nontrivial casing variations supplied.
     properties:
       originalName: string
-      camelCase: SafeAndUnsafeString
-      pascalCase: SafeAndUnsafeString
-      snakeCase: SafeAndUnsafeString
-      screamingSnakeCase: SafeAndUnsafeString
+      camelCase: optional<SafeAndUnsafeString>
+      pascalCase: optional<SafeAndUnsafeString>
+      snakeCase: optional<SafeAndUnsafeString>
+      screamingSnakeCase: optional<SafeAndUnsafeString>
   DisplayName: string
   NameAndWireValue:
     properties:
