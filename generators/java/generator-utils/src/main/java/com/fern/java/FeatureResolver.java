@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 public class FeatureResolver {
 
     public static final AuthScheme DEFAULT_BEARER_AUTH = AuthScheme.bearer(BearerAuthScheme.builder()
-            .key(AuthSchemeKey.of("key"))
+            .key(AuthSchemeKey.of("bearer"))
             .token(Name.builder()
                     .originalName("token")
                     .camelCase(SafeAndUnsafeString.builder()

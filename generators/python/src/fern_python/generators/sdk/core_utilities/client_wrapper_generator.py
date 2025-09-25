@@ -784,7 +784,7 @@ class ClientWrapperGenerator:
                 # TODO: We need to support the token prefix. This will actually need to be handled as a
                 #       custom header auth scheme.
                 return ir_types.BearerAuthScheme(
-                    key="key",
+                    key="bearer",
                     token=ir_types.Name(
                         original_name="token",
                         camel_case=ir_types.SafeAndUnsafeString(
