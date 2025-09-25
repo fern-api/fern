@@ -42,7 +42,7 @@ export const V59_TO_V58_MIGRATION: IrMigration<
         [GeneratorName.SWIFT_SDK]: "0.16.0",
         [GeneratorName.PHP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.PHP_SDK]: "1.17.0",
-        [GeneratorName.RUST_MODEL]: GeneratorWasNotCreatedYet,
+        [GeneratorName.RUST_MODEL]: "0.0.2",
         [GeneratorName.RUST_SDK]: "0.1.1"
     },
     jsonifyEarlierVersion: (ir) =>
