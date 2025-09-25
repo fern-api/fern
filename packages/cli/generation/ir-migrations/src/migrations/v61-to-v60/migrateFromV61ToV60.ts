@@ -8,27 +8,6 @@ import {
 } from "../../types/IrMigration";
 import { expandName } from "@fern-api/ir-utils";
 
-// NOTE(tjb9dc): Since the Name breaking change is so pervasive, it would be a massive pain to code explicitly.
-// Instead, we hook into custom serialization to write out a backwards compatible version, and then just deserialize it.
-const V61SerializerWithV60Names = {
-    ...IrSerialization.V61,
-    // Override the Name serializer
-    commons: {
-        ...IrSerialization.V61.commons,
-        Name: IrSerialization.V61.commons.Name.transform({
-            transform: (name) => {
-                if (typeof name === "string") {
-                    // Expand the name using the shared library function
-                    return expandName(name);
-                }
-                // Return the deconflicted name which is already back-compat
-                return name;
-            },
-            untransform: (deconflictedName) => deconflictedName // Leave a deconflicted name as-is
-        })
-    }
-};
-
 export const V61_TO_V60_MIGRATION: IrMigration<
     IrVersions.V61.ir.IntermediateRepresentation,
     IrVersions.V60.ir.IntermediateRepresentation
@@ -74,13 +53,35 @@ export const V61_TO_V60_MIGRATION: IrMigration<
     migrateBackwards: (
         v61: IrVersions.V61.IntermediateRepresentation
     ): IrVersions.V60.ir.IntermediateRepresentation => {
-        const raw = V61SerializerWithV60Names.IntermediateRepresentation.jsonOrThrow(v61, {
-            unrecognizedObjectKeys: "strip",
-            skipValidation: true
-        });
-        return IrSerialization.V60.IntermediateRepresentation.parseOrThrow(raw, {
-            unrecognizedObjectKeys: "strip",
-            skipValidation: true
-        });
+        // NOTE(tjb9dc): Since the Name breaking change is so pervasive, it would be a massive pain to code explicitly.
+        // Instead, we'll monkey patch the Name serializer to call expandName.
+        // There may be a nicer way to do this via a transformer, but I couldn't get the Name transformer to be respected.
+        const originalNameSchema = IrSerialization.V61.commons.Name;
+        const originalJsonMethod = originalNameSchema.json.bind(originalNameSchema);
+
+        try {
+            // Override the json method to use expandName
+            originalNameSchema.json = (
+                name: Parameters<typeof originalJsonMethod>[0],
+                opts?: Parameters<typeof originalJsonMethod>[1]
+            ) => {
+                const expandedName = expandName(name as IrVersions.V61.Name);
+                return originalJsonMethod(expandedName, opts);
+            };
+
+            // Serialize using V61 schema with patched Name transformation
+            const raw = IrSerialization.V61.IntermediateRepresentation.jsonOrThrow(v61, {
+                unrecognizedObjectKeys: "strip",
+                skipValidation: true
+            });
+
+            // Deserialize as V60
+            return IrSerialization.V60.IntermediateRepresentation.parseOrThrow(raw, {
+                unrecognizedObjectKeys: "strip",
+                skipValidation: true
+            });
+        } finally {
+            originalNameSchema.json = originalJsonMethod;
+        }
     }
 };

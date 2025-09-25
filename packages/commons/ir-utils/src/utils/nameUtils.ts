@@ -48,7 +48,7 @@ export const expandName = (name: Name): ExpandedName => {
                 unsafeName: screamingSnakeCaseName,
                 safeName: screamingSnakeCaseName
             }
-        }
+        };
     }
 
     return {

@@ -115,7 +115,10 @@ export function constructCasingsGenerator({
                 camelCase: finalCamelCaseName.safeName === naiveCamelCaseName ? undefined : finalCamelCaseName,
                 pascalCase: finalPascalCaseName.safeName === naivePascalCaseName ? undefined : finalPascalCaseName,
                 snakeCase: finalSnakeCaseName.safeName === naiveSnakeCaseName ? undefined : finalSnakeCaseName,
-                screamingSnakeCase: finalScreamingSnakeCaseName.safeName === naiveScreamingSnakeCaseName ? undefined : finalScreamingSnakeCaseName
+                screamingSnakeCase:
+                    finalScreamingSnakeCaseName.safeName === naiveScreamingSnakeCaseName
+                        ? undefined
+                        : finalScreamingSnakeCaseName
             };
         },
         generateNameAndWireValue: ({ name, wireValue, opts }) => ({
