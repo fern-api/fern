@@ -3,7 +3,7 @@
     - summary: |
         Upgrade to irV60
       type: internal
-  createdAt: "2025-09-23"
+  createdAt: "2025-09-25"
   irVersion: 60
   version: 1.8.3
 
