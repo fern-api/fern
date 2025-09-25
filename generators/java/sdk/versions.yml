@@ -1,8 +1,8 @@
 - version: 3.6.1
   changelogEntry:
     - summary: |
-        Fixed wire tests failing with InvalidDefinitionException for Optional<T> serialization by using
-        the configured ObjectMappers.JSON_MAPPER instead of plain ObjectMapper.
+        Fixed wire tests failing with `InvalidDefinitionException` for `Optional<T>` serialization by using
+        the configured `ObjectMappers.JSON_MAPPER` instead of plain `ObjectMapper`.
       type: fix
   createdAt: "2025-09-25"
   irVersion: 60
@@ -26,7 +26,7 @@
 - version: 3.5.9
   changelogEntry:
     - summary: |
-        Fixed missing java.util.Optional import in dynamic snippets generation for wire tests.
+        Fixed missing `java.util.Optional` import in dynamic snippets generation for wire tests.
       type: fix
   createdAt: "2025-09-24"
   irVersion: 59
@@ -42,7 +42,7 @@
 - version: 3.5.7
   changelogEntry:
     - summary: |
-        Fixed NullPointerException in builder setters when collections are null by adding null checks before addAll()/putAll() calls.
+        Fixed `NullPointerException` in builder setters when collections are null by adding null checks before `addAll()`/`putAll()` calls.
       type: fix
   createdAt: "2025-09-22"
   irVersion: 59
