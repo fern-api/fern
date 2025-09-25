@@ -66,12 +66,12 @@ class CoreUtilities:
             exports={
                 "parse_obj_as",
                 "UniversalBaseModel",
-                "IS_PYDANTIC_V2",
                 "universal_root_validator",
                 "universal_field_validator",
                 "update_forward_refs",
                 "UniversalRootModel",
-            },
+            }
+            | (set() if is_v1_on_v2 else {"IS_PYDANTIC_V2"}),
         )
         project.add_dependency(PYDANTIC_CORE_DEPENDENCY)
 
