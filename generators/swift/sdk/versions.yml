@@ -2,7 +2,7 @@
 
 - version: 0.17.1
   changelogEntry:
-    - type: feat
+    - type: fix
       summary: |
         Fixed incorrect handling of `self` keyword in struct property names.
   createdAt: "2025-09-25"
