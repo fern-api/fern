@@ -31,6 +31,7 @@ export class TestClassBuilder {
             writer.addImport("org.junit.jupiter.api.AfterEach");
             writer.addImport("org.junit.jupiter.api.BeforeEach");
             writer.addImport("org.junit.jupiter.api.Test");
+            writer.addImport(`${this.context.getRootPackageName()}.core.ObjectMappers`);
 
             // Add any additional imports collected from snippets and type resolution
             if (additionalImports) {
@@ -44,7 +45,7 @@ export class TestClassBuilder {
 
             writer.writeLine("private MockWebServer server;");
             writer.writeLine(`private ${clientClassName} client;`);
-            writer.writeLine("private ObjectMapper objectMapper = new ObjectMapper();");
+            writer.writeLine("private ObjectMapper objectMapper = ObjectMappers.JSON_MAPPER;");
 
             writer.writeLine("@BeforeEach");
             writer.writeLine("public void setup() throws Exception {");
