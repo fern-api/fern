@@ -223,23 +223,25 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return this.joinPackageTokens(tokens);
     }
 
-    public getTypesPackageName(fernFilepath: FernIr.FernFilepath): string {
+    public getTypesPackageName(fernFilepath: FernIr.dynamic.FernFilepath): string {
         return this.getResourcesPackage(fernFilepath, "types");
     }
 
-    public getRequestsPackageName(fernFilepath: FernIr.FernFilepath): string {
+    public getRequestsPackageName(fernFilepath: FernIr.dynamic.FernFilepath): string {
         if (this.getPackageLayout() === "flat") {
             return this.getTypesPackageName(fernFilepath);
         }
         return this.getResourcesPackage(fernFilepath, "requests");
     }
 
-    protected getResourcesPackage(fernFilepath: FernIr.FernFilepath, suffix?: string): string {
+    protected getResourcesPackage(fernFilepath: FernIr.dynamic.FernFilepath, suffix?: string): string {
         const tokens = this.getPackagePrefixTokens();
         switch (this.getPackageLayout()) {
             case "flat":
                 if (fernFilepath != null) {
-                    tokens.push(...fernFilepath.packagePath.map((name) => this.getPackageNameSegment(name)));
+                    tokens.push(
+                        ...fernFilepath.packagePath.map((name: FernIr.dynamic.Name) => this.getPackageNameSegment(name))
+                    );
                 }
                 break;
             case "nested":
@@ -248,7 +250,9 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
                     tokens.push("resources");
                 }
                 if (fernFilepath != null) {
-                    tokens.push(...fernFilepath.allParts.map((name) => this.getPackageNameSegment(name)));
+                    tokens.push(
+                        ...fernFilepath.allParts.map((name: FernIr.dynamic.Name) => this.getPackageNameSegment(name))
+                    );
                 }
         }
         if (suffix != null) {
@@ -257,7 +261,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return this.joinPackageTokens(tokens);
     }
 
-    public getPackageName(fernFilepath: FernIr.FernFilepath, suffix?: string): string {
+    public getPackageName(fernFilepath: FernIr.dynamic.FernFilepath, suffix?: string): string {
         let parts = this.getPackageNameSegments(fernFilepath);
         parts = suffix != null ? [...parts, suffix] : parts;
         return [...this.getPackagePrefixTokens(), ...parts].join(".");
@@ -275,11 +279,11 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return this.customConfig?.["inline-file-properties"] ?? false;
     }
 
-    private getPackageNameSegments(fernFilepath: FernIr.FernFilepath): string[] {
-        return fernFilepath.packagePath.map((segment) => this.getPackageNameSegment(segment));
+    private getPackageNameSegments(fernFilepath: FernIr.dynamic.FernFilepath): string[] {
+        return fernFilepath.packagePath.map((segment: FernIr.dynamic.Name) => this.getPackageNameSegment(segment));
     }
 
-    private getPackageNameSegment(name: FernIr.Name): string {
+    private getPackageNameSegment(name: FernIr.dynamic.Name): string {
         return name.camelCase.safeName.toLowerCase();
     }
 
