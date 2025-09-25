@@ -1,5 +1,5 @@
 import { assertNever, noop } from "@fern-api/core-utils";
-import { swift } from "@fern-api/swift-codegen";
+import { sanitizeSelf, swift } from "@fern-api/swift-codegen";
 import { ObjectProperty, TypeId, UnionTypeDeclaration } from "@fern-fern/ir-sdk/api";
 
 import { StructGenerator } from "../helpers/struct-generator/StructGenerator";
@@ -234,27 +234,27 @@ export class DiscriminatedUnionGenerator {
 
             if (singleUnionType.shape.propertiesType === "singleProperty") {
                 constantPropertyDefinitions.push({
-                    unsafeName: this.unionTypeDeclaration.discriminant.name.camelCase.unsafeName,
+                    unsafeName: sanitizeSelf(this.unionTypeDeclaration.discriminant.name.camelCase.unsafeName),
                     rawName: this.unionTypeDeclaration.discriminant.wireValue,
                     type: swift.Type.string(),
                     value: swift.Expression.stringLiteral(singleUnionType.discriminantValue.wireValue)
                 });
                 dataPropertyDefinitions.push({
-                    unsafeName: singleUnionType.shape.name.name.camelCase.unsafeName,
+                    unsafeName: sanitizeSelf(singleUnionType.shape.name.name.camelCase.unsafeName),
                     rawName: singleUnionType.shape.name.wireValue,
                     type: singleUnionType.shape.type
                 });
             } else if (singleUnionType.shape.propertiesType === "samePropertiesAsObject") {
                 const variantProperties = this.getPropertiesOfVariant(singleUnionType.shape.typeId);
                 constantPropertyDefinitions.push({
-                    unsafeName: this.unionTypeDeclaration.discriminant.name.camelCase.unsafeName,
+                    unsafeName: sanitizeSelf(this.unionTypeDeclaration.discriminant.name.camelCase.unsafeName),
                     rawName: this.unionTypeDeclaration.discriminant.wireValue,
                     type: swift.Type.string(),
                     value: swift.Expression.stringLiteral(singleUnionType.discriminantValue.wireValue)
                 });
                 dataPropertyDefinitions.push(
                     ...variantProperties.map((p) => ({
-                        unsafeName: p.name.name.camelCase.unsafeName,
+                        unsafeName: sanitizeSelf(p.name.name.camelCase.unsafeName),
                         rawName: p.name.wireValue,
                         type: p.valueType,
                         docsContent: p.docs

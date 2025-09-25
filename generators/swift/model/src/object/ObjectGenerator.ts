@@ -1,4 +1,4 @@
-import { swift } from "@fern-api/swift-codegen";
+import { sanitizeSelf, swift } from "@fern-api/swift-codegen";
 import { InlinedRequestBodyProperty, ObjectProperty } from "@fern-fern/ir-sdk/api";
 
 import { StructGenerator } from "../helpers/struct-generator/StructGenerator";
@@ -38,7 +38,7 @@ export class ObjectGenerator {
             name: this.name,
             constantPropertyDefinitions: [],
             dataPropertyDefinitions: [...this.extendedProperties, ...this.properties].map((p) => ({
-                unsafeName: p.name.name.camelCase.unsafeName,
+                unsafeName: sanitizeSelf(p.name.name.camelCase.unsafeName),
                 rawName: p.name.wireValue,
                 type: p.valueType,
                 docsContent: p.docs
