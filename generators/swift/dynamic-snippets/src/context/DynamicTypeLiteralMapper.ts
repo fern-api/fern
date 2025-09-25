@@ -1,7 +1,7 @@
 import { DiscriminatedUnionTypeInstance, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { LiteralEnum, swift } from "@fern-api/swift-codegen";
+import { LiteralEnum, sanitizeSelf, swift } from "@fern-api/swift-codegen";
 
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
 import { DynamicTypeMapper } from "./DynamicTypeMapper";
@@ -225,7 +225,7 @@ export class DynamicTypeLiteralMapper {
                     return [
                         ...baseFields,
                         swift.functionArgument({
-                            label: unionVariant.discriminantValue.name.camelCase.unsafeName,
+                            label: sanitizeSelf(unionVariant.discriminantValue.name.camelCase.unsafeName),
                             value: this.convert({
                                 typeReference: unionVariant.typeReference,
                                 value: record[unionVariant.discriminantValue.wireValue]
@@ -262,7 +262,7 @@ export class DynamicTypeLiteralMapper {
             this.context.errors.scope(property.name.wireValue);
             try {
                 return swift.functionArgument({
-                    label: property.name.name.camelCase.unsafeName,
+                    label: sanitizeSelf(property.name.name.camelCase.unsafeName),
                     value: this.convert(property)
                 });
             } finally {
@@ -317,7 +317,7 @@ export class DynamicTypeLiteralMapper {
                 this.context.errors.scope(property.name.wireValue);
                 try {
                     return swift.functionArgument({
-                        label: property.name.name.camelCase.unsafeName,
+                        label: sanitizeSelf(property.name.name.camelCase.unsafeName),
                         value: this.convert({ typeReference: property.typeReference, value: property.value, as })
                     });
                 } finally {
