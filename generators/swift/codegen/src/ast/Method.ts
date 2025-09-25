@@ -1,9 +1,9 @@
+import { escapeReservedKeyword } from "../syntax";
 import { AccessLevel } from "./AccessLevel";
 import { CodeBlock } from "./CodeBlock";
 import { AstNode, Writer } from "./core";
 import { DocComment } from "./DocComment";
 import { FunctionParameter } from "./FunctionParameter";
-import { escapeReservedKeyword } from "./syntax";
 import { Type } from "./Type";
 
 export declare namespace Method {
