@@ -1,7 +1,7 @@
 use crate::types_object_object_with_optional_field::ObjectWithOptionalField;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct NestedObjectWithOptionalField {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub string: Option<String>,

@@ -378,7 +378,9 @@ function convertDeprecatedApiSettingsToOpenApiSettings(
         "only-include-referenced-schemas": deprecatedApiSettings["only-include-referenced-schemas"],
         "prefer-undiscriminated-unions-with-literals": deprecatedApiSettings?.unions === "v1" ? true : undefined,
         "respect-nullable-schemas": deprecatedApiSettings["respect-nullable-schemas"],
-        "title-as-schema-name": deprecatedApiSettings["use-title"]
+        "title-as-schema-name": deprecatedApiSettings["use-title"],
+        "wrap-references-to-nullable-in-optional": deprecatedApiSettings["wrap-references-to-nullable-in-optional"],
+        "coerce-optional-schemas-to-nullable": deprecatedApiSettings["coerce-optional-schemas-to-nullable"]
     };
 
     if (Object.values(settings).some((setting) => setting != null)) {
@@ -394,7 +396,9 @@ function convertDeprecatedApiSettingsToAsyncApiSettings(
         "idiomatic-request-names": deprecatedApiSettings["idiomatic-request-names"],
         "respect-nullable-schemas": deprecatedApiSettings["respect-nullable-schemas"],
         "title-as-schema-name": deprecatedApiSettings["use-title"],
-        "message-naming": deprecatedApiSettings["message-naming"]
+        "message-naming": deprecatedApiSettings["message-naming"],
+        "wrap-references-to-nullable-in-optional": deprecatedApiSettings["wrap-references-to-nullable-in-optional"],
+        "coerce-optional-schemas-to-nullable": deprecatedApiSettings["coerce-optional-schemas-to-nullable"]
     };
 
     if (Object.values(settings).some((setting) => setting != null)) {

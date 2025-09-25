@@ -13,6 +13,15 @@ impl UserEventsMetadataClient {
         })
     }
 
+    /// Get event metadata.
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn get_metadata(
         &self,
         request: &GetMetadataQueryRequest,

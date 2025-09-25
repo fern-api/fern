@@ -1,6 +1,7 @@
 package com.snippets;
 
 import com.seed.examples.SeedExamplesClient;
+import java.util.Optional;
 
 public class Example20 {
     public static void main(String[] args) {

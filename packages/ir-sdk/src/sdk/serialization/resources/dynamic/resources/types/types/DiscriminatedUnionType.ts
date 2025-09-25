@@ -6,7 +6,7 @@ import * as serializers from "../../../../../index";
 import * as FernIr from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { Declaration } from "../../declaration/types/Declaration";
-import { NameAndWireValue } from "../../../../commons/types/NameAndWireValue";
+import { NameAndWireValue } from "../../commons/types/NameAndWireValue";
 import { SingleDiscriminatedUnionType } from "./SingleDiscriminatedUnionType";
 
 export const DiscriminatedUnionType: core.serialization.ObjectSchema<

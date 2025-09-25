@@ -3,7 +3,7 @@ use crate::submission_test_case_grade::TestCaseGrade;
 use crate::submission_traced_test_case::TracedTestCase;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "type")]
 pub enum SubmissionStatusForTestCase {
         Graded {

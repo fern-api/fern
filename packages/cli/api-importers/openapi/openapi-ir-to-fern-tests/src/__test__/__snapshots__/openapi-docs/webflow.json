@@ -8845,6 +8845,11 @@ errors:
                   "path-parameters": {
                     "site_id": "580e63e98c9a982ac9b8b741",
                   },
+                  "query-parameters": {
+                    "limit": 1.1,
+                    "offset": 1.1,
+                    "sort": "CreatedOn",
+                  },
                   "response": {
                     "body": {
                       "accessGroups": [
@@ -9103,6 +9108,10 @@ service:
       examples:
         - path-parameters:
             site_id: 580e63e98c9a982ac9b8b741
+          query-parameters:
+            offset: 1.1
+            limit: 1.1
+            sort: CreatedOn
           response:
             body:
               count: 1
@@ -12928,6 +12937,9 @@ service:
                     "collection_id": "580e63fc8c9a982ac9b8b745",
                     "item_id": "580e64008c9a982ac9b8b754",
                   },
+                  "query-parameters": {
+                    "cmsLocaleId": "cmsLocaleId",
+                  },
                 },
               ],
               "method": "DELETE",
@@ -12979,6 +12991,9 @@ service:
                     "collection_id": "580e63fc8c9a982ac9b8b745",
                     "item_id": "580e64008c9a982ac9b8b754",
                   },
+                  "query-parameters": {
+                    "cmsLocaleId": "cmsLocaleId",
+                  },
                 },
               ],
               "method": "DELETE",
@@ -13029,6 +13044,9 @@ service:
                   "path-parameters": {
                     "collection_id": "580e63fc8c9a982ac9b8b745",
                     "item_id": "580e64008c9a982ac9b8b754",
+                  },
+                  "query-parameters": {
+                    "cmsLocaleId": "cmsLocaleId",
                   },
                   "response": {
                     "body": {
@@ -13104,6 +13122,9 @@ service:
                     "collection_id": "580e63fc8c9a982ac9b8b745",
                     "item_id": "580e64008c9a982ac9b8b754",
                   },
+                  "query-parameters": {
+                    "cmsLocaleId": "cmsLocaleId",
+                  },
                   "response": {
                     "body": {
                       "cmsLocaleId": "653ad57de882f528b32e810e",
@@ -13176,6 +13197,15 @@ service:
                 {
                   "path-parameters": {
                     "collection_id": "580e63fc8c9a982ac9b8b745",
+                  },
+                  "query-parameters": {
+                    "cmsLocaleId": "cmsLocaleId",
+                    "limit": 1.1,
+                    "name": "name",
+                    "offset": 1.1,
+                    "slug": "slug",
+                    "sortBy": "lastPublished",
+                    "sortOrder": "asc",
                   },
                   "response": {
                     "body": {
@@ -13292,6 +13322,15 @@ service:
                 {
                   "path-parameters": {
                     "collection_id": "580e63fc8c9a982ac9b8b745",
+                  },
+                  "query-parameters": {
+                    "cmsLocaleId": "cmsLocaleId",
+                    "limit": 1.1,
+                    "name": "name",
+                    "offset": 1.1,
+                    "slug": "slug",
+                    "sortBy": "lastPublished",
+                    "sortOrder": "asc",
                   },
                   "response": {
                     "body": {
@@ -15134,6 +15173,14 @@ service:
       examples:
         - path-parameters:
             collection_id: 580e63fc8c9a982ac9b8b745
+          query-parameters:
+            cmsLocaleId: cmsLocaleId
+            offset: 1.1
+            limit: 1.1
+            name: name
+            slug: slug
+            sortBy: lastPublished
+            sortOrder: asc
           response:
             body:
               items:
@@ -15299,6 +15346,14 @@ service:
       examples:
         - path-parameters:
             collection_id: 580e63fc8c9a982ac9b8b745
+          query-parameters:
+            cmsLocaleId: cmsLocaleId
+            offset: 1.1
+            limit: 1.1
+            name: name
+            slug: slug
+            sortBy: lastPublished
+            sortOrder: asc
           response:
             body:
               items:
@@ -15513,6 +15568,8 @@ service:
         - path-parameters:
             collection_id: 580e63fc8c9a982ac9b8b745
             item_id: 580e64008c9a982ac9b8b754
+          query-parameters:
+            cmsLocaleId: cmsLocaleId
           response:
             body:
               id: 42b720ef280c7a7a3be8cabe
@@ -15567,6 +15624,8 @@ service:
         - path-parameters:
             collection_id: 580e63fc8c9a982ac9b8b745
             item_id: 580e64008c9a982ac9b8b754
+          query-parameters:
+            cmsLocaleId: cmsLocaleId
     update-item:
       path: /collections/{collection_id}/items/{item_id}
       method: PATCH
@@ -15685,6 +15744,8 @@ service:
         - path-parameters:
             collection_id: 580e63fc8c9a982ac9b8b745
             item_id: 580e64008c9a982ac9b8b754
+          query-parameters:
+            cmsLocaleId: cmsLocaleId
           response:
             body:
               id: 42b720ef280c7a7a3be8cabe
@@ -15741,6 +15802,8 @@ service:
         - path-parameters:
             collection_id: 580e63fc8c9a982ac9b8b745
             item_id: 580e64008c9a982ac9b8b754
+          query-parameters:
+            cmsLocaleId: cmsLocaleId
     update-item-live:
       path: /collections/{collection_id}/items/{item_id}/live
       method: PATCH
@@ -16191,6 +16254,10 @@ service:
                   "path-parameters": {
                     "site_id": "580e63e98c9a982ac9b8b741",
                   },
+                  "query-parameters": {
+                    "limit": 1.1,
+                    "offset": 1.1,
+                  },
                   "response": {
                     "body": {
                       "forms": [
@@ -16307,6 +16374,10 @@ service:
                 {
                   "path-parameters": {
                     "form_id": "580e63e98c9a982ac9b8b741",
+                  },
+                  "query-parameters": {
+                    "limit": 1.1,
+                    "offset": 1.1,
                   },
                   "response": {
                     "body": {
@@ -17364,6 +17435,9 @@ service:
       examples:
         - path-parameters:
             site_id: 580e63e98c9a982ac9b8b741
+          query-parameters:
+            limit: 1.1
+            offset: 1.1
           response:
             body:
               forms:
@@ -17507,6 +17581,9 @@ service:
       examples:
         - path-parameters:
             form_id: 580e63e98c9a982ac9b8b741
+          query-parameters:
+            offset: 1.1
+            limit: 1.1
           response:
             body:
               formSubmissions:
@@ -19051,6 +19128,11 @@ Required scope | `ecommerce:read`
                 {
                   "path-parameters": {
                     "site_id": "580e63e98c9a982ac9b8b741",
+                  },
+                  "query-parameters": {
+                    "limit": 1.1,
+                    "offset": 1.1,
+                    "status": "pending",
                   },
                   "response": {
                     "body": {
@@ -34976,6 +35058,10 @@ service:
       examples:
         - path-parameters:
             site_id: 580e63e98c9a982ac9b8b741
+          query-parameters:
+            status: pending
+            offset: 1.1
+            limit: 1.1
           response:
             body:
               orders:
@@ -36830,7 +36916,9 @@ webhooks:
                     "page_id": "63c720f9347c2139b248e552",
                   },
                   "query-parameters": {
+                    "limit": 1.1,
                     "locale": "65427cf400e02b306eaa04a0",
+                    "offset": 1.1,
                   },
                   "response": {
                     "body": {
@@ -37016,7 +37104,9 @@ webhooks:
                     "site_id": "580e63e98c9a982ac9b8b741",
                   },
                   "query-parameters": {
+                    "limit": 1.1,
                     "locale": "65427cf400e02b306eaa04a0",
+                    "offset": 1.1,
                   },
                   "response": {
                     "body": {
@@ -38739,6 +38829,8 @@ service:
             site_id: 580e63e98c9a982ac9b8b741
           query-parameters:
             locale: 65427cf400e02b306eaa04a0
+            limit: 1.1
+            offset: 1.1
           response:
             body:
               pages:
@@ -39004,6 +39096,8 @@ service:
             page_id: 63c720f9347c2139b248e552
           query-parameters:
             locale: 65427cf400e02b306eaa04a0
+            limit: 1.1
+            offset: 1.1
           response:
             body:
               pageId: 658205daa3e8206a523b5ad4
@@ -40263,6 +40357,10 @@ Required scope | `ecommerce:read`
                 {
                   "path-parameters": {
                     "site_id": "580e63e98c9a982ac9b8b741",
+                  },
+                  "query-parameters": {
+                    "limit": 1.1,
+                    "offset": 1.1,
                   },
                   "response": {
                     "body": {
@@ -46764,6 +46862,9 @@ service:
       examples:
         - path-parameters:
             site_id: 580e63e98c9a982ac9b8b741
+          query-parameters:
+            offset: 1.1
+            limit: 1.1
           response:
             body:
               items:
@@ -49675,6 +49776,10 @@ webhooks:
                   "path-parameters": {
                     "site_id": "580e63e98c9a982ac9b8b741",
                   },
+                  "query-parameters": {
+                    "limit": 1.1,
+                    "offset": 1.1,
+                  },
                   "response": {
                     "body": {
                       "items": [
@@ -49921,6 +50026,9 @@ service:
       examples:
         - path-parameters:
             site_id: 580e63e98c9a982ac9b8b741
+          query-parameters:
+            limit: 1.1
+            offset: 1.1
           response:
             body:
               items:
@@ -50079,6 +50187,10 @@ service:
                 {
                   "path-parameters": {
                     "site_id": "580e63e98c9a982ac9b8b741",
+                  },
+                  "query-parameters": {
+                    "limit": 1.1,
+                    "offset": 1.1,
                   },
                   "response": {
                     "body": {
@@ -50967,6 +51079,9 @@ service:
       examples:
         - path-parameters:
             site_id: 580e63e98c9a982ac9b8b741
+          query-parameters:
+            offset: 1.1
+            limit: 1.1
           response:
             body:
               blocks:
@@ -51606,6 +51721,11 @@ service:
                 {
                   "path-parameters": {
                     "site_id": "580e63e98c9a982ac9b8b741",
+                  },
+                  "query-parameters": {
+                    "limit": 1.1,
+                    "offset": 1.1,
+                    "sort": "CreatedOn",
                   },
                   "response": {
                     "body": {
@@ -54099,6 +54219,10 @@ service:
       examples:
         - path-parameters:
             site_id: 580e63e98c9a982ac9b8b741
+          query-parameters:
+            offset: 1.1
+            limit: 1.1
+            sort: CreatedOn
           response:
             body:
               count: 5

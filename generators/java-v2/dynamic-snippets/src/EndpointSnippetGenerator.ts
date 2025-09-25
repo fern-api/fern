@@ -451,7 +451,10 @@ export class EndpointSnippetGenerator {
                     if (value === undefined || value === null) {
                         return java.TypeLiteral.reference(
                             java.invokeMethod({
-                                on: java.codeblock("Optional"),
+                                on: java.classReference({
+                                    name: "Optional",
+                                    packageName: "java.util"
+                                }),
                                 method: "empty",
                                 arguments_: []
                             })

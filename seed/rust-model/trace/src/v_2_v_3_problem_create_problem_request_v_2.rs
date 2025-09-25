@@ -6,7 +6,7 @@ use crate::commons_language::Language;
 use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct CreateProblemRequestV2 {
     #[serde(rename = "problemName")]
     pub problem_name: String,

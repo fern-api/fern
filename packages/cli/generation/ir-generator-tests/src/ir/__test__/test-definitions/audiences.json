@@ -4566,7 +4566,8 @@
                                 "value": "type_folder-b/common:Foo"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -4707,7 +4708,8 @@
                                 "value": "type_folder-c/common:FolderCFoo"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -4845,7 +4847,8 @@
                             "type": "primitive",
                             "value": "UUID"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -4983,7 +4986,8 @@
                             "type": "primitive",
                             "value": "STRING"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -5082,7 +5086,8 @@
                             "type": "named",
                             "value": "type_commons:Imported"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -5258,7 +5263,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -5287,7 +5293,8 @@
                             "type": "primitive",
                             "value": "INTEGER"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -5698,7 +5705,8 @@
                                 "type": "named",
                                 "value": "type_foo:OptionalString"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ],
                     "headers": [],
@@ -5735,7 +5743,8 @@
                                         "value": "STRING"
                                     }
                                 },
-                                "propertyAccess": null
+                                "propertyAccess": null,
+                                "variable": null
                             },
                             {
                                 "name": {
@@ -5767,7 +5776,8 @@
                                         "value": "INTEGER"
                                     }
                                 },
-                                "propertyAccess": null
+                                "propertyAccess": null,
+                                "variable": null
                             }
                         ]
                     },
@@ -5839,6 +5849,7 @@
                 ]
             }
         },
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": [

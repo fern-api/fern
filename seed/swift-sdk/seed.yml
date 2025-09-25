@@ -98,7 +98,8 @@ allowedFailures:
   - content-type
   - cross-package-type-names
   - enum
-  - examples
+  - examples:no-custom-config
+  - examples:readme-config
   - exhaustive
   - http-head
   - inferred-auth-explicit

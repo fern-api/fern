@@ -2705,7 +2705,8 @@
                                 }
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -2769,7 +2770,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -2804,7 +2806,8 @@
                                 }
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -2868,7 +2871,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -2900,7 +2904,8 @@
                                 "value": "type_:User"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -2997,7 +3002,8 @@
                                 "type": "primitive",
                                 "value": "INTEGER"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -3026,7 +3032,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -3055,7 +3062,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -3084,7 +3092,8 @@
                                 "type": "primitive",
                                 "value": "DATE_TIME"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -3113,7 +3122,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -3142,7 +3152,8 @@
                                 "type": "named",
                                 "value": "type_:User"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -3177,7 +3188,8 @@
                                     }
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -3209,7 +3221,8 @@
                                     "value": "DATE_TIME"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -3251,7 +3264,8 @@
                                     }
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -3283,7 +3297,8 @@
                                     "value": "STRING"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -3315,7 +3330,8 @@
                                     "value": "type_:NestedUser"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -3347,7 +3363,8 @@
                                     "value": "type_:User"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -3382,7 +3399,8 @@
                                     }
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -3417,7 +3435,8 @@
                                     }
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -3449,7 +3468,8 @@
                                     "value": "type_:User"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -3478,7 +3498,8 @@
                                 "type": "named",
                                 "value": "type_:SearchRequestNeighborRequired"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ],
                     "headers": [],
@@ -3496,6 +3517,7 @@
         },
         "pathParameters": [],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,

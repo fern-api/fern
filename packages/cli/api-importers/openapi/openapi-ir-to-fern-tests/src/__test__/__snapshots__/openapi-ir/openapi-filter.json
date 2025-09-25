@@ -437,7 +437,15 @@
           "name": "Successful",
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": "Intercom-Version",
+              "value": {
+                "value": "1.0",
+                "type": "enum"
+              }
+            }
+          ],
           "request": {
             "properties": {
               "name": {
@@ -462,6 +470,268 @@
                 "type": "primitive"
               }
             },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "type": {
+                  "value": {
+                    "value": "company",
+                    "type": "string"
+                  },
+                  "type": "literal"
+                },
+                "id": {
+                  "value": {
+                    "value": "667d607c8a68186f43bafd1e",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "name": {
+                  "value": {
+                    "value": "my company",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "app_id": {
+                  "value": {
+                    "value": "this_is_an_id116_that_should_be_at_least_",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "plan": {
+                  "properties": {
+                    "type": {
+                      "value": {
+                        "value": "plan",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "id": {
+                      "value": {
+                        "value": "269315",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    },
+                    "name": {
+                      "value": {
+                        "value": "Pro",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "object"
+                },
+                "company_id": {
+                  "value": {
+                    "value": "company_remote_id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "remote_created_at": {
+                  "value": {
+                    "value": 1374138000,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "created_at": {
+                  "value": {
+                    "value": 1719492732,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "updated_at": {
+                  "value": {
+                    "value": 1719492732,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "last_request_at": {
+                  "value": {
+                    "value": 1663597223,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "size": {
+                  "value": {
+                    "value": 100,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "website": {
+                  "value": {
+                    "value": "https://www.intercom.com",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "industry": {
+                  "value": {
+                    "value": "Software",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "monthly_spend": {
+                  "value": {
+                    "value": 0,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "session_count": {
+                  "value": {
+                    "value": 0,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "user_count": {
+                  "value": {
+                    "value": 0,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "custom_attributes": {
+                  "value": [
+                    {
+                      "key": {
+                        "value": "creation_source",
+                        "type": "string"
+                      },
+                      "value": {
+                        "value": {
+                          "value": "api",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    }
+                  ],
+                  "type": "map"
+                },
+                "tags": {
+                  "properties": {
+                    "type": {
+                      "value": {
+                        "value": "tag.list",
+                        "type": "string"
+                      },
+                      "type": "literal"
+                    },
+                    "tags": {
+                      "value": [
+                        {
+                          "value": [
+                            {
+                              "key": {
+                                "value": "key",
+                                "type": "string"
+                              },
+                              "value": {
+                                "value": {
+                                  "value": "value",
+                                  "type": "string"
+                                },
+                                "type": "primitive"
+                              }
+                            }
+                          ],
+                          "type": "map"
+                        }
+                      ],
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                },
+                "segments": {
+                  "properties": {
+                    "type": {
+                      "value": {
+                        "value": "segment.list",
+                        "type": "string"
+                      },
+                      "type": "literal"
+                    },
+                    "segments": {
+                      "value": [
+                        {
+                          "properties": {
+                            "id": {
+                              "value": {
+                                "value": "56203d253cba154d39010062",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "name": {
+                              "value": {
+                                "value": "Active",
+                                "type": "string"
+                              },
+                              "type": "primitive"
+                            },
+                            "created_at": {
+                              "value": {
+                                "value": 1394621988,
+                                "type": "int"
+                              },
+                              "type": "primitive"
+                            },
+                            "updated_at": {
+                              "value": {
+                                "value": 1394622004,
+                                "type": "int"
+                              },
+                              "type": "primitive"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      ],
+                      "type": "array"
+                    }
+                  },
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        },
+        {
+          "name": "Bad Request",
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [
+            {
+              "name": "Intercom-Version",
+              "value": {
+                "value": "1.0",
+                "type": "enum"
+              }
+            }
+          ],
+          "request": {
+            "properties": {},
             "type": "object"
           },
           "response": {

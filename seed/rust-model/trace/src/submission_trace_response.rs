@@ -4,7 +4,7 @@ use crate::submission_expression_location::ExpressionLocation;
 use crate::submission_stack_information::StackInformation;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct TraceResponse {
     #[serde(rename = "submissionId")]
     pub submission_id: SubmissionId,

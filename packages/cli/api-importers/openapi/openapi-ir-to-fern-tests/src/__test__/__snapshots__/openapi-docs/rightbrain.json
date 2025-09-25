@@ -16681,6 +16681,9 @@ types:
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "project_id": "project_id",
+                  },
                   "response": {
                     "body": [
                       {
@@ -16747,6 +16750,9 @@ types:
                 {
                   "path-parameters": {
                     "chat_id": "chat_id",
+                  },
+                  "query-parameters": {
+                    "type": "user",
                   },
                   "response": {
                     "body": {
@@ -17321,7 +17327,9 @@ service:
       errors:
         - root.GetRecentChatsForUserChatRecentGetRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            project_id: project_id
+          response:
             body:
               - title: title
                 description: description
@@ -17623,6 +17631,8 @@ service:
       examples:
         - path-parameters:
             chat_id: chat_id
+          query-parameters:
+            type: user
           response:
             body:
               pagination:
@@ -18377,6 +18387,9 @@ types:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
+                  "query-parameters": {
+                    "type": "user",
+                  },
                   "response": {
                     "body": {
                       "pagination": {
@@ -18609,6 +18622,11 @@ This may be combined with `remove_all` to replace the member's entire role list.
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "page_limit": 1,
+                    "show": "all",
+                  },
                   "response": {
                     "body": {
                       "pagination": {
@@ -18692,6 +18710,11 @@ This may be combined with `remove_all` to replace the member's entire role list.
                   "path-parameters": {
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "page_limit": 1,
+                    "title": "title",
                   },
                   "response": {
                     "body": {
@@ -18980,6 +19003,10 @@ service:
         - path-parameters:
             org_id: org_id
             project_id: project_id
+          query-parameters:
+            title: title
+            cursor: cursor
+            page_limit: 1
           response:
             body:
               pagination:
@@ -19225,6 +19252,10 @@ service:
             org_id: org_id
             project_id: project_id
             collection_id: collection_id
+          query-parameters:
+            show: all
+            cursor: cursor
+            page_limit: 1
           response:
             body:
               pagination:
@@ -19460,6 +19491,8 @@ service:
             org_id: org_id
             project_id: project_id
             collection_id: collection_id
+          query-parameters:
+            type: user
           response:
             body:
               pagination:
@@ -20321,8 +20354,12 @@ service:
               "examples": [
                 {
                   "path-parameters": {
+                    "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "redirect_to": "redirect_to",
                   },
                 },
               ],
@@ -20357,6 +20394,10 @@ service:
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "code": "code",
+                    "state": "state",
+                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -20648,6 +20689,9 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
+                  "query-parameters": {
+                    "parent_id": "parent_id",
+                  },
                   "response": {
                     "body": [
                       {
@@ -20717,6 +20761,10 @@ service:
                     "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "page_limit": 1,
                   },
                   "response": {
                     "body": {
@@ -20874,6 +20922,8 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          query-parameters:
+            parent_id: parent_id
           response:
             body:
               - id: id
@@ -20967,6 +21017,9 @@ service:
         - path-parameters:
             org_id: org_id
             project_id: project_id
+            connection_id: connection_id
+          query-parameters:
+            redirect_to: redirect_to
     delete:
       path: /org/{org_id}/project/{project_id}/datasource/box/{connection_id}
       method: DELETE
@@ -21038,6 +21091,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          query-parameters:
+            cursor: cursor
+            page_limit: 1
           response:
             body:
               pagination:
@@ -21204,7 +21260,10 @@ service:
       errors:
         - root.CallbackDatasourceBoxCallbackGetRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            code: code
+            state: state
+          response:
             body:
               key: value
   source:
@@ -21242,8 +21301,12 @@ service:
               "examples": [
                 {
                   "path-parameters": {
+                    "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "redirect_to": "redirect_to",
                   },
                 },
               ],
@@ -21278,6 +21341,10 @@ service:
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "code": "code",
+                    "state": "state",
+                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -21569,6 +21636,9 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
+                  "query-parameters": {
+                    "parent_id": "parent_id",
+                  },
                   "response": {
                     "body": [
                       {
@@ -21638,6 +21708,10 @@ service:
                     "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "page_limit": 1,
                   },
                   "response": {
                     "body": {
@@ -21795,6 +21869,8 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          query-parameters:
+            parent_id: parent_id
           response:
             body:
               - id: id
@@ -21889,6 +21965,9 @@ service:
         - path-parameters:
             org_id: org_id
             project_id: project_id
+            connection_id: connection_id
+          query-parameters:
+            redirect_to: redirect_to
     delete:
       path: /org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}
       method: DELETE
@@ -21961,6 +22040,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          query-parameters:
+            cursor: cursor
+            page_limit: 1
           response:
             body:
               pagination:
@@ -22131,7 +22213,10 @@ service:
         - >-
           root.CallbackDatasourceConfluenceCallbackGetRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            code: code
+            state: state
+          response:
             body:
               key: value
   source:
@@ -22169,8 +22254,12 @@ service:
               "examples": [
                 {
                   "path-parameters": {
+                    "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "redirect_to": "redirect_to",
                   },
                 },
               ],
@@ -22205,6 +22294,10 @@ service:
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "code": "code",
+                    "state": "state",
+                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -22496,6 +22589,9 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
+                  "query-parameters": {
+                    "parent_id": "parent_id",
+                  },
                   "response": {
                     "body": [
                       {
@@ -22565,6 +22661,10 @@ service:
                     "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "page_limit": 1,
                   },
                   "response": {
                     "body": {
@@ -22722,6 +22822,8 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          query-parameters:
+            parent_id: parent_id
           response:
             body:
               - id: id
@@ -22816,6 +22918,9 @@ service:
         - path-parameters:
             org_id: org_id
             project_id: project_id
+            connection_id: connection_id
+          query-parameters:
+            redirect_to: redirect_to
     delete:
       path: /org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}
       method: DELETE
@@ -22888,6 +22993,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          query-parameters:
+            cursor: cursor
+            page_limit: 1
           response:
             body:
               pagination:
@@ -23058,7 +23166,10 @@ service:
         - >-
           root.CallbackDatasourceDropboxCallbackGetRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            code: code
+            state: state
+          response:
             body:
               key: value
   source:
@@ -23096,8 +23207,12 @@ service:
               "examples": [
                 {
                   "path-parameters": {
+                    "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "redirect_to": "redirect_to",
                   },
                 },
               ],
@@ -23132,6 +23247,10 @@ service:
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "code": "code",
+                    "state": "state",
+                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -23423,6 +23542,9 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
+                  "query-parameters": {
+                    "parent_id": "parent_id",
+                  },
                   "response": {
                     "body": [
                       {
@@ -23492,6 +23614,10 @@ service:
                     "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "page_limit": 1,
                   },
                   "response": {
                     "body": {
@@ -23649,6 +23775,8 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          query-parameters:
+            parent_id: parent_id
           response:
             body:
               - id: id
@@ -23743,6 +23871,9 @@ service:
         - path-parameters:
             org_id: org_id
             project_id: project_id
+            connection_id: connection_id
+          query-parameters:
+            redirect_to: redirect_to
     delete:
       path: /org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}
       method: DELETE
@@ -23815,6 +23946,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          query-parameters:
+            cursor: cursor
+            page_limit: 1
           response:
             body:
               pagination:
@@ -23984,7 +24118,10 @@ service:
         - >-
           root.CallbackDatasourceGdriveCallbackGetRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            code: code
+            state: state
+          response:
             body:
               key: value
   source:
@@ -24022,8 +24159,12 @@ service:
               "examples": [
                 {
                   "path-parameters": {
+                    "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "redirect_to": "redirect_to",
                   },
                 },
               ],
@@ -24058,6 +24199,10 @@ service:
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "code": "code",
+                    "state": "state",
+                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -24349,6 +24494,9 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
+                  "query-parameters": {
+                    "parent_id": "parent_id",
+                  },
                   "response": {
                     "body": [
                       {
@@ -24418,6 +24566,10 @@ service:
                     "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "page_limit": 1,
                   },
                   "response": {
                     "body": {
@@ -24575,6 +24727,8 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          query-parameters:
+            parent_id: parent_id
           response:
             body:
               - id: id
@@ -24669,6 +24823,9 @@ service:
         - path-parameters:
             org_id: org_id
             project_id: project_id
+            connection_id: connection_id
+          query-parameters:
+            redirect_to: redirect_to
     delete:
       path: /org/{org_id}/project/{project_id}/datasource/notion/{connection_id}
       method: DELETE
@@ -24741,6 +24898,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          query-parameters:
+            cursor: cursor
+            page_limit: 1
           response:
             body:
               pagination:
@@ -24910,7 +25070,10 @@ service:
         - >-
           root.CallbackDatasourceNotionCallbackGetRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            code: code
+            state: state
+          response:
             body:
               key: value
   source:
@@ -24948,8 +25111,12 @@ service:
               "examples": [
                 {
                   "path-parameters": {
+                    "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "redirect_to": "redirect_to",
                   },
                 },
               ],
@@ -24984,6 +25151,10 @@ service:
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "code": "code",
+                    "state": "state",
+                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -25275,6 +25446,9 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
+                  "query-parameters": {
+                    "parent_id": "parent_id",
+                  },
                   "response": {
                     "body": [
                       {
@@ -25344,6 +25518,10 @@ service:
                     "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "page_limit": 1,
                   },
                   "response": {
                     "body": {
@@ -25501,6 +25679,8 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          query-parameters:
+            parent_id: parent_id
           response:
             body:
               - id: id
@@ -25595,6 +25775,9 @@ service:
         - path-parameters:
             org_id: org_id
             project_id: project_id
+            connection_id: connection_id
+          query-parameters:
+            redirect_to: redirect_to
     delete:
       path: /org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}
       method: DELETE
@@ -25667,6 +25850,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          query-parameters:
+            cursor: cursor
+            page_limit: 1
           response:
             body:
               pagination:
@@ -25837,7 +26023,10 @@ service:
         - >-
           root.CallbackDatasourceOnedriveCallbackGetRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            code: code
+            state: state
+          response:
             body:
               key: value
   source:
@@ -25875,8 +26064,12 @@ service:
               "examples": [
                 {
                   "path-parameters": {
+                    "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "redirect_to": "redirect_to",
                   },
                 },
               ],
@@ -25911,6 +26104,10 @@ service:
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "code": "code",
+                    "state": "state",
+                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -26202,6 +26399,9 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
+                  "query-parameters": {
+                    "parent_id": "parent_id",
+                  },
                   "response": {
                     "body": [
                       {
@@ -26271,6 +26471,10 @@ service:
                     "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "page_limit": 1,
                   },
                   "response": {
                     "body": {
@@ -26428,6 +26632,8 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          query-parameters:
+            parent_id: parent_id
           response:
             body:
               - id: id
@@ -26522,6 +26728,9 @@ service:
         - path-parameters:
             org_id: org_id
             project_id: project_id
+            connection_id: connection_id
+          query-parameters:
+            redirect_to: redirect_to
     delete:
       path: /org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}
       method: DELETE
@@ -26594,6 +26803,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          query-parameters:
+            cursor: cursor
+            page_limit: 1
           response:
             body:
               pagination:
@@ -26764,7 +26976,10 @@ service:
         - >-
           root.CallbackDatasourceSharepointCallbackGetRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            code: code
+            state: state
+          response:
             body:
               key: value
   source:
@@ -26969,6 +27184,10 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "page_limit": 1,
+                  },
                   "response": {
                     "body": {
                       "pagination": {
@@ -27114,6 +27333,15 @@ service:
                   "path-parameters": {
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "collection_id": "collection_id",
+                    "connection_id": "connection_id",
+                    "cursor": "cursor",
+                    "page_limit": 1,
+                    "source": "upload",
+                    "strategy": "strategy",
+                    "title": "title",
                   },
                   "response": {
                     "body": {
@@ -27521,6 +27749,9 @@ service:
                     "document_id": "document_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "type": "user",
                   },
                   "response": {
                     "body": {
@@ -27972,6 +28203,14 @@ service:
         - path-parameters:
             org_id: org_id
             project_id: project_id
+          query-parameters:
+            connection_id: connection_id
+            title: title
+            cursor: cursor
+            collection_id: collection_id
+            page_limit: 1
+            source: upload
+            strategy: strategy
           response:
             body:
               pagination:
@@ -28358,6 +28597,9 @@ service:
             org_id: org_id
             project_id: project_id
             document_id: document_id
+          query-parameters:
+            cursor: cursor
+            page_limit: 1
           response:
             body:
               pagination:
@@ -28432,6 +28674,8 @@ service:
             org_id: org_id
             project_id: project_id
             document_id: document_id
+          query-parameters:
+            type: user
           response:
             body:
               pagination:
@@ -29770,6 +30014,11 @@ service:
                   "path-parameters": {
                     "org_id": "org_id",
                   },
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "page_limit": 1,
+                    "show": "all",
+                  },
                   "response": {
                     "body": {
                       "pagination": {
@@ -29888,6 +30137,11 @@ service:
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "membership": "active",
+                    "page_limit": 1,
+                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -30133,6 +30387,9 @@ service:
                 {
                   "path-parameters": {
                     "org_id": "org_id",
+                  },
+                  "query-parameters": {
+                    "type": "user",
                   },
                   "response": {
                     "body": {
@@ -30466,6 +30723,8 @@ service:
       examples:
         - path-parameters:
             org_id: org_id
+          query-parameters:
+            type: user
           response:
             body:
               pagination:
@@ -30648,7 +30907,11 @@ service:
       errors:
         - root.OrgListOrgGetRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            membership: active
+            cursor: cursor
+            page_limit: 1
+          response:
             body:
               key: value
     orgCreate:
@@ -30818,6 +31081,10 @@ service:
       examples:
         - path-parameters:
             org_id: org_id
+          query-parameters:
+            show: all
+            cursor: cursor
+            page_limit: 1
           response:
             body:
               pagination:
@@ -31314,6 +31581,9 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
+                  "query-parameters": {
+                    "type": "user",
+                  },
                   "response": {
                     "body": {
                       "pagination": {
@@ -31538,6 +31808,10 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 {
                   "path-parameters": {
                     "org_id": "org_id",
+                  },
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "page_limit": 1,
                   },
                   "response": {
                     "body": {
@@ -31999,6 +32273,9 @@ service:
       examples:
         - path-parameters:
             org_id: org_id
+          query-parameters:
+            cursor: cursor
+            page_limit: 1
           response:
             body:
               pagination:
@@ -32313,6 +32590,8 @@ service:
         - path-parameters:
             org_id: org_id
             project_id: project_id
+          query-parameters:
+            type: user
           response:
             body:
               pagination:
@@ -32785,6 +33064,10 @@ types:
                     "org_id": "org_id",
                     "project_id": "project_id",
                   },
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "page_limit": 1,
+                  },
                   "response": {
                     "body": {
                       "pagination": {
@@ -32998,6 +33281,9 @@ service:
         - path-parameters:
             org_id: org_id
             project_id: project_id
+          query-parameters:
+            cursor: cursor
+            page_limit: 1
           response:
             body:
               pagination:
@@ -33165,6 +33451,10 @@ service:
                   "path-parameters": {
                     "org_id": "123e4567-e89b-12d3-a456-426614174000",
                     "project_id": "123e4567-e89b-12d3-a456-426614174001",
+                  },
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "page_limit": 1,
                   },
                   "response": {
                     "body": {
@@ -33480,6 +33770,9 @@ service:
         - path-parameters:
             org_id: 123e4567-e89b-12d3-a456-426614174000
             project_id: 123e4567-e89b-12d3-a456-426614174001
+          query-parameters:
+            page_limit: 1
+            cursor: cursor
           response:
             body:
               pagination:
@@ -34083,6 +34376,11 @@ service:
                     "org_id": "123e4567-e89b-12d3-a456-426614174000",
                     "project_id": "123e4567-e89b-12d3-a456-426614174001",
                   },
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "name": "name",
+                    "page_limit": 1,
+                  },
                   "response": {
                     "body": {
                       "pagination": {
@@ -34387,6 +34685,11 @@ service:
                     "project_id": "123e4567-e89b-12d3-a456-426614174001",
                     "task_id": "01909843-3596-da54-4756-28af46917e74",
                   },
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "page_limit": 1,
+                    "task_revision_id": "task_revision_id",
+                  },
                   "response": {
                     "body": {
                       "pagination": {
@@ -34669,6 +34972,9 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                     "task_id": "task_id",
+                  },
+                  "query-parameters": {
+                    "type": "user",
                   },
                   "response": {
                     "body": {
@@ -35137,6 +35443,10 @@ service:
         - path-parameters:
             org_id: 123e4567-e89b-12d3-a456-426614174000
             project_id: 123e4567-e89b-12d3-a456-426614174001
+          query-parameters:
+            name: name
+            page_limit: 1
+            cursor: cursor
           response:
             body:
               pagination:
@@ -35623,6 +35933,10 @@ service:
             org_id: 123e4567-e89b-12d3-a456-426614174000
             project_id: 123e4567-e89b-12d3-a456-426614174001
             task_id: 01909843-3596-da54-4756-28af46917e74
+          query-parameters:
+            page_limit: 1
+            cursor: cursor
+            task_revision_id: task_revision_id
           response:
             body:
               pagination:
@@ -35771,6 +36085,8 @@ service:
             org_id: org_id
             project_id: project_id
             task_id: task_id
+          query-parameters:
+            type: user
           response:
             body:
               pagination:

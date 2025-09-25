@@ -1,6 +1,41 @@
 imports:
-  environment: ../environment.yml
+  commons: ./commons.yml
 types:
+  EnvironmentId: string
+  EnvironmentBaseUrlId: string
+  EnvironmentUrl: string
+  EnvironmentsConfig:
+    properties:
+      defaultEnvironment: optional<EnvironmentId>
+      environments: Environments
+  Environments:
+    union:
+      singleBaseUrl: SingleBaseUrlEnvironments
+      multipleBaseUrls: MultipleBaseUrlsEnvironments
+  SingleBaseUrlEnvironments:
+    properties:
+      environments: list<SingleBaseUrlEnvironment>
+  SingleBaseUrlEnvironment:
+    extends: commons.WithDocs
+    properties:
+      id: EnvironmentId
+      name: commons.Name
+      url: EnvironmentUrl
+  MultipleBaseUrlsEnvironments:
+    properties:
+      baseUrls: list<EnvironmentBaseUrlWithId>
+      environments: list<MultipleBaseUrlsEnvironment>
+  MultipleBaseUrlsEnvironment:
+    extends: commons.WithDocs
+    properties:
+      id: EnvironmentId
+      name: commons.Name
+      urls: map<EnvironmentBaseUrlId, EnvironmentUrl>
+  EnvironmentBaseUrlWithId:
+    properties:
+      id: EnvironmentBaseUrlId
+      name: commons.Name
+
   EnvironmentValues:
     docs: |
       Represents the value to use for a specific environment. There are three cases:
@@ -15,7 +50,7 @@ types:
         }
     discriminated: false
     union:
-      - environment.EnvironmentId
+      - EnvironmentId
       - MultipleEnvironmentUrlValues
 
-  MultipleEnvironmentUrlValues: map<environment.EnvironmentBaseUrlId, environment.EnvironmentUrl>
+  MultipleEnvironmentUrlValues: map<EnvironmentBaseUrlId, EnvironmentUrl>

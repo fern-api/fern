@@ -88,6 +88,7 @@ export class DynamicSnippetsConverter {
             endpoints: this.convertEndpoints({ disableExamples }),
             pathParameters: this.convertPathParameters({ pathParameters: this.ir.pathParameters }),
             environments: this.ir.environments,
+            variables: this.convertVariables(),
             generatorConfig: this.generatorConfig
         };
     }
@@ -103,6 +104,17 @@ export class DynamicSnippetsConverter {
 
     private convertHeaders(): DynamicSnippets.NamedParameter[] {
         return this.convertWireValueParameters({ wireValueParameters: this.ir.headers });
+    }
+
+    private convertVariables(): DynamicSnippets.VariableDeclaration[] | undefined {
+        if (this.ir.variables.length === 0) {
+            return undefined;
+        }
+        return this.ir.variables.map((variable) => ({
+            id: variable.id,
+            name: variable.name,
+            typeReference: this.convertTypeReference(variable.type)
+        }));
     }
 
     private convertEndpoints({
@@ -275,7 +287,8 @@ export class DynamicSnippetsConverter {
                     return DynamicSnippets.FileUploadRequestBodyProperty.bodyProperty({
                         name: property.name,
                         typeReference: this.convertTypeReference(property.valueType),
-                        propertyAccess: property.propertyAccess
+                        propertyAccess: property.propertyAccess,
+                        variable: undefined
                     });
                 default:
                     assertNever(property);
@@ -309,7 +322,8 @@ export class DynamicSnippetsConverter {
                 wireValue: getOriginalName(pathParameter.name)
             },
             typeReference: this.convertTypeReference(pathParameter.valueType),
-            propertyAccess: undefined
+            propertyAccess: undefined,
+            variable: pathParameter.variable
         }));
     }
 
@@ -324,7 +338,8 @@ export class DynamicSnippetsConverter {
                 wireValue: property.name.wireValue
             },
             typeReference: this.convertTypeReference(property.valueType),
-            propertyAccess: property.propertyAccess
+            propertyAccess: property.propertyAccess,
+            variable: undefined
         }));
     }
 
@@ -339,7 +354,8 @@ export class DynamicSnippetsConverter {
                 wireValue: parameter.name.wireValue
             },
             typeReference: this.convertTypeReference(parameter.valueType),
-            propertyAccess: undefined
+            propertyAccess: undefined,
+            variable: undefined
         }));
     }
 
@@ -360,7 +376,8 @@ export class DynamicSnippetsConverter {
                     wireValue: queryParameter.name.wireValue
                 },
                 typeReference,
-                propertyAccess: undefined
+                propertyAccess: undefined,
+                variable: undefined
             });
         }
         return parameters;
@@ -636,7 +653,8 @@ export class DynamicSnippetsConverter {
                     header: {
                         name: scheme.name,
                         typeReference: this.convertTypeReference(scheme.valueType),
-                        propertyAccess: undefined
+                        propertyAccess: undefined,
+                        variable: undefined
                     }
                 });
             case "oauth":

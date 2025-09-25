@@ -1,0 +1,304 @@
+{
+  "title": "Required nullable example",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "Get foo",
+      "audiences": [],
+      "operationId": "getFoo",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [
+        {
+          "description": "An optional baz",
+          "name": "optional_baz",
+          "schema": {
+            "generatedName": "GetFooRequestOptionalBaz",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "GetFooRequestOptionalBaz",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "optional"
+          },
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "A required baz",
+          "name": "required_baz",
+          "schema": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "GetFooRequestRequiredBaz",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "An optional baz",
+          "name": "optional_nullable_baz",
+          "schema": {
+            "generatedName": "GetFooRequestOptionalNullableBaz",
+            "value": {
+              "generatedName": "GetFooRequestOptionalNullableBaz",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "GetFooRequestOptionalNullableBaz",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "nullable"
+            },
+            "groupName": [],
+            "type": "optional"
+          },
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "A required baz",
+          "name": "required_nullable_baz",
+          "schema": {
+            "generatedName": "GetFooRequestRequiredNullableBaz",
+            "value": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "GetFooRequestRequiredNullableBaz",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "groupName": [],
+            "type": "nullable"
+          },
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          }
+        }
+      ],
+      "headers": [],
+      "generatedRequestName": "GetFooRequest",
+      "response": {
+        "description": "successful operation",
+        "schema": {
+          "generatedName": "GetFooResponse",
+          "schema": "Foo",
+          "source": {
+            "file": "../openapi.json",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "GET",
+      "path": "/foo",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "required_baz",
+              "value": {
+                "value": {
+                  "value": "required_baz",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "required_nullable_baz",
+              "value": {
+                "value": {
+                  "value": "required_nullable_baz",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "nullable_required_bar": {
+                  "value": {
+                    "value": "nullable_required_bar",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "nullable_bar": {
+                  "value": {
+                    "value": "nullable_bar",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "required_bar": {
+                  "value": {
+                    "value": "required_bar",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "bar": {
+                  "value": {
+                    "value": "bar",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.json",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Foo": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "fooNullableRequiredBar",
+            "key": "nullable_required_bar",
+            "schema": {
+              "generatedName": "FooNullableRequiredBar",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "FooNullableRequiredBar",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "nullable"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "fooNullableBar",
+            "key": "nullable_bar",
+            "schema": {
+              "generatedName": "fooNullableBar",
+              "value": {
+                "generatedName": "FooNullableBar",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "FooNullableBar",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "nullable"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "fooRequiredBar",
+            "key": "required_bar",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "FooRequiredBar",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "fooBar",
+            "key": "bar",
+            "schema": {
+              "generatedName": "fooBar",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "FooBar",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Foo",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.json",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

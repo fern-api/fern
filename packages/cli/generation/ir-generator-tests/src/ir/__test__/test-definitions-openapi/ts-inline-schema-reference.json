@@ -5820,7 +5820,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -5852,7 +5853,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -5916,7 +5918,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -5948,7 +5951,8 @@
                                 "value": "type_:PostRootRequestBarInnerBar"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -6012,7 +6016,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -6044,7 +6049,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -6108,7 +6114,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -6140,7 +6147,8 @@
                                 "value": "type_:PostRootResponseBarInnerBar"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -6204,7 +6212,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -6236,7 +6245,8 @@
                                 "value": "type_:PostRootResponseBar"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -6352,7 +6362,8 @@
                                 "value": "INTEGER"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -6384,7 +6395,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -6423,7 +6435,8 @@
                                 }
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -6584,7 +6597,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -6648,7 +6662,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -6751,7 +6766,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -6815,7 +6831,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -6918,7 +6935,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -6950,7 +6968,8 @@
                                 "value": "INTEGER"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -6982,7 +7001,8 @@
                                 "value": "type_:Schema2TestEnum"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -7014,7 +7034,8 @@
                                 "value": "type_:Schema2TestDiscriminatedUnion"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -7046,7 +7067,8 @@
                                 "value": "type_:Schema2TestUnion"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -7284,7 +7306,8 @@
                                         "value": "STRING"
                                     }
                                 },
-                                "propertyAccess": null
+                                "propertyAccess": null,
+                                "variable": null
                             },
                             {
                                 "name": {
@@ -7316,7 +7339,8 @@
                                         "value": "type_:PostRootRequestBar"
                                     }
                                 },
-                                "propertyAccess": null
+                                "propertyAccess": null,
+                                "variable": null
                             }
                         ]
                     },
@@ -7333,6 +7357,7 @@
         },
         "pathParameters": [],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,

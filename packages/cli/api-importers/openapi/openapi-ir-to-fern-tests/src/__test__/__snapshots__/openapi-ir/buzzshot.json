@@ -171,7 +171,18 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -597,7 +608,58 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "complete",
+              "value": {
+                "value": {
+                  "value": "complete",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "date",
+              "value": {
+                "value": {
+                  "value": "date",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "before",
+              "value": {
+                "value": {
+                  "value": "before",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "after",
+              "value": {
+                "value": {
+                  "value": "after",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -718,6 +780,9 @@
                                   },
                                   "type": "primitive"
                                 },
+                                "value": {
+                                  "type": "null"
+                                },
                                 "present": {
                                   "value": {
                                     "value": true,
@@ -739,6 +804,18 @@
                                 "type": "datetime"
                               },
                               "type": "primitive"
+                            },
+                            "did_win": {
+                              "type": "null"
+                            },
+                            "hints": {
+                              "type": "null"
+                            },
+                            "score": {
+                              "type": "null"
+                            },
+                            "completion_time": {
+                              "type": "null"
                             }
                           },
                           "type": "object"
@@ -916,7 +993,48 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "complete",
+              "value": {
+                "value": {
+                  "value": "complete",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "date",
+              "value": {
+                "value": {
+                  "value": "date",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "before",
+              "value": {
+                "value": {
+                  "value": "before",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "after",
+              "value": {
+                "value": {
+                  "value": "after",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -1334,7 +1452,38 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "is_event",
+              "value": {
+                "value": {
+                  "value": "is_event",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "complete",
+              "value": {
+                "value": {
+                  "value": "complete",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -1449,6 +1598,9 @@
                                           },
                                           "type": "primitive"
                                         },
+                                        "value": {
+                                          "type": "null"
+                                        },
                                         "present": {
                                           "value": {
                                             "value": true,
@@ -1470,6 +1622,18 @@
                                         "type": "datetime"
                                       },
                                       "type": "primitive"
+                                    },
+                                    "did_win": {
+                                      "type": "null"
+                                    },
+                                    "hints": {
+                                      "type": "null"
+                                    },
+                                    "score": {
+                                      "type": "null"
+                                    },
+                                    "completion_time": {
+                                      "type": "null"
                                     }
                                   },
                                   "type": "object"
@@ -1508,6 +1672,9 @@
                                             "type": "string"
                                           },
                                           "type": "primitive"
+                                        },
+                                        "value": {
+                                          "type": "null"
                                         },
                                         "present": {
                                           "value": {
@@ -1676,7 +1843,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "is_event",
+              "value": {
+                "value": {
+                  "value": "is_event",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "complete",
+              "value": {
+                "value": {
+                  "value": "complete",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -1808,6 +1996,9 @@
                                   },
                                   "type": "primitive"
                                 },
+                                "value": {
+                                  "type": "null"
+                                },
                                 "present": {
                                   "value": {
                                     "value": true,
@@ -1829,6 +2020,18 @@
                                 "type": "datetime"
                               },
                               "type": "primitive"
+                            },
+                            "did_win": {
+                              "type": "null"
+                            },
+                            "hints": {
+                              "type": "null"
+                            },
+                            "score": {
+                              "type": "null"
+                            },
+                            "completion_time": {
+                              "type": "null"
                             }
                           },
                           "type": "object"
@@ -1902,6 +2105,9 @@
                                     "type": "string"
                                   },
                                   "type": "primitive"
+                                },
+                                "value": {
+                                  "type": "null"
                                 },
                                 "present": {
                                   "value": {
@@ -2152,7 +2358,18 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -2241,6 +2458,9 @@
                                     "type": "string"
                                   },
                                   "type": "primitive"
+                                },
+                                "value": {
+                                  "type": "null"
                                 },
                                 "present": {
                                   "value": {
@@ -2640,7 +2860,18 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -2982,7 +3213,18 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {

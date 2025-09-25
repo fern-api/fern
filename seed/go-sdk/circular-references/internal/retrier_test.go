@@ -20,9 +20,9 @@ type RetryTestCase struct {
 
 	giveAttempts    uint
 	giveStatusCodes []int
-	giveResponse    *Response
+	giveResponse    *InternalTestResponse
 
-	wantResponse *Response
+	wantResponse *InternalTestResponse
 	wantError    *core.APIError
 }
 
@@ -36,10 +36,10 @@ func TestRetrier(t *testing.T) {
 				http.StatusServiceUnavailable,
 				http.StatusOK,
 			},
-			giveResponse: &Response{
+			giveResponse: &InternalTestResponse{
 				Id: "1",
 			},
-			wantResponse: &Response{
+			wantResponse: &InternalTestResponse{
 				Id: "1",
 			},
 		},
@@ -107,13 +107,13 @@ func TestRetrier(t *testing.T) {
 				},
 			)
 
-			var response *Response
+			var response *InternalTestResponse
 			_, err := caller.Call(
 				context.Background(),
 				&CallParams{
 					URL:                server.URL,
 					Method:             http.MethodGet,
-					Request:            &Request{},
+					Request:            &InternalTestRequest{},
 					Response:           &response,
 					MaxAttempts:        test.giveAttempts,
 					ResponseIsOptional: true,
@@ -176,7 +176,7 @@ func newTestRetryServer(t *testing.T, tc *RetryTestCase) *httptest.Server {
 					)
 				}
 
-				request := new(Request)
+				request := new(InternalTestRequest)
 				bytes, err := io.ReadAll(r.Body)
 				require.NoError(t, err)
 				require.NoError(t, json.Unmarshal(bytes, request))
@@ -240,7 +240,7 @@ func TestRetryDelayTiming(t *testing.T) {
 			name:       "x-ratelimit-reset with future timestamp",
 			headerName: "x-ratelimit-reset",
 			headerValueFunc: func() string {
-				return fmt.Sprintf("%d", time.Now().Add(3 * time.Second).Unix())
+				return fmt.Sprintf("%d", time.Now().Add(3*time.Second).Unix())
 			},
 			expectedMinMs: 1500,
 			expectedMaxMs: 4500,
@@ -248,6 +248,7 @@ func TestRetryDelayTiming(t *testing.T) {
 	}
 
 	for _, tt := range tests {
+		tt := tt
 		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 
@@ -261,7 +262,7 @@ func TestRetryDelayTiming(t *testing.T) {
 				} else {
 					// Second request - return success
 					w.WriteHeader(http.StatusOK)
-					response := &Response{Id: "success"}
+					response := &InternalTestResponse{Id: "success"}
 					bytes, _ := json.Marshal(response)
 					w.Write(bytes)
 				}
@@ -272,13 +273,13 @@ func TestRetryDelayTiming(t *testing.T) {
 				Client: server.Client(),
 			})
 
-			var response *Response
+			var response *InternalTestResponse
 			_, err := caller.Call(
 				context.Background(),
 				&CallParams{
 					URL:                server.URL,
 					Method:             http.MethodGet,
-					Request:            &Request{},
+					Request:            &InternalTestRequest{},
 					Response:           &response,
 					MaxAttempts:        2,
 					ResponseIsOptional: true,

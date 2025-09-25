@@ -114,6 +114,7 @@ export class ExampleWebsocketSessionFactory {
                     schema: convertSchema(
                         resolvedSchema,
                         false,
+                        false,
                         context,
                         [messageExample.messageId],
                         source,

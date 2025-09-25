@@ -18,6 +18,9 @@
                   "path-parameters": {
                     "tran_id": "tran_id",
                   },
+                  "query-parameters": {
+                    "endorser_did": "endorser_did",
+                  },
                   "response": {
                     "body": {
                       "_type": "101",
@@ -7247,6 +7250,8 @@
       examples:
         - path-parameters:
             tran_id: tran_id
+          query-parameters:
+            endorser_did: endorser_did
           response:
             body:
               _type: '101'
@@ -12256,6 +12261,11 @@ docs: Simple messaging
                   "path-parameters": {
                     "conn_id": "conn_id",
                   },
+                  "query-parameters": {
+                    "mediation_id": "mediation_id",
+                    "my_endpoint": "my_endpoint",
+                    "my_label": "my_label",
+                  },
                   "response": {
                     "body": {
                       "accept": "auto",
@@ -12338,6 +12348,9 @@ docs: Simple messaging
                   "path-parameters": {
                     "conn_id": "conn_id",
                   },
+                  "query-parameters": {
+                    "my_endpoint": "my_endpoint",
+                  },
                   "response": {
                     "body": {
                       "accept": "auto",
@@ -12403,6 +12416,12 @@ docs: Simple messaging
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "alias": "alias",
+                    "auto_accept": true,
+                    "multi_use": true,
+                    "public": true,
+                  },
                   "request": {
                     "mediation_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "my_label": "Bob",
@@ -12710,6 +12729,9 @@ docs: Simple messaging
                   "path-parameters": {
                     "conn_id": "conn_id",
                   },
+                  "query-parameters": {
+                    "key": "key",
+                  },
                   "response": {
                     "body": {},
                   },
@@ -12801,6 +12823,17 @@ docs: Simple messaging
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "alias": "alias",
+                    "connection_protocol": "connections/1.0",
+                    "invitation_key": "invitation_key",
+                    "invitation_msg_id": "invitation_msg_id",
+                    "my_did": "my_did",
+                    "state": "start",
+                    "their_did": "their_did",
+                    "their_public_did": "their_public_did",
+                    "their_role": "invitee",
+                  },
                   "response": {
                     "body": {
                       "results": [
@@ -12942,6 +12975,11 @@ docs: Simple messaging
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "alias": "alias",
+                    "auto_accept": true,
+                    "mediation_id": "mediation_id",
+                  },
                   "request": {
                     "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "did": "WgWxqztrNooG92RXvxSTWv",
@@ -13320,7 +13358,17 @@ service:
         type: root.ConnectionList
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            alias: alias
+            connection_protocol: connections/1.0
+            invitation_key: invitation_key
+            invitation_msg_id: invitation_msg_id
+            my_did: my_did
+            state: start
+            their_did: their_did
+            their_public_did: their_public_did
+            their_role: invitee
+          response:
             body:
               results:
                 - accept: auto
@@ -13415,7 +13463,12 @@ service:
         type: root.InvitationResult
         status-code: 200
       examples:
-        - request:
+        - query-parameters:
+            alias: alias
+            auto_accept: true
+            multi_use: true
+            public: true
+          request:
             mediation_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
             my_label: Bob
             recipient_keys:
@@ -13581,7 +13634,11 @@ service:
         type: root.ConnRecord
         status-code: 200
       examples:
-        - request:
+        - query-parameters:
+            alias: alias
+            auto_accept: true
+            mediation_id: mediation_id
+          request:
             '@id': 3fa85f64-5717-4562-b3fc-2c963f66afa6
             did: WgWxqztrNooG92RXvxSTWv
             imageUrl: http://192.168.56.101/img/logo.jpg
@@ -13709,6 +13766,10 @@ service:
       examples:
         - path-parameters:
             conn_id: conn_id
+          query-parameters:
+            mediation_id: mediation_id
+            my_endpoint: my_endpoint
+            my_label: my_label
           response:
             body:
               accept: auto
@@ -13757,6 +13818,8 @@ service:
       examples:
         - path-parameters:
             conn_id: conn_id
+          query-parameters:
+            my_endpoint: my_endpoint
           response:
             body:
               accept: auto
@@ -13847,6 +13910,8 @@ service:
       examples:
         - path-parameters:
             conn_id: conn_id
+          query-parameters:
+            key: key
           response:
             body: {}
     set_connection_metadata:
@@ -13902,6 +13967,14 @@ docs: Connection management
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "cred_def_id": "cred_def_id",
+                    "issuer_did": "issuer_did",
+                    "schema_id": "schema_id",
+                    "schema_issuer_did": "schema_issuer_did",
+                    "schema_name": "schema_name",
+                    "schema_version": "schema_version",
+                  },
                   "response": {
                     "body": {
                       "credential_definition_ids": [
@@ -14031,6 +14104,10 @@ docs: Connection management
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "conn_id": "conn_id",
+                    "create_transaction_for_endorser": true,
+                  },
                   "request": {
                     "revocation_registry_size": 1000,
                     "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
@@ -14202,7 +14279,10 @@ service:
         type: root.TxnOrCredentialDefinitionSendResult
         status-code: 200
       examples:
-        - request:
+        - query-parameters:
+            conn_id: conn_id
+            create_transaction_for_endorser: true
+          request:
             revocation_registry_size: 1000
             schema_id: WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0
             support_revocation: true
@@ -14257,7 +14337,14 @@ service:
         type: root.CredentialDefinitionsCreatedResult
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            cred_def_id: cred_def_id
+            issuer_did: issuer_did
+            schema_id: schema_id
+            schema_issuer_did: schema_issuer_did
+            schema_name: schema_name
+            schema_version: schema_version
+          response:
             body:
               credential_definition_ids:
                 - WgWxqztrNooG92RXvxSTWv:3:CL:20:tag
@@ -14483,6 +14570,11 @@ docs: Credential definition operations
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "count": "count",
+                    "start": "start",
+                    "wql": "wql",
+                  },
                   "response": {
                     "body": {
                       "results": [
@@ -14566,6 +14658,10 @@ docs: Credential definition operations
                 {
                   "path-parameters": {
                     "credential_id": "credential_id",
+                  },
+                  "query-parameters": {
+                    "from": "from",
+                    "to": "to",
                   },
                   "response": {
                     "body": {
@@ -14682,6 +14778,11 @@ docs: Credential definition operations
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "count": "count",
+                    "start": "start",
+                    "wql": "wql",
+                  },
                   "request": {
                     "contexts": [
                       "https://myhost:8021",
@@ -14924,6 +15025,9 @@ service:
       examples:
         - path-parameters:
             credential_id: credential_id
+          query-parameters:
+            from: from
+            to: to
           response:
             body:
               revoked: true
@@ -15062,7 +15166,11 @@ service:
         type: root.CredInfoList
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            count: count
+            start: start
+            wql: wql
+          response:
             body:
               results:
                 - attrs:
@@ -15137,7 +15245,11 @@ service:
         type: root.VCRecordList
         status-code: 200
       examples:
-        - request:
+        - query-parameters:
+            count: count
+            start: start
+            wql: wql
+          request:
             contexts:
               - https://myhost:8021
               - https://myhost:8021
@@ -15228,6 +15340,10 @@ docs: Holder credential management
                   "path-parameters": {
                     "conn_id": "conn_id",
                   },
+                  "query-parameters": {
+                    "my_endpoint": "my_endpoint",
+                    "my_label": "my_label",
+                  },
                   "response": {
                     "body": {
                       "accept": "auto",
@@ -15299,6 +15415,10 @@ docs: Holder credential management
                 {
                   "path-parameters": {
                     "conn_id": "conn_id",
+                  },
+                  "query-parameters": {
+                    "mediation_id": "mediation_id",
+                    "my_endpoint": "my_endpoint",
                   },
                   "response": {
                     "body": {
@@ -15376,7 +15496,12 @@ docs: Holder credential management
               "examples": [
                 {
                   "query-parameters": {
+                    "alias": "alias",
+                    "mediation_id": "mediation_id",
+                    "my_endpoint": "my_endpoint",
+                    "my_label": "my_label",
                     "their_public_did": "their_public_did",
+                    "use_public_did": true,
                   },
                   "response": {
                     "body": {
@@ -15469,6 +15594,12 @@ docs: Holder credential management
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "alias": "alias",
+                    "auto_accept": true,
+                    "mediation_id": "mediation_id",
+                    "my_endpoint": "my_endpoint",
+                  },
                   "request": {
                     "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "did": "WgWxqztrNooG92RXvxSTWv",
@@ -15628,6 +15759,11 @@ service:
       examples:
         - query-parameters:
             their_public_did: their_public_did
+            alias: alias
+            mediation_id: mediation_id
+            my_endpoint: my_endpoint
+            my_label: my_label
+            use_public_did: true
           response:
             body:
               accept: auto
@@ -15699,7 +15835,12 @@ service:
         type: root.ConnRecord
         status-code: 200
       examples:
-        - request:
+        - query-parameters:
+            alias: alias
+            auto_accept: true
+            mediation_id: mediation_id
+            my_endpoint: my_endpoint
+          request:
             '@id': 3fa85f64-5717-4562-b3fc-2c963f66afa6
             did: WgWxqztrNooG92RXvxSTWv
             label: Request to connect with Bob
@@ -15754,6 +15895,9 @@ service:
       examples:
         - path-parameters:
             conn_id: conn_id
+          query-parameters:
+            my_endpoint: my_endpoint
+            my_label: my_label
           response:
             body:
               accept: auto
@@ -15808,6 +15952,9 @@ service:
       examples:
         - path-parameters:
             conn_id: conn_id
+          query-parameters:
+            mediation_id: mediation_id
+            my_endpoint: my_endpoint
           response:
             body:
               accept: auto
@@ -15854,6 +16001,9 @@ docs: Connection management via DID exchange
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "connection_id": "connection_id",
+                  },
                   "response": {
                     "body": {
                       "results": [
@@ -15907,6 +16057,11 @@ docs: Connection management via DID exchange
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "comment": "comment",
+                    "connection_id": "connection_id",
+                    "query": "query",
+                  },
                   "response": {
                     "body": {
                       "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -15986,7 +16141,11 @@ service:
         type: root.V10DiscoveryRecord
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            comment: comment
+            connection_id: connection_id
+            query: query
+          response:
             body:
               connection_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
               created_at: '2021-12-31 23:59:59+00:00'
@@ -16012,7 +16171,9 @@ service:
         type: root.V10DiscoveryExchangeListResult
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            connection_id: connection_id
+          response:
             body:
               results:
                 - connection_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
@@ -16053,6 +16214,9 @@ docs: Feature discovery
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "connection_id": "connection_id",
+                  },
                   "response": {
                     "body": {
                       "results": [
@@ -16132,6 +16296,11 @@ docs: Feature discovery
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "connection_id": "connection_id",
+                    "query_goal_code": "query_goal_code",
+                    "query_protocol": "query_protocol",
+                  },
                   "response": {
                     "body": {},
                   },
@@ -16203,7 +16372,11 @@ service:
         type: root.V20DiscoveryExchangeResult
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            connection_id: connection_id
+            query_goal_code: query_goal_code
+            query_protocol: query_protocol
+          response:
             body: {}
     get_v20_feature_records:
       path: /discover-features-2.0/records
@@ -16222,7 +16395,9 @@ service:
         type: root.V20DiscoveryExchangeListResult
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            connection_id: connection_id
+          response:
             body:
               results:
                 - connection_id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
@@ -16344,6 +16519,7 @@ docs: Feature discovery v2
               "examples": [
                 {
                   "query-parameters": {
+                    "endorser_write_txn": true,
                     "tran_id": "tran_id",
                   },
                   "request": {
@@ -16781,6 +16957,7 @@ docs: Feature discovery v2
                   },
                   "query-parameters": {
                     "endorser_did": "endorser_did",
+                    "endorser_name": "endorser_name",
                   },
                   "response": {
                     "body": {
@@ -16829,6 +17006,9 @@ docs: Feature discovery v2
                 {
                   "path-parameters": {
                     "conn_id": "conn_id",
+                  },
+                  "query-parameters": {
+                    "transaction_my_job": "TRANSACTION_AUTHOR",
                   },
                   "response": {
                     "body": {
@@ -17020,6 +17200,7 @@ service:
       examples:
         - query-parameters:
             tran_id: tran_id
+            endorser_write_txn: true
           request:
             expires_time: '2021-03-29T05:22:19Z'
           response:
@@ -17075,6 +17256,7 @@ service:
             conn_id: conn_id
           query-parameters:
             endorser_did: endorser_did
+            endorser_name: endorser_name
           response:
             body:
               endorser_did: endorser_did
@@ -17102,6 +17284,8 @@ service:
       examples:
         - path-parameters:
             conn_id: conn_id
+          query-parameters:
+            transaction_my_job: TRANSACTION_AUTHOR
           response:
             body:
               transaction_my_job: TRANSACTION_AUTHOR
@@ -17310,6 +17494,7 @@ types:
                     "conn_id": "conn_id",
                   },
                   "query-parameters": {
+                    "message": "message",
                     "target_connection_id": "target_connection_id",
                   },
                   "response": {
@@ -17390,6 +17575,7 @@ service:
             conn_id: conn_id
           query-parameters:
             target_connection_id: target_connection_id
+            message: message
           response:
             body:
               key: value
@@ -17757,6 +17943,12 @@ docs: Introduction of known parties
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "connection_id": "connection_id",
+                    "role": "issuer",
+                    "state": "proposal_sent",
+                    "thread_id": "thread_id",
+                  },
                   "response": {
                     "body": {
                       "results": [
@@ -18847,7 +19039,12 @@ service:
         type: root.V10CredentialExchangeListResult
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            connection_id: connection_id
+            role: issuer
+            state: proposal_sent
+            thread_id: thread_id
+          response:
             body:
               results:
                 - auto_issue: false
@@ -19757,6 +19954,12 @@ types:
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "connection_id": "connection_id",
+                    "role": "issuer",
+                    "state": "proposal-sent",
+                    "thread_id": "thread_id",
+                  },
                   "response": {
                     "body": {
                       "results": [
@@ -20741,7 +20944,12 @@ service:
         type: root.V20CredExRecordListResult
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            connection_id: connection_id
+            role: issuer
+            state: proposal-sent
+            thread_id: thread_id
+          response:
             body:
               results:
                 - indy:
@@ -21709,6 +21917,7 @@ docs: Sign and verify json-ld data
                 {
                   "query-parameters": {
                     "did": "did",
+                    "endpoint_type": "Endpoint",
                   },
                   "response": {
                     "body": {
@@ -21823,7 +22032,11 @@ docs: Sign and verify json-ld data
               "examples": [
                 {
                   "query-parameters": {
+                    "alias": "alias",
+                    "conn_id": "conn_id",
+                    "create_transaction_for_endorser": true,
                     "did": "did",
+                    "role": "STEWARD",
                     "verkey": "verkey",
                   },
                   "response": {
@@ -21991,6 +22204,7 @@ service:
       examples:
         - query-parameters:
             did: did
+            endpoint_type: Endpoint
           response:
             body:
               endpoint: https://myhost:8021
@@ -22123,6 +22337,10 @@ service:
         - query-parameters:
             did: did
             verkey: verkey
+            alias: alias
+            conn_id: conn_id
+            create_transaction_for_endorser: true
+            role: STEWARD
           response:
             body:
               success: true
@@ -22430,6 +22648,10 @@ docs: Interaction with ledger
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "conn_id": "conn_id",
+                    "role": "client",
+                  },
                   "response": {
                     "body": {
                       "results": [
@@ -22496,6 +22718,10 @@ docs: Interaction with ledger
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "conn_id": "conn_id",
+                    "state": "request",
+                  },
                   "response": {
                     "body": {
                       "results": [
@@ -22768,6 +22994,10 @@ docs: Interaction with ledger
                 {
                   "path-parameters": {
                     "mediation_id": "mediation_id",
+                  },
+                  "query-parameters": {
+                    "paginate_limit": 1,
+                    "paginate_offset": 1,
                   },
                   "request": {},
                   "response": {
@@ -23141,7 +23371,10 @@ service:
         type: root.Keylist
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            conn_id: conn_id
+            role: client
+          response:
             body:
               results:
                 - connection_id: connection_id
@@ -23194,6 +23427,9 @@ service:
       examples:
         - path-parameters:
             mediation_id: mediation_id
+          query-parameters:
+            paginate_limit: 1
+            paginate_offset: 1
           request: {}
           response:
             body:
@@ -23321,7 +23557,10 @@ service:
         type: root.MediationList
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            conn_id: conn_id
+            state: request
+          response:
             body:
               results:
                 - connection_id: connection_id
@@ -23806,6 +24045,9 @@ types:
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "wallet_name": "wallet_name",
+                  },
                   "response": {
                     "body": {
                       "results": [
@@ -24304,7 +24546,9 @@ service:
         type: root.WalletList
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            wallet_name: wallet_name
+          response:
             body:
               results:
                 - created_at: '2021-12-31 23:59:59+00:00'
@@ -24341,6 +24585,10 @@ docs: Multitenant wallet management
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "auto_accept": true,
+                    "multi_use": true,
+                  },
                   "request": {
                     "accept": [
                       "didcomm/aip1",
@@ -24459,6 +24707,12 @@ docs: Multitenant wallet management
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "alias": "alias",
+                    "auto_accept": true,
+                    "mediation_id": "mediation_id",
+                    "use_existing_connection": true,
+                  },
                   "request": {
                     "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "@type": "https://didcomm.org/my-family/1.0/my-message-type",
@@ -24756,7 +25010,10 @@ service:
         type: root.InvitationRecord
         status-code: 200
       examples:
-        - request:
+        - query-parameters:
+            auto_accept: true
+            multi_use: true
+          request:
             accept:
               - didcomm/aip1
               - didcomm/aip2;env=rfc19
@@ -24816,7 +25073,12 @@ service:
         type: root.OobRecord
         status-code: 200
       examples:
-        - request:
+        - query-parameters:
+            alias: alias
+            auto_accept: true
+            mediation_id: mediation_id
+            use_existing_connection: true
+          request:
             '@id': 3fa85f64-5717-4562-b3fc-2c963f66afa6
             '@type': https://didcomm.org/my-family/1.0/my-message-type
             accept:
@@ -25106,6 +25368,12 @@ docs: Out-of-band connections
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "connection_id": "connection_id",
+                    "role": "prover",
+                    "state": "proposal_sent",
+                    "thread_id": "thread_id",
+                  },
                   "response": {
                     "body": {
                       "results": [
@@ -25205,6 +25473,12 @@ docs: Out-of-band connections
                 {
                   "path-parameters": {
                     "pres_ex_id": "pres_ex_id",
+                  },
+                  "query-parameters": {
+                    "count": "count",
+                    "extra_query": "extra_query",
+                    "referent": "referent",
+                    "start": "start",
                   },
                   "response": {
                     "body": [
@@ -25946,7 +26220,12 @@ service:
         type: root.V10PresentationExchangeList
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            connection_id: connection_id
+            role: prover
+            state: proposal_sent
+            thread_id: thread_id
+          response:
             body:
               results:
                 - auto_present: false
@@ -26074,6 +26353,11 @@ service:
       examples:
         - path-parameters:
             pres_ex_id: pres_ex_id
+          query-parameters:
+            count: count
+            extra_query: extra_query
+            referent: referent
+            start: start
           response:
             body:
               - presentation_referents:
@@ -26547,6 +26831,12 @@ types:
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "connection_id": "connection_id",
+                    "role": "prover",
+                    "state": "proposal-sent",
+                    "thread_id": "thread_id",
+                  },
                   "response": {
                     "body": {
                       "results": [
@@ -26646,6 +26936,12 @@ types:
                 {
                   "path-parameters": {
                     "pres_ex_id": "pres_ex_id",
+                  },
+                  "query-parameters": {
+                    "count": "count",
+                    "extra_query": "extra_query",
+                    "referent": "referent",
+                    "start": "start",
                   },
                   "response": {
                     "body": [
@@ -27316,7 +27612,12 @@ service:
         type: root.V20PresExRecordList
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            connection_id: connection_id
+            role: prover
+            state: proposal-sent
+            thread_id: thread_id
+          response:
             body:
               results:
                 - auto_present: false
@@ -27444,6 +27745,11 @@ service:
       examples:
         - path-parameters:
             pres_ex_id: pres_ex_id
+          query-parameters:
+            count: count
+            extra_query: extra_query
+            referent: referent
+            start: start
           response:
             body:
               - presentation_referents:
@@ -27991,6 +28297,10 @@ docs: did resolver interface.
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "cred_def_id": "cred_def_id",
+                    "rev_reg_id": "rev_reg_id",
+                  },
                   "response": {
                     "body": {
                       "message": "message",
@@ -28138,6 +28448,10 @@ docs: did resolver interface.
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "cred_def_id": "cred_def_id",
+                    "state": "init",
+                  },
                   "response": {
                     "body": {
                       "rev_reg_ids": [
@@ -28185,6 +28499,11 @@ docs: did resolver interface.
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "cred_ex_id": "cred_ex_id",
+                    "cred_rev_id": "cred_rev_id",
+                    "rev_reg_id": "rev_reg_id",
+                  },
                   "response": {
                     "body": {
                       "result": {
@@ -28434,6 +28753,10 @@ docs: did resolver interface.
                   "path-parameters": {
                     "rev_reg_id": "rev_reg_id",
                   },
+                  "query-parameters": {
+                    "conn_id": "conn_id",
+                    "create_transaction_for_endorser": true,
+                  },
                   "response": {
                     "body": {
                       "sent": {
@@ -28501,6 +28824,10 @@ docs: did resolver interface.
                 {
                   "path-parameters": {
                     "rev_reg_id": "rev_reg_id",
+                  },
+                  "query-parameters": {
+                    "conn_id": "conn_id",
+                    "create_transaction_for_endorser": true,
                   },
                   "response": {
                     "body": {
@@ -29131,7 +29458,11 @@ service:
         type: root.CredRevRecordResult
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            cred_ex_id: cred_ex_id
+            cred_rev_id: cred_rev_id
+            rev_reg_id: rev_reg_id
+          response:
             body:
               result:
                 created_at: '2021-12-31 23:59:59+00:00'
@@ -29194,7 +29525,10 @@ service:
         type: root.RevRegsCreated
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            cred_def_id: cred_def_id
+            state: init
+          response:
             body:
               rev_reg_ids:
                 - >-
@@ -29227,7 +29561,10 @@ service:
         type: root.TailsDeleteResponse
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            cred_def_id: cred_def_id
+            rev_reg_id: rev_reg_id
+          response:
             body:
               message: message
     get_revocation_registry:
@@ -29343,6 +29680,9 @@ service:
       examples:
         - path-parameters:
             rev_reg_id: rev_reg_id
+          query-parameters:
+            conn_id: conn_id
+            create_transaction_for_endorser: true
           response:
             body:
               sent:
@@ -29391,6 +29731,9 @@ service:
       examples:
         - path-parameters:
             rev_reg_id: rev_reg_id
+          query-parameters:
+            conn_id: conn_id
+            create_transaction_for_endorser: true
           response:
             body:
               result:
@@ -29739,6 +30082,12 @@ types:
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "schema_id": "schema_id",
+                    "schema_issuer_did": "schema_issuer_did",
+                    "schema_name": "schema_name",
+                    "schema_version": "schema_version",
+                  },
                   "response": {
                     "body": {
                       "schema_ids": [
@@ -29850,6 +30199,10 @@ types:
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "conn_id": "conn_id",
+                    "create_transaction_for_endorser": true,
+                  },
                   "request": {
                     "attributes": [
                       "score",
@@ -30003,7 +30356,10 @@ service:
         type: root.TxnOrSchemaSendResult
         status-code: 200
       examples:
-        - request:
+        - query-parameters:
+            conn_id: conn_id
+            create_transaction_for_endorser: true
+          request:
             attributes:
               - score
               - score
@@ -30045,7 +30401,12 @@ service:
         type: root.SchemasCreatedResult
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            schema_id: schema_id
+            schema_issuer_did: schema_issuer_did
+            schema_name: schema_name
+            schema_version: schema_version
+          response:
             body:
               schema_ids:
                 - WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0
@@ -30646,6 +31007,13 @@ docs: Trust-ping over connection
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "did": "did",
+                    "key_type": "ed25519",
+                    "method": "key",
+                    "posture": "public",
+                    "verkey": "verkey",
+                  },
                   "response": {
                     "body": {
                       "results": [
@@ -30797,6 +31165,10 @@ docs: Trust-ping over connection
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "conn_id": "conn_id",
+                    "create_transaction_for_endorser": true,
+                  },
                   "request": {
                     "did": "WgWxqztrNooG92RXvxSTWv",
                     "endpoint": "https://myhost:8021",
@@ -30872,7 +31244,10 @@ docs: Trust-ping over connection
               "examples": [
                 {
                   "query-parameters": {
+                    "conn_id": "conn_id",
+                    "create_transaction_for_endorser": true,
                     "did": "did",
+                    "mediation_id": "mediation_id",
                   },
                   "response": {
                     "body": {
@@ -31051,7 +31426,13 @@ service:
         type: root.DIDList
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            did: did
+            key_type: ed25519
+            method: key
+            posture: public
+            verkey: verkey
+          response:
             body:
               results:
                 - did: did:peer:WgWxqztrNooG92RXvxSTWv
@@ -31178,6 +31559,9 @@ service:
       examples:
         - query-parameters:
             did: did
+            conn_id: conn_id
+            create_transaction_for_endorser: true
+            mediation_id: mediation_id
           response:
             body:
               result:
@@ -31252,7 +31636,10 @@ service:
         type: root.WalletModuleResponse
         status-code: 200
       examples:
-        - request:
+        - query-parameters:
+            conn_id: conn_id
+            create_transaction_for_endorser: true
+          request:
             did: WgWxqztrNooG92RXvxSTWv
             endpoint: https://myhost:8021
             endpoint_type: Endpoint

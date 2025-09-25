@@ -59,6 +59,27 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return [];
     }
 
+    public getRootAsIsFiles(): string[] {
+        const files = [
+            AsIsFiles.ErrorDecoder,
+            AsIsFiles.ErrorDecoderTest,
+            AsIsFiles.Caller,
+            AsIsFiles.CallerTest,
+            AsIsFiles.Retrier,
+            AsIsFiles.RetrierTest
+        ];
+
+        if (this.needsPaginationHelpers()) {
+            files.push(AsIsFiles.Pager, AsIsFiles.PagerTest);
+        }
+
+        if (this.ir.sdkConfig.hasStreamingEndpoints) {
+            files.push(AsIsFiles.Streamer);
+        }
+
+        return files;
+    }
+
     public getTestAsIsFiles(): string[] {
         return [AsIsFiles.MainTest];
     }
@@ -392,7 +413,21 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     }
 
     public callNewErrorDecoder(arguments_: go.AstNode[]): go.FuncInvocation {
-        return this.callInternalFunc({ name: "NewErrorDecoder", arguments_, multiline: false });
+        return go.invokeFunc({
+            func: go.typeReference({
+                name: "NewErrorDecoder",
+                importPath: this.getInternalImportPath()
+            }),
+            arguments_,
+            multiline: false
+        });
+    }
+
+    public getErrorCodesVariableReference(): go.TypeReference {
+        return go.typeReference({
+            name: "ErrorCodes",
+            importPath: this.getRootImportPath()
+        });
     }
 
     public callNewMultipartWriter(arguments_: go.AstNode[]): go.FuncInvocation {
@@ -414,11 +449,14 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         arguments_: go.AstNode[];
         streamPayload: go.Type;
     }): go.FuncInvocation {
-        return this.callInternalFunc({
-            name: "NewStreamer",
+        return go.invokeFunc({
+            func: go.typeReference({
+                name: "NewStreamer",
+                importPath: this.getRootImportPath(),
+                generics: [streamPayload]
+            }),
             arguments_,
-            multiline: false,
-            generics: [streamPayload]
+            multiline: false
         });
     }
 
@@ -745,5 +783,16 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             default:
                 assertNever(responseBody);
         }
+    }
+
+    private needsPaginationHelpers(): boolean {
+        for (const service of Object.values(this.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.pagination != null) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

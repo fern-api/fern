@@ -268,7 +268,28 @@
         {
           "name": "example-1",
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "validateOriginUserId",
+              "value": {
+                "value": {
+                  "value": "validateOriginUserId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "validateDestinationUserId",
+              "value": {
+                "value": {
+                  "value": "validateDestinationUserId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "request": {
             "properties": {

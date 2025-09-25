@@ -54,6 +54,7 @@ function addSchemas({
             if (
                 aliasType === (typeDeclaration.name ?? id) ||
                 aliasType === `optional<${typeDeclaration.name ?? id}>` ||
+                aliasType === `nullable<${typeDeclaration.name ?? id}>` ||
                 aliasType === `optional<nullable<${typeDeclaration.name ?? id}>>`
             ) {
                 continue;

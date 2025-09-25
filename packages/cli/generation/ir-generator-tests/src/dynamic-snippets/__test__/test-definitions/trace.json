@@ -812,7 +812,8 @@
                         "type": "named",
                         "value": "type_commons:VariableType"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -844,7 +845,8 @@
                             "value": "BOOLEAN"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -943,7 +945,8 @@
                         "type": "named",
                         "value": "type_commons:VariableType"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -972,7 +975,8 @@
                         "type": "named",
                         "value": "type_commons:VariableType"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -1943,7 +1947,8 @@
                             "value": "STRING"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -1972,7 +1977,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -2074,7 +2080,8 @@
                             "value": "type_commons:KeyValuePair"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -2173,7 +2180,8 @@
                         "type": "named",
                         "value": "type_commons:VariableValue"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -2202,7 +2210,8 @@
                         "type": "named",
                         "value": "type_commons:VariableValue"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -2304,7 +2313,8 @@
                             "value": "type_commons:NodeId"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -2340,7 +2350,8 @@
                             "value": "type_commons:BinaryTreeNodeValue"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -2439,7 +2450,8 @@
                         "type": "named",
                         "value": "type_commons:NodeId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -2468,7 +2480,8 @@
                         "type": "primitive",
                         "value": "DOUBLE"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -2500,7 +2513,8 @@
                             "value": "type_commons:NodeId"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -2532,7 +2546,8 @@
                             "value": "type_commons:NodeId"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -2631,7 +2646,8 @@
                         "type": "named",
                         "value": "type_commons:NodeId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -2660,7 +2676,8 @@
                         "type": "named",
                         "value": "type_commons:BinaryTreeValue"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -2762,7 +2779,8 @@
                             "value": "type_commons:NodeId"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -2798,7 +2816,8 @@
                             "value": "type_commons:SinglyLinkedListNodeValue"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -2897,7 +2916,8 @@
                         "type": "named",
                         "value": "type_commons:NodeId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -2926,7 +2946,8 @@
                         "type": "primitive",
                         "value": "DOUBLE"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -2958,7 +2979,8 @@
                             "value": "type_commons:NodeId"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -3057,7 +3079,8 @@
                         "type": "named",
                         "value": "type_commons:NodeId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -3086,7 +3109,8 @@
                         "type": "named",
                         "value": "type_commons:SinglyLinkedListValue"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -3188,7 +3212,8 @@
                             "value": "type_commons:NodeId"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -3224,7 +3249,8 @@
                             "value": "type_commons:DoublyLinkedListNodeValue"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -3323,7 +3349,8 @@
                         "type": "named",
                         "value": "type_commons:NodeId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -3352,7 +3379,8 @@
                         "type": "primitive",
                         "value": "DOUBLE"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -3384,7 +3412,8 @@
                             "value": "type_commons:NodeId"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -3416,7 +3445,8 @@
                             "value": "type_commons:NodeId"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -3515,7 +3545,8 @@
                         "type": "named",
                         "value": "type_commons:NodeId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -3544,7 +3575,8 @@
                         "type": "named",
                         "value": "type_commons:DoublyLinkedListValue"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -3646,7 +3678,8 @@
                             "value": "type_commons:DebugKeyValuePairs"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -3745,7 +3778,8 @@
                         "type": "named",
                         "value": "type_commons:DebugVariableValue"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -3774,7 +3808,8 @@
                         "type": "named",
                         "value": "type_commons:DebugVariableValue"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -3873,7 +3908,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -3905,7 +3941,8 @@
                             "value": "type_commons:VariableValue"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -4004,7 +4041,8 @@
                         "type": "named",
                         "value": "type_commons:TestCase"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -4033,7 +4071,8 @@
                         "type": "named",
                         "value": "type_commons:VariableValue"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -4132,7 +4171,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -4161,7 +4201,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -4394,7 +4435,8 @@
                     "typeReference": {
                         "type": "unknown"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -4492,7 +4534,8 @@
                     "typeReference": {
                         "type": "unknown"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -4726,7 +4769,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -4755,7 +4799,8 @@
                         "type": "named",
                         "value": "type_migration:MigrationStatus"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -4925,7 +4970,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -4957,7 +5003,8 @@
                             "value": "type_commons:ProblemId"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -4986,7 +5033,8 @@
                         "type": "named",
                         "value": "type_playlist:PlaylistId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -5015,7 +5063,8 @@
                         "type": "named",
                         "value": "type_commons:UserId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -5114,7 +5163,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -5146,7 +5196,8 @@
                             "value": "type_commons:ProblemId"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -5245,7 +5296,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -5277,7 +5329,8 @@
                             "value": "type_commons:ProblemId"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -5610,7 +5663,8 @@
                         "type": "named",
                         "value": "type_commons:ProblemId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -5639,7 +5693,8 @@
                         "type": "named",
                         "value": "type_problem:ProblemDescription"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -5668,7 +5723,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -5697,7 +5753,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -5733,7 +5790,8 @@
                             "value": "type_problem:ProblemFiles"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -5765,7 +5823,8 @@
                             "value": "type_problem:VariableTypeAndName"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -5794,7 +5853,8 @@
                         "type": "named",
                         "value": "type_commons:VariableType"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -5826,7 +5886,8 @@
                             "value": "type_commons:TestCaseWithExpectedResult"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -5855,7 +5916,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -5884,7 +5946,8 @@
                         "type": "primitive",
                         "value": "BOOLEAN"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -5986,7 +6049,8 @@
                             "value": "type_problem:ProblemDescriptionBoard"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -6266,7 +6330,8 @@
                         "type": "named",
                         "value": "type_commons:FileInfo"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -6298,7 +6363,8 @@
                             "value": "type_commons:FileInfo"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -6397,7 +6463,8 @@
                         "type": "named",
                         "value": "type_commons:VariableType"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -6426,7 +6493,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -6525,7 +6593,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -6554,7 +6623,8 @@
                         "type": "named",
                         "value": "type_problem:ProblemDescription"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -6590,7 +6660,8 @@
                             "value": "type_problem:ProblemFiles"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -6622,7 +6693,8 @@
                             "value": "type_problem:VariableTypeAndName"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -6651,7 +6723,8 @@
                         "type": "named",
                         "value": "type_commons:VariableType"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -6683,7 +6756,8 @@
                             "value": "type_commons:TestCaseWithExpectedResult"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -6712,7 +6786,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -6962,7 +7037,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -7179,7 +7255,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -7208,7 +7285,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -7237,7 +7315,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -7343,7 +7422,8 @@
                             "value": "type_problem:ProblemFiles"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -7809,7 +7889,8 @@
                         "type": "named",
                         "value": "type_commons:ProblemId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -7841,7 +7922,8 @@
                             "value": "INTEGER"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -7940,7 +8022,8 @@
                         "type": "named",
                         "value": "type_submission:SubmissionId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -7969,7 +8052,8 @@
                         "type": "named",
                         "value": "type_commons:Language"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -8001,7 +8085,8 @@
                             "value": "type_submission:SubmissionFileInfo"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -8030,7 +8115,8 @@
                         "type": "named",
                         "value": "type_commons:ProblemId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -8062,7 +8148,8 @@
                             "value": "INTEGER"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -8094,7 +8181,8 @@
                             "value": "STRING"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -8193,7 +8281,8 @@
                         "type": "named",
                         "value": "type_submission:SubmissionId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -8222,7 +8311,8 @@
                         "type": "named",
                         "value": "type_commons:Language"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -8254,7 +8344,8 @@
                             "value": "type_submission:SubmissionFileInfo"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -8286,7 +8377,8 @@
                             "value": "STRING"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -8385,7 +8477,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -8414,7 +8507,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -8443,7 +8537,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -8633,7 +8728,8 @@
                         "type": "named",
                         "value": "type_submission:SubmissionId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -9377,7 +9473,8 @@
                         "type": "named",
                         "value": "type_submission:SubmissionId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -9406,7 +9503,8 @@
                         "type": "named",
                         "value": "type_submission:ExecutionSessionStatus"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -9505,7 +9603,8 @@
                         "type": "named",
                         "value": "type_submission:SubmissionId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -9534,7 +9633,8 @@
                         "type": "named",
                         "value": "type_submission:RunningSubmissionState"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -9812,7 +9912,8 @@
                         "type": "named",
                         "value": "type_submission:SubmissionId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -9841,7 +9942,8 @@
                         "type": "named",
                         "value": "type_submission:ErrorInfo"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -10112,7 +10214,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -10211,7 +10314,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -10310,7 +10414,8 @@
                         "type": "named",
                         "value": "type_submission:ExceptionInfo"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -10409,7 +10514,8 @@
                         "type": "named",
                         "value": "type_submission:SubmissionId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -10508,7 +10614,8 @@
                         "type": "named",
                         "value": "type_submission:SubmissionId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -10537,7 +10644,8 @@
                         "type": "named",
                         "value": "type_submission:WorkspaceRunDetails"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -10639,7 +10747,8 @@
                             "value": "type_submission:ExceptionV2"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -10671,7 +10780,8 @@
                             "value": "type_submission:ExceptionInfo"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -10700,7 +10810,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -10799,7 +10910,8 @@
                         "type": "named",
                         "value": "type_submission:SubmissionId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -10835,7 +10947,8 @@
                             "value": "type_submission:TestCaseResultWithStdout"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -10934,7 +11047,8 @@
                         "type": "named",
                         "value": "type_submission:SubmissionId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -10970,7 +11084,8 @@
                             "value": "type_submission:TestCaseGrade"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -11214,7 +11329,8 @@
                         "type": "primitive",
                         "value": "BOOLEAN"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -11313,7 +11429,8 @@
                         "type": "primitive",
                         "value": "BOOLEAN"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -11345,7 +11462,8 @@
                             "value": "type_commons:VariableValue"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -11377,7 +11495,8 @@
                             "value": "type_submission:ExceptionV2"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -11406,7 +11525,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -11505,7 +11625,8 @@
                         "type": "named",
                         "value": "type_submission:SubmissionId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -11534,7 +11655,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -11566,7 +11688,8 @@
                             "value": "STRING"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -11665,7 +11788,8 @@
                         "type": "named",
                         "value": "type_submission:SubmissionId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -11697,7 +11821,8 @@
                             "value": "STRING"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -11726,7 +11851,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -11755,7 +11881,8 @@
                         "type": "named",
                         "value": "type_submission:LightweightStackframeInformation"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -11787,7 +11914,8 @@
                             "value": "type_submission:TracedFile"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -11886,7 +12014,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -11915,7 +12044,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -12014,7 +12144,8 @@
                         "type": "named",
                         "value": "type_submission:TestCaseResult"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -12043,7 +12174,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -12142,7 +12274,8 @@
                         "type": "named",
                         "value": "type_commons:VariableValue"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -12171,7 +12304,8 @@
                         "type": "named",
                         "value": "type_submission:ActualResult"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -12200,7 +12334,8 @@
                         "type": "primitive",
                         "value": "BOOLEAN"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -12621,7 +12756,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -12650,7 +12786,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -12679,7 +12816,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -12778,7 +12916,8 @@
                         "type": "named",
                         "value": "type_submission:SubmissionRequest"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -12807,7 +12946,8 @@
                         "type": "named",
                         "value": "type_submission:InvalidRequestCause"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -13078,7 +13218,8 @@
                         "type": "named",
                         "value": "type_submission:SubmissionId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -13177,7 +13318,8 @@
                         "type": "named",
                         "value": "type_submission:SubmissionId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -13276,7 +13418,8 @@
                         "type": "named",
                         "value": "type_commons:ProblemId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -13305,7 +13448,8 @@
                         "type": "named",
                         "value": "type_submission:SubmissionId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -13404,7 +13548,8 @@
                         "type": "named",
                         "value": "type_commons:Language"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -13433,7 +13578,8 @@
                         "type": "named",
                         "value": "type_commons:Language"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -13601,7 +13747,8 @@
                         "type": "named",
                         "value": "type_submission:SubmissionId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -13700,7 +13847,8 @@
                         "type": "named",
                         "value": "type_submission:SubmissionId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -13729,7 +13877,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -13828,7 +13977,8 @@
                         "type": "named",
                         "value": "type_submission:SubmissionId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -13857,7 +14007,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -13956,7 +14107,8 @@
                         "type": "named",
                         "value": "type_submission:SubmissionId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -13985,7 +14137,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -14017,7 +14170,8 @@
                             "value": "type_commons:DebugVariableValue"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -14049,7 +14203,8 @@
                             "value": "type_submission:ExpressionLocation"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -14078,7 +14233,8 @@
                         "type": "named",
                         "value": "type_submission:StackInformation"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -14110,7 +14266,8 @@
                             "value": "STRING"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -14209,7 +14366,8 @@
                         "type": "named",
                         "value": "type_submission:SubmissionId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -14238,7 +14396,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -14267,7 +14426,8 @@
                         "type": "named",
                         "value": "type_submission:TracedFile"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -14299,7 +14459,8 @@
                             "value": "type_commons:DebugVariableValue"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -14331,7 +14492,8 @@
                             "value": "type_submission:ExpressionLocation"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -14360,7 +14522,8 @@
                         "type": "named",
                         "value": "type_submission:StackInformation"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -14392,7 +14555,8 @@
                             "value": "STRING"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -14491,7 +14655,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -14520,7 +14685,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -14619,7 +14785,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -14648,7 +14815,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -14747,7 +14915,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -14779,7 +14948,8 @@
                             "value": "type_submission:StackFrame"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -14878,7 +15048,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -14907,7 +15078,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -14939,7 +15111,8 @@
                             "value": "type_submission:Scope"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -15045,7 +15218,8 @@
                             "value": "type_commons:DebugVariableValue"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -15144,7 +15318,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -15176,7 +15351,8 @@
                             "value": "STRING"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -15205,7 +15381,8 @@
                         "type": "named",
                         "value": "type_commons:Language"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -15234,7 +15411,8 @@
                         "type": "named",
                         "value": "type_submission:ExecutionSessionStatus"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -15682,7 +15860,8 @@
                             "value": "type_submission:TestSubmissionUpdate"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -15711,7 +15890,8 @@
                         "type": "named",
                         "value": "type_commons:ProblemId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -15740,7 +15920,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -15769,7 +15950,8 @@
                         "type": "named",
                         "value": "type_v2/problem:ProblemInfoV2"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -15871,7 +16053,8 @@
                             "value": "type_submission:WorkspaceSubmissionUpdate"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -15970,7 +16153,8 @@
                         "type": "primitive",
                         "value": "DATE_TIME"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -15999,7 +16183,8 @@
                         "type": "named",
                         "value": "type_submission:TestSubmissionUpdateInfo"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -16355,7 +16540,8 @@
                         "type": "primitive",
                         "value": "DATE_TIME"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -16384,7 +16570,8 @@
                         "type": "named",
                         "value": "type_submission:WorkspaceSubmissionUpdateInfo"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -16766,7 +16953,8 @@
                         "type": "named",
                         "value": "type_v2/problem:TestCaseId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -16795,7 +16983,8 @@
                         "type": "named",
                         "value": "type_submission:TestCaseGrade"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -16894,7 +17083,8 @@
                         "type": "named",
                         "value": "type_v2/problem:TestCaseId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -16923,7 +17113,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -17022,7 +17213,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -17266,7 +17458,8 @@
                         "type": "named",
                         "value": "type_submission:WorkspaceSubmissionStatus"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -17596,7 +17789,8 @@
                         "type": "named",
                         "value": "type_commons:ProblemId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -17628,7 +17822,8 @@
                             "value": "type_commons:TestCase"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -17660,7 +17855,8 @@
                             "value": "type_commons:TestCase"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -17689,7 +17885,8 @@
                         "type": "named",
                         "value": "type_submission:TestSubmissionStatus"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -18177,7 +18374,8 @@
                         "type": "named",
                         "value": "type_submission:TestCaseResultWithStdout"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -18206,7 +18404,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -18308,7 +18507,8 @@
                             "value": "INTEGER"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -18340,7 +18540,8 @@
                             "value": "type_submission:TraceResponse"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -18442,7 +18643,8 @@
                             "value": "INTEGER"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -18474,7 +18676,8 @@
                             "value": "type_submission:TraceResponseV2"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -18576,7 +18779,8 @@
                             "value": "INTEGER"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -18682,7 +18886,8 @@
                             "value": "type_submission:WorkspaceFiles"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -18788,7 +18993,8 @@
                             "value": "type_v2/problem:Files"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -18887,7 +19093,8 @@
                         "type": "named",
                         "value": "type_commons:FileInfo"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -18919,7 +19126,8 @@
                             "value": "type_commons:FileInfo"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -19021,7 +19229,8 @@
                             "value": "STRING"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -19050,7 +19259,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -19079,7 +19289,8 @@
                         "type": "primitive",
                         "value": "BOOLEAN"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -19111,7 +19322,8 @@
                             "value": "STRING"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -19140,7 +19352,8 @@
                         "type": "named",
                         "value": "type_commons:Language"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -19169,7 +19382,8 @@
                         "type": "named",
                         "value": "type_submission:ExecutionSessionStatus"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -19275,7 +19489,8 @@
                             "value": "type_submission:ExecutionSessionState"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -19307,7 +19522,8 @@
                             "value": "INTEGER"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -19339,7 +19555,8 @@
                             "value": "STRING"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -19441,7 +19658,8 @@
                             "value": "DATE_TIME"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -19470,7 +19688,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -19499,7 +19718,8 @@
                         "type": "named",
                         "value": "type_commons:Language"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -19528,7 +19748,8 @@
                         "type": "named",
                         "value": "type_submission:SubmissionTypeState"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -19996,7 +20217,8 @@
                         "type": "named",
                         "value": "type_commons:ProblemId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -20025,7 +20247,8 @@
                         "type": "named",
                         "value": "type_problem:ProblemDescription"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -20054,7 +20277,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -20083,7 +20307,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -20115,7 +20340,8 @@
                             "value": "type_commons:Language"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -20144,7 +20370,8 @@
                         "type": "named",
                         "value": "type_v2/problem:CustomFiles"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -20173,7 +20400,8 @@
                         "type": "named",
                         "value": "type_v2/problem:GeneratedFiles"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -20205,7 +20433,8 @@
                             "value": "type_v2/problem:TestCaseTemplate"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -20237,7 +20466,8 @@
                             "value": "type_v2/problem:TestCaseV2"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -20266,7 +20496,8 @@
                         "type": "primitive",
                         "value": "BOOLEAN"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -20404,7 +20635,8 @@
                         "type": "named",
                         "value": "type_commons:ProblemId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -20433,7 +20665,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -20462,7 +20695,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -20494,7 +20728,8 @@
                             "value": "type_commons:VariableType"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -20632,7 +20867,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -20661,7 +20897,8 @@
                         "type": "named",
                         "value": "type_problem:ProblemDescription"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -20690,7 +20927,8 @@
                         "type": "named",
                         "value": "type_v2/problem:CustomFiles"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -20722,7 +20960,8 @@
                             "value": "type_v2/problem:TestCaseTemplate"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -20754,7 +20993,8 @@
                             "value": "type_v2/problem:TestCaseV2"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -20786,7 +21026,8 @@
                             "value": "type_commons:Language"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -20815,7 +21056,8 @@
                         "type": "primitive",
                         "value": "BOOLEAN"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -20953,7 +21195,8 @@
                         "type": "named",
                         "value": "type_v2/problem:TestCaseMetadata"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -20982,7 +21225,8 @@
                         "type": "named",
                         "value": "type_v2/problem:TestCaseImplementationReference"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -21018,7 +21262,8 @@
                             "value": "type_commons:VariableValue"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -21050,7 +21295,8 @@
                             "value": "type_v2/problem:TestCaseExpects"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -21191,7 +21437,8 @@
                             "value": "STRING"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -21516,7 +21763,8 @@
                         "type": "named",
                         "value": "type_v2/problem:TestCaseTemplateId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -21545,7 +21793,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -21574,7 +21823,8 @@
                         "type": "named",
                         "value": "type_v2/problem:TestCaseImplementationDescription"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -21603,7 +21853,8 @@
                         "type": "named",
                         "value": "type_v2/problem:ParameterId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -21741,7 +21992,8 @@
                         "type": "named",
                         "value": "type_v2/problem:TestCaseTemplateId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -21770,7 +22022,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -21799,7 +22052,8 @@
                         "type": "named",
                         "value": "type_v2/problem:TestCaseImplementation"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -21937,7 +22191,8 @@
                         "type": "named",
                         "value": "type_v2/problem:TestCaseImplementationDescription"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -21966,7 +22221,8 @@
                         "type": "named",
                         "value": "type_v2/problem:TestCaseFunction"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -22288,7 +22544,8 @@
                         "type": "named",
                         "value": "type_v2/problem:NonVoidFunctionDefinition"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -22317,7 +22574,8 @@
                         "type": "named",
                         "value": "type_v2/problem:AssertCorrectnessCheck"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -22458,7 +22716,8 @@
                             "value": "type_v2/problem:Parameter"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -22487,7 +22746,8 @@
                         "type": "named",
                         "value": "type_v2/problem:FunctionImplementationForMultipleLanguages"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -22625,7 +22885,8 @@
                         "type": "named",
                         "value": "type_v2/problem:ParameterId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -22654,7 +22915,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -22683,7 +22945,8 @@
                         "type": "named",
                         "value": "type_commons:VariableType"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -22821,7 +23084,8 @@
                         "type": "named",
                         "value": "type_v2/problem:NonVoidFunctionSignature"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -22850,7 +23114,8 @@
                         "type": "named",
                         "value": "type_v2/problem:FunctionImplementationForMultipleLanguages"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -22991,7 +23256,8 @@
                             "value": "type_v2/problem:Parameter"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -23132,7 +23398,8 @@
                             "value": "type_v2/problem:Parameter"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -23161,7 +23428,8 @@
                         "type": "named",
                         "value": "type_commons:VariableType"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -23302,7 +23570,8 @@
                             "value": "type_v2/problem:Parameter"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -23331,7 +23600,8 @@
                         "type": "named",
                         "value": "type_commons:VariableType"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -23653,7 +23923,8 @@
                         "type": "named",
                         "value": "type_v2/problem:ParameterId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -23794,7 +24065,8 @@
                             "value": "type_v2/problem:Parameter"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -23823,7 +24095,8 @@
                         "type": "named",
                         "value": "type_v2/problem:FunctionImplementationForMultipleLanguages"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -23964,7 +24237,8 @@
                             "value": "type_v2/problem:TestCaseImplementationDescriptionBoard"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -24292,7 +24566,8 @@
                         "type": "named",
                         "value": "type_v2/problem:TestCaseId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -24321,7 +24596,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -24350,7 +24626,8 @@
                         "type": "primitive",
                         "value": "BOOLEAN"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -24495,7 +24772,8 @@
                             "value": "type_v2/problem:FunctionImplementation"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -24633,7 +24911,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -24665,7 +24944,8 @@
                             "value": "STRING"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -24810,7 +25090,8 @@
                             "value": "type_v2/problem:Files"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -24846,7 +25127,8 @@
                             "value": "type_v2/problem:Files"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -24882,7 +25164,8 @@
                             "value": "type_v2/problem:Files"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -25214,7 +25497,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -25243,7 +25527,8 @@
                         "type": "named",
                         "value": "type_v2/problem:NonVoidFunctionSignature"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -25279,7 +25564,8 @@
                             "value": "type_v2/problem:Files"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -25308,7 +25594,8 @@
                         "type": "named",
                         "value": "type_v2/problem:BasicTestCaseTemplate"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -25449,7 +25736,8 @@
                             "value": "type_v2/problem:FileInfoV2"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -25587,7 +25875,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -25616,7 +25905,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -25645,7 +25935,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -25674,7 +25965,8 @@
                         "type": "primitive",
                         "value": "BOOLEAN"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -25812,7 +26104,8 @@
                         "type": "named",
                         "value": "type_v2/problem:FileInfoV2"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -25844,7 +26137,8 @@
                             "value": "type_commons:VariableType"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -26193,7 +26487,8 @@
                         "type": "named",
                         "value": "type_v2/problem:FunctionSignature"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -26338,7 +26633,8 @@
                             "value": "STRING"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -26476,7 +26772,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -26505,7 +26802,8 @@
                         "type": "named",
                         "value": "type_v2/problem:NonVoidFunctionSignature"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -26650,7 +26948,8 @@
                             "value": "type_v2/problem:FileInfoV2"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -26791,7 +27090,8 @@
                             "value": "type_v2/problem:TestCaseTemplate"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -26820,7 +27120,8 @@
                         "type": "named",
                         "value": "type_v2/problem:TestCaseV2"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -26958,7 +27259,8 @@
                         "type": "named",
                         "value": "type_v2/problem:TestCaseTemplate"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -27578,7 +27880,8 @@
                         "type": "named",
                         "value": "type_commons:ProblemId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -27607,7 +27910,8 @@
                         "type": "named",
                         "value": "type_problem:ProblemDescription"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -27636,7 +27940,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -27665,7 +27970,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -27697,7 +28003,8 @@
                             "value": "type_commons:Language"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -27726,7 +28033,8 @@
                         "type": "named",
                         "value": "type_v2/v3/problem:CustomFiles"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -27755,7 +28063,8 @@
                         "type": "named",
                         "value": "type_v2/v3/problem:GeneratedFiles"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -27787,7 +28096,8 @@
                             "value": "type_v2/v3/problem:TestCaseTemplate"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -27819,7 +28129,8 @@
                             "value": "type_v2/v3/problem:TestCaseV2"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -27848,7 +28159,8 @@
                         "type": "primitive",
                         "value": "BOOLEAN"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -28024,7 +28336,8 @@
                         "type": "named",
                         "value": "type_commons:ProblemId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -28053,7 +28366,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -28082,7 +28396,8 @@
                         "type": "primitive",
                         "value": "INTEGER"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -28114,7 +28429,8 @@
                             "value": "type_commons:VariableType"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -28290,7 +28606,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -28319,7 +28636,8 @@
                         "type": "named",
                         "value": "type_problem:ProblemDescription"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -28348,7 +28666,8 @@
                         "type": "named",
                         "value": "type_v2/v3/problem:CustomFiles"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -28380,7 +28699,8 @@
                             "value": "type_v2/v3/problem:TestCaseTemplate"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -28412,7 +28732,8 @@
                             "value": "type_v2/v3/problem:TestCaseV2"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -28444,7 +28765,8 @@
                             "value": "type_commons:Language"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -28473,7 +28795,8 @@
                         "type": "primitive",
                         "value": "BOOLEAN"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -28649,7 +28972,8 @@
                         "type": "named",
                         "value": "type_v2/v3/problem:TestCaseMetadata"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -28678,7 +29002,8 @@
                         "type": "named",
                         "value": "type_v2/v3/problem:TestCaseImplementationReference"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -28714,7 +29039,8 @@
                             "value": "type_commons:VariableValue"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -28746,7 +29072,8 @@
                             "value": "type_v2/v3/problem:TestCaseExpects"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -28925,7 +29252,8 @@
                             "value": "STRING"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -29326,7 +29654,8 @@
                         "type": "named",
                         "value": "type_v2/v3/problem:TestCaseTemplateId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -29355,7 +29684,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -29384,7 +29714,8 @@
                         "type": "named",
                         "value": "type_v2/v3/problem:TestCaseImplementationDescription"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -29413,7 +29744,8 @@
                         "type": "named",
                         "value": "type_v2/v3/problem:ParameterId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -29589,7 +29921,8 @@
                         "type": "named",
                         "value": "type_v2/v3/problem:TestCaseTemplateId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -29618,7 +29951,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -29647,7 +29981,8 @@
                         "type": "named",
                         "value": "type_v2/v3/problem:TestCaseImplementation"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -29823,7 +30158,8 @@
                         "type": "named",
                         "value": "type_v2/v3/problem:TestCaseImplementationDescription"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -29852,7 +30188,8 @@
                         "type": "named",
                         "value": "type_v2/v3/problem:TestCaseFunction"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -30250,7 +30587,8 @@
                         "type": "named",
                         "value": "type_v2/v3/problem:NonVoidFunctionDefinition"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -30279,7 +30617,8 @@
                         "type": "named",
                         "value": "type_v2/v3/problem:AssertCorrectnessCheck"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -30458,7 +30797,8 @@
                             "value": "type_v2/v3/problem:Parameter"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -30487,7 +30827,8 @@
                         "type": "named",
                         "value": "type_v2/v3/problem:FunctionImplementationForMultipleLanguages"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -30663,7 +31004,8 @@
                         "type": "named",
                         "value": "type_v2/v3/problem:ParameterId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -30692,7 +31034,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -30721,7 +31064,8 @@
                         "type": "named",
                         "value": "type_commons:VariableType"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -30897,7 +31241,8 @@
                         "type": "named",
                         "value": "type_v2/v3/problem:NonVoidFunctionSignature"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -30926,7 +31271,8 @@
                         "type": "named",
                         "value": "type_v2/v3/problem:FunctionImplementationForMultipleLanguages"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -31105,7 +31451,8 @@
                             "value": "type_v2/v3/problem:Parameter"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -31284,7 +31631,8 @@
                             "value": "type_v2/v3/problem:Parameter"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -31313,7 +31661,8 @@
                         "type": "named",
                         "value": "type_commons:VariableType"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -31492,7 +31841,8 @@
                             "value": "type_v2/v3/problem:Parameter"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -31521,7 +31871,8 @@
                         "type": "named",
                         "value": "type_commons:VariableType"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -31919,7 +32270,8 @@
                         "type": "named",
                         "value": "type_v2/v3/problem:ParameterId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -32098,7 +32450,8 @@
                             "value": "type_v2/v3/problem:Parameter"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -32127,7 +32480,8 @@
                         "type": "named",
                         "value": "type_v2/v3/problem:FunctionImplementationForMultipleLanguages"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -32306,7 +32660,8 @@
                             "value": "type_v2/v3/problem:TestCaseImplementationDescriptionBoard"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -32710,7 +33065,8 @@
                         "type": "named",
                         "value": "type_v2/v3/problem:TestCaseId"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -32739,7 +33095,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -32768,7 +33125,8 @@
                         "type": "primitive",
                         "value": "BOOLEAN"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -32951,7 +33309,8 @@
                             "value": "type_v2/v3/problem:FunctionImplementation"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -33127,7 +33486,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -33159,7 +33519,8 @@
                             "value": "STRING"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -33342,7 +33703,8 @@
                             "value": "type_v2/v3/problem:Files"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -33378,7 +33740,8 @@
                             "value": "type_v2/v3/problem:Files"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -33414,7 +33777,8 @@
                             "value": "type_v2/v3/problem:Files"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -33822,7 +34186,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -33851,7 +34216,8 @@
                         "type": "named",
                         "value": "type_v2/v3/problem:NonVoidFunctionSignature"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -33887,7 +34253,8 @@
                             "value": "type_v2/v3/problem:Files"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -33916,7 +34283,8 @@
                         "type": "named",
                         "value": "type_v2/v3/problem:BasicTestCaseTemplate"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -34095,7 +34463,8 @@
                             "value": "type_v2/v3/problem:FileInfoV2"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -34271,7 +34640,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -34300,7 +34670,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -34329,7 +34700,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -34358,7 +34730,8 @@
                         "type": "primitive",
                         "value": "BOOLEAN"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -34534,7 +34907,8 @@
                         "type": "named",
                         "value": "type_v2/v3/problem:FileInfoV2"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -34566,7 +34940,8 @@
                             "value": "type_commons:VariableType"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -34991,7 +35366,8 @@
                         "type": "named",
                         "value": "type_v2/v3/problem:FunctionSignature"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -35174,7 +35550,8 @@
                             "value": "STRING"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -35350,7 +35727,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -35379,7 +35757,8 @@
                         "type": "named",
                         "value": "type_v2/v3/problem:NonVoidFunctionSignature"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -35562,7 +35941,8 @@
                             "value": "type_v2/v3/problem:FileInfoV2"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -35741,7 +36121,8 @@
                             "value": "type_v2/v3/problem:TestCaseTemplate"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -35770,7 +36151,8 @@
                         "type": "named",
                         "value": "type_v2/v3/problem:TestCaseV2"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -35946,7 +36328,8 @@
                         "type": "named",
                         "value": "type_v2/v3/problem:TestCaseTemplate"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -35983,7 +36366,8 @@
                     "value": "STRING"
                 }
             },
-            "propertyAccess": null
+            "propertyAccess": null,
+            "variable": null
         }
     ],
     "endpoints": {
@@ -36211,7 +36595,8 @@
                             "type": "named",
                             "value": "type_submission:SubmissionId"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "body": {
@@ -36348,7 +36733,8 @@
                             "type": "named",
                             "value": "type_submission:SubmissionId"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "body": {
@@ -36485,7 +36871,8 @@
                             "type": "named",
                             "value": "type_submission:SubmissionId"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "body": {
@@ -36622,7 +37009,8 @@
                             "type": "named",
                             "value": "type_submission:SubmissionId"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "body": {
@@ -36823,7 +37211,8 @@
                             "type": "named",
                             "value": "type_submission:SubmissionId"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -36852,7 +37241,8 @@
                             "type": "primitive",
                             "value": "STRING"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "queryParameters": [],
@@ -36887,7 +37277,8 @@
                                 "type": "named",
                                 "value": "type_submission:TestCaseResultWithStdout"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -36919,7 +37310,8 @@
                                     "value": "type_submission:TraceResponse"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ]
                 },
@@ -37054,7 +37446,8 @@
                             "type": "named",
                             "value": "type_submission:SubmissionId"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -37083,7 +37476,8 @@
                             "type": "named",
                             "value": "type_v2/problem:TestCaseId"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "body": {
@@ -37287,7 +37681,8 @@
                             "type": "named",
                             "value": "type_submission:SubmissionId"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "queryParameters": [],
@@ -37322,7 +37717,8 @@
                                 "type": "named",
                                 "value": "type_submission:WorkspaceRunDetails"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -37354,7 +37750,8 @@
                                     "value": "type_submission:TraceResponse"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ]
                 },
@@ -37489,7 +37886,8 @@
                             "type": "named",
                             "value": "type_submission:SubmissionId"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "body": {
@@ -37906,7 +38304,8 @@
                             "type": "primitive",
                             "value": "STRING"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "body": null,
@@ -38105,7 +38504,8 @@
                             "type": "primitive",
                             "value": "INTEGER"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "queryParameters": [
@@ -38136,7 +38536,8 @@
                             "type": "primitive",
                             "value": "DATE_TIME"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -38168,7 +38569,8 @@
                                 "value": "DATE_TIME"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "headers": [],
@@ -38396,7 +38798,8 @@
                             "type": "primitive",
                             "value": "INTEGER"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "queryParameters": [
@@ -38430,7 +38833,8 @@
                                 "value": "INTEGER"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -38459,7 +38863,8 @@
                             "type": "primitive",
                             "value": "STRING"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -38488,7 +38893,8 @@
                             "type": "primitive",
                             "value": "STRING"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -38523,7 +38929,8 @@
                                 }
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -38555,7 +38962,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "headers": [],
@@ -38691,7 +39099,8 @@
                             "type": "primitive",
                             "value": "INTEGER"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -38720,7 +39129,8 @@
                             "type": "named",
                             "value": "type_playlist:PlaylistId"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "body": null
@@ -38851,7 +39261,8 @@
                             "type": "primitive",
                             "value": "INTEGER"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -38880,7 +39291,8 @@
                             "type": "named",
                             "value": "type_playlist:PlaylistId"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "body": {
@@ -39020,7 +39432,8 @@
                             "type": "primitive",
                             "value": "INTEGER"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -39049,7 +39462,8 @@
                             "type": "named",
                             "value": "type_playlist:PlaylistId"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "body": null
@@ -39287,7 +39701,8 @@
                             "type": "named",
                             "value": "type_commons:ProblemId"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "body": {
@@ -39424,7 +39839,8 @@
                             "type": "named",
                             "value": "type_commons:ProblemId"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "body": null
@@ -39627,7 +40043,8 @@
                                     "value": "type_problem:VariableTypeAndName"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -39656,7 +40073,8 @@
                                 "type": "named",
                                 "value": "type_commons:VariableType"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -39685,7 +40103,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ]
                 },
@@ -39820,7 +40239,8 @@
                             "type": "named",
                             "value": "type_commons:Language"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "body": null
@@ -39951,7 +40371,8 @@
                             "type": "primitive",
                             "value": "STRING"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "body": null
@@ -40082,7 +40503,8 @@
                             "type": "primitive",
                             "value": "STRING"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "body": null
@@ -40314,7 +40736,8 @@
                             "type": "named",
                             "value": "type_commons:Language"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -40343,7 +40766,8 @@
                             "type": "primitive",
                             "value": "INTEGER"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "body": null
@@ -40894,7 +41318,8 @@
                             "type": "named",
                             "value": "type_commons:ProblemId"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "body": null
@@ -41064,7 +41489,8 @@
                             "type": "named",
                             "value": "type_commons:ProblemId"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -41093,7 +41519,8 @@
                             "type": "primitive",
                             "value": "INTEGER"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "body": null
@@ -41657,7 +42084,8 @@
                             "type": "named",
                             "value": "type_commons:ProblemId"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "body": null
@@ -41865,7 +42293,8 @@
                             "type": "named",
                             "value": "type_commons:ProblemId"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -41894,7 +42323,8 @@
                             "type": "primitive",
                             "value": "INTEGER"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "body": null
@@ -41938,5 +42368,6 @@
             ]
         }
     },
+    "variables": null,
     "generatorConfig": null
 }

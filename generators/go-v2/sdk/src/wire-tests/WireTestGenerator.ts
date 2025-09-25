@@ -85,13 +85,13 @@ export class WireTestGenerator {
         const serviceTestFileContent = go
             .codeblock((writer) => {
                 this.writeImports(writer, imports);
-                writer.writeNewLineIfLastLineNot();
-                writer.writeLine();
-                for (const endpointTestCaseCodeBlock of endpointTestCaseCodeBlocks) {
+                writer.newLine();
+                endpointTestCaseCodeBlocks.forEach((endpointTestCaseCodeBlock, index) => {
                     writer.write(endpointTestCaseCodeBlock);
-                    writer.writeNewLineIfLastLineNot();
-                    writer.writeLine();
-                }
+                    if (index < endpointTestCaseCodeBlocks.length - 1) {
+                        writer.newLine();
+                    }
+                });
             })
             .toString({
                 packageName: "wiremock",

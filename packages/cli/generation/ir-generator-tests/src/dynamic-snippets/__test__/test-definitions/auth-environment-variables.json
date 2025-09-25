@@ -29,7 +29,8 @@
                 "type": "primitive",
                 "value": "STRING"
             },
-            "propertyAccess": null
+            "propertyAccess": null,
+            "variable": null
         },
         {
             "name": {
@@ -61,7 +62,8 @@
                     "value": "01-01-2000"
                 }
             },
-            "propertyAccess": null
+            "propertyAccess": null,
+            "variable": null
         }
     ],
     "endpoints": {
@@ -95,7 +97,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             },
             "declaration": {
@@ -206,7 +209,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             },
             "declaration": {
@@ -373,7 +377,8 @@
                             "type": "primitive",
                             "value": "STRING"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "body": null,
@@ -390,5 +395,6 @@
     },
     "pathParameters": [],
     "environments": null,
+    "variables": null,
     "generatorConfig": null
 }
