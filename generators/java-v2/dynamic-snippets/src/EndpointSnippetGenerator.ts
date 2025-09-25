@@ -161,12 +161,10 @@ export class EndpointSnippetGenerator {
         }
         this.context.errors.unscope();
 
-        // Handle variables that should be configured at client level
-        // Check for variables used in this endpoint's path parameters
         const usedVariables = new Set<string>();
         const allPathParams = [...(this.context.ir.pathParameters ?? []), ...(endpoint.request.pathParameters ?? [])];
 
-        allPathParams.forEach(param => {
+        allPathParams.forEach((param) => {
             if (param.variable != null) {
                 usedVariables.add(param.variable);
             }
@@ -174,7 +172,6 @@ export class EndpointSnippetGenerator {
 
         if (this.context.ir.variables != null && this.context.ir.variables.length > 0) {
             for (const variable of this.context.ir.variables) {
-                // Only add variables that are actually used in this endpoint
                 if (usedVariables.has(variable.id)) {
                     const variableName = variable.name.camelCase.unsafeName;
                     builderArgs.push({

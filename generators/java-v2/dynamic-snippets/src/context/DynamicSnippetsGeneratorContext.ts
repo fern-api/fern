@@ -239,7 +239,9 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         switch (this.getPackageLayout()) {
             case "flat":
                 if (fernFilepath != null) {
-                    tokens.push(...fernFilepath.packagePath.map((name: FernIr.dynamic.Name) => this.getPackageNameSegment(name)));
+                    tokens.push(
+                        ...fernFilepath.packagePath.map((name: FernIr.dynamic.Name) => this.getPackageNameSegment(name))
+                    );
                 }
                 break;
             case "nested":
@@ -248,7 +250,9 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
                     tokens.push("resources");
                 }
                 if (fernFilepath != null) {
-                    tokens.push(...fernFilepath.allParts.map((name: FernIr.dynamic.Name) => this.getPackageNameSegment(name)));
+                    tokens.push(
+                        ...fernFilepath.allParts.map((name: FernIr.dynamic.Name) => this.getPackageNameSegment(name))
+                    );
                 }
         }
         if (suffix != null) {

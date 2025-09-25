@@ -134,7 +134,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const clientClassReference = this.context.getRootClientClassReference();
         const endpointMethodInvocation = this.getMethodCall(endpoint, [ReadmeSnippetBuilder.ELLIPSES]);
 
-        // Add variables to builder parameters if they exist
         const builderParameters: Array<{ name: string; value: java.TypeLiteral }> = [];
         if (this.context.ir.variables != null && this.context.ir.variables.length > 0) {
             for (const variable of this.context.ir.variables) {
@@ -146,7 +145,10 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             }
         }
 
-        const clientBuilder = java.TypeLiteral.builder({ classReference: clientClassReference, parameters: builderParameters });
+        const clientBuilder = java.TypeLiteral.builder({
+            classReference: clientClassReference,
+            parameters: builderParameters
+        });
 
         const snippet = java.codeblock((writer) => {
             writer.writeNode(clientClassReference);
