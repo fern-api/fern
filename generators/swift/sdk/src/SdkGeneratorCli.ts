@@ -2,7 +2,7 @@ import { File, GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever, extractErrorMessage, noop } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractSwiftGeneratorCli } from "@fern-api/swift-base";
-import { swift } from "@fern-api/swift-codegen";
+import { sanitizeSelf, swift } from "@fern-api/swift-codegen";
 import { DynamicSnippetsGenerator } from "@fern-api/swift-dynamic-snippets";
 import {
     AliasGenerator,
@@ -236,7 +236,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                     return fileProperty._visit({
                                         file: (property) => {
                                             return swift.property({
-                                                unsafeName: property.key.name.camelCase.unsafeName,
+                                                unsafeName: sanitizeSelf(property.key.name.camelCase.unsafeName),
                                                 accessLevel: "public",
                                                 declarationType: "let",
                                                 type: swift.Type.custom("FormFile"),
@@ -247,7 +247,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                         },
                                         fileArray: (property) => {
                                             return swift.property({
-                                                unsafeName: property.key.name.camelCase.unsafeName,
+                                                unsafeName: sanitizeSelf(property.key.name.camelCase.unsafeName),
                                                 accessLevel: "public",
                                                 declarationType: "let",
                                                 type: swift.Type.array(swift.Type.custom("FormFile")),
@@ -261,7 +261,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                                 },
                                 bodyProperty: (property) => {
                                     return swift.property({
-                                        unsafeName: property.name.name.camelCase.unsafeName,
+                                        unsafeName: sanitizeSelf(property.name.name.camelCase.unsafeName),
                                         accessLevel: "public",
                                         declarationType: "let",
                                         type: context.getSwiftTypeForTypeReference(property.valueType),
