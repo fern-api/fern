@@ -334,6 +334,98 @@
                 }
             ]
         },
+        "type_:TypeWithSingleCharPropertyEqualToTypeStartingLetter": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "TypeWithSingleCharPropertyEqualToTypeStartingLetter",
+                    "camelCase": {
+                        "unsafeName": "typeWithSingleCharPropertyEqualToTypeStartingLetter",
+                        "safeName": "typeWithSingleCharPropertyEqualToTypeStartingLetter"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "type_with_single_char_property_equal_to_type_starting_letter",
+                        "safeName": "type_with_single_char_property_equal_to_type_starting_letter"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TYPE_WITH_SINGLE_CHAR_PROPERTY_EQUAL_TO_TYPE_STARTING_LETTER",
+                        "safeName": "TYPE_WITH_SINGLE_CHAR_PROPERTY_EQUAL_TO_TYPE_STARTING_LETTER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "TypeWithSingleCharPropertyEqualToTypeStartingLetter",
+                        "safeName": "TypeWithSingleCharPropertyEqualToTypeStartingLetter"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "t",
+                            "camelCase": {
+                                "unsafeName": "t",
+                                "safeName": "t"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "t",
+                                "safeName": "t"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "T",
+                                "safeName": "T"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "T",
+                                "safeName": "T"
+                            }
+                        },
+                        "wireValue": "t"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "ty",
+                            "camelCase": {
+                                "unsafeName": "ty",
+                                "safeName": "ty"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "ty",
+                                "safeName": "ty"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TY",
+                                "safeName": "TY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Ty",
+                                "safeName": "Ty"
+                            }
+                        },
+                        "wireValue": "ty"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "additionalProperties": false
+        },
         "type_commons/types:Tag": {
             "type": "alias",
             "declaration": {
