@@ -38,6 +38,7 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
 
     public async persist({ tidy }: { tidy?: boolean } = {}): Promise<void> {
         this.context.logger.debug(`Writing go files to ${this.absolutePathToOutputDirectory}`);
+        // hotfix: disable go.mod generation after inverting overwrite order of generator execution so v2 wins
         // await this.writeGoMod();
         await this.writeInternalFiles();
         await this.writeRootAsIsFiles();
