@@ -17,6 +17,7 @@
 package com.fern.java.client.generators;
 
 import com.fern.ir.model.auth.AuthScheme;
+import com.fern.ir.model.auth.AuthSchemeKey;
 import com.fern.ir.model.auth.BasicAuthScheme;
 import com.fern.ir.model.auth.BearerAuthScheme;
 import com.fern.ir.model.auth.EnvironmentVariable;
@@ -259,6 +260,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             if (hasCustomHeaders) {
                 generatorContext.getIr().getHeaders().forEach(httpHeader -> {
                     authSchemeHandler.visitNonAuthHeader(HeaderAuthScheme.builder()
+                            .key(AuthSchemeKey.of(httpHeader.getName().getWireValue()))
                             .name(httpHeader.getName())
                             .valueType(httpHeader.getValueType())
                             .docs(httpHeader.getDocs())

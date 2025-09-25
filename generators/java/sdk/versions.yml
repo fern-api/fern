@@ -1,3 +1,11 @@
+- version: 3.6.0
+  changelogEntry:
+    - summary: |
+        Add support for PR mode for self-hosted/local sdk generation.
+      type: feat
+  createdAt: "2025-09-25"
+  irVersion: 60
+
 - version: 3.5.10
   changelogEntry:
     - summary: |

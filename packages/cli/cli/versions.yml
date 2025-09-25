@@ -38,6 +38,14 @@
 
 - changelogEntry:
     - summary: |
+        Update migration versions for ir-v60 for python generators
+      type: feat
+  irVersion: 60
+  createdAt: "2025-09-23"
+  version: 0.81.0
+
+- changelogEntry:
+    - summary: |
         Enable PR mode for self-hosted/local sdk generation
       type: feat
   irVersion: 60

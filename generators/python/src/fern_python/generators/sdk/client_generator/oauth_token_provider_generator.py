@@ -354,8 +354,10 @@ class OAuthTokenProviderGenerator:
         def _write_response_property_setter(writer: AST.NodeWriter) -> None:
             property_path = response_property.property_path
             property_name = response_property.property.name.name.snake_case.safe_name
+            # Extract names from PropertyPathItem objects
+            property_path_names = [item.name for item in property_path] if property_path else None
             writer.write_line(
-                f"self.{member_name} = token_response.{self._get_response_property_path(property_path)}{property_name}"
+                f"self.{member_name} = token_response.{self._get_response_property_path(property_path_names)}{property_name}"
             )
 
         return _write_response_property_setter
@@ -368,6 +370,8 @@ class OAuthTokenProviderGenerator:
         def _write_expires_at_setter(writer: AST.NodeWriter) -> None:
             property_path = expires_in_property.property_path
             property_name = expires_in_property.property.name.name.snake_case.safe_name
+            # Extract names from PropertyPathItem objects
+            property_path_names = [item.name for item in property_path] if property_path else None
             writer.write(f"self.{member_name} = ")
             writer.write_node(
                 node=AST.FunctionInvocation(
@@ -378,7 +382,7 @@ class OAuthTokenProviderGenerator:
                         (
                             "expires_in_seconds",
                             AST.Expression(
-                                f"token_response.{self._get_response_property_path(property_path)}{property_name}"
+                                f"token_response.{self._get_response_property_path(property_path_names)}{property_name}"
                             ),
                         ),
                         ("buffer_in_minutes", AST.Expression(f"self.{self._get_buffer_in_minutes_member_name()}")),
