@@ -19,10 +19,10 @@ export const UpdateComplexProfileRequest: core.serialization.Schema<
 
 export declare namespace UpdateComplexProfileRequest {
     export interface Raw {
-        nullableRole?: (serializers.UserRole.Raw | null) | null;
-        nullableStatus?: (serializers.UserStatus.Raw | null) | null;
-        nullableNotification?: (serializers.NotificationMethod.Raw | null) | null;
-        nullableSearchResult?: (serializers.SearchResult.Raw | null) | null;
-        nullableArray?: (string[] | null) | null;
+        nullableRole?: (serializers.UserRole.Raw | null | undefined) | null;
+        nullableStatus?: (serializers.UserStatus.Raw | null | undefined) | null;
+        nullableNotification?: (serializers.NotificationMethod.Raw | null | undefined) | null;
+        nullableSearchResult?: (serializers.SearchResult.Raw | null | undefined) | null;
+        nullableArray?: (string[] | null | undefined) | null;
     }
 }

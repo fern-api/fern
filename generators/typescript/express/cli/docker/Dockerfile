@@ -9,7 +9,6 @@ RUN apk --no-cache add git zip
 RUN git config --global user.name "fern" && git config --global user.email "hey@buildwithfern.com"
 
 COPY generators/typescript/express/cli/docker/cache_heavy_dependencies.sh /
-RUN npm install -g pnpm@10.14.0
 RUN /cache_heavy_dependencies.sh
 RUN rm /cache_heavy_dependencies.sh
 

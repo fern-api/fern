@@ -11,5 +11,5 @@ export const Email: core.serialization.Schema<serializers.Email.Raw, SeedNullabl
     .nullable();
 
 export declare namespace Email {
-    export type Raw = string | null;
+    export type Raw = string | null | undefined;
 }
