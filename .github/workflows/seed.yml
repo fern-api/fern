@@ -54,7 +54,7 @@ jobs:
         run: |
           BASH_VAR=$(jq -c '.' .github/workflow-resource-files/balancedGroups.json)
           echo "split-tests=true" >> $GITHUB_OUTPUT
-          echo "${{ matrix.sdk-name }}-test-matrix=$BASH_VAR" >> $GITHUB_OUTPUT
+          echo "test-matrix=$BASH_VAR" >> $GITHUB_OUTPUT
 
       - name: Set test matrix for ${{ matrix.sdk-name }}
         id: set-test-matrix
