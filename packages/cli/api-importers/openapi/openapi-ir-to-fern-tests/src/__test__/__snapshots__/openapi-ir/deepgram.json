@@ -4460,23 +4460,6 @@
             "file": "../openapi.yml",
             "type": "openapi"
           }
-        },
-        {
-          "description": "The unique identifier of the project",
-          "name": "project_id",
-          "schema": {
-            "schema": {
-              "example": "123456-7890-1234-5678-901234",
-              "type": "string"
-            },
-            "generatedName": "DeleteProjectRequestProjectId",
-            "groupName": [],
-            "type": "primitive"
-          },
-          "source": {
-            "file": "../openapi.yml",
-            "type": "openapi"
-          }
         }
       ],
       "queryParameters": [],
@@ -5015,16 +4998,6 @@
                 },
                 "type": "primitive"
               }
-            },
-            {
-              "name": "project_id",
-              "value": {
-                "value": {
-                  "value": "123456-7890-1234-5678-901234",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
             }
           ],
           "queryParameters": [],
@@ -5061,23 +5034,6 @@
         "Management API"
       ],
       "pathParameters": [
-        {
-          "description": "The unique identifier of the project",
-          "name": "project_id",
-          "schema": {
-            "schema": {
-              "example": "123456-7890-1234-5678-901234",
-              "type": "string"
-            },
-            "generatedName": "UpdateProjectRequestProjectId",
-            "groupName": [],
-            "type": "primitive"
-          },
-          "source": {
-            "file": "../openapi.yml",
-            "type": "openapi"
-          }
-        },
         {
           "description": "The unique identifier of the project",
           "name": "project_id",
@@ -5642,16 +5598,6 @@
       "examples": [
         {
           "pathParameters": [
-            {
-              "name": "project_id",
-              "value": {
-                "value": {
-                  "value": "123456-7890-1234-5678-901234",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
             {
               "name": "project_id",
               "value": {
@@ -7956,23 +7902,6 @@
             "file": "../openapi.yml",
             "type": "openapi"
           }
-        },
-        {
-          "description": "The unique identifier of the project",
-          "name": "project_id",
-          "schema": {
-            "schema": {
-              "example": "123456-7890-1234-5678-901234",
-              "type": "string"
-            },
-            "generatedName": "ListProjectKeysRequestProjectId",
-            "groupName": [],
-            "type": "primitive"
-          },
-          "source": {
-            "file": "../openapi.yml",
-            "type": "openapi"
-          }
         }
       ],
       "queryParameters": [],
@@ -8377,16 +8306,6 @@
                 },
                 "type": "primitive"
               }
-            },
-            {
-              "name": "project_id",
-              "value": {
-                "value": {
-                  "value": "123456-7890-1234-5678-901234",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
             }
           ],
           "queryParameters": [],
@@ -8430,23 +8349,6 @@
         "Management API"
       ],
       "pathParameters": [
-        {
-          "description": "The unique identifier of the project",
-          "name": "project_id",
-          "schema": {
-            "schema": {
-              "example": "123456-7890-1234-5678-901234",
-              "type": "string"
-            },
-            "generatedName": "CreateProjectKeyRequestProjectId",
-            "groupName": [],
-            "type": "primitive"
-          },
-          "source": {
-            "file": "../openapi.yml",
-            "type": "openapi"
-          }
-        },
         {
           "description": "The unique identifier of the project",
           "name": "project_id",
@@ -8847,16 +8749,6 @@
       "examples": [
         {
           "pathParameters": [
-            {
-              "name": "project_id",
-              "value": {
-                "value": {
-                  "value": "123456-7890-1234-5678-901234",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
             {
               "name": "project_id",
               "value": {

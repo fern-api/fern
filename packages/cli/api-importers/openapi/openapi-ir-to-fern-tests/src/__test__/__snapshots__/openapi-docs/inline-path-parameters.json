@@ -261,8 +261,8 @@ service:
       request:
         name: SearchRequest
         path-parameters:
-          id: string
           organization_id: string
+          id: string
         body:
           properties:
             access:
@@ -275,8 +275,8 @@ service:
         status-code: 200
       examples:
         - path-parameters:
-            id: id
             organization_id: organization_id
+            id: id
           request: {}
           response:
             body:

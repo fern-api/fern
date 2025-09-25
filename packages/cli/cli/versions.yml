@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Ensure path parameters are parsed in the same order as they appear in the endpoint's URL.
+      type: fix
+  irVersion: 60
+  createdAt: "2025-09-25"
+  version: 0.82.1
+
+- changelogEntry:
+    - summary: |
         Update migration versions for ir-v60 for python and java generators
       type: feat
   irVersion: 60
@@ -21,7 +29,7 @@
         The default is `true`.
       type: feat
     - summary: |
-        Add type for nullable schema examples. 
+        Add type for nullable schema examples.
         If a schema is nullable, examples for its inner type will be parsed or generated, or `null` will be used as an example if no inner examples are available.
       type: feat
   irVersion: 60
