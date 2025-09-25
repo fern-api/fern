@@ -5,6 +5,7 @@ import {
     getReferenceToExportFromPackage,
     getReferenceToExportViaNamespaceImport,
     ImportsManager,
+    NamedExport,
     NpmPackage,
     Reference
 } from "@fern-typescript/commons";
@@ -42,9 +43,12 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
     }
 
     public getExportedFilepath(): ExportedFilePath {
-        const namedExports = [this.getExportedNameOfEnvironmentsEnum()];
+        const namedExports: NamedExport[] = [this.getExportedNameOfEnvironmentsEnum()];
         if (this.environmentsConfig?.environments.type === "multipleBaseUrls") {
-            namedExports.push(this.getExportedNameOfEnvironmentUrls());
+            namedExports.push({
+                type: "type",
+                name: this.getExportedNameOfEnvironmentUrls()
+            });
         }
 
         return {

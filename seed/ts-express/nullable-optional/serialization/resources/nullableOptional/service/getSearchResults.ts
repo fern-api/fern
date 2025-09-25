@@ -12,5 +12,5 @@ export const Response: core.serialization.Schema<
 > = core.serialization.list(core.serialization.lazy(() => serializers.SearchResult)).nullable();
 
 export declare namespace Response {
-    export type Raw = serializers.SearchResult.Raw[] | null;
+    export type Raw = serializers.SearchResult.Raw[] | null | undefined;
 }

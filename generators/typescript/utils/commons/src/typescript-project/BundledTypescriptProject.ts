@@ -176,7 +176,9 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
             sourceMap: true,
             outDir: BundledTypescriptProject.TYPES_DIRECTORY,
             rootDir: this.packagePath,
-            baseUrl: this.packagePath
+            baseUrl: this.packagePath,
+            isolatedModules: true,
+            isolatedDeclarations: true
         };
 
         await this.writeFileToVolume(

@@ -20,7 +20,7 @@ func main() {
 	cmd.Run(usage, run)
 }
 
-func run(config *cmd.Config, coordinator *coordinator.Client) ([]*generator.File, error) {
+func run(config *cmd.Config, coordinator *coordinator.Client) ([]*generator.File, generator.Mode, error) {
 	_, includeReadme := config.Writer.Mode.(*writer.GithubConfig)
 	generatorConfig, err := generator.NewConfig(
 		config.DryRun,
@@ -48,11 +48,12 @@ func run(config *cmd.Config, coordinator *coordinator.Client) ([]*generator.File
 		config.Module,
 	)
 	if err != nil {
-		return nil, err
+		return nil, 0, err
 	}
 	g, err := generator.New(generatorConfig, coordinator)
 	if err != nil {
-		return nil, err
+		return nil, 0, err
 	}
-	return g.Generate(generator.ModeFiber)
+	files, err := g.Generate(generator.ModeFiber)
+	return files, generator.ModeFiber, err
 }

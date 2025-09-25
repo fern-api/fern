@@ -3,6 +3,7 @@ package com.seed.exhaustive;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.exhaustive.SeedExhaustiveClient;
+import com.seed.exhaustive.core.ObjectMappers;
 import com.seed.exhaustive.resources.types.object.types.ObjectWithOptionalField;
 import java.math.BigInteger;
 import java.time.OffsetDateTime;
@@ -22,7 +23,7 @@ import org.junit.jupiter.api.Test;
 public class EndpointsContentTypeWireTest {
     private MockWebServer server;
     private SeedExhaustiveClient client;
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private ObjectMapper objectMapper = ObjectMappers.JSON_MAPPER;
     @BeforeEach
     public void setup() throws Exception {
         server = new MockWebServer();

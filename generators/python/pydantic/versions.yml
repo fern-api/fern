@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 1.7.0
+  changelogEntry:
+    - summary: |
+        Bumped IR version to 60.
+      type: chore
+  createdAt: "2025-09-23"
+  irVersion: 60
+
 - version: 1.6.1
   changelogEntry:
     - summary: |

@@ -13,7 +13,8 @@ import {
     WebhookGroupId,
     WebSocketChannelId
 } from "@fern-api/ir-sdk";
-import { FilteredIr, getOriginalName, IdGenerator } from "@fern-api/ir-utils";
+import { getOriginalName } from "@fern-api/core-utils";
+import { FilteredIr, IdGenerator } from "@fern-api/ir-utils";
 import { mapValues } from "lodash-es";
 
 type UnprocessedPackage = Omit<Package, "hasEndpointsInTree">;

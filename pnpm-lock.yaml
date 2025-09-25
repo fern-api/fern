@@ -734,8 +734,8 @@ importers:
         specifier: workspace:*
         version: link:../ast
       '@fern-fern/ir-sdk':
-        specifier: ^59.7.0
-        version: 59.7.0
+        specifier: ^60.3.1
+        version: 60.3.1
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -767,8 +767,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: ^59.6.1
-        version: 59.6.1
+        specifier: ^60.5.0
+        version: 60.5.0
       '@fern-api/java-ast':
         specifier: workspace:*
         version: link:../ast
@@ -836,8 +836,8 @@ importers:
         specifier: ^0.0.1045
         version: 0.0.1045
       '@fern-fern/ir-sdk':
-        specifier: ^59.7.0
-        version: 59.7.0
+        specifier: ^60.3.1
+        version: 60.3.1
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -1233,8 +1233,8 @@ importers:
         specifier: workspace:*
         version: link:../browser-compatible-base
       '@fern-fern/ir-sdk':
-        specifier: 58.2.0
-        version: 58.2.0
+        specifier: 60.3.0
+        version: 60.3.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -1405,8 +1405,8 @@ importers:
         specifier: ^0.0.1045
         version: 0.0.1045
       '@fern-fern/ir-sdk':
-        specifier: 58.2.0
-        version: 58.2.0
+        specifier: 60.3.0
+        version: 60.3.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -1447,8 +1447,8 @@ importers:
         specifier: ^0.0.1045
         version: 0.0.1045
       '@fern-fern/ir-sdk':
-        specifier: 58.2.0
-        version: 58.2.0
+        specifier: 60.3.0
+        version: 60.3.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -3839,6 +3839,9 @@ importers:
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../../packages/cli/logger
+      '@fern-api/logging-execa':
+        specifier: workspace:*
+        version: link:../../../../packages/commons/logging-execa
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
         version: 0.0.1045
@@ -3851,6 +3854,9 @@ importers:
       '@fern-typescript/contexts':
         specifier: workspace:*
         version: link:../contexts
+      tmp-promise:
+        specifier: ^3.0.3
+        version: 3.0.3
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -9345,6 +9351,9 @@ packages:
 
   '@fern-api/dynamic-ir-sdk@59.6.1':
     resolution: {integrity: sha512-GNo6cLnpaJjwY041x2clzRaUqsPKcQkpW9TsLYVptj2UniSFS7dtMcoPpRb/zFMmBO/SjFnOs/2OQ8AHYp58NA==}
+
+  '@fern-api/dynamic-ir-sdk@60.5.0':
+    resolution: {integrity: sha512-Wq7blsKHAP1FKDpnWVuP52Jftv+vfs5557NvO1kIkV85n2jQtNeltyZG5pYAwmQSVoAJGN9bceNyrm49pW0b1A==}
 
   '@fern-api/fdr-sdk@0.139.20-69bd5f3e0':
     resolution: {integrity: sha512-B9LJp8hJcBg1eRZbYL2KQdGZHgjaT1wJ8oILazlILvZgHIS7+vQLVJ48RAgket1fynf6i+msVllDOPLDZgbzEQ==}
@@ -16115,6 +16124,8 @@ snapshots:
   '@fern-api/dynamic-ir-sdk@58.3.0': {}
 
   '@fern-api/dynamic-ir-sdk@59.6.1': {}
+
+  '@fern-api/dynamic-ir-sdk@60.5.0': {}
 
   '@fern-api/fdr-sdk@0.139.20-69bd5f3e0(typescript@5.8.3)':
     dependencies:
