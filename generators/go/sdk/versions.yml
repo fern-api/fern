@@ -4,7 +4,7 @@
     - summary: |
         Add support for PR mode for self-hosted/local sdk generation
       type: feat
-  createdAt: "2025-09-24"
+  createdAt: "2025-09-25"
   irVersion: 60
 
 - version: 1.12.4

@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: Add support for PR mode for self-hosted/local sdk generation
+      type: fix
+  irVersion: 60
+  createdAt: "2025-09-25"
+  version: 0.19.0
+
+- changelogEntry:
     - summary: Fixed semver for changelog validation.
       type: fix
   irVersion: 58
