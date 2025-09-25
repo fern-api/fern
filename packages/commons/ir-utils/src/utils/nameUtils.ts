@@ -1,23 +1,23 @@
-import { Name } from "@fern-api/ir-sdk";
+import { Name, NameAndWireValue, SafeAndUnsafeString } from "@fern-api/ir-sdk";
 import { camelCase, snakeCase, upperFirst } from "lodash-es";
 
 export type ExpandedName = {
     originalName: string;
-    camelCase: {
-        unsafeName: string;
-        safeName: string;
-    };
-    pascalCase: {
-        unsafeName: string;
-        safeName: string;
-    };
-    snakeCase: {
-        unsafeName: string;
-        safeName: string;
-    };
-    screamingSnakeCase: {
-        unsafeName: string;
-        safeName: string;
+    camelCase: SafeAndUnsafeString;
+    pascalCase: SafeAndUnsafeString;
+    snakeCase: SafeAndUnsafeString;
+    screamingSnakeCase: SafeAndUnsafeString;
+};
+
+export type ExpandedNameAndWireValue = {
+    wireValue: string;
+    name: ExpandedName;
+};
+
+export const expandNameAndWireValue = (nameAndWireValue: NameAndWireValue): ExpandedNameAndWireValue => {
+    return {
+        ...nameAndWireValue,
+        name: expandName(nameAndWireValue.name)
     };
 };
 
