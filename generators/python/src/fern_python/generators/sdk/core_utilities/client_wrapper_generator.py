@@ -803,7 +803,7 @@ class ClientWrapperGenerator:
                             safe_name="TOKEN",
                             unsafe_name="TOKEN",
                         ),
-                    )
+                    ),
                 )
         return None
 
