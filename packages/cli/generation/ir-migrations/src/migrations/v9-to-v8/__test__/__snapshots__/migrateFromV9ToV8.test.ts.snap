@@ -125,25 +125,7 @@ exports[`migrateFromV9ToV8 > migrates maps to list 1`] = `
             },
           },
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "file",
-            "unsafeName": "file",
-          },
-          "originalName": "file",
-          "pascalCase": {
-            "safeName": "File",
-            "unsafeName": "File",
-          },
-          "screamingSnakeCase": {
-            "safeName": "FILE",
-            "unsafeName": "FILE",
-          },
-          "snakeCase": {
-            "safeName": "file",
-            "unsafeName": "file",
-          },
-        },
+        "file": "file",
         "packagePath": [],
       },
       "hasEndpointsInTree": false,
@@ -208,25 +190,7 @@ exports[`migrateFromV9ToV8 > migrates maps to list 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "file",
-              "unsafeName": "file",
-            },
-            "originalName": "file",
-            "pascalCase": {
-              "safeName": "File",
-              "unsafeName": "File",
-            },
-            "screamingSnakeCase": {
-              "safeName": "FILE",
-              "unsafeName": "FILE",
-            },
-            "snakeCase": {
-              "safeName": "file",
-              "unsafeName": "file",
-            },
-          },
+          "file": "file",
           "packagePath": [],
         },
         "name": {

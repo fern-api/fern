@@ -145,7 +145,7 @@ exports[`migrateFromV52ToV51 > simple 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "71aa89f3",
+                "id": "624daa7c",
                 "name": null,
                 "queryParameters": [
                   {
@@ -223,25 +223,7 @@ exports[`migrateFromV52ToV51 > simple 1`] = `
                                 },
                               },
                             ],
-                            "file": {
-                              "camelCase": {
-                                "safeName": "service",
-                                "unsafeName": "service",
-                              },
-                              "originalName": "service",
-                              "pascalCase": {
-                                "safeName": "Service",
-                                "unsafeName": "Service",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "SERVICE",
-                                "unsafeName": "SERVICE",
-                              },
-                              "snakeCase": {
-                                "safeName": "service",
-                                "unsafeName": "service",
-                              },
-                            },
+                            "file": "service",
                             "packagePath": [],
                           },
                           "name": {
@@ -338,25 +320,7 @@ exports[`migrateFromV52ToV51 > simple 1`] = `
                                       },
                                     },
                                   ],
-                                  "file": {
-                                    "camelCase": {
-                                      "safeName": "service",
-                                      "unsafeName": "service",
-                                    },
-                                    "originalName": "service",
-                                    "pascalCase": {
-                                      "safeName": "Service",
-                                      "unsafeName": "Service",
-                                    },
-                                    "screamingSnakeCase": {
-                                      "safeName": "SERVICE",
-                                      "unsafeName": "SERVICE",
-                                    },
-                                    "snakeCase": {
-                                      "safeName": "service",
-                                      "unsafeName": "service",
-                                    },
-                                  },
+                                  "file": "service",
                                   "packagePath": [],
                                 },
                                 "name": {
@@ -419,25 +383,7 @@ exports[`migrateFromV52ToV51 > simple 1`] = `
                                             },
                                           },
                                         ],
-                                        "file": {
-                                          "camelCase": {
-                                            "safeName": "service",
-                                            "unsafeName": "service",
-                                          },
-                                          "originalName": "service",
-                                          "pascalCase": {
-                                            "safeName": "Service",
-                                            "unsafeName": "Service",
-                                          },
-                                          "screamingSnakeCase": {
-                                            "safeName": "SERVICE",
-                                            "unsafeName": "SERVICE",
-                                          },
-                                          "snakeCase": {
-                                            "safeName": "service",
-                                            "unsafeName": "service",
-                                          },
-                                        },
+                                        "file": "service",
                                         "packagePath": [],
                                       },
                                       "name": {
@@ -517,25 +463,7 @@ exports[`migrateFromV52ToV51 > simple 1`] = `
                                                         },
                                                       },
                                                     ],
-                                                    "file": {
-                                                      "camelCase": {
-                                                        "safeName": "service",
-                                                        "unsafeName": "service",
-                                                      },
-                                                      "originalName": "service",
-                                                      "pascalCase": {
-                                                        "safeName": "Service",
-                                                        "unsafeName": "Service",
-                                                      },
-                                                      "screamingSnakeCase": {
-                                                        "safeName": "SERVICE",
-                                                        "unsafeName": "SERVICE",
-                                                      },
-                                                      "snakeCase": {
-                                                        "safeName": "service",
-                                                        "unsafeName": "service",
-                                                      },
-                                                    },
+                                                    "file": "service",
                                                     "packagePath": [],
                                                   },
                                                   "name": {
@@ -611,25 +539,7 @@ exports[`migrateFromV52ToV51 > simple 1`] = `
                                                             },
                                                           },
                                                         ],
-                                                        "file": {
-                                                          "camelCase": {
-                                                            "safeName": "service",
-                                                            "unsafeName": "service",
-                                                          },
-                                                          "originalName": "service",
-                                                          "pascalCase": {
-                                                            "safeName": "Service",
-                                                            "unsafeName": "Service",
-                                                          },
-                                                          "screamingSnakeCase": {
-                                                            "safeName": "SERVICE",
-                                                            "unsafeName": "SERVICE",
-                                                          },
-                                                          "snakeCase": {
-                                                            "safeName": "service",
-                                                            "unsafeName": "service",
-                                                          },
-                                                        },
+                                                        "file": "service",
                                                         "packagePath": [],
                                                       },
                                                       "name": {
@@ -702,25 +612,7 @@ exports[`migrateFromV52ToV51 > simple 1`] = `
                                                         },
                                                       },
                                                     ],
-                                                    "file": {
-                                                      "camelCase": {
-                                                        "safeName": "service",
-                                                        "unsafeName": "service",
-                                                      },
-                                                      "originalName": "service",
-                                                      "pascalCase": {
-                                                        "safeName": "Service",
-                                                        "unsafeName": "Service",
-                                                      },
-                                                      "screamingSnakeCase": {
-                                                        "safeName": "SERVICE",
-                                                        "unsafeName": "SERVICE",
-                                                      },
-                                                      "snakeCase": {
-                                                        "safeName": "service",
-                                                        "unsafeName": "service",
-                                                      },
-                                                    },
+                                                    "file": "service",
                                                     "packagePath": [],
                                                   },
                                                   "name": {
@@ -803,25 +695,7 @@ exports[`migrateFromV52ToV51 > simple 1`] = `
                                                         },
                                                       },
                                                     ],
-                                                    "file": {
-                                                      "camelCase": {
-                                                        "safeName": "service",
-                                                        "unsafeName": "service",
-                                                      },
-                                                      "originalName": "service",
-                                                      "pascalCase": {
-                                                        "safeName": "Service",
-                                                        "unsafeName": "Service",
-                                                      },
-                                                      "screamingSnakeCase": {
-                                                        "safeName": "SERVICE",
-                                                        "unsafeName": "SERVICE",
-                                                      },
-                                                      "snakeCase": {
-                                                        "safeName": "service",
-                                                        "unsafeName": "service",
-                                                      },
-                                                    },
+                                                    "file": "service",
                                                     "packagePath": [],
                                                   },
                                                   "name": {
@@ -883,25 +757,7 @@ exports[`migrateFromV52ToV51 > simple 1`] = `
                                                   },
                                                 },
                                               ],
-                                              "file": {
-                                                "camelCase": {
-                                                  "safeName": "service",
-                                                  "unsafeName": "service",
-                                                },
-                                                "originalName": "service",
-                                                "pascalCase": {
-                                                  "safeName": "Service",
-                                                  "unsafeName": "Service",
-                                                },
-                                                "screamingSnakeCase": {
-                                                  "safeName": "SERVICE",
-                                                  "unsafeName": "SERVICE",
-                                                },
-                                                "snakeCase": {
-                                                  "safeName": "service",
-                                                  "unsafeName": "service",
-                                                },
-                                              },
+                                              "file": "service",
                                               "packagePath": [],
                                             },
                                             "name": {
@@ -982,25 +838,7 @@ exports[`migrateFromV52ToV51 > simple 1`] = `
                                                         },
                                                       },
                                                     ],
-                                                    "file": {
-                                                      "camelCase": {
-                                                        "safeName": "service",
-                                                        "unsafeName": "service",
-                                                      },
-                                                      "originalName": "service",
-                                                      "pascalCase": {
-                                                        "safeName": "Service",
-                                                        "unsafeName": "Service",
-                                                      },
-                                                      "screamingSnakeCase": {
-                                                        "safeName": "SERVICE",
-                                                        "unsafeName": "SERVICE",
-                                                      },
-                                                      "snakeCase": {
-                                                        "safeName": "service",
-                                                        "unsafeName": "service",
-                                                      },
-                                                    },
+                                                    "file": "service",
                                                     "packagePath": [],
                                                   },
                                                   "name": {
@@ -1076,25 +914,7 @@ exports[`migrateFromV52ToV51 > simple 1`] = `
                                                             },
                                                           },
                                                         ],
-                                                        "file": {
-                                                          "camelCase": {
-                                                            "safeName": "service",
-                                                            "unsafeName": "service",
-                                                          },
-                                                          "originalName": "service",
-                                                          "pascalCase": {
-                                                            "safeName": "Service",
-                                                            "unsafeName": "Service",
-                                                          },
-                                                          "screamingSnakeCase": {
-                                                            "safeName": "SERVICE",
-                                                            "unsafeName": "SERVICE",
-                                                          },
-                                                          "snakeCase": {
-                                                            "safeName": "service",
-                                                            "unsafeName": "service",
-                                                          },
-                                                        },
+                                                        "file": "service",
                                                         "packagePath": [],
                                                       },
                                                       "name": {
@@ -1167,25 +987,7 @@ exports[`migrateFromV52ToV51 > simple 1`] = `
                                                         },
                                                       },
                                                     ],
-                                                    "file": {
-                                                      "camelCase": {
-                                                        "safeName": "service",
-                                                        "unsafeName": "service",
-                                                      },
-                                                      "originalName": "service",
-                                                      "pascalCase": {
-                                                        "safeName": "Service",
-                                                        "unsafeName": "Service",
-                                                      },
-                                                      "screamingSnakeCase": {
-                                                        "safeName": "SERVICE",
-                                                        "unsafeName": "SERVICE",
-                                                      },
-                                                      "snakeCase": {
-                                                        "safeName": "service",
-                                                        "unsafeName": "service",
-                                                      },
-                                                    },
+                                                    "file": "service",
                                                     "packagePath": [],
                                                   },
                                                   "name": {
@@ -1268,25 +1070,7 @@ exports[`migrateFromV52ToV51 > simple 1`] = `
                                                         },
                                                       },
                                                     ],
-                                                    "file": {
-                                                      "camelCase": {
-                                                        "safeName": "service",
-                                                        "unsafeName": "service",
-                                                      },
-                                                      "originalName": "service",
-                                                      "pascalCase": {
-                                                        "safeName": "Service",
-                                                        "unsafeName": "Service",
-                                                      },
-                                                      "screamingSnakeCase": {
-                                                        "safeName": "SERVICE",
-                                                        "unsafeName": "SERVICE",
-                                                      },
-                                                      "snakeCase": {
-                                                        "safeName": "service",
-                                                        "unsafeName": "service",
-                                                      },
-                                                    },
+                                                    "file": "service",
                                                     "packagePath": [],
                                                   },
                                                   "name": {
@@ -1348,25 +1132,7 @@ exports[`migrateFromV52ToV51 > simple 1`] = `
                                                   },
                                                 },
                                               ],
-                                              "file": {
-                                                "camelCase": {
-                                                  "safeName": "service",
-                                                  "unsafeName": "service",
-                                                },
-                                                "originalName": "service",
-                                                "pascalCase": {
-                                                  "safeName": "Service",
-                                                  "unsafeName": "Service",
-                                                },
-                                                "screamingSnakeCase": {
-                                                  "safeName": "SERVICE",
-                                                  "unsafeName": "SERVICE",
-                                                },
-                                                "snakeCase": {
-                                                  "safeName": "service",
-                                                  "unsafeName": "service",
-                                                },
-                                              },
+                                              "file": "service",
                                               "packagePath": [],
                                             },
                                             "name": {
@@ -1426,25 +1192,7 @@ exports[`migrateFromV52ToV51 > simple 1`] = `
                                 },
                               },
                             ],
-                            "file": {
-                              "camelCase": {
-                                "safeName": "service",
-                                "unsafeName": "service",
-                              },
-                              "originalName": "service",
-                              "pascalCase": {
-                                "safeName": "Service",
-                                "unsafeName": "Service",
-                              },
-                              "screamingSnakeCase": {
-                                "safeName": "SERVICE",
-                                "unsafeName": "SERVICE",
-                              },
-                              "snakeCase": {
-                                "safeName": "service",
-                                "unsafeName": "service",
-                              },
-                            },
+                            "file": "service",
                             "packagePath": [],
                           },
                           "name": {
@@ -1568,25 +1316,7 @@ exports[`migrateFromV52ToV51 > simple 1`] = `
                       },
                     },
                   ],
-                  "file": {
-                    "camelCase": {
-                      "safeName": "service",
-                      "unsafeName": "service",
-                    },
-                    "originalName": "service",
-                    "pascalCase": {
-                      "safeName": "Service",
-                      "unsafeName": "Service",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "SERVICE",
-                      "unsafeName": "SERVICE",
-                    },
-                    "snakeCase": {
-                      "safeName": "service",
-                      "unsafeName": "service",
-                    },
-                  },
+                  "file": "service",
                   "packagePath": [],
                 },
                 "name": {
@@ -1642,25 +1372,7 @@ exports[`migrateFromV52ToV51 > simple 1`] = `
                         },
                       },
                     ],
-                    "file": {
-                      "camelCase": {
-                        "safeName": "service",
-                        "unsafeName": "service",
-                      },
-                      "originalName": "service",
-                      "pascalCase": {
-                        "safeName": "Service",
-                        "unsafeName": "Service",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "SERVICE",
-                        "unsafeName": "SERVICE",
-                      },
-                      "snakeCase": {
-                        "safeName": "service",
-                        "unsafeName": "service",
-                      },
-                    },
+                    "file": "service",
                     "packagePath": [],
                   },
                   "name": {
@@ -1779,25 +1491,7 @@ exports[`migrateFromV52ToV51 > simple 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "service",
-              "unsafeName": "service",
-            },
-            "originalName": "service",
-            "pascalCase": {
-              "safeName": "Service",
-              "unsafeName": "Service",
-            },
-            "screamingSnakeCase": {
-              "safeName": "SERVICE",
-              "unsafeName": "SERVICE",
-            },
-            "snakeCase": {
-              "safeName": "service",
-              "unsafeName": "service",
-            },
-          },
+          "file": "service",
           "packagePath": [],
         },
       },
@@ -1830,25 +1524,7 @@ exports[`migrateFromV52ToV51 > simple 1`] = `
             },
           },
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "service",
-            "unsafeName": "service",
-          },
-          "originalName": "service",
-          "pascalCase": {
-            "safeName": "Service",
-            "unsafeName": "Service",
-          },
-          "screamingSnakeCase": {
-            "safeName": "SERVICE",
-            "unsafeName": "SERVICE",
-          },
-          "snakeCase": {
-            "safeName": "service",
-            "unsafeName": "service",
-          },
-        },
+        "file": "service",
         "packagePath": [],
       },
       "hasEndpointsInTree": true,
@@ -1911,25 +1587,7 @@ exports[`migrateFromV52ToV51 > simple 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "service",
-              "unsafeName": "service",
-            },
-            "originalName": "service",
-            "pascalCase": {
-              "safeName": "Service",
-              "unsafeName": "Service",
-            },
-            "screamingSnakeCase": {
-              "safeName": "SERVICE",
-              "unsafeName": "SERVICE",
-            },
-            "snakeCase": {
-              "safeName": "service",
-              "unsafeName": "service",
-            },
-          },
+          "file": "service",
           "packagePath": [],
         },
         "name": {
@@ -2015,25 +1673,7 @@ exports[`migrateFromV52ToV51 > simple 1`] = `
                         },
                       },
                     ],
-                    "file": {
-                      "camelCase": {
-                        "safeName": "service",
-                        "unsafeName": "service",
-                      },
-                      "originalName": "service",
-                      "pascalCase": {
-                        "safeName": "Service",
-                        "unsafeName": "Service",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "SERVICE",
-                        "unsafeName": "SERVICE",
-                      },
-                      "snakeCase": {
-                        "safeName": "service",
-                        "unsafeName": "service",
-                      },
-                    },
+                    "file": "service",
                     "packagePath": [],
                   },
                   "name": {
@@ -2091,25 +1731,7 @@ exports[`migrateFromV52ToV51 > simple 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "service",
-              "unsafeName": "service",
-            },
-            "originalName": "service",
-            "pascalCase": {
-              "safeName": "Service",
-              "unsafeName": "Service",
-            },
-            "screamingSnakeCase": {
-              "safeName": "SERVICE",
-              "unsafeName": "SERVICE",
-            },
-            "snakeCase": {
-              "safeName": "service",
-              "unsafeName": "service",
-            },
-          },
+          "file": "service",
           "packagePath": [],
         },
         "name": {
@@ -2190,25 +1812,7 @@ exports[`migrateFromV52ToV51 > simple 1`] = `
                     },
                   },
                 ],
-                "file": {
-                  "camelCase": {
-                    "safeName": "service",
-                    "unsafeName": "service",
-                  },
-                  "originalName": "service",
-                  "pascalCase": {
-                    "safeName": "Service",
-                    "unsafeName": "Service",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "SERVICE",
-                    "unsafeName": "SERVICE",
-                  },
-                  "snakeCase": {
-                    "safeName": "service",
-                    "unsafeName": "service",
-                  },
-                },
+                "file": "service",
                 "packagePath": [],
               },
               "name": {
@@ -2334,25 +1938,7 @@ exports[`migrateFromV52ToV51 > simple 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "service",
-              "unsafeName": "service",
-            },
-            "originalName": "service",
-            "pascalCase": {
-              "safeName": "Service",
-              "unsafeName": "Service",
-            },
-            "screamingSnakeCase": {
-              "safeName": "SERVICE",
-              "unsafeName": "SERVICE",
-            },
-            "snakeCase": {
-              "safeName": "service",
-              "unsafeName": "service",
-            },
-          },
+          "file": "service",
           "packagePath": [],
         },
         "name": {

@@ -426,25 +426,7 @@ exports[`migrateFromV30ToV29 > snapshot 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "service",
-              "unsafeName": "service",
-            },
-            "originalName": "service",
-            "pascalCase": {
-              "safeName": "Service",
-              "unsafeName": "Service",
-            },
-            "screamingSnakeCase": {
-              "safeName": "SERVICE",
-              "unsafeName": "SERVICE",
-            },
-            "snakeCase": {
-              "safeName": "service",
-              "unsafeName": "service",
-            },
-          },
+          "file": "service",
           "packagePath": [],
         },
       },
@@ -477,25 +459,7 @@ exports[`migrateFromV30ToV29 > snapshot 1`] = `
             },
           },
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "service",
-            "unsafeName": "service",
-          },
-          "originalName": "service",
-          "pascalCase": {
-            "safeName": "Service",
-            "unsafeName": "Service",
-          },
-          "screamingSnakeCase": {
-            "safeName": "SERVICE",
-            "unsafeName": "SERVICE",
-          },
-          "snakeCase": {
-            "safeName": "service",
-            "unsafeName": "service",
-          },
-        },
+        "file": "service",
         "packagePath": [],
       },
       "hasEndpointsInTree": true,
@@ -549,25 +513,7 @@ exports[`migrateFromV30ToV29 > snapshot 1`] = `
             },
           },
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "types",
-            "unsafeName": "types",
-          },
-          "originalName": "types",
-          "pascalCase": {
-            "safeName": "Types",
-            "unsafeName": "Types",
-          },
-          "screamingSnakeCase": {
-            "safeName": "TYPES",
-            "unsafeName": "TYPES",
-          },
-          "snakeCase": {
-            "safeName": "types",
-            "unsafeName": "types",
-          },
-        },
+        "file": "types",
         "packagePath": [],
       },
       "hasEndpointsInTree": false,
@@ -614,25 +560,7 @@ exports[`migrateFromV30ToV29 > snapshot 1`] = `
             "exceptionType": "Unavailable",
             "type": "info",
           },
-          "name": {
-            "camelCase": {
-              "safeName": "one",
-              "unsafeName": "one",
-            },
-            "originalName": "One",
-            "pascalCase": {
-              "safeName": "One",
-              "unsafeName": "One",
-            },
-            "screamingSnakeCase": {
-              "safeName": "ONE",
-              "unsafeName": "ONE",
-            },
-            "snakeCase": {
-              "safeName": "one",
-              "unsafeName": "one",
-            },
-          },
+          "name": "One",
           "shape": {
             "properties": {
               "shape": {
@@ -661,25 +589,7 @@ exports[`migrateFromV30ToV29 > snapshot 1`] = `
                             },
                           },
                         ],
-                        "file": {
-                          "camelCase": {
-                            "safeName": "types",
-                            "unsafeName": "types",
-                          },
-                          "originalName": "types",
-                          "pascalCase": {
-                            "safeName": "Types",
-                            "unsafeName": "Types",
-                          },
-                          "screamingSnakeCase": {
-                            "safeName": "TYPES",
-                            "unsafeName": "TYPES",
-                          },
-                          "snakeCase": {
-                            "safeName": "types",
-                            "unsafeName": "types",
-                          },
-                        },
+                        "file": "types",
                         "packagePath": [],
                       },
                       "name": {
@@ -739,25 +649,7 @@ exports[`migrateFromV30ToV29 > snapshot 1`] = `
                             },
                           },
                         ],
-                        "file": {
-                          "camelCase": {
-                            "safeName": "types",
-                            "unsafeName": "types",
-                          },
-                          "originalName": "types",
-                          "pascalCase": {
-                            "safeName": "Types",
-                            "unsafeName": "Types",
-                          },
-                          "screamingSnakeCase": {
-                            "safeName": "TYPES",
-                            "unsafeName": "TYPES",
-                          },
-                          "snakeCase": {
-                            "safeName": "types",
-                            "unsafeName": "types",
-                          },
-                        },
+                        "file": "types",
                         "packagePath": [],
                       },
                       "name": {
@@ -817,25 +709,7 @@ exports[`migrateFromV30ToV29 > snapshot 1`] = `
                             },
                           },
                         ],
-                        "file": {
-                          "camelCase": {
-                            "safeName": "types",
-                            "unsafeName": "types",
-                          },
-                          "originalName": "types",
-                          "pascalCase": {
-                            "safeName": "Types",
-                            "unsafeName": "Types",
-                          },
-                          "screamingSnakeCase": {
-                            "safeName": "TYPES",
-                            "unsafeName": "TYPES",
-                          },
-                          "snakeCase": {
-                            "safeName": "types",
-                            "unsafeName": "types",
-                          },
-                        },
+                        "file": "types",
                         "packagePath": [],
                       },
                       "name": {
@@ -898,25 +772,7 @@ exports[`migrateFromV30ToV29 > snapshot 1`] = `
                       },
                     },
                   ],
-                  "file": {
-                    "camelCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                    "originalName": "types",
-                    "pascalCase": {
-                      "safeName": "Types",
-                      "unsafeName": "Types",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "TYPES",
-                      "unsafeName": "TYPES",
-                    },
-                    "snakeCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                  },
+                  "file": "types",
                   "packagePath": [],
                 },
                 "name": {
@@ -969,25 +825,7 @@ exports[`migrateFromV30ToV29 > snapshot 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "types",
-              "unsafeName": "types",
-            },
-            "originalName": "types",
-            "pascalCase": {
-              "safeName": "Types",
-              "unsafeName": "Types",
-            },
-            "screamingSnakeCase": {
-              "safeName": "TYPES",
-              "unsafeName": "TYPES",
-            },
-            "snakeCase": {
-              "safeName": "types",
-              "unsafeName": "types",
-            },
-          },
+          "file": "types",
           "packagePath": [],
         },
         "name": {
@@ -1090,25 +928,7 @@ exports[`migrateFromV30ToV29 > snapshot 1`] = `
                     },
                   },
                 ],
-                "file": {
-                  "camelCase": {
-                    "safeName": "types",
-                    "unsafeName": "types",
-                  },
-                  "originalName": "types",
-                  "pascalCase": {
-                    "safeName": "Types",
-                    "unsafeName": "Types",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "TYPES",
-                    "unsafeName": "TYPES",
-                  },
-                  "snakeCase": {
-                    "safeName": "types",
-                    "unsafeName": "types",
-                  },
-                },
+                "file": "types",
                 "packagePath": [],
               },
               "name": {
@@ -1205,25 +1025,7 @@ exports[`migrateFromV30ToV29 > snapshot 1`] = `
                       },
                     },
                   ],
-                  "file": {
-                    "camelCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                    "originalName": "types",
-                    "pascalCase": {
-                      "safeName": "Types",
-                      "unsafeName": "Types",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "TYPES",
-                      "unsafeName": "TYPES",
-                    },
-                    "snakeCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                  },
+                  "file": "types",
                   "packagePath": [],
                 },
                 "name": {
@@ -1263,25 +1065,7 @@ exports[`migrateFromV30ToV29 > snapshot 1`] = `
             "exceptionStacktrace": "<logs>",
             "exceptionType": "Unavailable",
           },
-          "name": {
-            "camelCase": {
-              "safeName": "one",
-              "unsafeName": "one",
-            },
-            "originalName": "One",
-            "pascalCase": {
-              "safeName": "One",
-              "unsafeName": "One",
-            },
-            "screamingSnakeCase": {
-              "safeName": "ONE",
-              "unsafeName": "ONE",
-            },
-            "snakeCase": {
-              "safeName": "one",
-              "unsafeName": "one",
-            },
-          },
+          "name": "One",
           "shape": {
             "properties": [
               {
@@ -1308,25 +1092,7 @@ exports[`migrateFromV30ToV29 > snapshot 1`] = `
                         },
                       },
                     ],
-                    "file": {
-                      "camelCase": {
-                        "safeName": "types",
-                        "unsafeName": "types",
-                      },
-                      "originalName": "types",
-                      "pascalCase": {
-                        "safeName": "Types",
-                        "unsafeName": "Types",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "TYPES",
-                        "unsafeName": "TYPES",
-                      },
-                      "snakeCase": {
-                        "safeName": "types",
-                        "unsafeName": "types",
-                      },
-                    },
+                    "file": "types",
                     "packagePath": [],
                   },
                   "name": {
@@ -1386,25 +1152,7 @@ exports[`migrateFromV30ToV29 > snapshot 1`] = `
                         },
                       },
                     ],
-                    "file": {
-                      "camelCase": {
-                        "safeName": "types",
-                        "unsafeName": "types",
-                      },
-                      "originalName": "types",
-                      "pascalCase": {
-                        "safeName": "Types",
-                        "unsafeName": "Types",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "TYPES",
-                        "unsafeName": "TYPES",
-                      },
-                      "snakeCase": {
-                        "safeName": "types",
-                        "unsafeName": "types",
-                      },
-                    },
+                    "file": "types",
                     "packagePath": [],
                   },
                   "name": {
@@ -1464,25 +1212,7 @@ exports[`migrateFromV30ToV29 > snapshot 1`] = `
                         },
                       },
                     ],
-                    "file": {
-                      "camelCase": {
-                        "safeName": "types",
-                        "unsafeName": "types",
-                      },
-                      "originalName": "types",
-                      "pascalCase": {
-                        "safeName": "Types",
-                        "unsafeName": "Types",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "TYPES",
-                        "unsafeName": "TYPES",
-                      },
-                      "snakeCase": {
-                        "safeName": "types",
-                        "unsafeName": "types",
-                      },
-                    },
+                    "file": "types",
                     "packagePath": [],
                   },
                   "name": {
@@ -1546,25 +1276,7 @@ exports[`migrateFromV30ToV29 > snapshot 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "types",
-              "unsafeName": "types",
-            },
-            "originalName": "types",
-            "pascalCase": {
-              "safeName": "Types",
-              "unsafeName": "Types",
-            },
-            "screamingSnakeCase": {
-              "safeName": "TYPES",
-              "unsafeName": "TYPES",
-            },
-            "snakeCase": {
-              "safeName": "types",
-              "unsafeName": "types",
-            },
-          },
+          "file": "types",
           "packagePath": [],
         },
         "name": {
@@ -1693,25 +1405,7 @@ exports[`migrateFromV30ToV29 > snapshot 1`] = `
         {
           "docs": null,
           "jsonExample": "INTERNAL",
-          "name": {
-            "camelCase": {
-              "safeName": "internal",
-              "unsafeName": "internal",
-            },
-            "originalName": "Internal",
-            "pascalCase": {
-              "safeName": "Internal",
-              "unsafeName": "Internal",
-            },
-            "screamingSnakeCase": {
-              "safeName": "INTERNAL",
-              "unsafeName": "INTERNAL",
-            },
-            "snakeCase": {
-              "safeName": "internal",
-              "unsafeName": "internal",
-            },
-          },
+          "name": "Internal",
           "shape": {
             "type": "enum",
             "wireValue": "INTERNAL",
@@ -1720,25 +1414,7 @@ exports[`migrateFromV30ToV29 > snapshot 1`] = `
         {
           "docs": null,
           "jsonExample": "USER",
-          "name": {
-            "camelCase": {
-              "safeName": "user",
-              "unsafeName": "user",
-            },
-            "originalName": "User",
-            "pascalCase": {
-              "safeName": "User",
-              "unsafeName": "User",
-            },
-            "screamingSnakeCase": {
-              "safeName": "USER",
-              "unsafeName": "USER",
-            },
-            "snakeCase": {
-              "safeName": "user",
-              "unsafeName": "user",
-            },
-          },
+          "name": "User",
           "shape": {
             "type": "enum",
             "wireValue": "USER",
@@ -1768,25 +1444,7 @@ exports[`migrateFromV30ToV29 > snapshot 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "types",
-              "unsafeName": "types",
-            },
-            "originalName": "types",
-            "pascalCase": {
-              "safeName": "Types",
-              "unsafeName": "Types",
-            },
-            "screamingSnakeCase": {
-              "safeName": "TYPES",
-              "unsafeName": "TYPES",
-            },
-            "snakeCase": {
-              "safeName": "types",
-              "unsafeName": "types",
-            },
-          },
+          "file": "types",
           "packagePath": [],
         },
         "name": {

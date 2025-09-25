@@ -649,25 +649,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                                   },
                                 },
                               ],
-                              "file": {
-                                "camelCase": {
-                                  "safeName": "auth",
-                                  "unsafeName": "auth",
-                                },
-                                "originalName": "auth",
-                                "pascalCase": {
-                                  "safeName": "Auth",
-                                  "unsafeName": "Auth",
-                                },
-                                "screamingSnakeCase": {
-                                  "safeName": "AUTH",
-                                  "unsafeName": "AUTH",
-                                },
-                                "snakeCase": {
-                                  "safeName": "auth",
-                                  "unsafeName": "auth",
-                                },
-                              },
+                              "file": "auth",
                               "packagePath": [],
                             },
                             "name": {
@@ -750,25 +732,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                                   },
                                 },
                               ],
-                              "file": {
-                                "camelCase": {
-                                  "safeName": "auth",
-                                  "unsafeName": "auth",
-                                },
-                                "originalName": "auth",
-                                "pascalCase": {
-                                  "safeName": "Auth",
-                                  "unsafeName": "Auth",
-                                },
-                                "screamingSnakeCase": {
-                                  "safeName": "AUTH",
-                                  "unsafeName": "AUTH",
-                                },
-                                "snakeCase": {
-                                  "safeName": "auth",
-                                  "unsafeName": "auth",
-                                },
-                              },
+                              "file": "auth",
                               "packagePath": [],
                             },
                             "name": {
@@ -849,25 +813,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                                   },
                                 },
                               ],
-                              "file": {
-                                "camelCase": {
-                                  "safeName": "auth",
-                                  "unsafeName": "auth",
-                                },
-                                "originalName": "auth",
-                                "pascalCase": {
-                                  "safeName": "Auth",
-                                  "unsafeName": "Auth",
-                                },
-                                "screamingSnakeCase": {
-                                  "safeName": "AUTH",
-                                  "unsafeName": "AUTH",
-                                },
-                                "snakeCase": {
-                                  "safeName": "auth",
-                                  "unsafeName": "auth",
-                                },
-                              },
+                              "file": "auth",
                               "packagePath": [],
                             },
                             "name": {
@@ -940,25 +886,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                             },
                           },
                         ],
-                        "file": {
-                          "camelCase": {
-                            "safeName": "auth",
-                            "unsafeName": "auth",
-                          },
-                          "originalName": "auth",
-                          "pascalCase": {
-                            "safeName": "Auth",
-                            "unsafeName": "Auth",
-                          },
-                          "screamingSnakeCase": {
-                            "safeName": "AUTH",
-                            "unsafeName": "AUTH",
-                          },
-                          "snakeCase": {
-                            "safeName": "auth",
-                            "unsafeName": "auth",
-                          },
-                        },
+                        "file": "auth",
                         "packagePath": [],
                       },
                       "name": {
@@ -1244,25 +1172,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                       },
                     },
                   ],
-                  "file": {
-                    "camelCase": {
-                      "safeName": "auth",
-                      "unsafeName": "auth",
-                    },
-                    "originalName": "auth",
-                    "pascalCase": {
-                      "safeName": "Auth",
-                      "unsafeName": "Auth",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "AUTH",
-                      "unsafeName": "AUTH",
-                    },
-                    "snakeCase": {
-                      "safeName": "auth",
-                      "unsafeName": "auth",
-                    },
-                  },
+                  "file": "auth",
                   "packagePath": [],
                 },
                 "name": {
@@ -1658,25 +1568,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                                   },
                                 },
                               ],
-                              "file": {
-                                "camelCase": {
-                                  "safeName": "auth",
-                                  "unsafeName": "auth",
-                                },
-                                "originalName": "auth",
-                                "pascalCase": {
-                                  "safeName": "Auth",
-                                  "unsafeName": "Auth",
-                                },
-                                "screamingSnakeCase": {
-                                  "safeName": "AUTH",
-                                  "unsafeName": "AUTH",
-                                },
-                                "snakeCase": {
-                                  "safeName": "auth",
-                                  "unsafeName": "auth",
-                                },
-                              },
+                              "file": "auth",
                               "packagePath": [],
                             },
                             "name": {
@@ -1759,25 +1651,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                                   },
                                 },
                               ],
-                              "file": {
-                                "camelCase": {
-                                  "safeName": "auth",
-                                  "unsafeName": "auth",
-                                },
-                                "originalName": "auth",
-                                "pascalCase": {
-                                  "safeName": "Auth",
-                                  "unsafeName": "Auth",
-                                },
-                                "screamingSnakeCase": {
-                                  "safeName": "AUTH",
-                                  "unsafeName": "AUTH",
-                                },
-                                "snakeCase": {
-                                  "safeName": "auth",
-                                  "unsafeName": "auth",
-                                },
-                              },
+                              "file": "auth",
                               "packagePath": [],
                             },
                             "name": {
@@ -1858,25 +1732,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                                   },
                                 },
                               ],
-                              "file": {
-                                "camelCase": {
-                                  "safeName": "auth",
-                                  "unsafeName": "auth",
-                                },
-                                "originalName": "auth",
-                                "pascalCase": {
-                                  "safeName": "Auth",
-                                  "unsafeName": "Auth",
-                                },
-                                "screamingSnakeCase": {
-                                  "safeName": "AUTH",
-                                  "unsafeName": "AUTH",
-                                },
-                                "snakeCase": {
-                                  "safeName": "auth",
-                                  "unsafeName": "auth",
-                                },
-                              },
+                              "file": "auth",
                               "packagePath": [],
                             },
                             "name": {
@@ -1949,25 +1805,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                             },
                           },
                         ],
-                        "file": {
-                          "camelCase": {
-                            "safeName": "auth",
-                            "unsafeName": "auth",
-                          },
-                          "originalName": "auth",
-                          "pascalCase": {
-                            "safeName": "Auth",
-                            "unsafeName": "Auth",
-                          },
-                          "screamingSnakeCase": {
-                            "safeName": "AUTH",
-                            "unsafeName": "AUTH",
-                          },
-                          "snakeCase": {
-                            "safeName": "auth",
-                            "unsafeName": "auth",
-                          },
-                        },
+                        "file": "auth",
                         "packagePath": [],
                       },
                       "name": {
@@ -2282,25 +2120,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                       },
                     },
                   ],
-                  "file": {
-                    "camelCase": {
-                      "safeName": "auth",
-                      "unsafeName": "auth",
-                    },
-                    "originalName": "auth",
-                    "pascalCase": {
-                      "safeName": "Auth",
-                      "unsafeName": "Auth",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "AUTH",
-                      "unsafeName": "AUTH",
-                    },
-                    "snakeCase": {
-                      "safeName": "auth",
-                      "unsafeName": "auth",
-                    },
-                  },
+                  "file": "auth",
                   "packagePath": [],
                 },
                 "name": {
@@ -2415,25 +2235,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "auth",
-              "unsafeName": "auth",
-            },
-            "originalName": "auth",
-            "pascalCase": {
-              "safeName": "Auth",
-              "unsafeName": "Auth",
-            },
-            "screamingSnakeCase": {
-              "safeName": "AUTH",
-              "unsafeName": "AUTH",
-            },
-            "snakeCase": {
-              "safeName": "auth",
-              "unsafeName": "auth",
-            },
-          },
+          "file": "auth",
           "packagePath": [],
         },
       },
@@ -2671,25 +2473,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                                     },
                                   },
                                 ],
-                                "file": {
-                                  "camelCase": {
-                                    "safeName": "service",
-                                    "unsafeName": "service",
-                                  },
-                                  "originalName": "service",
-                                  "pascalCase": {
-                                    "safeName": "Service",
-                                    "unsafeName": "Service",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "SERVICE",
-                                    "unsafeName": "SERVICE",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "service",
-                                    "unsafeName": "service",
-                                  },
-                                },
+                                "file": "service",
                                 "packagePath": [],
                               },
                               "name": {
@@ -2753,25 +2537,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                               },
                             },
                           ],
-                          "file": {
-                            "camelCase": {
-                              "safeName": "service",
-                              "unsafeName": "service",
-                            },
-                            "originalName": "service",
-                            "pascalCase": {
-                              "safeName": "Service",
-                              "unsafeName": "Service",
-                            },
-                            "screamingSnakeCase": {
-                              "safeName": "SERVICE",
-                              "unsafeName": "SERVICE",
-                            },
-                            "snakeCase": {
-                              "safeName": "service",
-                              "unsafeName": "service",
-                            },
-                          },
+                          "file": "service",
                           "packagePath": [],
                         },
                         "name": {
@@ -2937,25 +2703,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                                     },
                                   },
                                 ],
-                                "file": {
-                                  "camelCase": {
-                                    "safeName": "service",
-                                    "unsafeName": "service",
-                                  },
-                                  "originalName": "service",
-                                  "pascalCase": {
-                                    "safeName": "Service",
-                                    "unsafeName": "Service",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "SERVICE",
-                                    "unsafeName": "SERVICE",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "service",
-                                    "unsafeName": "service",
-                                  },
-                                },
+                                "file": "service",
                                 "packagePath": [],
                               },
                               "name": {
@@ -3019,25 +2767,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                               },
                             },
                           ],
-                          "file": {
-                            "camelCase": {
-                              "safeName": "service",
-                              "unsafeName": "service",
-                            },
-                            "originalName": "service",
-                            "pascalCase": {
-                              "safeName": "Service",
-                              "unsafeName": "Service",
-                            },
-                            "screamingSnakeCase": {
-                              "safeName": "SERVICE",
-                              "unsafeName": "SERVICE",
-                            },
-                            "snakeCase": {
-                              "safeName": "service",
-                              "unsafeName": "service",
-                            },
-                          },
+                          "file": "service",
                           "packagePath": [],
                         },
                         "name": {
@@ -3297,25 +3027,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                                     },
                                   },
                                 ],
-                                "file": {
-                                  "camelCase": {
-                                    "safeName": "service",
-                                    "unsafeName": "service",
-                                  },
-                                  "originalName": "service",
-                                  "pascalCase": {
-                                    "safeName": "Service",
-                                    "unsafeName": "Service",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "SERVICE",
-                                    "unsafeName": "SERVICE",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "service",
-                                    "unsafeName": "service",
-                                  },
-                                },
+                                "file": "service",
                                 "packagePath": [],
                               },
                               "name": {
@@ -3379,25 +3091,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                               },
                             },
                           ],
-                          "file": {
-                            "camelCase": {
-                              "safeName": "service",
-                              "unsafeName": "service",
-                            },
-                            "originalName": "service",
-                            "pascalCase": {
-                              "safeName": "Service",
-                              "unsafeName": "Service",
-                            },
-                            "screamingSnakeCase": {
-                              "safeName": "SERVICE",
-                              "unsafeName": "SERVICE",
-                            },
-                            "snakeCase": {
-                              "safeName": "service",
-                              "unsafeName": "service",
-                            },
-                          },
+                          "file": "service",
                           "packagePath": [],
                         },
                         "name": {
@@ -3563,25 +3257,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                                     },
                                   },
                                 ],
-                                "file": {
-                                  "camelCase": {
-                                    "safeName": "service",
-                                    "unsafeName": "service",
-                                  },
-                                  "originalName": "service",
-                                  "pascalCase": {
-                                    "safeName": "Service",
-                                    "unsafeName": "Service",
-                                  },
-                                  "screamingSnakeCase": {
-                                    "safeName": "SERVICE",
-                                    "unsafeName": "SERVICE",
-                                  },
-                                  "snakeCase": {
-                                    "safeName": "service",
-                                    "unsafeName": "service",
-                                  },
-                                },
+                                "file": "service",
                                 "packagePath": [],
                               },
                               "name": {
@@ -3645,25 +3321,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                               },
                             },
                           ],
-                          "file": {
-                            "camelCase": {
-                              "safeName": "service",
-                              "unsafeName": "service",
-                            },
-                            "originalName": "service",
-                            "pascalCase": {
-                              "safeName": "Service",
-                              "unsafeName": "Service",
-                            },
-                            "screamingSnakeCase": {
-                              "safeName": "SERVICE",
-                              "unsafeName": "SERVICE",
-                            },
-                            "snakeCase": {
-                              "safeName": "service",
-                              "unsafeName": "service",
-                            },
-                          },
+                          "file": "service",
                           "packagePath": [],
                         },
                         "name": {
@@ -3923,25 +3581,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                       },
                     },
                   ],
-                  "file": {
-                    "camelCase": {
-                      "safeName": "service",
-                      "unsafeName": "service",
-                    },
-                    "originalName": "service",
-                    "pascalCase": {
-                      "safeName": "Service",
-                      "unsafeName": "Service",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "SERVICE",
-                      "unsafeName": "SERVICE",
-                    },
-                    "snakeCase": {
-                      "safeName": "service",
-                      "unsafeName": "service",
-                    },
-                  },
+                  "file": "service",
                   "packagePath": [],
                 },
                 "name": {
@@ -4094,25 +3734,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                       },
                     },
                   ],
-                  "file": {
-                    "camelCase": {
-                      "safeName": "service",
-                      "unsafeName": "service",
-                    },
-                    "originalName": "service",
-                    "pascalCase": {
-                      "safeName": "Service",
-                      "unsafeName": "Service",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "SERVICE",
-                      "unsafeName": "SERVICE",
-                    },
-                    "snakeCase": {
-                      "safeName": "service",
-                      "unsafeName": "service",
-                    },
-                  },
+                  "file": "service",
                   "packagePath": [],
                 },
                 "name": {
@@ -4384,25 +4006,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                                   },
                                 },
                               ],
-                              "file": {
-                                "camelCase": {
-                                  "safeName": "service",
-                                  "unsafeName": "service",
-                                },
-                                "originalName": "service",
-                                "pascalCase": {
-                                  "safeName": "Service",
-                                  "unsafeName": "Service",
-                                },
-                                "screamingSnakeCase": {
-                                  "safeName": "SERVICE",
-                                  "unsafeName": "SERVICE",
-                                },
-                                "snakeCase": {
-                                  "safeName": "service",
-                                  "unsafeName": "service",
-                                },
-                              },
+                              "file": "service",
                               "packagePath": [],
                             },
                             "name": {
@@ -4491,25 +4095,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                                                     },
                                                   },
                                                 ],
-                                                "file": {
-                                                  "camelCase": {
-                                                    "safeName": "service",
-                                                    "unsafeName": "service",
-                                                  },
-                                                  "originalName": "service",
-                                                  "pascalCase": {
-                                                    "safeName": "Service",
-                                                    "unsafeName": "Service",
-                                                  },
-                                                  "screamingSnakeCase": {
-                                                    "safeName": "SERVICE",
-                                                    "unsafeName": "SERVICE",
-                                                  },
-                                                  "snakeCase": {
-                                                    "safeName": "service",
-                                                    "unsafeName": "service",
-                                                  },
-                                                },
+                                                "file": "service",
                                                 "packagePath": [],
                                               },
                                               "name": {
@@ -4573,25 +4159,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                                               },
                                             },
                                           ],
-                                          "file": {
-                                            "camelCase": {
-                                              "safeName": "service",
-                                              "unsafeName": "service",
-                                            },
-                                            "originalName": "service",
-                                            "pascalCase": {
-                                              "safeName": "Service",
-                                              "unsafeName": "Service",
-                                            },
-                                            "screamingSnakeCase": {
-                                              "safeName": "SERVICE",
-                                              "unsafeName": "SERVICE",
-                                            },
-                                            "snakeCase": {
-                                              "safeName": "service",
-                                              "unsafeName": "service",
-                                            },
-                                          },
+                                          "file": "service",
                                           "packagePath": [],
                                         },
                                         "name": {
@@ -4670,25 +4238,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                                                     },
                                                   },
                                                 ],
-                                                "file": {
-                                                  "camelCase": {
-                                                    "safeName": "service",
-                                                    "unsafeName": "service",
-                                                  },
-                                                  "originalName": "service",
-                                                  "pascalCase": {
-                                                    "safeName": "Service",
-                                                    "unsafeName": "Service",
-                                                  },
-                                                  "screamingSnakeCase": {
-                                                    "safeName": "SERVICE",
-                                                    "unsafeName": "SERVICE",
-                                                  },
-                                                  "snakeCase": {
-                                                    "safeName": "service",
-                                                    "unsafeName": "service",
-                                                  },
-                                                },
+                                                "file": "service",
                                                 "packagePath": [],
                                               },
                                               "name": {
@@ -4752,25 +4302,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                                               },
                                             },
                                           ],
-                                          "file": {
-                                            "camelCase": {
-                                              "safeName": "service",
-                                              "unsafeName": "service",
-                                            },
-                                            "originalName": "service",
-                                            "pascalCase": {
-                                              "safeName": "Service",
-                                              "unsafeName": "Service",
-                                            },
-                                            "screamingSnakeCase": {
-                                              "safeName": "SERVICE",
-                                              "unsafeName": "SERVICE",
-                                            },
-                                            "snakeCase": {
-                                              "safeName": "service",
-                                              "unsafeName": "service",
-                                            },
-                                          },
+                                          "file": "service",
                                           "packagePath": [],
                                         },
                                         "name": {
@@ -4830,25 +4362,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                             },
                           },
                         ],
-                        "file": {
-                          "camelCase": {
-                            "safeName": "service",
-                            "unsafeName": "service",
-                          },
-                          "originalName": "service",
-                          "pascalCase": {
-                            "safeName": "Service",
-                            "unsafeName": "Service",
-                          },
-                          "screamingSnakeCase": {
-                            "safeName": "SERVICE",
-                            "unsafeName": "SERVICE",
-                          },
-                          "snakeCase": {
-                            "safeName": "service",
-                            "unsafeName": "service",
-                          },
-                        },
+                        "file": "service",
                         "packagePath": [],
                       },
                       "name": {
@@ -4995,25 +4509,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                             },
                           },
                         ],
-                        "file": {
-                          "camelCase": {
-                            "safeName": "service",
-                            "unsafeName": "service",
-                          },
-                          "originalName": "service",
-                          "pascalCase": {
-                            "safeName": "Service",
-                            "unsafeName": "Service",
-                          },
-                          "screamingSnakeCase": {
-                            "safeName": "SERVICE",
-                            "unsafeName": "SERVICE",
-                          },
-                          "snakeCase": {
-                            "safeName": "service",
-                            "unsafeName": "service",
-                          },
-                        },
+                        "file": "service",
                         "packagePath": [],
                       },
                       "name": {
@@ -5111,25 +4607,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                       },
                     },
                   ],
-                  "file": {
-                    "camelCase": {
-                      "safeName": "service",
-                      "unsafeName": "service",
-                    },
-                    "originalName": "service",
-                    "pascalCase": {
-                      "safeName": "Service",
-                      "unsafeName": "Service",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "SERVICE",
-                      "unsafeName": "SERVICE",
-                    },
-                    "snakeCase": {
-                      "safeName": "service",
-                      "unsafeName": "service",
-                    },
-                  },
+                  "file": "service",
                   "packagePath": [],
                 },
                 "name": {
@@ -5244,25 +4722,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "service",
-              "unsafeName": "service",
-            },
-            "originalName": "service",
-            "pascalCase": {
-              "safeName": "Service",
-              "unsafeName": "Service",
-            },
-            "screamingSnakeCase": {
-              "safeName": "SERVICE",
-              "unsafeName": "SERVICE",
-            },
-            "snakeCase": {
-              "safeName": "service",
-              "unsafeName": "service",
-            },
-          },
+          "file": "service",
           "packagePath": [],
         },
       },
@@ -5295,25 +4755,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
             },
           },
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "auth",
-            "unsafeName": "auth",
-          },
-          "originalName": "auth",
-          "pascalCase": {
-            "safeName": "Auth",
-            "unsafeName": "Auth",
-          },
-          "screamingSnakeCase": {
-            "safeName": "AUTH",
-            "unsafeName": "AUTH",
-          },
-          "snakeCase": {
-            "safeName": "auth",
-            "unsafeName": "auth",
-          },
-        },
+        "file": "auth",
         "packagePath": [],
       },
       "hasEndpointsInTree": true,
@@ -5370,25 +4812,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
             },
           },
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "service",
-            "unsafeName": "service",
-          },
-          "originalName": "service",
-          "pascalCase": {
-            "safeName": "Service",
-            "unsafeName": "Service",
-          },
-          "screamingSnakeCase": {
-            "safeName": "SERVICE",
-            "unsafeName": "SERVICE",
-          },
-          "snakeCase": {
-            "safeName": "service",
-            "unsafeName": "service",
-          },
-        },
+        "file": "service",
         "packagePath": [],
       },
       "hasEndpointsInTree": true,
@@ -5450,25 +4874,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "auth",
-              "unsafeName": "auth",
-            },
-            "originalName": "auth",
-            "pascalCase": {
-              "safeName": "Auth",
-              "unsafeName": "Auth",
-            },
-            "screamingSnakeCase": {
-              "safeName": "AUTH",
-              "unsafeName": "AUTH",
-            },
-            "snakeCase": {
-              "safeName": "auth",
-              "unsafeName": "auth",
-            },
-          },
+          "file": "auth",
           "packagePath": [],
         },
         "name": {
@@ -5624,25 +5030,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "service",
-              "unsafeName": "service",
-            },
-            "originalName": "service",
-            "pascalCase": {
-              "safeName": "Service",
-              "unsafeName": "Service",
-            },
-            "screamingSnakeCase": {
-              "safeName": "SERVICE",
-              "unsafeName": "SERVICE",
-            },
-            "snakeCase": {
-              "safeName": "service",
-              "unsafeName": "service",
-            },
-          },
+          "file": "service",
           "packagePath": [],
         },
         "name": {
@@ -5727,25 +5115,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
                         },
                       },
                     ],
-                    "file": {
-                      "camelCase": {
-                        "safeName": "service",
-                        "unsafeName": "service",
-                      },
-                      "originalName": "service",
-                      "pascalCase": {
-                        "safeName": "Service",
-                        "unsafeName": "Service",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "SERVICE",
-                        "unsafeName": "SERVICE",
-                      },
-                      "snakeCase": {
-                        "safeName": "service",
-                        "unsafeName": "service",
-                      },
-                    },
+                    "file": "service",
                     "packagePath": [],
                   },
                   "name": {
@@ -5802,25 +5172,7 @@ exports[`migrateFromV42ToV41 > snapshot 1`] = `
               },
             },
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "service",
-              "unsafeName": "service",
-            },
-            "originalName": "service",
-            "pascalCase": {
-              "safeName": "Service",
-              "unsafeName": "Service",
-            },
-            "screamingSnakeCase": {
-              "safeName": "SERVICE",
-              "unsafeName": "SERVICE",
-            },
-            "snakeCase": {
-              "safeName": "service",
-              "unsafeName": "service",
-            },
-          },
+          "file": "service",
           "packagePath": [],
         },
         "name": {
