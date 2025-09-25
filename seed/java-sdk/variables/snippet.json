@@ -9,8 +9,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.variables.SeedVariablesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedVariablesClient client = SeedVariablesClient\n            .builder()\n            .build();\n\n        client.service().post();\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.variables.SeedVariablesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedVariablesClient client = SeedVariablesClient\n            .builder()\n            .build();\n\n        client.service().post();\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.variables.SeedVariablesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedVariablesClient client = SeedVariablesClient\n            .builder()\n            .rootVariable(\"YOUR_ROOT_VARIABLE\")\n            .build();\n\n        client.service().post();\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.variables.SeedVariablesClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedVariablesClient client = SeedVariablesClient\n            .builder()\n            .rootVariable(\"YOUR_ROOT_VARIABLE\")\n            .build();\n\n        client.service().post();\n    }\n}\n"
             }
         }
     ],

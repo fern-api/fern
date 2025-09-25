@@ -46,6 +46,7 @@ public class Example {
     public static void main(String[] args) {
         SeedVariablesClient client = SeedVariablesClient
             .builder()
+            .rootVariable("YOUR_ROOT_VARIABLE")
             .build();
 
         client.service().post();

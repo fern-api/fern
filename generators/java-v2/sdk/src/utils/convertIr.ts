@@ -4,7 +4,6 @@ import { convertEndpoints, Endpoint } from "./convertEndpoints";
 
 export type DynamicIntermediateRepresentation = Omit<dynamic.DynamicIntermediateRepresentation, "endpoints"> & {
     endpoints: Record<EndpointId, Endpoint>;
-    variables?: any; // Add variables field for compatibility
 };
 
 /**
@@ -14,8 +13,6 @@ export type DynamicIntermediateRepresentation = Omit<dynamic.DynamicIntermediate
 export function convertIr(ir: dynamic.DynamicIntermediateRepresentation): DynamicIntermediateRepresentation {
     return {
         ...ir,
-        endpoints: convertEndpoints(ir.endpoints),
-        // Pass through variables field even if TypeScript doesn't know about it
-        variables: (ir as any).variables
+        endpoints: convertEndpoints(ir.endpoints)
     };
 }
