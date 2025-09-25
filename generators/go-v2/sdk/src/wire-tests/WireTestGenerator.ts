@@ -2,7 +2,7 @@ import { File } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
-import { dynamic, HttpEndpoint, QueryParameter } from "@fern-fern/ir-sdk/api";
+import { dynamic, HttpEndpoint, PrimitiveTypeV1, QueryParameter, TypeReference } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
 import { convertIr } from "../utils/convertIr";
@@ -89,15 +89,16 @@ export class WireTestGenerator {
         const serviceTestFileContent = go
             .codeblock((writer) => {
                 for (const [_, importPath] of imports.entries()) {
+                    // Manually add any imports that were used in the snippet (client/request types)
+                    // but that may not be used in the rest of the generated test file and therefore would be missed
                     writer.addImport(importPath);
                 }
-                // this.writeImports(writer, imports);
                 writer.writeNewLineIfLastLineNot();
-                writer.writeLine();
+                writer.newLine();
                 for (const endpointTestCaseCodeBlock of endpointTestCaseCodeBlocks) {
                     writer.writeNode(endpointTestCaseCodeBlock);
                     writer.writeNewLineIfLastLineNot();
-                    writer.writeLine();
+                    writer.newLine();
                 }
             })
             .toString({
@@ -123,9 +124,9 @@ export class WireTestGenerator {
     }
 
     private generateEndpointTestMethod(endpoint: HttpEndpoint, snippet: string): [go.CodeBlock, Map<string, string>] {
-        const clientCall = this.parseClientCall(snippet);
+        const clientCall = this.parseClientCallFromSnippet(snippet);
         const imports = this.parseImportsFromSnippet(snippet);
-        const testFunctionName = this.parseTestFunctionName(snippet);
+        const testFunctionName = this.parseTestFunctionNameFromSnippet(snippet);
 
         const testMethod = go.codeblock((writer) => {
             writer.writeNode(
@@ -141,11 +142,11 @@ export class WireTestGenerator {
                     body: go.codeblock((writer) => {
                         for (const node of this.buildWiremockTestSetup({ endpoint })) {
                             writer.writeNode(node);
-                            writer.writeLine();
+                            writer.writeNewLineIfLastLineNot();
                         }
-                        writer.writeLine();
+                        writer.newLine();
                         writer.writeNode(this.constructWiremockTestClient({ endpoint, snippet }));
-                        writer.writeLine();
+                        writer.newLine();
                         writer.writeNode(this.callClientMethodAndAssert({ clientCall, endpoint, snippet }));
                     })
                 })
@@ -156,7 +157,7 @@ export class WireTestGenerator {
         return [testMethod, imports];
     }
 
-    private parseClientCall(snippet: string): string {
+    private parseClientCallFromSnippet(snippet: string): string {
         const lines = snippet.split("\n");
 
         // Find the line that starts with "client." (after trimming whitespace)
@@ -262,7 +263,7 @@ export class WireTestGenerator {
         return constructorLines.join("\n");
     }
 
-    private parseTestFunctionName(snippet: string): string {
+    private parseTestFunctionNameFromSnippet(snippet: string): string {
         const lines = snippet.split("\n");
 
         // Find the line that starts with "func Test"
@@ -478,7 +479,14 @@ export class WireTestGenerator {
                                                   name: "Matching",
                                                   importPath: "github.com/wiremock/go-wiremock"
                                               }),
-                                              arguments_: [go.TypeInstantiation.string(".+")],
+                                              arguments_: [
+                                                  go.TypeInstantiation.string(
+                                                      this.resolveQueryParamValue(
+                                                          endpoint,
+                                                          queryParameter.name.wireValue
+                                                      )
+                                                  )
+                                              ],
                                               multiline: false
                                           })
                                       ]
@@ -503,6 +511,27 @@ export class WireTestGenerator {
                                       })
                                   ]
                               }))
+                            : []),
+                        ...(this.resolveRequestBody(endpoint) !== null
+                            ? [
+                                  {
+                                      method: "WithBodyPattern",
+                                      arguments_: [
+                                          go.invokeFunc({
+                                              func: go.typeReference({
+                                                  name: "MatchesJsonSchema",
+                                                  importPath: "github.com/wiremock/go-wiremock"
+                                              }),
+                                              arguments_: [
+                                                  go.TypeInstantiation.string(this.buildMinimalJsonSchema(endpoint)),
+                                                  go.TypeInstantiation.string("V202012")
+                                              ],
+                                              multiline: false
+                                          })
+                                      ],
+                                      multiline: false
+                                  }
+                              ]
                             : []),
                         {
                             method: "WillReturnResponse",
@@ -532,7 +561,7 @@ export class WireTestGenerator {
                                         : [
                                               {
                                                   method: "WithJSONBody",
-                                                  arguments_: [go.codeblock("map[string]interface{}{}")]
+                                                  arguments_: [this.resolveResponseBody(endpoint)]
                                               },
                                               {
                                                   method: "WithStatus",
@@ -604,13 +633,31 @@ export class WireTestGenerator {
         snippet: string;
     }): go.CodeBlock {
         return go.codeblock((writer) => {
-            // IMPORTANT: currently not capturing the response/error values since its not trivial to determine
-            // the number of return values for the method using the dynamic ir
-
-            // Call the method and capture response and error
-            // writer.write("_, invocationErr := ");
+            // Call the method and capture response and error (error onlyif response body is nonexistent)
+            if (endpoint.response?.body != null) {
+                writer.write("_, invocationErr := ");
+            } else {
+                writer.write("invocationErr := ");
+            }
             writer.write(clientCall);
-            writer.writeLine();
+            writer.writeNewLineIfLastLineNot();
+            writer.newLine();
+
+            // Assert no error on the invocation
+            writer.writeNode(
+                go.invokeFunc({
+                    func: go.typeReference({
+                        name: "NoError",
+                        importPath: "github.com/stretchr/testify/require"
+                    }),
+                    arguments_: [
+                        go.codeblock("t"),
+                        go.codeblock("invocationErr"),
+                        go.TypeInstantiation.string("Client method call should succeed")
+                    ],
+                    multiline: false
+                })
+            );
             writer.writeLine();
 
             // Verify WireMock request was matched
@@ -664,27 +711,6 @@ export class WireTestGenerator {
                 })
             );
             writer.writeLine();
-
-            // IMPORTANT: currently not asserting that the call succeeded since its not trivial to determine
-            // the number of return values for the method using the dynamic ir
-
-            // Verify the call succeeded (may not assert this at all and only assert the WireMock request was matched)
-            // Since we don't necessarily have valid response bodies in our WireMock stubs (so type casting will fail)
-            // writer.writeNode(
-            //     go.invokeFunc({
-            //         func: go.typeReference({
-            //             name: "NoError",
-            //             importPath: "github.com/stretchr/testify/require"
-            //         }),
-            //         arguments_: [
-            //             go.codeblock("t"),
-            //             go.codeblock("invocationErr"),
-            //             go.TypeInstantiation.string(`${this.getMethod({ endpoint })} call should succeed with WireMock`)
-            //         ],
-            //         multiline: false
-            //     })
-            // );
-            // writer.writeLine();
         });
     }
 
@@ -766,132 +792,212 @@ export class WireTestGenerator {
         return pathParameterValue as string;
     }
 
-    private writeImports(writer: go.Writer, imports: Map<string, string>): void {
-        const standardLibraryImports: string[] = [];
-        const externalImports: Array<[string, string]> = [];
+    private resolveQueryParamValue(endpoint: HttpEndpoint, queryParameterName: string): string {
+        const autoGeneratedExample = endpoint.autogeneratedExamples[0];
+        if (!autoGeneratedExample) {
+            return ".+";
+        }
 
-        for (const [alias, importPath] of imports.entries()) {
-            if (this.isStandardLibraryImport(importPath)) {
-                standardLibraryImports.push(importPath);
-            } else {
-                externalImports.push([alias, importPath]);
+        const queryParameterValue = autoGeneratedExample.example.queryParameters?.find(
+            (queryParameter) => queryParameter.name.wireValue === queryParameterName
+        )?.value.jsonExample;
+        if (!queryParameterValue) {
+            return ".+";
+        }
+
+        return queryParameterValue as string;
+    }
+
+    private resolveResponseBody(endpoint: HttpEndpoint): go.AstNode {
+        const autoGeneratedExample = endpoint.autogeneratedExamples[0];
+        if (!autoGeneratedExample) {
+            return go.codeblock("map[string]interface{}{}");
+        }
+
+        const responseValue = autoGeneratedExample.example.response;
+        if (responseValue.type !== "ok") {
+            return go.codeblock("map[string]interface{}{}");
+        }
+
+        const responseBodyType = responseValue.value.type;
+        if (responseBodyType !== "body") {
+            return go.codeblock("map[string]interface{}{}");
+        }
+
+        const responseExampleJson = responseValue.value.value?.jsonExample;
+        if (!responseExampleJson) {
+            return go.codeblock("map[string]interface{}{}");
+        }
+
+        // Convert JSON example to Go map[string]interface{}
+        const goMapString = this.convertJsonToGoMap(responseExampleJson);
+        return go.codeblock(goMapString);
+    }
+
+    private convertJsonToGoMap(obj: unknown): string {
+        if (obj === null || obj === undefined) {
+            return "nil";
+        }
+
+        if (typeof obj === "string") {
+            // Escape special characters in strings
+            const escaped = obj
+                .replace(/\\/g, "\\\\") // Escape backslashes
+                .replace(/"/g, '\\"') // Escape quotes
+                .replace(/\n/g, "\\n") // Escape newlines
+                .replace(/\r/g, "\\r") // Escape carriage returns
+                .replace(/\t/g, "\\t"); // Escape tabs
+            return `"${escaped}"`;
+        }
+
+        if (typeof obj === "number") {
+            return obj.toString();
+        }
+
+        if (typeof obj === "boolean") {
+            return obj.toString();
+        }
+
+        if (Array.isArray(obj)) {
+            const items = obj.map((item) => this.convertJsonToGoMap(item));
+            const trailingComma = items.length > 0 ? "," : "";
+            return `[]interface{}{${items.join(", ")}${trailingComma}}`;
+        }
+
+        if (typeof obj === "object") {
+            const entries = Object.entries(obj).map(([key, value]) => {
+                return `"${key}": ${this.convertJsonToGoMap(value)}`;
+            });
+            const trailingComma = entries.length > 0 ? "," : "";
+            return `map[string]interface{}{${entries.join(", ")}${trailingComma}}`;
+        }
+
+        return "nil";
+    }
+
+    private resolveRequestBody(endpoint: HttpEndpoint): string | null {
+        const autoGeneratedExample = endpoint.autogeneratedExamples[0];
+        if (!autoGeneratedExample) {
+            return null;
+        }
+
+        const requestBodyType = autoGeneratedExample.example.request?.type;
+        if (requestBodyType !== "inlinedRequestBody") {
+            return null;
+        }
+
+        const requestBodyValue = autoGeneratedExample.example.request?.jsonExample;
+        if (!requestBodyValue) {
+            return null;
+        }
+
+        // Return the raw JSON string escape inner quotes
+        return JSON.stringify(requestBodyValue).replace(/"/g, '\\"');
+    }
+
+    private buildMinimalJsonSchema(endpoint: HttpEndpoint): string {
+        const requestBodyType = endpoint.requestBody?.type;
+        if (requestBodyType !== "inlinedRequestBody") {
+            return "{}";
+        }
+
+        const requiredProperties =
+            endpoint.requestBody?.properties.filter((property) => !this.context.isOptional(property.valueType)) || [];
+
+        const requiredKeys = requiredProperties.map((property) => property.name.wireValue);
+        const properties = requiredProperties.map((property) => {
+            const jsonType = this.getJsonSchemaType(property.valueType);
+            return `"${property.name.wireValue}": ${jsonType}`;
+        });
+
+        const schema = `
+            {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "type": "object",
+                "required": [${requiredKeys.map((key) => `"${key}"`).join(", ")}],
+                "properties": {
+                    ${properties.join(", ")}
+                },
+                "additionalProperties": true
+            }`;
+
+        return schema.trim().replace(/\s+/g, " ");
+    }
+
+    private getJsonSchemaType(valueType: TypeReference): string {
+        // Check if it's a primitive type
+        const primitive = this.context.maybePrimitive(valueType);
+        if (primitive != null) {
+            switch (primitive) {
+                case PrimitiveTypeV1.Integer:
+                case PrimitiveTypeV1.Uint:
+                    return '{"type": "integer"}';
+                case PrimitiveTypeV1.Long:
+                case PrimitiveTypeV1.Uint64:
+                    return '{"type": "integer", "format": "int64"}';
+                case PrimitiveTypeV1.Float:
+                case PrimitiveTypeV1.Double:
+                    return '{"type": "number"}';
+                case PrimitiveTypeV1.Boolean:
+                    return '{"type": "boolean"}';
+                case PrimitiveTypeV1.String:
+                case PrimitiveTypeV1.Date:
+                case PrimitiveTypeV1.DateTime:
+                case PrimitiveTypeV1.Uuid:
+                case PrimitiveTypeV1.Base64:
+                case PrimitiveTypeV1.BigInteger:
+                    return '{"type": "string"}';
+                default:
+                    return '{"type": "string"}';
             }
         }
 
-        standardLibraryImports.sort();
-        externalImports.sort(([, pathA], [, pathB]) => pathA.localeCompare(pathB));
-
-        writer.writeLine("import (");
-        for (const importPath of standardLibraryImports) {
-            writer.writeLine(`\t"${importPath}"`);
-        }
-        if (standardLibraryImports.length > 0 && externalImports.length > 0) {
-            writer.writeLine();
-        }
-        for (const [alias, importPath] of externalImports) {
-            writer.writeLine(`\t${alias} "${importPath}"`);
+        // Check if it's an array (list or set)
+        const iterableType = this.context.maybeUnwrapIterable(valueType);
+        if (iterableType != null) {
+            const itemType = this.getJsonSchemaType(iterableType);
+            return `{"type": "array", "items": ${itemType}}`;
         }
 
-        writer.writeLine(")");
-    }
+        // Check if it's a map
+        if (valueType.type === "container" && valueType.container.type === "map") {
+            const valueTypeSchema = this.getJsonSchemaType(valueType.container.valueType);
+            return `{"type": "object", "additionalProperties": ${valueTypeSchema}}`;
+        }
 
-    private isStandardLibraryImport(importPath: string): boolean {
-        const standardLibraryPackages = [
-            "context",
-            "fmt",
-            "io",
-            "net",
-            "net/http",
-            "os",
-            "strings",
-            "testing",
-            "time",
-            "encoding/json",
-            "encoding/base64",
-            "crypto/md5",
-            "crypto/sha1",
-            "crypto/sha256",
-            "crypto/sha512",
-            "hash",
-            "math",
-            "math/rand",
-            "sort",
-            "strconv",
-            "sync",
-            "unicode",
-            "unicode/utf8",
-            "unsafe",
-            "reflect",
-            "runtime",
-            "path",
-            "path/filepath",
-            "regexp",
-            "bytes",
-            "bufio",
-            "compress/gzip",
-            "compress/flate",
-            "archive/tar",
-            "archive/zip",
-            "database/sql",
-            "database/sql/driver",
-            "html",
-            "html/template",
-            "image",
-            "image/color",
-            "image/draw",
-            "image/gif",
-            "image/jpeg",
-            "image/png",
-            "log",
-            "log/syslog",
-            "mime",
-            "mime/multipart",
-            "net/mail",
-            "net/smtp",
-            "net/textproto",
-            "net/url",
-            "net/rpc",
-            "net/rpc/jsonrpc",
-            "plugin",
-            "text",
-            "text/scanner",
-            "text/tabwriter",
-            "text/template",
-            "text/template/parse",
-            "vendor"
-        ];
+        // Check if it's a literal
+        if (valueType.type === "container" && valueType.container.type === "literal") {
+            const literal = valueType.container.literal;
+            switch (literal.type) {
+                case "string":
+                    return `{"type": "string", "const": "${literal.string}"}`;
+                case "boolean":
+                    return `{"type": "boolean", "const": ${literal.boolean}}`;
+                default:
+                    return '{"type": "string"}';
+            }
+        }
 
-        const path = importPath.replace(/"/g, "");
-        return !path.includes(".") || standardLibraryPackages.includes(path);
-    }
+        // For named types, check if it's an enum (which serializes to string)
+        if (valueType.type === "named") {
+            const enumType = this.context.maybeEnum(valueType);
+            if (enumType != null) {
+                return '{"type": "string"}';
+            }
 
-    private getTestMethodName(endpoint: HttpEndpoint): string {
-        return endpoint.name.pascalCase.unsafeName;
-    }
+            // Check if it's an alias of a primitive type
+            const declaration = this.context.getTypeDeclarationOrThrow(valueType.typeId);
+            if (declaration.shape.type === "alias") {
+                // Recursively get the JSON schema type for the aliased type
+                return this.getJsonSchemaType(declaration.shape.aliasOf);
+            }
 
-    private getWiremockTestConstructorArgs(): go.AstNode[] {
-        return [go.codeblock("ctx"), go.codeblock(WIREMOCK_BASE_URL)];
-    }
+            // For other named types (objects, unions, etc.), default to object
+            return '{"type": "object"}';
+        }
 
-    private getRootClientFuncInvocation(args: go.AstNode[]): go.AstNode {
-        return go.invokeFunc({
-            func: go.typeReference({
-                name: "NewClient",
-                importPath: this.context.getRootPackageName()
-            }),
-            arguments_: args,
-            multiline: true
-        });
-    }
-
-    private getMethod({ endpoint }: { endpoint: HttpEndpoint }): string {
-        return endpoint.name.camelCase.unsafeName;
-    }
-
-    private getMethodArgs({ endpoint, snippet }: { endpoint: HttpEndpoint; snippet: string }): go.AstNode[] {
-        // This is a simplified implementation - you may need to parse the snippet
-        // to extract the actual method arguments
-        return [];
+        // Default fallback
+        return '{"type": "string"}';
     }
 
     private buildFullPath(endpoint: HttpEndpoint): string {
