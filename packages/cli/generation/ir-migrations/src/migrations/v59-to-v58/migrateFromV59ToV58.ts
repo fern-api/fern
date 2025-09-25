@@ -2,11 +2,7 @@ import { GeneratorName } from "@fern-api/configuration-loader";
 
 import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";
-import {
-    GeneratorWasNeverUpdatedToConsumeNewIR,
-    GeneratorWasNotCreatedYet,
-    IrMigration
-} from "../../types/IrMigration";
+import { GeneratorWasNeverUpdatedToConsumeNewIR, IrMigration } from "../../types/IrMigration";
 
 export const V59_TO_V58_MIGRATION: IrMigration<
     IrVersions.V59.ir.IntermediateRepresentation,

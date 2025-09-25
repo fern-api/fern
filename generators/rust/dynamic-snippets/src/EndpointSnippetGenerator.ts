@@ -1,4 +1,4 @@
-import { AbstractFormatter, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
+import { Scope, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { formatRustSnippet, formatRustSnippetAsync } from "@fern-api/rust-base";
@@ -10,11 +10,9 @@ const CLIENT_VAR_NAME = "client";
 
 export class EndpointSnippetGenerator {
     private context: DynamicSnippetsGeneratorContext;
-    private formatter: AbstractFormatter | undefined;
 
-    constructor({ context, formatter }: { context: DynamicSnippetsGeneratorContext; formatter?: AbstractFormatter }) {
+    constructor({ context }: { context: DynamicSnippetsGeneratorContext }) {
         this.context = context;
-        this.formatter = formatter;
     }
 
     public async generateSnippet({

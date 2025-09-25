@@ -2035,6 +2035,10 @@ importers:
         version: 3.25.76
 
   generators/rust/sdk:
+    dependencies:
+      '@fern-api/rust-codegen':
+        specifier: workspace:*
+        version: link:../codegen
     devDependencies:
       '@fern-api/base-generator':
         specifier: workspace:*
@@ -2057,9 +2061,6 @@ importers:
       '@fern-api/rust-base':
         specifier: workspace:*
         version: link:../base
-      '@fern-api/rust-codegen':
-        specifier: workspace:*
-        version: link:../codegen
       '@fern-api/rust-dynamic-snippets':
         specifier: workspace:*
         version: link:../dynamic-snippets
@@ -6254,6 +6255,9 @@ importers:
       '@fern-api/ruby-dynamic-snippets':
         specifier: workspace:*
         version: link:../../../../../generators/ruby-v2/dynamic-snippets
+      '@fern-api/rust-dynamic-snippets':
+        specifier: workspace:*
+        version: link:../../../../../generators/rust/dynamic-snippets
       '@fern-api/sdk':
         specifier: 0.12.3
         version: 0.12.3
