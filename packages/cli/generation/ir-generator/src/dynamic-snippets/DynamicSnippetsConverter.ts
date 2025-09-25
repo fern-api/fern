@@ -145,7 +145,7 @@ export class DynamicSnippetsConverter {
         }
         return this.ir.variables.map((variable) => ({
             id: variable.id,
-            name: variable.name,
+            name: expandName(variable.name),
             typeReference: this.convertTypeReference(variable.type)
         }));
     }
