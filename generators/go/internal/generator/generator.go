@@ -138,15 +138,15 @@ func (g *Generator) Generate(mode Mode) ([]*File, error) {
 	if err != nil {
 		return nil, err
 	}
-    if g.config.PackagePath == "" {
-        return files, nil
-    }
+	if g.config.PackagePath == "" {
+		return files, nil
+	}
 
 	// Somewhat hacky fix; prefix packagePath to all .go file paths after the fact
 	for i := range files {
-	    if strings.HasSuffix(files[i].Path, ".go") {
-	        files[i].Path = path.Join(g.config.PackagePath, files[i].Path)
-	    }
+		if strings.HasSuffix(files[i].Path, ".go") {
+			files[i].Path = path.Join(g.config.PackagePath, files[i].Path)
+		}
 	}
 
 	return files, nil
@@ -451,7 +451,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			generatedEnvironment,
 			exportedClientName,
 			g.config.ClientConstructorName,
-
 		)
 		if len(ir.IdempotencyHeaders) > 0 {
 			fileInfo = fileInfoForIdempotentRequestOptionsDefinition()
@@ -580,7 +579,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		if generatedPagination {
 			files = append(files, newPageFile(g.coordinator))
 		}
-		clientTestFile, err := newClientTestFile(g.config.FullImportPath, rootPackageName, g.coordinator,  g.config.ClientName, g.config.ClientConstructorName)
+		clientTestFile, err := newClientTestFile(g.config.FullImportPath, rootPackageName, g.coordinator, g.config.ClientName, g.config.ClientConstructorName)
 		if err != nil {
 			return nil, err
 		}
@@ -659,42 +658,29 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			}
 		}
 		// Then generate the client for all of the subpackages.
-			for _, subpackageToGenerate := range subpackagesToGenerate {
-				irSubpackage := subpackageToGenerate.Subpackage
-				var subpackages []*fernir.Subpackage
-				for _, subpackageID := range irSubpackage.Subpackages {
-					subpackage := ir.Subpackages[subpackageID]
-					if !subpackage.HasEndpointsInTree {
-						// We only want to include subpackages that have endpoints.
-						continue
-					}
-					subpackages = append(subpackages, subpackage)
-				}
-				if irSubpackage.Service == nil && len(subpackages) == 0 {
-					// This subpackage doesn't have any transitive services,
-					// so we don't need to generate a client for it.
+		for _, subpackageToGenerate := range subpackagesToGenerate {
+			irSubpackage := subpackageToGenerate.Subpackage
+			var subpackages []*fernir.Subpackage
+			for _, subpackageID := range irSubpackage.Subpackages {
+				subpackage := ir.Subpackages[subpackageID]
+				if !subpackage.HasEndpointsInTree {
+					// We only want to include subpackages that have endpoints.
 					continue
 				}
-				if irSubpackage.Service == nil {
-					// This subpackage doesn't have a service, but we still need
-					// to generate an intermediary client for it to access the
-					// nested endpoints.
-					_, err := g.generateServiceWithoutEndpoints(
-						ir,
-						irSubpackage,
-						subpackages,
-						rootClientInstantiation,
-						subpackageToGenerate.OriginalFernFilepath,
-					)
-					if err != nil {
-						return nil, err
-					}
-					continue
-				}
-				// This service has endpoints, so we proceed with the normal flow.
-				_, generatedClient, err := g.generateService(
+				subpackages = append(subpackages, subpackage)
+			}
+			if irSubpackage.Service == nil && len(subpackages) == 0 {
+				// This subpackage doesn't have any transitive services,
+				// so we don't need to generate a client for it.
+				continue
+			}
+			if irSubpackage.Service == nil {
+				// This subpackage doesn't have a service, but we still need
+				// to generate an intermediary client for it to access the
+				// nested endpoints.
+				_, err := g.generateServiceWithoutEndpoints(
 					ir,
-					ir.Services[*irSubpackage.Service],
+					irSubpackage,
 					subpackages,
 					rootClientInstantiation,
 					subpackageToGenerate.OriginalFernFilepath,
@@ -702,10 +688,23 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				if err != nil {
 					return nil, err
 				}
-
-				// Merge this client's endpoints with the root generated client.
-				generatedRootClient.Endpoints = append(generatedRootClient.Endpoints, generatedClient.Endpoints...)
+				continue
 			}
+			// This service has endpoints, so we proceed with the normal flow.
+			_, generatedClient, err := g.generateService(
+				ir,
+				ir.Services[*irSubpackage.Service],
+				subpackages,
+				rootClientInstantiation,
+				subpackageToGenerate.OriginalFernFilepath,
+			)
+			if err != nil {
+				return nil, err
+			}
+
+			// Merge this client's endpoints with the root generated client.
+			generatedRootClient.Endpoints = append(generatedRootClient.Endpoints, generatedClient.Endpoints...)
+		}
 	}
 	// Write the snippets, if any.
 	if g.config.SnippetFilepath != "" {
@@ -1206,7 +1205,6 @@ func newApiErrorFile(coordinator *coordinator.Client) *File {
 	)
 }
 
-
 // func newErrorDecoderFile(coordinator *coordinator.Client, baseImportPath string) *File {
 // 	content := replaceCoreImportPath(errorDecoderFile, baseImportPath)
 // 	return NewFile(
@@ -1273,7 +1271,6 @@ func newOptionalTestFile(coordinator *coordinator.Client) *File {
 	)
 }
 
-
 func newPageFile(coordinator *coordinator.Client) *File {
 	return NewFile(
 		coordinator,
@@ -1289,8 +1286,6 @@ func newStreamFile(coordinator *coordinator.Client) *File {
 		[]byte(streamFile),
 	)
 }
-
-
 
 func newQueryFile(coordinator *coordinator.Client) *File {
 	return NewFile(
@@ -1932,12 +1927,12 @@ func isReservedFilename(filename string) bool {
 }
 
 var reservedFilenames = map[string]struct{}{
-	"environments.go":         struct{}{},
-	"errors.go":               struct{}{},
-	"file_param.go":           struct{}{},
-	"optional.go":             struct{}{},
-	"pointer.go":              struct{}{},
-	inlinedRequestsFilename:   struct{}{},
+	"environments.go":       struct{}{},
+	"errors.go":             struct{}{},
+	"file_param.go":         struct{}{},
+	"optional.go":           struct{}{},
+	"pointer.go":            struct{}{},
+	inlinedRequestsFilename: struct{}{},
 }
 
 // pointerFunctionNames enumerates all of the pointer function names.
