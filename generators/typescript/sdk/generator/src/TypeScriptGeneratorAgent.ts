@@ -1,4 +1,4 @@
-import { AbstractGeneratorAgent, RawGithubConfig } from "@fern-api/base-generator";
+import { AbstractGeneratorAgent } from "@fern-api/base-generator";
 import { Logger } from "@fern-api/logger";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -60,15 +60,13 @@ export class TypeScriptGeneratorAgent extends AbstractGeneratorAgent<SdkContext>
         };
     }
 
-    public getGitHubConfig(
-        args: AbstractGeneratorAgent.GitHubConfigArgs<SdkContext>
-    ): RawGithubConfig {
+    public getGitHubConfig(args: AbstractGeneratorAgent.GitHubConfigArgs<SdkContext>): FernGeneratorCli.GitHubConfig {
+        // TODO: get from env
         return {
-            sourceDirectory: "fern/output",
-            type: this.publishConfig?.type,
-            uri: this.publishConfig?.type === "github" ? this.publishConfig.uri : undefined,
-            token: this.publishConfig?.type === "github" ? this.publishConfig.token : undefined,
-            mode: this.publishConfig?.type === "github" ? this.publishConfig.mode : undefined
+            sourceDirectory: "NONE",
+            uri: "NONE",
+            token: "token",
+            branch: "NONE"
         };
     }
 }
