@@ -12,49 +12,13 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "getTest_Response_200",
-          "camelCase": {
-            "unsafeName": "getTestResponse200",
-            "safeName": "getTestResponse200"
-          },
-          "snakeCase": {
-            "unsafeName": "get_test_response_200",
-            "safeName": "get_test_response_200"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "GET_TEST_RESPONSE_200",
-            "safeName": "GET_TEST_RESPONSE_200"
-          },
-          "pascalCase": {
-            "unsafeName": "GetTestResponse200",
-            "safeName": "GetTestResponse200"
-          }
-        }
+        "name": "getTest_Response_200"
       },
       "shape": {
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "boolField1",
-                "camelCase": {
-                  "unsafeName": "boolField1",
-                  "safeName": "boolField1"
-                },
-                "snakeCase": {
-                  "unsafeName": "bool_field_1",
-                  "safeName": "bool_field_1"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BOOL_FIELD_1",
-                  "safeName": "BOOL_FIELD_1"
-                },
-                "pascalCase": {
-                  "unsafeName": "BoolField1",
-                  "safeName": "BoolField1"
-                }
-              },
+              "name": "boolField1",
               "wireValue": "boolField1"
             },
             "valueType": {
@@ -82,25 +46,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "boolField2",
-                "camelCase": {
-                  "unsafeName": "boolField2",
-                  "safeName": "boolField2"
-                },
-                "snakeCase": {
-                  "unsafeName": "bool_field_2",
-                  "safeName": "bool_field_2"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BOOL_FIELD_2",
-                  "safeName": "BOOL_FIELD_2"
-                },
-                "pascalCase": {
-                  "unsafeName": "BoolField2",
-                  "safeName": "BoolField2"
-                }
-              },
+              "name": "boolField2",
               "wireValue": "boolField2"
             },
             "valueType": {
@@ -128,25 +74,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "stringField",
-                "camelCase": {
-                  "unsafeName": "stringField",
-                  "safeName": "stringField"
-                },
-                "snakeCase": {
-                  "unsafeName": "string_field",
-                  "safeName": "string_field"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "STRING_FIELD",
-                  "safeName": "STRING_FIELD"
-                },
-                "pascalCase": {
-                  "unsafeName": "StringField",
-                  "safeName": "StringField"
-                }
-              },
+              "name": "stringField",
               "wireValue": "stringField"
             },
             "valueType": {
@@ -175,25 +103,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "numberField",
-                "camelCase": {
-                  "unsafeName": "numberField",
-                  "safeName": "numberField"
-                },
-                "snakeCase": {
-                  "unsafeName": "number_field",
-                  "safeName": "number_field"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "NUMBER_FIELD",
-                  "safeName": "NUMBER_FIELD"
-                },
-                "pascalCase": {
-                  "unsafeName": "NumberField",
-                  "safeName": "NumberField"
-                }
-              },
+              "name": "numberField",
               "wireValue": "numberField"
             },
             "valueType": {
@@ -263,25 +173,7 @@
           "queryParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "boolParam1",
-                  "camelCase": {
-                    "unsafeName": "boolParam1",
-                    "safeName": "boolParam1"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "bool_param_1",
-                    "safeName": "bool_param_1"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "BOOL_PARAM_1",
-                    "safeName": "BOOL_PARAM_1"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "BoolParam1",
-                    "safeName": "BoolParam1"
-                  }
-                },
+                "name": "boolParam1",
                 "wireValue": "boolParam1"
               },
               "valueType": {
@@ -310,25 +202,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "boolParam2",
-                  "camelCase": {
-                    "unsafeName": "boolParam2",
-                    "safeName": "boolParam2"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "bool_param_2",
-                    "safeName": "bool_param_2"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "BOOL_PARAM_2",
-                    "safeName": "BOOL_PARAM_2"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "BoolParam2",
-                    "safeName": "BoolParam2"
-                  }
-                },
+                "name": "boolParam2",
                 "wireValue": "boolParam2"
               },
               "valueType": {
@@ -357,25 +231,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "boolParam3",
-                  "camelCase": {
-                    "unsafeName": "boolParam3",
-                    "safeName": "boolParam3"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "bool_param_3",
-                    "safeName": "bool_param_3"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "BOOL_PARAM_3",
-                    "safeName": "BOOL_PARAM_3"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "BoolParam3",
-                    "safeName": "BoolParam3"
-                  }
-                },
+                "name": "boolParam3",
                 "wireValue": "boolParam3"
               },
               "valueType": {
@@ -404,25 +260,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "boolParam4",
-                  "camelCase": {
-                    "unsafeName": "boolParam4",
-                    "safeName": "boolParam4"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "bool_param_4",
-                    "safeName": "bool_param_4"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "BOOL_PARAM_4",
-                    "safeName": "BOOL_PARAM_4"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "BoolParam4",
-                    "safeName": "BoolParam4"
-                  }
-                },
+                "name": "boolParam4",
                 "wireValue": "boolParam4"
               },
               "valueType": {
@@ -451,25 +289,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "stringParam",
-                  "camelCase": {
-                    "unsafeName": "stringParam",
-                    "safeName": "stringParam"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "string_param",
-                    "safeName": "string_param"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "STRING_PARAM",
-                    "safeName": "STRING_PARAM"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "StringParam",
-                    "safeName": "StringParam"
-                  }
-                },
+                "name": "stringParam",
                 "wireValue": "stringParam"
               },
               "valueType": {
@@ -499,25 +319,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "numberParam",
-                  "camelCase": {
-                    "unsafeName": "numberParam",
-                    "safeName": "numberParam"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "number_param",
-                    "safeName": "number_param"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "NUMBER_PARAM",
-                    "safeName": "NUMBER_PARAM"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "NumberParam",
-                    "safeName": "NumberParam"
-                  }
-                },
+                "name": "numberParam",
                 "wireValue": "numberParam"
               },
               "valueType": {
@@ -547,25 +349,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "integerParam",
-                  "camelCase": {
-                    "unsafeName": "integerParam",
-                    "safeName": "integerParam"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "integer_param",
-                    "safeName": "integer_param"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "INTEGER_PARAM",
-                    "safeName": "INTEGER_PARAM"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "IntegerParam",
-                    "safeName": "IntegerParam"
-                  }
-                },
+                "name": "integerParam",
                 "wireValue": "integerParam"
               },
               "valueType": {
@@ -610,25 +394,7 @@
           },
           "audiences": [],
           "id": "endpoint_.getTest",
-          "name": {
-            "originalName": "getTest",
-            "camelCase": {
-              "unsafeName": "getTest",
-              "safeName": "getTest"
-            },
-            "snakeCase": {
-              "unsafeName": "get_test",
-              "safeName": "get_test"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GET_TEST",
-              "safeName": "GET_TEST"
-            },
-            "pascalCase": {
-              "unsafeName": "GetTest",
-              "safeName": "GetTest"
-            }
-          },
+          "name": "getTest",
           "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
@@ -639,25 +405,7 @@
                     "allParts": [],
                     "packagePath": []
                   },
-                  "name": {
-                    "originalName": "getTest_Response_200",
-                    "camelCase": {
-                      "unsafeName": "getTestResponse200",
-                      "safeName": "getTestResponse200"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "get_test_response_200",
-                      "safeName": "get_test_response_200"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "GET_TEST_RESPONSE_200",
-                      "safeName": "GET_TEST_RESPONSE_200"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "GetTestResponse200",
-                      "safeName": "GetTestResponse200"
-                    }
-                  },
+                  "name": "getTest_Response_200",
                   "typeId": "getTest_Response_200",
                   "inline": false,
                   "type": "named"
@@ -719,25 +467,7 @@
                         "allParts": [],
                         "packagePath": []
                       },
-                      "name": {
-                        "originalName": "getTest_Response_200",
-                        "camelCase": {
-                          "unsafeName": "getTestResponse200",
-                          "safeName": "getTestResponse200"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "get_test_response_200",
-                          "safeName": "get_test_response_200"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "GET_TEST_RESPONSE_200",
-                          "safeName": "GET_TEST_RESPONSE_200"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "GetTestResponse200",
-                          "safeName": "GetTestResponse200"
-                        }
-                      },
+                      "name": "getTest_Response_200",
                       "typeId": "getTest_Response_200",
                       "inline": false,
                       "type": "named"
@@ -801,46 +531,10 @@
       "sdkVersion": ""
     }
   },
-  "apiName": {
-    "originalName": "",
-    "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
-    }
-  },
+  "apiName": "",
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceId",
-          "safeName": "errorInstanceId"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceId",
-          "safeName": "ErrorInstanceId"
-        }
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   }

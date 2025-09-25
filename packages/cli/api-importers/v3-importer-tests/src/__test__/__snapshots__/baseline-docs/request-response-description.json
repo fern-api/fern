@@ -2,18 +2,6 @@
   "selfHosted": false,
   "apiName": {
     "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
     "pascalCase": {
       "unsafeName": "API",
       "safeName": "API"
@@ -32,10 +20,6 @@
       "name": {
         "name": {
           "originalName": "Schema1",
-          "camelCase": {
-            "unsafeName": "schema1",
-            "safeName": "schema1"
-          },
           "snakeCase": {
             "unsafeName": "schema1",
             "safeName": "schema1"
@@ -43,10 +27,6 @@
           "screamingSnakeCase": {
             "unsafeName": "SCHEMA1",
             "safeName": "SCHEMA1"
-          },
-          "pascalCase": {
-            "unsafeName": "Schema1",
-            "safeName": "Schema1"
           }
         },
         "fernFilepath": {
@@ -62,18 +42,6 @@
             "name": {
               "name": {
                 "originalName": "id",
-                "camelCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "snakeCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
                 "pascalCase": {
                   "unsafeName": "ID",
                   "safeName": "ID"
@@ -103,25 +71,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "name",
-                "camelCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "snakeCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "NAME",
-                  "safeName": "NAME"
-                },
-                "pascalCase": {
-                  "unsafeName": "Name",
-                  "safeName": "Name"
-                }
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "valueType": {
@@ -181,25 +131,7 @@
       "endpoints": [
         {
           "id": "endpoint_.getExample",
-          "name": {
-            "originalName": "getExample",
-            "camelCase": {
-              "unsafeName": "getExample",
-              "safeName": "getExample"
-            },
-            "snakeCase": {
-              "unsafeName": "get_example",
-              "safeName": "get_example"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GET_EXAMPLE",
-              "safeName": "GET_EXAMPLE"
-            },
-            "pascalCase": {
-              "unsafeName": "GetExample",
-              "safeName": "GetExample"
-            }
-          },
+          "name": "getExample",
           "displayName": "Get Example",
           "auth": false,
           "idempotent": false,
@@ -223,10 +155,6 @@
                 "responseBodyType": {
                   "name": {
                     "originalName": "Schema1",
-                    "camelCase": {
-                      "unsafeName": "schema1",
-                      "safeName": "schema1"
-                    },
                     "snakeCase": {
                       "unsafeName": "schema1",
                       "safeName": "schema1"
@@ -234,10 +162,6 @@
                     "screamingSnakeCase": {
                       "unsafeName": "SCHEMA1",
                       "safeName": "SCHEMA1"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Schema1",
-                      "safeName": "Schema1"
                     }
                   },
                   "fernFilepath": {
@@ -267,14 +191,6 @@
         "camelCase": {
           "unsafeName": "errorInstanceID",
           "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
         },
         "pascalCase": {
           "unsafeName": "ErrorInstanceID",
@@ -310,6 +226,10 @@
               "unsafeName": "schema1",
               "safeName": "schema1"
             },
+            "pascalCase": {
+              "unsafeName": "Schema1",
+              "safeName": "Schema1"
+            },
             "snakeCase": {
               "unsafeName": "schema1",
               "safeName": "schema1"
@@ -317,10 +237,6 @@
             "screamingSnakeCase": {
               "unsafeName": "SCHEMA1",
               "safeName": "SCHEMA1"
-            },
-            "pascalCase": {
-              "unsafeName": "Schema1",
-              "safeName": "Schema1"
             }
           },
           "fernFilepath": {
@@ -337,15 +253,15 @@
                   "unsafeName": "id",
                   "safeName": "id"
                 },
+                "pascalCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
                 "snakeCase": {
                   "unsafeName": "id",
                   "safeName": "id"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
-                "pascalCase": {
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
@@ -368,6 +284,10 @@
                   "unsafeName": "name",
                   "safeName": "name"
                 },
+                "pascalCase": {
+                  "unsafeName": "Name",
+                  "safeName": "Name"
+                },
                 "snakeCase": {
                   "unsafeName": "name",
                   "safeName": "name"
@@ -375,10 +295,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "NAME",
                   "safeName": "NAME"
-                },
-                "pascalCase": {
-                  "unsafeName": "Name",
-                  "safeName": "Name"
                 }
               },
               "wireValue": "name"
@@ -406,6 +322,10 @@
               "unsafeName": "getExample",
               "safeName": "getExample"
             },
+            "pascalCase": {
+              "unsafeName": "GetExample",
+              "safeName": "GetExample"
+            },
             "snakeCase": {
               "unsafeName": "get_example",
               "safeName": "get_example"
@@ -413,10 +333,6 @@
             "screamingSnakeCase": {
               "unsafeName": "GET_EXAMPLE",
               "safeName": "GET_EXAMPLE"
-            },
-            "pascalCase": {
-              "unsafeName": "GetExample",
-              "safeName": "GetExample"
             }
           },
           "fernFilepath": {

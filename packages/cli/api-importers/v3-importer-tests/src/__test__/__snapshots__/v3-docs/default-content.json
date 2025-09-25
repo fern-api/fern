@@ -12,49 +12,13 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "GenerateContentResponse",
-          "camelCase": {
-            "unsafeName": "generateContentResponse",
-            "safeName": "generateContentResponse"
-          },
-          "snakeCase": {
-            "unsafeName": "generate_content_response",
-            "safeName": "generate_content_response"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "GENERATE_CONTENT_RESPONSE",
-            "safeName": "GENERATE_CONTENT_RESPONSE"
-          },
-          "pascalCase": {
-            "unsafeName": "GenerateContentResponse",
-            "safeName": "GenerateContentResponse"
-          }
-        }
+        "name": "GenerateContentResponse"
       },
       "shape": {
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "bar",
-                "camelCase": {
-                  "unsafeName": "bar",
-                  "safeName": "bar"
-                },
-                "snakeCase": {
-                  "unsafeName": "bar",
-                  "safeName": "bar"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BAR",
-                  "safeName": "BAR"
-                },
-                "pascalCase": {
-                  "unsafeName": "Bar",
-                  "safeName": "Bar"
-                }
-              },
+              "name": "bar",
               "wireValue": "bar"
             },
             "valueType": {
@@ -103,46 +67,10 @@
       "name": {
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "generativelanguage",
-              "camelCase": {
-                "unsafeName": "generativelanguage",
-                "safeName": "generativelanguage"
-              },
-              "snakeCase": {
-                "unsafeName": "generativelanguage",
-                "safeName": "generativelanguage"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "GENERATIVELANGUAGE",
-                "safeName": "GENERATIVELANGUAGE"
-              },
-              "pascalCase": {
-                "unsafeName": "Generativelanguage",
-                "safeName": "Generativelanguage"
-              }
-            }
+            "generativelanguage"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "generativelanguage",
-            "camelCase": {
-              "unsafeName": "generativelanguage",
-              "safeName": "generativelanguage"
-            },
-            "snakeCase": {
-              "unsafeName": "generativelanguage",
-              "safeName": "generativelanguage"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GENERATIVELANGUAGE",
-              "safeName": "GENERATIVELANGUAGE"
-            },
-            "pascalCase": {
-              "unsafeName": "Generativelanguage",
-              "safeName": "Generativelanguage"
-            }
-          }
+          "file": "generativelanguage"
         }
       },
       "displayName": "generativelanguage",
@@ -162,25 +90,7 @@
           },
           "pathParameters": [
             {
-              "name": {
-                "originalName": "model",
-                "camelCase": {
-                  "unsafeName": "model",
-                  "safeName": "model"
-                },
-                "snakeCase": {
-                  "unsafeName": "model",
-                  "safeName": "model"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "MODEL",
-                  "safeName": "MODEL"
-                },
-                "pascalCase": {
-                  "unsafeName": "Model",
-                  "safeName": "Model"
-                }
-              },
+              "name": "model",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -213,25 +123,7 @@
           },
           "allPathParameters": [
             {
-              "name": {
-                "originalName": "model",
-                "camelCase": {
-                  "unsafeName": "model",
-                  "safeName": "model"
-                },
-                "snakeCase": {
-                  "unsafeName": "model",
-                  "safeName": "model"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "MODEL",
-                  "safeName": "MODEL"
-                },
-                "pascalCase": {
-                  "unsafeName": "Model",
-                  "safeName": "Model"
-                }
-              },
+              "name": "model",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -256,25 +148,7 @@
           },
           "audiences": [],
           "id": "endpoint_generativelanguage.GenerateContent",
-          "name": {
-            "originalName": "GenerateContent",
-            "camelCase": {
-              "unsafeName": "generateContent",
-              "safeName": "generateContent"
-            },
-            "snakeCase": {
-              "unsafeName": "generate_content",
-              "safeName": "generate_content"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GENERATE_CONTENT",
-              "safeName": "GENERATE_CONTENT"
-            },
-            "pascalCase": {
-              "unsafeName": "GenerateContent",
-              "safeName": "GenerateContent"
-            }
-          },
+          "name": "GenerateContent",
           "v2RequestBodies": {},
           "v2Examples": {
             "autogeneratedExamples": {
@@ -321,25 +195,7 @@
       "environments": [
         {
           "id": "https://ai.com",
-          "name": {
-            "originalName": "https://ai.com",
-            "camelCase": {
-              "unsafeName": "httpsAiCom",
-              "safeName": "httpsAiCom"
-            },
-            "snakeCase": {
-              "unsafeName": "https_ai_com",
-              "safeName": "https_ai_com"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "HTTPS_AI_COM",
-              "safeName": "HTTPS_AI_COM"
-            },
-            "pascalCase": {
-              "unsafeName": "HttpsAiCom",
-              "safeName": "HttpsAiCom"
-            }
-          },
+          "name": "https://ai.com",
           "url": "https://ai.com"
         }
       ],
@@ -362,67 +218,13 @@
   },
   "subpackages": {
     "subpackage_generativelanguage": {
-      "name": {
-        "originalName": "generativelanguage",
-        "camelCase": {
-          "unsafeName": "generativelanguage",
-          "safeName": "generativelanguage"
-        },
-        "snakeCase": {
-          "unsafeName": "generativelanguage",
-          "safeName": "generativelanguage"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "GENERATIVELANGUAGE",
-          "safeName": "GENERATIVELANGUAGE"
-        },
-        "pascalCase": {
-          "unsafeName": "Generativelanguage",
-          "safeName": "Generativelanguage"
-        }
-      },
+      "name": "generativelanguage",
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "generativelanguage",
-            "camelCase": {
-              "unsafeName": "generativelanguage",
-              "safeName": "generativelanguage"
-            },
-            "snakeCase": {
-              "unsafeName": "generativelanguage",
-              "safeName": "generativelanguage"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GENERATIVELANGUAGE",
-              "safeName": "GENERATIVELANGUAGE"
-            },
-            "pascalCase": {
-              "unsafeName": "Generativelanguage",
-              "safeName": "Generativelanguage"
-            }
-          }
+          "generativelanguage"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "generativelanguage",
-          "camelCase": {
-            "unsafeName": "generativelanguage",
-            "safeName": "generativelanguage"
-          },
-          "snakeCase": {
-            "unsafeName": "generativelanguage",
-            "safeName": "generativelanguage"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "GENERATIVELANGUAGE",
-            "safeName": "GENERATIVELANGUAGE"
-          },
-          "pascalCase": {
-            "unsafeName": "Generativelanguage",
-            "safeName": "Generativelanguage"
-          }
-        }
+        "file": "generativelanguage"
       },
       "service": "service_generativelanguage",
       "types": [],
@@ -442,46 +244,10 @@
       "sdkVersion": ""
     }
   },
-  "apiName": {
-    "originalName": "",
-    "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
-    }
-  },
+  "apiName": "",
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceId",
-          "safeName": "errorInstanceId"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceId",
-          "safeName": "ErrorInstanceId"
-        }
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   }

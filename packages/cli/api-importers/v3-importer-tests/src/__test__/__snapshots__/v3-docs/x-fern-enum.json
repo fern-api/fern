@@ -12,49 +12,13 @@
           "allParts": [],
           "packagePath": []
         },
-        "name": {
-          "originalName": "SpeechModel",
-          "camelCase": {
-            "unsafeName": "speechModel",
-            "safeName": "speechModel"
-          },
-          "snakeCase": {
-            "unsafeName": "speech_model",
-            "safeName": "speech_model"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "SPEECH_MODEL",
-            "safeName": "SPEECH_MODEL"
-          },
-          "pascalCase": {
-            "unsafeName": "SpeechModel",
-            "safeName": "SpeechModel"
-          }
-        }
+        "name": "SpeechModel"
       },
       "shape": {
         "values": [
           {
             "name": {
-              "name": {
-                "originalName": "Nano",
-                "camelCase": {
-                  "unsafeName": "nano",
-                  "safeName": "nano"
-                },
-                "snakeCase": {
-                  "unsafeName": "nano",
-                  "safeName": "nano"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "NANO",
-                  "safeName": "NANO"
-                },
-                "pascalCase": {
-                  "unsafeName": "Nano",
-                  "safeName": "Nano"
-                }
-              },
+              "name": "Nano",
               "wireValue": "nano"
             },
             "docs": "The Nano tier is a lightweight model that is optimized for speed and cost."
@@ -113,46 +77,10 @@
       "sdkVersion": ""
     }
   },
-  "apiName": {
-    "originalName": "",
-    "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
-    }
-  },
+  "apiName": "",
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceId",
-          "safeName": "errorInstanceId"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceId",
-          "safeName": "ErrorInstanceId"
-        }
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   }

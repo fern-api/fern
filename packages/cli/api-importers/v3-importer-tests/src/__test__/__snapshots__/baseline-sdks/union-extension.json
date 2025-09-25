@@ -2,18 +2,6 @@
   "selfHosted": false,
   "apiName": {
     "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
     "pascalCase": {
       "unsafeName": "API",
       "safeName": "API"
@@ -30,25 +18,7 @@
     "type_:PartyAccount": {
       "docs": "PartyAccount with excluded currency in response",
       "name": {
-        "name": {
-          "originalName": "PartyAccount",
-          "camelCase": {
-            "unsafeName": "partyAccount",
-            "safeName": "partyAccount"
-          },
-          "snakeCase": {
-            "unsafeName": "party_account",
-            "safeName": "party_account"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "PARTY_ACCOUNT",
-            "safeName": "PARTY_ACCOUNT"
-          },
-          "pascalCase": {
-            "unsafeName": "PartyAccount",
-            "safeName": "PartyAccount"
-          }
-        },
+        "name": "PartyAccount",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -59,25 +29,7 @@
         "members": [
           {
             "type": {
-              "name": {
-                "originalName": "IbanField",
-                "camelCase": {
-                  "unsafeName": "ibanField",
-                  "safeName": "ibanField"
-                },
-                "snakeCase": {
-                  "unsafeName": "iban_field",
-                  "safeName": "iban_field"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "IBAN_FIELD",
-                  "safeName": "IBAN_FIELD"
-                },
-                "pascalCase": {
-                  "unsafeName": "IbanField",
-                  "safeName": "IbanField"
-                }
-              },
+              "name": "IbanField",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -89,25 +41,7 @@
           },
           {
             "type": {
-              "name": {
-                "originalName": "OtherField",
-                "camelCase": {
-                  "unsafeName": "otherField",
-                  "safeName": "otherField"
-                },
-                "snakeCase": {
-                  "unsafeName": "other_field",
-                  "safeName": "other_field"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "OTHER_FIELD",
-                  "safeName": "OTHER_FIELD"
-                },
-                "pascalCase": {
-                  "unsafeName": "OtherField",
-                  "safeName": "OtherField"
-                }
-              },
+              "name": "OtherField",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -129,25 +63,7 @@
     },
     "type_:IbanField": {
       "name": {
-        "name": {
-          "originalName": "IbanField",
-          "camelCase": {
-            "unsafeName": "ibanField",
-            "safeName": "ibanField"
-          },
-          "snakeCase": {
-            "unsafeName": "iban_field",
-            "safeName": "iban_field"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "IBAN_FIELD",
-            "safeName": "IBAN_FIELD"
-          },
-          "pascalCase": {
-            "unsafeName": "IbanField",
-            "safeName": "IbanField"
-          }
-        },
+        "name": "IbanField",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -159,25 +75,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "iban",
-                "camelCase": {
-                  "unsafeName": "iban",
-                  "safeName": "iban"
-                },
-                "snakeCase": {
-                  "unsafeName": "iban",
-                  "safeName": "iban"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "IBAN",
-                  "safeName": "IBAN"
-                },
-                "pascalCase": {
-                  "unsafeName": "Iban",
-                  "safeName": "Iban"
-                }
-              },
+              "name": "iban",
               "wireValue": "iban"
             },
             "valueType": {
@@ -214,25 +112,7 @@
     },
     "type_:OtherField": {
       "name": {
-        "name": {
-          "originalName": "OtherField",
-          "camelCase": {
-            "unsafeName": "otherField",
-            "safeName": "otherField"
-          },
-          "snakeCase": {
-            "unsafeName": "other_field",
-            "safeName": "other_field"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "OTHER_FIELD",
-            "safeName": "OTHER_FIELD"
-          },
-          "pascalCase": {
-            "unsafeName": "OtherField",
-            "safeName": "OtherField"
-          }
-        },
+        "name": "OtherField",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -244,49 +124,13 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "other",
-                "camelCase": {
-                  "unsafeName": "other",
-                  "safeName": "other"
-                },
-                "snakeCase": {
-                  "unsafeName": "other",
-                  "safeName": "other"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "OTHER",
-                  "safeName": "OTHER"
-                },
-                "pascalCase": {
-                  "unsafeName": "Other",
-                  "safeName": "Other"
-                }
-              },
+              "name": "other",
               "wireValue": "other"
             },
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "Other",
-                    "camelCase": {
-                      "unsafeName": "other",
-                      "safeName": "other"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "other",
-                      "safeName": "other"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "OTHER",
-                      "safeName": "OTHER"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Other",
-                      "safeName": "Other"
-                    }
-                  },
+                  "name": "Other",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -317,25 +161,7 @@
     },
     "type_:Other": {
       "name": {
-        "name": {
-          "originalName": "Other",
-          "camelCase": {
-            "unsafeName": "other",
-            "safeName": "other"
-          },
-          "snakeCase": {
-            "unsafeName": "other",
-            "safeName": "other"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "OTHER",
-            "safeName": "OTHER"
-          },
-          "pascalCase": {
-            "unsafeName": "Other",
-            "safeName": "Other"
-          }
-        },
+        "name": "Other",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -347,25 +173,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "identification",
-                "camelCase": {
-                  "unsafeName": "identification",
-                  "safeName": "identification"
-                },
-                "snakeCase": {
-                  "unsafeName": "identification",
-                  "safeName": "identification"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "IDENTIFICATION",
-                  "safeName": "IDENTIFICATION"
-                },
-                "pascalCase": {
-                  "unsafeName": "Identification",
-                  "safeName": "Identification"
-                }
-              },
+              "name": "identification",
               "wireValue": "identification"
             },
             "valueType": {
@@ -390,25 +198,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "schemeNameCone",
-                "camelCase": {
-                  "unsafeName": "schemeNameCone",
-                  "safeName": "schemeNameCone"
-                },
-                "snakeCase": {
-                  "unsafeName": "scheme_name_cone",
-                  "safeName": "scheme_name_cone"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "SCHEME_NAME_CONE",
-                  "safeName": "SCHEME_NAME_CONE"
-                },
-                "pascalCase": {
-                  "unsafeName": "SchemeNameCone",
-                  "safeName": "SchemeNameCone"
-                }
-              },
+              "name": "schemeNameCone",
               "wireValue": "schemeNameCone"
             },
             "valueType": {
@@ -445,25 +235,7 @@
     },
     "type_:CounterPartyAccount": {
       "name": {
-        "name": {
-          "originalName": "CounterPartyAccount",
-          "camelCase": {
-            "unsafeName": "counterPartyAccount",
-            "safeName": "counterPartyAccount"
-          },
-          "snakeCase": {
-            "unsafeName": "counter_party_account",
-            "safeName": "counter_party_account"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "COUNTER_PARTY_ACCOUNT",
-            "safeName": "COUNTER_PARTY_ACCOUNT"
-          },
-          "pascalCase": {
-            "unsafeName": "CounterPartyAccount",
-            "safeName": "CounterPartyAccount"
-          }
-        },
+        "name": "CounterPartyAccount",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -475,25 +247,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "currency",
-                "camelCase": {
-                  "unsafeName": "currency",
-                  "safeName": "currency"
-                },
-                "snakeCase": {
-                  "unsafeName": "currency",
-                  "safeName": "currency"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "CURRENCY",
-                  "safeName": "CURRENCY"
-                },
-                "pascalCase": {
-                  "unsafeName": "Currency",
-                  "safeName": "Currency"
-                }
-              },
+              "name": "currency",
               "wireValue": "currency"
             },
             "valueType": {
@@ -518,25 +272,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "iban",
-                "camelCase": {
-                  "unsafeName": "iban",
-                  "safeName": "iban"
-                },
-                "snakeCase": {
-                  "unsafeName": "iban",
-                  "safeName": "iban"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "IBAN",
-                  "safeName": "IBAN"
-                },
-                "pascalCase": {
-                  "unsafeName": "Iban",
-                  "safeName": "Iban"
-                }
-              },
+              "name": "iban",
               "wireValue": "iban"
             },
             "valueType": {
@@ -561,49 +297,13 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "other",
-                "camelCase": {
-                  "unsafeName": "other",
-                  "safeName": "other"
-                },
-                "snakeCase": {
-                  "unsafeName": "other",
-                  "safeName": "other"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "OTHER",
-                  "safeName": "OTHER"
-                },
-                "pascalCase": {
-                  "unsafeName": "Other",
-                  "safeName": "Other"
-                }
-              },
+              "name": "other",
               "wireValue": "other"
             },
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "Other",
-                    "camelCase": {
-                      "unsafeName": "other",
-                      "safeName": "other"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "other",
-                      "safeName": "other"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "OTHER",
-                      "safeName": "OTHER"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Other",
-                      "safeName": "Other"
-                    }
-                  },
+                  "name": "Other",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -643,14 +343,6 @@
           "unsafeName": "errorInstanceID",
           "safeName": "errorInstanceID"
         },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
         "pascalCase": {
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
@@ -687,6 +379,10 @@
               "unsafeName": "partyAccount",
               "safeName": "partyAccount"
             },
+            "pascalCase": {
+              "unsafeName": "PartyAccount",
+              "safeName": "PartyAccount"
+            },
             "snakeCase": {
               "unsafeName": "party_account",
               "safeName": "party_account"
@@ -694,10 +390,6 @@
             "screamingSnakeCase": {
               "unsafeName": "PARTY_ACCOUNT",
               "safeName": "PARTY_ACCOUNT"
-            },
-            "pascalCase": {
-              "unsafeName": "PartyAccount",
-              "safeName": "PartyAccount"
             }
           },
           "fernFilepath": {
@@ -725,6 +417,10 @@
               "unsafeName": "ibanField",
               "safeName": "ibanField"
             },
+            "pascalCase": {
+              "unsafeName": "IbanField",
+              "safeName": "IbanField"
+            },
             "snakeCase": {
               "unsafeName": "iban_field",
               "safeName": "iban_field"
@@ -732,10 +428,6 @@
             "screamingSnakeCase": {
               "unsafeName": "IBAN_FIELD",
               "safeName": "IBAN_FIELD"
-            },
-            "pascalCase": {
-              "unsafeName": "IbanField",
-              "safeName": "IbanField"
             }
           },
           "fernFilepath": {
@@ -752,6 +444,10 @@
                   "unsafeName": "iban",
                   "safeName": "iban"
                 },
+                "pascalCase": {
+                  "unsafeName": "Iban",
+                  "safeName": "Iban"
+                },
                 "snakeCase": {
                   "unsafeName": "iban",
                   "safeName": "iban"
@@ -759,10 +455,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "IBAN",
                   "safeName": "IBAN"
-                },
-                "pascalCase": {
-                  "unsafeName": "Iban",
-                  "safeName": "Iban"
                 }
               },
               "wireValue": "iban"
@@ -787,6 +479,10 @@
               "unsafeName": "otherField",
               "safeName": "otherField"
             },
+            "pascalCase": {
+              "unsafeName": "OtherField",
+              "safeName": "OtherField"
+            },
             "snakeCase": {
               "unsafeName": "other_field",
               "safeName": "other_field"
@@ -794,10 +490,6 @@
             "screamingSnakeCase": {
               "unsafeName": "OTHER_FIELD",
               "safeName": "OTHER_FIELD"
-            },
-            "pascalCase": {
-              "unsafeName": "OtherField",
-              "safeName": "OtherField"
             }
           },
           "fernFilepath": {
@@ -814,6 +506,10 @@
                   "unsafeName": "other",
                   "safeName": "other"
                 },
+                "pascalCase": {
+                  "unsafeName": "Other",
+                  "safeName": "Other"
+                },
                 "snakeCase": {
                   "unsafeName": "other",
                   "safeName": "other"
@@ -821,10 +517,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "OTHER",
                   "safeName": "OTHER"
-                },
-                "pascalCase": {
-                  "unsafeName": "Other",
-                  "safeName": "Other"
                 }
               },
               "wireValue": "other"
@@ -849,6 +541,10 @@
               "unsafeName": "other",
               "safeName": "other"
             },
+            "pascalCase": {
+              "unsafeName": "Other",
+              "safeName": "Other"
+            },
             "snakeCase": {
               "unsafeName": "other",
               "safeName": "other"
@@ -856,10 +552,6 @@
             "screamingSnakeCase": {
               "unsafeName": "OTHER",
               "safeName": "OTHER"
-            },
-            "pascalCase": {
-              "unsafeName": "Other",
-              "safeName": "Other"
             }
           },
           "fernFilepath": {
@@ -876,6 +568,10 @@
                   "unsafeName": "identification",
                   "safeName": "identification"
                 },
+                "pascalCase": {
+                  "unsafeName": "Identification",
+                  "safeName": "Identification"
+                },
                 "snakeCase": {
                   "unsafeName": "identification",
                   "safeName": "identification"
@@ -883,10 +579,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "IDENTIFICATION",
                   "safeName": "IDENTIFICATION"
-                },
-                "pascalCase": {
-                  "unsafeName": "Identification",
-                  "safeName": "Identification"
                 }
               },
               "wireValue": "identification"
@@ -907,6 +599,10 @@
                   "unsafeName": "schemeNameCone",
                   "safeName": "schemeNameCone"
                 },
+                "pascalCase": {
+                  "unsafeName": "SchemeNameCone",
+                  "safeName": "SchemeNameCone"
+                },
                 "snakeCase": {
                   "unsafeName": "scheme_name_cone",
                   "safeName": "scheme_name_cone"
@@ -914,10 +610,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "SCHEME_NAME_CONE",
                   "safeName": "SCHEME_NAME_CONE"
-                },
-                "pascalCase": {
-                  "unsafeName": "SchemeNameCone",
-                  "safeName": "SchemeNameCone"
                 }
               },
               "wireValue": "schemeNameCone"
@@ -942,6 +634,10 @@
               "unsafeName": "counterPartyAccount",
               "safeName": "counterPartyAccount"
             },
+            "pascalCase": {
+              "unsafeName": "CounterPartyAccount",
+              "safeName": "CounterPartyAccount"
+            },
             "snakeCase": {
               "unsafeName": "counter_party_account",
               "safeName": "counter_party_account"
@@ -949,10 +645,6 @@
             "screamingSnakeCase": {
               "unsafeName": "COUNTER_PARTY_ACCOUNT",
               "safeName": "COUNTER_PARTY_ACCOUNT"
-            },
-            "pascalCase": {
-              "unsafeName": "CounterPartyAccount",
-              "safeName": "CounterPartyAccount"
             }
           },
           "fernFilepath": {
@@ -969,6 +661,10 @@
                   "unsafeName": "currency",
                   "safeName": "currency"
                 },
+                "pascalCase": {
+                  "unsafeName": "Currency",
+                  "safeName": "Currency"
+                },
                 "snakeCase": {
                   "unsafeName": "currency",
                   "safeName": "currency"
@@ -976,10 +672,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "CURRENCY",
                   "safeName": "CURRENCY"
-                },
-                "pascalCase": {
-                  "unsafeName": "Currency",
-                  "safeName": "Currency"
                 }
               },
               "wireValue": "currency"
@@ -1000,6 +692,10 @@
                   "unsafeName": "iban",
                   "safeName": "iban"
                 },
+                "pascalCase": {
+                  "unsafeName": "Iban",
+                  "safeName": "Iban"
+                },
                 "snakeCase": {
                   "unsafeName": "iban",
                   "safeName": "iban"
@@ -1007,10 +703,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "IBAN",
                   "safeName": "IBAN"
-                },
-                "pascalCase": {
-                  "unsafeName": "Iban",
-                  "safeName": "Iban"
                 }
               },
               "wireValue": "iban"
@@ -1031,6 +723,10 @@
                   "unsafeName": "other",
                   "safeName": "other"
                 },
+                "pascalCase": {
+                  "unsafeName": "Other",
+                  "safeName": "Other"
+                },
                 "snakeCase": {
                   "unsafeName": "other",
                   "safeName": "other"
@@ -1038,10 +734,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "OTHER",
                   "safeName": "OTHER"
-                },
-                "pascalCase": {
-                  "unsafeName": "Other",
-                  "safeName": "Other"
                 }
               },
               "wireValue": "other"

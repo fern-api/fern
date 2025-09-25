@@ -29,25 +29,7 @@
           },
           "pathParameters": [
             {
-              "name": {
-                "originalName": "some-path-param",
-                "camelCase": {
-                  "unsafeName": "somePathParam",
-                  "safeName": "somePathParam"
-                },
-                "snakeCase": {
-                  "unsafeName": "some_path_param",
-                  "safeName": "some_path_param"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "SOME_PATH_PARAM",
-                  "safeName": "SOME_PATH_PARAM"
-                },
-                "pascalCase": {
-                  "unsafeName": "SomePathParam",
-                  "safeName": "SomePathParam"
-                }
-              },
+              "name": "some-path-param",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -71,25 +53,7 @@
           "queryParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "some-query-param",
-                  "camelCase": {
-                    "unsafeName": "someQueryParam",
-                    "safeName": "someQueryParam"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "some_query_param",
-                    "safeName": "some_query_param"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "SOME_QUERY_PARAM",
-                    "safeName": "SOME_QUERY_PARAM"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "SomeQueryParam",
-                    "safeName": "SomeQueryParam"
-                  }
-                },
+                "name": "some-query-param",
                 "wireValue": "some-query-param"
               },
               "valueType": {
@@ -112,25 +76,7 @@
             },
             {
               "name": {
-                "name": {
-                  "originalName": "some-query-param-ref-examples",
-                  "camelCase": {
-                    "unsafeName": "someQueryParamRefExamples",
-                    "safeName": "someQueryParamRefExamples"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "some_query_param_ref_examples",
-                    "safeName": "some_query_param_ref_examples"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "SOME_QUERY_PARAM_REF_EXAMPLES",
-                    "safeName": "SOME_QUERY_PARAM_REF_EXAMPLES"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "SomeQueryParamRefExamples",
-                    "safeName": "SomeQueryParamRefExamples"
-                  }
-                },
+                "name": "some-query-param-ref-examples",
                 "wireValue": "some-query-param-ref-examples"
               },
               "valueType": {
@@ -156,25 +102,7 @@
           "headers": [
             {
               "name": {
-                "name": {
-                  "originalName": "some-header",
-                  "camelCase": {
-                    "unsafeName": "someHeader",
-                    "safeName": "someHeader"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "some_header",
-                    "safeName": "some_header"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "SOME_HEADER",
-                    "safeName": "SOME_HEADER"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "SomeHeader",
-                    "safeName": "SomeHeader"
-                  }
-                },
+                "name": "some-header",
                 "wireValue": "some-header"
               },
               "valueType": {
@@ -207,25 +135,7 @@
           },
           "allPathParameters": [
             {
-              "name": {
-                "originalName": "some-path-param",
-                "camelCase": {
-                  "unsafeName": "somePathParam",
-                  "safeName": "somePathParam"
-                },
-                "snakeCase": {
-                  "unsafeName": "some_path_param",
-                  "safeName": "some_path_param"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "SOME_PATH_PARAM",
-                  "safeName": "SOME_PATH_PARAM"
-                },
-                "pascalCase": {
-                  "unsafeName": "SomePathParam",
-                  "safeName": "SomePathParam"
-                }
-              },
+              "name": "some-path-param",
               "valueType": {
                 "primitive": {
                   "v1": "STRING",
@@ -260,14 +170,6 @@
             "snakeCase": {
               "unsafeName": "get",
               "safeName": "get_"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GET",
-              "safeName": "GET"
-            },
-            "pascalCase": {
-              "unsafeName": "Get",
-              "safeName": "Get"
             }
           },
           "v2RequestBodies": {},
@@ -398,46 +300,10 @@
       "sdkVersion": ""
     }
   },
-  "apiName": {
-    "originalName": "",
-    "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
-    }
-  },
+  "apiName": "",
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceId",
-          "safeName": "errorInstanceId"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceId",
-          "safeName": "ErrorInstanceId"
-        }
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   }

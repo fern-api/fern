@@ -2,18 +2,6 @@
   "selfHosted": false,
   "apiName": {
     "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
     "pascalCase": {
       "unsafeName": "API",
       "safeName": "API"
@@ -29,25 +17,7 @@
   "types": {
     "type_:User": {
       "name": {
-        "name": {
-          "originalName": "User",
-          "camelCase": {
-            "unsafeName": "user",
-            "safeName": "user"
-          },
-          "snakeCase": {
-            "unsafeName": "user",
-            "safeName": "user"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "USER",
-            "safeName": "USER"
-          },
-          "pascalCase": {
-            "unsafeName": "User",
-            "safeName": "User"
-          }
-        },
+        "name": "User",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -61,18 +31,6 @@
             "name": {
               "name": {
                 "originalName": "id",
-                "camelCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "snakeCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
                 "pascalCase": {
                   "unsafeName": "ID",
                   "safeName": "ID"
@@ -102,25 +60,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "username",
-                "camelCase": {
-                  "unsafeName": "username",
-                  "safeName": "username"
-                },
-                "snakeCase": {
-                  "unsafeName": "username",
-                  "safeName": "username"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "USERNAME",
-                  "safeName": "USERNAME"
-                },
-                "pascalCase": {
-                  "unsafeName": "Username",
-                  "safeName": "Username"
-                }
-              },
+              "name": "username",
               "wireValue": "username"
             },
             "valueType": {
@@ -145,25 +85,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "email",
-                "camelCase": {
-                  "unsafeName": "email",
-                  "safeName": "email"
-                },
-                "snakeCase": {
-                  "unsafeName": "email",
-                  "safeName": "email"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "EMAIL",
-                  "safeName": "EMAIL"
-                },
-                "pascalCase": {
-                  "unsafeName": "Email",
-                  "safeName": "Email"
-                }
-              },
+              "name": "email",
               "wireValue": "email"
             },
             "valueType": {
@@ -188,25 +110,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "createdAt",
-                "camelCase": {
-                  "unsafeName": "createdAt",
-                  "safeName": "createdAt"
-                },
-                "snakeCase": {
-                  "unsafeName": "created_at",
-                  "safeName": "created_at"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "CREATED_AT",
-                  "safeName": "CREATED_AT"
-                },
-                "pascalCase": {
-                  "unsafeName": "CreatedAt",
-                  "safeName": "CreatedAt"
-                }
-              },
+              "name": "createdAt",
               "wireValue": "createdAt"
             },
             "valueType": {
@@ -240,25 +144,7 @@
     },
     "type_:Token": {
       "name": {
-        "name": {
-          "originalName": "Token",
-          "camelCase": {
-            "unsafeName": "token",
-            "safeName": "token"
-          },
-          "snakeCase": {
-            "unsafeName": "token",
-            "safeName": "token"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "TOKEN",
-            "safeName": "TOKEN"
-          },
-          "pascalCase": {
-            "unsafeName": "Token",
-            "safeName": "Token"
-          }
-        },
+        "name": "Token",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -270,25 +156,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "accessToken",
-                "camelCase": {
-                  "unsafeName": "accessToken",
-                  "safeName": "accessToken"
-                },
-                "snakeCase": {
-                  "unsafeName": "access_token",
-                  "safeName": "access_token"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ACCESS_TOKEN",
-                  "safeName": "ACCESS_TOKEN"
-                },
-                "pascalCase": {
-                  "unsafeName": "AccessToken",
-                  "safeName": "AccessToken"
-                }
-              },
+              "name": "accessToken",
               "wireValue": "accessToken"
             },
             "valueType": {
@@ -313,25 +181,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "tokenType",
-                "camelCase": {
-                  "unsafeName": "tokenType",
-                  "safeName": "tokenType"
-                },
-                "snakeCase": {
-                  "unsafeName": "token_type",
-                  "safeName": "token_type"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "TOKEN_TYPE",
-                  "safeName": "TOKEN_TYPE"
-                },
-                "pascalCase": {
-                  "unsafeName": "TokenType",
-                  "safeName": "TokenType"
-                }
-              },
+              "name": "tokenType",
               "wireValue": "tokenType"
             },
             "valueType": {
@@ -356,25 +206,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "expiresIn",
-                "camelCase": {
-                  "unsafeName": "expiresIn",
-                  "safeName": "expiresIn"
-                },
-                "snakeCase": {
-                  "unsafeName": "expires_in",
-                  "safeName": "expires_in"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "EXPIRES_IN",
-                  "safeName": "EXPIRES_IN"
-                },
-                "pascalCase": {
-                  "unsafeName": "ExpiresIn",
-                  "safeName": "ExpiresIn"
-                }
-              },
+              "name": "expiresIn",
               "wireValue": "expiresIn"
             },
             "valueType": {
@@ -413,25 +245,7 @@
   "errors": {
     "error_:GetUsersRequestUnauthorizedError": {
       "name": {
-        "name": {
-          "originalName": "GetUsersRequestUnauthorizedError",
-          "camelCase": {
-            "unsafeName": "getUsersRequestUnauthorizedError",
-            "safeName": "getUsersRequestUnauthorizedError"
-          },
-          "snakeCase": {
-            "unsafeName": "get_users_request_unauthorized_error",
-            "safeName": "get_users_request_unauthorized_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "GET_USERS_REQUEST_UNAUTHORIZED_ERROR",
-            "safeName": "GET_USERS_REQUEST_UNAUTHORIZED_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "GetUsersRequestUnauthorizedError",
-            "safeName": "GetUsersRequestUnauthorizedError"
-          }
-        },
+        "name": "GetUsersRequestUnauthorizedError",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -439,25 +253,7 @@
         "errorId": "error_:GetUsersRequestUnauthorizedError"
       },
       "discriminantValue": {
-        "name": {
-          "originalName": "GetUsersRequestUnauthorizedError",
-          "camelCase": {
-            "unsafeName": "getUsersRequestUnauthorizedError",
-            "safeName": "getUsersRequestUnauthorizedError"
-          },
-          "snakeCase": {
-            "unsafeName": "get_users_request_unauthorized_error",
-            "safeName": "get_users_request_unauthorized_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "GET_USERS_REQUEST_UNAUTHORIZED_ERROR",
-            "safeName": "GET_USERS_REQUEST_UNAUTHORIZED_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "GetUsersRequestUnauthorizedError",
-            "safeName": "GetUsersRequestUnauthorizedError"
-          }
-        },
+        "name": "GetUsersRequestUnauthorizedError",
         "wireValue": "GetUsersRequestUnauthorizedError"
       },
       "docs": "Unauthorized",
@@ -469,25 +265,7 @@
     },
     "error_:GetUsersRequestNotFoundError": {
       "name": {
-        "name": {
-          "originalName": "GetUsersRequestNotFoundError",
-          "camelCase": {
-            "unsafeName": "getUsersRequestNotFoundError",
-            "safeName": "getUsersRequestNotFoundError"
-          },
-          "snakeCase": {
-            "unsafeName": "get_users_request_not_found_error",
-            "safeName": "get_users_request_not_found_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "GET_USERS_REQUEST_NOT_FOUND_ERROR",
-            "safeName": "GET_USERS_REQUEST_NOT_FOUND_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "GetUsersRequestNotFoundError",
-            "safeName": "GetUsersRequestNotFoundError"
-          }
-        },
+        "name": "GetUsersRequestNotFoundError",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -495,25 +273,7 @@
         "errorId": "error_:GetUsersRequestNotFoundError"
       },
       "discriminantValue": {
-        "name": {
-          "originalName": "GetUsersRequestNotFoundError",
-          "camelCase": {
-            "unsafeName": "getUsersRequestNotFoundError",
-            "safeName": "getUsersRequestNotFoundError"
-          },
-          "snakeCase": {
-            "unsafeName": "get_users_request_not_found_error",
-            "safeName": "get_users_request_not_found_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "GET_USERS_REQUEST_NOT_FOUND_ERROR",
-            "safeName": "GET_USERS_REQUEST_NOT_FOUND_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "GetUsersRequestNotFoundError",
-            "safeName": "GetUsersRequestNotFoundError"
-          }
-        },
+        "name": "GetUsersRequestNotFoundError",
         "wireValue": "GetUsersRequestNotFoundError"
       },
       "docs": "User not found",
@@ -530,14 +290,6 @@
           "camelCase": {
             "unsafeName": "getUsersUserIDRequestUnauthorizedError",
             "safeName": "getUsersUserIDRequestUnauthorizedError"
-          },
-          "snakeCase": {
-            "unsafeName": "get_users_user_id_request_unauthorized_error",
-            "safeName": "get_users_user_id_request_unauthorized_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "GET_USERS_USER_ID_REQUEST_UNAUTHORIZED_ERROR",
-            "safeName": "GET_USERS_USER_ID_REQUEST_UNAUTHORIZED_ERROR"
           },
           "pascalCase": {
             "unsafeName": "GetUsersUserIDRequestUnauthorizedError",
@@ -556,14 +308,6 @@
           "camelCase": {
             "unsafeName": "getUsersUserIDRequestUnauthorizedError",
             "safeName": "getUsersUserIDRequestUnauthorizedError"
-          },
-          "snakeCase": {
-            "unsafeName": "get_users_user_id_request_unauthorized_error",
-            "safeName": "get_users_user_id_request_unauthorized_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "GET_USERS_USER_ID_REQUEST_UNAUTHORIZED_ERROR",
-            "safeName": "GET_USERS_USER_ID_REQUEST_UNAUTHORIZED_ERROR"
           },
           "pascalCase": {
             "unsafeName": "GetUsersUserIDRequestUnauthorizedError",
@@ -587,14 +331,6 @@
             "unsafeName": "getUsersUserIDRequestNotFoundError",
             "safeName": "getUsersUserIDRequestNotFoundError"
           },
-          "snakeCase": {
-            "unsafeName": "get_users_user_id_request_not_found_error",
-            "safeName": "get_users_user_id_request_not_found_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "GET_USERS_USER_ID_REQUEST_NOT_FOUND_ERROR",
-            "safeName": "GET_USERS_USER_ID_REQUEST_NOT_FOUND_ERROR"
-          },
           "pascalCase": {
             "unsafeName": "GetUsersUserIDRequestNotFoundError",
             "safeName": "GetUsersUserIDRequestNotFoundError"
@@ -613,14 +349,6 @@
             "unsafeName": "getUsersUserIDRequestNotFoundError",
             "safeName": "getUsersUserIDRequestNotFoundError"
           },
-          "snakeCase": {
-            "unsafeName": "get_users_user_id_request_not_found_error",
-            "safeName": "get_users_user_id_request_not_found_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "GET_USERS_USER_ID_REQUEST_NOT_FOUND_ERROR",
-            "safeName": "GET_USERS_USER_ID_REQUEST_NOT_FOUND_ERROR"
-          },
           "pascalCase": {
             "unsafeName": "GetUsersUserIDRequestNotFoundError",
             "safeName": "GetUsersUserIDRequestNotFoundError"
@@ -637,25 +365,7 @@
     },
     "error_:GetTokenRequestUnauthorizedError": {
       "name": {
-        "name": {
-          "originalName": "GetTokenRequestUnauthorizedError",
-          "camelCase": {
-            "unsafeName": "getTokenRequestUnauthorizedError",
-            "safeName": "getTokenRequestUnauthorizedError"
-          },
-          "snakeCase": {
-            "unsafeName": "get_token_request_unauthorized_error",
-            "safeName": "get_token_request_unauthorized_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "GET_TOKEN_REQUEST_UNAUTHORIZED_ERROR",
-            "safeName": "GET_TOKEN_REQUEST_UNAUTHORIZED_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "GetTokenRequestUnauthorizedError",
-            "safeName": "GetTokenRequestUnauthorizedError"
-          }
-        },
+        "name": "GetTokenRequestUnauthorizedError",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -663,25 +373,7 @@
         "errorId": "error_:GetTokenRequestUnauthorizedError"
       },
       "discriminantValue": {
-        "name": {
-          "originalName": "GetTokenRequestUnauthorizedError",
-          "camelCase": {
-            "unsafeName": "getTokenRequestUnauthorizedError",
-            "safeName": "getTokenRequestUnauthorizedError"
-          },
-          "snakeCase": {
-            "unsafeName": "get_token_request_unauthorized_error",
-            "safeName": "get_token_request_unauthorized_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "GET_TOKEN_REQUEST_UNAUTHORIZED_ERROR",
-            "safeName": "GET_TOKEN_REQUEST_UNAUTHORIZED_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "GetTokenRequestUnauthorizedError",
-            "safeName": "GetTokenRequestUnauthorizedError"
-          }
-        },
+        "name": "GetTokenRequestUnauthorizedError",
         "wireValue": "GetTokenRequestUnauthorizedError"
       },
       "docs": "Unauthorized",
@@ -716,25 +408,7 @@
         {
           "docs": "List information about all users",
           "id": "endpoint_.listUsers",
-          "name": {
-            "originalName": "listUsers",
-            "camelCase": {
-              "unsafeName": "listUsers",
-              "safeName": "listUsers"
-            },
-            "snakeCase": {
-              "unsafeName": "list_users",
-              "safeName": "list_users"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "LIST_USERS",
-              "safeName": "LIST_USERS"
-            },
-            "pascalCase": {
-              "unsafeName": "ListUsers",
-              "safeName": "ListUsers"
-            }
-          },
+          "name": "listUsers",
           "displayName": "List Users",
           "auth": false,
           "idempotent": false,
@@ -756,25 +430,7 @@
               "value": {
                 "docs": "Successful response",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "User",
-                    "camelCase": {
-                      "unsafeName": "user",
-                      "safeName": "user"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "user",
-                      "safeName": "user"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "USER",
-                      "safeName": "USER"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "User",
-                      "safeName": "User"
-                    }
-                  },
+                  "name": "User",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -791,25 +447,7 @@
           "errors": [
             {
               "error": {
-                "name": {
-                  "originalName": "GetUsersRequestUnauthorizedError",
-                  "camelCase": {
-                    "unsafeName": "getUsersRequestUnauthorizedError",
-                    "safeName": "getUsersRequestUnauthorizedError"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "get_users_request_unauthorized_error",
-                    "safeName": "get_users_request_unauthorized_error"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "GET_USERS_REQUEST_UNAUTHORIZED_ERROR",
-                    "safeName": "GET_USERS_REQUEST_UNAUTHORIZED_ERROR"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "GetUsersRequestUnauthorizedError",
-                    "safeName": "GetUsersRequestUnauthorizedError"
-                  }
-                },
+                "name": "GetUsersRequestUnauthorizedError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
@@ -819,25 +457,7 @@
             },
             {
               "error": {
-                "name": {
-                  "originalName": "GetUsersRequestNotFoundError",
-                  "camelCase": {
-                    "unsafeName": "getUsersRequestNotFoundError",
-                    "safeName": "getUsersRequestNotFoundError"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "get_users_request_not_found_error",
-                    "safeName": "get_users_request_not_found_error"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "GET_USERS_REQUEST_NOT_FOUND_ERROR",
-                    "safeName": "GET_USERS_REQUEST_NOT_FOUND_ERROR"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "GetUsersRequestNotFoundError",
-                    "safeName": "GetUsersRequestNotFoundError"
-                  }
-                },
+                "name": "GetUsersRequestNotFoundError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
@@ -852,25 +472,7 @@
         {
           "docs": "Retrieve detailed information about a specific user",
           "id": "endpoint_.getUserInformation",
-          "name": {
-            "originalName": "getUserInformation",
-            "camelCase": {
-              "unsafeName": "getUserInformation",
-              "safeName": "getUserInformation"
-            },
-            "snakeCase": {
-              "unsafeName": "get_user_information",
-              "safeName": "get_user_information"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GET_USER_INFORMATION",
-              "safeName": "GET_USER_INFORMATION"
-            },
-            "pascalCase": {
-              "unsafeName": "GetUserInformation",
-              "safeName": "GetUserInformation"
-            }
-          },
+          "name": "getUserInformation",
           "displayName": "Get user information",
           "auth": false,
           "idempotent": false,
@@ -901,14 +503,6 @@
                   "unsafeName": "userID",
                   "safeName": "userID"
                 },
-                "snakeCase": {
-                  "unsafeName": "user_id",
-                  "safeName": "user_id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "USER_ID",
-                  "safeName": "USER_ID"
-                },
                 "pascalCase": {
                   "unsafeName": "UserID",
                   "safeName": "UserID"
@@ -938,14 +532,6 @@
                   "unsafeName": "userID",
                   "safeName": "userID"
                 },
-                "snakeCase": {
-                  "unsafeName": "user_id",
-                  "safeName": "user_id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "USER_ID",
-                  "safeName": "USER_ID"
-                },
                 "pascalCase": {
                   "unsafeName": "UserID",
                   "safeName": "UserID"
@@ -974,25 +560,7 @@
               "value": {
                 "docs": "Successful response",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "User",
-                    "camelCase": {
-                      "unsafeName": "user",
-                      "safeName": "user"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "user",
-                      "safeName": "user"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "USER",
-                      "safeName": "USER"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "User",
-                      "safeName": "User"
-                    }
-                  },
+                  "name": "User",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -1015,14 +583,6 @@
                     "unsafeName": "getUsersUserIDRequestUnauthorizedError",
                     "safeName": "getUsersUserIDRequestUnauthorizedError"
                   },
-                  "snakeCase": {
-                    "unsafeName": "get_users_user_id_request_unauthorized_error",
-                    "safeName": "get_users_user_id_request_unauthorized_error"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "GET_USERS_USER_ID_REQUEST_UNAUTHORIZED_ERROR",
-                    "safeName": "GET_USERS_USER_ID_REQUEST_UNAUTHORIZED_ERROR"
-                  },
                   "pascalCase": {
                     "unsafeName": "GetUsersUserIDRequestUnauthorizedError",
                     "safeName": "GetUsersUserIDRequestUnauthorizedError"
@@ -1043,14 +603,6 @@
                     "unsafeName": "getUsersUserIDRequestNotFoundError",
                     "safeName": "getUsersUserIDRequestNotFoundError"
                   },
-                  "snakeCase": {
-                    "unsafeName": "get_users_user_id_request_not_found_error",
-                    "safeName": "get_users_user_id_request_not_found_error"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "GET_USERS_USER_ID_REQUEST_NOT_FOUND_ERROR",
-                    "safeName": "GET_USERS_USER_ID_REQUEST_NOT_FOUND_ERROR"
-                  },
                   "pascalCase": {
                     "unsafeName": "GetUsersUserIDRequestNotFoundError",
                     "safeName": "GetUsersUserIDRequestNotFoundError"
@@ -1070,25 +622,7 @@
         {
           "docs": "Retrieve an authentication token for the API",
           "id": "endpoint_.getAuthenticationToken",
-          "name": {
-            "originalName": "getAuthenticationToken",
-            "camelCase": {
-              "unsafeName": "getAuthenticationToken",
-              "safeName": "getAuthenticationToken"
-            },
-            "snakeCase": {
-              "unsafeName": "get_authentication_token",
-              "safeName": "get_authentication_token"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GET_AUTHENTICATION_TOKEN",
-              "safeName": "GET_AUTHENTICATION_TOKEN"
-            },
-            "pascalCase": {
-              "unsafeName": "GetAuthenticationToken",
-              "safeName": "GetAuthenticationToken"
-            }
-          },
+          "name": "getAuthenticationToken",
           "displayName": "Get authentication token",
           "auth": false,
           "idempotent": false,
@@ -1110,25 +644,7 @@
               "value": {
                 "docs": "Successful response",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "Token",
-                    "camelCase": {
-                      "unsafeName": "token",
-                      "safeName": "token"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "token",
-                      "safeName": "token"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "TOKEN",
-                      "safeName": "TOKEN"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Token",
-                      "safeName": "Token"
-                    }
-                  },
+                  "name": "Token",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -1145,25 +661,7 @@
           "errors": [
             {
               "error": {
-                "name": {
-                  "originalName": "GetTokenRequestUnauthorizedError",
-                  "camelCase": {
-                    "unsafeName": "getTokenRequestUnauthorizedError",
-                    "safeName": "getTokenRequestUnauthorizedError"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "get_token_request_unauthorized_error",
-                    "safeName": "get_token_request_unauthorized_error"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "GET_TOKEN_REQUEST_UNAUTHORIZED_ERROR",
-                    "safeName": "GET_TOKEN_REQUEST_UNAUTHORIZED_ERROR"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "GetTokenRequestUnauthorizedError",
-                    "safeName": "GetTokenRequestUnauthorizedError"
-                  }
-                },
+                "name": "GetTokenRequestUnauthorizedError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
@@ -1186,14 +684,6 @@
           "unsafeName": "errorInstanceID",
           "safeName": "errorInstanceID"
         },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
         "pascalCase": {
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
@@ -1208,25 +698,7 @@
       "environments": [
         {
           "id": "Default",
-          "name": {
-            "originalName": "Default",
-            "camelCase": {
-              "unsafeName": "default",
-              "safeName": "default"
-            },
-            "snakeCase": {
-              "unsafeName": "default",
-              "safeName": "default"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "DEFAULT",
-              "safeName": "DEFAULT"
-            },
-            "pascalCase": {
-              "unsafeName": "Default",
-              "safeName": "Default"
-            }
-          },
+          "name": "Default",
           "url": "https://a.com"
         }
       ],
@@ -1260,6 +732,10 @@
               "unsafeName": "user",
               "safeName": "user"
             },
+            "pascalCase": {
+              "unsafeName": "User",
+              "safeName": "User"
+            },
             "snakeCase": {
               "unsafeName": "user",
               "safeName": "user"
@@ -1267,10 +743,6 @@
             "screamingSnakeCase": {
               "unsafeName": "USER",
               "safeName": "USER"
-            },
-            "pascalCase": {
-              "unsafeName": "User",
-              "safeName": "User"
             }
           },
           "fernFilepath": {
@@ -1287,15 +759,15 @@
                   "unsafeName": "id",
                   "safeName": "id"
                 },
+                "pascalCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
                 "snakeCase": {
                   "unsafeName": "id",
                   "safeName": "id"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
-                "pascalCase": {
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
@@ -1318,6 +790,10 @@
                   "unsafeName": "username",
                   "safeName": "username"
                 },
+                "pascalCase": {
+                  "unsafeName": "Username",
+                  "safeName": "Username"
+                },
                 "snakeCase": {
                   "unsafeName": "username",
                   "safeName": "username"
@@ -1325,10 +801,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "USERNAME",
                   "safeName": "USERNAME"
-                },
-                "pascalCase": {
-                  "unsafeName": "Username",
-                  "safeName": "Username"
                 }
               },
               "wireValue": "username"
@@ -1349,6 +821,10 @@
                   "unsafeName": "email",
                   "safeName": "email"
                 },
+                "pascalCase": {
+                  "unsafeName": "Email",
+                  "safeName": "Email"
+                },
                 "snakeCase": {
                   "unsafeName": "email",
                   "safeName": "email"
@@ -1356,10 +832,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "EMAIL",
                   "safeName": "EMAIL"
-                },
-                "pascalCase": {
-                  "unsafeName": "Email",
-                  "safeName": "Email"
                 }
               },
               "wireValue": "email"
@@ -1380,6 +852,10 @@
                   "unsafeName": "createdAt",
                   "safeName": "createdAt"
                 },
+                "pascalCase": {
+                  "unsafeName": "CreatedAt",
+                  "safeName": "CreatedAt"
+                },
                 "snakeCase": {
                   "unsafeName": "created_at",
                   "safeName": "created_at"
@@ -1387,10 +863,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "CREATED_AT",
                   "safeName": "CREATED_AT"
-                },
-                "pascalCase": {
-                  "unsafeName": "CreatedAt",
-                  "safeName": "CreatedAt"
                 }
               },
               "wireValue": "createdAt"
@@ -1415,6 +887,10 @@
               "unsafeName": "token",
               "safeName": "token"
             },
+            "pascalCase": {
+              "unsafeName": "Token",
+              "safeName": "Token"
+            },
             "snakeCase": {
               "unsafeName": "token",
               "safeName": "token"
@@ -1422,10 +898,6 @@
             "screamingSnakeCase": {
               "unsafeName": "TOKEN",
               "safeName": "TOKEN"
-            },
-            "pascalCase": {
-              "unsafeName": "Token",
-              "safeName": "Token"
             }
           },
           "fernFilepath": {
@@ -1442,6 +914,10 @@
                   "unsafeName": "accessToken",
                   "safeName": "accessToken"
                 },
+                "pascalCase": {
+                  "unsafeName": "AccessToken",
+                  "safeName": "AccessToken"
+                },
                 "snakeCase": {
                   "unsafeName": "access_token",
                   "safeName": "access_token"
@@ -1449,10 +925,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "ACCESS_TOKEN",
                   "safeName": "ACCESS_TOKEN"
-                },
-                "pascalCase": {
-                  "unsafeName": "AccessToken",
-                  "safeName": "AccessToken"
                 }
               },
               "wireValue": "accessToken"
@@ -1473,6 +945,10 @@
                   "unsafeName": "tokenType",
                   "safeName": "tokenType"
                 },
+                "pascalCase": {
+                  "unsafeName": "TokenType",
+                  "safeName": "TokenType"
+                },
                 "snakeCase": {
                   "unsafeName": "token_type",
                   "safeName": "token_type"
@@ -1480,10 +956,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "TOKEN_TYPE",
                   "safeName": "TOKEN_TYPE"
-                },
-                "pascalCase": {
-                  "unsafeName": "TokenType",
-                  "safeName": "TokenType"
                 }
               },
               "wireValue": "tokenType"
@@ -1504,6 +976,10 @@
                   "unsafeName": "expiresIn",
                   "safeName": "expiresIn"
                 },
+                "pascalCase": {
+                  "unsafeName": "ExpiresIn",
+                  "safeName": "ExpiresIn"
+                },
                 "snakeCase": {
                   "unsafeName": "expires_in",
                   "safeName": "expires_in"
@@ -1511,10 +987,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "EXPIRES_IN",
                   "safeName": "EXPIRES_IN"
-                },
-                "pascalCase": {
-                  "unsafeName": "ExpiresIn",
-                  "safeName": "ExpiresIn"
                 }
               },
               "wireValue": "expiresIn"
@@ -1542,6 +1014,10 @@
               "unsafeName": "listUsers",
               "safeName": "listUsers"
             },
+            "pascalCase": {
+              "unsafeName": "ListUsers",
+              "safeName": "ListUsers"
+            },
             "snakeCase": {
               "unsafeName": "list_users",
               "safeName": "list_users"
@@ -1549,10 +1025,6 @@
             "screamingSnakeCase": {
               "unsafeName": "LIST_USERS",
               "safeName": "LIST_USERS"
-            },
-            "pascalCase": {
-              "unsafeName": "ListUsers",
-              "safeName": "ListUsers"
             }
           },
           "fernFilepath": {
@@ -1581,6 +1053,10 @@
               "unsafeName": "getUserInformation",
               "safeName": "getUserInformation"
             },
+            "pascalCase": {
+              "unsafeName": "GetUserInformation",
+              "safeName": "GetUserInformation"
+            },
             "snakeCase": {
               "unsafeName": "get_user_information",
               "safeName": "get_user_information"
@@ -1588,10 +1064,6 @@
             "screamingSnakeCase": {
               "unsafeName": "GET_USER_INFORMATION",
               "safeName": "GET_USER_INFORMATION"
-            },
-            "pascalCase": {
-              "unsafeName": "GetUserInformation",
-              "safeName": "GetUserInformation"
             }
           },
           "fernFilepath": {
@@ -1613,6 +1085,10 @@
                     "unsafeName": "userID",
                     "safeName": "userID"
                   },
+                  "pascalCase": {
+                    "unsafeName": "UserID",
+                    "safeName": "UserID"
+                  },
                   "snakeCase": {
                     "unsafeName": "user_id",
                     "safeName": "user_id"
@@ -1620,10 +1096,6 @@
                   "screamingSnakeCase": {
                     "unsafeName": "USER_ID",
                     "safeName": "USER_ID"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "UserID",
-                    "safeName": "UserID"
                   }
                 },
                 "wireValue": "userId"
@@ -1649,6 +1121,10 @@
               "unsafeName": "getAuthenticationToken",
               "safeName": "getAuthenticationToken"
             },
+            "pascalCase": {
+              "unsafeName": "GetAuthenticationToken",
+              "safeName": "GetAuthenticationToken"
+            },
             "snakeCase": {
               "unsafeName": "get_authentication_token",
               "safeName": "get_authentication_token"
@@ -1656,10 +1132,6 @@
             "screamingSnakeCase": {
               "unsafeName": "GET_AUTHENTICATION_TOKEN",
               "safeName": "GET_AUTHENTICATION_TOKEN"
-            },
-            "pascalCase": {
-              "unsafeName": "GetAuthenticationToken",
-              "safeName": "GetAuthenticationToken"
             }
           },
           "fernFilepath": {
@@ -1694,6 +1166,10 @@
                 "unsafeName": "default",
                 "safeName": "default"
               },
+              "pascalCase": {
+                "unsafeName": "Default",
+                "safeName": "Default"
+              },
               "snakeCase": {
                 "unsafeName": "default",
                 "safeName": "default"
@@ -1701,10 +1177,6 @@
               "screamingSnakeCase": {
                 "unsafeName": "DEFAULT",
                 "safeName": "DEFAULT"
-              },
-              "pascalCase": {
-                "unsafeName": "Default",
-                "safeName": "Default"
               }
             },
             "url": "https://a.com"

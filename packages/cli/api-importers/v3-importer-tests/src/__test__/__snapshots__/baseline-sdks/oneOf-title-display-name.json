@@ -2,18 +2,6 @@
   "selfHosted": false,
   "apiName": {
     "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
     "pascalCase": {
       "unsafeName": "API",
       "safeName": "API"
@@ -36,14 +24,6 @@
             "unsafeName": "postTestOneOfDisplayNameRequestFieldsItemID",
             "safeName": "postTestOneOfDisplayNameRequestFieldsItemID"
           },
-          "snakeCase": {
-            "unsafeName": "post_test_one_of_display_name_request_fields_item_id",
-            "safeName": "post_test_one_of_display_name_request_fields_item_id"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "POST_TEST_ONE_OF_DISPLAY_NAME_REQUEST_FIELDS_ITEM_ID",
-            "safeName": "POST_TEST_ONE_OF_DISPLAY_NAME_REQUEST_FIELDS_ITEM_ID"
-          },
           "pascalCase": {
             "unsafeName": "PostTestOneOfDisplayNameRequestFieldsItemID",
             "safeName": "PostTestOneOfDisplayNameRequestFieldsItemID"
@@ -62,18 +42,6 @@
             "name": {
               "name": {
                 "originalName": "id",
-                "camelCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "snakeCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
                 "pascalCase": {
                   "unsafeName": "ID",
                   "safeName": "ID"
@@ -116,25 +84,7 @@
     "type_:PostTestOneOfDisplayNameRequestFieldsItemName": {
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "PostTestOneOfDisplayNameRequestFieldsItemName",
-          "camelCase": {
-            "unsafeName": "postTestOneOfDisplayNameRequestFieldsItemName",
-            "safeName": "postTestOneOfDisplayNameRequestFieldsItemName"
-          },
-          "snakeCase": {
-            "unsafeName": "post_test_one_of_display_name_request_fields_item_name",
-            "safeName": "post_test_one_of_display_name_request_fields_item_name"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "POST_TEST_ONE_OF_DISPLAY_NAME_REQUEST_FIELDS_ITEM_NAME",
-            "safeName": "POST_TEST_ONE_OF_DISPLAY_NAME_REQUEST_FIELDS_ITEM_NAME"
-          },
-          "pascalCase": {
-            "unsafeName": "PostTestOneOfDisplayNameRequestFieldsItemName",
-            "safeName": "PostTestOneOfDisplayNameRequestFieldsItemName"
-          }
-        },
+        "name": "PostTestOneOfDisplayNameRequestFieldsItemName",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -146,25 +96,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "name",
-                "camelCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "snakeCase": {
-                  "unsafeName": "name",
-                  "safeName": "name"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "NAME",
-                  "safeName": "NAME"
-                },
-                "pascalCase": {
-                  "unsafeName": "Name",
-                  "safeName": "Name"
-                }
-              },
+              "name": "name",
               "wireValue": "name"
             },
             "valueType": {
@@ -202,25 +134,7 @@
     "type_:PostTestOneOfDisplayNameRequestFieldsItem": {
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "PostTestOneOfDisplayNameRequestFieldsItem",
-          "camelCase": {
-            "unsafeName": "postTestOneOfDisplayNameRequestFieldsItem",
-            "safeName": "postTestOneOfDisplayNameRequestFieldsItem"
-          },
-          "snakeCase": {
-            "unsafeName": "post_test_one_of_display_name_request_fields_item",
-            "safeName": "post_test_one_of_display_name_request_fields_item"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "POST_TEST_ONE_OF_DISPLAY_NAME_REQUEST_FIELDS_ITEM",
-            "safeName": "POST_TEST_ONE_OF_DISPLAY_NAME_REQUEST_FIELDS_ITEM"
-          },
-          "pascalCase": {
-            "unsafeName": "PostTestOneOfDisplayNameRequestFieldsItem",
-            "safeName": "PostTestOneOfDisplayNameRequestFieldsItem"
-          }
-        },
+        "name": "PostTestOneOfDisplayNameRequestFieldsItem",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -236,14 +150,6 @@
                 "camelCase": {
                   "unsafeName": "postTestOneOfDisplayNameRequestFieldsItemID",
                   "safeName": "postTestOneOfDisplayNameRequestFieldsItemID"
-                },
-                "snakeCase": {
-                  "unsafeName": "post_test_one_of_display_name_request_fields_item_id",
-                  "safeName": "post_test_one_of_display_name_request_fields_item_id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "POST_TEST_ONE_OF_DISPLAY_NAME_REQUEST_FIELDS_ITEM_ID",
-                  "safeName": "POST_TEST_ONE_OF_DISPLAY_NAME_REQUEST_FIELDS_ITEM_ID"
                 },
                 "pascalCase": {
                   "unsafeName": "PostTestOneOfDisplayNameRequestFieldsItemID",
@@ -261,25 +167,7 @@
           },
           {
             "type": {
-              "name": {
-                "originalName": "PostTestOneOfDisplayNameRequestFieldsItemName",
-                "camelCase": {
-                  "unsafeName": "postTestOneOfDisplayNameRequestFieldsItemName",
-                  "safeName": "postTestOneOfDisplayNameRequestFieldsItemName"
-                },
-                "snakeCase": {
-                  "unsafeName": "post_test_one_of_display_name_request_fields_item_name",
-                  "safeName": "post_test_one_of_display_name_request_fields_item_name"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "POST_TEST_ONE_OF_DISPLAY_NAME_REQUEST_FIELDS_ITEM_NAME",
-                  "safeName": "POST_TEST_ONE_OF_DISPLAY_NAME_REQUEST_FIELDS_ITEM_NAME"
-                },
-                "pascalCase": {
-                  "unsafeName": "PostTestOneOfDisplayNameRequestFieldsItemName",
-                  "safeName": "PostTestOneOfDisplayNameRequestFieldsItemName"
-                }
-              },
+              "name": "PostTestOneOfDisplayNameRequestFieldsItemName",
               "fernFilepath": {
                 "allParts": [],
                 "packagePath": []
@@ -301,25 +189,7 @@
     },
     "type_:PostTestOneOfDisplayNameResponse": {
       "name": {
-        "name": {
-          "originalName": "PostTestOneOfDisplayNameResponse",
-          "camelCase": {
-            "unsafeName": "postTestOneOfDisplayNameResponse",
-            "safeName": "postTestOneOfDisplayNameResponse"
-          },
-          "snakeCase": {
-            "unsafeName": "post_test_one_of_display_name_response",
-            "safeName": "post_test_one_of_display_name_response"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "POST_TEST_ONE_OF_DISPLAY_NAME_RESPONSE",
-            "safeName": "POST_TEST_ONE_OF_DISPLAY_NAME_RESPONSE"
-          },
-          "pascalCase": {
-            "unsafeName": "PostTestOneOfDisplayNameResponse",
-            "safeName": "PostTestOneOfDisplayNameResponse"
-          }
-        },
+        "name": "PostTestOneOfDisplayNameResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -333,18 +203,6 @@
             "name": {
               "name": {
                 "originalName": "id",
-                "camelCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "snakeCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
                 "pascalCase": {
                   "unsafeName": "ID",
                   "safeName": "ID"
@@ -403,25 +261,7 @@
       "endpoints": [
         {
           "id": "endpoint_.postTestOneOfDisplayName",
-          "name": {
-            "originalName": "postTestOneOfDisplayName",
-            "camelCase": {
-              "unsafeName": "postTestOneOfDisplayName",
-              "safeName": "postTestOneOfDisplayName"
-            },
-            "snakeCase": {
-              "unsafeName": "post_test_one_of_display_name",
-              "safeName": "post_test_one_of_display_name"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "POST_TEST_ONE_OF_DISPLAY_NAME",
-              "safeName": "POST_TEST_ONE_OF_DISPLAY_NAME"
-            },
-            "pascalCase": {
-              "unsafeName": "PostTestOneOfDisplayName",
-              "safeName": "PostTestOneOfDisplayName"
-            }
-          },
+          "name": "postTestOneOfDisplayName",
           "auth": false,
           "idempotent": false,
           "method": "POST",
@@ -438,49 +278,13 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "PostTestOneOfDisplayNameRequest",
-              "camelCase": {
-                "unsafeName": "postTestOneOfDisplayNameRequest",
-                "safeName": "postTestOneOfDisplayNameRequest"
-              },
-              "snakeCase": {
-                "unsafeName": "post_test_one_of_display_name_request",
-                "safeName": "post_test_one_of_display_name_request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "POST_TEST_ONE_OF_DISPLAY_NAME_REQUEST",
-                "safeName": "POST_TEST_ONE_OF_DISPLAY_NAME_REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "PostTestOneOfDisplayNameRequest",
-                "safeName": "PostTestOneOfDisplayNameRequest"
-              }
-            },
+            "name": "PostTestOneOfDisplayNameRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "fields",
-                    "camelCase": {
-                      "unsafeName": "fields",
-                      "safeName": "fields"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "fields",
-                      "safeName": "fields"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "FIELDS",
-                      "safeName": "FIELDS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Fields",
-                      "safeName": "Fields"
-                    }
-                  },
+                  "name": "fields",
                   "wireValue": "fields"
                 },
                 "valueType": {
@@ -488,25 +292,7 @@
                     "optional": {
                       "container": {
                         "list": {
-                          "name": {
-                            "originalName": "PostTestOneOfDisplayNameRequestFieldsItem",
-                            "camelCase": {
-                              "unsafeName": "postTestOneOfDisplayNameRequestFieldsItem",
-                              "safeName": "postTestOneOfDisplayNameRequestFieldsItem"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "post_test_one_of_display_name_request_fields_item",
-                              "safeName": "post_test_one_of_display_name_request_fields_item"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "POST_TEST_ONE_OF_DISPLAY_NAME_REQUEST_FIELDS_ITEM",
-                              "safeName": "POST_TEST_ONE_OF_DISPLAY_NAME_REQUEST_FIELDS_ITEM"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "PostTestOneOfDisplayNameRequestFieldsItem",
-                              "safeName": "PostTestOneOfDisplayNameRequestFieldsItem"
-                            }
-                          },
+                          "name": "PostTestOneOfDisplayNameRequestFieldsItem",
                           "fernFilepath": {
                             "allParts": [],
                             "packagePath": []
@@ -534,91 +320,19 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "PostTestOneOfDisplayNameRequest",
-                "camelCase": {
-                  "unsafeName": "postTestOneOfDisplayNameRequest",
-                  "safeName": "postTestOneOfDisplayNameRequest"
-                },
-                "snakeCase": {
-                  "unsafeName": "post_test_one_of_display_name_request",
-                  "safeName": "post_test_one_of_display_name_request"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "POST_TEST_ONE_OF_DISPLAY_NAME_REQUEST",
-                  "safeName": "POST_TEST_ONE_OF_DISPLAY_NAME_REQUEST"
-                },
-                "pascalCase": {
-                  "unsafeName": "PostTestOneOfDisplayNameRequest",
-                  "safeName": "PostTestOneOfDisplayNameRequest"
-                }
-              },
-              "bodyKey": {
-                "originalName": "body",
-                "camelCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "snakeCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BODY",
-                  "safeName": "BODY"
-                },
-                "pascalCase": {
-                  "unsafeName": "Body",
-                  "safeName": "Body"
-                }
-              },
+              "wrapperName": "PostTestOneOfDisplayNameRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request",
-              "camelCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "snakeCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "REQUEST",
-                "safeName": "REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "Request",
-                "safeName": "Request"
-              }
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "PostTestOneOfDisplayNameResponse",
-                    "camelCase": {
-                      "unsafeName": "postTestOneOfDisplayNameResponse",
-                      "safeName": "postTestOneOfDisplayNameResponse"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "post_test_one_of_display_name_response",
-                      "safeName": "post_test_one_of_display_name_response"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "POST_TEST_ONE_OF_DISPLAY_NAME_RESPONSE",
-                      "safeName": "POST_TEST_ONE_OF_DISPLAY_NAME_RESPONSE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "PostTestOneOfDisplayNameResponse",
-                      "safeName": "PostTestOneOfDisplayNameResponse"
-                    }
-                  },
+                  "name": "PostTestOneOfDisplayNameResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -646,14 +360,6 @@
         "camelCase": {
           "unsafeName": "errorInstanceID",
           "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
         },
         "pascalCase": {
           "unsafeName": "ErrorInstanceID",
@@ -692,6 +398,10 @@
               "unsafeName": "postTestOneOfDisplayNameRequestFieldsItemID",
               "safeName": "postTestOneOfDisplayNameRequestFieldsItemID"
             },
+            "pascalCase": {
+              "unsafeName": "PostTestOneOfDisplayNameRequestFieldsItemID",
+              "safeName": "PostTestOneOfDisplayNameRequestFieldsItemID"
+            },
             "snakeCase": {
               "unsafeName": "post_test_one_of_display_name_request_fields_item_id",
               "safeName": "post_test_one_of_display_name_request_fields_item_id"
@@ -699,10 +409,6 @@
             "screamingSnakeCase": {
               "unsafeName": "POST_TEST_ONE_OF_DISPLAY_NAME_REQUEST_FIELDS_ITEM_ID",
               "safeName": "POST_TEST_ONE_OF_DISPLAY_NAME_REQUEST_FIELDS_ITEM_ID"
-            },
-            "pascalCase": {
-              "unsafeName": "PostTestOneOfDisplayNameRequestFieldsItemID",
-              "safeName": "PostTestOneOfDisplayNameRequestFieldsItemID"
             }
           },
           "fernFilepath": {
@@ -719,15 +425,15 @@
                   "unsafeName": "id",
                   "safeName": "id"
                 },
+                "pascalCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
                 "snakeCase": {
                   "unsafeName": "id",
                   "safeName": "id"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
-                "pascalCase": {
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
@@ -754,6 +460,10 @@
               "unsafeName": "postTestOneOfDisplayNameRequestFieldsItemName",
               "safeName": "postTestOneOfDisplayNameRequestFieldsItemName"
             },
+            "pascalCase": {
+              "unsafeName": "PostTestOneOfDisplayNameRequestFieldsItemName",
+              "safeName": "PostTestOneOfDisplayNameRequestFieldsItemName"
+            },
             "snakeCase": {
               "unsafeName": "post_test_one_of_display_name_request_fields_item_name",
               "safeName": "post_test_one_of_display_name_request_fields_item_name"
@@ -761,10 +471,6 @@
             "screamingSnakeCase": {
               "unsafeName": "POST_TEST_ONE_OF_DISPLAY_NAME_REQUEST_FIELDS_ITEM_NAME",
               "safeName": "POST_TEST_ONE_OF_DISPLAY_NAME_REQUEST_FIELDS_ITEM_NAME"
-            },
-            "pascalCase": {
-              "unsafeName": "PostTestOneOfDisplayNameRequestFieldsItemName",
-              "safeName": "PostTestOneOfDisplayNameRequestFieldsItemName"
             }
           },
           "fernFilepath": {
@@ -781,6 +487,10 @@
                   "unsafeName": "name",
                   "safeName": "name"
                 },
+                "pascalCase": {
+                  "unsafeName": "Name",
+                  "safeName": "Name"
+                },
                 "snakeCase": {
                   "unsafeName": "name",
                   "safeName": "name"
@@ -788,10 +498,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "NAME",
                   "safeName": "NAME"
-                },
-                "pascalCase": {
-                  "unsafeName": "Name",
-                  "safeName": "Name"
                 }
               },
               "wireValue": "name"
@@ -816,6 +522,10 @@
               "unsafeName": "postTestOneOfDisplayNameRequestFieldsItem",
               "safeName": "postTestOneOfDisplayNameRequestFieldsItem"
             },
+            "pascalCase": {
+              "unsafeName": "PostTestOneOfDisplayNameRequestFieldsItem",
+              "safeName": "PostTestOneOfDisplayNameRequestFieldsItem"
+            },
             "snakeCase": {
               "unsafeName": "post_test_one_of_display_name_request_fields_item",
               "safeName": "post_test_one_of_display_name_request_fields_item"
@@ -823,10 +533,6 @@
             "screamingSnakeCase": {
               "unsafeName": "POST_TEST_ONE_OF_DISPLAY_NAME_REQUEST_FIELDS_ITEM",
               "safeName": "POST_TEST_ONE_OF_DISPLAY_NAME_REQUEST_FIELDS_ITEM"
-            },
-            "pascalCase": {
-              "unsafeName": "PostTestOneOfDisplayNameRequestFieldsItem",
-              "safeName": "PostTestOneOfDisplayNameRequestFieldsItem"
             }
           },
           "fernFilepath": {
@@ -854,6 +560,10 @@
               "unsafeName": "postTestOneOfDisplayNameResponse",
               "safeName": "postTestOneOfDisplayNameResponse"
             },
+            "pascalCase": {
+              "unsafeName": "PostTestOneOfDisplayNameResponse",
+              "safeName": "PostTestOneOfDisplayNameResponse"
+            },
             "snakeCase": {
               "unsafeName": "post_test_one_of_display_name_response",
               "safeName": "post_test_one_of_display_name_response"
@@ -861,10 +571,6 @@
             "screamingSnakeCase": {
               "unsafeName": "POST_TEST_ONE_OF_DISPLAY_NAME_RESPONSE",
               "safeName": "POST_TEST_ONE_OF_DISPLAY_NAME_RESPONSE"
-            },
-            "pascalCase": {
-              "unsafeName": "PostTestOneOfDisplayNameResponse",
-              "safeName": "PostTestOneOfDisplayNameResponse"
             }
           },
           "fernFilepath": {
@@ -881,15 +587,15 @@
                   "unsafeName": "id",
                   "safeName": "id"
                 },
+                "pascalCase": {
+                  "unsafeName": "ID",
+                  "safeName": "ID"
+                },
                 "snakeCase": {
                   "unsafeName": "id",
                   "safeName": "id"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
-                "pascalCase": {
                   "unsafeName": "ID",
                   "safeName": "ID"
                 }
@@ -916,6 +622,10 @@
               "unsafeName": "postTestOneOfDisplayName",
               "safeName": "postTestOneOfDisplayName"
             },
+            "pascalCase": {
+              "unsafeName": "PostTestOneOfDisplayName",
+              "safeName": "PostTestOneOfDisplayName"
+            },
             "snakeCase": {
               "unsafeName": "post_test_one_of_display_name",
               "safeName": "post_test_one_of_display_name"
@@ -923,10 +633,6 @@
             "screamingSnakeCase": {
               "unsafeName": "POST_TEST_ONE_OF_DISPLAY_NAME",
               "safeName": "POST_TEST_ONE_OF_DISPLAY_NAME"
-            },
-            "pascalCase": {
-              "unsafeName": "PostTestOneOfDisplayName",
-              "safeName": "PostTestOneOfDisplayName"
             }
           },
           "fernFilepath": {
@@ -946,6 +652,10 @@
                 "unsafeName": "postTestOneOfDisplayNameRequest",
                 "safeName": "postTestOneOfDisplayNameRequest"
               },
+              "pascalCase": {
+                "unsafeName": "PostTestOneOfDisplayNameRequest",
+                "safeName": "PostTestOneOfDisplayNameRequest"
+              },
               "snakeCase": {
                 "unsafeName": "post_test_one_of_display_name_request",
                 "safeName": "post_test_one_of_display_name_request"
@@ -953,10 +663,6 @@
               "screamingSnakeCase": {
                 "unsafeName": "POST_TEST_ONE_OF_DISPLAY_NAME_REQUEST",
                 "safeName": "POST_TEST_ONE_OF_DISPLAY_NAME_REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "PostTestOneOfDisplayNameRequest",
-                "safeName": "PostTestOneOfDisplayNameRequest"
               }
             },
             "fernFilepath": {
@@ -977,6 +683,10 @@
                       "unsafeName": "fields",
                       "safeName": "fields"
                     },
+                    "pascalCase": {
+                      "unsafeName": "Fields",
+                      "safeName": "Fields"
+                    },
                     "snakeCase": {
                       "unsafeName": "fields",
                       "safeName": "fields"
@@ -984,10 +694,6 @@
                     "screamingSnakeCase": {
                       "unsafeName": "FIELDS",
                       "safeName": "FIELDS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Fields",
-                      "safeName": "Fields"
                     }
                   },
                   "wireValue": "fields"

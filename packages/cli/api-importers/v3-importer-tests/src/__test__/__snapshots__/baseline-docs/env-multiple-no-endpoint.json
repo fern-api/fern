@@ -2,18 +2,6 @@
   "selfHosted": false,
   "apiName": {
     "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
     "pascalCase": {
       "unsafeName": "API",
       "safeName": "API"
@@ -51,25 +39,7 @@
       "endpoints": [
         {
           "id": "endpoint_.list",
-          "name": {
-            "originalName": "list",
-            "camelCase": {
-              "unsafeName": "list",
-              "safeName": "list"
-            },
-            "snakeCase": {
-              "unsafeName": "list",
-              "safeName": "list"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "LIST",
-              "safeName": "LIST"
-            },
-            "pascalCase": {
-              "unsafeName": "List",
-              "safeName": "List"
-            }
-          },
+          "name": "list",
           "auth": false,
           "idempotent": false,
           "method": "GET",
@@ -119,14 +89,6 @@
           "unsafeName": "errorInstanceID",
           "safeName": "errorInstanceID"
         },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
         "pascalCase": {
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
@@ -141,48 +103,12 @@
       "environments": [
         {
           "id": "Prod",
-          "name": {
-            "originalName": "Prod",
-            "camelCase": {
-              "unsafeName": "prod",
-              "safeName": "prod"
-            },
-            "snakeCase": {
-              "unsafeName": "prod",
-              "safeName": "prod"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "PROD",
-              "safeName": "PROD"
-            },
-            "pascalCase": {
-              "unsafeName": "Prod",
-              "safeName": "Prod"
-            }
-          },
+          "name": "Prod",
           "url": "http://prod.api.com"
         },
         {
           "id": "Dev",
-          "name": {
-            "originalName": "Dev",
-            "camelCase": {
-              "unsafeName": "dev",
-              "safeName": "dev"
-            },
-            "snakeCase": {
-              "unsafeName": "dev",
-              "safeName": "dev"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "DEV",
-              "safeName": "DEV"
-            },
-            "pascalCase": {
-              "unsafeName": "Dev",
-              "safeName": "Dev"
-            }
-          },
+          "name": "Dev",
           "url": "http://dev.api.com"
         }
       ],
@@ -213,6 +139,10 @@
               "unsafeName": "list",
               "safeName": "list"
             },
+            "pascalCase": {
+              "unsafeName": "List",
+              "safeName": "List"
+            },
             "snakeCase": {
               "unsafeName": "list",
               "safeName": "list"
@@ -220,10 +150,6 @@
             "screamingSnakeCase": {
               "unsafeName": "LIST",
               "safeName": "LIST"
-            },
-            "pascalCase": {
-              "unsafeName": "List",
-              "safeName": "List"
             }
           },
           "fernFilepath": {
@@ -258,6 +184,10 @@
                 "unsafeName": "prod",
                 "safeName": "prod"
               },
+              "pascalCase": {
+                "unsafeName": "Prod",
+                "safeName": "Prod"
+              },
               "snakeCase": {
                 "unsafeName": "prod",
                 "safeName": "prod"
@@ -265,10 +195,6 @@
               "screamingSnakeCase": {
                 "unsafeName": "PROD",
                 "safeName": "PROD"
-              },
-              "pascalCase": {
-                "unsafeName": "Prod",
-                "safeName": "Prod"
               }
             },
             "url": "http://prod.api.com"
@@ -281,6 +207,10 @@
                 "unsafeName": "dev",
                 "safeName": "dev"
               },
+              "pascalCase": {
+                "unsafeName": "Dev",
+                "safeName": "Dev"
+              },
               "snakeCase": {
                 "unsafeName": "dev",
                 "safeName": "dev"
@@ -288,10 +218,6 @@
               "screamingSnakeCase": {
                 "unsafeName": "DEV",
                 "safeName": "DEV"
-              },
-              "pascalCase": {
-                "unsafeName": "Dev",
-                "safeName": "Dev"
               }
             },
             "url": "http://dev.api.com"

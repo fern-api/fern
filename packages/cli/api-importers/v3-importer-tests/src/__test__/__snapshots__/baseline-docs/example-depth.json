@@ -2,18 +2,6 @@
   "selfHosted": false,
   "apiName": {
     "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
     "pascalCase": {
       "unsafeName": "API",
       "safeName": "API"
@@ -29,25 +17,7 @@
   "types": {
     "type_:TreeNode": {
       "name": {
-        "name": {
-          "originalName": "TreeNode",
-          "camelCase": {
-            "unsafeName": "treeNode",
-            "safeName": "treeNode"
-          },
-          "snakeCase": {
-            "unsafeName": "tree_node",
-            "safeName": "tree_node"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "TREE_NODE",
-            "safeName": "TREE_NODE"
-          },
-          "pascalCase": {
-            "unsafeName": "TreeNode",
-            "safeName": "TreeNode"
-          }
-        },
+        "name": "TreeNode",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -60,25 +30,7 @@
           {
             "docs": "The value stored in this node",
             "name": {
-              "name": {
-                "originalName": "value",
-                "camelCase": {
-                  "unsafeName": "value",
-                  "safeName": "value"
-                },
-                "snakeCase": {
-                  "unsafeName": "value",
-                  "safeName": "value"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "VALUE",
-                  "safeName": "VALUE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Value",
-                  "safeName": "Value"
-                }
-              },
+              "name": "value",
               "wireValue": "value"
             },
             "valueType": {
@@ -104,49 +56,13 @@
           {
             "docs": "Child nodes of this tree node",
             "name": {
-              "name": {
-                "originalName": "left",
-                "camelCase": {
-                  "unsafeName": "left",
-                  "safeName": "left"
-                },
-                "snakeCase": {
-                  "unsafeName": "left",
-                  "safeName": "left"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "LEFT",
-                  "safeName": "LEFT"
-                },
-                "pascalCase": {
-                  "unsafeName": "Left",
-                  "safeName": "Left"
-                }
-              },
+              "name": "left",
               "wireValue": "left"
             },
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "TreeNode",
-                    "camelCase": {
-                      "unsafeName": "treeNode",
-                      "safeName": "treeNode"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "tree_node",
-                      "safeName": "tree_node"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "TREE_NODE",
-                      "safeName": "TREE_NODE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "TreeNode",
-                      "safeName": "TreeNode"
-                    }
-                  },
+                  "name": "TreeNode",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -166,49 +82,13 @@
           {
             "docs": "Child nodes of this tree node",
             "name": {
-              "name": {
-                "originalName": "right",
-                "camelCase": {
-                  "unsafeName": "right",
-                  "safeName": "right"
-                },
-                "snakeCase": {
-                  "unsafeName": "right",
-                  "safeName": "right"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "RIGHT",
-                  "safeName": "RIGHT"
-                },
-                "pascalCase": {
-                  "unsafeName": "Right",
-                  "safeName": "Right"
-                }
-              },
+              "name": "right",
               "wireValue": "right"
             },
             "valueType": {
               "container": {
                 "optional": {
-                  "name": {
-                    "originalName": "TreeNode",
-                    "camelCase": {
-                      "unsafeName": "treeNode",
-                      "safeName": "treeNode"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "tree_node",
-                      "safeName": "tree_node"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "TREE_NODE",
-                      "safeName": "TREE_NODE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "TreeNode",
-                      "safeName": "TreeNode"
-                    }
-                  },
+                  "name": "TreeNode",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -262,25 +142,7 @@
       "endpoints": [
         {
           "id": "endpoint_.getTree",
-          "name": {
-            "originalName": "getTree",
-            "camelCase": {
-              "unsafeName": "getTree",
-              "safeName": "getTree"
-            },
-            "snakeCase": {
-              "unsafeName": "get_tree",
-              "safeName": "get_tree"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GET_TREE",
-              "safeName": "GET_TREE"
-            },
-            "pascalCase": {
-              "unsafeName": "GetTree",
-              "safeName": "GetTree"
-            }
-          },
+          "name": "getTree",
           "displayName": "Get tree",
           "auth": false,
           "idempotent": false,
@@ -302,25 +164,7 @@
               "value": {
                 "docs": "Successfully retrieved tree",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "TreeNode",
-                    "camelCase": {
-                      "unsafeName": "treeNode",
-                      "safeName": "treeNode"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "tree_node",
-                      "safeName": "tree_node"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "TREE_NODE",
-                      "safeName": "TREE_NODE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "TreeNode",
-                      "safeName": "TreeNode"
-                    }
-                  },
+                  "name": "TreeNode",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -348,14 +192,6 @@
         "camelCase": {
           "unsafeName": "errorInstanceID",
           "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
         },
         "pascalCase": {
           "unsafeName": "ErrorInstanceID",
@@ -391,6 +227,10 @@
               "unsafeName": "treeNode",
               "safeName": "treeNode"
             },
+            "pascalCase": {
+              "unsafeName": "TreeNode",
+              "safeName": "TreeNode"
+            },
             "snakeCase": {
               "unsafeName": "tree_node",
               "safeName": "tree_node"
@@ -398,10 +238,6 @@
             "screamingSnakeCase": {
               "unsafeName": "TREE_NODE",
               "safeName": "TREE_NODE"
-            },
-            "pascalCase": {
-              "unsafeName": "TreeNode",
-              "safeName": "TreeNode"
             }
           },
           "fernFilepath": {
@@ -418,6 +254,10 @@
                   "unsafeName": "value",
                   "safeName": "value"
                 },
+                "pascalCase": {
+                  "unsafeName": "Value",
+                  "safeName": "Value"
+                },
                 "snakeCase": {
                   "unsafeName": "value",
                   "safeName": "value"
@@ -425,10 +265,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "VALUE",
                   "safeName": "VALUE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Value",
-                  "safeName": "Value"
                 }
               },
               "wireValue": "value"
@@ -449,6 +285,10 @@
                   "unsafeName": "left",
                   "safeName": "left"
                 },
+                "pascalCase": {
+                  "unsafeName": "Left",
+                  "safeName": "Left"
+                },
                 "snakeCase": {
                   "unsafeName": "left",
                   "safeName": "left"
@@ -456,10 +296,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "LEFT",
                   "safeName": "LEFT"
-                },
-                "pascalCase": {
-                  "unsafeName": "Left",
-                  "safeName": "Left"
                 }
               },
               "wireValue": "left"
@@ -480,6 +316,10 @@
                   "unsafeName": "right",
                   "safeName": "right"
                 },
+                "pascalCase": {
+                  "unsafeName": "Right",
+                  "safeName": "Right"
+                },
                 "snakeCase": {
                   "unsafeName": "right",
                   "safeName": "right"
@@ -487,10 +327,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "RIGHT",
                   "safeName": "RIGHT"
-                },
-                "pascalCase": {
-                  "unsafeName": "Right",
-                  "safeName": "Right"
                 }
               },
               "wireValue": "right"
@@ -518,6 +354,10 @@
               "unsafeName": "getTree",
               "safeName": "getTree"
             },
+            "pascalCase": {
+              "unsafeName": "GetTree",
+              "safeName": "GetTree"
+            },
             "snakeCase": {
               "unsafeName": "get_tree",
               "safeName": "get_tree"
@@ -525,10 +365,6 @@
             "screamingSnakeCase": {
               "unsafeName": "GET_TREE",
               "safeName": "GET_TREE"
-            },
-            "pascalCase": {
-              "unsafeName": "GetTree",
-              "safeName": "GetTree"
             }
           },
           "fernFilepath": {

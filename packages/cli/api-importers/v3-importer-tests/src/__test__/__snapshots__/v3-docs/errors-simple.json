@@ -14,18 +14,6 @@
         },
         "name": {
           "originalName": "Error",
-          "camelCase": {
-            "unsafeName": "error",
-            "safeName": "error"
-          },
-          "snakeCase": {
-            "unsafeName": "error",
-            "safeName": "error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "ERROR",
-            "safeName": "ERROR"
-          },
           "pascalCase": {
             "unsafeName": "Error",
             "safeName": "Error_"
@@ -38,18 +26,6 @@
             "name": {
               "name": {
                 "originalName": "error",
-                "camelCase": {
-                  "unsafeName": "error",
-                  "safeName": "error"
-                },
-                "snakeCase": {
-                  "unsafeName": "error",
-                  "safeName": "error"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ERROR",
-                  "safeName": "ERROR"
-                },
                 "pascalCase": {
                   "unsafeName": "Error",
                   "safeName": "Error_"
@@ -77,25 +53,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "status",
-                "camelCase": {
-                  "unsafeName": "status",
-                  "safeName": "status"
-                },
-                "snakeCase": {
-                  "unsafeName": "status",
-                  "safeName": "status"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "STATUS",
-                  "safeName": "STATUS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Status",
-                  "safeName": "Status"
-                }
-              },
+              "name": "status",
               "wireValue": "status"
             },
             "valueType": {
@@ -169,25 +127,7 @@
           "errors": [
             {
               "error": {
-                "name": {
-                  "originalName": "ListRequestBadRequestError",
-                  "camelCase": {
-                    "unsafeName": "listRequestBadRequestError",
-                    "safeName": "listRequestBadRequestError"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "list_request_bad_request_error",
-                    "safeName": "list_request_bad_request_error"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LIST_REQUEST_BAD_REQUEST_ERROR",
-                    "safeName": "LIST_REQUEST_BAD_REQUEST_ERROR"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "ListRequestBadRequestError",
-                    "safeName": "ListRequestBadRequestError"
-                  }
-                },
+                "name": "ListRequestBadRequestError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
@@ -198,25 +138,7 @@
             },
             {
               "error": {
-                "name": {
-                  "originalName": "ListRequestUnauthorizedError",
-                  "camelCase": {
-                    "unsafeName": "listRequestUnauthorizedError",
-                    "safeName": "listRequestUnauthorizedError"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "list_request_unauthorized_error",
-                    "safeName": "list_request_unauthorized_error"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LIST_REQUEST_UNAUTHORIZED_ERROR",
-                    "safeName": "LIST_REQUEST_UNAUTHORIZED_ERROR"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "ListRequestUnauthorizedError",
-                    "safeName": "ListRequestUnauthorizedError"
-                  }
-                },
+                "name": "ListRequestUnauthorizedError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
@@ -227,25 +149,7 @@
             },
             {
               "error": {
-                "name": {
-                  "originalName": "ListRequestNotFoundError",
-                  "camelCase": {
-                    "unsafeName": "listRequestNotFoundError",
-                    "safeName": "listRequestNotFoundError"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "list_request_not_found_error",
-                    "safeName": "list_request_not_found_error"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LIST_REQUEST_NOT_FOUND_ERROR",
-                    "safeName": "LIST_REQUEST_NOT_FOUND_ERROR"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "ListRequestNotFoundError",
-                    "safeName": "ListRequestNotFoundError"
-                  }
-                },
+                "name": "ListRequestNotFoundError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
@@ -256,25 +160,7 @@
             },
             {
               "error": {
-                "name": {
-                  "originalName": "ListRequestInternalServerError",
-                  "camelCase": {
-                    "unsafeName": "listRequestInternalServerError",
-                    "safeName": "listRequestInternalServerError"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "list_request_internal_server_error",
-                    "safeName": "list_request_internal_server_error"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LIST_REQUEST_INTERNAL_SERVER_ERROR",
-                    "safeName": "LIST_REQUEST_INTERNAL_SERVER_ERROR"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "ListRequestInternalServerError",
-                    "safeName": "ListRequestInternalServerError"
-                  }
-                },
+                "name": "ListRequestInternalServerError",
                 "fernFilepath": {
                   "allParts": [],
                   "packagePath": []
@@ -298,70 +184,16 @@
           },
           "audiences": [],
           "id": "endpoint_.list",
-          "name": {
-            "originalName": "list",
-            "camelCase": {
-              "unsafeName": "list",
-              "safeName": "list"
-            },
-            "snakeCase": {
-              "unsafeName": "list",
-              "safeName": "list"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "LIST",
-              "safeName": "LIST"
-            },
-            "pascalCase": {
-              "unsafeName": "List",
-              "safeName": "List"
-            }
-          },
+          "name": "list",
           "requestBody": {
             "contentType": "application/json",
-            "name": {
-              "originalName": "list_Request",
-              "camelCase": {
-                "unsafeName": "listRequest",
-                "safeName": "listRequest"
-              },
-              "snakeCase": {
-                "unsafeName": "list_request",
-                "safeName": "list_request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "LIST_REQUEST",
-                "safeName": "LIST_REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "ListRequest",
-                "safeName": "ListRequest"
-              }
-            },
+            "name": "list_Request",
             "extendedProperties": [],
             "extends": [],
             "properties": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "limit",
-                    "camelCase": {
-                      "unsafeName": "limit",
-                      "safeName": "limit"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "limit",
-                      "safeName": "limit"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "LIMIT",
-                      "safeName": "LIMIT"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Limit",
-                      "safeName": "Limit"
-                    }
-                  },
+                  "name": "limit",
                   "wireValue": "limit"
                 },
                 "valueType": {
@@ -384,25 +216,7 @@
               },
               {
                 "name": {
-                  "name": {
-                    "originalName": "offset",
-                    "camelCase": {
-                      "unsafeName": "offset",
-                      "safeName": "offset"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "offset",
-                      "safeName": "offset"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "OFFSET",
-                      "safeName": "OFFSET"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Offset",
-                      "safeName": "Offset"
-                    }
-                  },
+                  "name": "offset",
                   "wireValue": "offset"
                 },
                 "valueType": {
@@ -445,49 +259,13 @@
             "requestBodies": [
               {
                 "contentType": "application/json",
-                "name": {
-                  "originalName": "list_Request",
-                  "camelCase": {
-                    "unsafeName": "listRequest",
-                    "safeName": "listRequest"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "list_request",
-                    "safeName": "list_request"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LIST_REQUEST",
-                    "safeName": "LIST_REQUEST"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "ListRequest",
-                    "safeName": "ListRequest"
-                  }
-                },
+                "name": "list_Request",
                 "extendedProperties": [],
                 "extends": [],
                 "properties": [
                   {
                     "name": {
-                      "name": {
-                        "originalName": "limit",
-                        "camelCase": {
-                          "unsafeName": "limit",
-                          "safeName": "limit"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "limit",
-                          "safeName": "limit"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "LIMIT",
-                          "safeName": "LIMIT"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "Limit",
-                          "safeName": "Limit"
-                        }
-                      },
+                      "name": "limit",
                       "wireValue": "limit"
                     },
                     "valueType": {
@@ -510,25 +288,7 @@
                   },
                   {
                     "name": {
-                      "name": {
-                        "originalName": "offset",
-                        "camelCase": {
-                          "unsafeName": "offset",
-                          "safeName": "offset"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "offset",
-                          "safeName": "offset"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "OFFSET",
-                          "safeName": "OFFSET"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "Offset",
-                          "safeName": "Offset"
-                        }
-                      },
+                      "name": "offset",
                       "wireValue": "offset"
                     },
                     "valueType": {
@@ -660,25 +420,7 @@
   "errors": {
     "ListRequestBadRequestError": {
       "name": {
-        "name": {
-          "originalName": "ListRequestBadRequestError",
-          "camelCase": {
-            "unsafeName": "listRequestBadRequestError",
-            "safeName": "listRequestBadRequestError"
-          },
-          "snakeCase": {
-            "unsafeName": "list_request_bad_request_error",
-            "safeName": "list_request_bad_request_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "LIST_REQUEST_BAD_REQUEST_ERROR",
-            "safeName": "LIST_REQUEST_BAD_REQUEST_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "ListRequestBadRequestError",
-            "safeName": "ListRequestBadRequestError"
-          }
-        },
+        "name": "ListRequestBadRequestError",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -687,25 +429,7 @@
       },
       "displayName": "BadRequestError",
       "discriminantValue": {
-        "name": {
-          "originalName": "ListRequestBadRequestError",
-          "camelCase": {
-            "unsafeName": "listRequestBadRequestError",
-            "safeName": "listRequestBadRequestError"
-          },
-          "snakeCase": {
-            "unsafeName": "list_request_bad_request_error",
-            "safeName": "list_request_bad_request_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "LIST_REQUEST_BAD_REQUEST_ERROR",
-            "safeName": "LIST_REQUEST_BAD_REQUEST_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "ListRequestBadRequestError",
-            "safeName": "ListRequestBadRequestError"
-          }
-        },
+        "name": "ListRequestBadRequestError",
         "wireValue": "ListRequestBadRequestError"
       },
       "type": {
@@ -715,18 +439,6 @@
         },
         "name": {
           "originalName": "Error",
-          "camelCase": {
-            "unsafeName": "error",
-            "safeName": "error"
-          },
-          "snakeCase": {
-            "unsafeName": "error",
-            "safeName": "error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "ERROR",
-            "safeName": "ERROR"
-          },
           "pascalCase": {
             "unsafeName": "Error",
             "safeName": "Error_"
@@ -746,25 +458,7 @@
     },
     "ListRequestUnauthorizedError": {
       "name": {
-        "name": {
-          "originalName": "ListRequestUnauthorizedError",
-          "camelCase": {
-            "unsafeName": "listRequestUnauthorizedError",
-            "safeName": "listRequestUnauthorizedError"
-          },
-          "snakeCase": {
-            "unsafeName": "list_request_unauthorized_error",
-            "safeName": "list_request_unauthorized_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "LIST_REQUEST_UNAUTHORIZED_ERROR",
-            "safeName": "LIST_REQUEST_UNAUTHORIZED_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "ListRequestUnauthorizedError",
-            "safeName": "ListRequestUnauthorizedError"
-          }
-        },
+        "name": "ListRequestUnauthorizedError",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -773,25 +467,7 @@
       },
       "displayName": "UnauthorizedError",
       "discriminantValue": {
-        "name": {
-          "originalName": "ListRequestUnauthorizedError",
-          "camelCase": {
-            "unsafeName": "listRequestUnauthorizedError",
-            "safeName": "listRequestUnauthorizedError"
-          },
-          "snakeCase": {
-            "unsafeName": "list_request_unauthorized_error",
-            "safeName": "list_request_unauthorized_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "LIST_REQUEST_UNAUTHORIZED_ERROR",
-            "safeName": "LIST_REQUEST_UNAUTHORIZED_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "ListRequestUnauthorizedError",
-            "safeName": "ListRequestUnauthorizedError"
-          }
-        },
+        "name": "ListRequestUnauthorizedError",
         "wireValue": "ListRequestUnauthorizedError"
       },
       "type": {
@@ -801,18 +477,6 @@
         },
         "name": {
           "originalName": "Error",
-          "camelCase": {
-            "unsafeName": "error",
-            "safeName": "error"
-          },
-          "snakeCase": {
-            "unsafeName": "error",
-            "safeName": "error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "ERROR",
-            "safeName": "ERROR"
-          },
           "pascalCase": {
             "unsafeName": "Error",
             "safeName": "Error_"
@@ -832,25 +496,7 @@
     },
     "ListRequestNotFoundError": {
       "name": {
-        "name": {
-          "originalName": "ListRequestNotFoundError",
-          "camelCase": {
-            "unsafeName": "listRequestNotFoundError",
-            "safeName": "listRequestNotFoundError"
-          },
-          "snakeCase": {
-            "unsafeName": "list_request_not_found_error",
-            "safeName": "list_request_not_found_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "LIST_REQUEST_NOT_FOUND_ERROR",
-            "safeName": "LIST_REQUEST_NOT_FOUND_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "ListRequestNotFoundError",
-            "safeName": "ListRequestNotFoundError"
-          }
-        },
+        "name": "ListRequestNotFoundError",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -859,25 +505,7 @@
       },
       "displayName": "NotFoundError",
       "discriminantValue": {
-        "name": {
-          "originalName": "ListRequestNotFoundError",
-          "camelCase": {
-            "unsafeName": "listRequestNotFoundError",
-            "safeName": "listRequestNotFoundError"
-          },
-          "snakeCase": {
-            "unsafeName": "list_request_not_found_error",
-            "safeName": "list_request_not_found_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "LIST_REQUEST_NOT_FOUND_ERROR",
-            "safeName": "LIST_REQUEST_NOT_FOUND_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "ListRequestNotFoundError",
-            "safeName": "ListRequestNotFoundError"
-          }
-        },
+        "name": "ListRequestNotFoundError",
         "wireValue": "ListRequestNotFoundError"
       },
       "type": {
@@ -887,18 +515,6 @@
         },
         "name": {
           "originalName": "Error",
-          "camelCase": {
-            "unsafeName": "error",
-            "safeName": "error"
-          },
-          "snakeCase": {
-            "unsafeName": "error",
-            "safeName": "error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "ERROR",
-            "safeName": "ERROR"
-          },
           "pascalCase": {
             "unsafeName": "Error",
             "safeName": "Error_"
@@ -918,25 +534,7 @@
     },
     "ListRequestInternalServerError": {
       "name": {
-        "name": {
-          "originalName": "ListRequestInternalServerError",
-          "camelCase": {
-            "unsafeName": "listRequestInternalServerError",
-            "safeName": "listRequestInternalServerError"
-          },
-          "snakeCase": {
-            "unsafeName": "list_request_internal_server_error",
-            "safeName": "list_request_internal_server_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "LIST_REQUEST_INTERNAL_SERVER_ERROR",
-            "safeName": "LIST_REQUEST_INTERNAL_SERVER_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "ListRequestInternalServerError",
-            "safeName": "ListRequestInternalServerError"
-          }
-        },
+        "name": "ListRequestInternalServerError",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -945,25 +543,7 @@
       },
       "displayName": "InternalServerError",
       "discriminantValue": {
-        "name": {
-          "originalName": "ListRequestInternalServerError",
-          "camelCase": {
-            "unsafeName": "listRequestInternalServerError",
-            "safeName": "listRequestInternalServerError"
-          },
-          "snakeCase": {
-            "unsafeName": "list_request_internal_server_error",
-            "safeName": "list_request_internal_server_error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "LIST_REQUEST_INTERNAL_SERVER_ERROR",
-            "safeName": "LIST_REQUEST_INTERNAL_SERVER_ERROR"
-          },
-          "pascalCase": {
-            "unsafeName": "ListRequestInternalServerError",
-            "safeName": "ListRequestInternalServerError"
-          }
-        },
+        "name": "ListRequestInternalServerError",
         "wireValue": "ListRequestInternalServerError"
       },
       "type": {
@@ -973,18 +553,6 @@
         },
         "name": {
           "originalName": "Error",
-          "camelCase": {
-            "unsafeName": "error",
-            "safeName": "error"
-          },
-          "snakeCase": {
-            "unsafeName": "error",
-            "safeName": "error"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "ERROR",
-            "safeName": "ERROR"
-          },
           "pascalCase": {
             "unsafeName": "Error",
             "safeName": "Error_"
@@ -1021,25 +589,7 @@
       "environments": [
         {
           "id": "Test API",
-          "name": {
-            "originalName": "Test API",
-            "camelCase": {
-              "unsafeName": "testApi",
-              "safeName": "testApi"
-            },
-            "snakeCase": {
-              "unsafeName": "test_api",
-              "safeName": "test_api"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "TEST_API",
-              "safeName": "TEST_API"
-            },
-            "pascalCase": {
-              "unsafeName": "TestApi",
-              "safeName": "TestApi"
-            }
-          },
+          "name": "Test API",
           "url": "https://api.test.com",
           "docs": "Test API"
         }
@@ -1072,46 +622,10 @@
       "sdkVersion": ""
     }
   },
-  "apiName": {
-    "originalName": "",
-    "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
-    }
-  },
+  "apiName": "",
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceId",
-          "safeName": "errorInstanceId"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceId",
-          "safeName": "ErrorInstanceId"
-        }
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   }

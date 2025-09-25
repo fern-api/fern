@@ -80,25 +80,7 @@
           },
           "audiences": [],
           "id": "endpoint_.list",
-          "name": {
-            "originalName": "list",
-            "camelCase": {
-              "unsafeName": "list",
-              "safeName": "list"
-            },
-            "snakeCase": {
-              "unsafeName": "list",
-              "safeName": "list"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "LIST",
-              "safeName": "LIST"
-            },
-            "pascalCase": {
-              "unsafeName": "List",
-              "safeName": "List"
-            }
-          },
+          "name": "list",
           "v2RequestBodies": {},
           "response": {
             "statusCode": 200,
@@ -204,93 +186,21 @@
       "baseUrls": [
         {
           "id": "Prod",
-          "name": {
-            "originalName": "Prod",
-            "camelCase": {
-              "unsafeName": "prod",
-              "safeName": "prod"
-            },
-            "snakeCase": {
-              "unsafeName": "prod",
-              "safeName": "prod"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "PROD",
-              "safeName": "PROD"
-            },
-            "pascalCase": {
-              "unsafeName": "Prod",
-              "safeName": "Prod"
-            }
-          }
+          "name": "Prod"
         },
         {
           "id": "Debug 1",
-          "name": {
-            "originalName": "Debug 1",
-            "camelCase": {
-              "unsafeName": "debug1",
-              "safeName": "debug1"
-            },
-            "snakeCase": {
-              "unsafeName": "debug_1",
-              "safeName": "debug_1"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "DEBUG_1",
-              "safeName": "DEBUG_1"
-            },
-            "pascalCase": {
-              "unsafeName": "Debug1",
-              "safeName": "Debug1"
-            }
-          }
+          "name": "Debug 1"
         },
         {
           "id": "Debug 2",
-          "name": {
-            "originalName": "Debug 2",
-            "camelCase": {
-              "unsafeName": "debug2",
-              "safeName": "debug2"
-            },
-            "snakeCase": {
-              "unsafeName": "debug_2",
-              "safeName": "debug_2"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "DEBUG_2",
-              "safeName": "DEBUG_2"
-            },
-            "pascalCase": {
-              "unsafeName": "Debug2",
-              "safeName": "Debug2"
-            }
-          }
+          "name": "Debug 2"
         }
       ],
       "environments": [
         {
           "id": "Prod",
-          "name": {
-            "originalName": "Prod",
-            "camelCase": {
-              "unsafeName": "prod",
-              "safeName": "prod"
-            },
-            "snakeCase": {
-              "unsafeName": "prod",
-              "safeName": "prod"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "PROD",
-              "safeName": "PROD"
-            },
-            "pascalCase": {
-              "unsafeName": "Prod",
-              "safeName": "Prod"
-            }
-          },
+          "name": "Prod",
           "urls": {
             "Prod": "http://prod.api.com",
             "Debug 1": "http://debug-1.api.com",
@@ -299,25 +209,7 @@
         },
         {
           "id": "Dev",
-          "name": {
-            "originalName": "Dev",
-            "camelCase": {
-              "unsafeName": "dev",
-              "safeName": "dev"
-            },
-            "snakeCase": {
-              "unsafeName": "dev",
-              "safeName": "dev"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "DEV",
-              "safeName": "DEV"
-            },
-            "pascalCase": {
-              "unsafeName": "Dev",
-              "safeName": "Dev"
-            }
-          },
+          "name": "Dev",
           "urls": {
             "Prod": "http://dev.api.com",
             "Debug 1": "http://debug-1.api.com",
@@ -351,46 +243,10 @@
       "sdkVersion": ""
     }
   },
-  "apiName": {
-    "originalName": "",
-    "camelCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "snakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "",
-      "safeName": ""
-    },
-    "pascalCase": {
-      "unsafeName": "",
-      "safeName": ""
-    }
-  },
+  "apiName": "",
   "constants": {
     "errorInstanceIdKey": {
-      "name": {
-        "originalName": "errorInstanceId",
-        "camelCase": {
-          "unsafeName": "errorInstanceId",
-          "safeName": "errorInstanceId"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
-        "pascalCase": {
-          "unsafeName": "ErrorInstanceId",
-          "safeName": "ErrorInstanceId"
-        }
-      },
+      "name": "errorInstanceId",
       "wireValue": "errorInstanceId"
     }
   }

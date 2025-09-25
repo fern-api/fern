@@ -2,18 +2,6 @@
   "selfHosted": false,
   "apiName": {
     "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
     "pascalCase": {
       "unsafeName": "API",
       "safeName": "API"
@@ -29,25 +17,7 @@
   "types": {
     "type_:Data": {
       "name": {
-        "name": {
-          "originalName": "Data",
-          "camelCase": {
-            "unsafeName": "data",
-            "safeName": "data"
-          },
-          "snakeCase": {
-            "unsafeName": "data",
-            "safeName": "data"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "DATA",
-            "safeName": "DATA"
-          },
-          "pascalCase": {
-            "unsafeName": "Data",
-            "safeName": "Data"
-          }
-        },
+        "name": "Data",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -59,25 +29,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "foo",
-                "camelCase": {
-                  "unsafeName": "foo",
-                  "safeName": "foo"
-                },
-                "snakeCase": {
-                  "unsafeName": "foo",
-                  "safeName": "foo"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "FOO",
-                  "safeName": "FOO"
-                },
-                "pascalCase": {
-                  "unsafeName": "Foo",
-                  "safeName": "Foo"
-                }
-              },
+              "name": "foo",
               "wireValue": "foo"
             },
             "valueType": {
@@ -102,25 +54,7 @@
           },
           {
             "name": {
-              "name": {
-                "originalName": "bar",
-                "camelCase": {
-                  "unsafeName": "bar",
-                  "safeName": "bar"
-                },
-                "snakeCase": {
-                  "unsafeName": "bar",
-                  "safeName": "bar"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BAR",
-                  "safeName": "BAR"
-                },
-                "pascalCase": {
-                  "unsafeName": "Bar",
-                  "safeName": "Bar"
-                }
-              },
+              "name": "bar",
               "wireValue": "bar"
             },
             "valueType": {
@@ -186,6 +120,10 @@
               "unsafeName": "getVndFernUserJSONVersion1",
               "safeName": "getVndFernUserJSONVersion1"
             },
+            "pascalCase": {
+              "unsafeName": "GetVndFernUserJSONVersion1",
+              "safeName": "GetVndFernUserJSONVersion1"
+            },
             "snakeCase": {
               "unsafeName": "get_vnd_fern_user_json_version1",
               "safeName": "get_vnd_fern_user_json_version1"
@@ -193,10 +131,6 @@
             "screamingSnakeCase": {
               "unsafeName": "GET_VND_FERN_USER_JSON_VERSION1",
               "safeName": "GET_VND_FERN_USER_JSON_VERSION1"
-            },
-            "pascalCase": {
-              "unsafeName": "GetVndFernUserJSONVersion1",
-              "safeName": "GetVndFernUserJSONVersion1"
             }
           },
           "auth": false,
@@ -219,25 +153,7 @@
               "value": {
                 "docs": "Success",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "Data",
-                    "camelCase": {
-                      "unsafeName": "data",
-                      "safeName": "data"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "data",
-                      "safeName": "data"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "DATA",
-                      "safeName": "DATA"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Data",
-                      "safeName": "Data"
-                    }
-                  },
+                  "name": "Data",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -262,14 +178,6 @@
             "camelCase": {
               "unsafeName": "getApplicationJSON",
               "safeName": "getApplicationJSON"
-            },
-            "snakeCase": {
-              "unsafeName": "get_application_json",
-              "safeName": "get_application_json"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GET_APPLICATION_JSON",
-              "safeName": "GET_APPLICATION_JSON"
             },
             "pascalCase": {
               "unsafeName": "GetApplicationJSON",
@@ -296,25 +204,7 @@
               "value": {
                 "docs": "Success",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "Data",
-                    "camelCase": {
-                      "unsafeName": "data",
-                      "safeName": "data"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "data",
-                      "safeName": "data"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "DATA",
-                      "safeName": "DATA"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Data",
-                      "safeName": "Data"
-                    }
-                  },
+                  "name": "Data",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -342,14 +232,6 @@
         "camelCase": {
           "unsafeName": "errorInstanceID",
           "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
         },
         "pascalCase": {
           "unsafeName": "ErrorInstanceID",
@@ -385,6 +267,10 @@
               "unsafeName": "data",
               "safeName": "data"
             },
+            "pascalCase": {
+              "unsafeName": "Data",
+              "safeName": "Data"
+            },
             "snakeCase": {
               "unsafeName": "data",
               "safeName": "data"
@@ -392,10 +278,6 @@
             "screamingSnakeCase": {
               "unsafeName": "DATA",
               "safeName": "DATA"
-            },
-            "pascalCase": {
-              "unsafeName": "Data",
-              "safeName": "Data"
             }
           },
           "fernFilepath": {
@@ -412,6 +294,10 @@
                   "unsafeName": "foo",
                   "safeName": "foo"
                 },
+                "pascalCase": {
+                  "unsafeName": "Foo",
+                  "safeName": "Foo"
+                },
                 "snakeCase": {
                   "unsafeName": "foo",
                   "safeName": "foo"
@@ -419,10 +305,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "FOO",
                   "safeName": "FOO"
-                },
-                "pascalCase": {
-                  "unsafeName": "Foo",
-                  "safeName": "Foo"
                 }
               },
               "wireValue": "foo"
@@ -443,6 +325,10 @@
                   "unsafeName": "bar",
                   "safeName": "bar"
                 },
+                "pascalCase": {
+                  "unsafeName": "Bar",
+                  "safeName": "Bar"
+                },
                 "snakeCase": {
                   "unsafeName": "bar",
                   "safeName": "bar"
@@ -450,10 +336,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "BAR",
                   "safeName": "BAR"
-                },
-                "pascalCase": {
-                  "unsafeName": "Bar",
-                  "safeName": "Bar"
                 }
               },
               "wireValue": "bar"
@@ -481,6 +363,10 @@
               "unsafeName": "getVndFernUserJSONVersion1",
               "safeName": "getVndFernUserJSONVersion1"
             },
+            "pascalCase": {
+              "unsafeName": "GetVndFernUserJSONVersion1",
+              "safeName": "GetVndFernUserJSONVersion1"
+            },
             "snakeCase": {
               "unsafeName": "get_vnd_fern_user_json_version1",
               "safeName": "get_vnd_fern_user_json_version1"
@@ -488,10 +374,6 @@
             "screamingSnakeCase": {
               "unsafeName": "GET_VND_FERN_USER_JSON_VERSION1",
               "safeName": "GET_VND_FERN_USER_JSON_VERSION1"
-            },
-            "pascalCase": {
-              "unsafeName": "GetVndFernUserJSONVersion1",
-              "safeName": "GetVndFernUserJSONVersion1"
             }
           },
           "fernFilepath": {
@@ -520,6 +402,10 @@
               "unsafeName": "getApplicationJSON",
               "safeName": "getApplicationJSON"
             },
+            "pascalCase": {
+              "unsafeName": "GetApplicationJSON",
+              "safeName": "GetApplicationJSON"
+            },
             "snakeCase": {
               "unsafeName": "get_application_json",
               "safeName": "get_application_json"
@@ -527,10 +413,6 @@
             "screamingSnakeCase": {
               "unsafeName": "GET_APPLICATION_JSON",
               "safeName": "GET_APPLICATION_JSON"
-            },
-            "pascalCase": {
-              "unsafeName": "GetApplicationJSON",
-              "safeName": "GetApplicationJSON"
             }
           },
           "fernFilepath": {

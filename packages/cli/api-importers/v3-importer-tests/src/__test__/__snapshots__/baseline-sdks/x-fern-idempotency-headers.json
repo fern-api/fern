@@ -2,18 +2,6 @@
   "selfHosted": false,
   "apiName": {
     "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
     "pascalCase": {
       "unsafeName": "API",
       "safeName": "API"
@@ -28,25 +16,7 @@
   "idempotencyHeaders": [
     {
       "name": {
-        "name": {
-          "originalName": "idempotencyKey",
-          "camelCase": {
-            "unsafeName": "idempotencyKey",
-            "safeName": "idempotencyKey"
-          },
-          "snakeCase": {
-            "unsafeName": "idempotency_key",
-            "safeName": "idempotency_key"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "IDEMPOTENCY_KEY",
-            "safeName": "IDEMPOTENCY_KEY"
-          },
-          "pascalCase": {
-            "unsafeName": "IdempotencyKey",
-            "safeName": "IdempotencyKey"
-          }
-        },
+        "name": "idempotencyKey",
         "wireValue": "Idempotency-Key"
       },
       "valueType": {
@@ -95,25 +65,7 @@
       "endpoints": [
         {
           "id": "endpoint_.send",
-          "name": {
-            "originalName": "send",
-            "camelCase": {
-              "unsafeName": "send",
-              "safeName": "send"
-            },
-            "snakeCase": {
-              "unsafeName": "send",
-              "safeName": "send"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "SEND",
-              "safeName": "SEND"
-            },
-            "pascalCase": {
-              "unsafeName": "Send",
-              "safeName": "Send"
-            }
-          },
+          "name": "send",
           "auth": false,
           "idempotent": true,
           "method": "POST",
@@ -130,49 +82,13 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "SendRequest",
-              "camelCase": {
-                "unsafeName": "sendRequest",
-                "safeName": "sendRequest"
-              },
-              "snakeCase": {
-                "unsafeName": "send_request",
-                "safeName": "send_request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "SEND_REQUEST",
-                "safeName": "SEND_REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "SendRequest",
-                "safeName": "SendRequest"
-              }
-            },
+            "name": "SendRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "name": {
-                  "name": {
-                    "originalName": "send",
-                    "camelCase": {
-                      "unsafeName": "send",
-                      "safeName": "send"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "send",
-                      "safeName": "send"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "SEND",
-                      "safeName": "SEND"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Send",
-                      "safeName": "Send"
-                    }
-                  },
+                  "name": "send",
                   "wireValue": "send"
                 },
                 "valueType": {
@@ -202,67 +118,13 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "SendRequest",
-                "camelCase": {
-                  "unsafeName": "sendRequest",
-                  "safeName": "sendRequest"
-                },
-                "snakeCase": {
-                  "unsafeName": "send_request",
-                  "safeName": "send_request"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "SEND_REQUEST",
-                  "safeName": "SEND_REQUEST"
-                },
-                "pascalCase": {
-                  "unsafeName": "SendRequest",
-                  "safeName": "SendRequest"
-                }
-              },
-              "bodyKey": {
-                "originalName": "body",
-                "camelCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "snakeCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BODY",
-                  "safeName": "BODY"
-                },
-                "pascalCase": {
-                  "unsafeName": "Body",
-                  "safeName": "Body"
-                }
-              },
+              "wrapperName": "SendRequest",
+              "bodyKey": "body",
               "includePathParameters": false,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request",
-              "camelCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "snakeCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "REQUEST",
-                "safeName": "REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "Request",
-                "safeName": "Request"
-              }
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
@@ -298,14 +160,6 @@
           "unsafeName": "errorInstanceID",
           "safeName": "errorInstanceID"
         },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
-        },
         "pascalCase": {
           "unsafeName": "ErrorInstanceID",
           "safeName": "ErrorInstanceID"
@@ -338,6 +192,10 @@
               "unsafeName": "send",
               "safeName": "send"
             },
+            "pascalCase": {
+              "unsafeName": "Send",
+              "safeName": "Send"
+            },
             "snakeCase": {
               "unsafeName": "send",
               "safeName": "send"
@@ -345,10 +203,6 @@
             "screamingSnakeCase": {
               "unsafeName": "SEND",
               "safeName": "SEND"
-            },
-            "pascalCase": {
-              "unsafeName": "Send",
-              "safeName": "Send"
             }
           },
           "fernFilepath": {
@@ -368,6 +222,10 @@
                 "unsafeName": "sendRequest",
                 "safeName": "sendRequest"
               },
+              "pascalCase": {
+                "unsafeName": "SendRequest",
+                "safeName": "SendRequest"
+              },
               "snakeCase": {
                 "unsafeName": "send_request",
                 "safeName": "send_request"
@@ -375,10 +233,6 @@
               "screamingSnakeCase": {
                 "unsafeName": "SEND_REQUEST",
                 "safeName": "SEND_REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "SendRequest",
-                "safeName": "SendRequest"
               }
             },
             "fernFilepath": {
@@ -399,6 +253,10 @@
                       "unsafeName": "send",
                       "safeName": "send"
                     },
+                    "pascalCase": {
+                      "unsafeName": "Send",
+                      "safeName": "Send"
+                    },
                     "snakeCase": {
                       "unsafeName": "send",
                       "safeName": "send"
@@ -406,10 +264,6 @@
                     "screamingSnakeCase": {
                       "unsafeName": "SEND",
                       "safeName": "SEND"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Send",
-                      "safeName": "Send"
                     }
                   },
                   "wireValue": "send"

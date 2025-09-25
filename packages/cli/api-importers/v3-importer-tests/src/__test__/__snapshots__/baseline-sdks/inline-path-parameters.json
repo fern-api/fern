@@ -2,18 +2,6 @@
   "selfHosted": false,
   "apiName": {
     "originalName": "api",
-    "camelCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "snakeCase": {
-      "unsafeName": "api",
-      "safeName": "api"
-    },
-    "screamingSnakeCase": {
-      "unsafeName": "API",
-      "safeName": "API"
-    },
     "pascalCase": {
       "unsafeName": "API",
       "safeName": "API"
@@ -31,67 +19,13 @@
       "docs": "Access level",
       "inline": true,
       "name": {
-        "name": {
-          "originalName": "SearchRequestAccess",
-          "camelCase": {
-            "unsafeName": "searchRequestAccess",
-            "safeName": "searchRequestAccess"
-          },
-          "snakeCase": {
-            "unsafeName": "search_request_access",
-            "safeName": "search_request_access"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "SEARCH_REQUEST_ACCESS",
-            "safeName": "SEARCH_REQUEST_ACCESS"
-          },
-          "pascalCase": {
-            "unsafeName": "SearchRequestAccess",
-            "safeName": "SearchRequestAccess"
-          }
-        },
+        "name": "SearchRequestAccess",
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "organizations",
-              "camelCase": {
-                "unsafeName": "organizations",
-                "safeName": "organizations"
-              },
-              "snakeCase": {
-                "unsafeName": "organizations",
-                "safeName": "organizations"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "ORGANIZATIONS",
-                "safeName": "ORGANIZATIONS"
-              },
-              "pascalCase": {
-                "unsafeName": "Organizations",
-                "safeName": "Organizations"
-              }
-            }
+            "organizations"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "organizations",
-            "camelCase": {
-              "unsafeName": "organizations",
-              "safeName": "organizations"
-            },
-            "snakeCase": {
-              "unsafeName": "organizations",
-              "safeName": "organizations"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "ORGANIZATIONS",
-              "safeName": "ORGANIZATIONS"
-            },
-            "pascalCase": {
-              "unsafeName": "Organizations",
-              "safeName": "Organizations"
-            }
-          }
+          "file": "organizations"
         },
         "typeId": "type_organizations:SearchRequestAccess"
       },
@@ -99,49 +33,13 @@
         "values": [
           {
             "name": {
-              "name": {
-                "originalName": "private",
-                "camelCase": {
-                  "unsafeName": "private",
-                  "safeName": "private"
-                },
-                "snakeCase": {
-                  "unsafeName": "private",
-                  "safeName": "private"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PRIVATE",
-                  "safeName": "PRIVATE"
-                },
-                "pascalCase": {
-                  "unsafeName": "Private",
-                  "safeName": "Private"
-                }
-              },
+              "name": "private",
               "wireValue": "private"
             }
           },
           {
             "name": {
-              "name": {
-                "originalName": "public",
-                "camelCase": {
-                  "unsafeName": "public",
-                  "safeName": "public"
-                },
-                "snakeCase": {
-                  "unsafeName": "public",
-                  "safeName": "public"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "PUBLIC",
-                  "safeName": "PUBLIC"
-                },
-                "pascalCase": {
-                  "unsafeName": "Public",
-                  "safeName": "Public"
-                }
-              },
+              "name": "public",
               "wireValue": "public"
             }
           }
@@ -157,67 +55,13 @@
     },
     "type_organizations:SearchResponse": {
       "name": {
-        "name": {
-          "originalName": "SearchResponse",
-          "camelCase": {
-            "unsafeName": "searchResponse",
-            "safeName": "searchResponse"
-          },
-          "snakeCase": {
-            "unsafeName": "search_response",
-            "safeName": "search_response"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "SEARCH_RESPONSE",
-            "safeName": "SEARCH_RESPONSE"
-          },
-          "pascalCase": {
-            "unsafeName": "SearchResponse",
-            "safeName": "SearchResponse"
-          }
-        },
+        "name": "SearchResponse",
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "organizations",
-              "camelCase": {
-                "unsafeName": "organizations",
-                "safeName": "organizations"
-              },
-              "snakeCase": {
-                "unsafeName": "organizations",
-                "safeName": "organizations"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "ORGANIZATIONS",
-                "safeName": "ORGANIZATIONS"
-              },
-              "pascalCase": {
-                "unsafeName": "Organizations",
-                "safeName": "Organizations"
-              }
-            }
+            "organizations"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "organizations",
-            "camelCase": {
-              "unsafeName": "organizations",
-              "safeName": "organizations"
-            },
-            "snakeCase": {
-              "unsafeName": "organizations",
-              "safeName": "organizations"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "ORGANIZATIONS",
-              "safeName": "ORGANIZATIONS"
-            },
-            "pascalCase": {
-              "unsafeName": "Organizations",
-              "safeName": "Organizations"
-            }
-          }
+          "file": "organizations"
         },
         "typeId": "type_organizations:SearchResponse"
       },
@@ -226,25 +70,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "results",
-                "camelCase": {
-                  "unsafeName": "results",
-                  "safeName": "results"
-                },
-                "snakeCase": {
-                  "unsafeName": "results",
-                  "safeName": "results"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "RESULTS",
-                  "safeName": "RESULTS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Results",
-                  "safeName": "Results"
-                }
-              },
+              "name": "results",
               "wireValue": "results"
             },
             "valueType": {
@@ -287,25 +113,7 @@
     },
     "type_:GetOrganizationUserResponse": {
       "name": {
-        "name": {
-          "originalName": "GetOrganizationUserResponse",
-          "camelCase": {
-            "unsafeName": "getOrganizationUserResponse",
-            "safeName": "getOrganizationUserResponse"
-          },
-          "snakeCase": {
-            "unsafeName": "get_organization_user_response",
-            "safeName": "get_organization_user_response"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "GET_ORGANIZATION_USER_RESPONSE",
-            "safeName": "GET_ORGANIZATION_USER_RESPONSE"
-          },
-          "pascalCase": {
-            "unsafeName": "GetOrganizationUserResponse",
-            "safeName": "GetOrganizationUserResponse"
-          }
-        },
+        "name": "GetOrganizationUserResponse",
         "fernFilepath": {
           "allParts": [],
           "packagePath": []
@@ -317,25 +125,7 @@
         "properties": [
           {
             "name": {
-              "name": {
-                "originalName": "results",
-                "camelCase": {
-                  "unsafeName": "results",
-                  "safeName": "results"
-                },
-                "snakeCase": {
-                  "unsafeName": "results",
-                  "safeName": "results"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "RESULTS",
-                  "safeName": "RESULTS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Results",
-                  "safeName": "Results"
-                }
-              },
+              "name": "results",
               "wireValue": "results"
             },
             "valueType": {
@@ -383,46 +173,10 @@
       "name": {
         "fernFilepath": {
           "allParts": [
-            {
-              "originalName": "organizations",
-              "camelCase": {
-                "unsafeName": "organizations",
-                "safeName": "organizations"
-              },
-              "snakeCase": {
-                "unsafeName": "organizations",
-                "safeName": "organizations"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "ORGANIZATIONS",
-                "safeName": "ORGANIZATIONS"
-              },
-              "pascalCase": {
-                "unsafeName": "Organizations",
-                "safeName": "Organizations"
-              }
-            }
+            "organizations"
           ],
           "packagePath": [],
-          "file": {
-            "originalName": "organizations",
-            "camelCase": {
-              "unsafeName": "organizations",
-              "safeName": "organizations"
-            },
-            "snakeCase": {
-              "unsafeName": "organizations",
-              "safeName": "organizations"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "ORGANIZATIONS",
-              "safeName": "ORGANIZATIONS"
-            },
-            "pascalCase": {
-              "unsafeName": "Organizations",
-              "safeName": "Organizations"
-            }
-          }
+          "file": "organizations"
         }
       },
       "basePath": {
@@ -441,25 +195,7 @@
         {
           "docs": "",
           "id": "endpoint_organizations.Search",
-          "name": {
-            "originalName": "Search",
-            "camelCase": {
-              "unsafeName": "search",
-              "safeName": "search"
-            },
-            "snakeCase": {
-              "unsafeName": "search",
-              "safeName": "search"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "SEARCH",
-              "safeName": "SEARCH"
-            },
-            "pascalCase": {
-              "unsafeName": "Search",
-              "safeName": "Search"
-            }
-          },
+          "name": "Search",
           "displayName": "Search an organization",
           "auth": false,
           "idempotent": false,
@@ -486,18 +222,6 @@
             {
               "name": {
                 "originalName": "id",
-                "camelCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "snakeCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
                 "pascalCase": {
                   "unsafeName": "ID",
                   "safeName": "ID"
@@ -524,14 +248,6 @@
                 "camelCase": {
                   "unsafeName": "organizationID",
                   "safeName": "organizationID"
-                },
-                "snakeCase": {
-                  "unsafeName": "organization_id",
-                  "safeName": "organization_id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ORGANIZATION_ID",
-                  "safeName": "ORGANIZATION_ID"
                 },
                 "pascalCase": {
                   "unsafeName": "OrganizationID",
@@ -558,18 +274,6 @@
             {
               "name": {
                 "originalName": "id",
-                "camelCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "snakeCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
-                },
                 "pascalCase": {
                   "unsafeName": "ID",
                   "safeName": "ID"
@@ -597,14 +301,6 @@
                   "unsafeName": "organizationID",
                   "safeName": "organizationID"
                 },
-                "snakeCase": {
-                  "unsafeName": "organization_id",
-                  "safeName": "organization_id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ORGANIZATION_ID",
-                  "safeName": "ORGANIZATION_ID"
-                },
                 "pascalCase": {
                   "unsafeName": "OrganizationID",
                   "safeName": "OrganizationID"
@@ -629,116 +325,26 @@
           "queryParameters": [],
           "headers": [],
           "requestBody": {
-            "name": {
-              "originalName": "SearchRequest",
-              "camelCase": {
-                "unsafeName": "searchRequest",
-                "safeName": "searchRequest"
-              },
-              "snakeCase": {
-                "unsafeName": "search_request",
-                "safeName": "search_request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "SEARCH_REQUEST",
-                "safeName": "SEARCH_REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "SearchRequest",
-                "safeName": "SearchRequest"
-              }
-            },
+            "name": "SearchRequest",
             "extends": [],
             "contentType": "application/json",
             "properties": [
               {
                 "docs": "Access level",
                 "name": {
-                  "name": {
-                    "originalName": "access",
-                    "camelCase": {
-                      "unsafeName": "access",
-                      "safeName": "access"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "access",
-                      "safeName": "access"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "ACCESS",
-                      "safeName": "ACCESS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Access",
-                      "safeName": "Access"
-                    }
-                  },
+                  "name": "access",
                   "wireValue": "access"
                 },
                 "valueType": {
                   "container": {
                     "optional": {
-                      "name": {
-                        "originalName": "SearchRequestAccess",
-                        "camelCase": {
-                          "unsafeName": "searchRequestAccess",
-                          "safeName": "searchRequestAccess"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "search_request_access",
-                          "safeName": "search_request_access"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "SEARCH_REQUEST_ACCESS",
-                          "safeName": "SEARCH_REQUEST_ACCESS"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "SearchRequestAccess",
-                          "safeName": "SearchRequestAccess"
-                        }
-                      },
+                      "name": "SearchRequestAccess",
                       "fernFilepath": {
                         "allParts": [
-                          {
-                            "originalName": "organizations",
-                            "camelCase": {
-                              "unsafeName": "organizations",
-                              "safeName": "organizations"
-                            },
-                            "snakeCase": {
-                              "unsafeName": "organizations",
-                              "safeName": "organizations"
-                            },
-                            "screamingSnakeCase": {
-                              "unsafeName": "ORGANIZATIONS",
-                              "safeName": "ORGANIZATIONS"
-                            },
-                            "pascalCase": {
-                              "unsafeName": "Organizations",
-                              "safeName": "Organizations"
-                            }
-                          }
+                          "organizations"
                         ],
                         "packagePath": [],
-                        "file": {
-                          "originalName": "organizations",
-                          "camelCase": {
-                            "unsafeName": "organizations",
-                            "safeName": "organizations"
-                          },
-                          "snakeCase": {
-                            "unsafeName": "organizations",
-                            "safeName": "organizations"
-                          },
-                          "screamingSnakeCase": {
-                            "unsafeName": "ORGANIZATIONS",
-                            "safeName": "ORGANIZATIONS"
-                          },
-                          "pascalCase": {
-                            "unsafeName": "Organizations",
-                            "safeName": "Organizations"
-                          }
-                        }
+                        "file": "organizations"
                       },
                       "typeId": "type_organizations:SearchRequestAccess",
                       "type": "named"
@@ -759,134 +365,26 @@
           },
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "SearchRequest",
-                "camelCase": {
-                  "unsafeName": "searchRequest",
-                  "safeName": "searchRequest"
-                },
-                "snakeCase": {
-                  "unsafeName": "search_request",
-                  "safeName": "search_request"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "SEARCH_REQUEST",
-                  "safeName": "SEARCH_REQUEST"
-                },
-                "pascalCase": {
-                  "unsafeName": "SearchRequest",
-                  "safeName": "SearchRequest"
-                }
-              },
-              "bodyKey": {
-                "originalName": "body",
-                "camelCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "snakeCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BODY",
-                  "safeName": "BODY"
-                },
-                "pascalCase": {
-                  "unsafeName": "Body",
-                  "safeName": "Body"
-                }
-              },
+              "wrapperName": "SearchRequest",
+              "bodyKey": "body",
               "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request",
-              "camelCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "snakeCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "REQUEST",
-                "safeName": "REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "Request",
-                "safeName": "Request"
-              }
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Successful response",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "SearchResponse",
-                    "camelCase": {
-                      "unsafeName": "searchResponse",
-                      "safeName": "searchResponse"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "search_response",
-                      "safeName": "search_response"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "SEARCH_RESPONSE",
-                      "safeName": "SEARCH_RESPONSE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "SearchResponse",
-                      "safeName": "SearchResponse"
-                    }
-                  },
+                  "name": "SearchResponse",
                   "fernFilepath": {
                     "allParts": [
-                      {
-                        "originalName": "organizations",
-                        "camelCase": {
-                          "unsafeName": "organizations",
-                          "safeName": "organizations"
-                        },
-                        "snakeCase": {
-                          "unsafeName": "organizations",
-                          "safeName": "organizations"
-                        },
-                        "screamingSnakeCase": {
-                          "unsafeName": "ORGANIZATIONS",
-                          "safeName": "ORGANIZATIONS"
-                        },
-                        "pascalCase": {
-                          "unsafeName": "Organizations",
-                          "safeName": "Organizations"
-                        }
-                      }
+                      "organizations"
                     ],
                     "packagePath": [],
-                    "file": {
-                      "originalName": "organizations",
-                      "camelCase": {
-                        "unsafeName": "organizations",
-                        "safeName": "organizations"
-                      },
-                      "snakeCase": {
-                        "unsafeName": "organizations",
-                        "safeName": "organizations"
-                      },
-                      "screamingSnakeCase": {
-                        "unsafeName": "ORGANIZATIONS",
-                        "safeName": "ORGANIZATIONS"
-                      },
-                      "pascalCase": {
-                        "unsafeName": "Organizations",
-                        "safeName": "Organizations"
-                      }
-                    }
+                    "file": "organizations"
                   },
                   "typeId": "type_organizations:SearchResponse",
                   "type": "named"
@@ -926,25 +424,7 @@
         {
           "docs": "Returns the user with the provided user ID.",
           "id": "endpoint_.GetUser",
-          "name": {
-            "originalName": "GetUser",
-            "camelCase": {
-              "unsafeName": "getUser",
-              "safeName": "getUser"
-            },
-            "snakeCase": {
-              "unsafeName": "get_user",
-              "safeName": "get_user"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GET_USER",
-              "safeName": "GET_USER"
-            },
-            "pascalCase": {
-              "unsafeName": "GetUser",
-              "safeName": "GetUser"
-            }
-          },
+          "name": "GetUser",
           "auth": false,
           "idempotent": false,
           "method": "GET",
@@ -973,14 +453,6 @@
                 "camelCase": {
                   "unsafeName": "userID",
                   "safeName": "userID"
-                },
-                "snakeCase": {
-                  "unsafeName": "user_id",
-                  "safeName": "user_id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "USER_ID",
-                  "safeName": "USER_ID"
                 },
                 "pascalCase": {
                   "unsafeName": "UserID",
@@ -1011,14 +483,6 @@
                   "unsafeName": "userID",
                   "safeName": "userID"
                 },
-                "snakeCase": {
-                  "unsafeName": "user_id",
-                  "safeName": "user_id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "USER_ID",
-                  "safeName": "USER_ID"
-                },
                 "pascalCase": {
                   "unsafeName": "UserID",
                   "safeName": "UserID"
@@ -1044,67 +508,13 @@
           "headers": [],
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "GetUserRequest",
-                "camelCase": {
-                  "unsafeName": "getUserRequest",
-                  "safeName": "getUserRequest"
-                },
-                "snakeCase": {
-                  "unsafeName": "get_user_request",
-                  "safeName": "get_user_request"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "GET_USER_REQUEST",
-                  "safeName": "GET_USER_REQUEST"
-                },
-                "pascalCase": {
-                  "unsafeName": "GetUserRequest",
-                  "safeName": "GetUserRequest"
-                }
-              },
-              "bodyKey": {
-                "originalName": "body",
-                "camelCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "snakeCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BODY",
-                  "safeName": "BODY"
-                },
-                "pascalCase": {
-                  "unsafeName": "Body",
-                  "safeName": "Body"
-                }
-              },
+              "wrapperName": "GetUserRequest",
+              "bodyKey": "body",
               "includePathParameters": true,
               "onlyPathParameters": true,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request",
-              "camelCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "snakeCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "REQUEST",
-                "safeName": "REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "Request",
-                "safeName": "Request"
-              }
-            }
+            "requestParameterName": "request"
           },
           "response": {},
           "errors": [],
@@ -1114,25 +524,7 @@
         {
           "docs": "Returns the user with the provided user ID.",
           "id": "endpoint_.GetOrganizationUser",
-          "name": {
-            "originalName": "GetOrganizationUser",
-            "camelCase": {
-              "unsafeName": "getOrganizationUser",
-              "safeName": "getOrganizationUser"
-            },
-            "snakeCase": {
-              "unsafeName": "get_organization_user",
-              "safeName": "get_organization_user"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "GET_ORGANIZATION_USER",
-              "safeName": "GET_ORGANIZATION_USER"
-            },
-            "pascalCase": {
-              "unsafeName": "GetOrganizationUser",
-              "safeName": "GetOrganizationUser"
-            }
-          },
+          "name": "GetOrganizationUser",
           "auth": false,
           "idempotent": false,
           "method": "GET",
@@ -1170,14 +562,6 @@
                   "unsafeName": "organizationID",
                   "safeName": "organizationID"
                 },
-                "snakeCase": {
-                  "unsafeName": "organization_id",
-                  "safeName": "organization_id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ORGANIZATION_ID",
-                  "safeName": "ORGANIZATION_ID"
-                },
                 "pascalCase": {
                   "unsafeName": "OrganizationID",
                   "safeName": "OrganizationID"
@@ -1204,14 +588,6 @@
                 "camelCase": {
                   "unsafeName": "userID",
                   "safeName": "userID"
-                },
-                "snakeCase": {
-                  "unsafeName": "user_id",
-                  "safeName": "user_id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "USER_ID",
-                  "safeName": "USER_ID"
                 },
                 "pascalCase": {
                   "unsafeName": "UserID",
@@ -1242,14 +618,6 @@
                   "unsafeName": "organizationID",
                   "safeName": "organizationID"
                 },
-                "snakeCase": {
-                  "unsafeName": "organization_id",
-                  "safeName": "organization_id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "ORGANIZATION_ID",
-                  "safeName": "ORGANIZATION_ID"
-                },
                 "pascalCase": {
                   "unsafeName": "OrganizationID",
                   "safeName": "OrganizationID"
@@ -1277,14 +645,6 @@
                   "unsafeName": "userID",
                   "safeName": "userID"
                 },
-                "snakeCase": {
-                  "unsafeName": "user_id",
-                  "safeName": "user_id"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "USER_ID",
-                  "safeName": "USER_ID"
-                },
                 "pascalCase": {
                   "unsafeName": "UserID",
                   "safeName": "UserID"
@@ -1309,25 +669,7 @@
           "queryParameters": [
             {
               "name": {
-                "name": {
-                  "originalName": "limit",
-                  "camelCase": {
-                    "unsafeName": "limit",
-                    "safeName": "limit"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "limit",
-                    "safeName": "limit"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "LIMIT",
-                    "safeName": "LIMIT"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Limit",
-                    "safeName": "Limit"
-                  }
-                },
+                "name": "limit",
                 "wireValue": "limit"
               },
               "valueType": {
@@ -1349,92 +691,20 @@
           "headers": [],
           "sdkRequest": {
             "shape": {
-              "wrapperName": {
-                "originalName": "GetOrganizationUserRequest",
-                "camelCase": {
-                  "unsafeName": "getOrganizationUserRequest",
-                  "safeName": "getOrganizationUserRequest"
-                },
-                "snakeCase": {
-                  "unsafeName": "get_organization_user_request",
-                  "safeName": "get_organization_user_request"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "GET_ORGANIZATION_USER_REQUEST",
-                  "safeName": "GET_ORGANIZATION_USER_REQUEST"
-                },
-                "pascalCase": {
-                  "unsafeName": "GetOrganizationUserRequest",
-                  "safeName": "GetOrganizationUserRequest"
-                }
-              },
-              "bodyKey": {
-                "originalName": "body",
-                "camelCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "snakeCase": {
-                  "unsafeName": "body",
-                  "safeName": "body"
-                },
-                "screamingSnakeCase": {
-                  "unsafeName": "BODY",
-                  "safeName": "BODY"
-                },
-                "pascalCase": {
-                  "unsafeName": "Body",
-                  "safeName": "Body"
-                }
-              },
+              "wrapperName": "GetOrganizationUserRequest",
+              "bodyKey": "body",
               "includePathParameters": true,
               "onlyPathParameters": false,
               "type": "wrapper"
             },
-            "requestParameterName": {
-              "originalName": "request",
-              "camelCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "snakeCase": {
-                "unsafeName": "request",
-                "safeName": "request"
-              },
-              "screamingSnakeCase": {
-                "unsafeName": "REQUEST",
-                "safeName": "REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "Request",
-                "safeName": "Request"
-              }
-            }
+            "requestParameterName": "request"
           },
           "response": {
             "body": {
               "value": {
                 "docs": "Successful response",
                 "responseBodyType": {
-                  "name": {
-                    "originalName": "GetOrganizationUserResponse",
-                    "camelCase": {
-                      "unsafeName": "getOrganizationUserResponse",
-                      "safeName": "getOrganizationUserResponse"
-                    },
-                    "snakeCase": {
-                      "unsafeName": "get_organization_user_response",
-                      "safeName": "get_organization_user_response"
-                    },
-                    "screamingSnakeCase": {
-                      "unsafeName": "GET_ORGANIZATION_USER_RESPONSE",
-                      "safeName": "GET_ORGANIZATION_USER_RESPONSE"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "GetOrganizationUserResponse",
-                      "safeName": "GetOrganizationUserResponse"
-                    }
-                  },
+                  "name": "GetOrganizationUserResponse",
                   "fernFilepath": {
                     "allParts": [],
                     "packagePath": []
@@ -1462,14 +732,6 @@
         "camelCase": {
           "unsafeName": "errorInstanceID",
           "safeName": "errorInstanceID"
-        },
-        "snakeCase": {
-          "unsafeName": "error_instance_id",
-          "safeName": "error_instance_id"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ERROR_INSTANCE_ID",
-          "safeName": "ERROR_INSTANCE_ID"
         },
         "pascalCase": {
           "unsafeName": "ErrorInstanceID",
@@ -1509,6 +771,10 @@
               "unsafeName": "searchRequestAccess",
               "safeName": "searchRequestAccess"
             },
+            "pascalCase": {
+              "unsafeName": "SearchRequestAccess",
+              "safeName": "SearchRequestAccess"
+            },
             "snakeCase": {
               "unsafeName": "search_request_access",
               "safeName": "search_request_access"
@@ -1516,10 +782,6 @@
             "screamingSnakeCase": {
               "unsafeName": "SEARCH_REQUEST_ACCESS",
               "safeName": "SEARCH_REQUEST_ACCESS"
-            },
-            "pascalCase": {
-              "unsafeName": "SearchRequestAccess",
-              "safeName": "SearchRequestAccess"
             }
           },
           "fernFilepath": {
@@ -1530,6 +792,10 @@
                   "unsafeName": "organizations",
                   "safeName": "organizations"
                 },
+                "pascalCase": {
+                  "unsafeName": "Organizations",
+                  "safeName": "Organizations"
+                },
                 "snakeCase": {
                   "unsafeName": "organizations",
                   "safeName": "organizations"
@@ -1537,10 +803,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "ORGANIZATIONS",
                   "safeName": "ORGANIZATIONS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Organizations",
-                  "safeName": "Organizations"
                 }
               }
             ],
@@ -1551,6 +813,10 @@
                 "unsafeName": "organizations",
                 "safeName": "organizations"
               },
+              "pascalCase": {
+                "unsafeName": "Organizations",
+                "safeName": "Organizations"
+              },
               "snakeCase": {
                 "unsafeName": "organizations",
                 "safeName": "organizations"
@@ -1558,10 +824,6 @@
               "screamingSnakeCase": {
                 "unsafeName": "ORGANIZATIONS",
                 "safeName": "ORGANIZATIONS"
-              },
-              "pascalCase": {
-                "unsafeName": "Organizations",
-                "safeName": "Organizations"
               }
             }
           }
@@ -1574,6 +836,10 @@
                 "unsafeName": "private",
                 "safeName": "private"
               },
+              "pascalCase": {
+                "unsafeName": "Private",
+                "safeName": "Private"
+              },
               "snakeCase": {
                 "unsafeName": "private",
                 "safeName": "private"
@@ -1581,10 +847,6 @@
               "screamingSnakeCase": {
                 "unsafeName": "PRIVATE",
                 "safeName": "PRIVATE"
-              },
-              "pascalCase": {
-                "unsafeName": "Private",
-                "safeName": "Private"
               }
             },
             "wireValue": "private"
@@ -1596,6 +858,10 @@
                 "unsafeName": "public",
                 "safeName": "public"
               },
+              "pascalCase": {
+                "unsafeName": "Public",
+                "safeName": "Public"
+              },
               "snakeCase": {
                 "unsafeName": "public",
                 "safeName": "public"
@@ -1603,10 +869,6 @@
               "screamingSnakeCase": {
                 "unsafeName": "PUBLIC",
                 "safeName": "PUBLIC"
-              },
-              "pascalCase": {
-                "unsafeName": "Public",
-                "safeName": "Public"
               }
             },
             "wireValue": "public"
@@ -1622,6 +884,10 @@
               "unsafeName": "searchResponse",
               "safeName": "searchResponse"
             },
+            "pascalCase": {
+              "unsafeName": "SearchResponse",
+              "safeName": "SearchResponse"
+            },
             "snakeCase": {
               "unsafeName": "search_response",
               "safeName": "search_response"
@@ -1629,10 +895,6 @@
             "screamingSnakeCase": {
               "unsafeName": "SEARCH_RESPONSE",
               "safeName": "SEARCH_RESPONSE"
-            },
-            "pascalCase": {
-              "unsafeName": "SearchResponse",
-              "safeName": "SearchResponse"
             }
           },
           "fernFilepath": {
@@ -1643,6 +905,10 @@
                   "unsafeName": "organizations",
                   "safeName": "organizations"
                 },
+                "pascalCase": {
+                  "unsafeName": "Organizations",
+                  "safeName": "Organizations"
+                },
                 "snakeCase": {
                   "unsafeName": "organizations",
                   "safeName": "organizations"
@@ -1650,10 +916,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "ORGANIZATIONS",
                   "safeName": "ORGANIZATIONS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Organizations",
-                  "safeName": "Organizations"
                 }
               }
             ],
@@ -1664,6 +926,10 @@
                 "unsafeName": "organizations",
                 "safeName": "organizations"
               },
+              "pascalCase": {
+                "unsafeName": "Organizations",
+                "safeName": "Organizations"
+              },
               "snakeCase": {
                 "unsafeName": "organizations",
                 "safeName": "organizations"
@@ -1671,10 +937,6 @@
               "screamingSnakeCase": {
                 "unsafeName": "ORGANIZATIONS",
                 "safeName": "ORGANIZATIONS"
-              },
-              "pascalCase": {
-                "unsafeName": "Organizations",
-                "safeName": "Organizations"
               }
             }
           }
@@ -1688,6 +950,10 @@
                   "unsafeName": "results",
                   "safeName": "results"
                 },
+                "pascalCase": {
+                  "unsafeName": "Results",
+                  "safeName": "Results"
+                },
                 "snakeCase": {
                   "unsafeName": "results",
                   "safeName": "results"
@@ -1695,10 +961,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "RESULTS",
                   "safeName": "RESULTS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Results",
-                  "safeName": "Results"
                 }
               },
               "wireValue": "results"
@@ -1726,6 +988,10 @@
               "unsafeName": "getOrganizationUserResponse",
               "safeName": "getOrganizationUserResponse"
             },
+            "pascalCase": {
+              "unsafeName": "GetOrganizationUserResponse",
+              "safeName": "GetOrganizationUserResponse"
+            },
             "snakeCase": {
               "unsafeName": "get_organization_user_response",
               "safeName": "get_organization_user_response"
@@ -1733,10 +999,6 @@
             "screamingSnakeCase": {
               "unsafeName": "GET_ORGANIZATION_USER_RESPONSE",
               "safeName": "GET_ORGANIZATION_USER_RESPONSE"
-            },
-            "pascalCase": {
-              "unsafeName": "GetOrganizationUserResponse",
-              "safeName": "GetOrganizationUserResponse"
             }
           },
           "fernFilepath": {
@@ -1753,6 +1015,10 @@
                   "unsafeName": "results",
                   "safeName": "results"
                 },
+                "pascalCase": {
+                  "unsafeName": "Results",
+                  "safeName": "Results"
+                },
                 "snakeCase": {
                   "unsafeName": "results",
                   "safeName": "results"
@@ -1760,10 +1026,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "RESULTS",
                   "safeName": "RESULTS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Results",
-                  "safeName": "Results"
                 }
               },
               "wireValue": "results"
@@ -1794,6 +1056,10 @@
               "unsafeName": "search",
               "safeName": "search"
             },
+            "pascalCase": {
+              "unsafeName": "Search",
+              "safeName": "Search"
+            },
             "snakeCase": {
               "unsafeName": "search",
               "safeName": "search"
@@ -1801,10 +1067,6 @@
             "screamingSnakeCase": {
               "unsafeName": "SEARCH",
               "safeName": "SEARCH"
-            },
-            "pascalCase": {
-              "unsafeName": "Search",
-              "safeName": "Search"
             }
           },
           "fernFilepath": {
@@ -1815,6 +1077,10 @@
                   "unsafeName": "organizations",
                   "safeName": "organizations"
                 },
+                "pascalCase": {
+                  "unsafeName": "Organizations",
+                  "safeName": "Organizations"
+                },
                 "snakeCase": {
                   "unsafeName": "organizations",
                   "safeName": "organizations"
@@ -1822,10 +1088,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "ORGANIZATIONS",
                   "safeName": "ORGANIZATIONS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Organizations",
-                  "safeName": "Organizations"
                 }
               }
             ],
@@ -1836,6 +1098,10 @@
                 "unsafeName": "organizations",
                 "safeName": "organizations"
               },
+              "pascalCase": {
+                "unsafeName": "Organizations",
+                "safeName": "Organizations"
+              },
               "snakeCase": {
                 "unsafeName": "organizations",
                 "safeName": "organizations"
@@ -1843,10 +1109,6 @@
               "screamingSnakeCase": {
                 "unsafeName": "ORGANIZATIONS",
                 "safeName": "ORGANIZATIONS"
-              },
-              "pascalCase": {
-                "unsafeName": "Organizations",
-                "safeName": "Organizations"
               }
             }
           }
@@ -1863,6 +1125,10 @@
                 "unsafeName": "searchRequest",
                 "safeName": "searchRequest"
               },
+              "pascalCase": {
+                "unsafeName": "SearchRequest",
+                "safeName": "SearchRequest"
+              },
               "snakeCase": {
                 "unsafeName": "search_request",
                 "safeName": "search_request"
@@ -1870,10 +1136,6 @@
               "screamingSnakeCase": {
                 "unsafeName": "SEARCH_REQUEST",
                 "safeName": "SEARCH_REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "SearchRequest",
-                "safeName": "SearchRequest"
               }
             },
             "fernFilepath": {
@@ -1884,6 +1146,10 @@
                     "unsafeName": "organizations",
                     "safeName": "organizations"
                   },
+                  "pascalCase": {
+                    "unsafeName": "Organizations",
+                    "safeName": "Organizations"
+                  },
                   "snakeCase": {
                     "unsafeName": "organizations",
                     "safeName": "organizations"
@@ -1891,10 +1157,6 @@
                   "screamingSnakeCase": {
                     "unsafeName": "ORGANIZATIONS",
                     "safeName": "ORGANIZATIONS"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Organizations",
-                    "safeName": "Organizations"
                   }
                 }
               ],
@@ -1905,6 +1167,10 @@
                   "unsafeName": "organizations",
                   "safeName": "organizations"
                 },
+                "pascalCase": {
+                  "unsafeName": "Organizations",
+                  "safeName": "Organizations"
+                },
                 "snakeCase": {
                   "unsafeName": "organizations",
                   "safeName": "organizations"
@@ -1912,10 +1178,6 @@
                 "screamingSnakeCase": {
                   "unsafeName": "ORGANIZATIONS",
                   "safeName": "ORGANIZATIONS"
-                },
-                "pascalCase": {
-                  "unsafeName": "Organizations",
-                  "safeName": "Organizations"
                 }
               }
             }
@@ -1929,15 +1191,15 @@
                     "unsafeName": "id",
                     "safeName": "id"
                   },
+                  "pascalCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
                   "snakeCase": {
                     "unsafeName": "id",
                     "safeName": "id"
                   },
                   "screamingSnakeCase": {
-                    "unsafeName": "ID",
-                    "safeName": "ID"
-                  },
-                  "pascalCase": {
                     "unsafeName": "ID",
                     "safeName": "ID"
                   }
@@ -1957,6 +1219,10 @@
                     "unsafeName": "organizationID",
                     "safeName": "organizationID"
                   },
+                  "pascalCase": {
+                    "unsafeName": "OrganizationID",
+                    "safeName": "OrganizationID"
+                  },
                   "snakeCase": {
                     "unsafeName": "organization_id",
                     "safeName": "organization_id"
@@ -1964,10 +1230,6 @@
                   "screamingSnakeCase": {
                     "unsafeName": "ORGANIZATION_ID",
                     "safeName": "ORGANIZATION_ID"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "OrganizationID",
-                    "safeName": "OrganizationID"
                   }
                 },
                 "wireValue": "organization_id"
@@ -1990,6 +1252,10 @@
                       "unsafeName": "access",
                       "safeName": "access"
                     },
+                    "pascalCase": {
+                      "unsafeName": "Access",
+                      "safeName": "Access"
+                    },
                     "snakeCase": {
                       "unsafeName": "access",
                       "safeName": "access"
@@ -1997,10 +1263,6 @@
                     "screamingSnakeCase": {
                       "unsafeName": "ACCESS",
                       "safeName": "ACCESS"
-                    },
-                    "pascalCase": {
-                      "unsafeName": "Access",
-                      "safeName": "Access"
                     }
                   },
                   "wireValue": "access"
@@ -2035,6 +1297,10 @@
               "unsafeName": "getUser",
               "safeName": "getUser"
             },
+            "pascalCase": {
+              "unsafeName": "GetUser",
+              "safeName": "GetUser"
+            },
             "snakeCase": {
               "unsafeName": "get_user",
               "safeName": "get_user"
@@ -2042,10 +1308,6 @@
             "screamingSnakeCase": {
               "unsafeName": "GET_USER",
               "safeName": "GET_USER"
-            },
-            "pascalCase": {
-              "unsafeName": "GetUser",
-              "safeName": "GetUser"
             }
           },
           "fernFilepath": {
@@ -2065,6 +1327,10 @@
                 "unsafeName": "getUserRequest",
                 "safeName": "getUserRequest"
               },
+              "pascalCase": {
+                "unsafeName": "GetUserRequest",
+                "safeName": "GetUserRequest"
+              },
               "snakeCase": {
                 "unsafeName": "get_user_request",
                 "safeName": "get_user_request"
@@ -2072,10 +1338,6 @@
               "screamingSnakeCase": {
                 "unsafeName": "GET_USER_REQUEST",
                 "safeName": "GET_USER_REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "GetUserRequest",
-                "safeName": "GetUserRequest"
               }
             },
             "fernFilepath": {
@@ -2092,6 +1354,10 @@
                     "unsafeName": "userID",
                     "safeName": "userID"
                   },
+                  "pascalCase": {
+                    "unsafeName": "UserID",
+                    "safeName": "UserID"
+                  },
                   "snakeCase": {
                     "unsafeName": "user_id",
                     "safeName": "user_id"
@@ -2099,10 +1365,6 @@
                   "screamingSnakeCase": {
                     "unsafeName": "USER_ID",
                     "safeName": "USER_ID"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "UserID",
-                    "safeName": "UserID"
                   }
                 },
                 "wireValue": "user_id"
@@ -2134,6 +1396,10 @@
               "unsafeName": "getOrganizationUser",
               "safeName": "getOrganizationUser"
             },
+            "pascalCase": {
+              "unsafeName": "GetOrganizationUser",
+              "safeName": "GetOrganizationUser"
+            },
             "snakeCase": {
               "unsafeName": "get_organization_user",
               "safeName": "get_organization_user"
@@ -2141,10 +1407,6 @@
             "screamingSnakeCase": {
               "unsafeName": "GET_ORGANIZATION_USER",
               "safeName": "GET_ORGANIZATION_USER"
-            },
-            "pascalCase": {
-              "unsafeName": "GetOrganizationUser",
-              "safeName": "GetOrganizationUser"
             }
           },
           "fernFilepath": {
@@ -2164,6 +1426,10 @@
                 "unsafeName": "getOrganizationUserRequest",
                 "safeName": "getOrganizationUserRequest"
               },
+              "pascalCase": {
+                "unsafeName": "GetOrganizationUserRequest",
+                "safeName": "GetOrganizationUserRequest"
+              },
               "snakeCase": {
                 "unsafeName": "get_organization_user_request",
                 "safeName": "get_organization_user_request"
@@ -2171,10 +1437,6 @@
               "screamingSnakeCase": {
                 "unsafeName": "GET_ORGANIZATION_USER_REQUEST",
                 "safeName": "GET_ORGANIZATION_USER_REQUEST"
-              },
-              "pascalCase": {
-                "unsafeName": "GetOrganizationUserRequest",
-                "safeName": "GetOrganizationUserRequest"
               }
             },
             "fernFilepath": {
@@ -2191,6 +1453,10 @@
                     "unsafeName": "organizationID",
                     "safeName": "organizationID"
                   },
+                  "pascalCase": {
+                    "unsafeName": "OrganizationID",
+                    "safeName": "OrganizationID"
+                  },
                   "snakeCase": {
                     "unsafeName": "organization_id",
                     "safeName": "organization_id"
@@ -2198,10 +1464,6 @@
                   "screamingSnakeCase": {
                     "unsafeName": "ORGANIZATION_ID",
                     "safeName": "ORGANIZATION_ID"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "OrganizationID",
-                    "safeName": "OrganizationID"
                   }
                 },
                 "wireValue": "organization_id"
@@ -2219,6 +1481,10 @@
                     "unsafeName": "userID",
                     "safeName": "userID"
                   },
+                  "pascalCase": {
+                    "unsafeName": "UserID",
+                    "safeName": "UserID"
+                  },
                   "snakeCase": {
                     "unsafeName": "user_id",
                     "safeName": "user_id"
@@ -2226,10 +1492,6 @@
                   "screamingSnakeCase": {
                     "unsafeName": "USER_ID",
                     "safeName": "USER_ID"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "UserID",
-                    "safeName": "UserID"
                   }
                 },
                 "wireValue": "user_id"
@@ -2249,6 +1511,10 @@
                     "unsafeName": "limit",
                     "safeName": "limit"
                   },
+                  "pascalCase": {
+                    "unsafeName": "Limit",
+                    "safeName": "Limit"
+                  },
                   "snakeCase": {
                     "unsafeName": "limit",
                     "safeName": "limit"
@@ -2256,10 +1522,6 @@
                   "screamingSnakeCase": {
                     "unsafeName": "LIMIT",
                     "safeName": "LIMIT"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "Limit",
-                    "safeName": "Limit"
                   }
                 },
                 "wireValue": "limit"
@@ -2289,66 +1551,12 @@
     "subpackage_organizations": {
       "fernFilepath": {
         "allParts": [
-          {
-            "originalName": "organizations",
-            "camelCase": {
-              "unsafeName": "organizations",
-              "safeName": "organizations"
-            },
-            "snakeCase": {
-              "unsafeName": "organizations",
-              "safeName": "organizations"
-            },
-            "screamingSnakeCase": {
-              "unsafeName": "ORGANIZATIONS",
-              "safeName": "ORGANIZATIONS"
-            },
-            "pascalCase": {
-              "unsafeName": "Organizations",
-              "safeName": "Organizations"
-            }
-          }
+          "organizations"
         ],
         "packagePath": [],
-        "file": {
-          "originalName": "organizations",
-          "camelCase": {
-            "unsafeName": "organizations",
-            "safeName": "organizations"
-          },
-          "snakeCase": {
-            "unsafeName": "organizations",
-            "safeName": "organizations"
-          },
-          "screamingSnakeCase": {
-            "unsafeName": "ORGANIZATIONS",
-            "safeName": "ORGANIZATIONS"
-          },
-          "pascalCase": {
-            "unsafeName": "Organizations",
-            "safeName": "Organizations"
-          }
-        }
+        "file": "organizations"
       },
-      "name": {
-        "originalName": "organizations",
-        "camelCase": {
-          "unsafeName": "organizations",
-          "safeName": "organizations"
-        },
-        "snakeCase": {
-          "unsafeName": "organizations",
-          "safeName": "organizations"
-        },
-        "screamingSnakeCase": {
-          "unsafeName": "ORGANIZATIONS",
-          "safeName": "ORGANIZATIONS"
-        },
-        "pascalCase": {
-          "unsafeName": "Organizations",
-          "safeName": "Organizations"
-        }
-      },
+      "name": "organizations",
       "service": "service_organizations",
       "types": [
         "type_organizations:SearchRequestAccess",
