@@ -5481,9 +5481,6 @@ importers:
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../ir-sdk
-      '@fern-api/ir-utils':
-        specifier: workspace:*
-        version: link:../../commons/ir-utils
       '@fern-api/lazy-fern-workspace':
         specifier: workspace:*
         version: link:../workspace/lazy-fern-workspace
@@ -5676,9 +5673,6 @@ importers:
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../../ir-sdk
-      '@fern-api/ir-utils':
-        specifier: workspace:*
-        version: link:../../../commons/ir-utils
       '@fern-api/project-loader':
         specifier: workspace:*
         version: link:../../project-loader
@@ -5950,9 +5944,6 @@ importers:
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../../ir-sdk
-      '@fern-api/ir-utils':
-        specifier: workspace:*
-        version: link:../../../commons/ir-utils
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../logger
@@ -6249,9 +6240,6 @@ importers:
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../../../ir-sdk
-      '@fern-api/ir-utils':
-        specifier: workspace:*
-        version: link:../../../../commons/ir-utils
       '@fern-api/java-dynamic-snippets':
         specifier: workspace:*
         version: link:../../../../../generators/java-v2/dynamic-snippets
@@ -6409,9 +6397,6 @@ importers:
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../../../ir-sdk
-      '@fern-api/ir-utils':
-        specifier: workspace:*
-        version: link:../../../../commons/ir-utils
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../logger
@@ -6693,9 +6678,6 @@ importers:
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../ir-sdk
-      '@fern-api/ir-utils':
-        specifier: workspace:*
-        version: link:../../commons/ir-utils
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../task-context
