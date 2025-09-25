@@ -7,6 +7,14 @@
   createdAt: "2025-09-25"
   irVersion: 60
 
+- version: 1.12.6
+  changelogEntry:
+    - summary: |
+        Fix name collision between receiver and parameter.
+      type: fix
+  createdAt: "2025-09-25"
+  irVersion: 60
+
 - version: 1.12.5
   changelogEntry:
     - summary: |

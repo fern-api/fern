@@ -213,6 +213,10 @@ func (f *fileWriter) WriteSetterMethods(typeName string, propertyNames []string,
 		paramName := propertySafeNames[i]
 		propertyType := propertyTypes[i]
 
+		if receiver == paramName {
+			receiver = fmt.Sprintf("_%s", setterName)
+		}
+
 		f.P("// ", setterName, " sets the ", propertyName, " field and marks it as non-optional;")
 		f.P("// ", "this prevents an empty or null value for this field from being omitted during serialization.")
 		f.P("func (", receiver, " *", typeName, ") ", setterName, "(", paramName, " ", propertyType, ") {")

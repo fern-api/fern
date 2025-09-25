@@ -240,6 +240,100 @@ func (t *Type) Accept(visitor TypeVisitor) error {
 }
 
 var (
+	typeWithSingleCharPropertyEqualToTypeStartingLetterFieldT  = big.NewInt(1 << 0)
+	typeWithSingleCharPropertyEqualToTypeStartingLetterFieldTy = big.NewInt(1 << 1)
+)
+
+type TypeWithSingleCharPropertyEqualToTypeStartingLetter struct {
+	T  string `json:"t" url:"t"`
+	Ty string `json:"ty" url:"ty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (t *TypeWithSingleCharPropertyEqualToTypeStartingLetter) GetT() string {
+	if t == nil {
+		return ""
+	}
+	return t.T
+}
+
+func (t *TypeWithSingleCharPropertyEqualToTypeStartingLetter) GetTy() string {
+	if t == nil {
+		return ""
+	}
+	return t.Ty
+}
+
+func (t *TypeWithSingleCharPropertyEqualToTypeStartingLetter) GetExtraProperties() map[string]interface{} {
+	return t.extraProperties
+}
+
+func (t *TypeWithSingleCharPropertyEqualToTypeStartingLetter) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+// SetT sets the T field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (_SetT *TypeWithSingleCharPropertyEqualToTypeStartingLetter) SetT(t string) {
+	_SetT.T = t
+	_SetT.require(typeWithSingleCharPropertyEqualToTypeStartingLetterFieldT)
+}
+
+// SetTy sets the Ty field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (_SetT *TypeWithSingleCharPropertyEqualToTypeStartingLetter) SetTy(ty string) {
+	_SetT.Ty = ty
+	_SetT.require(typeWithSingleCharPropertyEqualToTypeStartingLetterFieldTy)
+}
+
+func (t *TypeWithSingleCharPropertyEqualToTypeStartingLetter) UnmarshalJSON(data []byte) error {
+	type unmarshaler TypeWithSingleCharPropertyEqualToTypeStartingLetter
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = TypeWithSingleCharPropertyEqualToTypeStartingLetter(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (t *TypeWithSingleCharPropertyEqualToTypeStartingLetter) MarshalJSON() ([]byte, error) {
+	type embed TypeWithSingleCharPropertyEqualToTypeStartingLetter
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*t),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (t *TypeWithSingleCharPropertyEqualToTypeStartingLetter) String() string {
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
+}
+
+var (
 	actorFieldName = big.NewInt(1 << 0)
 	actorFieldId   = big.NewInt(1 << 1)
 )
