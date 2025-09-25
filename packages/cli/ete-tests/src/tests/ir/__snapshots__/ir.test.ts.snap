@@ -1312,7 +1312,8 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                             "type": "named",
                             "value": "type_commons:AppId"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -1341,7 +1342,8 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                             "type": "primitive",
                             "value": "STRING"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -1511,7 +1513,8 @@ exports[`ir > {"name":"extended-examples"} 1`] = `
                             "type": "named",
                             "value": "type_commons:AppId"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -2334,7 +2337,8 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                                     "type": "primitive",
                                     "value": "STRING"
                                 },
-                                "propertyAccess": null
+                                "propertyAccess": null,
+                                "variable": null
                             },
                             {
                                 "type": "file",
@@ -2410,7 +2414,8 @@ exports[`ir > {"name":"file-upload"} 1`] = `
                                     "type": "primitive",
                                     "value": "INTEGER"
                                 },
-                                "propertyAccess": null
+                                "propertyAccess": null,
+                                "variable": null
                             }
                         ]
                     },
@@ -12576,7 +12581,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                 }
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -12677,7 +12683,8 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                                 "type": "unknown"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -14032,7 +14039,8 @@ exports[`ir > {"name":"packages"} 1`] = `
                             "type": "named",
                             "value": "type_:RootString"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -14061,7 +14069,8 @@ exports[`ir > {"name":"packages"} 1`] = `
                             "type": "named",
                             "value": "type_package:PackageString"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -16972,7 +16981,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                             "type": "primitive",
                             "value": "STRING"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -17071,7 +17081,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                             "type": "primitive",
                             "value": "STRING"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -17170,7 +17181,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                             "type": "primitive",
                             "value": "STRING"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -17199,7 +17211,8 @@ exports[`ir > {"name":"response-property"} 1`] = `
                             "type": "named",
                             "value": "type_service:Movie"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -19154,7 +19167,8 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                             "type": "primitive",
                             "value": "STRING"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -19252,7 +19266,8 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                         "typeReference": {
                             "type": "unknown"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -19289,7 +19304,8 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                         "value": "STRING"
                     }
                 },
-                "propertyAccess": null
+                "propertyAccess": null,
+                "variable": null
             }
         ],
         "endpoints": {
@@ -19408,7 +19424,8 @@ exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
                     "type": "primitive",
                     "value": "STRING"
                 },
-                "propertyAccess": null
+                "propertyAccess": null,
+                "variable": null
             }
         ],
         "environments": null,
@@ -23131,7 +23148,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                             "type": "primitive",
                             "value": "STRING"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -23301,7 +23319,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                             "type": "primitive",
                             "value": "STRING"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -23333,7 +23352,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                                 "value": "DOUBLE"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -23370,7 +23390,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                         "value": "STRING"
                     }
                 },
-                "propertyAccess": null
+                "propertyAccess": null,
+                "variable": null
             }
         ],
         "endpoints": {
@@ -23489,7 +23510,8 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                     "type": "primitive",
                     "value": "STRING"
                 },
-                "propertyAccess": null
+                "propertyAccess": null,
+                "variable": null
             }
         ],
         "environments": null,
@@ -38072,7 +38094,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "type": "primitive",
                             "value": "STRING"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -38171,7 +38194,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "type": "primitive",
                             "value": "STRING"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -38364,7 +38388,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "type": "primitive",
                             "value": "STRING"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -38393,7 +38418,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "type": "named",
                             "value": "type_director:Age"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -38924,7 +38950,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "type": "named",
                             "value": "type_imdb:MovieId"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -38953,7 +38980,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "type": "primitive",
                             "value": "STRING"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -38982,7 +39010,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "type": "primitive",
                             "value": "DOUBLE"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -39081,7 +39110,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "type": "primitive",
                             "value": "STRING"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -39113,7 +39143,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "value": "DOUBLE"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -39212,7 +39243,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "type": "named",
                             "value": "type_director:Director"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -39581,7 +39613,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "typeReference": {
                             "type": "unknown"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -39680,7 +39713,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "type": "primitive",
                             "value": "STRING"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -39712,7 +39746,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "value": "DOUBLE"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -39744,7 +39779,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "value": "type_imdb:RecursiveType"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -39781,7 +39817,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                         "value": "STRING"
                     }
                 },
-                "propertyAccess": null
+                "propertyAccess": null,
+                "variable": null
             }
         ],
         "endpoints": {
@@ -40121,7 +40158,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "type": "named",
                                 "value": "type_imdb:MovieId"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ],
                     "queryParameters": [
@@ -40155,7 +40193,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                     "value": "STRING"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ],
                     "headers": [],
@@ -40270,7 +40309,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                                 "type": "named",
                                 "value": "type_imdb:MovieId"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ],
                     "body": null
@@ -40309,7 +40349,8 @@ exports[`ir > {"name":"simple"} 1`] = `
                     "type": "primitive",
                     "value": "STRING"
                 },
-                "propertyAccess": null
+                "propertyAccess": null,
+                "variable": null
             }
         ],
         "environments": null,
@@ -41407,7 +41448,8 @@ exports[`ir > {"name":"streaming"} 1`] = `
                                     "type": "primitive",
                                     "value": "BOOLEAN"
                                 },
-                                "propertyAccess": null
+                                "propertyAccess": null,
+                                "variable": null
                             }
                         ]
                     },
@@ -42774,7 +42816,8 @@ exports[`ir > {"name":"variables"} 1`] = `
                                 "type": "named",
                                 "value": "type_commons:StringAlias"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": "my-variable"
                         }
                     ],
                     "body": null
@@ -42813,7 +42856,8 @@ exports[`ir > {"name":"variables"} 1`] = `
                     "type": "named",
                     "value": "type_commons:StringAlias"
                 },
-                "propertyAccess": null
+                "propertyAccess": null,
+                "variable": "my-variable"
             }
         ],
         "environments": null,
