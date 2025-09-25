@@ -160,6 +160,30 @@ export class EndpointSnippetGenerator {
             );
         }
         this.context.errors.unscope();
+
+        // Handle variables that should be configured at client level
+        // Check for variables used in this endpoint's path parameters
+        const usedVariables = new Set<string>();
+        const allPathParams = [...(this.context.ir.pathParameters ?? []), ...(endpoint.request.pathParameters ?? [])];
+
+        allPathParams.forEach(param => {
+            if (param.variable != null) {
+                usedVariables.add(param.variable);
+            }
+        });
+
+        if (this.context.ir.variables != null && this.context.ir.variables.length > 0) {
+            for (const variable of this.context.ir.variables) {
+                // Only add variables that are actually used in this endpoint
+                if (usedVariables.has(variable.id)) {
+                    const variableName = variable.name.camelCase.unsafeName;
+                    builderArgs.push({
+                        name: variableName,
+                        value: java.TypeLiteral.string(`YOUR_${variable.name.screamingSnakeCase.unsafeName}`)
+                    });
+                }
+            }
+        }
         return builderArgs;
     }
 
@@ -411,7 +435,11 @@ export class EndpointSnippetGenerator {
         const args: java.TypeLiteral[] = [];
 
         this.context.errors.scope(Scope.PathParameters);
-        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
+        // Only include path parameters that don't reference variables
+        // Variables are configured at client level, not passed as method args
+        const allPathParams = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
+
+        const pathParameters = allPathParams.filter((param) => param.variable == null);
         if (pathParameters.length > 0) {
             args.push(
                 ...this.getPathParameters({ namedParameters: pathParameters, snippet }).map((field) => field.value)
@@ -503,8 +531,11 @@ export class EndpointSnippetGenerator {
 
         this.context.errors.scope(Scope.PathParameters);
         const pathParameterFields: java.BuilderParameter[] = [];
-        if (request.pathParameters != null) {
-            pathParameterFields.push(...this.getPathParameters({ namedParameters: request.pathParameters, snippet }));
+        // Combine global and request path parameters, then filter out those with variables
+        const allPathParams = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
+        const nonVariablePathParams = allPathParams.filter((param) => param.variable == null);
+        if (nonVariablePathParams.length > 0) {
+            pathParameterFields.push(...this.getPathParameters({ namedParameters: nonVariablePathParams, snippet }));
         }
         this.context.errors.unscope();
 
