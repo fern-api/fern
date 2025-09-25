@@ -293,11 +293,17 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
             draft.browser = {
                 fs: false,
                 os: false,
-                path: false
+                path: false,
+                stream: false
                 // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
             } as any;
 
-            draft["packageManager"] = "yarn@1.22.22";
+            if (this.packageManager === "yarn") {
+                draft["packageManager"] = "yarn@1.22.22";
+            }
+            if (this.packageManager === "pnpm") {
+                draft["packageManager"] = "pnpm@10.14.0";
+            }
             draft["engines"] = {
                 node: ">=18.0.0"
             };
