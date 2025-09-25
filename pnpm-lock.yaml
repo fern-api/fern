@@ -6134,8 +6134,8 @@ importers:
         specifier: 0.0.33
         version: 0.0.33
       '@fern-fern/ir-v60-sdk':
-        specifier: 0.0.2
-        version: 0.0.2
+        specifier: 0.0.3
+        version: 0.0.3
       '@fern-fern/ir-v7-model':
         specifier: 0.0.2
         version: 0.0.2
@@ -9596,8 +9596,8 @@ packages:
   '@fern-fern/ir-v6-model@0.0.33':
     resolution: {integrity: sha512-I3KLvdrRzSrh5CcpU0v/Mjn4ywZhzVwhqJC8IDIQiP1yPvsCnjgbTBNwLRG8KdJqHfLOgdt/hfVzjeuFugSlGA==}
 
-  '@fern-fern/ir-v60-sdk@0.0.2':
-    resolution: {integrity: sha512-hN1FMEBCjreet3VP6JZxkLSKKcI/xt+aFS4QqOqDIQfQL7mxNJmcEmexgMJu8y7ZomBFv4PBFrA0sAYXuH2MzQ==}
+  '@fern-fern/ir-v60-sdk@0.0.3':
+    resolution: {integrity: sha512-W41rrRvZRvFRtMcW/nb1TWTPZSLBsveKX6mjxBrTU3MHaXvi6njL5wlsir4khFihk4M9gg8eYTkcbiT90KuIMA==}
 
   '@fern-fern/ir-v7-model@0.0.2':
     resolution: {integrity: sha512-YLm+eUW97/wghZR8COZ5P0kGPis27L3hqG7+Cy+lyhqx4qv5Gw/jck0gaskZ3KqOWbigVfblo0ukW9P5TaW0Iw==}
@@ -16467,7 +16467,7 @@ snapshots:
 
   '@fern-fern/ir-v6-model@0.0.33': {}
 
-  '@fern-fern/ir-v60-sdk@0.0.2':
+  '@fern-fern/ir-v60-sdk@0.0.3':
     dependencies:
       form-data: 4.0.4
       formdata-node: 6.0.3
