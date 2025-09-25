@@ -23,6 +23,7 @@ import { createLoggingExecutable } from "@fern-api/logging-execa";
 
 import { publishPackage } from "./publishPackage";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows";
+import { tmpdir } from "os";
 
 const OUTPUT_ZIP_FILENAME = "output.zip";
 
@@ -153,7 +154,14 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         unzipOutput: options?.unzipOutput
                     });
                     if (ir.selfHosted) {
-                        await this.pushToGihub(ir, destinationPath, logger);
+                        const tmpDir = await tmp.dir();
+                        await typescriptProject.copyProjectTo({
+                            destinationPath: AbsoluteFilePath.of(tmpDir.path),
+                            zipFilename: OUTPUT_ZIP_FILENAME,
+                            unzipOutput: true,
+                            logger
+                        });
+                        await this.pushToGihub(ir, tmpDir.path, logger);
                     }
                 },
                 downloadFiles: async () => {
