@@ -1894,8 +1894,11 @@ importers:
         specifier: workspace:*
         version: link:../codegen
       '@fern-fern/ir-sdk':
-        specifier: ^59.7.0
-        version: 59.7.0
+        specifier: 59.0.0
+        version: 59.0.0
+      zod:
+        specifier: ^3.22.4
+        version: 3.25.76
     devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
@@ -1936,29 +1939,28 @@ importers:
         version: 2.1.9(@types/node@18.15.3)(jsdom@20.0.3)(msw@2.11.3(@types/node@18.15.3)(typescript@5.8.3))(sass@1.93.0)(terser@5.44.0)
 
   generators/rust/dynamic-snippets:
-    dependencies:
+    devDependencies:
       '@fern-api/browser-compatible-base-generator':
         specifier: workspace:*
         version: link:../../browser-compatible-base
-      '@fern-api/core-utils':
-        specifier: workspace:*
-        version: link:../../../packages/commons/core-utils
-      '@fern-api/rust-base':
-        specifier: workspace:*
-        version: link:../base
-      '@fern-api/rust-codegen':
-        specifier: workspace:*
-        version: link:../codegen
-    devDependencies:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
         specifier: ^59.6.1
         version: 59.6.1
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
+      '@fern-api/rust-base':
+        specifier: workspace:*
+        version: link:../base
+      '@fern-api/rust-codegen':
+        specifier: workspace:*
+        version: link:../codegen
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -2011,8 +2013,8 @@ importers:
         specifier: ^0.0.1045
         version: 0.0.1045
       '@fern-fern/ir-sdk':
-        specifier: ^59.7.0
-        version: 59.7.0
+        specifier: 59.0.0
+        version: 59.0.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -2033,10 +2035,6 @@ importers:
         version: 3.25.76
 
   generators/rust/sdk:
-    dependencies:
-      '@fern-api/rust-codegen':
-        specifier: workspace:*
-        version: link:../codegen
     devDependencies:
       '@fern-api/base-generator':
         specifier: workspace:*
@@ -2059,6 +2057,9 @@ importers:
       '@fern-api/rust-base':
         specifier: workspace:*
         version: link:../base
+      '@fern-api/rust-codegen':
+        specifier: workspace:*
+        version: link:../codegen
       '@fern-api/rust-dynamic-snippets':
         specifier: workspace:*
         version: link:../dynamic-snippets
@@ -2066,14 +2067,14 @@ importers:
         specifier: workspace:*
         version: link:../model
       '@fern-fern/generator-cli-sdk':
-        specifier: 0.1.1
-        version: 0.1.1
+        specifier: 0.0.33
+        version: 0.0.33
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.1045
         version: 0.0.1045
       '@fern-fern/ir-sdk':
-        specifier: ^59.7.0
-        version: 59.7.0
+        specifier: 59.0.0
+        version: 59.0.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -6289,9 +6290,6 @@ importers:
       '@fern-api/ruby-dynamic-snippets':
         specifier: workspace:*
         version: link:../../../../../generators/ruby-v2/dynamic-snippets
-      '@fern-api/rust-dynamic-snippets':
-        specifier: workspace:*
-        version: link:../../../../../generators/rust/dynamic-snippets
       '@fern-api/sdk':
         specifier: 0.12.3
         version: 0.12.3
@@ -9510,6 +9508,9 @@ packages:
 
   '@fern-fern/ir-sdk@58.2.0':
     resolution: {integrity: sha512-fLbBTss0BhNoPFYDFvAoTmXLAE32EMw0LHjX9HZQjDxPiObUzcjvyxcA2uByY7OYmTm2vNijFvRxc0hqv7x2XQ==}
+
+  '@fern-fern/ir-sdk@59.0.0':
+    resolution: {integrity: sha512-Cd26neNEuPlY7cczTw16gsZeTc9GfbhwC3q0IZMYuZRqWuq5Qd55vcEDnkCqewEuem7wyopxT1MBJ48GNrqk1A==}
 
   '@fern-fern/ir-sdk@59.7.0':
     resolution: {integrity: sha512-4KuS8z/Kw3uuGdQeB4GpGsCdw21/TCXR+DeJOLLvmrHdK5cjdqVUEl/GfOk9LG3J46sMSZwHIreQ/MlnDB16Wg==}
@@ -17315,6 +17316,16 @@ snapshots:
   '@fern-fern/ir-sdk@53.9.0': {}
 
   '@fern-fern/ir-sdk@58.2.0':
+    dependencies:
+      form-data: 4.0.4
+      formdata-node: 6.0.3
+      node-fetch: 2.7.0
+      qs: 6.14.0
+      readable-stream: 4.7.0
+    transitivePeerDependencies:
+      - encoding
+
+  '@fern-fern/ir-sdk@59.0.0':
     dependencies:
       form-data: 4.0.4
       formdata-node: 6.0.3
