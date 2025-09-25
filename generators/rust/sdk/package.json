@@ -35,11 +35,9 @@
     "test": "vitest --passWithNoTests --run",
     "test:update": "vitest --passWithNoTests --run -u"
   },
-  "dependencies": {
-    "@fern-api/core-utils": "0.15.0-rc63",
-    "@fern-api/rust-dynamic-snippets": "workspace:*"
-  },
   "devDependencies": {
+    "@fern-api/rust-dynamic-snippets": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
     "@fern-api/dynamic-ir-sdk": "^59.0.0",

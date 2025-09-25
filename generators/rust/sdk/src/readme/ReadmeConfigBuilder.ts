@@ -5,31 +5,27 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder";
 
 export class ReadmeConfigBuilder {
-    private endpointSnippets: FernGeneratorExec.Endpoint[];
-
-    constructor({ endpointSnippets }: { endpointSnippets: FernGeneratorExec.Endpoint[] }) {
-        this.endpointSnippets = endpointSnippets;
-    }
-
     public build({
         context,
         remote,
-        featureConfig
+        featureConfig,
+        endpointSnippets
     }: {
         context: SdkGeneratorContext;
         remote: FernGeneratorCli.Remote | undefined;
         featureConfig: FernGeneratorCli.FeatureConfig;
+        endpointSnippets: FernGeneratorExec.Endpoint[];
     }): FernGeneratorCli.ReadmeConfig {
         const readmeSnippetBuilder = new ReadmeSnippetBuilder({
             context,
-            endpointSnippets: this.endpointSnippets
+            endpointSnippets
         });
         const snippets = readmeSnippetBuilder.buildReadmeSnippets();
         const features: FernGeneratorCli.ReadmeFeature[] = [];
 
         for (const feature of featureConfig.features) {
             const featureSnippets = snippets[feature.id];
-            if (featureSnippets == null || featureSnippets.length === 0) {
+            if (!featureSnippets) {
                 continue;
             }
             features.push({
@@ -53,8 +49,8 @@ export class ReadmeConfigBuilder {
     }
 
     private getLanguageInfo({ context }: { context: SdkGeneratorContext }): FernGeneratorCli.LanguageInfo {
-        const packageName = context.configManager.getPackageName();
-        const packageVersion = context.configManager.get("packageVersion") || "0.1.0";
+        const packageName = context.getCrateName();
+        const packageVersion = context.getCrateVersion();
 
         return FernGeneratorCli.LanguageInfo.rust({
             publishInfo: {

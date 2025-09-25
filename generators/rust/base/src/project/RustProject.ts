@@ -1,7 +1,7 @@
 import { AbstractProject } from "@fern-api/base-generator";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { BaseRustCustomConfigSchema } from "@fern-api/rust-codegen";
 import { mkdir } from "fs/promises";
-import { BaseRustCustomConfigSchema } from "../config";
 import { AbstractRustGeneratorContext } from "../context/AbstractRustGeneratorContext";
 import { RustFile } from "./RustFile";
 
@@ -11,17 +11,20 @@ export interface RustProjectConfig {
     context: AbstractRustGeneratorContext<BaseRustCustomConfigSchema>;
     packageName: string;
     packageVersion: string;
+    clientClassName: string;
 }
 
 export class RustProject extends AbstractProject<AbstractRustGeneratorContext<BaseRustCustomConfigSchema>> {
     private packageName: string;
     private packageVersion: string;
+    private clientClassName: string;
     private sourceFiles: RustFile[] = [];
 
-    public constructor({ context, packageName, packageVersion }: RustProjectConfig) {
+    public constructor({ context, packageName, packageVersion, clientClassName }: RustProjectConfig) {
         super(context);
         this.packageName = packageName;
         this.packageVersion = packageVersion;
+        this.clientClassName = clientClassName;
     }
 
     public get sourceFileDirectory(): RelativeFilePath {
@@ -65,20 +68,8 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
     }
 
     private replaceTemplateVariables(content: string): string {
-        // Replace CLIENT_NAME template variable if context supports it
-        if (
-            "getApiClientBuilderClientName" in this.context &&
-            typeof this.context.getApiClientBuilderClientName === "function"
-        ) {
-            const clientName = (
-                this.context as { getApiClientBuilderClientName(): string }
-            ).getApiClientBuilderClientName();
-            content = content.replace(/\{\{CLIENT_NAME\}\}/g, clientName);
-        } else if ("getClientName" in this.context && typeof this.context.getClientName === "function") {
-            // Fallback to original method for backward compatibility
-            const clientName = (this.context as { getClientName(): string }).getClientName();
-            content = content.replace(/\{\{CLIENT_NAME\}\}/g, clientName);
-        }
+        // Replace CLIENT_NAME template variable (using the configured client class name)
+        content = content.replace(/\{\{CLIENT_NAME\}\}/g, this.clientClassName);
 
         // Replace project-level template variables
         content = content.replace(/\{\{PACKAGE_NAME\}\}/g, this.packageName);

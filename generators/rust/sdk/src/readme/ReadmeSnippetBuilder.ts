@@ -40,7 +40,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             this.context.ir.readmeConfig?.defaultEndpoint != null
                 ? this.context.ir.readmeConfig.defaultEndpoint
                 : this.getDefaultEndpointId();
-        this.packageName = this.context.configManager.getPackageName();
+        this.packageName = this.context.getCrateName();
     }
 
     public buildReadmeSnippets(): Record<FernGeneratorCli.FeatureId, string[]> {
@@ -201,8 +201,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         // Use statements
         const useStatements = [
             new UseStatement({
-                path: this.packageName,
-                items: ["ApiError", "ClientConfig", this.getClientName(endpoint)]
+                path: this.context.getCrateName(),
+                items: ["ApiError", "ClientConfig", this.context.getClientName()]
             })
         ];
 
@@ -239,7 +239,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             value: this.getClientConfigStruct("error", endpoint)
         });
 
-        const clientBuild = Expression.raw(`${this.getClientName(endpoint)}::new(config)`);
+        const clientBuild = Expression.raw(`${this.context.getClientName()}::new(config)`);
 
         const clientVar = Statement.let({
             name: "client",
@@ -271,21 +271,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         ]);
 
         return [configVar, clientVar, matchStatement, Statement.return(Expression.ok(Expression.raw("()")))];
-    }
-
-    private getClientName(_endpoint?: EndpointWithFilepath): string {
-        // Always use the main client name derived from package name
-        // This ensures we show the root client (e.g., OauthClientCredentialsClient)
-        // rather than individual service clients (e.g., AuthClient)
-
-        // Convert workspace name to client name (e.g., "oauth-client-credentials" -> "OauthClientCredentialsClient")
-        // Use workspace name to avoid organization prefix
-        const workspaceName = this.context.config.workspaceName?.replace(/-/g, "_") || "Api";
-        const pascalCase = workspaceName
-            .split("_")
-            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-            .join("");
-        return `${pascalCase}Client`;
     }
 
     private getClientConfigStruct(
@@ -347,7 +332,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const writer = new Writer();
 
         const useStatements = [
-            new UseStatement({ path: this.packageName, items: ["ClientConfig", this.getClientName(endpoint)] })
+            new UseStatement({ path: this.packageName, items: ["ClientConfig", this.context.getClientName()] })
         ];
 
         // Write use statements
@@ -377,7 +362,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         });
 
         const clientBuild = Expression.methodCall({
-            target: Expression.raw(`${this.getClientName(endpoint)}::new(config)`),
+            target: Expression.raw(`${this.context.getClientName()}::new(config)`),
             method: "expect",
             args: [Expression.stringLiteral("Failed to build client")]
         });
@@ -393,7 +378,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private buildTimeoutCode(endpoint: EndpointWithFilepath): string {
         const useStatements = [
-            new UseStatement({ path: this.packageName, items: ["ClientConfig", this.getClientName(endpoint)] }),
+            new UseStatement({ path: this.packageName, items: ["ClientConfig", this.context.getClientName()] }),
             new UseStatement({ path: "std::time", items: ["Duration"] })
         ];
 
@@ -426,7 +411,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         });
 
         const clientBuild = Expression.methodCall({
-            target: Expression.raw(`${this.getClientName(endpoint)}::new(config)`),
+            target: Expression.raw(`${this.context.getClientName()}::new(config)`),
             method: "expect",
             args: [Expression.stringLiteral("Failed to build client")]
         });
@@ -444,7 +429,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const writer = new Writer();
 
         const useStatements = [
-            new UseStatement({ path: this.packageName, items: ["ClientConfig", this.getClientName(endpoint)] }),
+            new UseStatement({ path: this.packageName, items: ["ClientConfig", this.context.getClientName()] }),
             new UseStatement({ path: "futures", items: ["StreamExt"] })
         ];
 
@@ -475,7 +460,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         });
 
         const clientBuild = Expression.methodCall({
-            target: Expression.raw(`${this.getClientName(endpoint)}::new(config)`),
+            target: Expression.raw(`${this.context.getClientName()}::new(config)`),
             method: "expect",
             args: [Expression.stringLiteral("Failed to build client")]
         });

@@ -4,9 +4,8 @@ import {
     Options
 } from "@fern-api/browser-compatible-base-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { rust } from "@fern-api/rust-codegen";
+import { BaseRustCustomConfigSchema, rust } from "@fern-api/rust-codegen";
 import { camelCase, snakeCase } from "lodash-es";
-
 import { DynamicTypeInstantiationMapper } from "./DynamicTypeInstantiationMapper";
 import { DynamicTypeMapper } from "./DynamicTypeMapper";
 import { FilePropertyMapper } from "./FilePropertyMapper";
@@ -49,16 +48,9 @@ const RESERVED_NAMES = new Set([
     "while"
 ]);
 
-interface RustCustomConfigSchema {
-    packageName?: string;
-    crateName?: string;
-    clientName?: string;
-    clientBuilderName?: string;
-}
-
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation;
-    public customConfig: RustCustomConfigSchema | undefined;
+    public customConfig: BaseRustCustomConfigSchema | undefined;
     public dynamicTypeMapper: DynamicTypeMapper;
     public dynamicTypeInstantiationMapper: DynamicTypeInstantiationMapper;
     public filePropertyMapper: FilePropertyMapper;
@@ -74,7 +66,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }) {
         super({ ir, config, options });
         this.ir = ir;
-        this.customConfig = config.customConfig as RustCustomConfigSchema | undefined;
+        this.customConfig = config.customConfig as BaseRustCustomConfigSchema | undefined;
         this.dynamicTypeMapper = new DynamicTypeMapper({ context: this });
         this.dynamicTypeInstantiationMapper = new DynamicTypeInstantiationMapper({ context: this });
         this.filePropertyMapper = new FilePropertyMapper({ context: this });
@@ -161,11 +153,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     // Client methods
     public getClientStructName(): string {
-        return this.customConfig?.clientName ?? "Client";
-    }
-
-    public getClientBuilderName(): string {
-        return this.customConfig?.clientBuilderName ?? `${this.getClientStructName()}Builder`;
+        return this.customConfig?.clientClassName ?? `${this.convertToPascalCase(this.config.workspaceName)}Client `;
     }
 
     // Module and path methods

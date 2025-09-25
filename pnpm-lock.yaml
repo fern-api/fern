@@ -1890,6 +1890,9 @@ importers:
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../packages/cli/logger
+      '@fern-api/rust-codegen':
+        specifier: workspace:*
+        version: link:../codegen
       '@fern-fern/ir-sdk':
         specifier: 59.0.0
         version: 59.0.0
@@ -1918,6 +1921,9 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
+      zod:
+        specifier: ^3.22.4
+        version: 3.25.76
     devDependencies:
       '@types/node':
         specifier: ^18.7.18
@@ -2029,13 +2035,6 @@ importers:
         version: 3.25.76
 
   generators/rust/sdk:
-    dependencies:
-      '@fern-api/core-utils':
-        specifier: 0.15.0-rc63
-        version: 0.15.0-rc63
-      '@fern-api/rust-dynamic-snippets':
-        specifier: workspace:*
-        version: link:../dynamic-snippets
     devDependencies:
       '@fern-api/base-generator':
         specifier: workspace:*
@@ -2043,6 +2042,9 @@ importers:
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
         specifier: ^59.0.0
         version: 59.6.1
@@ -2058,6 +2060,9 @@ importers:
       '@fern-api/rust-codegen':
         specifier: workspace:*
         version: link:../codegen
+      '@fern-api/rust-dynamic-snippets':
+        specifier: workspace:*
+        version: link:../dynamic-snippets
       '@fern-api/rust-model':
         specifier: workspace:*
         version: link:../model
@@ -9310,9 +9315,6 @@ packages:
   '@exodus/schemasafe@1.3.0':
     resolution: {integrity: sha512-5Aap/GaRupgNx/feGBwLLTVv8OQFfv3pq2lPRzPg9R+IOBnDgghTGW7l7EuVXOvg5cc/xSAlRW8rBrjIC3Nvqw==}
 
-  '@fern-api/core-utils@0.15.0-rc63':
-    resolution: {integrity: sha512-E5g6oPcFLz9ZOTkYH1uF3Le9bw9yFuOft4zNiq0HD2xE/RK2wGn9gYcIgJn/qRT0dB1hBCanHx4KehCMc8Z99w==}
-
   '@fern-api/core-utils@0.4.24-rc1':
     resolution: {integrity: sha512-aYu4lQK2qZIKzTF9TeFrICTPJ/zGEZUEWQmZt6pJeHu+R6afrcCBNkUleWU1OpHlDbe+xXUUBOktRg0PM9Hywg==}
 
@@ -16067,11 +16069,6 @@ snapshots:
   '@eslint/js@8.57.1': {}
 
   '@exodus/schemasafe@1.3.0': {}
-
-  '@fern-api/core-utils@0.15.0-rc63':
-    dependencies:
-      strip-ansi: 7.1.2
-      ua-parser-js: 1.0.41
 
   '@fern-api/core-utils@0.4.24-rc1':
     dependencies:
