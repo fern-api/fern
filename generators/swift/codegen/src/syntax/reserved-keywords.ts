@@ -67,3 +67,11 @@ export function isReservedKeyword(word: string): word is ReservedKeyword {
 export function escapeReservedKeyword(word: string): string {
     return isReservedKeyword(word) ? `\`${word}\`` : word;
 }
+
+/**
+ * The `self` keyword cannot be used as a property name in Swift, and unlike other
+ * reserved keywords, it cannot be escaped with backticks.
+ */
+export function sanitizeSelfPropertyName(name: string): string {
+    return name === "self" ? "self_" : name;
+}

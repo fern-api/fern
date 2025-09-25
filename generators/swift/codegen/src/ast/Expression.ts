@@ -1,8 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
-
+import { escapeReservedKeyword } from "../syntax";
 import { AstNode, Writer } from "./core";
 import { FunctionArgument } from "./FunctionArgument";
-import { escapeReservedKeyword } from "./syntax";
 import { Type } from "./Type";
 
 /**
