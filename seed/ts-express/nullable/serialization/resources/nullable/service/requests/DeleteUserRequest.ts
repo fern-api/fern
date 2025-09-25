@@ -15,6 +15,6 @@ export const DeleteUserRequest: core.serialization.Schema<
 
 export declare namespace DeleteUserRequest {
     export interface Raw {
-        username?: (string | null) | null;
+        username?: (string | null | undefined) | null;
     }
 }
