@@ -1,6 +1,6 @@
 export type { APIResponse } from "./APIResponse.js";
 export type { BinaryResponse } from "./BinaryResponse.js";
-export { EndpointMetadata } from "./EndpointMetadata.js";
+export type { EndpointMetadata } from "./EndpointMetadata.js";
 export { EndpointSupplier } from "./EndpointSupplier.js";
 export type { Fetcher, FetchFunction } from "./Fetcher.js";
 export { fetcher } from "./Fetcher.js";

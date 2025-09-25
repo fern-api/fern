@@ -104,31 +104,15 @@ export class ReconnectingWebSocket {
         this._connect();
     }
 
-    static get CONNECTING() {
-        return 0;
-    }
-    static get OPEN() {
-        return 1;
-    }
-    static get CLOSING() {
-        return 2;
-    }
-    static get CLOSED() {
-        return 3;
-    }
+    public static readonly CONNECTING = 0;
+    public static readonly OPEN = 1;
+    public static readonly CLOSING = 2;
+    public static readonly CLOSED = 3;
 
-    get CONNECTING() {
-        return ReconnectingWebSocket.CONNECTING;
-    }
-    get OPEN() {
-        return ReconnectingWebSocket.OPEN;
-    }
-    get CLOSING() {
-        return ReconnectingWebSocket.CLOSING;
-    }
-    get CLOSED() {
-        return ReconnectingWebSocket.CLOSED;
-    }
+    public readonly CONNECTING: typeof ReconnectingWebSocket.CONNECTING = ReconnectingWebSocket.CONNECTING;
+    public readonly OPEN: typeof ReconnectingWebSocket.OPEN = ReconnectingWebSocket.OPEN;
+    public readonly CLOSING: typeof ReconnectingWebSocket.CLOSING = ReconnectingWebSocket.CLOSING;
+    public readonly CLOSED: typeof ReconnectingWebSocket.CLOSED = ReconnectingWebSocket.CLOSED;
 
     get binaryType() {
         return this._ws ? this._ws.binaryType : this._binaryType;
@@ -227,7 +211,7 @@ export class ReconnectingWebSocket {
      * Closes the WebSocket connection or connection attempt, if any. If the connection is already
      * CLOSED, this method does nothing
      */
-    public close(code = 1000, reason?: string) {
+    public close(code = 1000, reason?: string): void {
         this._closeCalled = true;
         this._shouldReconnect = false;
         this._clearTimeouts();
@@ -246,7 +230,7 @@ export class ReconnectingWebSocket {
      * Closes the WebSocket connection or connection attempt and connects again.
      * Resets retry counter;
      */
-    public reconnect(code?: number, reason?: string) {
+    public reconnect(code?: number, reason?: string): void {
         this._shouldReconnect = true;
         this._closeCalled = false;
         this._retryCount = -1;
@@ -261,7 +245,7 @@ export class ReconnectingWebSocket {
     /**
      * Enqueue specified data to be transmitted to the server over the WebSocket connection
      */
-    public send(data: ReconnectingWebSocket.Message) {
+    public send(data: ReconnectingWebSocket.Message): void {
         if (this._ws && this._ws.readyState === this.OPEN) {
             this._debug("send", data);
             this._ws.send(data);
