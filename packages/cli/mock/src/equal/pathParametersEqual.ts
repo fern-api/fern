@@ -1,9 +1,8 @@
+import { getOriginalName } from "@fern-api/core-utils";
 import { ExampleEndpointCall } from "@fern-api/ir-sdk";
 import { Request } from "express";
 import { isEqualWith } from "lodash-es";
-
 import { EqualResponse } from "./EqualRequestResponse";
-import { getOriginalName } from "@fern-api/ir-utils";
 
 export declare namespace pathParametersEqual {
     interface Args {

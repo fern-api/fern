@@ -18,4 +18,3 @@ export { mergeIntermediateRepresentation } from "./mergeIntermediateRepresentati
 export { IdGenerator } from "./utils/IdGenerator";
 export { isReferencedWebhookPayloadSchema } from "./utils/isReferencedWebhookPayloadSchema";
 export { stringifyFernFilepath } from "./utils/stringifyFernFilepath";
-export { expandName, getOriginalName } from "./utils/nameUtils";

@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, getOriginalName } from "@fern-api/core-utils";
 import { isInlineRequestBody, RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     ObjectProperty,
@@ -17,7 +17,6 @@ import { FernFileContext } from "../FernFileContext";
 import { EndpointResolver } from "./EndpointResolver";
 import { ResolvedType } from "./ResolvedType";
 import { TypeResolver } from "./TypeResolver";
-import { getOriginalName } from "@fern-api/ir-utils";
 
 export interface PropertyResolver {
     resolveRequestProperty: (args: {

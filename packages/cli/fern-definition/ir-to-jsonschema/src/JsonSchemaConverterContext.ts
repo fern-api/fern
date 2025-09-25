@@ -1,5 +1,5 @@
+import { getOriginalName } from "@fern-api/core-utils";
 import { IntermediateRepresentation, TypeDeclaration, TypeId, TypeReference } from "@fern-api/ir-sdk";
-import { getOriginalName } from "@fern-api/ir-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { JSONSchema4 } from "json-schema";
 

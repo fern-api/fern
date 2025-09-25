@@ -1,8 +1,7 @@
+import { getOriginalName } from "@fern-api/core-utils";
 import { HttpEndpoint, IntermediateRepresentation, TypeDeclaration, TypeId, V2ValueExamples } from "@fern-api/ir-sdk";
-
 import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional";
 import { getFirstExamples } from "./getV2Examples";
-import { getOriginalName } from "../../utils/nameUtils";
 
 export function getParameterExamples({
     ir,

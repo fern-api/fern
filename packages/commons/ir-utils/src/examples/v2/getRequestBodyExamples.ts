@@ -1,9 +1,7 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, getOriginalName } from "@fern-api/core-utils";
 import { HttpEndpoint, IntermediateRepresentation, V2HttpEndpointRequest } from "@fern-api/ir-sdk";
-
 import { getParameterExamples } from "./getParameterExamples";
 import { getFirstExamples, getV2Examples } from "./getV2Examples";
-import { getOriginalName } from "../../utils/nameUtils";
 
 export function getRequestBodyExamples({
     endpoint,

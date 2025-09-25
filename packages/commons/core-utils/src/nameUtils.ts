@@ -1,6 +1,24 @@
-import { Name, NameAndWireValue, SafeAndUnsafeString } from "@fern-api/ir-sdk";
 import { camelCase, snakeCase, upperFirst } from "lodash-es";
 
+// Redefining some IR types to avoid a dependency on @fern-api/ir-sdk
+type SafeAndUnsafeString = {
+    unsafeName: string;
+    safeName: string;
+};
+type CasedName = {
+    originalName: string;
+    camelCase: SafeAndUnsafeString | undefined;
+    pascalCase: SafeAndUnsafeString | undefined;
+    snakeCase: SafeAndUnsafeString | undefined;
+    screamingSnakeCase: SafeAndUnsafeString | undefined;
+};
+type Name = string | CasedName;
+type NameAndWireValue = {
+    wireValue: string;
+    name: Name;
+};
+
+// The fully expanded name type, like the old version of the IR type
 export type ExpandedName = {
     originalName: string;
     camelCase: SafeAndUnsafeString;

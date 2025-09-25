@@ -6,6 +6,7 @@ import {
     SNIPPET_JSON_FILENAME,
     SNIPPET_TEMPLATES_JSON_FILENAME
 } from "@fern-api/configuration";
+import { getOriginalName } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { HttpEndpoint, IntermediateRepresentation } from "@fern-api/ir-sdk";
@@ -19,7 +20,6 @@ import { generateDynamicSnippetTests } from "./dynamic-snippets/generateDynamicS
 import { ExecutionEnvironment } from "./ExecutionEnvironment";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator";
 import { getWorkspaceTempDir } from "./runLocalGenerationForWorkspace";
-import { getOriginalName } from "@fern-api/ir-utils";
 
 export declare namespace GenerationRunner {
     interface RunArgs {

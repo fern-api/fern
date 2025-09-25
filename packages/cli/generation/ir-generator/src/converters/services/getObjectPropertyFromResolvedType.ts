@@ -1,12 +1,10 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, getOriginalName } from "@fern-api/core-utils";
 import { isRawObjectDefinition, RawSchemas } from "@fern-api/fern-definition-schema";
 import { ObjectProperty } from "@fern-api/ir-sdk";
-
 import { FernFileContext } from "../../FernFileContext";
 import { ResolvedType } from "../../resolvers/ResolvedType";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { getObjectPropertiesFromRawObjectSchema } from "../type-declarations/convertObjectTypeDeclaration";
-import { getOriginalName } from "@fern-api/ir-utils";
 
 export function getObjectPropertyFromResolvedType({
     typeResolver,

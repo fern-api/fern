@@ -1,4 +1,5 @@
 import { GeneratorName } from "@fern-api/configuration-loader";
+import { expandName } from "@fern-api/ir-utils";
 import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";
 import {
@@ -6,7 +7,6 @@ import {
     GeneratorWasNotCreatedYet,
     IrMigration
 } from "../../types/IrMigration";
-import { expandName } from "@fern-api/ir-utils";
 
 export const V61_TO_V60_MIGRATION: IrMigration<
     IrVersions.V61.ir.IntermediateRepresentation,

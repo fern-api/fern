@@ -1,3 +1,4 @@
+import { getOriginalName } from "@fern-api/core-utils";
 import {
     DeclaredErrorName,
     DeclaredTypeName,
@@ -6,11 +7,9 @@ import {
     TypeDeclaration
 } from "@fern-api/ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
-
 import { convertServices } from "./converters/servicesConverter";
 import { convertType } from "./converters/typeConverter";
 import { constructEndpointSecurity, constructSecuritySchemes } from "./security";
-import { getOriginalName } from "@fern-api/ir-utils";
 
 export type Mode = "stoplight" | "openapi";
 

@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, getOriginalName } from "@fern-api/core-utils";
 import {
     ErrorDeclaration,
     ExampleEndpointCall,
@@ -16,7 +16,6 @@ import {
     TypeId,
     TypeReference
 } from "@fern-api/ir-sdk";
-
 import { hashJSON } from "../../hashJSON";
 import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional";
 import { ExampleGenerationResult } from "./ExampleGenerationResult";
@@ -27,7 +26,6 @@ import {
 } from "./generateParameterExamples";
 import { generateTypeDeclarationExample } from "./generateTypeDeclarationExample";
 import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
-import { getOriginalName } from "../../utils/nameUtils";
 
 export declare namespace generateEndpointExample {
     interface Args {

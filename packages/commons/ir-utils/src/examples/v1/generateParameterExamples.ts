@@ -1,3 +1,4 @@
+import { getOriginalName } from "@fern-api/core-utils";
 import {
     ExampleHeader,
     ExamplePathParameter,
@@ -9,11 +10,9 @@ import {
     TypeDeclaration,
     TypeId
 } from "@fern-api/ir-sdk";
-
 import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional";
 import { ExampleGenerationResult } from "./ExampleGenerationResult";
 import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
-import { getOriginalName } from "../../utils/nameUtils";
 
 export interface GenerateParamsOptions {
     typeDeclarations: Record<TypeId, TypeDeclaration>;

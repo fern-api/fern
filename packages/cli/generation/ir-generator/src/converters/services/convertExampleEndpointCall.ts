@@ -1,5 +1,5 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { isNonNullish, isPlainObject } from "@fern-api/core-utils";
+import { getOriginalName, isNonNullish, isPlainObject } from "@fern-api/core-utils";
 import {
     isInlineRequestBody,
     parseBytesRequest,
@@ -18,7 +18,7 @@ import {
     ExampleResponse,
     Name
 } from "@fern-api/ir-sdk";
-import { getOriginalName, hashJSON } from "@fern-api/ir-utils";
+import { hashJSON } from "@fern-api/ir-utils";
 import urlJoin from "url-join";
 
 import { FernFileContext } from "../../FernFileContext";

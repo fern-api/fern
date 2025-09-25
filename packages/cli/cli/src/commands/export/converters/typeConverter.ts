@@ -1,3 +1,4 @@
+import { getOriginalName } from "@fern-api/core-utils";
 import {
     AliasTypeDeclaration,
     ContainerType,
@@ -20,9 +21,7 @@ import {
 } from "@fern-api/ir-sdk";
 import isEqual from "lodash-es/isEqual";
 import { OpenAPIV3 } from "openapi-types";
-
 import { convertObject } from "./convertObject";
-import { getOriginalName } from "@fern-api/ir-utils";
 
 export interface ConvertedType {
     openApiSchema: OpenApiComponentSchema;

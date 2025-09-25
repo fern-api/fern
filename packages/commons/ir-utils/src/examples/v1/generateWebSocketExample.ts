@@ -1,3 +1,4 @@
+import { getOriginalName } from "@fern-api/core-utils";
 import {
     ExampleWebSocketMessageBody,
     ExampleWebSocketSession,
@@ -7,7 +8,6 @@ import {
     WebSocketChannel,
     WebSocketMessage
 } from "@fern-api/ir-sdk";
-
 import { ExampleGenerationResult } from "./ExampleGenerationResult";
 import {
     generateHeaderExamples,
@@ -15,7 +15,6 @@ import {
     generateQueryParameterExamples
 } from "./generateParameterExamples";
 import { generateTypeReferenceExample } from "./generateTypeReferenceExample";
-import { getOriginalName } from "../../utils/nameUtils";
 
 export declare namespace generateWebSocketExample {
     interface Args {

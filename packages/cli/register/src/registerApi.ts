@@ -3,15 +3,13 @@ import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { Audiences } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
+import { getOriginalName } from "@fern-api/core-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
-
 import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
-
 import { PlaygroundConfig } from "./ir-to-fdr-converter/convertAuth";
 import { convertIrToFdrApi } from "./ir-to-fdr-converter/convertIrToFdrApi";
-import { getOriginalName } from "@fern-api/ir-utils";
 
 export async function registerApi({
     organization,

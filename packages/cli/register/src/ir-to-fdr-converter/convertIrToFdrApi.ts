@@ -1,5 +1,5 @@
+import { getOriginalName } from "@fern-api/core-utils";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
-import { getOriginalName } from "@fern-api/ir-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
 import { convertAuth, PlaygroundConfig } from "./convertAuth";

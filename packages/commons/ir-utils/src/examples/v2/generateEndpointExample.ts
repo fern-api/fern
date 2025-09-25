@@ -1,3 +1,4 @@
+import { getOriginalName } from "@fern-api/core-utils";
 import {
     HttpEndpoint,
     IntermediateRepresentation,
@@ -6,10 +7,8 @@ import {
     V2HttpEndpointResponse
 } from "@fern-api/ir-sdk";
 import { camelCase } from "lodash-es";
-
 import { getRequestBodyExamples } from "./getRequestBodyExamples";
 import { getResponseExamples } from "./getResponseExamples";
-import { getOriginalName } from "../../utils/nameUtils";
 
 export declare namespace generateEndpointExample {
     interface Args {

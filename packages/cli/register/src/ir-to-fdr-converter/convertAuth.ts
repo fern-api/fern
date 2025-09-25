@@ -1,6 +1,5 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, getOriginalName } from "@fern-api/core-utils";
 import { FernIr as Ir } from "@fern-api/ir-sdk";
-import { getOriginalName } from "@fern-api/ir-utils";
 import { TaskContext } from "@fern-api/task-context";
 
 import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";

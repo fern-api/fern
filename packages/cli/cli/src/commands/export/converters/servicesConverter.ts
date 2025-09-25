@@ -24,13 +24,13 @@ import {
     TypeDeclaration,
     TypeReference
 } from "@fern-api/ir-sdk";
+import { expandName, getOriginalName } from "@fern-api/ir-utils";
 import { isEqual, size } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import urlJoin from "url-join";
 import { getDeclaredTypeNameKey, getErrorTypeNameKey, Mode } from "../convertIrToOpenApi";
 import { convertObject } from "./convertObject";
 import { convertTypeReference, OpenApiComponentSchema } from "./typeConverter";
-import { getOriginalName, expandName } from "@fern-api/ir-utils";
 
 export function convertServices({
     ir,

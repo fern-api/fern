@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, expandName, getOriginalName } from "@fern-api/core-utils";
 import {
     ContainerType,
     DeclaredErrorName,
@@ -31,7 +31,6 @@ import {
     TypeReference
 } from "@fern-api/ir-sdk";
 import { isMarkedUnstable } from "./utils/availabilityUtils";
-import { expandName, getOriginalName } from "./utils/nameUtils";
 
 export namespace IntermediateRepresentationChangeDetector {
     export type Result = {

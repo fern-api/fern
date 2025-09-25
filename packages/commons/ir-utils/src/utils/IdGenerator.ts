@@ -1,7 +1,6 @@
+import { getOriginalName } from "@fern-api/core-utils";
 import { DeclaredErrorName, DeclaredServiceName, DeclaredTypeName, FernFilepath, FernIr } from "@fern-api/ir-sdk";
-
 import { stringifyFernFilepath } from "./stringifyFernFilepath";
-import { getOriginalName } from "./nameUtils";
 
 export const IdGenerator = {
     generateTypeId: (typeName: Omit<DeclaredTypeName, "typeId">): FernIr.commons.TypeId => {

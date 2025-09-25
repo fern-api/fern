@@ -11,6 +11,7 @@ import { APIV1Write, DocsV1Write, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, join, listFiles, RelativeFilePath, relative, resolve } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
+import { expandName } from "@fern-api/ir-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace, DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
@@ -19,7 +20,6 @@ import utc from "dayjs/plugin/utc";
 import { readFile, stat } from "fs/promises";
 import matter from "gray-matter";
 import { kebabCase } from "lodash-es";
-
 import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter";
 import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
 import { NodeIdGenerator } from "./NodeIdGenerator";
@@ -28,7 +28,6 @@ import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
 import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload";
 import { visitNavigationAst } from "./visitNavigationAst";
 import { wrapWithHttps } from "./wrapWithHttps";
-import { expandName } from "@fern-api/ir-utils";
 
 dayjs.extend(utc);
 

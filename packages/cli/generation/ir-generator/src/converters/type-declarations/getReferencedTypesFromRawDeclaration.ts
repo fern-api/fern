@@ -1,3 +1,4 @@
+import { getOriginalName } from "@fern-api/core-utils";
 import {
     isGeneric,
     isRawObjectDefinition,
@@ -7,11 +8,9 @@ import {
     visitRawTypeDeclaration
 } from "@fern-api/fern-definition-schema";
 import { DeclaredTypeName } from "@fern-api/ir-sdk";
-
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { parseTypeName } from "../../utils/parseTypeName";
-import { getOriginalName } from "@fern-api/ir-utils";
 
 interface SeenTypeNames {
     addTypeName: (typeName: DeclaredTypeName) => void;

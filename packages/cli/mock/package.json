@@ -32,6 +32,7 @@
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {
+    "@fern-api/core-utils": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/ir-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",

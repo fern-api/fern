@@ -1,5 +1,5 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { isPlainObject } from "@fern-api/core-utils";
+import { getOriginalName, isPlainObject } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     ExampleHeader,
@@ -15,7 +15,7 @@ import {
     WebSocketMessage,
     WebSocketMessageBody
 } from "@fern-api/ir-sdk";
-import { constructHttpPath, getOriginalName } from "@fern-api/ir-utils";
+import { constructHttpPath } from "@fern-api/ir-utils";
 
 import { getHeaderName } from "..";
 import { FernFileContext } from "../FernFileContext";

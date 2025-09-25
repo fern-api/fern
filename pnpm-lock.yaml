@@ -4423,6 +4423,9 @@ importers:
 
   packages/cli/api-importers/openrpc-to-ir:
     dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../../commons/core-utils
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../../ir-sdk
@@ -6678,6 +6681,9 @@ importers:
 
   packages/cli/mock:
     dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../commons/core-utils
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../ir-sdk

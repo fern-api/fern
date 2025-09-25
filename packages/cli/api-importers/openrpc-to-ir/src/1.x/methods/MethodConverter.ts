@@ -1,3 +1,4 @@
+import { getOriginalName } from "@fern-api/core-utils";
 import {
     FernIr,
     HttpEndpoint,
@@ -11,7 +12,7 @@ import {
     PathParameter,
     TypeId
 } from "@fern-api/ir-sdk";
-import { constructHttpPath, getOriginalName } from "@fern-api/ir-utils";
+import { constructHttpPath } from "@fern-api/ir-utils";
 import { AbstractConverter, Converters, ServersConverter } from "@fern-api/v3-importer-commons";
 import {
     ContentDescriptorObject,

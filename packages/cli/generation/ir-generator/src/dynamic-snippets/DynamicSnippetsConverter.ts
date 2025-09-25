@@ -10,6 +10,8 @@ import {
     dynamic,
     EndpointId,
     EnumTypeDeclaration,
+    Environments,
+    EnvironmentsConfig,
     FernFilepath,
     FileProperty,
     FileUploadRequestProperty,
@@ -34,16 +36,13 @@ import {
     TypeId,
     TypeReference,
     UndiscriminatedUnionTypeDeclaration,
-    UnionTypeDeclaration,
-    EnvironmentsConfig,
-    Environments
+    UnionTypeDeclaration
 } from "@fern-api/ir-sdk";
-import urlJoin from "url-join";
-import { v4 as uuidv4 } from "uuid";
-
-import { Version } from "./version";
 import { expandName, getOriginalName } from "@fern-api/ir-utils";
 import { expandNameAndWireValue } from "@fern-api/ir-utils/src/utils/nameUtils";
+import urlJoin from "url-join";
+import { v4 as uuidv4 } from "uuid";
+import { Version } from "./version";
 
 interface EndpointWithFilepath extends HttpEndpoint {
     servicePathParameters: PathParameter[];
