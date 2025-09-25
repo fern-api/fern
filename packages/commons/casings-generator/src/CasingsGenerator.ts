@@ -109,13 +109,13 @@ export function constructCasingsGenerator({
                 return name;
             }
 
-            // Otherwise, return the fully expanded and deconflicted name
+            // Otherwise, return the name cased as needed
             return {
                 originalName: name,
-                camelCase: finalCamelCaseName,
-                pascalCase: finalPascalCaseName,
-                snakeCase: finalSnakeCaseName,
-                screamingSnakeCase: finalScreamingSnakeCaseName
+                camelCase: finalCamelCaseName.safeName === naiveCamelCaseName ? undefined : finalCamelCaseName,
+                pascalCase: finalPascalCaseName.safeName === naivePascalCaseName ? undefined : finalPascalCaseName,
+                snakeCase: finalSnakeCaseName.safeName === naiveSnakeCaseName ? undefined : finalSnakeCaseName,
+                screamingSnakeCase: finalScreamingSnakeCaseName.safeName === naiveScreamingSnakeCaseName ? undefined : finalScreamingSnakeCaseName
             };
         },
         generateNameAndWireValue: ({ name, wireValue, opts }) => ({
