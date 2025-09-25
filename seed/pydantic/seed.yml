@@ -85,4 +85,3 @@ allowedFailures:
   - websocket
   # Complex circular refs
   - simple-fhir
-

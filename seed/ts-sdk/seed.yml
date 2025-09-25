@@ -467,4 +467,3 @@ allowedFailures:
   - license
   - oauth-client-credentials:no-custom-config
   - ts-inline-types:inline
-

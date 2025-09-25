@@ -49,4 +49,3 @@ fixtures:
     - customConfig:
         generateBuilders: true
       outputFolder: with-builders 
-
