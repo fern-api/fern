@@ -540,7 +540,11 @@ export class DynamicTypeLiteralMapper {
         return undefined;
     }
 
-    private getUndiscriminatedUnionFieldNameForPrimitive({ primitive }: { primitive: FernIr.PrimitiveTypeV1 }): string {
+    private getUndiscriminatedUnionFieldNameForPrimitive({
+        primitive
+    }: {
+        primitive: FernIr.dynamic.PrimitiveTypeV1;
+    }): string {
         switch (primitive) {
             case "INTEGER":
             case "UINT":
@@ -580,7 +584,7 @@ export class DynamicTypeLiteralMapper {
         value,
         as
     }: {
-        primitive: FernIr.PrimitiveTypeV1;
+        primitive: FernIr.dynamic.PrimitiveTypeV1;
         value: unknown;
         as?: DynamicTypeLiteralMapper.ConvertedAs;
     }): java.TypeLiteral {

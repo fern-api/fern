@@ -83,7 +83,7 @@ export class DynamicTypeMapper {
         return java.Type.object();
     }
 
-    private convertPrimitive({ primitive }: { primitive: FernIr.PrimitiveTypeV1 }): java.Type {
+    private convertPrimitive({ primitive }: { primitive: FernIr.dynamic.PrimitiveTypeV1 }): java.Type {
         switch (primitive) {
             case "INTEGER":
                 return java.Type.integer();

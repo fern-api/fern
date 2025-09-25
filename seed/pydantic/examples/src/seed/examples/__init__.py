@@ -42,6 +42,9 @@ from .resources import (
     types,
 )
 from .type import Type
+from .type_with_single_char_property_equal_to_type_starting_letter import (
+    TypeWithSingleCharPropertyEqualToTypeStartingLetter,
+)
 
 __all__ = [
     "Actor",
@@ -79,6 +82,7 @@ __all__ = [
     "Test_Or",
     "Tree",
     "Type",
+    "TypeWithSingleCharPropertyEqualToTypeStartingLetter",
     "commons",
     "file",
     "types",
