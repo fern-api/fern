@@ -734,8 +734,8 @@ importers:
         specifier: workspace:*
         version: link:../ast
       '@fern-fern/ir-sdk':
-        specifier: ^60.0.0
-        version: 60.3.1
+        specifier: ^59.7.0
+        version: 59.7.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -836,8 +836,8 @@ importers:
         specifier: ^0.0.1045
         version: 0.0.1045
       '@fern-fern/ir-sdk':
-        specifier: ^60.0.0
-        version: 60.3.1
+        specifier: ^59.7.0
+        version: 59.7.0
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
