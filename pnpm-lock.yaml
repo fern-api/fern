@@ -767,8 +767,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: ^59.6.1
-        version: 59.6.1
+        specifier: ^60.5.0
+        version: 60.5.0
       '@fern-api/java-ast':
         specifier: workspace:*
         version: link:../ast
@@ -9325,6 +9325,9 @@ packages:
   '@fern-api/dynamic-ir-sdk@59.6.1':
     resolution: {integrity: sha512-GNo6cLnpaJjwY041x2clzRaUqsPKcQkpW9TsLYVptj2UniSFS7dtMcoPpRb/zFMmBO/SjFnOs/2OQ8AHYp58NA==}
 
+  '@fern-api/dynamic-ir-sdk@60.5.0':
+    resolution: {integrity: sha512-Wq7blsKHAP1FKDpnWVuP52Jftv+vfs5557NvO1kIkV85n2jQtNeltyZG5pYAwmQSVoAJGN9bceNyrm49pW0b1A==}
+
   '@fern-api/fdr-sdk@0.139.20-69bd5f3e0':
     resolution: {integrity: sha512-B9LJp8hJcBg1eRZbYL2KQdGZHgjaT1wJ8oILazlILvZgHIS7+vQLVJ48RAgket1fynf6i+msVllDOPLDZgbzEQ==}
 
@@ -16091,6 +16094,8 @@ snapshots:
   '@fern-api/dynamic-ir-sdk@58.3.0': {}
 
   '@fern-api/dynamic-ir-sdk@59.6.1': {}
+
+  '@fern-api/dynamic-ir-sdk@60.5.0': {}
 
   '@fern-api/fdr-sdk@0.139.20-69bd5f3e0(typescript@5.8.3)':
     dependencies:

@@ -22,7 +22,7 @@ export const V60_TO_V59_MIGRATION: IrMigration<
         [GeneratorName.TYPESCRIPT_EXPRESS]: "0.19.0",
         [GeneratorName.JAVA]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.JAVA_MODEL]: "1.8.3",
-        [GeneratorName.JAVA_SDK]: "3.6.0",
+        [GeneratorName.JAVA_SDK]: "3.5.10",
         [GeneratorName.JAVA_SPRING]: "1.8.3",
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
