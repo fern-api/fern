@@ -10570,16 +10570,6 @@ service:
       source:
         openapi: ../openapi.json
       path-parameters:
-        resource_id:
-          type: string
-          docs: >-
-            Either the unique id of the resource, or the URL-friendly key of the
-            resource (i.e: the "slug").
-        action_group_id:
-          type: string
-          docs: >-
-            Either the unique id of the action group, or the URL-friendly key of
-            the action group (i.e: the "slug").
         proj_id:
           type: string
           docs: >-
@@ -10590,6 +10580,16 @@ service:
           docs: >-
             Either the unique id of the environment, or the URL-friendly key of
             the environment (i.e: the "slug").
+        resource_id:
+          type: string
+          docs: >-
+            Either the unique id of the resource, or the URL-friendly key of the
+            resource (i.e: the "slug").
+        action_group_id:
+          type: string
+          docs: >-
+            Either the unique id of the action group, or the URL-friendly key of
+            the action group (i.e: the "slug").
       display-name: Update Resource Action Group
       request:
         name: ResourceActionGroupUpdate
@@ -10621,10 +10621,10 @@ service:
         - root.UnprocessableEntityError
       examples:
         - path-parameters:
-            resource_id: resource_id
-            action_group_id: action_group_id
             proj_id: proj_id
             env_id: env_id
+            resource_id: resource_id
+            action_group_id: action_group_id
           request: {}
           response:
             body:
@@ -18566,16 +18566,16 @@ service:
           docs: >-
             Either the unique id of the project, or the URL-friendly key of the
             project (i.e: the "slug").
-        tenant_id:
-          type: string
-          docs: >-
-            Either the unique id of the tenant, or the URL-friendly key of the
-            tenant (i.e: the "slug").
         env_id:
           type: string
           docs: >-
             Either the unique id of the environment, or the URL-friendly key of
             the environment (i.e: the "slug").
+        tenant_id:
+          type: string
+          docs: >-
+            Either the unique id of the tenant, or the URL-friendly key of the
+            tenant (i.e: the "slug").
       display-name: List Tenant Users
       request:
         name: ListTenantUsersRequest
@@ -18608,8 +18608,8 @@ service:
       examples:
         - path-parameters:
             proj_id: proj_id
-            tenant_id: tenant_id
             env_id: env_id
+            tenant_id: tenant_id
           query-parameters:
             search: search
             role: role

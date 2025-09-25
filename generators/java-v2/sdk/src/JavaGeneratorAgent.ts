@@ -1,4 +1,4 @@
-import { AbstractGeneratorAgent } from "@fern-api/base-generator";
+import { AbstractGeneratorAgent, RawGithubConfig } from "@fern-api/base-generator";
 import { Logger } from "@fern-api/logger";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
@@ -42,28 +42,13 @@ export class JavaGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorConte
         return FernGeneratorCli.Language.Java;
     }
 
-    public getGitHubConfig(
-        args: AbstractGeneratorAgent.GitHubConfigArgs<SdkGeneratorContext>
-    ): FernGeneratorCli.GitHubConfig {
-        if (this.publishConfig == null) {
-            args.context.logger.error("Publishing config is missing");
-            throw new Error("Publishing config is required for GitHub actions");
-        }
-
-        if (this.publishConfig.type !== "github") {
-            args.context.logger.error(`Publishing type ${this.publishConfig.type} is not supported`);
-            throw new Error("Only GitHub publishing is supported");
-        }
-
-        if (this.publishConfig.uri == null || this.publishConfig.token == null) {
-            args.context.logger.error("GitHub URI or token is missing in publishing config");
-            throw new Error("GitHub URI and token are required in publishing config");
-        }
-
+    public getGitHubConfig(args: AbstractGeneratorAgent.GitHubConfigArgs<SdkGeneratorContext>): RawGithubConfig {
         return {
             sourceDirectory: "/fern/output",
-            uri: this.publishConfig.uri,
-            token: this.publishConfig.token
+            type: this.publishConfig?.type,
+            uri: this.publishConfig?.type === "github" ? this.publishConfig.uri : undefined,
+            token: this.publishConfig?.type === "github" ? this.publishConfig.token : undefined,
+            mode: this.publishConfig?.type === "github" ? this.publishConfig.mode : undefined
         };
     }
 }

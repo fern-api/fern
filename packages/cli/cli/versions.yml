@@ -1,6 +1,22 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Ensure path parameters are parsed in the same order as they appear in the endpoint's URL.
+      type: fix
+  irVersion: 60
+  createdAt: "2025-09-25"
+  version: 0.82.1
+
+- changelogEntry:
+    - summary: |
+        Update migration versions for ir-v60 for python and java generators
+      type: feat
+  irVersion: 60
+  createdAt: "2025-09-25"
+  version: 0.82.0
+
+- changelogEntry:
+    - summary: |
         Control how type references are wrapped when they refer to nullable schemas using the new `wrap-references-to-nullable-in-optional` setting:
         - `true`: When a type reference points to a nullable schema, it will be wrapped in `optional<>`.
         - `false`: When a type reference points to a nullable schema, it will be wrapped in `nullable<>`.
@@ -13,7 +29,7 @@
         The default is `true`.
       type: feat
     - summary: |
-        Add type for nullable schema examples. 
+        Add type for nullable schema examples.
         If a schema is nullable, examples for its inner type will be parsed or generated, or `null` will be used as an example if no inner examples are available.
       type: feat
   irVersion: 60
@@ -88,7 +104,7 @@
   version: 0.78.5
 
 - changelogEntry:
-    - summary: Collapse any combination of optional and nullable to optional<nullable<T>>.
+    - summary: Collapse any combination of optional and nullable to `optional<nullable<T>>`.
       type: fix
   irVersion: 59
   createdAt: "2025-09-22"

@@ -27,6 +27,8 @@ public class SeedOauthClientCredentialsWithVariablesClientBuilder {
 
     private OkHttpClient httpClient;
 
+    private String rootVariable;
+
     /**
      * Sets clientId
      */
@@ -86,7 +88,7 @@ public class SeedOauthClientCredentialsWithVariablesClientBuilder {
     }
 
     public SeedOauthClientCredentialsWithVariablesClientBuilder rootVariable(String rootVariable) {
-        clientOptionsBuilder.rootVariable(rootVariable);
+        this.rootVariable = rootVariable;
         return this;
     }
 
@@ -146,7 +148,11 @@ public class SeedOauthClientCredentialsWithVariablesClientBuilder {
      *
      * @param builder The ClientOptions.Builder to configure
      */
-    protected void setVariables(ClientOptions.Builder builder) {}
+    protected void setVariables(ClientOptions.Builder builder) {
+        if (this.rootVariable != null) {
+            builder.rootVariable(this.rootVariable);
+        }
+    }
 
     /**
      * Sets the request timeout configuration.

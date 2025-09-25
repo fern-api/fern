@@ -3,6 +3,7 @@ package com.seed.exhaustive;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.exhaustive.SeedExhaustiveClient;
+import com.seed.exhaustive.core.ObjectMappers;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
@@ -14,7 +15,7 @@ import org.junit.jupiter.api.Test;
 public class EndpointsUrlsWireTest {
     private MockWebServer server;
     private SeedExhaustiveClient client;
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private ObjectMapper objectMapper = ObjectMappers.JSON_MAPPER;
     @BeforeEach
     public void setup() throws Exception {
         server = new MockWebServer();

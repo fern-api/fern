@@ -17,8 +17,8 @@ export const UpdateTagsRequest: core.serialization.Schema<
 
 export declare namespace UpdateTagsRequest {
     export interface Raw {
-        tags: string[] | null;
+        tags?: string[] | null;
         categories?: string[] | null;
-        labels?: (string[] | null) | null;
+        labels?: (string[] | null | undefined) | null;
     }
 }

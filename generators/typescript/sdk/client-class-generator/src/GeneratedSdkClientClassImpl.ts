@@ -1033,6 +1033,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 scope: Scope.Protected,
                 isAsync: true,
                 name: GeneratedSdkClientClassImpl.CUSTOM_AUTHORIZATION_HEADER_HELPER_METHOD_NAME,
+                returnType: "Promise<Record<string, string | undefined>>",
                 statements: this.getCustomAuthorizationHeaderStatements(context).map(getTextOfTsNode),
                 parameters: [
                     ...(this.generateEndpointMetadata

@@ -1,4 +1,4 @@
-irVersion: v59
+irVersion: v60
 displayName: Java SDK
 changelogLocation: ../../generators/java/sdk/versions.yml
 image: fernapi/fern-java-sdk
@@ -291,7 +291,6 @@ allowedFailures:
   - request-parameters
   - streaming-parameter
   - trace
-  - variables
   - version-no-default
   - websocket-inferred-auth
 
@@ -315,6 +314,5 @@ allowedFailures:
   - query-parameters
   - streaming
   - undiscriminated-unions
-  - variables
 
   - java-pagination-deep-cursor-path:wire-tests
