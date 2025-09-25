@@ -61,13 +61,11 @@ export function convertHttpOperation({
     const PATH_PARAM_REGEX = /{([^}]+)}/g;
     const paramNamesInUrlOrder = [...path.matchAll(PATH_PARAM_REGEX)]
         .map((match) => match[1])
-    	.filter((paramName): paramName is string => paramName !== undefined)
+        .filter((paramName): paramName is string => paramName !== undefined);
 
     // Reorder path parameters to match URL order
     if (paramNamesInUrlOrder.length > 0) {
-        const urlParams = new Map(
-            convertedParameters.pathParameters.map((param) => [param.name, param])
-        );
+        const urlParams = new Map(convertedParameters.pathParameters.map((param) => [param.name, param]));
 
         // If there's a path parameter listed only in the URL, add it to the list
         const reorderedPathParameters: PathParameterWithExample[] = [];
