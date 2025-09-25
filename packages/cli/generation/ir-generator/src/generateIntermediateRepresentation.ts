@@ -1,7 +1,7 @@
 import { FernWorkspace, visitAllDefinitionFiles, visitAllPackageMarkers } from "@fern-api/api-workspace-commons";
 import { constructCasingsGenerator } from "@fern-api/casings-generator";
 import { Audiences, FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configuration";
-import { noop, visitObject } from "@fern-api/core-utils";
+import { getOriginalName, noop, visitObject } from "@fern-api/core-utils";
 import { isGeneric } from "@fern-api/fern-definition-schema";
 import {
     dynamic,
@@ -15,7 +15,6 @@ import {
     TypeId,
     Webhook
 } from "@fern-api/ir-sdk";
-import { getOriginalName } from "@fern-api/core-utils";
 import {
     constructHttpPath,
     convertEnvironments,

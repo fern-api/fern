@@ -1,5 +1,5 @@
 import { GeneratorName } from "@fern-api/configuration-loader";
-import { expandName } from "@fern-api/ir-utils";
+import { expandName } from "@fern-api/core-utils";
 import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";
 import {

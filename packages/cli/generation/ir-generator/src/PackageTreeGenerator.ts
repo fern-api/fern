@@ -1,3 +1,4 @@
+import { getOriginalName } from "@fern-api/core-utils";
 import {
     ErrorDeclaration,
     ErrorId,
@@ -13,7 +14,6 @@ import {
     WebhookGroupId,
     WebSocketChannelId
 } from "@fern-api/ir-sdk";
-import { getOriginalName } from "@fern-api/core-utils";
 import { FilteredIr, IdGenerator } from "@fern-api/ir-utils";
 import { mapValues } from "lodash-es";
 

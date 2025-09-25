@@ -1,4 +1,4 @@
-import { isNonNullish } from "@fern-api/core-utils";
+import { expandName, getOriginalName, isNonNullish } from "@fern-api/core-utils";
 import {
     ContainerType,
     EnvironmentsConfig,
@@ -24,7 +24,6 @@ import {
     TypeDeclaration,
     TypeReference
 } from "@fern-api/ir-sdk";
-import { expandName, getOriginalName } from "@fern-api/ir-utils";
 import { isEqual, size } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import urlJoin from "url-join";

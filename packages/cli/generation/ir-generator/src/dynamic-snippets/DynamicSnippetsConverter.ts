@@ -1,6 +1,6 @@
 import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator";
 import { generatorsYml } from "@fern-api/configuration";
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, expandName, expandNameAndWireValue, getOriginalName } from "@fern-api/core-utils";
 import {
     AliasTypeDeclaration,
     ApiAuth,
@@ -38,7 +38,6 @@ import {
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
 } from "@fern-api/ir-sdk";
-import { expandName, expandNameAndWireValue, getOriginalName } from "@fern-api/core-utils";
 import urlJoin from "url-join";
 import { v4 as uuidv4 } from "uuid";
 import { Version } from "./version";
