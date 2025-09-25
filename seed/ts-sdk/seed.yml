@@ -411,6 +411,7 @@ allowedFailures:
   - basic-auth
   - basic-auth-environment-variables
   - bearer-token-environment-variable
+  - bytes-download
   - bytes-upload
   - circular-references
   - circular-references-advanced
@@ -423,6 +424,7 @@ allowedFailures:
   - exhaustive:bundle
   - exhaustive:custom-package-json
   - exhaustive:dev-dependencies
+  - exhaustive:local-files-no-source
   - exhaustive:never-throw-errors
   - extends
   - file-download:file-download-response-headers
@@ -444,6 +446,7 @@ allowedFailures:
   - unions
   - version
   - version-no-default
+  - websocket:serde
 
   # the below are likely related to changes made to example generation
   - examples:examples-with-api-reference

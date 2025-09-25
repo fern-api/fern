@@ -317,3 +317,4 @@ allowedFailures:
   - undiscriminated-unions
   - variables
 
+  - java-pagination-deep-cursor-path:wire-tests

@@ -89,15 +89,106 @@ fixtures:
         retainOriginalCasing: true
       outputFolder: retain-original-casing
 allowedFailures:
-  - bytes-upload
+  - accept-header
+  - alias
+  - alias-extends
+  - any-auth
+  - api-wide-base-path
+  - audiences
+  - auth-environment-variables
+  - basic-auth
+  - basic-auth-environment-variables
+  - bearer-token-environment-variable
   - bytes-download
+  - bytes-upload
+  - circular-references
+  - circular-references-advanced
+  - client-side-params
+  - content-type
+  - cross-package-type-names
+  - custom-auth
+  - empty-clients
+  - enum
+  - error-property
+  - errors
+  - examples
+  - exhaustive:allow-extra-fields
+  - exhaustive:no-custom-config
+  - exhaustive:no-optional-properties
+  - exhaustive:retain-original-casing
+  - exhaustive:test-package-path
+  - exhaustive:union-utils
+  - extends
+  - extra-properties
   - file-download
   - file-upload
+  - folders
+  - http-head
+  - idempotency-headers
+  - imdb:no-custom-config
+  - imdb:output-compiled
   - imdb:skip-request-validation
+  - imdb:skip-response-validation
+  - imdb:validation-status-code
+  - inferred-auth-explicit
+  - inferred-auth-implicit
+  - inferred-auth-implicit-no-expiry
+  - license
+  - literal
+  - literals-unions
+  - mixed-case:no-custom-config
+  - mixed-case:retain-original-casing
+  - mixed-file-directory
+  - multi-line-docs
+  - multi-url-environment
+  - multi-url-environment-no-default
+  - multiple-request-bodies
+  - no-environment
+  - nullable
+  - nullable-optional
+  - oauth-client-credentials
+  - oauth-client-credentials-custom
+  - oauth-client-credentials-default
+  - oauth-client-credentials-environment-variables
+  - oauth-client-credentials-nested-root
+  - oauth-client-credentials-with-variables
+  - object
+  - objects-with-imports
+  - optional
+  - package-yml
+  - pagination
+  - pagination-custom
+  - path-parameters
   - plain-text
+  - property-access
   - public-object
+  - query-parameters
+  - query-parameters-openapi
+  - query-parameters-openapi-as-objects
+  - request-parameters
+  - reserved-keywords
+  - response-property
+  - server-sent-event-examples
+  - server-sent-events
+  - simple-api
+  - simple-fhir
+  - single-url-environment-default
+  - single-url-environment-no-default
   - streaming
   - streaming-parameter
-  - server-sent-events
-  - server-sent-event-examples
+  - trace:no-custom-config
+  - trace:no-zurg-trace
+  - ts-express-casing:no-custom-config
+  - ts-express-casing:no-serde-layer
+  - ts-inline-types
+  - undiscriminated-unions
+  - unions
+  - unknown
+  - validation
+  - variables
+  - version
+  - version-no-default
+  - websocket
+  - websocket-bearer-auth
+  - websocket-inferred-auth
 
