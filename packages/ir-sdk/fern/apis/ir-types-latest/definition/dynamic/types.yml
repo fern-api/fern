@@ -7,6 +7,9 @@ types:
       name: commons.NameAndWireValue
       typeReference: TypeReference
       propertyAccess: optional<ObjectPropertyAccess>
+      variable:
+        docs: If set, this parameter references a variable defined at the client level
+        type: optional<string>
 
   NamedType:
     docs: |

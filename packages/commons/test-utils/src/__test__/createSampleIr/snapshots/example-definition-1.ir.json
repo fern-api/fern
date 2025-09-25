@@ -156,6 +156,7 @@
               "type": "primitive",
               "value": "STRING",
             },
+            "variable": undefined,
           },
           {
             "name": {
@@ -186,6 +187,7 @@
               "type": "primitive",
               "value": "STRING",
             },
+            "variable": undefined,
           },
           {
             "name": {
@@ -220,6 +222,7 @@
                 "value": "type_types:OrderItem",
               },
             },
+            "variable": undefined,
           },
           {
             "name": {
@@ -250,6 +253,7 @@
               "type": "primitive",
               "value": "DOUBLE",
             },
+            "variable": undefined,
           },
           {
             "name": {
@@ -280,6 +284,7 @@
               "type": "primitive",
               "value": "STRING",
             },
+            "variable": undefined,
           },
           {
             "name": {
@@ -310,6 +315,7 @@
               "type": "named",
               "value": "type_types:OrderStatus",
             },
+            "variable": undefined,
           },
         ],
         "type": "object",
@@ -411,6 +417,7 @@
               "type": "primitive",
               "value": "STRING",
             },
+            "variable": undefined,
           },
           {
             "name": {
@@ -441,6 +448,7 @@
               "type": "primitive",
               "value": "INTEGER",
             },
+            "variable": undefined,
           },
           {
             "name": {
@@ -471,6 +479,7 @@
               "type": "primitive",
               "value": "DOUBLE",
             },
+            "variable": undefined,
           },
         ],
         "type": "object",

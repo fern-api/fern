@@ -3458,7 +3458,8 @@
                                 "value": "FLOAT"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -3490,7 +3491,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -3522,7 +3524,8 @@
                                 "value": "type_infra/telemetry:TelemetryData"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -3663,7 +3666,8 @@
                                 "value": "FLOAT"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -3695,7 +3699,8 @@
                                 "value": "FLOAT"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -3727,7 +3732,8 @@
                                 "value": "FLOAT"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -3924,7 +3930,8 @@
                                     "value": "BOOLEAN"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ],
                     "headers": [],
