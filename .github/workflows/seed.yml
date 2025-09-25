@@ -36,7 +36,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           sparse-checkout: |
-            .github/workflows/workflow-resource-files/balancedGroups.json
+            .github/workflow-resource-files/balancedGroups.json
 
       - name: Echo location tehehehe
         id: echo-location
@@ -46,7 +46,8 @@ jobs:
       - name: Echo level
         id: echo-level
         run: |
-          echo "LS: $(ls -l)"
+          cd .github
+          echo "In GitHub directory, LS: $(ls -l)"
 
       - name: Get test matrix
         id: get-test-matrix
