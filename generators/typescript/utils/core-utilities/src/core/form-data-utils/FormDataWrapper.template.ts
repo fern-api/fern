@@ -2,11 +2,11 @@
 import { RUNTIME } from "../runtime/index";
 
 <% if (streamType === "wrapper") { %>
-export async function toReadableStream(encoder: import("form-data-encoder").FormDataEncoder) {
+export async function toReadableStream(encoder: import("form-data-encoder").FormDataEncoder): Promise<import("readable-stream").Readable> {
   return (await import("readable-stream")).Readable.from(encoder)
 }
 <% } else { %>
-export async function toReadableStream(encoder: import("form-data-encoder").FormDataEncoder) {
+export async function toReadableStream(encoder: import("form-data-encoder").FormDataEncoder): Promise<ReadableStream<Uint8Array<ArrayBufferLike>>> {
   const iterator = encoder.encode()
 
   return new ReadableStream({
@@ -80,7 +80,7 @@ export type Node18FormDataFd =
 export class Node18FormData implements CrossPlatformFormData {
     private fd: Node18FormDataFd;
 
-    public async setup() {
+    public async setup(): Promise<void> {
         this.fd = new (await import("formdata-node")).FormData();
     }
 
