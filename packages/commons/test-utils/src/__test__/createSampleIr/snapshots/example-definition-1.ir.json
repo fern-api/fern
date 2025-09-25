@@ -2,23 +2,14 @@
   "apiDisplayName": undefined,
   "apiDocs": undefined,
   "apiName": {
-    "camelCase": {
-      "safeName": "api",
-      "unsafeName": "api",
-    },
+    "camelCase": undefined,
     "originalName": "api",
     "pascalCase": {
       "safeName": "API",
       "unsafeName": "API",
     },
-    "screamingSnakeCase": {
-      "safeName": "API",
-      "unsafeName": "API",
-    },
-    "snakeCase": {
-      "safeName": "api",
-      "unsafeName": "api",
-    },
+    "screamingSnakeCase": undefined,
+    "snakeCase": undefined,
   },
   "apiVersion": undefined,
   "audiences": undefined,
@@ -40,14 +31,8 @@
           "safeName": "ErrorInstanceID",
           "unsafeName": "ErrorInstanceID",
         },
-        "screamingSnakeCase": {
-          "safeName": "ERROR_INSTANCE_ID",
-          "unsafeName": "ERROR_INSTANCE_ID",
-        },
-        "snakeCase": {
-          "safeName": "error_instance_id",
-          "unsafeName": "error_instance_id",
-        },
+        "screamingSnakeCase": undefined,
+        "snakeCase": undefined,
       },
       "wireValue": "errorInstanceId",
     },
@@ -728,67 +713,13 @@
       "errors": [],
       "fernFilepath": {
         "allParts": [
-          {
-            "camelCase": {
-              "safeName": "types",
-              "unsafeName": "types",
-            },
-            "originalName": "types",
-            "pascalCase": {
-              "safeName": "Types",
-              "unsafeName": "Types",
-            },
-            "screamingSnakeCase": {
-              "safeName": "TYPES",
-              "unsafeName": "TYPES",
-            },
-            "snakeCase": {
-              "safeName": "types",
-              "unsafeName": "types",
-            },
-          },
+          "types",
         ],
-        "file": {
-          "camelCase": {
-            "safeName": "types",
-            "unsafeName": "types",
-          },
-          "originalName": "types",
-          "pascalCase": {
-            "safeName": "Types",
-            "unsafeName": "Types",
-          },
-          "screamingSnakeCase": {
-            "safeName": "TYPES",
-            "unsafeName": "TYPES",
-          },
-          "snakeCase": {
-            "safeName": "types",
-            "unsafeName": "types",
-          },
-        },
+        "file": "types",
         "packagePath": [],
       },
       "hasEndpointsInTree": false,
-      "name": {
-        "camelCase": {
-          "safeName": "types",
-          "unsafeName": "types",
-        },
-        "originalName": "types",
-        "pascalCase": {
-          "safeName": "Types",
-          "unsafeName": "Types",
-        },
-        "screamingSnakeCase": {
-          "safeName": "TYPES",
-          "unsafeName": "TYPES",
-        },
-        "snakeCase": {
-          "safeName": "types",
-          "unsafeName": "types",
-        },
-      },
+      "name": "types",
       "navigationConfig": undefined,
       "service": undefined,
       "subpackages": [],
@@ -815,66 +746,12 @@
         "displayName": undefined,
         "fernFilepath": {
           "allParts": [
-            {
-              "camelCase": {
-                "safeName": "types",
-                "unsafeName": "types",
-              },
-              "originalName": "types",
-              "pascalCase": {
-                "safeName": "Types",
-                "unsafeName": "Types",
-              },
-              "screamingSnakeCase": {
-                "safeName": "TYPES",
-                "unsafeName": "TYPES",
-              },
-              "snakeCase": {
-                "safeName": "types",
-                "unsafeName": "types",
-              },
-            },
+            "types",
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "types",
-              "unsafeName": "types",
-            },
-            "originalName": "types",
-            "pascalCase": {
-              "safeName": "Types",
-              "unsafeName": "Types",
-            },
-            "screamingSnakeCase": {
-              "safeName": "TYPES",
-              "unsafeName": "TYPES",
-            },
-            "snakeCase": {
-              "safeName": "types",
-              "unsafeName": "types",
-            },
-          },
+          "file": "types",
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "order",
-            "unsafeName": "order",
-          },
-          "originalName": "Order",
-          "pascalCase": {
-            "safeName": "Order",
-            "unsafeName": "Order",
-          },
-          "screamingSnakeCase": {
-            "safeName": "ORDER",
-            "unsafeName": "ORDER",
-          },
-          "snakeCase": {
-            "safeName": "order",
-            "unsafeName": "order",
-          },
-        },
+        "name": "Order",
         "typeId": "type_types:Order",
       },
       "referencedTypes": Set {
@@ -892,23 +769,14 @@
             "docs": undefined,
             "name": {
               "name": {
-                "camelCase": {
-                  "safeName": "id",
-                  "unsafeName": "id",
-                },
+                "camelCase": undefined,
                 "originalName": "id",
                 "pascalCase": {
                   "safeName": "ID",
                   "unsafeName": "ID",
                 },
-                "screamingSnakeCase": {
-                  "safeName": "ID",
-                  "unsafeName": "ID",
-                },
-                "snakeCase": {
-                  "safeName": "id",
-                  "unsafeName": "id",
-                },
+                "screamingSnakeCase": undefined,
+                "snakeCase": undefined,
               },
               "wireValue": "id",
             },
@@ -945,14 +813,8 @@
                   "safeName": "UserID",
                   "unsafeName": "UserID",
                 },
-                "screamingSnakeCase": {
-                  "safeName": "USER_ID",
-                  "unsafeName": "USER_ID",
-                },
-                "snakeCase": {
-                  "safeName": "user_id",
-                  "unsafeName": "user_id",
-                },
+                "screamingSnakeCase": undefined,
+                "snakeCase": undefined,
               },
               "wireValue": "userId",
             },
@@ -979,25 +841,7 @@
             "availability": undefined,
             "docs": undefined,
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "items",
-                  "unsafeName": "items",
-                },
-                "originalName": "items",
-                "pascalCase": {
-                  "safeName": "Items",
-                  "unsafeName": "Items",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "ITEMS",
-                  "unsafeName": "ITEMS",
-                },
-                "snakeCase": {
-                  "safeName": "items",
-                  "unsafeName": "items",
-                },
-              },
+              "name": "items",
               "wireValue": "items",
             },
             "propertyAccess": undefined,
@@ -1015,67 +859,13 @@
                   "displayName": undefined,
                   "fernFilepath": {
                     "allParts": [
-                      {
-                        "camelCase": {
-                          "safeName": "types",
-                          "unsafeName": "types",
-                        },
-                        "originalName": "types",
-                        "pascalCase": {
-                          "safeName": "Types",
-                          "unsafeName": "Types",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "TYPES",
-                          "unsafeName": "TYPES",
-                        },
-                        "snakeCase": {
-                          "safeName": "types",
-                          "unsafeName": "types",
-                        },
-                      },
+                      "types",
                     ],
-                    "file": {
-                      "camelCase": {
-                        "safeName": "types",
-                        "unsafeName": "types",
-                      },
-                      "originalName": "types",
-                      "pascalCase": {
-                        "safeName": "Types",
-                        "unsafeName": "Types",
-                      },
-                      "screamingSnakeCase": {
-                        "safeName": "TYPES",
-                        "unsafeName": "TYPES",
-                      },
-                      "snakeCase": {
-                        "safeName": "types",
-                        "unsafeName": "types",
-                      },
-                    },
+                    "file": "types",
                     "packagePath": [],
                   },
                   "inline": undefined,
-                  "name": {
-                    "camelCase": {
-                      "safeName": "orderItem",
-                      "unsafeName": "orderItem",
-                    },
-                    "originalName": "OrderItem",
-                    "pascalCase": {
-                      "safeName": "OrderItem",
-                      "unsafeName": "OrderItem",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "ORDER_ITEM",
-                      "unsafeName": "ORDER_ITEM",
-                    },
-                    "snakeCase": {
-                      "safeName": "order_item",
-                      "unsafeName": "order_item",
-                    },
-                  },
+                  "name": "OrderItem",
                   "type": "named",
                   "typeId": "type_types:OrderItem",
                 },
@@ -1088,25 +878,7 @@
             "availability": undefined,
             "docs": undefined,
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "total",
-                  "unsafeName": "total",
-                },
-                "originalName": "total",
-                "pascalCase": {
-                  "safeName": "Total",
-                  "unsafeName": "Total",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "TOTAL",
-                  "unsafeName": "TOTAL",
-                },
-                "snakeCase": {
-                  "safeName": "total",
-                  "unsafeName": "total",
-                },
-              },
+              "name": "total",
               "wireValue": "total",
             },
             "propertyAccess": undefined,
@@ -1132,25 +904,7 @@
             "availability": undefined,
             "docs": undefined,
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "createdAt",
-                  "unsafeName": "createdAt",
-                },
-                "originalName": "createdAt",
-                "pascalCase": {
-                  "safeName": "CreatedAt",
-                  "unsafeName": "CreatedAt",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "CREATED_AT",
-                  "unsafeName": "CREATED_AT",
-                },
-                "snakeCase": {
-                  "safeName": "created_at",
-                  "unsafeName": "created_at",
-                },
-              },
+              "name": "createdAt",
               "wireValue": "createdAt",
             },
             "propertyAccess": undefined,
@@ -1176,25 +930,7 @@
             "availability": undefined,
             "docs": undefined,
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "status",
-                  "unsafeName": "status",
-                },
-                "originalName": "status",
-                "pascalCase": {
-                  "safeName": "Status",
-                  "unsafeName": "Status",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "STATUS",
-                  "unsafeName": "STATUS",
-                },
-                "snakeCase": {
-                  "safeName": "status",
-                  "unsafeName": "status",
-                },
-              },
+              "name": "status",
               "wireValue": "status",
             },
             "propertyAccess": undefined,
@@ -1208,67 +944,13 @@
               "displayName": undefined,
               "fernFilepath": {
                 "allParts": [
-                  {
-                    "camelCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                    "originalName": "types",
-                    "pascalCase": {
-                      "safeName": "Types",
-                      "unsafeName": "Types",
-                    },
-                    "screamingSnakeCase": {
-                      "safeName": "TYPES",
-                      "unsafeName": "TYPES",
-                    },
-                    "snakeCase": {
-                      "safeName": "types",
-                      "unsafeName": "types",
-                    },
-                  },
+                  "types",
                 ],
-                "file": {
-                  "camelCase": {
-                    "safeName": "types",
-                    "unsafeName": "types",
-                  },
-                  "originalName": "types",
-                  "pascalCase": {
-                    "safeName": "Types",
-                    "unsafeName": "Types",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "TYPES",
-                    "unsafeName": "TYPES",
-                  },
-                  "snakeCase": {
-                    "safeName": "types",
-                    "unsafeName": "types",
-                  },
-                },
+                "file": "types",
                 "packagePath": [],
               },
               "inline": undefined,
-              "name": {
-                "camelCase": {
-                  "safeName": "orderStatus",
-                  "unsafeName": "orderStatus",
-                },
-                "originalName": "OrderStatus",
-                "pascalCase": {
-                  "safeName": "OrderStatus",
-                  "unsafeName": "OrderStatus",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "ORDER_STATUS",
-                  "unsafeName": "ORDER_STATUS",
-                },
-                "snakeCase": {
-                  "safeName": "order_status",
-                  "unsafeName": "order_status",
-                },
-              },
+              "name": "OrderStatus",
               "type": "named",
               "typeId": "type_types:OrderStatus",
             },
@@ -1293,66 +975,12 @@
         "displayName": undefined,
         "fernFilepath": {
           "allParts": [
-            {
-              "camelCase": {
-                "safeName": "types",
-                "unsafeName": "types",
-              },
-              "originalName": "types",
-              "pascalCase": {
-                "safeName": "Types",
-                "unsafeName": "Types",
-              },
-              "screamingSnakeCase": {
-                "safeName": "TYPES",
-                "unsafeName": "TYPES",
-              },
-              "snakeCase": {
-                "safeName": "types",
-                "unsafeName": "types",
-              },
-            },
+            "types",
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "types",
-              "unsafeName": "types",
-            },
-            "originalName": "types",
-            "pascalCase": {
-              "safeName": "Types",
-              "unsafeName": "Types",
-            },
-            "screamingSnakeCase": {
-              "safeName": "TYPES",
-              "unsafeName": "TYPES",
-            },
-            "snakeCase": {
-              "safeName": "types",
-              "unsafeName": "types",
-            },
-          },
+          "file": "types",
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "orderItem",
-            "unsafeName": "orderItem",
-          },
-          "originalName": "OrderItem",
-          "pascalCase": {
-            "safeName": "OrderItem",
-            "unsafeName": "OrderItem",
-          },
-          "screamingSnakeCase": {
-            "safeName": "ORDER_ITEM",
-            "unsafeName": "ORDER_ITEM",
-          },
-          "snakeCase": {
-            "safeName": "order_item",
-            "unsafeName": "order_item",
-          },
-        },
+        "name": "OrderItem",
         "typeId": "type_types:OrderItem",
       },
       "referencedTypes": Set {},
@@ -1376,14 +1004,8 @@
                   "safeName": "ProductID",
                   "unsafeName": "ProductID",
                 },
-                "screamingSnakeCase": {
-                  "safeName": "PRODUCT_ID",
-                  "unsafeName": "PRODUCT_ID",
-                },
-                "snakeCase": {
-                  "safeName": "product_id",
-                  "unsafeName": "product_id",
-                },
+                "screamingSnakeCase": undefined,
+                "snakeCase": undefined,
               },
               "wireValue": "productId",
             },
@@ -1410,25 +1032,7 @@
             "availability": undefined,
             "docs": undefined,
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "quantity",
-                  "unsafeName": "quantity",
-                },
-                "originalName": "quantity",
-                "pascalCase": {
-                  "safeName": "Quantity",
-                  "unsafeName": "Quantity",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "QUANTITY",
-                  "unsafeName": "QUANTITY",
-                },
-                "snakeCase": {
-                  "safeName": "quantity",
-                  "unsafeName": "quantity",
-                },
-              },
+              "name": "quantity",
               "wireValue": "quantity",
             },
             "propertyAccess": undefined,
@@ -1454,25 +1058,7 @@
             "availability": undefined,
             "docs": undefined,
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "unitPrice",
-                  "unsafeName": "unitPrice",
-                },
-                "originalName": "unitPrice",
-                "pascalCase": {
-                  "safeName": "UnitPrice",
-                  "unsafeName": "UnitPrice",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "UNIT_PRICE",
-                  "unsafeName": "UNIT_PRICE",
-                },
-                "snakeCase": {
-                  "safeName": "unit_price",
-                  "unsafeName": "unit_price",
-                },
-              },
+              "name": "unitPrice",
               "wireValue": "unitPrice",
             },
             "propertyAccess": undefined,
@@ -1514,66 +1100,12 @@
         "displayName": undefined,
         "fernFilepath": {
           "allParts": [
-            {
-              "camelCase": {
-                "safeName": "types",
-                "unsafeName": "types",
-              },
-              "originalName": "types",
-              "pascalCase": {
-                "safeName": "Types",
-                "unsafeName": "Types",
-              },
-              "screamingSnakeCase": {
-                "safeName": "TYPES",
-                "unsafeName": "TYPES",
-              },
-              "snakeCase": {
-                "safeName": "types",
-                "unsafeName": "types",
-              },
-            },
+            "types",
           ],
-          "file": {
-            "camelCase": {
-              "safeName": "types",
-              "unsafeName": "types",
-            },
-            "originalName": "types",
-            "pascalCase": {
-              "safeName": "Types",
-              "unsafeName": "Types",
-            },
-            "screamingSnakeCase": {
-              "safeName": "TYPES",
-              "unsafeName": "TYPES",
-            },
-            "snakeCase": {
-              "safeName": "types",
-              "unsafeName": "types",
-            },
-          },
+          "file": "types",
           "packagePath": [],
         },
-        "name": {
-          "camelCase": {
-            "safeName": "orderStatus",
-            "unsafeName": "orderStatus",
-          },
-          "originalName": "OrderStatus",
-          "pascalCase": {
-            "safeName": "OrderStatus",
-            "unsafeName": "OrderStatus",
-          },
-          "screamingSnakeCase": {
-            "safeName": "ORDER_STATUS",
-            "unsafeName": "ORDER_STATUS",
-          },
-          "snakeCase": {
-            "safeName": "order_status",
-            "unsafeName": "order_status",
-          },
-        },
+        "name": "OrderStatus",
         "typeId": "type_types:OrderStatus",
       },
       "referencedTypes": Set {},
@@ -1586,25 +1118,7 @@
             "availability": undefined,
             "docs": undefined,
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "pending",
-                  "unsafeName": "pending",
-                },
-                "originalName": "pending",
-                "pascalCase": {
-                  "safeName": "Pending",
-                  "unsafeName": "Pending",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "PENDING",
-                  "unsafeName": "PENDING",
-                },
-                "snakeCase": {
-                  "safeName": "pending",
-                  "unsafeName": "pending",
-                },
-              },
+              "name": "pending",
               "wireValue": "pending",
             },
           },
@@ -1612,25 +1126,7 @@
             "availability": undefined,
             "docs": undefined,
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "processing",
-                  "unsafeName": "processing",
-                },
-                "originalName": "processing",
-                "pascalCase": {
-                  "safeName": "Processing",
-                  "unsafeName": "Processing",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "PROCESSING",
-                  "unsafeName": "PROCESSING",
-                },
-                "snakeCase": {
-                  "safeName": "processing",
-                  "unsafeName": "processing",
-                },
-              },
+              "name": "processing",
               "wireValue": "processing",
             },
           },
@@ -1638,25 +1134,7 @@
             "availability": undefined,
             "docs": undefined,
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "shipped",
-                  "unsafeName": "shipped",
-                },
-                "originalName": "shipped",
-                "pascalCase": {
-                  "safeName": "Shipped",
-                  "unsafeName": "Shipped",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "SHIPPED",
-                  "unsafeName": "SHIPPED",
-                },
-                "snakeCase": {
-                  "safeName": "shipped",
-                  "unsafeName": "shipped",
-                },
-              },
+              "name": "shipped",
               "wireValue": "shipped",
             },
           },
@@ -1664,25 +1142,7 @@
             "availability": undefined,
             "docs": undefined,
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "delivered",
-                  "unsafeName": "delivered",
-                },
-                "originalName": "delivered",
-                "pascalCase": {
-                  "safeName": "Delivered",
-                  "unsafeName": "Delivered",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "DELIVERED",
-                  "unsafeName": "DELIVERED",
-                },
-                "snakeCase": {
-                  "safeName": "delivered",
-                  "unsafeName": "delivered",
-                },
-              },
+              "name": "delivered",
               "wireValue": "delivered",
             },
           },
@@ -1690,25 +1150,7 @@
             "availability": undefined,
             "docs": undefined,
             "name": {
-              "name": {
-                "camelCase": {
-                  "safeName": "cancelled",
-                  "unsafeName": "cancelled",
-                },
-                "originalName": "cancelled",
-                "pascalCase": {
-                  "safeName": "Cancelled",
-                  "unsafeName": "Cancelled",
-                },
-                "screamingSnakeCase": {
-                  "safeName": "CANCELLED",
-                  "unsafeName": "CANCELLED",
-                },
-                "snakeCase": {
-                  "safeName": "cancelled",
-                  "unsafeName": "cancelled",
-                },
-              },
+              "name": "cancelled",
               "wireValue": "cancelled",
             },
           },

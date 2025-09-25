@@ -2,25 +2,7 @@
     "selfHosted": false,
     "fdrApiDefinitionId": null,
     "apiVersion": null,
-    "apiName": {
-        "originalName": "error-property",
-        "camelCase": {
-            "unsafeName": "errorProperty",
-            "safeName": "errorProperty"
-        },
-        "snakeCase": {
-            "unsafeName": "error_property",
-            "safeName": "error_property"
-        },
-        "screamingSnakeCase": {
-            "unsafeName": "ERROR_PROPERTY",
-            "safeName": "ERROR_PROPERTY"
-        },
-        "pascalCase": {
-            "unsafeName": "ErrorProperty",
-            "safeName": "ErrorProperty"
-        }
-    },
+    "apiName": "error-property",
     "apiDisplayName": null,
     "apiDocs": null,
     "auth": {
@@ -34,67 +16,13 @@
         "type_errors:PropertyBasedErrorTestBody": {
             "inline": null,
             "name": {
-                "name": {
-                    "originalName": "PropertyBasedErrorTestBody",
-                    "camelCase": {
-                        "unsafeName": "propertyBasedErrorTestBody",
-                        "safeName": "propertyBasedErrorTestBody"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "property_based_error_test_body",
-                        "safeName": "property_based_error_test_body"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "PROPERTY_BASED_ERROR_TEST_BODY",
-                        "safeName": "PROPERTY_BASED_ERROR_TEST_BODY"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "PropertyBasedErrorTestBody",
-                        "safeName": "PropertyBasedErrorTestBody"
-                    }
-                },
+                "name": "PropertyBasedErrorTestBody",
                 "fernFilepath": {
                     "allParts": [
-                        {
-                            "originalName": "errors",
-                            "camelCase": {
-                                "unsafeName": "errors",
-                                "safeName": "errors"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "errors",
-                                "safeName": "errors"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "ERRORS",
-                                "safeName": "ERRORS"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Errors",
-                                "safeName": "Errors"
-                            }
-                        }
+                        "errors"
                     ],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "errors",
-                        "camelCase": {
-                            "unsafeName": "errors",
-                            "safeName": "errors"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "errors",
-                            "safeName": "errors"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "ERRORS",
-                            "safeName": "ERRORS"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Errors",
-                            "safeName": "Errors"
-                        }
-                    }
+                    "file": "errors"
                 },
                 "displayName": null,
                 "typeId": "type_errors:PropertyBasedErrorTestBody"
@@ -105,25 +33,7 @@
                 "properties": [
                     {
                         "name": {
-                            "name": {
-                                "originalName": "message",
-                                "camelCase": {
-                                    "unsafeName": "message",
-                                    "safeName": "message"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "message",
-                                    "safeName": "message"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "MESSAGE",
-                                    "safeName": "MESSAGE"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Message",
-                                    "safeName": "Message"
-                                }
-                            },
+                            "name": "message",
                             "wireValue": "message"
                         },
                         "valueType": {
@@ -165,156 +75,30 @@
     "errors": {
         "error_errors:PropertyBasedErrorTest": {
             "name": {
-                "name": {
-                    "originalName": "PropertyBasedErrorTest",
-                    "camelCase": {
-                        "unsafeName": "propertyBasedErrorTest",
-                        "safeName": "propertyBasedErrorTest"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "property_based_error_test",
-                        "safeName": "property_based_error_test"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "PROPERTY_BASED_ERROR_TEST",
-                        "safeName": "PROPERTY_BASED_ERROR_TEST"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "PropertyBasedErrorTest",
-                        "safeName": "PropertyBasedErrorTest"
-                    }
-                },
+                "name": "PropertyBasedErrorTest",
                 "fernFilepath": {
                     "allParts": [
-                        {
-                            "originalName": "errors",
-                            "camelCase": {
-                                "unsafeName": "errors",
-                                "safeName": "errors"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "errors",
-                                "safeName": "errors"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "ERRORS",
-                                "safeName": "ERRORS"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Errors",
-                                "safeName": "Errors"
-                            }
-                        }
+                        "errors"
                     ],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "errors",
-                        "camelCase": {
-                            "unsafeName": "errors",
-                            "safeName": "errors"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "errors",
-                            "safeName": "errors"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "ERRORS",
-                            "safeName": "ERRORS"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Errors",
-                            "safeName": "Errors"
-                        }
-                    }
+                    "file": "errors"
                 },
                 "errorId": "error_errors:PropertyBasedErrorTest"
             },
             "discriminantValue": {
-                "name": {
-                    "originalName": "PropertyBasedErrorTest",
-                    "camelCase": {
-                        "unsafeName": "propertyBasedErrorTest",
-                        "safeName": "propertyBasedErrorTest"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "property_based_error_test",
-                        "safeName": "property_based_error_test"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "PROPERTY_BASED_ERROR_TEST",
-                        "safeName": "PROPERTY_BASED_ERROR_TEST"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "PropertyBasedErrorTest",
-                        "safeName": "PropertyBasedErrorTest"
-                    }
-                },
+                "name": "PropertyBasedErrorTest",
                 "wireValue": "PropertyBasedErrorTest"
             },
             "statusCode": 400,
             "type": {
                 "_type": "named",
-                "name": {
-                    "originalName": "PropertyBasedErrorTestBody",
-                    "camelCase": {
-                        "unsafeName": "propertyBasedErrorTestBody",
-                        "safeName": "propertyBasedErrorTestBody"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "property_based_error_test_body",
-                        "safeName": "property_based_error_test_body"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "PROPERTY_BASED_ERROR_TEST_BODY",
-                        "safeName": "PROPERTY_BASED_ERROR_TEST_BODY"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "PropertyBasedErrorTestBody",
-                        "safeName": "PropertyBasedErrorTestBody"
-                    }
-                },
+                "name": "PropertyBasedErrorTestBody",
                 "fernFilepath": {
                     "allParts": [
-                        {
-                            "originalName": "errors",
-                            "camelCase": {
-                                "unsafeName": "errors",
-                                "safeName": "errors"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "errors",
-                                "safeName": "errors"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "ERRORS",
-                                "safeName": "ERRORS"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "Errors",
-                                "safeName": "Errors"
-                            }
-                        }
+                        "errors"
                     ],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "errors",
-                        "camelCase": {
-                            "unsafeName": "errors",
-                            "safeName": "errors"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "errors",
-                            "safeName": "errors"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "ERRORS",
-                            "safeName": "ERRORS"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Errors",
-                            "safeName": "Errors"
-                        }
-                    }
+                    "file": "errors"
                 },
                 "displayName": null,
                 "typeId": "type_errors:PropertyBasedErrorTestBody",
@@ -333,46 +117,10 @@
             "name": {
                 "fernFilepath": {
                     "allParts": [
-                        {
-                            "originalName": "property-based-error",
-                            "camelCase": {
-                                "unsafeName": "propertyBasedError",
-                                "safeName": "propertyBasedError"
-                            },
-                            "snakeCase": {
-                                "unsafeName": "property_based_error",
-                                "safeName": "property_based_error"
-                            },
-                            "screamingSnakeCase": {
-                                "unsafeName": "PROPERTY_BASED_ERROR",
-                                "safeName": "PROPERTY_BASED_ERROR"
-                            },
-                            "pascalCase": {
-                                "unsafeName": "PropertyBasedError",
-                                "safeName": "PropertyBasedError"
-                            }
-                        }
+                        "property-based-error"
                     ],
                     "packagePath": [],
-                    "file": {
-                        "originalName": "property-based-error",
-                        "camelCase": {
-                            "unsafeName": "propertyBasedError",
-                            "safeName": "propertyBasedError"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "property_based_error",
-                            "safeName": "property_based_error"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "PROPERTY_BASED_ERROR",
-                            "safeName": "PROPERTY_BASED_ERROR"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "PropertyBasedError",
-                            "safeName": "PropertyBasedError"
-                        }
-                    }
+                    "file": "property-based-error"
                 }
             },
             "displayName": null,
@@ -392,25 +140,7 @@
             "endpoints": [
                 {
                     "id": "endpoint_property-based-error.ThrowError",
-                    "name": {
-                        "originalName": "ThrowError",
-                        "camelCase": {
-                            "unsafeName": "throwError",
-                            "safeName": "throwError"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "throw_error",
-                            "safeName": "throw_error"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "THROW_ERROR",
-                            "safeName": "THROW_ERROR"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "ThrowError",
-                            "safeName": "ThrowError"
-                        }
-                    },
+                    "name": "ThrowError",
                     "displayName": null,
                     "auth": false,
                     "security": null,
@@ -460,67 +190,13 @@
                     "errors": [
                         {
                             "error": {
-                                "name": {
-                                    "originalName": "PropertyBasedErrorTest",
-                                    "camelCase": {
-                                        "unsafeName": "propertyBasedErrorTest",
-                                        "safeName": "propertyBasedErrorTest"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "property_based_error_test",
-                                        "safeName": "property_based_error_test"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "PROPERTY_BASED_ERROR_TEST",
-                                        "safeName": "PROPERTY_BASED_ERROR_TEST"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "PropertyBasedErrorTest",
-                                        "safeName": "PropertyBasedErrorTest"
-                                    }
-                                },
+                                "name": "PropertyBasedErrorTest",
                                 "fernFilepath": {
                                     "allParts": [
-                                        {
-                                            "originalName": "errors",
-                                            "camelCase": {
-                                                "unsafeName": "errors",
-                                                "safeName": "errors"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "errors",
-                                                "safeName": "errors"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "ERRORS",
-                                                "safeName": "ERRORS"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Errors",
-                                                "safeName": "Errors"
-                                            }
-                                        }
+                                        "errors"
                                     ],
                                     "packagePath": [],
-                                    "file": {
-                                        "originalName": "errors",
-                                        "camelCase": {
-                                            "unsafeName": "errors",
-                                            "safeName": "errors"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "errors",
-                                            "safeName": "errors"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "ERRORS",
-                                            "safeName": "ERRORS"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Errors",
-                                            "safeName": "Errors"
-                                        }
-                                    }
+                                    "file": "errors"
                                 },
                                 "errorId": "error_errors:PropertyBasedErrorTest"
                             },
@@ -564,7 +240,7 @@
                         },
                         {
                             "example": {
-                                "id": "406789d1",
+                                "id": "ab4f9d27",
                                 "url": "/property-based-error",
                                 "name": null,
                                 "endpointHeaders": [],
@@ -584,89 +260,17 @@
                                                 "properties": [
                                                     {
                                                         "name": {
-                                                            "name": {
-                                                                "originalName": "message",
-                                                                "camelCase": {
-                                                                    "unsafeName": "message",
-                                                                    "safeName": "message"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "message",
-                                                                    "safeName": "message"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "MESSAGE",
-                                                                    "safeName": "MESSAGE"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "Message",
-                                                                    "safeName": "Message"
-                                                                }
-                                                            },
+                                                            "name": "message",
                                                             "wireValue": "message"
                                                         },
                                                         "originalTypeDeclaration": {
-                                                            "name": {
-                                                                "originalName": "PropertyBasedErrorTestBody",
-                                                                "camelCase": {
-                                                                    "unsafeName": "propertyBasedErrorTestBody",
-                                                                    "safeName": "propertyBasedErrorTestBody"
-                                                                },
-                                                                "snakeCase": {
-                                                                    "unsafeName": "property_based_error_test_body",
-                                                                    "safeName": "property_based_error_test_body"
-                                                                },
-                                                                "screamingSnakeCase": {
-                                                                    "unsafeName": "PROPERTY_BASED_ERROR_TEST_BODY",
-                                                                    "safeName": "PROPERTY_BASED_ERROR_TEST_BODY"
-                                                                },
-                                                                "pascalCase": {
-                                                                    "unsafeName": "PropertyBasedErrorTestBody",
-                                                                    "safeName": "PropertyBasedErrorTestBody"
-                                                                }
-                                                            },
+                                                            "name": "PropertyBasedErrorTestBody",
                                                             "fernFilepath": {
                                                                 "allParts": [
-                                                                    {
-                                                                        "originalName": "errors",
-                                                                        "camelCase": {
-                                                                            "unsafeName": "errors",
-                                                                            "safeName": "errors"
-                                                                        },
-                                                                        "snakeCase": {
-                                                                            "unsafeName": "errors",
-                                                                            "safeName": "errors"
-                                                                        },
-                                                                        "screamingSnakeCase": {
-                                                                            "unsafeName": "ERRORS",
-                                                                            "safeName": "ERRORS"
-                                                                        },
-                                                                        "pascalCase": {
-                                                                            "unsafeName": "Errors",
-                                                                            "safeName": "Errors"
-                                                                        }
-                                                                    }
+                                                                    "errors"
                                                                 ],
                                                                 "packagePath": [],
-                                                                "file": {
-                                                                    "originalName": "errors",
-                                                                    "camelCase": {
-                                                                        "unsafeName": "errors",
-                                                                        "safeName": "errors"
-                                                                    },
-                                                                    "snakeCase": {
-                                                                        "unsafeName": "errors",
-                                                                        "safeName": "errors"
-                                                                    },
-                                                                    "screamingSnakeCase": {
-                                                                        "unsafeName": "ERRORS",
-                                                                        "safeName": "ERRORS"
-                                                                    },
-                                                                    "pascalCase": {
-                                                                        "unsafeName": "Errors",
-                                                                        "safeName": "Errors"
-                                                                    }
-                                                                }
+                                                                "file": "errors"
                                                             },
                                                             "displayName": null,
                                                             "typeId": "type_errors:PropertyBasedErrorTestBody"
@@ -688,67 +292,13 @@
                                                 ]
                                             },
                                             "typeName": {
-                                                "name": {
-                                                    "originalName": "PropertyBasedErrorTestBody",
-                                                    "camelCase": {
-                                                        "unsafeName": "propertyBasedErrorTestBody",
-                                                        "safeName": "propertyBasedErrorTestBody"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "property_based_error_test_body",
-                                                        "safeName": "property_based_error_test_body"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "PROPERTY_BASED_ERROR_TEST_BODY",
-                                                        "safeName": "PROPERTY_BASED_ERROR_TEST_BODY"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "PropertyBasedErrorTestBody",
-                                                        "safeName": "PropertyBasedErrorTestBody"
-                                                    }
-                                                },
+                                                "name": "PropertyBasedErrorTestBody",
                                                 "fernFilepath": {
                                                     "allParts": [
-                                                        {
-                                                            "originalName": "errors",
-                                                            "camelCase": {
-                                                                "unsafeName": "errors",
-                                                                "safeName": "errors"
-                                                            },
-                                                            "snakeCase": {
-                                                                "unsafeName": "errors",
-                                                                "safeName": "errors"
-                                                            },
-                                                            "screamingSnakeCase": {
-                                                                "unsafeName": "ERRORS",
-                                                                "safeName": "ERRORS"
-                                                            },
-                                                            "pascalCase": {
-                                                                "unsafeName": "Errors",
-                                                                "safeName": "Errors"
-                                                            }
-                                                        }
+                                                        "errors"
                                                     ],
                                                     "packagePath": [],
-                                                    "file": {
-                                                        "originalName": "errors",
-                                                        "camelCase": {
-                                                            "unsafeName": "errors",
-                                                            "safeName": "errors"
-                                                        },
-                                                        "snakeCase": {
-                                                            "unsafeName": "errors",
-                                                            "safeName": "errors"
-                                                        },
-                                                        "screamingSnakeCase": {
-                                                            "unsafeName": "ERRORS",
-                                                            "safeName": "ERRORS"
-                                                        },
-                                                        "pascalCase": {
-                                                            "unsafeName": "Errors",
-                                                            "safeName": "Errors"
-                                                        }
-                                                    }
+                                                    "file": "errors"
                                                 },
                                                 "displayName": null,
                                                 "typeId": "type_errors:PropertyBasedErrorTestBody"
@@ -759,67 +309,13 @@
                                         }
                                     },
                                     "error": {
-                                        "name": {
-                                            "originalName": "PropertyBasedErrorTest",
-                                            "camelCase": {
-                                                "unsafeName": "propertyBasedErrorTest",
-                                                "safeName": "propertyBasedErrorTest"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "property_based_error_test",
-                                                "safeName": "property_based_error_test"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "PROPERTY_BASED_ERROR_TEST",
-                                                "safeName": "PROPERTY_BASED_ERROR_TEST"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "PropertyBasedErrorTest",
-                                                "safeName": "PropertyBasedErrorTest"
-                                            }
-                                        },
+                                        "name": "PropertyBasedErrorTest",
                                         "fernFilepath": {
                                             "allParts": [
-                                                {
-                                                    "originalName": "errors",
-                                                    "camelCase": {
-                                                        "unsafeName": "errors",
-                                                        "safeName": "errors"
-                                                    },
-                                                    "snakeCase": {
-                                                        "unsafeName": "errors",
-                                                        "safeName": "errors"
-                                                    },
-                                                    "screamingSnakeCase": {
-                                                        "unsafeName": "ERRORS",
-                                                        "safeName": "ERRORS"
-                                                    },
-                                                    "pascalCase": {
-                                                        "unsafeName": "Errors",
-                                                        "safeName": "Errors"
-                                                    }
-                                                }
+                                                "errors"
                                             ],
                                             "packagePath": [],
-                                            "file": {
-                                                "originalName": "errors",
-                                                "camelCase": {
-                                                    "unsafeName": "errors",
-                                                    "safeName": "errors"
-                                                },
-                                                "snakeCase": {
-                                                    "unsafeName": "errors",
-                                                    "safeName": "errors"
-                                                },
-                                                "screamingSnakeCase": {
-                                                    "unsafeName": "ERRORS",
-                                                    "safeName": "ERRORS"
-                                                },
-                                                "pascalCase": {
-                                                    "unsafeName": "Errors",
-                                                    "safeName": "Errors"
-                                                }
-                                            }
+                                            "file": "errors"
                                         },
                                         "errorId": "error_errors:PropertyBasedErrorTest"
                                     }
@@ -849,14 +345,8 @@
                     "unsafeName": "errorInstanceID",
                     "safeName": "errorInstanceID"
                 },
-                "snakeCase": {
-                    "unsafeName": "error_instance_id",
-                    "safeName": "error_instance_id"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "ERROR_INSTANCE_ID",
-                    "safeName": "ERROR_INSTANCE_ID"
-                },
+                "snakeCase": null,
+                "screamingSnakeCase": null,
                 "pascalCase": {
                     "unsafeName": "ErrorInstanceID",
                     "safeName": "ErrorInstanceID"
@@ -869,47 +359,11 @@
     "errorDiscriminationStrategy": {
         "type": "property",
         "discriminant": {
-            "name": {
-                "originalName": "errorName",
-                "camelCase": {
-                    "unsafeName": "errorName",
-                    "safeName": "errorName"
-                },
-                "snakeCase": {
-                    "unsafeName": "error_name",
-                    "safeName": "error_name"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "ERROR_NAME",
-                    "safeName": "ERROR_NAME"
-                },
-                "pascalCase": {
-                    "unsafeName": "ErrorName",
-                    "safeName": "ErrorName"
-                }
-            },
+            "name": "errorName",
             "wireValue": "errorName"
         },
         "contentProperty": {
-            "name": {
-                "originalName": "content",
-                "camelCase": {
-                    "unsafeName": "content",
-                    "safeName": "content"
-                },
-                "snakeCase": {
-                    "unsafeName": "content",
-                    "safeName": "content"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "CONTENT",
-                    "safeName": "CONTENT"
-                },
-                "pascalCase": {
-                    "unsafeName": "Content",
-                    "safeName": "Content"
-                }
-            },
+            "name": "content",
             "wireValue": "content"
         }
     },
@@ -1122,68 +576,14 @@
     "audiences": null,
     "subpackages": {
         "subpackage_errors": {
-            "name": {
-                "originalName": "errors",
-                "camelCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
-                },
-                "snakeCase": {
-                    "unsafeName": "errors",
-                    "safeName": "errors"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "ERRORS",
-                    "safeName": "ERRORS"
-                },
-                "pascalCase": {
-                    "unsafeName": "Errors",
-                    "safeName": "Errors"
-                }
-            },
+            "name": "errors",
             "displayName": null,
             "fernFilepath": {
                 "allParts": [
-                    {
-                        "originalName": "errors",
-                        "camelCase": {
-                            "unsafeName": "errors",
-                            "safeName": "errors"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "errors",
-                            "safeName": "errors"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "ERRORS",
-                            "safeName": "ERRORS"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "Errors",
-                            "safeName": "Errors"
-                        }
-                    }
+                    "errors"
                 ],
                 "packagePath": [],
-                "file": {
-                    "originalName": "errors",
-                    "camelCase": {
-                        "unsafeName": "errors",
-                        "safeName": "errors"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "errors",
-                        "safeName": "errors"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "ERRORS",
-                        "safeName": "ERRORS"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "Errors",
-                        "safeName": "Errors"
-                    }
-                }
+                "file": "errors"
             },
             "service": null,
             "types": [
@@ -1200,68 +600,14 @@
             "docs": null
         },
         "subpackage_property-based-error": {
-            "name": {
-                "originalName": "property-based-error",
-                "camelCase": {
-                    "unsafeName": "propertyBasedError",
-                    "safeName": "propertyBasedError"
-                },
-                "snakeCase": {
-                    "unsafeName": "property_based_error",
-                    "safeName": "property_based_error"
-                },
-                "screamingSnakeCase": {
-                    "unsafeName": "PROPERTY_BASED_ERROR",
-                    "safeName": "PROPERTY_BASED_ERROR"
-                },
-                "pascalCase": {
-                    "unsafeName": "PropertyBasedError",
-                    "safeName": "PropertyBasedError"
-                }
-            },
+            "name": "property-based-error",
             "displayName": null,
             "fernFilepath": {
                 "allParts": [
-                    {
-                        "originalName": "property-based-error",
-                        "camelCase": {
-                            "unsafeName": "propertyBasedError",
-                            "safeName": "propertyBasedError"
-                        },
-                        "snakeCase": {
-                            "unsafeName": "property_based_error",
-                            "safeName": "property_based_error"
-                        },
-                        "screamingSnakeCase": {
-                            "unsafeName": "PROPERTY_BASED_ERROR",
-                            "safeName": "PROPERTY_BASED_ERROR"
-                        },
-                        "pascalCase": {
-                            "unsafeName": "PropertyBasedError",
-                            "safeName": "PropertyBasedError"
-                        }
-                    }
+                    "property-based-error"
                 ],
                 "packagePath": [],
-                "file": {
-                    "originalName": "property-based-error",
-                    "camelCase": {
-                        "unsafeName": "propertyBasedError",
-                        "safeName": "propertyBasedError"
-                    },
-                    "snakeCase": {
-                        "unsafeName": "property_based_error",
-                        "safeName": "property_based_error"
-                    },
-                    "screamingSnakeCase": {
-                        "unsafeName": "PROPERTY_BASED_ERROR",
-                        "safeName": "PROPERTY_BASED_ERROR"
-                    },
-                    "pascalCase": {
-                        "unsafeName": "PropertyBasedError",
-                        "safeName": "PropertyBasedError"
-                    }
-                }
+                "file": "property-based-error"
             },
             "service": "service_property-based-error",
             "types": [],
