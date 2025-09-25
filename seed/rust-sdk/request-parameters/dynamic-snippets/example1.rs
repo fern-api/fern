@@ -4,7 +4,9 @@ use seed_request_parameters::{
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        base_url: "https://api.fern.com".to_string(),
+    };
     let client = RequestParametersClient::new(config).expect("Failed to build client");
     client
         .user_create_username_with_referenced_type(CreateUsernameReferencedRequest {
