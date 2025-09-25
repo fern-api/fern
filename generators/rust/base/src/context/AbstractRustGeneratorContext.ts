@@ -20,8 +20,8 @@ export abstract class AbstractRustGeneratorContext<
         super(config, generatorNotificationService);
         this.project = new RustProject({
             context: this,
-            packageName: this.getCrateName(),
-            packageVersion: this.getCrateVersion(),
+            crateName: this.getCrateName(),
+            crateVersion: this.getCrateVersion(),
             clientClassName: this.getClientClassName(this.ir.apiName.pascalCase.safeName)
         });
     }
@@ -53,21 +53,6 @@ export abstract class AbstractRustGeneratorContext<
     }
 
     /**
-     * Get the package name with validation and fallback to default
-     */
-    public getPackageName(): string {
-        const packageName = this.customConfig.packageName ?? this.generateDefaultPackageName();
-        return this.validateAndSanitizePackageName(packageName);
-    }
-
-    /**
-     * Get the package version with fallback to default
-     */
-    public getPackageVersion(): string {
-        return this.customConfig.packageVersion ?? "0.1.0";
-    }
-
-    /**
      * Get extra dependencies with empty object fallback
      */
     public getExtraDependencies(): Record<string, string> {
@@ -82,19 +67,18 @@ export abstract class AbstractRustGeneratorContext<
     }
 
     /**
-     * Get the crate name with fallback to packageName or generated default
+     * Get the crate name with fallback to generated default
      */
     public getCrateName(): string {
-        const crateName =
-            this.customConfig.crateName ?? this.customConfig.packageName ?? this.generateDefaultPackageName();
-        return this.validateAndSanitizePackageName(crateName);
+        const crateName = this.customConfig.crateName ?? this.generateDefaultCrateName();
+        return this.validateAndSanitizeCrateName(crateName);
     }
 
     /**
-     * Get the crate version with fallback to packageVersion or default
+     * Get the crate version with fallback to default
      */
     public getCrateVersion(): string {
-        return this.customConfig.crateVersion ?? this.customConfig.packageVersion ?? "0.1.0";
+        return this.customConfig.crateVersion ?? "0.1.0";
     }
 
     /**
@@ -285,7 +269,7 @@ export abstract class AbstractRustGeneratorContext<
     /**
      * Generate default package name from organization and API name
      */
-    private generateDefaultPackageName(): string {
+    private generateDefaultCrateName(): string {
         const orgName = this.config.organization;
         const apiName = this.ir.apiName.snakeCase.unsafeName;
         return `${orgName}_${apiName}`.toLowerCase();
@@ -294,10 +278,10 @@ export abstract class AbstractRustGeneratorContext<
     /**
      * Validate and sanitize package name for Rust crate naming conventions
      */
-    private validateAndSanitizePackageName(packageName: string): string {
+    private validateAndSanitizeCrateName(crateName: string): string {
         // Rust crate names must be lowercase alphanumeric with hyphens and underscores
         // Cannot start with numbers
-        let sanitized = packageName
+        let sanitized = crateName
             .toLowerCase()
             .replace(/[^a-z0-9_-]/g, "_") // Replace invalid chars with underscore
             .replace(/^[0-9]/, "_$&"); // Prefix numbers at start with underscore

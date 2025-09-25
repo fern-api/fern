@@ -22,7 +22,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private readonly endpointsById: Record<EndpointId, EndpointWithFilepath> = {};
     private readonly prerenderedSnippetsByEndpointId: Record<EndpointId, string> = {};
     private readonly defaultEndpointId: EndpointId;
-    private readonly packageName: string;
+    private readonly crateName: string;
 
     constructor({
         context,
@@ -40,7 +40,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             this.context.ir.readmeConfig?.defaultEndpoint != null
                 ? this.context.ir.readmeConfig.defaultEndpoint
                 : this.getDefaultEndpointId();
-        this.packageName = this.context.getCrateName();
+        this.crateName = this.context.getCrateName();
     }
 
     public buildReadmeSnippets(): Record<FernGeneratorCli.FeatureId, string[]> {
@@ -332,7 +332,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const writer = new Writer();
 
         const useStatements = [
-            new UseStatement({ path: this.packageName, items: ["ClientConfig", this.context.getClientName()] })
+            new UseStatement({ path: this.crateName, items: ["ClientConfig", this.context.getClientName()] })
         ];
 
         // Write use statements
@@ -378,7 +378,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private buildTimeoutCode(endpoint: EndpointWithFilepath): string {
         const useStatements = [
-            new UseStatement({ path: this.packageName, items: ["ClientConfig", this.context.getClientName()] }),
+            new UseStatement({ path: this.crateName, items: ["ClientConfig", this.context.getClientName()] }),
             new UseStatement({ path: "std::time", items: ["Duration"] })
         ];
 
@@ -429,7 +429,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const writer = new Writer();
 
         const useStatements = [
-            new UseStatement({ path: this.packageName, items: ["ClientConfig", this.context.getClientName()] }),
+            new UseStatement({ path: this.crateName, items: ["ClientConfig", this.context.getClientName()] }),
             new UseStatement({ path: "futures", items: ["StreamExt"] })
         ];
 

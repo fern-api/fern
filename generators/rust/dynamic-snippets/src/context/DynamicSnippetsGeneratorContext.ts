@@ -100,13 +100,13 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return this.getName(name.snakeCase.safeName);
     }
 
-    public getPackageName(): string {
-        // Try to get package name from custom config first
-        if (this.customConfig?.packageName) {
-            return this.customConfig.packageName;
+    public getCrateName(): string {
+        // Generate default package name from organization and workspace name to match SDK generator
+
+        if (this.customConfig?.crateName) {
+            return this.customConfig.crateName;
         }
 
-        // Generate default package name from organization and workspace name to match SDK generator
         const orgName = this.config.organization;
         const workspaceName = this.config.workspaceName;
 
@@ -144,11 +144,6 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public convertToPascalCase(str: string): string {
         return str.charAt(0).toUpperCase() + camelCase(str).slice(1);
-    }
-
-    // Package and crate methods
-    public getCrateName(): string {
-        return this.customConfig?.crateName ?? this.getPackageName();
     }
 
     // Client methods

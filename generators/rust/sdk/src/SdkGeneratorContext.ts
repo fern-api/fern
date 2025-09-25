@@ -88,8 +88,8 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
             this.config,
             ModelCustomConfigSchema.parse({
                 // Convert SDK config to model config - use centralized configuration manager
-                packageName: this.getCrateName(),
-                packageVersion: this.getCrateVersion(),
+                crateName: this.getCrateName(),
+                crateVersion: this.getCrateVersion(),
                 extraDependencies: this.getExtraDependencies(),
                 extraDevDependencies: this.getExtraDevDependencies(),
                 generateBuilders: false,

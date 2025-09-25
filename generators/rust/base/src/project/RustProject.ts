@@ -9,21 +9,21 @@ const SRC_DIRECTORY_NAME = "src";
 
 export interface RustProjectConfig {
     context: AbstractRustGeneratorContext<BaseRustCustomConfigSchema>;
-    packageName: string;
-    packageVersion: string;
+    crateName: string;
+    crateVersion: string;
     clientClassName: string;
 }
 
 export class RustProject extends AbstractProject<AbstractRustGeneratorContext<BaseRustCustomConfigSchema>> {
-    private packageName: string;
-    private packageVersion: string;
+    private crateName: string;
+    private crateVersion: string;
     private clientClassName: string;
     private sourceFiles: RustFile[] = [];
 
-    public constructor({ context, packageName, packageVersion, clientClassName }: RustProjectConfig) {
+    public constructor({ context, crateName, crateVersion, clientClassName }: RustProjectConfig) {
         super(context);
-        this.packageName = packageName;
-        this.packageVersion = packageVersion;
+        this.crateName = crateName;
+        this.crateVersion = crateVersion;
         this.clientClassName = clientClassName;
     }
 
@@ -72,8 +72,8 @@ export class RustProject extends AbstractProject<AbstractRustGeneratorContext<Ba
         content = content.replace(/\{\{CLIENT_NAME\}\}/g, this.clientClassName);
 
         // Replace project-level template variables
-        content = content.replace(/\{\{PACKAGE_NAME\}\}/g, this.packageName);
-        content = content.replace(/\{\{PACKAGE_VERSION\}\}/g, this.packageVersion);
+        content = content.replace(/\{\{PACKAGE_NAME\}\}/g, this.crateName);
+        content = content.replace(/\{\{PACKAGE_VERSION\}\}/g, this.crateVersion);
 
         // Replace dependency template variables
         content = content.replace(/\{\{EXTRA_DEPENDENCIES\}\}/g, this.generateExtraDependencies());

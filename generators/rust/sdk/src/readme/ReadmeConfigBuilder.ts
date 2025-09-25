@@ -49,13 +49,10 @@ export class ReadmeConfigBuilder {
     }
 
     private getLanguageInfo({ context }: { context: SdkGeneratorContext }): FernGeneratorCli.LanguageInfo {
-        const packageName = context.getCrateName();
-        const packageVersion = context.getCrateVersion();
-
         return FernGeneratorCli.LanguageInfo.rust({
             publishInfo: {
-                packageName: packageName,
-                version: packageVersion
+                packageName: context.getCrateName(),
+                version: context.getCrateVersion()
             }
         });
     }
