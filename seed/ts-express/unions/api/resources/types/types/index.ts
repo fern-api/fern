@@ -15,3 +15,5 @@ export * from "./UnionWithSubTypes";
 export * from "./Foo";
 export * from "./FooExtended";
 export * from "./Bar";
+export * from "./UnionWithSameStringTypes";
+export * from "./UnionWithSameNumberTypes";

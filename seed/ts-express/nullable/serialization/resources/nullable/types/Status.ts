@@ -30,7 +30,7 @@ export declare namespace Status {
 
     export interface Archived {
         type: "archived";
-        value: string | null;
+        value?: string | null;
     }
 
     export interface SoftDeleted {
