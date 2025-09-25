@@ -5,8 +5,8 @@
 import * as serializers from "../../../../../index";
 import * as FernIr from "../../../../../../api/index";
 import * as core from "../../../../../../core";
-import { EnvironmentBaseUrlId } from "../../../../environment/types/EnvironmentBaseUrlId";
-import { EnvironmentUrl } from "../../../../environment/types/EnvironmentUrl";
+import { EnvironmentBaseUrlId } from "./EnvironmentBaseUrlId";
+import { EnvironmentUrl } from "./EnvironmentUrl";
 
 export const MultipleEnvironmentUrlValues: core.serialization.Schema<
     serializers.dynamic.MultipleEnvironmentUrlValues.Raw,

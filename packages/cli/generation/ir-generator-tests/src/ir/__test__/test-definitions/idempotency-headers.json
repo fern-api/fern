@@ -1425,7 +1425,8 @@
                                     "type": "primitive",
                                     "value": "INTEGER"
                                 },
-                                "propertyAccess": null
+                                "propertyAccess": null,
+                                "variable": null
                             },
                             {
                                 "name": {
@@ -1454,7 +1455,8 @@
                                     "type": "named",
                                     "value": "type_payment:Currency"
                                 },
-                                "propertyAccess": null
+                                "propertyAccess": null,
+                                "variable": null
                             }
                         ]
                     },
@@ -1589,7 +1591,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ],
                     "body": null

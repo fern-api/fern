@@ -5,6 +5,6 @@
 import * as FernIr from "../../../../../index";
 
 export interface BasicAuth {
-    username: FernIr.Name;
-    password: FernIr.Name;
+    username: FernIr.dynamic.Name;
+    password: FernIr.dynamic.Name;
 }

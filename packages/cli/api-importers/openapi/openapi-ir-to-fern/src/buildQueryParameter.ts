@@ -259,6 +259,7 @@ function getQueryParameterTypeReference({
     }
 
     if (schema.type === "optional" || schema.type === "nullable") {
+        const optOrNullableSchema = schema.type === "optional" ? Schema.optional : Schema.nullable;
         if (schema.value.type === "reference") {
             const resolvedSchema = context.getSchema(schema.value.schema, namespace);
             if (resolvedSchema == null) {
@@ -266,7 +267,7 @@ function getQueryParameterTypeReference({
             } else if (resolvedSchema.type === "array") {
                 return {
                     value: buildTypeReference({
-                        schema: Schema.optional({
+                        schema: optOrNullableSchema({
                             nameOverride: schema.nameOverride,
                             generatedName: schema.generatedName,
                             title: schema.title,
@@ -302,7 +303,7 @@ function getQueryParameterTypeReference({
         if (schema.value.type === "array") {
             return {
                 value: buildTypeReference({
-                    schema: Schema.optional({
+                    schema: optOrNullableSchema({
                         nameOverride: schema.nameOverride,
                         generatedName: schema.generatedName,
                         title: schema.title,
@@ -381,7 +382,7 @@ function getQueryParameterTypeReference({
                 ) {
                     return {
                         value: buildTypeReference({
-                            schema: Schema.optional({
+                            schema: optOrNullableSchema({
                                 nameOverride: schema.nameOverride,
                                 generatedName: schema.generatedName,
                                 title: schema.title,
@@ -407,7 +408,7 @@ function getQueryParameterTypeReference({
                 ) {
                     return {
                         value: buildTypeReference({
-                            schema: Schema.optional({
+                            schema: optOrNullableSchema({
                                 nameOverride: schema.nameOverride,
                                 generatedName: schema.generatedName,
                                 title: schema.title,
@@ -447,7 +448,7 @@ function getQueryParameterTypeReference({
             // If no literal values, just pick the first schema of the undiscriminated union
             for (const [_, oneOfSchema] of Object.entries(schema.value.value.schemas)) {
                 return getQueryParameterTypeReference({
-                    schema: Schema.optional({
+                    schema: optOrNullableSchema({
                         nameOverride: schema.nameOverride,
                         generatedName: schema.generatedName,
                         title: schema.title,

@@ -2227,6 +2227,26 @@
               }
             },
             {
+              "name": "since",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "until",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
               "name": "relationship",
               "value": {
                 "value": "any",
@@ -2271,6 +2291,9 @@
                                 "type": "string"
                               },
                               "type": "primitive"
+                            },
+                            "username": {
+                              "type": "null"
                             }
                           },
                           "type": "object"
@@ -2301,6 +2324,9 @@
                             "privacy": {
                               "value": "public",
                               "type": "enum"
+                            },
+                            "author": {
+                              "type": "null"
                             }
                           },
                           "type": "object"
@@ -2739,6 +2765,26 @@
                 },
                 "type": "primitive"
               }
+            },
+            {
+              "name": "since",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "until",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
             }
           ],
           "headers": [],
@@ -2758,6 +2804,12 @@
                               },
                               "type": "primitive"
                             },
+                            "username": {
+                              "type": "null"
+                            },
+                            "author_id": {
+                              "type": "null"
+                            },
                             "name": {
                               "value": {
                                 "value": "name",
@@ -2776,6 +2828,12 @@
                                 "type": "string"
                               },
                               "type": "primitive"
+                            },
+                            "username": {
+                              "type": "null"
+                            },
+                            "author_id": {
+                              "type": "null"
                             },
                             "name": {
                               "value": {
@@ -2982,7 +3040,18 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "prefix",
+              "value": {
+                "value": {
+                  "value": "prefix",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -5189,7 +5258,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "args",
+              "value": {
+                "value": {
+                  "value": "args",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -5282,7 +5362,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "args",
+              "value": {
+                "value": {
+                  "value": "args",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "codeSamples": [],
           "type": "full"

@@ -1891,7 +1891,35 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "client_id",
+              "value": {
+                "value": {
+                  "value": "client_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "requested_token_type",
+              "value": {
+                "value": "urn:devrev:params:oauth:token-type:aat",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "subject",
+              "value": {
+                "value": {
+                  "value": "subject",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -2990,6 +3018,9 @@
                     "type": "string"
                   },
                   "type": "primitive"
+                },
+                "display_name": {
+                  "type": "null"
                 }
               },
               "type": "discriminated"
@@ -4387,6 +4418,9 @@
                   },
                   "type": "primitive"
                 },
+                "display_name": {
+                  "type": "null"
+                },
                 "id": {
                   "value": {
                     "value": "string",
@@ -4806,7 +4840,35 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cursor",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "mode",
+              "value": {
+                "value": "after",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -5684,6 +5746,9 @@
                     "type": "string"
                   },
                   "type": "primitive"
+                },
+                "description": {
+                  "type": "null"
                 },
                 "name": {
                   "value": {
@@ -7153,7 +7218,35 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cursor",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "mode",
+              "value": {
+                "value": "after",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -7621,12 +7714,21 @@
                   },
                   "type": "primitive"
                 },
+                "description": {
+                  "type": "null"
+                },
                 "id": {
                   "value": {
                     "value": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
                     "type": "string"
                   },
                   "type": "primitive"
+                },
+                "name": {
+                  "type": "null"
+                },
+                "owned_by": {
+                  "type": "null"
                 }
               },
               "type": "discriminated"
@@ -9523,7 +9625,75 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "created_date.after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "created_date.before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cursor",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "mode",
+              "value": {
+                "value": "after",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "modified_date.after",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "modified_date.before",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -11544,7 +11714,35 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cursor",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "mode",
+              "value": {
+                "value": "after",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -12368,6 +12566,9 @@
                     "type": "string"
                   },
                   "type": "primitive"
+                },
+                "visibility": {
+                  "type": "null"
                 }
               },
               "type": "discriminated"
@@ -13406,6 +13607,33 @@
                   "type": "string"
                 },
                 "type": "primitive"
+              }
+            },
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cursor",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "mode",
+              "value": {
+                "value": "after",
+                "type": "enum"
               }
             }
           ],
@@ -16227,6 +16455,12 @@
                   },
                   "type": "primitive"
                 },
+                "artifacts": {
+                  "type": "null"
+                },
+                "body": {
+                  "type": "null"
+                },
                 "owned_by": {
                   "value": [
                     {
@@ -16238,6 +16472,12 @@
                     }
                   ],
                   "type": "array"
+                },
+                "reported_by": {
+                  "type": "null"
+                },
+                "stage": {
+                  "type": "null"
                 },
                 "tags": {
                   "value": [
@@ -16255,6 +16495,9 @@
                     }
                   ],
                   "type": "array"
+                },
+                "target_close_date": {
+                  "type": "null"
                 },
                 "title": {
                   "value": {
@@ -17363,7 +17606,18 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "first",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -18742,7 +18996,35 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "cursor",
+              "value": {
+                "value": {
+                  "value": "cursor",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "mode",
+              "value": {
+                "value": "after",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -19286,12 +19568,36 @@
                   },
                   "type": "primitive"
                 },
+                "artifacts": {
+                  "type": "null"
+                },
+                "body": {
+                  "type": "null"
+                },
                 "id": {
                   "value": {
                     "value": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>",
                     "type": "string"
                   },
                   "type": "primitive"
+                },
+                "owned_by": {
+                  "type": "null"
+                },
+                "reported_by": {
+                  "type": "null"
+                },
+                "stage": {
+                  "type": "null"
+                },
+                "tags": {
+                  "type": "null"
+                },
+                "target_close_date": {
+                  "type": "null"
+                },
+                "title": {
+                  "type": "null"
                 }
               },
               "type": "discriminated"

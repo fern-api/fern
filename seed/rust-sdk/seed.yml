@@ -47,4 +47,3 @@ fixtures:
     - customConfig:
         clientName: ImdbClient
       outputFolder: imdb 
-

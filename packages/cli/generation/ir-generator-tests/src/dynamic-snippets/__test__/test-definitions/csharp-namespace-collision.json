@@ -57,7 +57,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": "READ_ONLY"
+                    "propertyAccess": "READ_ONLY",
+                    "variable": null
                 },
                 {
                     "name": {
@@ -86,7 +87,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -115,7 +117,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -144,7 +147,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": "WRITE_ONLY"
+                    "propertyAccess": "WRITE_ONLY",
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -205,7 +209,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": "READ_ONLY"
+                    "propertyAccess": "READ_ONLY",
+                    "variable": null
                 },
                 {
                     "name": {
@@ -234,7 +239,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -263,7 +269,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -292,7 +299,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": "WRITE_ONLY"
+                    "propertyAccess": "WRITE_ONLY",
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -393,7 +401,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -422,7 +431,8 @@
                         "type": "named",
                         "value": "type_System:User"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -523,7 +533,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -555,7 +566,8 @@
                             "value": "STRING"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -584,7 +596,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -613,7 +626,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -642,7 +656,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -674,7 +689,8 @@
                             "value": "USA"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
