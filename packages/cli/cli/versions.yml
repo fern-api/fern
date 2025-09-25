@@ -96,7 +96,7 @@
   version: 0.78.5
 
 - changelogEntry:
-    - summary: Collapse any combination of optional and nullable to optional<nullable<T>>.
+    - summary: Collapse any combination of optional and nullable to `optional<nullable<T>>`.
       type: fix
   irVersion: 59
   createdAt: "2025-09-22"
