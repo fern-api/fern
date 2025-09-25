@@ -12,3 +12,4 @@ generatorType: Model
 defaultOutputMode: local_files
 allowedFailures:
   - version
+

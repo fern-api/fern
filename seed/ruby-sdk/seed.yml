@@ -87,3 +87,4 @@ scripts:
   - docker: ruby:2.7
     commands:
       - bundle install && bundle exec rake test
+

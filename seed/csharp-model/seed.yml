@@ -60,3 +60,4 @@ allowedFailures:
   - pagination
   - trace
   - undiscriminated-unions.
+
