@@ -18,7 +18,7 @@ export namespace UnionSchemaNamingUtils {
             return subSchema.title;
         }
 
-        // Try description third
+        // Try description second
         if (subSchema.description) {
             const nameFromDescription = cleanDescriptionForDisplayName(subSchema.description);
             if (nameFromDescription) {
