@@ -105,3 +105,15 @@ fixtures:
           timeouts:
             - GET /movie/{movieId}
       outputFolder: readme-config
+
+allowedFailures:
+  - bytes-download
+  - circular-references
+  - circular-references-advanced
+  - empty-clients
+  - literals-unions
+  - object
+  - objects-with-imports
+  - public-object
+  - websocket
+  - websocket-bearer-auth

@@ -6,5 +6,5 @@ async fn main() {
         base_url: "https://api.fern.com".to_string(),
     };
     let client = VariablesClient::new(config).expect("Failed to build client");
-    client.service_post("endpointParam").await;
+    client.service_post().await;
 }
