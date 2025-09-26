@@ -70,7 +70,7 @@ function addTestCommand(cli: Argv) {
                 .option("fixture", {
                     type: "array",
                     string: true,
-                    default: FIXTURES,
+                    // default: FIXTURES,
                     demandOption: false,
                     description: "Runs on all fixtures if not provided"
                 })
@@ -129,11 +129,15 @@ function addTestCommand(cli: Argv) {
                 let testRunner: TestRunner;
                 let scriptRunner: ScriptRunner;
 
+                // If no fixtures passed in, use all available fixtures (without output folders)
+                if (argv.fixture == null) {
+                    argv.fixture = await getAvailableFixtures(generator, false);
+                }
+
                 // Get both formats of fixtures and check if the fixtures passed in are of one of the two formats allowed
                 const availableFixtures = await getAvailableFixtures(generator, false);
                 const availableFixturesWithOutputFolders = await getAvailableFixtures(generator, true);
 
-                // Make sure all passed in fixtures are valid if multiple
                 for (const fixture of argv.fixture) {
                     if (!availableFixtures.includes(fixture) && !availableFixturesWithOutputFolders.includes(fixture)) {
                         throw new Error(`Fixture ${fixture} not found. Please make sure that it is a valid fixture for the generator ${generator.workspaceName}.`);
