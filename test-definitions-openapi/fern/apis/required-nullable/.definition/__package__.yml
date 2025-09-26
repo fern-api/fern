@@ -3,7 +3,7 @@ types:
     properties:
       bar: optional<string>
       nullable_bar: optional<nullable<string>>
-      nullable_required_bar: optional<nullable<string>>
+      nullable_required_bar: nullable<string>
       required_bar: string
     source:
       openapi: openapi.json
@@ -12,24 +12,38 @@ service:
   base-path: ''
   endpoints:
     getFoo:
-      auth: false
       display-name: Get foo
       examples:
-        - response:
+        - query-parameters:
+            required_baz: required_baz
+            required_nullable_baz: required_nullable_baz
+          response:
             body:
-              key: value
+              bar: bar
+              nullable_bar: nullable_bar
+              nullable_required_bar: nullable_required_bar
+              required_bar: required_bar
       method: GET
       path: /foo
       request:
         name: GetFooRequest
         query-parameters:
-          baz:
+          optional_baz:
+            docs: An optional baz
+            type: optional<string>
+          optional_nullable_baz:
             docs: An optional baz
             type: optional<nullable<string>>
+          required_baz:
+            docs: A required baz
+            type: string
+          required_nullable_baz:
+            docs: A required baz
+            type: nullable<string>
       response:
         docs: successful operation
         status-code: 200
-        type: unknown
+        type: Foo
       source:
         openapi: openapi.json
   source:
