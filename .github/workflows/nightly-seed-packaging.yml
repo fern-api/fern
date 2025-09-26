@@ -1,0 +1,147 @@
+name: Nightly Seed Packaging
+
+on:
+  # Runs every night at 5:00 AM UTC (1:00 AM ET)
+  schedule:
+    - cron: '0 5 * * *'
+  # CHRISM - temporary for testing
+  push:
+    branches:
+      - nightly-seed-packaging
+  # Runs when triggered manually to do so
+  workflow_dispatch:
+
+# Cancel previous workflows when another is triggered
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:  
+  package-seed-tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        sdk-name:
+            [ pydantic ]
+# - CHRISM temporary
+        #   [
+        #     ruby-model,
+        #     ruby-sdk,
+        #     ruby-sdk-v2,
+        #     pydantic,
+        #     python-sdk,
+        #     fastapi,
+        #     openapi,
+        #     postman,
+        #     java-sdk,
+        #     java-model,
+        #     java-spring,
+        #     ts-sdk,
+        #     ts-express,
+        #     go-fiber,
+        #     go-model,
+        #     go-sdk,
+        #     csharp-model,
+        #     csharp-sdk,
+        #     php-model,
+        #     php-sdk,
+        #     swift-sdk,
+        #     rust-model,
+        #     rust-sdk
+        #   ]
+    # outputs:
+    #   ruby-model: ${{ steps.set-test-matrix.outputs.ruby-model-test-matrix }}
+    #   ruby-sdk: ${{ steps.set-test-matrix.outputs.ruby-sdk-test-matrix }}
+    #   ruby-sdk-v2: ${{ steps.set-test-matrix.outputs.ruby-sdk-v2-test-matrix }}
+    #   pydantic: ${{ steps.set-test-matrix.outputs.pydantic-test-matrix }}
+    #   python-sdk: ${{ steps.set-test-matrix.outputs.python-sdk-test-matrix }}
+    #   fastapi: ${{ steps.set-test-matrix.outputs.fastapi-test-matrix }}
+    #   openapi: ${{ steps.set-test-matrix.outputs.openapi-test-matrix }}
+    #   postman: ${{ steps.set-test-matrix.outputs.postman-test-matrix }}
+    #   java-sdk: ${{ steps.set-test-matrix.outputs.java-sdk-test-matrix }}
+    #   java-model: ${{ steps.set-test-matrix.outputs.java-model-test-matrix }}
+    #   java-spring: ${{ steps.set-test-matrix.outputs.java-spring-test-matrix }}
+    #   ts-sdk: ${{ steps.set-test-matrix.outputs.ts-sdk-test-matrix }}
+    #   ts-express: ${{ steps.set-test-matrix.outputs.ts-express-test-matrix }}
+    #   go-fiber: ${{ steps.set-test-matrix.outputs.go-fiber-test-matrix }}
+    #   go-model: ${{ steps.set-test-matrix.outputs.go-model-test-matrix }}
+    #   go-sdk: ${{ steps.set-test-matrix.outputs.go-sdk-test-matrix }}
+    #   csharp-model: ${{ steps.set-test-matrix.outputs.csharp-model-test-matrix }}
+    #   csharp-sdk: ${{ steps.set-test-matrix.outputs.csharp-sdk-test-matrix }}
+    #   php-model: ${{ steps.set-test-matrix.outputs.php-model-test-matrix }}
+    #   php-sdk: ${{ steps.set-test-matrix.outputs.php-sdk-test-matrix }}
+    #   swift-sdk: ${{ steps.set-test-matrix.outputs.swift-sdk-test-matrix }}
+    #   rust-model: ${{ steps.set-test-matrix.outputs.rust-model-test-matrix }}
+    #   rust-sdk: ${{ steps.set-test-matrix.outputs.rust-sdk-test-matrix }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+            github_token: ${{ github.token }}
+
+      - uses: actions/setup-go@v5
+        with:
+            go-version: "stable"
+
+      - name: Install protoc-gen-openapi
+        shell: bash
+        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+
+      - name: Build seed
+        shell: bash
+        run: |
+            pnpm seed:build
+
+      - name: Save seed test log to file
+        id: save-seed-test-log-to-file
+        run: |
+          pnpm seed:local test --generator ${{ matrix.sdk-name }} --parallel 16 --allow-unexpected-failures > ${{ matrix.sdk-name }}-seed-test-log.txt
+
+      - name: Upload seed test log as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.sdk-name }}-seed-test-log.txt
+          path: ${{ matrix.sdk-name }}-seed-test-log.txt
+          if-no-files-found: error
+          retention-days: 1
+
+      - name: Echo info for this run    
+        run: |
+          echo "Artifact name: ${{ matrix.sdk-name }}-seed-test-log.txt"
+          echo "GitHub event name: ${{ github.event_name }}"
+          echo "GitHub repository name: ${{ github.repository }}"
+          echo "GitHub workflow name: ${{ github.workflow }}"
+          echo "GitHub workflow run ID: ${{ github.run_id }}"
+
+    #   - name: Output seed test and time data
+    #     id: output-seed-test-and-time-data
+    #     uses: ./.github/actions/parse-test-and-times
+    #     with:
+    #       sdk-name: ${{ matrix.sdk-name }}
+
+    #   - name: Parse seed test and time data
+    #     id: parse-seed-test-and-time-data
+    #     uses: ./.github/actions/parse-seed-test-and-time-data
+    #     with:
+    #       sdk-name: ${{ matrix.sdk-name }}
+
+    #   - name: Create packages
+    #     id: set-test-matrix
+    #     # CHRISM - need to update on final push
+    #     uses: fern-api/package-seed-test@mallinson/working-branch
+    #     with:
+    #       seed-generator-alias: ${{ matrix.sdk-name }}
+    #       max-runner-count: 10 #CHRISM - move to setting for everyone to use
+
+    #   - name: Create JSON File with Packages
+    #     id: create-json-file-with-packages
+    #     run: |
+    #       echo "Ready to start creating JSON file"
+
+    #   - name: PR JSON File
+    #     id: pr-json-file
