@@ -19,6 +19,9 @@ concurrency:
 jobs:  
   package-seed-tests:
     runs-on: ubuntu-latest
+    
+    # CHRISM - working, add back later
+    if: false
     strategy:
       matrix:
         sdk-name:
@@ -76,7 +79,6 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
-
       - name: Install
         uses: ./.github/actions/install
 
@@ -118,7 +120,33 @@ jobs:
           echo "GitHub workflow name: ${{ github.workflow }}"
           echo "GitHub workflow run ID: ${{ github.run_id }}"
 
-    #   - name: Output seed test and time data
+  commit-package-file-to-repo:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        sdk-name:
+            [ pydantic ]
+    # needs: [package-seed-tests]
+    steps:
+        - name: Checkout repo
+          uses: actions/checkout@v4
+          with:
+            token: ${{ secrets.FERN_GITHUB_PAT }}
+
+        - name: Download package file artifact
+          uses: actions/download-artifact@v5
+          with:
+              path: ./artifacts
+              name: ${{ matrix.sdk-name }}-seed-test-log.txt
+              run-id: 18047218143 #CHRISM - temporary for testing
+              merge-multiple: true
+
+        - name: Echo contents of file
+          run: |
+            echo "Contents of file: $(cat artifacts/${{ matrix.sdk-name }}-seed-test-log.txt)"
+
+       
+    #   - name: Get output log data seed test and time data
     #     id: output-seed-test-and-time-data
     #     uses: ./.github/actions/parse-test-and-times
     #     with:
