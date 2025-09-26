@@ -190,6 +190,13 @@ fixtures:
     - customConfig:
         client-class-name: System
       outputFolder: system-client
+  websocket: 
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        experimental-readonly-constants: true
+        experimental-enable-websockets: true
+      outputFolder: with-websockets
 allowedFailures:
   - imdb:exported-client-class-name
   - oauth-client-credentials-custom
