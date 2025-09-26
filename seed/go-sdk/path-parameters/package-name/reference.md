@@ -128,6 +128,11 @@ client.Organizations.GetOrganizationUser(
 <dd>
 
 ```go
+request := &pathparametersgo.SearchOrganizationsRequest{
+        Limit: pathparametersgo.Int(
+            1,
+        ),
+    }
 client.Organizations.SearchOrganizations(
         context.TODO(),
         "tenant_id",
@@ -244,6 +249,13 @@ client.User.GetUser(
 <dd>
 
 ```go
+request := &pathparametersgo.User{
+        Name: "name",
+        Tags: []string{
+            "tags",
+            "tags",
+        },
+    }
 client.User.CreateUser(
         context.TODO(),
         "tenant_id",
@@ -297,6 +309,15 @@ client.User.CreateUser(
 <dd>
 
 ```go
+request := &pathparametersgo.UpdateUserRequest{
+        Body: &pathparametersgo.User{
+            Name: "name",
+            Tags: []string{
+                "tags",
+                "tags",
+            },
+        },
+    }
 client.User.UpdateUser(
         context.TODO(),
         "tenant_id",
@@ -359,6 +380,11 @@ client.User.UpdateUser(
 <dd>
 
 ```go
+request := &pathparametersgo.SearchUsersRequest{
+        Limit: pathparametersgo.Int(
+            1,
+        ),
+    }
 client.User.SearchUsers(
         context.TODO(),
         "tenant_id",
