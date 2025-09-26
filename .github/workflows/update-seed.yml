@@ -3,7 +3,7 @@ name: Update Seed
 on:
   push:
     branches:
-      - main
+      - mallinson/y-seed-no-update
     paths:
       - ".github/workflows/update-seed.yml"
       - "packages/seed/**"
@@ -1412,12 +1412,13 @@ jobs:
           pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
           merge-method: squash
 
-      - name: Approve PR
-        if: steps.cpr.outputs.pull-request-operation == 'created'
-        uses: ./.github/actions/auto-approve
-        with:
-          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+      # For test - don't approve PR so it won't merge
+      # - name: Approve PR
+      #   if: steps.cpr.outputs.pull-request-operation == 'created'
+      #   uses: ./.github/actions/auto-approve
+      #   with:
+      #     approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+      #     pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
 
   # Use always() to ensure this runs even if stages from needs are skipped.
   # Add check back to make sure it doesn't run for failures or cancellations.
