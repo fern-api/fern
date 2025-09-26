@@ -1,6 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
-
 - version: 1.9.1
   changelogEntry:
     - summary: Fix fastapi `v1_on_v2` export of non-existent `IS_PYDANTIC_V2` variable.

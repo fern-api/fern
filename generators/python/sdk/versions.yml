@@ -1,6 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
-
 - version: 4.30.1
   changelogEntry:
     - summary: Fix sdk `v1_on_v2` export of non-existent `IS_PYDANTIC_V2` variable.
