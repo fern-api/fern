@@ -44,7 +44,7 @@ fixtures:
           path: github.com/idempotency-headers/fern
         includeLegacyClientOptions: true
 scripts:
-  - docker: golang:1.18-alpine
+  - docker: golang:1.23.8-alpine3.20
     commands:
       - CGO_ENABLED=0 go test ./...
 allowedFailures:
