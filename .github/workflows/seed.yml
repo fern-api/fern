@@ -3,7 +3,7 @@ name: Seed Snapshot Tests
 on:
   push:
     branches:
-      - mallinson/nightly-seed-packaging-testing-branch
+      - main
   # Note: pull request trigger will be removed once repository_dispatch trigger is verified
   # pull_request:
   #   types: [opened, synchronize, reopened, ready_for_review]
