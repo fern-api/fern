@@ -319,10 +319,10 @@ export async function loadAPIWorkspace({
             workspace: fernWorkspace
         };
     }
-    
+
     // check if directory is empty
     if (await isPathEmpty(join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY)))) {
-        const apiFolderName = absolutePathToWorkspace.split("/").pop()
+        const apiFolderName = absolutePathToWorkspace.split("/").pop();
         context.logger.warn(`Detected empty API definiton: ${apiFolderName}. Remove to resolve error.`);
     }
 
