@@ -114,7 +114,6 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 AbsoluteFilePath.of(config.output.path),
                 RelativeFilePath.of(options?.outputSubDirectory ?? "")
             );
-            await Promise.all([typescriptProject.generateLockfile(logger), typescriptProject.format(logger)]);
             await config.output.mode._visit<void | Promise<void>>({
                 publish: async () => {
                     await publishPackage({
@@ -125,6 +124,11 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         typescriptProject,
                         shouldTolerateRepublish: this.shouldTolerateRepublish(customConfig)
                     });
+                    await Promise.all([
+                        typescriptProject.installDependencies(logger),
+                        typescriptProject.format(logger)
+                    ]);
+                    await typescriptProject.build(logger);
                     await typescriptProject.npmPackTo({
                         logger,
                         destinationPath,
@@ -133,7 +137,6 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     });
                 },
                 github: async (githubOutputMode) => {
-                    await typescriptProject.deleteGitIgnoredFiles(logger);
                     await typescriptProject.writeArbitraryFiles(async (pathToProject) => {
                         await writeGitHubWorkflows({
                             githubOutputMode,
@@ -144,6 +147,11 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                             packageManager: this.getPackageManager(customConfig)
                         });
                     });
+                    await Promise.all([
+                        typescriptProject.generateLockfile(logger),
+                        typescriptProject.format(logger),
+                        typescriptProject.deleteGitIgnoredFiles(logger)
+                    ]);
                     await typescriptProject.copyProjectTo({
                         logger,
                         destinationPath,
@@ -158,10 +166,14 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                             unzipOutput: true,
                             logger
                         });
-                        await this.pushToGihub(ir, tmpDir.path, logger);
+                        await this.pushToGitHub(ir, tmpDir.path, logger);
                     }
                 },
                 downloadFiles: async () => {
+                    await Promise.all([
+                        typescriptProject.installDependencies(logger),
+                        typescriptProject.format(logger)
+                    ]);
                     if (this.shouldGenerateFullProject(ir)) {
                         await typescriptProject.copyProjectTo({
                             destinationPath,
@@ -180,6 +192,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         });
                         return;
                     }
+                    await typescriptProject.build(logger);
                     await typescriptProject.copyDistTo({
                         destinationPath,
                         zipFilename: OUTPUT_ZIP_FILENAME,
@@ -248,7 +261,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
         }
     }
 
-    private async pushToGihub(
+    private async pushToGitHub(
         ir: IntermediateRepresentation,
         sourceDirectory: string,
         logger: Logger

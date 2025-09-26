@@ -72,4 +72,4 @@ jobs:
             npm publish --access public
           fi
         env:
-          NPM_TOKEN: ${{ secrets. }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

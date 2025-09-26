@@ -1582,6 +1582,16 @@
             }
           ]
         },
+        "coerce-optional-schemas-to-nullable": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "only-include-referenced-schemas": {
           "oneOf": [
             {
@@ -1841,6 +1851,16 @@
           ]
         },
         "wrap-references-to-nullable-in-optional": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "coerce-optional-schemas-to-nullable": {
           "oneOf": [
             {
               "type": "boolean"
