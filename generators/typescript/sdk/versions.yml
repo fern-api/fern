@@ -3,6 +3,8 @@
   changelogEntry:
     - summary: Format GitHub Actions workflow files using prettier.
       type: fix
+    - summary: Add .prettierignore to ensure dist and temporary files are not formatted.
+      type: fix
     - summary: Fix non-GitHub output modes.
       type: fix
   createdAt: "2025-09-26"
