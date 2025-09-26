@@ -23,7 +23,7 @@ export class GeneratorAgentClient {
             config: readmeConfig
         });
         const args = ["generate", "readme", "--config", readmeConfigFilepath];
-        const cli = await this.getOrInstall();
+        const cli = await this.getOrInstall({ doNotPipeOutput: true });
         const content = await cli(args);
         return content.stdout;
     }
@@ -40,7 +40,7 @@ export class GeneratorAgentClient {
         });
         const cmd = withPullRequest ? "pr" : "push";
         const args = ["github", cmd, "--config", githubConfigFilepath];
-        const cli = await this.getOrInstall();
+        const cli = await this.getOrInstall({ doNotPipeOutput: true });
 
         const content = await cli(args);
         return content.stdout;
