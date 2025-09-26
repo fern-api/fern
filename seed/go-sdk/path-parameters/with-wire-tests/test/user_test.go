@@ -1,21 +1,22 @@
 package wiremock
 
 import (
-	context "context"
-	http "net/http"
-	testing "testing"
-
-	fern "github.com/path-parameters/fern"
-	client "github.com/path-parameters/fern/client"
-	option "github.com/path-parameters/fern/option"
-	require "github.com/stretchr/testify/require"
-	gowiremock "github.com/wiremock/go-wiremock"
+    testing "testing"
+    gowiremock "github.com/wiremock/go-wiremock"
+    http "net/http"
+    require "github.com/stretchr/testify/require"
+    client "github.com/path-parameters/fern/client"
+    option "github.com/path-parameters/fern/option"
+    context "context"
+    fern "github.com/path-parameters/fern"
 )
+
+
 
 func TestUserGetUserWithWireMock(
     t *testing.T,
 ) {
-    // wiremock client and server initialized in shared main_test.go
+    // wiremock client and server initialized in shared main_test.go 
     defer WireMockClient.Reset()
     stub := gowiremock.Get(gowiremock.URLPathTemplate("/{tenant_id}/user/{user_id}")).WithPathParam(
         "tenant_id",

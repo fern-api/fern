@@ -1,15 +1,14 @@
 package wiremock
 
 import (
-	context "context"
-	http "net/http"
-	testing "testing"
-
-	fern "github.com/path-parameters/fern"
-	client "github.com/path-parameters/fern/client"
-	option "github.com/path-parameters/fern/option"
-	require "github.com/stretchr/testify/require"
-	gowiremock "github.com/wiremock/go-wiremock"
+    testing "testing"
+    gowiremock "github.com/wiremock/go-wiremock"
+    http "net/http"
+    require "github.com/stretchr/testify/require"
+    client "github.com/path-parameters/fern/client"
+    option "github.com/path-parameters/fern/option"
+    context "context"
+    fern "github.com/path-parameters/fern"
 )
 
 
