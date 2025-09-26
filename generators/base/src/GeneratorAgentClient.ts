@@ -55,7 +55,7 @@ export class GeneratorAgentClient {
             config: referenceConfig
         });
         const args = ["generate-reference", "--config", referenceConfigFilepath];
-        const cli = await this.getOrInstall();
+        const cli = await this.getOrInstall({ doNotPipeOutput: true });
         const content = await cli(args);
         return content.stdout;
     }
@@ -66,24 +66,26 @@ export class GeneratorAgentClient {
         return AbsoluteFilePath.of(file.path);
     }
 
-    private async getOrInstall(): Promise<LoggingExecutable> {
+    private async getOrInstall(options: createLoggingExecutable.Options = {}): Promise<LoggingExecutable> {
         if (this.cli) {
             return this.cli;
         }
         if (this.skipInstall) {
             this.cli = createLoggingExecutable("generator-cli", {
                 cwd: process.cwd(),
-                logger: this.logger
+                logger: this.logger,
+                ...options
             });
             return this.cli;
         }
-        return this.install();
+        return this.install(options);
     }
 
-    private async install(): Promise<LoggingExecutable> {
+    private async install(options: createLoggingExecutable.Options = {}): Promise<LoggingExecutable> {
         const npm = createLoggingExecutable("npm", {
             cwd: process.cwd(),
-            logger: this.logger
+            logger: this.logger,
+            ...options
         });
         this.logger.debug(`Installing ${GENERATOR_AGENT_NPM_PACKAGE} ...`);
         try {
@@ -97,7 +99,8 @@ export class GeneratorAgentClient {
 
         const cli = createLoggingExecutable("generator-cli", {
             cwd: process.cwd(),
-            logger: this.logger
+            logger: this.logger,
+            ...options
         });
         const version = await cli(["--version"]);
         this.logger.debug(`Successfully installed ${GENERATOR_AGENT_NPM_PACKAGE} version ${version.stdout}`);
