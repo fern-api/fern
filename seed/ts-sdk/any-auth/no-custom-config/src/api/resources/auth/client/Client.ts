@@ -123,7 +123,7 @@ export class Auth {
         return undefined;
     }
 
-    protected async _getCustomAuthorizationHeaders() {
+    protected async _getCustomAuthorizationHeaders(): Promise<Record<string, string | undefined>> {
         const apiKeyValue = (await core.Supplier.get(this._options.apiKey)) ?? process?.env["MY_API_KEY"];
         return { "X-API-Key": apiKeyValue };
     }

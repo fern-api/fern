@@ -1,0 +1,161 @@
+# Generated with protoc-gen-openapi
+# https://github.com/fern-api/protoc-gen-openapi/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+  title: OneOfService API
+  description: Service definition
+  version: 0.0.1
+paths:
+  /v1/payments:
+    post:
+      tags:
+        - OneOfService
+      operationId: OneOfService_CreatePayment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OneOfMessage"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OneOfMessage"
+        default:
+          description: Default error response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Status"
+components:
+  schemas:
+    EmailObject:
+      type: object
+      properties:
+        email:
+          type: string
+          x-fern-encoding:
+            proto:
+              type: google.protobuf.StringValue
+      source: tests/oneof/message.proto
+    EmptyOneOf:
+      oneOf:
+        - required:
+            - anonymous
+          type: object
+          properties:
+            anonymous:
+              type: object
+        - type: "null"
+      source: tests/oneof/message.proto
+    GoogleProtobufAny:
+      type: object
+      properties:
+        "@type":
+          type: string
+          description: The type of the serialized message.
+      additionalProperties: true
+      description: Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.
+      x-fern-encoding:
+        proto:
+          type: google.protobuf.Any
+    ObjectOneOf:
+      oneOf:
+        - required:
+            - email
+          type: object
+          properties:
+            email:
+              $ref: "#/components/schemas/EmailObject"
+          additionalProperties: false
+        - required:
+            - phone_number
+          type: object
+          properties:
+            phone_number:
+              $ref: "#/components/schemas/PhoneNumberObject"
+          additionalProperties: false
+        - type: "null"
+      x-fern-type-name: ObjectOneOf
+      source: tests/oneof/message.proto
+    OneOfMessage:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Identifier for the message
+          x-fern-encoding:
+            proto:
+              type: google.protobuf.StringValue
+        authentication_config:
+          $ref: "#/components/schemas/EmptyOneOf"
+        contact_method:
+          $ref: "#/components/schemas/ObjectOneOf"
+        payment_method:
+          oneOf:
+            - required:
+                - credit_card
+              type: object
+              properties:
+                credit_card:
+                  type: string
+                  x-fern-encoding:
+                    proto:
+                      type: google.protobuf.StringValue
+              additionalProperties: false
+            - required:
+                - bank_transfer
+              type: object
+              properties:
+                bank_transfer:
+                  type: string
+                  x-fern-encoding:
+                    proto:
+                      type: google.protobuf.StringValue
+              additionalProperties: false
+            - required:
+                - digital_wallet
+              type: object
+              properties:
+                digital_wallet:
+                  type: string
+                  x-fern-encoding:
+                    proto:
+                      type: google.protobuf.StringValue
+              additionalProperties: false
+            - type: "null"
+      description: Message demonstrating oneof field usage
+      x-fern-type-name: OneOfMessage
+      source: tests/oneof/message.proto
+    PhoneNumberObject:
+      type: object
+      properties:
+        phone_number:
+          type: string
+          x-fern-encoding:
+            proto:
+              type: google.protobuf.StringValue
+      x-fern-type-name: PhoneNumberObject
+      source: tests/oneof/message.proto
+    Status:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].
+          format: int32
+        message:
+          type: string
+          description: A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.
+        details:
+          type: array
+          items:
+            $ref: "#/components/schemas/GoogleProtobufAny"
+          description: A list of messages that carry the error details.  There is a common set of message types for APIs to use.
+      description: "The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors)."
+tags:
+  - name: OneOfService

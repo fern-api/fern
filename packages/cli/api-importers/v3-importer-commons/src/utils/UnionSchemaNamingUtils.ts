@@ -18,12 +18,7 @@ export namespace UnionSchemaNamingUtils {
             return subSchema.title;
         }
 
-        // Try typeName
-        if (subSchema.typeName) {
-            return convertToPascalCase(subSchema.typeName);
-        }
-
-        // Try description third
+        // Try description second
         if (subSchema.description) {
             const nameFromDescription = cleanDescriptionForDisplayName(subSchema.description);
             if (nameFromDescription) {

@@ -89,6 +89,33 @@
         ]
       }
     },
+    "type_:TypeWithSingleCharPropertyEqualToTypeStartingLetter": {
+      "name": "TypeWithSingleCharPropertyEqualToTypeStartingLetter",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "t",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "key": "ty",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
     "type_commons/types:Tag": {
       "name": "Tag",
       "shape": {
@@ -2366,7 +2393,8 @@
       "type_:Type",
       "type_:Identifier",
       "type_:BasicType",
-      "type_:ComplexType"
+      "type_:ComplexType",
+      "type_:TypeWithSingleCharPropertyEqualToTypeStartingLetter"
     ],
     "subpackages": [
       "subpackage_commons",

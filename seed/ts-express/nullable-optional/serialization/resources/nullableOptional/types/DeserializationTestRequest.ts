@@ -27,16 +27,16 @@ export const DeserializationTestRequest: core.serialization.ObjectSchema<
 export declare namespace DeserializationTestRequest {
     export interface Raw {
         requiredString: string;
-        nullableString: string | null;
+        nullableString?: string | null;
         optionalString?: string | null;
-        optionalNullableString?: (string | null) | null;
-        nullableEnum: serializers.UserRole.Raw | null;
+        optionalNullableString?: (string | null | undefined) | null;
+        nullableEnum?: serializers.UserRole.Raw | null;
         optionalEnum?: serializers.UserStatus.Raw | null;
-        nullableUnion: serializers.NotificationMethod.Raw | null;
+        nullableUnion?: serializers.NotificationMethod.Raw | null;
         optionalUnion?: serializers.SearchResult.Raw | null;
-        nullableList: string[] | null;
-        nullableMap: Record<string, number> | null;
-        nullableObject: serializers.Address.Raw | null;
+        nullableList?: string[] | null;
+        nullableMap?: Record<string, number> | null;
+        nullableObject?: serializers.Address.Raw | null;
         optionalObject?: serializers.Organization.Raw | null;
     }
 }

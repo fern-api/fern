@@ -1,4 +1,28 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.13.1
+  changelogEntry:
+    - summary: |
+        Stop generating go.mod file in go-v2 sdk generation.
+      type: fix
+  createdAt: "2025-09-25"
+  irVersion: 60
+
+- version: 1.13.0
+  changelogEntry:
+    - summary: |
+        Add support for PR mode for self-hosted/local sdk generation
+      type: feat
+  createdAt: "2025-09-25"
+  irVersion: 60
+
+- version: 1.12.6
+  changelogEntry:
+    - summary: |
+        Fix name collision between receiver and parameter.
+      type: fix
+  createdAt: "2025-09-25"
+  irVersion: 60
+
 - version: 1.12.5
   changelogEntry:
     - summary: |

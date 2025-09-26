@@ -15,5 +15,5 @@ export const WeirdNumber: core.serialization.Schema<serializers.WeirdNumber.Raw,
     ]);
 
 export declare namespace WeirdNumber {
-    export type Raw = number | (number | null) | ((string | null) | null | undefined) | number;
+    export type Raw = number | (number | null | undefined) | ((string | null | undefined) | null | undefined) | number;
 }

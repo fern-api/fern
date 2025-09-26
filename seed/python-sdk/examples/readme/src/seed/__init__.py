@@ -43,6 +43,7 @@ if typing.TYPE_CHECKING:
         Test_Or,
         Tree,
         Type,
+        TypeWithSingleCharPropertyEqualToTypeStartingLetter,
     )
     from . import commons, file, health, service, types
     from .client import AsyncSeedExamples, SeedExamples
@@ -88,6 +89,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Test_Or": ".types",
     "Tree": ".types",
     "Type": ".types",
+    "TypeWithSingleCharPropertyEqualToTypeStartingLetter": ".types",
     "__version__": ".version",
     "commons": ".commons",
     "file": ".file",
@@ -158,6 +160,7 @@ __all__ = [
     "Test_Or",
     "Tree",
     "Type",
+    "TypeWithSingleCharPropertyEqualToTypeStartingLetter",
     "__version__",
     "commons",
     "file",

@@ -248,14 +248,12 @@
       ],
       "pathParameters": [
         {
-          "name": "id",
+          "name": "organization_id",
           "schema": {
-            "description": "Bookmark ID",
             "schema": {
               "type": "string"
             },
-            "generatedName": "SearchRequestId",
-            "groupName": [],
+            "generatedName": "",
             "type": "primitive"
           },
           "source": {
@@ -264,12 +262,14 @@
           }
         },
         {
-          "name": "organization_id",
+          "name": "id",
           "schema": {
+            "description": "Bookmark ID",
             "schema": {
               "type": "string"
             },
-            "generatedName": "",
+            "generatedName": "SearchRequestId",
+            "groupName": [],
             "type": "primitive"
           },
           "source": {
@@ -397,20 +397,20 @@
         {
           "pathParameters": [
             {
-              "name": "id",
+              "name": "organization_id",
               "value": {
                 "value": {
-                  "value": "id",
+                  "value": "organization_id",
                   "type": "string"
                 },
                 "type": "primitive"
               }
             },
             {
-              "name": "organization_id",
+              "name": "id",
               "value": {
                 "value": {
-                  "value": "organization_id",
+                  "value": "id",
                   "type": "string"
                 },
                 "type": "primitive"

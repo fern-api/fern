@@ -274,6 +274,7 @@ export class GeneratedWebsocketSocketClassImpl implements GeneratedWebsocketSock
             kind: StructureKind.Method,
             name: "on",
             scope: Scope.Public,
+            returnType: "void",
             typeParameters: [
                 {
                     name: "T",

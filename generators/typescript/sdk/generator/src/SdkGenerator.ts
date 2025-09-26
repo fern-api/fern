@@ -1420,7 +1420,8 @@ export class SdkGenerator {
                 if (generatedVersion != null) {
                     generatedVersion.writeToFile(context);
                 }
-            }
+            },
+            addExportTypeModifier: true
         });
     }
 

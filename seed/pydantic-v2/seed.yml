@@ -1,4 +1,4 @@
-irVersion: v57
+irVersion: v60
 displayName: Pydantic Model
 image: fernapi/fern-pydantic-model-v2
 changelogLocation: ../../generators/python/pydantic/versions.yml

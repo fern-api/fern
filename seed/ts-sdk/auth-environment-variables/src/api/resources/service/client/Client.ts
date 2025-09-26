@@ -187,7 +187,7 @@ export class Service {
         }
     }
 
-    protected async _getCustomAuthorizationHeaders() {
+    protected async _getCustomAuthorizationHeaders(): Promise<Record<string, string | undefined>> {
         const apiKeyValue = (await core.Supplier.get(this._options.apiKey)) ?? process?.env["FERN_API_KEY"];
         return { "X-FERN-API-KEY": apiKeyValue };
     }

@@ -174,7 +174,9 @@ export class User {
         return undefined;
     }
 
-    protected async _getCustomAuthorizationHeaders(endpointMetadata: core.EndpointMetadata) {
+    protected async _getCustomAuthorizationHeaders(
+        endpointMetadata: core.EndpointMetadata,
+    ): Promise<Record<string, string | undefined>> {
         const apiKeyValue =
             (await core.EndpointSupplier.get(this._options.apiKey, { endpointMetadata })) ?? process?.env["MY_API_KEY"];
         return { "X-API-Key": apiKeyValue };

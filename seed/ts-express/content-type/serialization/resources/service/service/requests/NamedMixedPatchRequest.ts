@@ -18,7 +18,7 @@ export const NamedMixedPatchRequest: core.serialization.Schema<
 export declare namespace NamedMixedPatchRequest {
     export interface Raw {
         appId?: string | null;
-        instructions: string | null;
-        active: boolean | null;
+        instructions?: string | null;
+        active?: boolean | null;
     }
 }

@@ -44,6 +44,9 @@ if typing.TYPE_CHECKING:
     from .complex_type import ComplexType
     from .identifier import Identifier
     from .type import Type
+    from .type_with_single_char_property_equal_to_type_starting_letter import (
+        TypeWithSingleCharPropertyEqualToTypeStartingLetter,
+    )
 _dynamic_imports: typing.Dict[str, str] = {
     "Actor": ".types",
     "Actress": ".types",
@@ -81,6 +84,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Test_Or": ".types",
     "Tree": ".types",
     "Type": ".type",
+    "TypeWithSingleCharPropertyEqualToTypeStartingLetter": ".type_with_single_char_property_equal_to_type_starting_letter",
 }
 
 
@@ -142,4 +146,5 @@ __all__ = [
     "Test_Or",
     "Tree",
     "Type",
+    "TypeWithSingleCharPropertyEqualToTypeStartingLetter",
 ]

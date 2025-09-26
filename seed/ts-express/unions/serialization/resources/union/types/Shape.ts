@@ -30,7 +30,7 @@ export declare namespace Shape {
         type: "square";
     }
 
-    export interface _Base {
+    export interface _Base extends serializers.WithName.Raw {
         id: string;
     }
 }
