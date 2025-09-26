@@ -7,7 +7,7 @@ on:
   # CHRISM - temporary for testing
   push:
     branches:
-      - nightly-seed-packaging
+      - mallinson/nightly-seed-packaging-testing-branch
   # Runs when triggered manually to do so
   workflow_dispatch:
 
