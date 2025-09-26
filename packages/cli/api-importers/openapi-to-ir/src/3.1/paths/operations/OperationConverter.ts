@@ -361,6 +361,49 @@ export class OperationConverter extends AbstractOperationConverter {
             }
         }
 
+        if (this.streamingExtension != null) {
+            if (convertedResponseBody == null) {
+                convertedResponseBody = {
+                    response: undefined,
+                    v2Responses: undefined,
+                    streamResponse: undefined,
+                    errors: [],
+                    examples: {}
+                };
+            }
+            const responseBodyConverter = new ResponseBodyConverter({
+                context: this.context,
+                breadcrumbs: [...breadcrumbs, "stream"],
+                responseBody: undefined as unknown as OpenAPIV3_1.ResponseObject,
+                group: group ?? [],
+                method,
+                statusCode: "stream",
+                streamingExtension
+            });
+            const converted = responseBodyConverter.convert();
+                if (converted != null) {
+                    this.inlinedTypes = {
+                        ...this.inlinedTypes,
+                        ...converted.inlinedTypes
+                    };
+                    convertedResponseBody.response = {
+                        statusCode: 200,
+                        body: converted.responseBody
+                    };
+                    convertedResponseBody.streamResponse = {
+                        statusCode: 200,
+                        body: converted.streamResponseBody
+                    };
+                    convertedResponseBody.v2Responses = [
+                        ...(convertedResponseBody.v2Responses ?? []),
+                        {
+                            statusCode: 200,
+                            body: converted.responseBody
+                        }
+                    ];
+                }
+        }
+
         return convertedResponseBody;
     }
 

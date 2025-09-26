@@ -1,6 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        The OpenAPI parser for docs handles `x-fern-streaming` even when no success status codes are defined for 
+        the underlying method.
+      type: feat
+  irVersion: 60
+  createdAt: "2025-09-24"
+  version: 0.81.1
+
+- changelogEntry:
+    - summary: |
         Control how type references are wrapped when they refer to nullable schemas using the new `wrap-references-to-nullable-in-optional` setting:
         - `true`: When a type reference points to a nullable schema, it will be wrapped in `optional<>`.
         - `false`: When a type reference points to a nullable schema, it will be wrapped in `nullable<>`.
