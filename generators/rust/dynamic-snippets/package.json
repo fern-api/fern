@@ -1,15 +1,12 @@
 {
   "name": "@fern-api/rust-dynamic-snippets",
   "version": "0.0.0",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern.git",
     "directory": "generators/rust/dynamic-snippets"
   },
-  "private": true,
-  "main": "lib/index.js",
-  "module": "lib/index.js",
-  "types": "lib/index.d.ts",
   "exports": {
     ".": {
       "types": "./lib/index.d.ts",
@@ -17,15 +14,18 @@
       "default": "./lib/index.js"
     }
   },
-  "files": ["lib"],
+  "main": "lib/index.js",
+  "module": "lib/index.js",
   "source": "src/index.ts",
+  "types": "lib/index.d.ts",
+  "files": ["lib"],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
-    "test": "vitest run --passWithNoTests",
-    "test:update": "vitest run -u --passWithNoTests",
+    "depcheck": "depcheck",
     "organize-imports": "organize-imports-cli tsconfig.json",
-    "depcheck": "depcheck"
+    "test": "vitest run --passWithNoTests",
+    "test:update": "vitest run -u --passWithNoTests"
   },
   "devDependencies": {
     "@fern-api/browser-compatible-base-generator": "workspace:*",
