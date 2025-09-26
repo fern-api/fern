@@ -55,7 +55,7 @@ export class WireTestGenerator {
         for (const endpoint of endpoints) {
             const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
             if (dynamicEndpoint?.examples && dynamicEndpoint.examples.length > 0) {
-                const firstExample = dynamicEndpoint.examples[0];
+                const firstExample = this.getEndpointExample(endpoint);
                 if (firstExample) {
                     try {
                         const snippet = await this.generateSnippetForExample(firstExample);
@@ -147,7 +147,7 @@ export class WireTestGenerator {
                         writer.newLine();
                         writer.writeNode(this.constructWiremockTestClient({ endpoint, snippet }));
                         writer.newLine();
-                        writer.writeNode(this.callClientMethodAndAssert({ clientCall, endpoint, snippet }));
+                        writer.writeNode(this.callClientMethodAndAssert({ endpoint, snippet }));
                     })
                 })
             );
@@ -208,6 +208,59 @@ export class WireTestGenerator {
         // Extract the client call lines
         const clientCallLines = lines.slice(clientCallStartIndex, clientCallEndIndex + 1);
         return clientCallLines.join("\n");
+    }
+
+    private parseRequestBodyInstantiation(snippet: string): string {
+        const lines = snippet.split("\n");
+
+        // Find the line that starts with "request :="
+        let requestStartIndex = -1;
+        for (let i = 0; i < lines.length; i++) {
+            const trimmedLine = lines[i]?.trim() ?? "";
+            if (trimmedLine.startsWith("request :=")) {
+                requestStartIndex = i;
+                break;
+            }
+        }
+
+        if (requestStartIndex === -1) {
+            return ""; // No request body instantiation found
+        }
+
+        // Track braces to find the end of the request body
+        let braceCount = 0;
+        let requestEndIndex = -1;
+        let foundOpenBrace = false;
+
+        for (let i = requestStartIndex; i < lines.length; i++) {
+            const line = lines[i] ?? "";
+
+            for (let j = 0; j < line.length; j++) {
+                const char = line[j];
+                if (char === "{") {
+                    braceCount++;
+                    foundOpenBrace = true;
+                } else if (char === "}") {
+                    braceCount--;
+                    if (foundOpenBrace && braceCount === 0) {
+                        requestEndIndex = i;
+                        break;
+                    }
+                }
+            }
+
+            if (requestEndIndex !== -1) {
+                break;
+            }
+        }
+
+        if (requestEndIndex === -1) {
+            return ""; // No matching closing brace found
+        }
+
+        // Extract the request body lines
+        const requestBodyLines = lines.slice(requestStartIndex, requestEndIndex + 1);
+        return requestBodyLines.join("\n");
     }
 
     private parseClientConstructor(snippet: string): string {
@@ -492,26 +545,22 @@ export class WireTestGenerator {
                                       ]
                                   }))
                             : []),
-                        ...(endpoint.pathParameters && endpoint.pathParameters.length > 0
-                            ? endpoint.pathParameters.map((pathParameter) => ({
-                                  method: "WithPathParam",
-                                  arguments_: [
-                                      go.TypeInstantiation.string(pathParameter.name.originalName),
-                                      go.invokeFunc({
-                                          func: go.typeReference({
-                                              name: "Matching",
-                                              importPath: "github.com/wiremock/go-wiremock"
-                                          }),
-                                          arguments_: [
-                                              go.TypeInstantiation.string(
-                                                  this.resolvePathParamValue(endpoint, pathParameter.name.originalName)
-                                              )
-                                          ],
-                                          multiline: false
-                                      })
-                                  ]
-                              }))
-                            : []),
+                        ...Object.entries(this.getEndpointExample(endpoint)?.pathParameters ?? {}).map(
+                            ([pathParameterName, pathParameterValue]) => ({
+                                method: "WithPathParam",
+                                arguments_: [
+                                    go.TypeInstantiation.string(pathParameterName),
+                                    go.invokeFunc({
+                                        func: go.typeReference({
+                                            name: "Matching",
+                                            importPath: "github.com/wiremock/go-wiremock"
+                                        }),
+                                        arguments_: [go.TypeInstantiation.string(pathParameterValue as string)],
+                                        multiline: false
+                                    })
+                                ]
+                            })
+                        ),
                         ...(this.resolveRequestBody(endpoint) !== null
                             ? [
                                   {
@@ -624,15 +673,21 @@ export class WireTestGenerator {
     }
 
     private callClientMethodAndAssert({
-        clientCall,
         endpoint,
         snippet
     }: {
-        clientCall: string;
         endpoint: HttpEndpoint;
         snippet: string;
     }): go.CodeBlock {
+        const requestBodyInstantiation = this.parseRequestBodyInstantiation(snippet);
+        const clientCall = this.parseClientCallFromSnippet(snippet);
+
         return go.codeblock((writer) => {
+            if (requestBodyInstantiation) {
+                writer.write(requestBodyInstantiation);
+                writer.newLine();
+            }
+
             // Call the method and capture response and error (error onlyif response body is nonexistent)
             if (endpoint.response?.body != null) {
                 writer.write("_, invocationErr := ");
@@ -800,14 +855,12 @@ export class WireTestGenerator {
     }
 
     private resolveQueryParamValue(endpoint: HttpEndpoint, queryParameterName: string): string {
-        const autoGeneratedExample = endpoint.autogeneratedExamples[0];
-        if (!autoGeneratedExample) {
+        const endpointExample = this.getEndpointExample(endpoint);
+        if (!endpointExample) {
             return ".+";
         }
 
-        const queryParameterValue = autoGeneratedExample.example.queryParameters?.find(
-            (queryParameter) => queryParameter.name.wireValue === queryParameterName
-        )?.value.jsonExample;
+        const queryParameterValue = endpointExample.queryParameters?.[queryParameterName];
         if (!queryParameterValue) {
             return ".+";
         }
@@ -816,22 +869,12 @@ export class WireTestGenerator {
     }
 
     private resolveResponseBody(endpoint: HttpEndpoint): go.AstNode {
-        const autoGeneratedExample = endpoint.autogeneratedExamples[0];
-        if (!autoGeneratedExample) {
+        const endpointExample = this.getEndpointExample(endpoint);
+        if (!endpointExample) {
             return go.codeblock("map[string]interface{}{}");
         }
 
-        const responseValue = autoGeneratedExample.example.response;
-        if (responseValue.type !== "ok") {
-            return go.codeblock("map[string]interface{}{}");
-        }
-
-        const responseBodyType = responseValue.value.type;
-        if (responseBodyType !== "body") {
-            return go.codeblock("map[string]interface{}{}");
-        }
-
-        const responseExampleJson = responseValue.value.value?.jsonExample;
+        const responseExampleJson = endpointExample.requestBody;
         if (!responseExampleJson) {
             return go.codeblock("map[string]interface{}{}");
         }
@@ -883,17 +926,12 @@ export class WireTestGenerator {
     }
 
     private resolveRequestBody(endpoint: HttpEndpoint): string | null {
-        const autoGeneratedExample = endpoint.autogeneratedExamples[0];
-        if (!autoGeneratedExample) {
+        const endpointExample = this.getEndpointExample(endpoint);
+        if (!endpointExample) {
             return null;
         }
 
-        const requestBodyType = autoGeneratedExample.example.request?.type;
-        if (requestBodyType !== "inlinedRequestBody") {
-            return null;
-        }
-
-        const requestBodyValue = autoGeneratedExample.example.request?.jsonExample;
+        const requestBodyValue = endpointExample.requestBody;
         if (!requestBodyValue) {
             return null;
         }
@@ -1009,7 +1047,7 @@ export class WireTestGenerator {
 
     private buildFullPath(endpoint: HttpEndpoint): string {
         const parts = endpoint.fullPath.parts;
-        let fullPath = "/" + endpoint.fullPath.head;
+        let fullPath = endpoint.fullPath.head.startsWith("/") ? endpoint.fullPath.head : "/" + endpoint.fullPath.head;
 
         for (const part of parts) {
             if (part.pathParameter) {
