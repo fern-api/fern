@@ -6,6 +6,7 @@ import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
 import { assertValidSemVerChangeOrThrow, assertValidSemVerOrThrow } from "./semVerUtils";
+import { validateAngleBracketEscaping } from "./angleBracketValidator";
 
 const parseReleaseOrThrow = serializers.generators.GeneratorReleaseRequest.parseOrThrow;
 
@@ -50,6 +51,15 @@ async function validateGeneratorChangelog({
     const changelogs = yaml.load((await readFile(absolutePathToChangelog)).toString());
     if (Array.isArray(changelogs)) {
         for (const entry of changelogs) {
+            const angleBracketErrors = validateAngleBracketEscaping(entry);
+            context.logger.debug(`Checking version ${entry.version}: Found ${angleBracketErrors.length} angle bracket errors`);
+            if (angleBracketErrors.length > 0) {
+                hasErrors = true;
+                for (const error of angleBracketErrors) {
+                    context.logger.error(chalk.red(error));
+                }
+            }
+
             try {
                 const release = parseReleaseOrThrow({ generatorId, ...entry });
                 assertValidSemVerOrThrow(release.version);
