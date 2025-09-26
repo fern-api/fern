@@ -17,7 +17,9 @@ public class Example0
                 Stream = false,
                 NumEvents = 5
             }
-        )) {/** consume each item */};
+        )) {
+            /* consume each item */
+        };
     }
 
 }
