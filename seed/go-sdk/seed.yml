@@ -155,6 +155,9 @@ fixtures:
   path-parameters:
     - outputFolder: no-custom-config
       customConfig: null
+    - outputFolder: with-wire-tests
+      customConfig:
+        enableWireTests: true
     - outputFolder: v0
       customConfig:
         alwaysSendRequiredProperties: false
