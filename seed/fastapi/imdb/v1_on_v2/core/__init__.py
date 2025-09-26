@@ -11,7 +11,6 @@ from .exceptions import (
     http_exception_handler,
 )
 from .pydantic_utilities import (
-    IS_PYDANTIC_V2,
     UniversalBaseModel,
     UniversalRootModel,
     parse_obj_as,
@@ -27,7 +26,6 @@ __all__ = [
     "BearerToken",
     "FernHTTPException",
     "FieldMetadata",
-    "IS_PYDANTIC_V2",
     "UnauthorizedException",
     "UniversalBaseModel",
     "UniversalRootModel",
