@@ -69,7 +69,6 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         await context.project.persist();
         context.logger.info("=== PERSIST COMPLETE ===");
 
-
         context.logger.info("=== RUNNING rustfmt ===");
         await formatRustCode({
             outputDir: context.project.absolutePathToOutputDirectory,
@@ -425,7 +424,6 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         }
         return endpointSnippets;
     }
-
 
     // ===========================
     // UTILITY METHODS
