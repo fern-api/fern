@@ -139,8 +139,8 @@ jobs:
               path: ./artifacts
               name: ${{ matrix.sdk-name }}-seed-test-log.txt.zip
               run-id: 18047218143 #CHRISM - temporary for testing
+              github-token: ${{ secrets.FERN_GITHUB_PAT }}
               merge-multiple: true
-
         - name: Echo contents of file
           run: |
             echo "Contents of file: $(cat artifacts/${{ matrix.sdk-name }}-seed-test-log.txt)"
