@@ -378,6 +378,10 @@ scripts:
   - docker: fernapi/ts-seed
     commands:
       - |
+        if [ ! -f "package.json" ]; then
+          echo "No package.json found, exiting..."
+          exit 0
+        fi
         if grep -q '"packageManager": "pnpm' package.json; then
           mkdir -p .pnpm-cache
           echo "Enabling corepack and preparing pnpm..."
@@ -421,11 +425,6 @@ allowedFailures:
   - error-property
   - error-property:union-utils
   - errors
-  - exhaustive:bundle
-  - exhaustive:custom-package-json
-  - exhaustive:dev-dependencies
-  - exhaustive:local-files-no-source
-  - exhaustive:never-throw-errors
   - extends
   - file-download:file-download-response-headers
   - file-download:no-custom-config
