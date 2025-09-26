@@ -279,6 +279,12 @@ types:
           If false, the converter will convert nullable schemas to required nullable.
           Defaults to true.
         default: true
+      coerce-optional-schemas-to-nullable:
+        type: optional<boolean>
+        docs: |
+          If true, the converter will coerce nullable schemas to optional.
+          If false, the converter will keep nullable schemas as nullable.
+          Defaults to true.
 
   OpenAPISettingsSchema:
     extends:

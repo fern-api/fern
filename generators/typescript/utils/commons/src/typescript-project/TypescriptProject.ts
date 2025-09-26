@@ -51,6 +51,7 @@ export abstract class TypescriptProject {
     protected static readonly API_BUNDLE_FILENAME = "index.js";
 
     protected static readonly PRETTIER_RC_FILENAME = ".prettierrc.yml";
+    protected static readonly PRETTIER_IGNORE_FILENAME = ".prettierignore";
     protected static readonly TS_CONFIG_BASE_FILENAME = "tsconfig.base.json";
     protected static readonly TS_CONFIG_FILENAME = "tsconfig.json";
     protected static readonly TS_CONFIG_ESM_FILENAME = "tsconfig.esm.json";
