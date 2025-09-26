@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { toJson } from "../json.mjs";
 import { createRequestUrl } from "./createRequestUrl.mjs";
+import { EndpointSupplier } from "./EndpointSupplier.mjs";
 import { getErrorResponseBody } from "./getErrorResponseBody.mjs";
 import { getFetchFn } from "./getFetchFn.mjs";
 import { getRequestBody } from "./getRequestBody.mjs";
@@ -16,9 +17,9 @@ import { getResponseBody } from "./getResponseBody.mjs";
 import { makeRequest } from "./makeRequest.mjs";
 import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse.mjs";
 import { requestWithRetries } from "./requestWithRetries.mjs";
-import { Supplier } from "./Supplier.mjs";
 function getHeaders(args) {
     return __awaiter(this, void 0, void 0, function* () {
+        var _a;
         const newHeaders = {};
         if (args.body !== undefined && args.contentType != null) {
             newHeaders["Content-Type"] = args.contentType;
@@ -27,7 +28,7 @@ function getHeaders(args) {
             return newHeaders;
         }
         for (const [key, value] of Object.entries(args.headers)) {
-            const result = yield Supplier.get(value);
+            const result = yield EndpointSupplier.get(value, { endpointMetadata: (_a = args.endpointMetadata) !== null && _a !== void 0 ? _a : {} });
             if (typeof result === "string") {
                 newHeaders[key] = result;
                 continue;
