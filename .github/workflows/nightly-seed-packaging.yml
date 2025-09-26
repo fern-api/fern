@@ -137,7 +137,7 @@ jobs:
           uses: actions/download-artifact@v5
           with:
               path: ./artifacts
-              name: ${{ matrix.sdk-name }}-seed-test-log.txt
+              name: ${{ matrix.sdk-name }}-seed-test-log.txt.zip
               run-id: 18047218143 #CHRISM - temporary for testing
               merge-multiple: true
 
