@@ -1,4 +1,4 @@
-import { ast } from "@fern-api/csharp-codegen";
+import { ast, Writer } from "@fern-api/csharp-codegen";
 
 import { FernIr } from "@fern-fern/ir-sdk";
 
@@ -38,17 +38,42 @@ export function generateField({
         }
         fieldAttributes.push(context.createJsonPropertyNameAttribute(property.name.wireValue));
     }
+    // if we are using readonly constants, we need to generate the accessors and initializer
+    // so that deserialization works correctly  (ie, throws deserializing an incorrect value to a readonly constant)
+    const name = getPropertyName({ className, objectProperty: property.name, context });
+    let accessors: ast.Field.Accessors | undefined;
+    let initializer: ast.CodeBlock | undefined = maybeLiteralInitializer;
+    let useRequired = true;
+
+    if (context.enableReadonlyConstants && maybeLiteralInitializer) {
+        accessors = {
+            get: (writer: Writer) => {
+                writer.writeNode(maybeLiteralInitializer);
+            },
+            set: (writer: Writer) => {
+                writer.write("value.Assert(value ==");
+                writer.writeNode(maybeLiteralInitializer);
+                writer.write(`, "'${name}' must be " + `);
+
+                writer.writeNode(maybeLiteralInitializer);
+                writer.write(")");
+            }
+        };
+        initializer = undefined;
+        useRequired = false;
+    }
 
     return context.csharp.field({
-        name: getPropertyName({ className, objectProperty: property.name, context }),
+        name,
         type: fieldType,
         access: ast.Access.Public,
         get: true,
         set: true,
         summary: property.docs,
-        useRequired: true,
-        initializer: maybeLiteralInitializer,
-        annotations: fieldAttributes
+        useRequired,
+        initializer,
+        annotations: fieldAttributes,
+        accessors
     });
 }
 
