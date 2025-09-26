@@ -12,3 +12,5 @@ export * from "./SingleDiscriminatedUnionTypeSingleProperty";
 export * from "./SingleDiscriminatedUnionTypeNoProperties";
 export * from "./UndiscriminatedUnionType";
 export * from "./LiteralType";
+export * from "./ObjectPropertyAccess";
+export * from "./PrimitiveTypeV1";

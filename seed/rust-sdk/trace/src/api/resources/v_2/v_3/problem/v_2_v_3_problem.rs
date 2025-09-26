@@ -1,5 +1,5 @@
 use crate::api::*;
-use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
 
 pub struct V2V3ProblemClient {
@@ -13,6 +13,15 @@ impl V2V3ProblemClient {
         })
     }
 
+    /// Returns lightweight versions of all problems
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn get_lightweight_problems(
         &self,
         options: Option<RequestOptions>,
@@ -28,6 +37,15 @@ impl V2V3ProblemClient {
             .await
     }
 
+    /// Returns latest versions of all problems
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn get_problems(
         &self,
         options: Option<RequestOptions>,
@@ -43,6 +61,15 @@ impl V2V3ProblemClient {
             .await
     }
 
+    /// Returns latest version of a problem
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn get_latest_problem(
         &self,
         problem_id: &ProblemId,
@@ -59,6 +86,15 @@ impl V2V3ProblemClient {
             .await
     }
 
+    /// Returns requested version of a problem
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn get_problem_version(
         &self,
         problem_id: &ProblemId,

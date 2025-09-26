@@ -153,6 +153,7 @@ export declare namespace SdkGenerator {
         exportAllRequestsAtRoot: boolean;
         testFramework: "jest" | "vitest";
         consolidateTypeFiles: boolean;
+        generateEndpointMetadata: boolean;
     }
 }
 
@@ -277,7 +278,8 @@ export class SdkGenerator {
             formDataSupport: this.config.formDataSupport,
             fetchSupport: this.config.fetchSupport,
             relativePackagePath: this.relativePackagePath,
-            relativeTestPath: this.relativeTestPath
+            relativeTestPath: this.relativeTestPath,
+            generateEndpointMetadata: this.config.generateEndpointMetadata
         });
 
         const apiDirectory: ExportedDirectory[] = [
@@ -442,7 +444,8 @@ export class SdkGenerator {
             exportsManager: this.exportsManager,
             formDataSupport: config.formDataSupport,
             omitFernHeaders: config.omitFernHeaders,
-            useDefaultRequestParameterValues: config.useDefaultRequestParameterValues
+            useDefaultRequestParameterValues: config.useDefaultRequestParameterValues,
+            generateEndpointMetadata: config.generateEndpointMetadata
         });
         this.websocketGenerator = new WebsocketClassGenerator({
             intermediateRepresentation,
@@ -1417,7 +1420,8 @@ export class SdkGenerator {
                 if (generatedVersion != null) {
                     generatedVersion.writeToFile(context);
                 }
-            }
+            },
+            addExportTypeModifier: true
         });
     }
 

@@ -2393,6 +2393,80 @@
                 },
                 "type": "primitive"
               }
+            },
+            {
+              "name": "callback_method",
+              "value": {
+                "value": "POST",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "custom_topic",
+              "value": {
+                "value": {
+                  "value": "custom_topic",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "custom_topic_mode",
+              "value": {
+                "value": "extended",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "intents",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "read_language",
+              "value": {
+                "value": {
+                  "value": "en",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "sentiment",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "read_summarize",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "topics",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
             }
           ],
           "headers": [],
@@ -4290,6 +4364,16 @@
           ],
           "queryParameters": [
             {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
               "name": "start",
               "value": {
                 "value": {
@@ -4305,6 +4389,16 @@
                 "value": {
                   "value": "2024-07-31T00:00:00",
                   "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
                 },
                 "type": "primitive"
               }
@@ -4350,23 +4444,6 @@
         "Management API"
       ],
       "pathParameters": [
-        {
-          "description": "The unique identifier of the project",
-          "name": "project_id",
-          "schema": {
-            "schema": {
-              "example": "123456-7890-1234-5678-901234",
-              "type": "string"
-            },
-            "generatedName": "DeleteProjectRequestProjectId",
-            "groupName": [],
-            "type": "primitive"
-          },
-          "source": {
-            "file": "../openapi.yml",
-            "type": "openapi"
-          }
-        },
         {
           "description": "The unique identifier of the project",
           "name": "project_id",
@@ -4921,16 +4998,6 @@
                 },
                 "type": "primitive"
               }
-            },
-            {
-              "name": "project_id",
-              "value": {
-                "value": {
-                  "value": "123456-7890-1234-5678-901234",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
             }
           ],
           "queryParameters": [],
@@ -4967,23 +5034,6 @@
         "Management API"
       ],
       "pathParameters": [
-        {
-          "description": "The unique identifier of the project",
-          "name": "project_id",
-          "schema": {
-            "schema": {
-              "example": "123456-7890-1234-5678-901234",
-              "type": "string"
-            },
-            "generatedName": "UpdateProjectRequestProjectId",
-            "groupName": [],
-            "type": "primitive"
-          },
-          "source": {
-            "file": "../openapi.yml",
-            "type": "openapi"
-          }
-        },
         {
           "description": "The unique identifier of the project",
           "name": "project_id",
@@ -5548,16 +5598,6 @@
       "examples": [
         {
           "pathParameters": [
-            {
-              "name": "project_id",
-              "value": {
-                "value": {
-                  "value": "123456-7890-1234-5678-901234",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
             {
               "name": "project_id",
               "value": {
@@ -7862,23 +7902,6 @@
             "file": "../openapi.yml",
             "type": "openapi"
           }
-        },
-        {
-          "description": "The unique identifier of the project",
-          "name": "project_id",
-          "schema": {
-            "schema": {
-              "example": "123456-7890-1234-5678-901234",
-              "type": "string"
-            },
-            "generatedName": "ListProjectKeysRequestProjectId",
-            "groupName": [],
-            "type": "primitive"
-          },
-          "source": {
-            "file": "../openapi.yml",
-            "type": "openapi"
-          }
         }
       ],
       "queryParameters": [],
@@ -8283,16 +8306,6 @@
                 },
                 "type": "primitive"
               }
-            },
-            {
-              "name": "project_id",
-              "value": {
-                "value": {
-                  "value": "123456-7890-1234-5678-901234",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
             }
           ],
           "queryParameters": [],
@@ -8336,23 +8349,6 @@
         "Management API"
       ],
       "pathParameters": [
-        {
-          "description": "The unique identifier of the project",
-          "name": "project_id",
-          "schema": {
-            "schema": {
-              "example": "123456-7890-1234-5678-901234",
-              "type": "string"
-            },
-            "generatedName": "CreateProjectKeyRequestProjectId",
-            "groupName": [],
-            "type": "primitive"
-          },
-          "source": {
-            "file": "../openapi.yml",
-            "type": "openapi"
-          }
-        },
         {
           "description": "The unique identifier of the project",
           "name": "project_id",
@@ -8753,16 +8749,6 @@
       "examples": [
         {
           "pathParameters": [
-            {
-              "name": "project_id",
-              "value": {
-                "value": {
-                  "value": "123456-7890-1234-5678-901234",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
             {
               "name": "project_id",
               "value": {
@@ -14322,6 +14308,26 @@
                 },
                 "type": "primitive"
               }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
             }
           ],
           "headers": [],
@@ -15518,6 +15524,13 @@
                   "type": "datetime"
                 },
                 "type": "primitive"
+              }
+            },
+            {
+              "name": "project_filters",
+              "value": {
+                "value": "alternatives.yml",
+                "type": "enum"
               }
             }
           ],
@@ -17736,6 +17749,13 @@
                 },
                 "type": "primitive"
               }
+            },
+            {
+              "name": "project_filters",
+              "value": {
+                "value": "alternatives.yml",
+                "type": "enum"
+              }
             }
           ],
           "headers": [],
@@ -18286,6 +18306,16 @@
                 "value": {
                   "value": "2024-07-01T00:00:00",
                   "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
                 },
                 "type": "primitive"
               }

@@ -17,6 +17,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
 
     private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
     private static RESPONSE_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "RESPONSE_HEADERS";
+    private static EXPLICIT_NULL_FEATURE_ID: FernGeneratorCli.FeatureId = "EXPLICIT_NULL";
 
     private readonly context: SdkGeneratorContext;
     private readonly endpointsById: Record<EndpointId, EndpointWithFilepath> = {};
@@ -70,6 +71,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             [ReadmeSnippetBuilder.RESPONSE_HEADERS_FEATURE_ID]: {
                 renderer: this.renderWithRawResponseHeadersSnippet.bind(this)
             },
+            [ReadmeSnippetBuilder.EXPLICIT_NULL_FEATURE_ID]: { renderer: this.renderExplicitNullSnippet.bind(this) },
             [FernGeneratorCli.StructuredFeatureId.RequestOptions]: {
                 renderer: this.renderRequestOptionsSnippet.bind(this)
             },
@@ -192,6 +194,23 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             defer cancel()
 
             response, err := ${this.getMethodCall(endpoint)}(ctx, ...)
+        `);
+    }
+
+    private renderExplicitNullSnippet(endpoint: EndpointWithFilepath): string {
+        return this.writeCode(dedent`
+            type ExampleRequest struct {
+                // An optional string parameter.
+                Name *string \`json:"name,omitempty" url:"-"\`
+
+                // Private bitmask of fields set to an explicit value and therefore not to be omitted
+                explicitFields *big.Int \`json:"-" url:"-"\`
+            }
+
+            request := &ExampleRequest{}
+            request.SetName(nil)
+
+            response, err := ${this.getMethodCall(endpoint)}(ctx, request, ...)
         `);
     }
 

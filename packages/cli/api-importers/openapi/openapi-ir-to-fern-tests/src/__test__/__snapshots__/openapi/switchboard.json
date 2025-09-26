@@ -1047,7 +1047,12 @@ types:
               "display-name": "Auth and redirect sessions",
               "docs": "Auth and redirect sessions by ID",
               "examples": [
-                {},
+                {
+                  "headers": {
+                    "x-call-type": "x-call-type",
+                    "x-session-id": "x-session-id",
+                  },
+                },
               ],
               "method": "GET",
               "pagination": undefined,
@@ -1100,7 +1105,9 @@ types:
             name: callType
             docs: call type, e.g. CHROMEDRIVER_EXTERNAL
       examples:
-        - {}
+        - headers:
+            x-session-id: x-session-id
+            x-call-type: x-call-type
   source:
     openapi: ../openapi.yml
 ",
@@ -2142,6 +2149,7 @@ service:
                   "query-parameters": {
                     "limit": 10,
                     "offset": 1,
+                    "status": "awaiting_capacity",
                   },
                   "response": {
                     "body": {
@@ -2509,6 +2517,7 @@ service:
         - root.InternalServerError
       examples:
         - query-parameters:
+            status: awaiting_capacity
             offset: 1
             limit: 10
           response:
@@ -2742,6 +2751,8 @@ service:
                   },
                   "query-parameters": {
                     "Screen resolution": "1920x1080",
+                    "disableResize": true,
+                    "includeNavigationBar": true,
                   },
                   "response": {
                     "body": {
@@ -3141,6 +3152,8 @@ service:
             sessionId: 6aac6f73-bd89-4a76-ab32-5a6c422e8b0b
             windowId: 7334da2a-91b0-42c5-6156-76a5eba87430
           query-parameters:
+            includeNavigationBar: true
+            disableResize: true
             Screen resolution: 1920x1080
           response:
             body:

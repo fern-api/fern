@@ -432,7 +432,7 @@ function getResponsePropertySetter({
             writer.writeNode(
                 getPropertyNilCheckCondition({
                     variableName: "response",
-                    propertyPath: responsePropertyPath
+                    propertyPath: responsePropertyPath.map((item) => item.name)
                 })
             );
             writer.writeLine(" {");
@@ -441,7 +441,7 @@ function getResponsePropertySetter({
             writer.writeNode(
                 getPropertyReference({
                     variableName: "response",
-                    propertyPath: responsePropertyPath,
+                    propertyPath: responsePropertyPath.map((item) => item.name),
                     name: responseProperty.property.name.name,
                     dereference
                 })
@@ -699,7 +699,7 @@ function getPagePropertyReference({
         case "offset": {
             return getPropertyReference({
                 variableName,
-                propertyPath: pagination.page.propertyPath,
+                propertyPath: pagination.page.propertyPath?.map((item) => item.name),
                 name: pagination.page.property.name.name,
                 withGetter
             });
@@ -720,7 +720,7 @@ function getResponsePropertyReference({
 }): go.AstNode {
     return getPropertyReference({
         variableName: "response",
-        propertyPath: results.propertyPath,
+        propertyPath: results.propertyPath?.map((item) => item.name),
         name: results.property.name.name,
         withGetter
     });

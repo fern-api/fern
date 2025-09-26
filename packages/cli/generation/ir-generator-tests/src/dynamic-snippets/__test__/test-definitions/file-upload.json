@@ -166,7 +166,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -198,7 +199,8 @@
                             "value": "STRING"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -442,7 +444,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -654,7 +657,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -835,7 +839,8 @@
                                     "value": "STRING"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "type": "bodyProperty",
@@ -865,7 +870,8 @@
                                 "type": "primitive",
                                 "value": "INTEGER"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "type": "file",
@@ -990,7 +996,8 @@
                                     "value": "INTEGER"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "type": "bodyProperty",
@@ -1026,7 +1033,8 @@
                                     }
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "type": "bodyProperty",
@@ -1059,7 +1067,8 @@
                                     "value": "type_service:MyObject"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "type": "bodyProperty",
@@ -1091,7 +1100,8 @@
                                     "type": "unknown"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "type": "bodyProperty",
@@ -1124,7 +1134,8 @@
                                     "value": "type_service:ObjectType"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "type": "bodyProperty",
@@ -1157,7 +1168,8 @@
                                     "value": "type_service:Id"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "type": "bodyProperty",
@@ -1187,7 +1199,8 @@
                                 "type": "named",
                                 "value": "type_service:MyAliasObject"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "type": "bodyProperty",
@@ -1220,7 +1233,8 @@
                                     "value": "type_service:MyAliasObject"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "type": "bodyProperty",
@@ -1250,7 +1264,8 @@
                                 "type": "named",
                                 "value": "type_service:MyCollectionAliasObject"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ]
                 },
@@ -1609,7 +1624,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -1638,7 +1654,8 @@
                             "type": "primitive",
                             "value": "INTEGER"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -1670,7 +1687,8 @@
                                 "value": "INTEGER"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -1702,7 +1720,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -1737,7 +1756,8 @@
                                 }
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "headers": [],
@@ -1972,7 +1992,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "type": "bodyProperty",
@@ -2002,7 +2023,8 @@
                                 "type": "named",
                                 "value": "type_service:MyObject"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "type": "bodyProperty",
@@ -2035,7 +2057,8 @@
                                     "value": "type_service:MyObject"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ]
                 },
@@ -2242,7 +2265,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "type": "bodyProperty",
@@ -2272,7 +2296,8 @@
                                 "type": "named",
                                 "value": "type_service:MyObject"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ]
                 },
@@ -2459,7 +2484,8 @@
                                     "value": "STRING"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "type": "bodyProperty",
@@ -2489,7 +2515,8 @@
                                 "type": "primitive",
                                 "value": "INTEGER"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "type": "file",
@@ -2614,7 +2641,8 @@
                                     "value": "INTEGER"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "type": "bodyProperty",
@@ -2650,7 +2678,8 @@
                                     }
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "type": "bodyProperty",
@@ -2683,7 +2712,8 @@
                                     "value": "type_service:MyObject"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "type": "bodyProperty",
@@ -2715,7 +2745,8 @@
                                     "type": "unknown"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "type": "bodyProperty",
@@ -2748,7 +2779,8 @@
                                     "value": "type_service:ObjectType"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "type": "bodyProperty",
@@ -2781,7 +2813,8 @@
                                     "value": "type_service:Id"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "type": "bodyProperty",
@@ -2814,7 +2847,8 @@
                                     "value": "type_service:MyObjectWithOptional"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "type": "bodyProperty",
@@ -2844,7 +2878,8 @@
                                 "type": "named",
                                 "value": "type_service:MyAliasObject"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "type": "bodyProperty",
@@ -2877,7 +2912,8 @@
                                     "value": "type_service:MyAliasObject"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "type": "bodyProperty",
@@ -2907,7 +2943,8 @@
                                 "type": "named",
                                 "value": "type_service:MyCollectionAliasObject"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ]
                 },
@@ -3116,7 +3153,8 @@
                                     "type": "unknown"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ]
                 },
@@ -3323,7 +3361,8 @@
                                 "type": "named",
                                 "value": "type_service:MyInlineType"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ]
                 },
@@ -3420,5 +3459,6 @@
     },
     "pathParameters": [],
     "environments": null,
+    "variables": null,
     "generatorConfig": null
 }

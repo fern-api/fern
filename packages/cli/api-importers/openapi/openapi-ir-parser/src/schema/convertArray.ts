@@ -11,6 +11,7 @@ export function convertArray({
     item,
     description,
     availability,
+    wrapAsOptional,
     wrapAsNullable,
     context,
     namespace,
@@ -25,6 +26,7 @@ export function convertArray({
     item: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
     description: string | undefined;
     availability: Availability | undefined;
+    wrapAsOptional: boolean;
     wrapAsNullable: boolean;
     context: SchemaParserContext;
     namespace: string | undefined;
@@ -44,7 +46,7 @@ export function convertArray({
                   namespace,
                   groupName
               })
-            : convertSchema(item, false, context, [...breadcrumbs, "Item"], source, namespace);
+            : convertSchema(item, false, false, context, [...breadcrumbs, "Item"], source, namespace);
     return wrapArray({
         nameOverride,
         generatedName,
@@ -52,6 +54,7 @@ export function convertArray({
         namespace,
         groupName,
         itemSchema,
+        wrapAsOptional,
         wrapAsNullable,
         description,
         availability,
@@ -64,6 +67,7 @@ export function wrapArray({
     generatedName,
     title,
     itemSchema,
+    wrapAsOptional,
     wrapAsNullable,
     description,
     availability,
@@ -75,6 +79,7 @@ export function wrapArray({
     generatedName: string;
     title: string | undefined;
     itemSchema: SchemaWithExample;
+    wrapAsOptional: boolean;
     wrapAsNullable: boolean;
     description: string | undefined;
     availability: Availability | undefined;
@@ -82,31 +87,7 @@ export function wrapArray({
     groupName: SdkGroupName | undefined;
     example: unknown[] | undefined;
 }): SchemaWithExample {
-    if (wrapAsNullable) {
-        return SchemaWithExample.nullable({
-            nameOverride,
-            generatedName,
-            title,
-            value: SchemaWithExample.array({
-                nameOverride,
-                generatedName,
-                title,
-                value: itemSchema,
-                description,
-                availability,
-                namespace,
-                groupName,
-                example,
-                inline: undefined
-            }),
-            description,
-            availability,
-            namespace,
-            groupName,
-            inline: undefined
-        });
-    }
-    return SchemaWithExample.array({
+    let result: SchemaWithExample = SchemaWithExample.array({
         nameOverride,
         generatedName,
         title,
@@ -118,4 +99,31 @@ export function wrapArray({
         example,
         inline: undefined
     });
+    if (wrapAsNullable) {
+        result = SchemaWithExample.nullable({
+            nameOverride,
+            generatedName,
+            title,
+            value: result,
+            description,
+            availability,
+            namespace,
+            groupName,
+            inline: undefined
+        });
+    }
+    if (wrapAsOptional) {
+        result = SchemaWithExample.optional({
+            nameOverride,
+            generatedName,
+            title,
+            value: result,
+            description,
+            availability,
+            namespace,
+            groupName,
+            inline: undefined
+        });
+    }
+    return result;
 }

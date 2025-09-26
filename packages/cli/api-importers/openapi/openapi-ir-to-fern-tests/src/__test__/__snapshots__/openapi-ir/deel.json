@@ -2043,6 +2043,9 @@
                               },
                               "type": "primitive"
                             },
+                            "email": {
+                              "type": "null"
+                            },
                             "type": {
                               "value": "individual",
                               "type": "enum"
@@ -2101,6 +2104,9 @@
                           "value": [
                             {
                               "properties": {
+                                "email": {
+                                  "type": "null"
+                                },
                                 "isVerified": {
                                   "value": {
                                     "value": true,
@@ -2935,6 +2941,9 @@
                               },
                               "type": "primitive"
                             },
+                            "email": {
+                              "type": "null"
+                            },
                             "type": {
                               "value": "individual",
                               "type": "enum"
@@ -2993,6 +3002,9 @@
                           "value": [
                             {
                               "properties": {
+                                "email": {
+                                  "type": "null"
+                                },
                                 "isVerified": {
                                   "value": {
                                     "value": true,
@@ -3827,6 +3839,9 @@
                               },
                               "type": "primitive"
                             },
+                            "email": {
+                              "type": "null"
+                            },
                             "type": {
                               "value": "individual",
                               "type": "enum"
@@ -3885,6 +3900,9 @@
                           "value": [
                             {
                               "properties": {
+                                "email": {
+                                  "type": "null"
+                                },
                                 "isVerified": {
                                   "value": {
                                     "value": true,
@@ -4730,6 +4748,9 @@
                               },
                               "type": "primitive"
                             },
+                            "email": {
+                              "type": "null"
+                            },
                             "type": {
                               "value": "individual",
                               "type": "enum"
@@ -4788,6 +4809,9 @@
                           "value": [
                             {
                               "properties": {
+                                "email": {
+                                  "type": "null"
+                                },
                                 "isVerified": {
                                   "value": {
                                     "value": true,
@@ -5565,7 +5589,72 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "after_cursor",
+              "value": {
+                "value": {
+                  "value": "after_cursor",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1.1,
+                  "type": "double"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "order_direction",
+              "value": {
+                "value": "asc",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "team_id",
+              "value": {
+                "value": {
+                  "value": 1.1,
+                  "type": "double"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "external_id",
+              "value": {
+                "value": {
+                  "value": "external_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "search",
+              "value": {
+                "value": {
+                  "value": "search",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "sort_by",
+              "value": {
+                "value": "contract_title",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -5615,6 +5704,9 @@
                                 "type": "string"
                               },
                               "type": "primitive"
+                            },
+                            "email": {
+                              "type": "null"
                             }
                           },
                           "type": "object"
@@ -5625,12 +5717,18 @@
                         },
                         "signatures": {
                           "properties": {
+                            "client_signed_at": {
+                              "type": "null"
+                            },
                             "worker_signature": {
                               "value": {
                                 "value": "Jane Doe",
                                 "type": "string"
                               },
                               "type": "primitive"
+                            },
+                            "worker_signed_at": {
+                              "type": "null"
                             }
                           },
                           "type": "object"
@@ -6248,6 +6346,9 @@
                               },
                               "type": "primitive"
                             },
+                            "email": {
+                              "type": "null"
+                            },
                             "type": {
                               "value": "individual",
                               "type": "enum"
@@ -6306,6 +6407,9 @@
                           "value": [
                             {
                               "properties": {
+                                "email": {
+                                  "type": "null"
+                                },
                                 "isVerified": {
                                   "value": {
                                     "value": true,
@@ -7044,6 +7148,9 @@
                               },
                               "type": "primitive"
                             },
+                            "email": {
+                              "type": "null"
+                            },
                             "type": {
                               "value": "individual",
                               "type": "enum"
@@ -7102,6 +7209,9 @@
                           "value": [
                             {
                               "properties": {
+                                "email": {
+                                  "type": "null"
+                                },
                                 "isVerified": {
                                   "value": {
                                     "value": true,
@@ -8634,7 +8744,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "templateId",
+              "value": {
+                "value": {
+                  "value": "templateId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "codeSamples": [],
           "type": "full"
@@ -10632,7 +10753,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "reason",
+              "value": {
+                "value": {
+                  "value": "reason",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -12870,7 +13002,58 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "reporter_id",
+              "value": {
+                "value": {
+                  "value": 1.1,
+                  "type": "double"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "date_from",
+              "value": {
+                "value": {
+                  "value": "1999-12-31",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "date_to",
+              "value": {
+                "value": {
+                  "value": "1999-12-31",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1000000,
+                  "type": "int64"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "offset",
+              "value": {
+                "value": {
+                  "value": 1000000,
+                  "type": "int64"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -16922,7 +17105,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "reason",
+              "value": {
+                "value": {
+                  "value": "reason",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -17242,7 +17436,45 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "end_date",
+              "value": {
+                "value": {
+                  "value": "1999-12-31",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "calculation_type",
+              "value": {
+                "value": "CUSTOM_AMOUNT",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "workweek_start",
+              "value": {
+                "value": {
+                  "value": "workweek_start",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "workweek_end",
+              "value": {
+                "value": {
+                  "value": "workweek_end",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -18037,6 +18269,9 @@
                               "value": "VACATION",
                               "type": "enum"
                             },
+                            "requested_at": {
+                              "type": "null"
+                            },
                             "status": {
                               "value": "REQUESTED",
                               "type": "enum"
@@ -18072,6 +18307,9 @@
                                 "type": {
                                   "value": "VACATION",
                                   "type": "enum"
+                                },
+                                "requested_at": {
+                                  "type": "null"
                                 },
                                 "status": {
                                   "value": "REQUESTED",
@@ -18754,6 +18992,9 @@
                             "type": {
                               "value": "VACATION",
                               "type": "enum"
+                            },
+                            "requested_at": {
+                              "type": "null"
                             },
                             "status": {
                               "value": "REQUESTED",
@@ -19461,6 +19702,9 @@
                               "value": "VACATION",
                               "type": "enum"
                             },
+                            "requested_at": {
+                              "type": "null"
+                            },
                             "status": {
                               "value": "REQUESTED",
                               "type": "enum"
@@ -20143,7 +20387,68 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "contract_id",
+              "value": {
+                "value": {
+                  "value": "contract_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "reporter_id",
+              "value": {
+                "value": {
+                  "value": 1.1,
+                  "type": "double"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "date_from",
+              "value": {
+                "value": {
+                  "value": "1999-12-31",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "date_to",
+              "value": {
+                "value": {
+                  "value": "1999-12-31",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1000000,
+                  "type": "int64"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "offset",
+              "value": {
+                "value": {
+                  "value": 1000000,
+                  "type": "int64"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -21541,7 +21846,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "reason",
+              "value": {
+                "value": {
+                  "value": "reason",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -22966,7 +23282,68 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "invoice_id",
+              "value": {
+                "value": {
+                  "value": 1000000,
+                  "type": "int64"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "reporter_id",
+              "value": {
+                "value": {
+                  "value": 1.1,
+                  "type": "double"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "date_from",
+              "value": {
+                "value": {
+                  "value": "1999-12-31",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "date_to",
+              "value": {
+                "value": {
+                  "value": "1999-12-31",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1.1,
+                  "type": "double"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "offset",
+              "value": {
+                "value": {
+                  "value": 1000000,
+                  "type": "int64"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -23162,7 +23539,14 @@
                           "type": "object"
                         },
                         "payment_cycle": {
-                          "properties": {},
+                          "properties": {
+                            "start_date": {
+                              "type": "null"
+                            },
+                            "end_date": {
+                              "type": "null"
+                            }
+                          },
                           "type": "object"
                         },
                         "reported_by": {
@@ -23671,7 +24055,78 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "contract_id",
+              "value": {
+                "value": {
+                  "value": "contract_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "invoice_id",
+              "value": {
+                "value": {
+                  "value": 1000000,
+                  "type": "int64"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "reporter_id",
+              "value": {
+                "value": {
+                  "value": 1.1,
+                  "type": "double"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "date_from",
+              "value": {
+                "value": {
+                  "value": "1999-12-31",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "date_to",
+              "value": {
+                "value": {
+                  "value": "1999-12-31",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1.1,
+                  "type": "double"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "offset",
+              "value": {
+                "value": {
+                  "value": 1000000,
+                  "type": "int64"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -23867,7 +24322,14 @@
                           "type": "object"
                         },
                         "payment_cycle": {
-                          "properties": {},
+                          "properties": {
+                            "start_date": {
+                              "type": "null"
+                            },
+                            "end_date": {
+                              "type": "null"
+                            }
+                          },
                           "type": "object"
                         },
                         "reported_by": {
@@ -24545,7 +25007,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "reason",
+              "value": {
+                "value": {
+                  "value": "reason",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -26638,7 +27111,28 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1000000,
+                  "type": "int64"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "after_cursor",
+              "value": {
+                "value": {
+                  "value": "after_cursor",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -26939,7 +27433,18 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1000000,
+                  "type": "int64"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -28347,6 +28852,26 @@
                 },
                 "type": "primitive"
               }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": "limit",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "offset",
+              "value": {
+                "value": {
+                  "value": "offset",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
             }
           ],
           "headers": [],
@@ -29237,6 +29762,9 @@
                                               "value": "VACATION",
                                               "type": "enum"
                                             },
+                                            "requested_at": {
+                                              "type": "null"
+                                            },
                                             "status": {
                                               "value": "REQUESTED",
                                               "type": "enum"
@@ -29275,6 +29803,12 @@
                                                 "type": "string"
                                               },
                                               "type": "primitive"
+                                            },
+                                            "created_at": {
+                                              "type": "null"
+                                            },
+                                            "start_date": {
+                                              "type": "null"
                                             }
                                           },
                                           "type": "object"
@@ -29307,6 +29841,9 @@
                                               "value": "VACATION",
                                               "type": "enum"
                                             },
+                                            "requested_at": {
+                                              "type": "null"
+                                            },
                                             "status": {
                                               "value": "REQUESTED",
                                               "type": "enum"
@@ -29345,6 +29882,12 @@
                                                 "type": "string"
                                               },
                                               "type": "primitive"
+                                            },
+                                            "created_at": {
+                                              "type": "null"
+                                            },
+                                            "start_date": {
+                                              "type": "null"
                                             }
                                           },
                                           "type": "object"
@@ -29377,6 +29920,9 @@
                                               "value": "VACATION",
                                               "type": "enum"
                                             },
+                                            "requested_at": {
+                                              "type": "null"
+                                            },
                                             "status": {
                                               "value": "REQUESTED",
                                               "type": "enum"
@@ -29415,6 +29961,12 @@
                                                 "type": "string"
                                               },
                                               "type": "primitive"
+                                            },
+                                            "created_at": {
+                                              "type": "null"
+                                            },
+                                            "start_date": {
+                                              "type": "null"
                                             }
                                           },
                                           "type": "object"
@@ -30046,7 +30598,28 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "issued_from_date",
+              "value": {
+                "value": {
+                  "value": "issued_from_date",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "issued_to_date",
+              "value": {
+                "value": {
+                  "value": "issued_to_date",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -30114,6 +30687,9 @@
                                 }
                               },
                               "type": "object"
+                            },
+                            "created_at": {
+                              "type": "null"
                             },
                             "total": {
                               "value": {
@@ -31029,7 +31605,28 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "date_from",
+              "value": {
+                "value": {
+                  "value": "1999-12-31",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "date_to",
+              "value": {
+                "value": {
+                  "value": "1999-12-31",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -31074,6 +31671,12 @@
                               },
                               "type": "primitive"
                             },
+                            "paid_at": {
+                              "type": "null"
+                            },
+                            "created_at": {
+                              "type": "null"
+                            },
                             "total": {
                               "value": {
                                 "value": 1015,
@@ -31091,6 +31694,9 @@
                                         "type": "string"
                                       },
                                       "type": "primitive"
+                                    },
+                                    "picUrl": {
+                                      "type": "null"
                                     }
                                   },
                                   "type": "object"
@@ -31399,7 +32005,28 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "offset",
+              "value": {
+                "value": {
+                  "value": 1000000,
+                  "type": "int64"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1.1,
+                  "type": "double"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -31523,6 +32150,12 @@
                                   },
                                   "type": "primitive"
                                 },
+                                "paid_at": {
+                                  "type": "null"
+                                },
+                                "created_at": {
+                                  "type": "null"
+                                },
                                 "total": {
                                   "value": {
                                     "value": 1015,
@@ -31540,6 +32173,9 @@
                                             "type": "string"
                                           },
                                           "type": "primitive"
+                                        },
+                                        "picUrl": {
+                                          "type": "null"
                                         }
                                       },
                                       "type": "object"

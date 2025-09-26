@@ -23,10 +23,10 @@ export declare namespace UserResponse {
     export interface Raw {
         id: string;
         username: string;
-        email: string | null;
+        email?: string | null;
         phone?: string | null;
         createdAt: string;
-        updatedAt: string | null;
+        updatedAt?: string | null;
         address?: serializers.Address.Raw | null;
     }
 }

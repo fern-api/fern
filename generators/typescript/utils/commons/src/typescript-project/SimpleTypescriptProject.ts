@@ -101,7 +101,9 @@ export class SimpleTypescriptProject extends TypescriptProject {
             declaration: true,
             outDir: SimpleTypescriptProject.DIST_DIRECTORY,
             rootDir: this.packagePath,
-            baseUrl: this.packagePath
+            baseUrl: this.packagePath,
+            isolatedModules: true,
+            isolatedDeclarations: true
         };
 
         if (this.useLegacyExports) {

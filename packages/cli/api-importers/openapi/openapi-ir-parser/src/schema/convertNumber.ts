@@ -15,6 +15,7 @@ export function convertNumber({
     multipleOf,
     description,
     availability,
+    wrapAsOptional,
     wrapAsNullable,
     example,
     namespace,
@@ -32,6 +33,7 @@ export function convertNumber({
     multipleOf: number | undefined;
     description: string | undefined;
     availability: Availability | undefined;
+    wrapAsOptional: boolean;
     wrapAsNullable: boolean;
     example: number | undefined;
     namespace: string | undefined;
@@ -51,6 +53,7 @@ export function convertNumber({
                 multipleOf,
                 example
             }),
+            wrapAsOptional,
             wrapAsNullable,
             description,
             availability,
@@ -65,6 +68,7 @@ export function convertNumber({
             primitive: PrimitiveSchemaValueWithExample.float({
                 example
             }),
+            wrapAsOptional,
             wrapAsNullable,
             description,
             availability,
@@ -85,6 +89,7 @@ export function convertNumber({
                 multipleOf,
                 example
             }),
+            wrapAsOptional,
             wrapAsNullable,
             description,
             availability,
@@ -100,6 +105,7 @@ export function convertNumber({
                 default: _default,
                 example
             }),
+            wrapAsOptional,
             wrapAsNullable,
             description,
             availability,
@@ -115,6 +121,7 @@ export function convertNumber({
                 default: _default,
                 example
             }),
+            wrapAsOptional,
             wrapAsNullable,
             description,
             availability,
@@ -130,6 +137,7 @@ export function convertNumber({
                 default: _default,
                 example
             }),
+            wrapAsOptional,
             wrapAsNullable,
             description,
             availability,
@@ -144,6 +152,7 @@ export function convertNumber({
             primitive: PrimitiveSchemaValueWithExample.float({
                 example
             }),
+            wrapAsOptional,
             wrapAsNullable,
             description,
             availability,
@@ -158,6 +167,7 @@ export function convertNumber({
         primitive: PrimitiveSchemaValueWithExample.float({
             example
         }),
+        wrapAsOptional,
         wrapAsNullable,
         description,
         availability,

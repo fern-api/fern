@@ -1,4 +1,70 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.3.1
+  changelogEntry:
+    - summary: |
+        Fix `bundle: true` mode
+      type: fix
+  createdAt: "2025-09-25"
+  irVersion: 60
+
+- version: 3.3.0
+  changelogEntry:
+    - summary: |
+        Add support for PR mode for self-hosted/local sdk generation
+      type: feat
+  createdAt: "2025-09-25"
+  irVersion: 60
+
+- version: 3.2.1
+  changelogEntry:
+    - summary: |
+        Set `compilerOptions.isolatedModules` and `compilerOptions.isolatedDeclarations` to `true` in _tsconfig.json_, and update the TypeScript code to comply with this setting. 
+        Users that enable `isolatedModules` can now use the SDK without any TypeScript compilation errors.
+        While `isolatedModules` is not turned on by default in TypeScript, more frameworks and tools enable it by default.
+
+        **Warning**: If you have custom code, this may cause compilation errors. Please refer to the TypeScript documentation to learn more about these settings:
+        * [Isolated Declarations](https://www.typescriptlang.org/tsconfig#isolatedDeclarations)
+        * [Isolated Modules](https://www.typescriptlang.org/tsconfig#isolatedModules)
+      type: fix
+  createdAt: "2025-09-25"
+  irVersion: 60
+
+- version: 3.2.0
+  changelogEntry:
+    - summary: |
+        Add `generateEndpointMetadata` configuration to generate endpoint metadata for each endpoints.
+        When you use a callback function to generate headers or auth tokens, the endpoint metadata will be passed to the callback.
+        ```ts
+        const client = new Foo({
+            ...,
+            token: ({ endpointMetadata }) => {
+                // generate token based on endpoint metadata
+            }
+        });
+        ```
+
+        To enable this, set `generateEndpointMetadata` to `true` in the `config` of your generator configuration.
+        ```yml
+        # In generators.yml
+        groups:
+          ts-sdk:
+            generators:
+              - name: fernapi/fern-typescript-sdk
+                config:
+                  generateEndpointMetadata: true
+        ```
+      type: feat
+  createdAt: "2025-09-24"
+  irVersion: 60
+
+- version: 3.1.2
+  changelogEntry:
+    - summary: |
+        Pin `msw` dependency to `2.11.2` because newer version introduces jest/vitest compatibility issues.
+      type: fix
+  createdAt: "2025-09-24"
+  irVersion: 60
+
 - version: 3.1.1
   changelogEntry:
     - summary: |

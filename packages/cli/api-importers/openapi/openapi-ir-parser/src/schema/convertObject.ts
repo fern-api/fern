@@ -38,6 +38,7 @@ export function convertObject({
     properties,
     description,
     required,
+    wrapAsOptional,
     wrapAsNullable,
     allOf,
     context,
@@ -56,6 +57,7 @@ export function convertObject({
     properties: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>;
     description: string | undefined;
     required: string[] | undefined;
+    wrapAsOptional: boolean;
     wrapAsNullable: boolean;
     allOf: (OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject)[];
     context: SchemaParserContext;
@@ -92,6 +94,7 @@ export function convertObject({
                             : variantSchema;
                         const convertedVariantSchema = convertSchema(
                             resolvedVariantSchema,
+                            false,
                             false,
                             context.DUMMY,
                             breadcrumbs,
@@ -144,7 +147,15 @@ export function convertObject({
             context.markSchemaAsReferencedByNonRequest(schemaId);
         } else if (isReferenceObject(allOfElement)) {
             const resolvedReference = context.resolveSchemaReference(allOfElement);
-            const convertedSchema = convertSchema(resolvedReference, false, context, breadcrumbs, source, namespace);
+            const convertedSchema = convertSchema(
+                resolvedReference,
+                false,
+                false,
+                context,
+                breadcrumbs,
+                source,
+                namespace
+            );
             if (convertedSchema.type === "object") {
                 inlinedParentProperties.push(...convertedSchema.properties);
             }
@@ -162,7 +173,7 @@ export function convertObject({
                 }
                 return property;
             });
-            const allOfSchema = convertSchema(allOfElement, false, context, breadcrumbs, source, namespace);
+            const allOfSchema = convertSchema(allOfElement, false, false, context, breadcrumbs, source, namespace);
             if (allOfSchema.type === "object") {
                 inlinedParentProperties.push(...allOfSchema.properties);
             }
@@ -223,14 +234,22 @@ export function convertObject({
             const propertyBreadcrumbs = [...breadcrumbs, propertyName];
             const generatedName = getGeneratedPropertyName(propertyBreadcrumbs);
             const schema = isRequired
-                ? convertSchema(propertySchema, false, context, propertyBreadcrumbs, source, namespace)
+                ? convertSchema(propertySchema, false, false, context, propertyBreadcrumbs, source, namespace)
                 : SchemaWithExample.optional({
                       nameOverride,
                       generatedName,
                       title,
                       description: undefined,
                       availability,
-                      value: convertSchema(propertySchema, false, context, propertyBreadcrumbs, source, namespace),
+                      value: convertSchema(
+                          propertySchema,
+                          false,
+                          false,
+                          context,
+                          propertyBreadcrumbs,
+                          source,
+                          namespace
+                      ),
                       namespace,
                       groupName,
                       inline: undefined
@@ -282,6 +301,7 @@ export function convertObject({
         nameOverride,
         generatedName,
         title,
+        wrapAsOptional,
         wrapAsNullable,
         properties: convertedProperties.filter((objectProperty) => {
             return !propertiesToExclude.has(objectProperty.key);
@@ -303,6 +323,7 @@ export function wrapObject({
     nameOverride,
     generatedName,
     title,
+    wrapAsOptional,
     wrapAsNullable,
     properties,
     description,
@@ -319,6 +340,7 @@ export function wrapObject({
     nameOverride: string | undefined;
     generatedName: string;
     title: string | undefined;
+    wrapAsOptional: boolean;
     wrapAsNullable: boolean;
     properties: ObjectPropertyWithExample[];
     description: string | undefined;
@@ -332,35 +354,7 @@ export function wrapObject({
     source: Source;
     context: SchemaParserContext;
 }): SchemaWithExample {
-    if (wrapAsNullable) {
-        return SchemaWithExample.nullable({
-            nameOverride,
-            generatedName,
-            title,
-            value: SchemaWithExample.object({
-                description,
-                properties,
-                nameOverride,
-                generatedName,
-                title,
-                allOf,
-                allOfPropertyConflicts,
-                namespace,
-                groupName,
-                fullExamples,
-                additionalProperties: isAdditionalPropertiesAny(additionalProperties, context.options),
-                availability: undefined,
-                source,
-                inline: undefined
-            }),
-            description,
-            availability,
-            namespace,
-            groupName,
-            inline: undefined
-        });
-    }
-    return SchemaWithExample.object({
+    let result: SchemaWithExample = SchemaWithExample.object({
         description,
         properties,
         nameOverride,
@@ -376,6 +370,33 @@ export function wrapObject({
         source,
         inline: undefined
     });
+    if (wrapAsNullable) {
+        result = SchemaWithExample.nullable({
+            nameOverride,
+            generatedName,
+            title,
+            value: result,
+            description,
+            availability,
+            namespace,
+            groupName,
+            inline: undefined
+        });
+    }
+    if (wrapAsOptional) {
+        result = SchemaWithExample.optional({
+            nameOverride,
+            generatedName,
+            title,
+            value: result,
+            description,
+            availability,
+            namespace,
+            groupName,
+            inline: undefined
+        });
+    }
+    return result;
 }
 
 function getAllProperties({
@@ -404,6 +425,7 @@ function getAllProperties({
     for (const [propertyName, propertySchema] of Object.entries(resolvedSchema.properties ?? {})) {
         const convertedPropertySchema = convertSchema(
             propertySchema,
+            false,
             false,
             context,
             [...resolvedBreadCrumbs, propertyName],

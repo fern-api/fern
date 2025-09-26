@@ -49,25 +49,29 @@ export class CoreUtilitiesManager {
 
     private readonly relativePackagePath: string;
     private readonly relativeTestPath: string;
+    private readonly generateEndpointMetadata: boolean;
 
     constructor({
         streamType,
         formDataSupport,
         fetchSupport,
         relativePackagePath = DEFAULT_PACKAGE_PATH,
-        relativeTestPath = DEFAULT_TEST_PATH
+        relativeTestPath = DEFAULT_TEST_PATH,
+        generateEndpointMetadata
     }: {
         streamType: "wrapper" | "web";
         formDataSupport: "Node16" | "Node18";
         fetchSupport: "node-fetch" | "native";
         relativePackagePath?: string;
         relativeTestPath?: string;
+        generateEndpointMetadata: boolean;
     }) {
         this.streamType = streamType;
         this.formDataSupport = formDataSupport;
         this.fetchSupport = fetchSupport;
         this.relativePackagePath = relativePackagePath;
         this.relativeTestPath = relativeTestPath;
+        this.generateEndpointMetadata = generateEndpointMetadata;
     }
 
     public getCoreUtilities({
@@ -86,18 +90,36 @@ export class CoreUtilitiesManager {
         });
 
         return {
-            zurg: new ZurgImpl({ getReferenceToExport }),
-            fetcher: new FetcherImpl({ getReferenceToExport }),
-            stream: new StreamImpl({ getReferenceToExport }),
-            auth: new AuthImpl({ getReferenceToExport }),
-            callbackQueue: new CallbackQueueImpl({ getReferenceToExport }),
-            formDataUtils: new FormDataUtilsImpl({ getReferenceToExport }),
-            runtime: new RuntimeImpl({ getReferenceToExport }),
-            pagination: new PaginationImpl({ getReferenceToExport }),
-            utils: new UtilsImpl({ getReferenceToExport }),
-            websocket: new WebsocketImpl({ getReferenceToExport }),
-            fileUtils: new FileUtilsImpl({ getReferenceToExport }),
-            urlUtils: new UrlUtilsImpl({ getReferenceToExport })
+            zurg: new ZurgImpl({ getReferenceToExport, generateEndpointMetadata: this.generateEndpointMetadata }),
+            fetcher: new FetcherImpl({ getReferenceToExport, generateEndpointMetadata: this.generateEndpointMetadata }),
+            stream: new StreamImpl({ getReferenceToExport, generateEndpointMetadata: this.generateEndpointMetadata }),
+            auth: new AuthImpl({ getReferenceToExport, generateEndpointMetadata: this.generateEndpointMetadata }),
+            callbackQueue: new CallbackQueueImpl({
+                getReferenceToExport,
+                generateEndpointMetadata: this.generateEndpointMetadata
+            }),
+            formDataUtils: new FormDataUtilsImpl({
+                getReferenceToExport,
+                generateEndpointMetadata: this.generateEndpointMetadata
+            }),
+            runtime: new RuntimeImpl({ getReferenceToExport, generateEndpointMetadata: this.generateEndpointMetadata }),
+            pagination: new PaginationImpl({
+                getReferenceToExport,
+                generateEndpointMetadata: this.generateEndpointMetadata
+            }),
+            utils: new UtilsImpl({ getReferenceToExport, generateEndpointMetadata: this.generateEndpointMetadata }),
+            websocket: new WebsocketImpl({
+                getReferenceToExport,
+                generateEndpointMetadata: this.generateEndpointMetadata
+            }),
+            fileUtils: new FileUtilsImpl({
+                getReferenceToExport,
+                generateEndpointMetadata: this.generateEndpointMetadata
+            }),
+            urlUtils: new UrlUtilsImpl({
+                getReferenceToExport,
+                generateEndpointMetadata: this.generateEndpointMetadata
+            })
         };
     }
 

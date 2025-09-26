@@ -7,6 +7,7 @@ import * as FernOpenapiIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { PrimitiveExample } from "./PrimitiveExample";
 import { LiteralExample } from "./LiteralExample";
+import { NullExample } from "./NullExample";
 
 export const FullExample: core.serialization.Schema<serializers.FullExample.Raw, FernOpenapiIr.FullExample> =
     core.serialization
@@ -30,6 +31,7 @@ export const FullExample: core.serialization.Schema<serializers.FullExample.Raw,
             oneOf: core.serialization.object({
                 value: core.serialization.lazy(() => serializers.FullOneOfExample),
             }),
+            null: NullExample,
             unknown: core.serialization.object({
                 value: core.serialization.lazy(() => serializers.FullExample),
             }),
@@ -51,6 +53,8 @@ export const FullExample: core.serialization.Schema<serializers.FullExample.Raw,
                         return FernOpenapiIr.FullExample.literal(value.value);
                     case "oneOf":
                         return FernOpenapiIr.FullExample.oneOf(value.value);
+                    case "null":
+                        return FernOpenapiIr.FullExample.null(value);
                     case "unknown":
                         return FernOpenapiIr.FullExample.unknown(value.value);
                     default:
@@ -69,6 +73,7 @@ export declare namespace FullExample {
         | FullExample.Enum
         | FullExample.Literal
         | FullExample.OneOf
+        | FullExample.Null
         | FullExample.Unknown;
 
     export interface Primitive {
@@ -103,6 +108,10 @@ export declare namespace FullExample {
     export interface OneOf {
         type: "oneOf";
         value: serializers.FullOneOfExample.Raw;
+    }
+
+    export interface Null extends NullExample.Raw {
+        type: "null";
     }
 
     export interface Unknown {

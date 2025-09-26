@@ -29,7 +29,9 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     typeDatesAsStrings: undefined,
     preserveSingleSchemaOneOf: undefined,
     inlineAllOfSchemas: undefined,
-    groupMultiApiEnvironments: undefined
+    groupMultiApiEnvironments: undefined,
+    wrapReferencesToNullableInOptional: undefined,
+    coerceOptionalSchemasToNullable: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -84,6 +86,8 @@ function parseDeprecatedApiDefinitionSettingsSchema(
         shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1",
         asyncApiMessageNaming: settings?.["message-naming"],
         respectNullableSchemas: settings?.["respect-nullable-schemas"],
+        wrapReferencesToNullableInOptional: settings?.["wrap-references-to-nullable-in-optional"],
+        coerceOptionalSchemasToNullable: settings?.["coerce-optional-schemas-to-nullable"],
         onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"],
         inlinePathParameters: settings?.["inline-path-parameters"],
         shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"]
@@ -131,7 +135,9 @@ function parseBaseApiDefinitionSettingsSchema(
         shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"],
         shouldUseOptionalAdditionalProperties: settings?.["optional-additional-properties"] ?? true,
         coerceEnumsToLiterals: settings?.["coerce-enums-to-literals"],
-        respectNullableSchemas: settings?.["respect-nullable-schemas"]
+        respectNullableSchemas: settings?.["respect-nullable-schemas"],
+        wrapReferencesToNullableInOptional: settings?.["wrap-references-to-nullable-in-optional"],
+        coerceOptionalSchemasToNullable: settings?.["coerce-optional-schemas-to-nullable"]
     };
 }
 

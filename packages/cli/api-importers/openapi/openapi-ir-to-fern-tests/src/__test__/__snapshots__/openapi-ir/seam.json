@@ -10346,6 +10346,9 @@
                                 "type": "string"
                               },
                               "type": "primitive"
+                            },
+                            "access_code_length": {
+                              "type": "null"
                             }
                           },
                           "type": "object"
@@ -10739,6 +10742,9 @@
                                 "type": "string"
                               },
                               "type": "primitive"
+                            },
+                            "relay_name": {
+                              "type": "null"
                             }
                           },
                           "type": "object"
@@ -12456,6 +12462,10 @@
                               "type": "object"
                             }
                           },
+                          "type": "object"
+                        },
+                        "location": {
+                          "properties": {},
                           "type": "object"
                         },
                         "connected_account_id": {
@@ -15234,6 +15244,9 @@
                                 "type": "string"
                               },
                               "type": "primitive"
+                            },
+                            "access_code_length": {
+                              "type": "null"
                             }
                           },
                           "type": "object"
@@ -15627,6 +15640,9 @@
                                 "type": "string"
                               },
                               "type": "primitive"
+                            },
+                            "relay_name": {
+                              "type": "null"
                             }
                           },
                           "type": "object"
@@ -16510,6 +16526,9 @@
                                 "type": "string"
                               },
                               "type": "primitive"
+                            },
+                            "access_code_length": {
+                              "type": "null"
                             }
                           },
                           "type": "object"
@@ -16903,6 +16922,9 @@
                                 "type": "string"
                               },
                               "type": "primitive"
+                            },
+                            "relay_name": {
+                              "type": "null"
                             }
                           },
                           "type": "object"
@@ -18642,6 +18664,10 @@
                           },
                           "type": "object"
                         },
+                        "location": {
+                          "properties": {},
+                          "type": "object"
+                        },
                         "connected_account_id": {
                           "value": {
                             "value": "connected_account_id",
@@ -18877,6 +18903,10 @@
                               "type": "object"
                             }
                           },
+                          "type": "object"
+                        },
+                        "location": {
+                          "properties": {},
                           "type": "object"
                         },
                         "connected_account_id": {
@@ -20394,6 +20424,10 @@
                           "properties": {},
                           "type": "object"
                         },
+                        "location": {
+                          "properties": {},
+                          "type": "object"
+                        },
                         "workspace_id": {
                           "value": {
                             "value": "workspace_id",
@@ -21382,6 +21416,9 @@
                                 "type": "string"
                               },
                               "type": "primitive"
+                            },
+                            "access_code_length": {
+                              "type": "null"
                             }
                           },
                           "type": "object"
@@ -21775,6 +21812,9 @@
                                 "type": "string"
                               },
                               "type": "primitive"
+                            },
+                            "relay_name": {
+                              "type": "null"
                             }
                           },
                           "type": "object"
@@ -24120,6 +24160,10 @@
                               "type": "object"
                             }
                           },
+                          "type": "object"
+                        },
+                        "location": {
+                          "properties": {},
                           "type": "object"
                         },
                         "connected_account_id": {
@@ -26996,6 +27040,10 @@
                           },
                           "type": "object"
                         },
+                        "location": {
+                          "properties": {},
+                          "type": "object"
+                        },
                         "connected_account_id": {
                           "value": {
                             "value": "connected_account_id",
@@ -27231,6 +27279,10 @@
                               "type": "object"
                             }
                           },
+                          "type": "object"
+                        },
+                        "location": {
+                          "properties": {},
                           "type": "object"
                         },
                         "connected_account_id": {
