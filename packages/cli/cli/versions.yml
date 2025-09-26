@@ -1,6 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Update display names for undiscriminated unions without titles. 
+
+        Now, if no title or description is provided, and one cannot be generated from the object properties, the display name will be undefined.
+      type: fix
+  irVersion: 60
+  createdAt: "2025-09-26"
+  version: 0.82.2
+
+- changelogEntry:
+    - summary: |
         Ensure path parameters are parsed in the same order as they appear in the endpoint's URL.
       type: fix
   irVersion: 60
