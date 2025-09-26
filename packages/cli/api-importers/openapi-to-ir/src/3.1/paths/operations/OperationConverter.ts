@@ -381,27 +381,27 @@ export class OperationConverter extends AbstractOperationConverter {
                 streamingExtension
             });
             const converted = responseBodyConverter.convert();
-                if (converted != null) {
-                    this.inlinedTypes = {
-                        ...this.inlinedTypes,
-                        ...converted.inlinedTypes
-                    };
-                    convertedResponseBody.response = {
+            if (converted != null) {
+                this.inlinedTypes = {
+                    ...this.inlinedTypes,
+                    ...converted.inlinedTypes
+                };
+                convertedResponseBody.response = {
+                    statusCode: 200,
+                    body: converted.responseBody
+                };
+                convertedResponseBody.streamResponse = {
+                    statusCode: 200,
+                    body: converted.streamResponseBody
+                };
+                convertedResponseBody.v2Responses = [
+                    ...(convertedResponseBody.v2Responses ?? []),
+                    {
                         statusCode: 200,
                         body: converted.responseBody
-                    };
-                    convertedResponseBody.streamResponse = {
-                        statusCode: 200,
-                        body: converted.streamResponseBody
-                    };
-                    convertedResponseBody.v2Responses = [
-                        ...(convertedResponseBody.v2Responses ?? []),
-                        {
-                            statusCode: 200,
-                            body: converted.responseBody
-                        }
-                    ];
-                }
+                    }
+                ];
+            }
         }
 
         return convertedResponseBody;
