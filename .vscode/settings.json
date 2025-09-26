@@ -5,8 +5,6 @@
     "**/.turbo": true,
     "**/.nx": true,
     "**/.yarn": true,
-    "**/seed/**": true,
-    "**/seed/**/seed.yml": false,
     "**/__snapshots__/**": true,
     "**/__test__/**/fixtures": true,
     "**/__test__/**/output": true,
