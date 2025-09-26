@@ -6,7 +6,7 @@
         Add generator code to create clients for WebSocket APIs.
   createdAt: "2025-09-26"
   irVersion: 59
-  
+
 - version: 2.2.0
   changelogEntry:
     - type: feat
