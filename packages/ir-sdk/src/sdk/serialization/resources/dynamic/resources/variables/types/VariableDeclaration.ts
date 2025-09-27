@@ -5,7 +5,7 @@
 import * as serializers from "../../../../../index";
 import * as FernIr from "../../../../../../api/index";
 import * as core from "../../../../../../core";
-import { Name } from "../../../../commons/types/Name";
+import { Name } from "../../commons/types/Name";
 
 export const VariableDeclaration: core.serialization.ObjectSchema<
     serializers.dynamic.VariableDeclaration.Raw,

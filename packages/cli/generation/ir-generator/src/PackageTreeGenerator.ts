@@ -1,3 +1,4 @@
+import { getOriginalName } from "@fern-api/core-utils";
 import {
     ErrorDeclaration,
     ErrorId,
@@ -212,7 +213,7 @@ export class PackageTreeGenerator {
             file: nextIndex === fernFilepath.allParts.length ? fernFilepath.file : undefined
         };
         let nextParent = subpackagesInParent.find(
-            (subpackage) => subpackage.name.originalName === nextPart.originalName
+            (subpackage) => getOriginalName(subpackage.name) === getOriginalName(nextPart)
         );
         if (nextParent == null) {
             const newParentId = IdGenerator.generateSubpackageId(fernFilepathForNextParent);

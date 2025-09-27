@@ -35,10 +35,16 @@ export function constructCasingsGenerator({
                 })
             });
 
-            let camelCaseName = camelCase(name);
-            let pascalCaseName = upperFirst(camelCaseName);
-            let snakeCaseName = snakeCase(name);
-            const camelCaseWords = words(camelCaseName);
+            const naiveCamelCaseName = camelCase(name);
+            const naivePascalCaseName = upperFirst(naiveCamelCaseName);
+            const naiveSnakeCaseName = snakeCase(name);
+            const naiveScreamingSnakeCaseName = naiveSnakeCaseName.toUpperCase();
+
+            let camelCaseName = naiveCamelCaseName;
+            let pascalCaseName = naivePascalCaseName;
+            let snakeCaseName = naiveSnakeCaseName;
+
+            const camelCaseWords = words(naiveCamelCaseName);
             if (smartCasing) {
                 if (
                     !hasAdjacentCommonInitialisms(camelCaseWords) &&
@@ -86,14 +92,33 @@ export function constructCasingsGenerator({
                     .join("_");
             }
 
+            const finalCamelCaseName = generateSafeAndUnsafeString(opts?.casingOverrides?.camel ?? camelCaseName);
+            const finalPascalCaseName = generateSafeAndUnsafeString(opts?.casingOverrides?.pascal ?? pascalCaseName);
+            const finalSnakeCaseName = generateSafeAndUnsafeString(opts?.casingOverrides?.snake ?? snakeCaseName);
+            const finalScreamingSnakeCaseName = generateSafeAndUnsafeString(
+                opts?.casingOverrides?.["screaming-snake"] ?? snakeCaseName.toUpperCase()
+            );
+
+            if (
+                finalCamelCaseName.safeName === naiveCamelCaseName &&
+                finalPascalCaseName.safeName === naivePascalCaseName &&
+                finalSnakeCaseName.safeName === naiveSnakeCaseName &&
+                finalScreamingSnakeCaseName.safeName === naiveScreamingSnakeCaseName
+            ) {
+                // If all the variations are trivially derivable, simply return the original name
+                return name;
+            }
+
+            // Otherwise, return the name cased as needed
             return {
                 originalName: name,
-                camelCase: generateSafeAndUnsafeString(opts?.casingOverrides?.camel ?? camelCaseName),
-                snakeCase: generateSafeAndUnsafeString(opts?.casingOverrides?.snake ?? snakeCaseName),
-                screamingSnakeCase: generateSafeAndUnsafeString(
-                    opts?.casingOverrides?.["screaming-snake"] ?? snakeCaseName.toUpperCase()
-                ),
-                pascalCase: generateSafeAndUnsafeString(opts?.casingOverrides?.pascal ?? pascalCaseName)
+                camelCase: finalCamelCaseName.safeName === naiveCamelCaseName ? undefined : finalCamelCaseName,
+                pascalCase: finalPascalCaseName.safeName === naivePascalCaseName ? undefined : finalPascalCaseName,
+                snakeCase: finalSnakeCaseName.safeName === naiveSnakeCaseName ? undefined : finalSnakeCaseName,
+                screamingSnakeCase:
+                    finalScreamingSnakeCaseName.safeName === naiveScreamingSnakeCaseName
+                        ? undefined
+                        : finalScreamingSnakeCaseName
             };
         },
         generateNameAndWireValue: ({ name, wireValue, opts }) => ({

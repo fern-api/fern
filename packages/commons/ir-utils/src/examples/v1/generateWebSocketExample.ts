@@ -1,3 +1,4 @@
+import { getOriginalName } from "@fern-api/core-utils";
 import {
     ExampleWebSocketMessageBody,
     ExampleWebSocketSession,
@@ -7,7 +8,6 @@ import {
     WebSocketChannel,
     WebSocketMessage
 } from "@fern-api/ir-sdk";
-
 import { ExampleGenerationResult } from "./ExampleGenerationResult";
 import {
     generateHeaderExamples,
@@ -163,7 +163,7 @@ function getUrlForExample(channel: WebSocketChannel, example: Omit<ExampleWebSoc
     [...example.pathParameters].forEach((examplePathParameter) => {
         const value = examplePathParameter.value.jsonExample;
         const stringValue = typeof value === "string" ? value : JSON.stringify(value);
-        pathParameters[examplePathParameter.name.originalName] = stringValue;
+        pathParameters[getOriginalName(examplePathParameter.name)] = stringValue;
     });
     const url =
         channel.path.head +

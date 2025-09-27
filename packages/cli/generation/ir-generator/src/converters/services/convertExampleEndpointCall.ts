@@ -1,5 +1,5 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { isNonNullish, isPlainObject } from "@fern-api/core-utils";
+import { getOriginalName, isNonNullish, isPlainObject } from "@fern-api/core-utils";
 import {
     isInlineRequestBody,
     parseBytesRequest,
@@ -602,7 +602,7 @@ function buildUrl({
             ...pathParams.rootPathParameters
         ]) {
             url = url.replaceAll(
-                `{${parameter.name.originalName}}`,
+                `{${getOriginalName(parameter.name)}}`,
                 encodeURIComponent(`${parameter.value.jsonExample}`)
             );
         }

@@ -1,6 +1,6 @@
 import { CasingsGenerator, constructCasingsGenerator } from "@fern-api/casings-generator";
 import { generatorsYml } from "@fern-api/configuration";
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, expandName, expandNameAndWireValue, getOriginalName } from "@fern-api/core-utils";
 import {
     AliasTypeDeclaration,
     ApiAuth,
@@ -10,6 +10,8 @@ import {
     dynamic,
     EndpointId,
     EnumTypeDeclaration,
+    Environments,
+    EnvironmentsConfig,
     FernFilepath,
     FileProperty,
     FileUploadRequestProperty,
@@ -38,7 +40,6 @@ import {
 } from "@fern-api/ir-sdk";
 import urlJoin from "url-join";
 import { v4 as uuidv4 } from "uuid";
-
 import { Version } from "./version";
 
 interface EndpointWithFilepath extends HttpEndpoint {
@@ -86,10 +87,43 @@ export class DynamicSnippetsConverter {
             headers: this.convertHeaders(),
             endpoints: this.convertEndpoints({ disableExamples }),
             pathParameters: this.convertPathParameters({ pathParameters: this.ir.pathParameters }),
-            environments: this.ir.environments,
+            environments:
+                this.ir.environments != null ? this.convertEnvironmentsConfig(this.ir.environments) : undefined,
             variables: this.convertVariables(),
             generatorConfig: this.generatorConfig
         };
+    }
+
+    private convertEnvironmentsConfig(environments: EnvironmentsConfig): DynamicSnippets.EnvironmentsConfig {
+        return {
+            defaultEnvironment: environments.defaultEnvironment,
+            environments: this.convertEnvironments(environments.environments)
+        };
+    }
+
+    private convertEnvironments(environments: Environments): DynamicSnippets.Environments {
+        switch (environments.type) {
+            case "singleBaseUrl":
+                return DynamicSnippets.Environments.singleBaseUrl({
+                    environments: environments.environments.map((environment) => ({
+                        ...environment,
+                        name: expandName(environment.name)
+                    }))
+                });
+            case "multipleBaseUrls":
+                return DynamicSnippets.Environments.multipleBaseUrls({
+                    baseUrls: environments.baseUrls.map((baseUrl) => ({
+                        ...baseUrl,
+                        name: expandName(baseUrl.name)
+                    })),
+                    environments: environments.environments.map((environment) => ({
+                        ...environment,
+                        name: expandName(environment.name)
+                    }))
+                });
+            default:
+                assertNever(environments);
+        }
     }
 
     private convertNamedTypes(): Record<TypeId, DynamicSnippets.NamedType> {
@@ -111,7 +145,7 @@ export class DynamicSnippetsConverter {
         }
         return this.ir.variables.map((variable) => ({
             id: variable.id,
-            name: variable.name,
+            name: expandName(variable.name),
             typeReference: this.convertTypeReference(variable.type)
         }));
     }
@@ -246,14 +280,14 @@ export class DynamicSnippetsConverter {
             }
             case "reference":
                 return DynamicSnippets.InlinedRequestBody.referenced({
-                    bodyKey: wrapper.bodyKey,
+                    bodyKey: expandName(wrapper.bodyKey),
                     bodyType: DynamicSnippets.ReferencedRequestBodyType.typeReference(
                         this.convertTypeReference(body.requestBodyType)
                     )
                 });
             case "bytes":
                 return DynamicSnippets.InlinedRequestBody.referenced({
-                    bodyKey: wrapper.bodyKey,
+                    bodyKey: expandName(wrapper.bodyKey),
                     bodyType: DynamicSnippets.ReferencedRequestBodyType.bytes()
                 });
             case "fileUpload":
@@ -284,7 +318,7 @@ export class DynamicSnippetsConverter {
                     return this.convertFileUploadRequestBodyFileProperty({ fileProperty: property.value });
                 case "bodyProperty":
                     return DynamicSnippets.FileUploadRequestBodyProperty.bodyProperty({
-                        name: property.name,
+                        name: expandNameAndWireValue(property.name),
                         typeReference: this.convertTypeReference(property.valueType),
                         propertyAccess: property.propertyAccess,
                         variable: undefined
@@ -302,9 +336,11 @@ export class DynamicSnippetsConverter {
     }): DynamicSnippets.FileUploadRequestBodyProperty {
         switch (fileProperty.type) {
             case "file":
-                return DynamicSnippets.FileUploadRequestBodyProperty.file(fileProperty.key);
+                return DynamicSnippets.FileUploadRequestBodyProperty.file(expandNameAndWireValue(fileProperty.key));
             case "fileArray":
-                return DynamicSnippets.FileUploadRequestBodyProperty.fileArray(fileProperty.key);
+                return DynamicSnippets.FileUploadRequestBodyProperty.fileArray(
+                    expandNameAndWireValue(fileProperty.key)
+                );
             default:
                 assertNever(fileProperty);
         }
@@ -317,8 +353,8 @@ export class DynamicSnippetsConverter {
     }): DynamicSnippets.NamedParameter[] {
         return pathParameters.map((pathParameter) => ({
             name: {
-                name: pathParameter.name,
-                wireValue: pathParameter.name.originalName
+                name: expandName(pathParameter.name),
+                wireValue: getOriginalName(pathParameter.name)
             },
             typeReference: this.convertTypeReference(pathParameter.valueType),
             propertyAccess: undefined,
@@ -333,7 +369,7 @@ export class DynamicSnippetsConverter {
     }): DynamicSnippets.NamedParameter[] {
         return properties.map((property) => ({
             name: {
-                name: property.name.name,
+                name: expandName(property.name.name),
                 wireValue: property.name.wireValue
             },
             typeReference: this.convertTypeReference(property.valueType),
@@ -349,7 +385,7 @@ export class DynamicSnippetsConverter {
     }): DynamicSnippets.NamedParameter[] {
         return wireValueParameters.map((parameter) => ({
             name: {
-                name: parameter.name.name,
+                name: expandName(parameter.name.name),
                 wireValue: parameter.name.wireValue
             },
             typeReference: this.convertTypeReference(parameter.valueType),
@@ -371,7 +407,7 @@ export class DynamicSnippetsConverter {
             }
             parameters.push({
                 name: {
-                    name: queryParameter.name.name,
+                    name: expandName(queryParameter.name.name),
                     wireValue: queryParameter.name.wireValue
                 },
                 typeReference,
@@ -463,7 +499,7 @@ export class DynamicSnippetsConverter {
     }): DynamicSnippets.NamedType {
         return DynamicSnippets.NamedType.enum({
             declaration,
-            values: enum_.values.map((value) => value.name)
+            values: enum_.values.map((value) => expandNameAndWireValue(value.name))
         });
     }
 
@@ -508,7 +544,7 @@ export class DynamicSnippetsConverter {
         const inheritedProperties = [...this.resolveProperties(union.extends), ...union.baseProperties];
         return DynamicSnippets.NamedType.discriminatedUnion({
             declaration,
-            discriminant: union.discriminant,
+            discriminant: expandNameAndWireValue(union.discriminant),
             types: Object.fromEntries(
                 union.types.map((unionType) => [
                     unionType.discriminantValue.wireValue,
@@ -565,7 +601,7 @@ export class DynamicSnippetsConverter {
     }): DynamicSnippets.SingleDiscriminatedUnionType {
         return DynamicSnippets.SingleDiscriminatedUnionType.samePropertiesAsObject({
             typeId: declaredTypeName.typeId,
-            discriminantValue,
+            discriminantValue: expandNameAndWireValue(discriminantValue),
             properties: this.convertBodyPropertiesToParameters({ properties: inheritedProperties })
         });
     }
@@ -581,7 +617,7 @@ export class DynamicSnippetsConverter {
     }): DynamicSnippets.SingleDiscriminatedUnionType {
         return DynamicSnippets.SingleDiscriminatedUnionType.singleProperty({
             typeReference: this.convertTypeReference(singleUnionTypeProperty.type),
-            discriminantValue,
+            discriminantValue: expandNameAndWireValue(discriminantValue),
             properties:
                 inheritedProperties.length > 0
                     ? this.convertBodyPropertiesToParameters({ properties: inheritedProperties })
@@ -597,7 +633,7 @@ export class DynamicSnippetsConverter {
         discriminantValue: NameAndWireValue;
     }): DynamicSnippets.SingleDiscriminatedUnionType {
         return DynamicSnippets.SingleDiscriminatedUnionType.noProperties({
-            discriminantValue,
+            discriminantValue: expandNameAndWireValue(discriminantValue),
             properties:
                 inheritedProperties.length > 0
                     ? this.convertBodyPropertiesToParameters({ properties: inheritedProperties })
@@ -644,13 +680,18 @@ export class DynamicSnippetsConverter {
         const scheme = auth.schemes[0];
         switch (scheme.type) {
             case "basic":
-                return DynamicSnippets.Auth.basic(scheme);
+                return DynamicSnippets.Auth.basic({
+                    username: expandName(scheme.username),
+                    password: expandName(scheme.password)
+                });
             case "bearer":
-                return DynamicSnippets.Auth.bearer(scheme);
+                return DynamicSnippets.Auth.bearer({
+                    token: expandName(scheme.token)
+                });
             case "header":
                 return DynamicSnippets.Auth.header({
                     header: {
-                        name: scheme.name,
+                        name: expandNameAndWireValue(scheme.name),
                         typeReference: this.convertTypeReference(scheme.valueType),
                         propertyAccess: undefined,
                         variable: undefined
@@ -658,8 +699,8 @@ export class DynamicSnippetsConverter {
                 });
             case "oauth":
                 return DynamicSnippets.Auth.oauth({
-                    clientId: this.casingsGenerator.generateName("clientId"),
-                    clientSecret: this.casingsGenerator.generateName("clientSecret")
+                    clientId: expandName(this.casingsGenerator.generateName("clientId")),
+                    clientSecret: expandName(this.casingsGenerator.generateName("clientSecret"))
                 });
             case "inferred":
                 return DynamicSnippets.Auth.inferred({});
@@ -699,6 +740,14 @@ export class DynamicSnippetsConverter {
         }
     }
 
+    private convertFernFilepath(fernFilepath: FernFilepath): DynamicSnippets.FernFilepath {
+        return {
+            allParts: fernFilepath.allParts.map((part) => expandName(part)),
+            packagePath: fernFilepath.packagePath.map((part) => expandName(part)),
+            file: fernFilepath.file ? expandName(fernFilepath.file) : undefined
+        };
+    }
+
     private convertDeclaration({
         name,
         fernFilepath
@@ -707,8 +756,8 @@ export class DynamicSnippetsConverter {
         fernFilepath: FernFilepath;
     }): DynamicSnippets.Declaration {
         return {
-            name,
-            fernFilepath
+            name: expandName(name),
+            fernFilepath: this.convertFernFilepath(fernFilepath)
         };
     }
 
@@ -777,7 +826,7 @@ export class DynamicSnippetsConverter {
             const variableReferencedParams = new Set<string>();
             [...this.ir.pathParameters, ...endpoint.pathParameters].forEach((param) => {
                 if (param.variable != null) {
-                    variableReferencedParams.add(param.name.originalName);
+                    variableReferencedParams.add(getOriginalName(param.name));
                 }
             });
 
@@ -785,11 +834,11 @@ export class DynamicSnippetsConverter {
                 ...(example.example?.rootPathParameters ?? []),
                 ...(example.example?.servicePathParameters ?? []),
                 ...(example.example?.endpointPathParameters ?? [])
-            ].filter((param) => !variableReferencedParams.has(param.name.originalName));
+            ].filter((param) => !variableReferencedParams.has(getOriginalName(param.name)));
 
             requests.push({
                 id: example?.example?.id ?? uuidv4(),
-                name: example?.example?.name?.originalName,
+                name: example?.example?.name ? getOriginalName(example.example.name) : undefined,
                 endpoint: location,
                 baseUrl: undefined,
                 environment: undefined,
@@ -803,7 +852,7 @@ export class DynamicSnippetsConverter {
                 ),
                 pathParameters: Object.fromEntries(
                     pathParameterExamples.map((parameter) => {
-                        return [parameter.name.originalName, parameter.value.jsonExample];
+                        return [getOriginalName(parameter.name), parameter.value.jsonExample];
                     })
                 ),
                 queryParameters: Object.fromEntries(

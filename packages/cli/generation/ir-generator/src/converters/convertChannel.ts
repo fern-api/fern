@@ -1,5 +1,5 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { isPlainObject } from "@fern-api/core-utils";
+import { getOriginalName, isPlainObject } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     ExampleHeader,
@@ -453,7 +453,7 @@ function buildUrl({
     if (example["path-parameters"] != null) {
         for (const parameter of [...pathParams.pathParameters]) {
             url = url.replaceAll(
-                `{${parameter.name.originalName}}`,
+                `{${getOriginalName(parameter.name)}}`,
                 encodeURIComponent(`${parameter.value.jsonExample}`)
             );
         }

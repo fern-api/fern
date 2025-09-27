@@ -1,3 +1,4 @@
+import { expandName } from "@fern-api/core-utils";
 import { ApiAuth, AuthScheme, AuthSchemesRequirement } from "@fern-api/ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 
@@ -65,7 +66,7 @@ function getNameForAuthScheme(authScheme: AuthScheme): string {
         inferred: () => "InferredAuth",
         basic: () => "BasicAuth",
         oauth: () => "BearerAuth",
-        header: (header) => `${header.name.name.pascalCase.unsafeName}Auth`,
+        header: (header) => `${expandName(header.name.name).pascalCase.unsafeName}Auth`,
         _other: () => {
             throw new Error("Unknown auth scheme: " + authScheme.type);
         }

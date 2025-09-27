@@ -7,7 +7,7 @@ import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { Name } from "../../commons/types/Name";
 
-export const EndpointName: core.serialization.ObjectSchema<serializers.EndpointName.Raw, FernIr.EndpointName> = Name;
+export const EndpointName: core.serialization.Schema<serializers.EndpointName.Raw, FernIr.EndpointName> = Name;
 
 export declare namespace EndpointName {
     export type Raw = Name.Raw;

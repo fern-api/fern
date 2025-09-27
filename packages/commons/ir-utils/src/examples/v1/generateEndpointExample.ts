@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, getOriginalName } from "@fern-api/core-utils";
 import {
     ErrorDeclaration,
     ExampleEndpointCall,
@@ -16,7 +16,6 @@ import {
     TypeId,
     TypeReference
 } from "@fern-api/ir-sdk";
-
 import { hashJSON } from "../../hashJSON";
 import { isTypeReferenceOptional } from "../../utils/isTypeReferenceOptional";
 import { ExampleGenerationResult } from "./ExampleGenerationResult";
@@ -413,7 +412,7 @@ function getUrlForExample(endpoint: HttpEndpoint, example: Omit<ExampleEndpointC
         (examplePathParameter) => {
             const value = examplePathParameter.value.jsonExample;
             const stringValue = typeof value === "string" ? value : JSON.stringify(value);
-            pathParameters[examplePathParameter.name.originalName] = stringValue;
+            pathParameters[getOriginalName(examplePathParameter.name)] = stringValue;
         }
     );
     const url =
