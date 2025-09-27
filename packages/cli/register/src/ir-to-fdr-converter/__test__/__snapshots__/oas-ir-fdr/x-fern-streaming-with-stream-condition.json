@@ -213,20 +213,23 @@
             }
           },
           "statusCode": 200,
-          "description": "A response to a chat request."
+          "description": ""
         },
         "responsesV2": {
           "responses": [
             {
               "type": {
-                "type": "reference",
-                "value": {
-                  "type": "id",
-                  "value": "ChatFullResponse"
+                "type": "stream",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "ChatStreamedResponse"
+                  }
                 }
               },
               "statusCode": 200,
-              "description": "A response to a chat request."
+              "description": ""
             }
           ]
         },
@@ -393,7 +396,7 @@
             }
           },
           "statusCode": 200,
-          "description": "A response to a chat request."
+          "description": ""
         },
         "responsesV2": {
           "responses": [
@@ -406,7 +409,7 @@
                 }
               },
               "statusCode": 200,
-              "description": "A response to a chat request."
+              "description": ""
             }
           ]
         },

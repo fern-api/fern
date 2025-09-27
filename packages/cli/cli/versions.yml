@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: |
+        Even when no success status codes are defined for the endpoint, `x-fern-streaming` responses are still respected.
+      type: fix
+  irVersion: 60
+  createdAt: "2025-09-26"
+  version: 0.82.4
+
+- changelogEntry:
     - summary: Allow `wrap-references-to-nullable-in-optional` setting in more API specs.
       type: fix
   irVersion: 60
