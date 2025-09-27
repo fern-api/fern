@@ -6,6 +6,7 @@
     "useIgnoreFile": false
   },
   "files": {
+    "includes": ["**", "!seed/"],
     "ignoreUnknown": false,
     "maxSize": 80000000
   },
