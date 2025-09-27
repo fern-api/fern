@@ -3,6 +3,7 @@ package com.seed.deepCursorPath;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.deepCursorPath.SeedDeepCursorPathClient;
+import com.seed.deepCursorPath.core.ObjectMappers;
 import com.seed.deepCursorPath.core.SyncPagingIterable;
 import com.seed.deepCursorPath.resources.deepcursorpath.types.A;
 import com.seed.deepCursorPath.resources.deepcursorpath.types.B;
@@ -26,7 +27,7 @@ import org.junit.jupiter.api.Test;
 public class DeepCursorPathWireTest {
     private MockWebServer server;
     private SeedDeepCursorPathClient client;
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private ObjectMapper objectMapper = ObjectMappers.JSON_MAPPER;
     @BeforeEach
     public void setup() throws Exception {
         server = new MockWebServer();

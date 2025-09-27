@@ -7,5 +7,5 @@ async fn main() {
     let config = ClientConfig {};
     let client =
         OauthClientCredentialsWithVariablesClient::new(config).expect("Failed to build client");
-    client.service_post("endpointParam").await;
+    client.service_post().await;
 }

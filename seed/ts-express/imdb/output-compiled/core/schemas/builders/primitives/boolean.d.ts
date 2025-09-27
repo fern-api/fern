@@ -1,1 +1,2 @@
-export declare const boolean: () => import("../../Schema").Schema<boolean, boolean>;
+import { Schema } from "../../Schema";
+export declare const boolean: () => Schema<boolean, boolean>;

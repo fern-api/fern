@@ -17,17 +17,18 @@ package example
 
 import (
     client "github.com/errors/fern/client"
-    context "context"
     fern "github.com/errors/fern"
+    context "context"
 )
 
 func do() {
     client := client.NewClient()
+    request := &fern.FooRequest{
+        Bar: "bar",
+    }
     client.Simple.FooWithoutEndpointError(
         context.TODO(),
-        &fern.FooRequest{
-            Bar: "bar",
-        },
+        request,
     )
 }
 ```

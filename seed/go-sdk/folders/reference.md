@@ -158,9 +158,7 @@ client.Folder.Service.Endpoint(
 ```go
 client.Folder.Service.UnknownRequest(
         context.TODO(),
-        map[string]any{
-            "key": "value",
-        },
+        request,
     )
 }
 ```

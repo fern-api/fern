@@ -15,9 +15,7 @@
 ```go
 client.Ec2.BootInstance(
         context.TODO(),
-        &fern.BootInstanceRequest{
-            Size: "size",
-        },
+        request,
     )
 }
 ```
@@ -62,9 +60,7 @@ client.Ec2.BootInstance(
 ```go
 client.S3.GetPresignedUrl(
         context.TODO(),
-        &fern.GetPresignedUrlRequest{
-            S3Key: "s3Key",
-        },
+        request,
     )
 }
 ```

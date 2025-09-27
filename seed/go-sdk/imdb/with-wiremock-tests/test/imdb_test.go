@@ -10,6 +10,7 @@ import (
 	require "github.com/stretchr/testify/require"
 	gowiremock "github.com/wiremock/go-wiremock"
 )
+
 func TestImdbCreateMovieWithWireMock(
     t *testing.T,
 ) {
@@ -28,18 +29,20 @@ func TestImdbCreateMovieWithWireMock(
             WireMockBaseURL,
         ),
     )
+    request := &fern.CreateMovieRequest{
+        Title: "title",
+        Rating: 1.1,
+    }
     client.Imdb.CreateMovie(
         context.TODO(),
-        &fern.CreateMovieRequest{
-            Title: "title",
-            Rating: 1.1,
-        },
+        request,
     )
     
     ok, countErr := WireMockClient.Verify(stub.Request(), 1)
     require.NoError(t, countErr, "Failed to verify WireMock request was matched")
     require.True(t, ok, "WireMock request was not matched")
 }
+
 func TestImdbGetMovieWithWireMock(
     t *testing.T,
 ) {
