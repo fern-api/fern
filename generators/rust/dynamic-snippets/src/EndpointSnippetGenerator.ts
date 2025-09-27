@@ -64,7 +64,7 @@ export class EndpointSnippetGenerator {
             rust.Statement.let({
                 name: CLIENT_VAR_NAME,
                 value: rust.Expression.methodCall({
-                    target: rust.Expression.raw(`${this.getClientName({ endpoint })}::new(config)`),
+                    target: rust.Expression.raw(`${this.getClientName()}::new(config)`),
                     method: "expect",
                     args: [rust.Expression.stringLiteral("Failed to build client")]
                 })
@@ -106,7 +106,7 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): rust.UseStatement[] {
-        const imports = new Set<string>(["ClientConfig", this.getClientName({ endpoint })]);
+        const imports = new Set<string>(["ClientConfig", this.getClientName()]);
         const stdImports = new Set<string>();
         const chronoImports = new Set<string>();
         const uuidImports = new Set<string>();
@@ -148,33 +148,41 @@ export class EndpointSnippetGenerator {
 
         // Add standard library imports
         if (stdImports.size > 0) {
-            useStatements.push(new rust.UseStatement({
-                path: "std::collections",
-                items: Array.from(stdImports)
-            }));
+            useStatements.push(
+                new rust.UseStatement({
+                    path: "std::collections",
+                    items: Array.from(stdImports)
+                })
+            );
         }
 
         // Add chrono imports
         if (chronoImports.size > 0) {
-            useStatements.push(new rust.UseStatement({
-                path: "chrono",
-                items: Array.from(chronoImports)
-            }));
+            useStatements.push(
+                new rust.UseStatement({
+                    path: "chrono",
+                    items: Array.from(chronoImports)
+                })
+            );
         }
 
         // Add UUID imports
         if (uuidImports.size > 0) {
-            useStatements.push(new rust.UseStatement({
-                path: "uuid",
-                items: Array.from(uuidImports)
-            }));
+            useStatements.push(
+                new rust.UseStatement({
+                    path: "uuid",
+                    items: Array.from(uuidImports)
+                })
+            );
         }
 
         // Add crate imports
-        useStatements.push(new rust.UseStatement({
-            path: this.context.getCrateName(),
-            items: Array.from(imports)
-        }));
+        useStatements.push(
+            new rust.UseStatement({
+                path: this.context.getCrateName(),
+                items: Array.from(imports)
+            })
+        );
 
         return useStatements;
     }
@@ -194,14 +202,14 @@ export class EndpointSnippetGenerator {
 
         // Collect types from query parameters
         if (snippet.queryParameters != null) {
-            Object.values(snippet.queryParameters).forEach(value => {
+            Object.values(snippet.queryParameters).forEach((value) => {
                 this.collectTypesFromValue(value, imports, stdImports, chronoImports, uuidImports);
             });
         }
 
         // Collect types from headers
         if (snippet.headers != null) {
-            Object.values(snippet.headers).forEach(value => {
+            Object.values(snippet.headers).forEach((value) => {
                 this.collectTypesFromValue(value, imports, stdImports, chronoImports, uuidImports);
             });
         }
@@ -224,7 +232,7 @@ export class EndpointSnippetGenerator {
             }
 
             // Look for discriminant fields that might indicate union types
-            Object.keys(obj).forEach(key => {
+            Object.keys(obj).forEach((key) => {
                 // Common discriminant field names
                 if (key === "type" || key === "_type" || key.endsWith("_type")) {
                     const discriminantValue = obj[key];
@@ -236,7 +244,7 @@ export class EndpointSnippetGenerator {
             });
 
             // Recursively collect from nested objects
-            Object.values(obj).forEach(nestedValue => {
+            Object.values(obj).forEach((nestedValue) => {
                 this.collectTypesFromValue(nestedValue, imports, stdImports, chronoImports, uuidImports);
             });
         } else if (Array.isArray(value)) {
@@ -244,7 +252,7 @@ export class EndpointSnippetGenerator {
             if (value.length > 0) {
                 stdImports.add("HashSet");
             }
-            value.forEach(item => this.collectTypesFromValue(item, imports, stdImports, chronoImports, uuidImports));
+            value.forEach((item) => this.collectTypesFromValue(item, imports, stdImports, chronoImports, uuidImports));
         } else if (typeof value === "string") {
             // Check for UUID pattern
             if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value)) {
@@ -264,7 +272,7 @@ export class EndpointSnippetGenerator {
     // Helper to find union types based on discriminant values
     private findAndAddUnionTypes(discriminantValue: string, imports: Set<string>): void {
         // Search through all types to find unions with this discriminant value
-        Object.values(this.context.ir.types).forEach(namedType => {
+        Object.values(this.context.ir.types).forEach((namedType) => {
             if (namedType.type === "discriminatedUnion") {
                 const unionType = namedType as FernIr.dynamic.DiscriminatedUnionType;
                 if (Object.keys(unionType.types).includes(discriminantValue)) {
@@ -477,7 +485,7 @@ export class EndpointSnippetGenerator {
         );
     }
 
-    private getClientName({ endpoint }: { endpoint?: FernIr.dynamic.Endpoint } = {}): string {
+    private getClientName(): string {
         // Use the configured client class name from custom config
         return this.context.getClientStructName();
     }
@@ -908,7 +916,7 @@ export class EndpointSnippetGenerator {
         }
 
         // Check for complex nested objects
-        return structFields.some(field => {
+        return structFields.some((field) => {
             const fieldString = field.value.toString();
             return fieldString.includes("json!") || fieldString.includes("{") || fieldString.length > 30;
         });

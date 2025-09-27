@@ -117,5 +117,4 @@ export class FilePropertyMapper {
             }
         ]);
     }
-
 }

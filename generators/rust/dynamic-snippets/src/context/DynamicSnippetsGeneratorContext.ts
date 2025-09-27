@@ -13,8 +13,8 @@ import {
     validateAndSanitizeCrateName
 } from "@fern-api/rust-base";
 import { BaseRustCustomConfigSchema } from "@fern-api/rust-codegen";
-import { DynamicTypeMapper } from "./DynamicTypeMapper";
 import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper";
+import { DynamicTypeMapper } from "./DynamicTypeMapper";
 import { FilePropertyMapper } from "./FilePropertyMapper";
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
@@ -95,7 +95,6 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return this.customConfig?.clientClassName ?? `${convertToPascalCase(this.config.workspaceName)}Client`;
     }
 
-
     // Environment resolution stub
     public resolveEnvironmentName(_environmentID: string): FernIr.Name | undefined {
         return undefined; // TODO: Implement proper environment resolution
@@ -111,7 +110,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public addScopedError(message: string, severity: (typeof Severity)[keyof typeof Severity]): void {
-        const fullScope = this.errorStack.length > 0 ? this.errorStack.join('.') : 'root';
+        const fullScope = this.errorStack.length > 0 ? this.errorStack.join(".") : "root";
         this.errors.add({
             severity,
             message: `[${fullScope}] ${message}`
@@ -119,7 +118,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getCurrentScope(): string {
-        return this.errorStack.join('.');
+        return this.errorStack.join(".");
     }
 
     // Value validation helpers matching Swift's pattern
@@ -142,8 +141,12 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             return value;
         }
         if (typeof value === "string") {
-            if (value === "true") return true;
-            if (value === "false") return false;
+            if (value === "true") {
+                return true;
+            }
+            if (value === "false") {
+                return false;
+            }
         }
         this.addScopedError(`Expected boolean but got: ${typeof value}`, Severity.Critical);
         return undefined;
@@ -158,10 +161,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     // Comprehensive type validation methods
-    public validateTypeReference(
-        typeRef: FernIr.dynamic.TypeReference,
-        value: unknown
-    ): boolean {
+    public validateTypeReference(typeRef: FernIr.dynamic.TypeReference, value: unknown): boolean {
         switch (typeRef.type) {
             case "primitive":
                 return this.validatePrimitive(typeRef.value, value);
@@ -185,10 +185,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         }
     }
 
-    private validatePrimitive(
-        primitive: FernIr.PrimitiveTypeV1,
-        value: unknown
-    ): boolean {
+    private validatePrimitive(primitive: FernIr.PrimitiveTypeV1, value: unknown): boolean {
         switch (primitive) {
             case "STRING":
             case "UUID":
@@ -222,8 +219,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             case "object":
                 return typeof value === "object" && value != null && !Array.isArray(value);
             case "enum":
-                return typeof value === "string" &&
-                       namedType.values.some(v => v.wireValue === value);
+                return typeof value === "string" && namedType.values.some((v) => v.wireValue === value);
             case "alias":
                 return this.validateTypeReference(namedType.typeReference, value);
             case "discriminatedUnion":
@@ -246,10 +242,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         }
     }
 
-    private validateDiscriminatedUnion(
-        union: FernIr.dynamic.DiscriminatedUnionType,
-        value: unknown
-    ): boolean {
+    private validateDiscriminatedUnion(union: FernIr.dynamic.DiscriminatedUnionType, value: unknown): boolean {
         if (typeof value !== "object" || value == null) {
             return false;
         }
@@ -257,21 +250,16 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         const record = value as Record<string, unknown>;
         const discriminantValue = record[union.discriminant.wireValue];
 
-        return typeof discriminantValue === "string" &&
-               Object.keys(union.types).includes(discriminantValue);
+        return typeof discriminantValue === "string" && Object.keys(union.types).includes(discriminantValue);
     }
 
-    private validateUndiscriminatedUnion(
-        union: FernIr.dynamic.UndiscriminatedUnionType,
-        value: unknown
-    ): boolean {
+    private validateUndiscriminatedUnion(union: FernIr.dynamic.UndiscriminatedUnionType, value: unknown): boolean {
         // At least one of the union types should validate
-        return union.types.some(typeRef => this.validateTypeReference(typeRef, value));
+        return union.types.some((typeRef) => this.validateTypeReference(typeRef, value));
     }
 
     // Enhanced nullable checking
     public isNullable(typeRef: FernIr.dynamic.TypeReference): boolean {
         return typeRef.type === "nullable" || typeRef.type === "optional";
     }
-
 }
