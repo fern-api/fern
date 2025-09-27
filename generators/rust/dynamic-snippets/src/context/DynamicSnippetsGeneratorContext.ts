@@ -14,12 +14,14 @@ import {
 } from "@fern-api/rust-base";
 import { BaseRustCustomConfigSchema } from "@fern-api/rust-codegen";
 import { DynamicTypeMapper } from "./DynamicTypeMapper";
+import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper";
 import { FilePropertyMapper } from "./FilePropertyMapper";
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation;
     public customConfig: BaseRustCustomConfigSchema | undefined;
-    public dynamicTypeInstantiationMapper: DynamicTypeMapper;
+    public dynamicTypeMapper: DynamicTypeMapper;
+    public dynamicTypeLiteralMapper: DynamicTypeLiteralMapper;
     public filePropertyMapper: FilePropertyMapper;
     private errorStack: string[] = [];
 
@@ -35,7 +37,8 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         super({ ir, config, options });
         this.ir = ir;
         this.customConfig = config.customConfig as BaseRustCustomConfigSchema | undefined;
-        this.dynamicTypeInstantiationMapper = new DynamicTypeMapper({ context: this });
+        this.dynamicTypeMapper = new DynamicTypeMapper({ context: this });
+        this.dynamicTypeLiteralMapper = new DynamicTypeLiteralMapper({ context: this });
         this.filePropertyMapper = new FilePropertyMapper({ context: this });
     }
 

@@ -642,7 +642,7 @@ export class EndpointSnippetGenerator {
             case "bytes":
                 return this.getBytesBodyRequestArg({ value });
             case "typeReference":
-                return this.context.dynamicTypeInstantiationMapper.convert({ typeReference: body.value, value });
+                return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value });
             default:
                 assertNever(body);
         }
@@ -683,7 +683,7 @@ export class EndpointSnippetGenerator {
                 try {
                     structFields.push({
                         name: this.context.getPropertyName(queryParameter.name.name),
-                        value: this.context.dynamicTypeInstantiationMapper.convert(queryParameter)
+                        value: this.context.dynamicTypeLiteralMapper.convert(queryParameter)
                     });
                 } finally {
                     this.context.unscopeError();
@@ -703,7 +703,7 @@ export class EndpointSnippetGenerator {
         for (const header of headers) {
             structFields.push({
                 name: this.context.getPropertyName(header.name.name),
-                value: this.context.dynamicTypeInstantiationMapper.convert(header)
+                value: this.context.dynamicTypeLiteralMapper.convert(header)
             });
         }
         this.context.errors.unscope();
@@ -759,7 +759,7 @@ export class EndpointSnippetGenerator {
         for (const parameter of bodyProperties) {
             fields.push({
                 name: this.context.getPropertyName(parameter.name.name),
-                value: this.context.dynamicTypeInstantiationMapper.convert(parameter)
+                value: this.context.dynamicTypeLiteralMapper.convert(parameter)
             });
         }
 
@@ -790,7 +790,7 @@ export class EndpointSnippetGenerator {
             case "bytes":
                 return this.getBytesBodyRequestArg({ value });
             case "typeReference":
-                return this.context.dynamicTypeInstantiationMapper.convert({ typeReference: body.value, value });
+                return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value });
             default:
                 assertNever(body);
         }
@@ -839,7 +839,7 @@ export class EndpointSnippetGenerator {
             values: snippet.pathParameters ?? {}
         });
         for (const parameter of pathParameters) {
-            args.push(rust.Expression.referenceOf(this.context.dynamicTypeInstantiationMapper.convert(parameter)));
+            args.push(rust.Expression.referenceOf(this.context.dynamicTypeLiteralMapper.convert(parameter)));
         }
 
         return args;

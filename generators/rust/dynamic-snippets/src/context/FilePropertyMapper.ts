@@ -94,7 +94,7 @@ export class FilePropertyMapper {
         if (bodyPropertyValue == null) {
             return rust.Expression.raw('todo!("Missing body property value")');
         }
-        return this.context.dynamicTypeInstantiationMapper.convert({
+        return this.context.dynamicTypeLiteralMapper.convert({
             typeReference: property.typeReference,
             value: bodyPropertyValue
         });

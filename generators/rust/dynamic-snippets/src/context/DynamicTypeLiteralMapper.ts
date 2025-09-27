@@ -4,7 +4,7 @@ import { rust } from "@fern-api/rust-codegen";
 
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
 
-export declare namespace DynamicTypeInstantiationMapper {
+export declare namespace DynamicTypeLiteralMapper {
     interface Args {
         typeReference: FernIr.dynamic.TypeReference;
         value: unknown;
@@ -14,14 +14,14 @@ export declare namespace DynamicTypeInstantiationMapper {
     type ConvertedAs = "mapKey" | "mapValue";
 }
 
-export class DynamicTypeInstantiationMapper {
+export class DynamicTypeLiteralMapper {
     private context: DynamicSnippetsGeneratorContext;
 
     constructor({ context }: { context: DynamicSnippetsGeneratorContext }) {
         this.context = context;
     }
 
-    public convert(args: DynamicTypeInstantiationMapper.Args): rust.Expression {
+    public convert(args: DynamicTypeLiteralMapper.Args): rust.Expression {
         // Validate null values
         if (args.value == null && !this.context.isNullable(args.typeReference)) {
             this.context.addScopedError("Expected non-null value, but got null", Severity.Critical);
@@ -70,7 +70,7 @@ export class DynamicTypeInstantiationMapper {
     }: {
         primitive: FernIr.PrimitiveTypeV1;
         value: unknown;
-        as?: DynamicTypeInstantiationMapper.ConvertedAs;
+        as?: DynamicTypeLiteralMapper.ConvertedAs;
     }): rust.Expression {
         switch (primitive) {
             case "STRING": {
@@ -707,7 +707,7 @@ export class DynamicTypeInstantiationMapper {
         as
     }: {
         value: unknown;
-        as?: DynamicTypeInstantiationMapper.ConvertedAs;
+        as?: DynamicTypeLiteralMapper.ConvertedAs;
     }): number | undefined {
         const num = as === "mapKey" && typeof value === "string" ? Number(value) : value;
         return this.context.getValueAsNumber({ value: num });
@@ -718,7 +718,7 @@ export class DynamicTypeInstantiationMapper {
         as
     }: {
         value: unknown;
-        as?: DynamicTypeInstantiationMapper.ConvertedAs;
+        as?: DynamicTypeLiteralMapper.ConvertedAs;
     }): boolean | undefined {
         const bool = (() => {
             switch (as) {
