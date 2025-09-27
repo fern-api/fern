@@ -919,7 +919,7 @@ function isExampleServerSentEvent(obj: unknown): obj is { event: string; data: u
         typeof obj === "object" &&
         obj !== null &&
         "event" in obj &&
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // biome-ignore lint/suspicious/noExplicitAny: legacy type usage
         typeof (obj as any)?.event === "string" &&
         "data" in obj
     );
