@@ -206,11 +206,12 @@ class TypeHint(AstNode):
 
     @staticmethod
     def literal(value: Expression) -> TypeHint:
-        return TypeHint(
+        result = TypeHint(
             type=get_reference_to_typing_import("Literal"),
             type_parameters=[TypeParameter(value)],
             is_literal=True,
         )
+        return result
 
     @staticmethod
     def class_var(class_var_type: TypeHint) -> TypeHint:
