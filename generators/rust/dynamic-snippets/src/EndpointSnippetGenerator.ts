@@ -107,9 +107,13 @@ export class EndpointSnippetGenerator {
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): rust.UseStatement[] {
         const imports = new Set<string>(["ClientConfig", this.getClientName({ endpoint })]);
+        const stdImports = new Set<string>();
+        const chronoImports = new Set<string>();
+        const uuidImports = new Set<string>();
+
+        // Conditionally add imports based on actual usage in the snippet
 
         // Add request struct import only if this endpoint actually uses a request struct
-        // Match the SDK generator logic: only for query params or body, not just headers
         if (endpoint.request.type === "inlined") {
             const request = endpoint.request;
             const hasQueryParams = (request.queryParameters ?? []).length > 0;
@@ -137,12 +141,147 @@ export class EndpointSnippetGenerator {
             }
         }
 
-        return [
-            new rust.UseStatement({
-                path: this.context.getCrateName(),
-                items: Array.from(imports)
-            })
-        ];
+        // Collect all types used in snippet values (enhanced collection)
+        this.collectSnippetTypeImports(snippet, imports, stdImports, chronoImports, uuidImports);
+
+        const useStatements: rust.UseStatement[] = [];
+
+        // Add standard library imports
+        if (stdImports.size > 0) {
+            useStatements.push(new rust.UseStatement({
+                path: "std::collections",
+                items: Array.from(stdImports)
+            }));
+        }
+
+        // Add chrono imports
+        if (chronoImports.size > 0) {
+            useStatements.push(new rust.UseStatement({
+                path: "chrono",
+                items: Array.from(chronoImports)
+            }));
+        }
+
+        // Add UUID imports
+        if (uuidImports.size > 0) {
+            useStatements.push(new rust.UseStatement({
+                path: "uuid",
+                items: Array.from(uuidImports)
+            }));
+        }
+
+        // Add crate imports
+        useStatements.push(new rust.UseStatement({
+            path: this.context.getCrateName(),
+            items: Array.from(imports)
+        }));
+
+        return useStatements;
+    }
+
+    // New method to collect types from snippet values
+    private collectSnippetTypeImports(
+        snippet: FernIr.dynamic.EndpointSnippetRequest,
+        imports: Set<string>,
+        stdImports: Set<string>,
+        chronoImports: Set<string>,
+        uuidImports: Set<string>
+    ): void {
+        // Collect types from request body if present
+        if (snippet.requestBody != null) {
+            this.collectTypesFromValue(snippet.requestBody, imports, stdImports, chronoImports, uuidImports);
+        }
+
+        // Collect types from query parameters
+        if (snippet.queryParameters != null) {
+            Object.values(snippet.queryParameters).forEach(value => {
+                this.collectTypesFromValue(value, imports, stdImports, chronoImports, uuidImports);
+            });
+        }
+
+        // Collect types from headers
+        if (snippet.headers != null) {
+            Object.values(snippet.headers).forEach(value => {
+                this.collectTypesFromValue(value, imports, stdImports, chronoImports, uuidImports);
+            });
+        }
+    }
+
+    // Helper to collect type imports from a value by analyzing its structure
+    private collectTypesFromValue(
+        value: unknown,
+        imports: Set<string>,
+        stdImports: Set<string>,
+        chronoImports: Set<string>,
+        uuidImports: Set<string>
+    ): void {
+        if (typeof value === "object" && value != null && !Array.isArray(value)) {
+            const obj = value as Record<string, unknown>;
+
+            // Check for HashMap usage
+            if (Object.keys(obj).length > 0) {
+                stdImports.add("HashMap");
+            }
+
+            // Look for discriminant fields that might indicate union types
+            Object.keys(obj).forEach(key => {
+                // Common discriminant field names
+                if (key === "type" || key === "_type" || key.endsWith("_type")) {
+                    const discriminantValue = obj[key];
+                    if (typeof discriminantValue === "string") {
+                        // Try to find the corresponding union type
+                        this.findAndAddUnionTypes(discriminantValue, imports);
+                    }
+                }
+            });
+
+            // Recursively collect from nested objects
+            Object.values(obj).forEach(nestedValue => {
+                this.collectTypesFromValue(nestedValue, imports, stdImports, chronoImports, uuidImports);
+            });
+        } else if (Array.isArray(value)) {
+            // Check for HashSet usage (arrays)
+            if (value.length > 0) {
+                stdImports.add("HashSet");
+            }
+            value.forEach(item => this.collectTypesFromValue(item, imports, stdImports, chronoImports, uuidImports));
+        } else if (typeof value === "string") {
+            // Check for UUID pattern
+            if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value)) {
+                uuidImports.add("Uuid");
+            }
+            // Check for date/time patterns
+            if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+                chronoImports.add("NaiveDate");
+            }
+            if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/.test(value)) {
+                chronoImports.add("DateTime");
+                chronoImports.add("Utc");
+            }
+        }
+    }
+
+    // Helper to find union types based on discriminant values
+    private findAndAddUnionTypes(discriminantValue: string, imports: Set<string>): void {
+        // Search through all types to find unions with this discriminant value
+        Object.values(this.context.ir.types).forEach(namedType => {
+            if (namedType.type === "discriminatedUnion") {
+                const unionType = namedType as FernIr.dynamic.DiscriminatedUnionType;
+                if (Object.keys(unionType.types).includes(discriminantValue)) {
+                    imports.add(this.context.getStructName(namedType.declaration.name));
+
+                    // Also add the variant types
+                    const variantType = unionType.types[discriminantValue];
+                    if (variantType && variantType.type === "samePropertiesAsObject") {
+                        const referencedType = this.context.ir.types[variantType.typeId];
+                        if (referencedType) {
+                            imports.add(this.context.getStructName(referencedType.declaration.name));
+                            this.collectNestedTypeImports(referencedType, imports);
+                        }
+                    }
+                }
+            }
+        });
     }
 
     private collectNestedTypeImports(
@@ -196,6 +335,11 @@ export class EndpointSnippetGenerator {
                                 this.collectNestedTypeImports(referencedType, imports, visited);
                             }
                         }
+                    });
+                } else if (namedType.type === "undiscriminatedUnion") {
+                    // For undiscriminated unions (like CastMember), collect all variant types
+                    namedType.types.forEach((unionType) => {
+                        this.collectTypeReferenceImports(unionType, imports, visited);
                     });
                 }
                 break;
@@ -460,11 +604,16 @@ export class EndpointSnippetGenerator {
 
         // Path parameters
         this.context.errors.scope(Scope.PathParameters);
-        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
-        if (pathParameters.length > 0) {
-            args.push(...this.getPathParameterArgs({ namedParameters: pathParameters, snippet }));
+        this.context.scopeError("pathParameters");
+        try {
+            const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
+            if (pathParameters.length > 0) {
+                args.push(...this.getPathParameterArgs({ namedParameters: pathParameters, snippet }));
+            }
+        } finally {
+            this.context.unscopeError();
+            this.context.errors.unscope();
         }
-        this.context.errors.unscope();
 
         // Only create request struct if it has meaningful parameters beyond headers
         // Match the SDK generator logic: headers are handled separately, not as request struct parameters
@@ -521,19 +670,29 @@ export class EndpointSnippetGenerator {
     }): rust.Expression {
         const structFields: Array<{ name: string; value: rust.Expression }> = [];
 
-        // Query parameters
+        // Query parameters with enhanced error scoping
         this.context.errors.scope(Scope.QueryParameters);
-        const queryParameters = this.context.associateQueryParametersByWireValue({
-            parameters: request.queryParameters ?? [],
-            values: snippet.queryParameters ?? {}
-        });
-        for (const queryParameter of queryParameters) {
-            structFields.push({
-                name: this.context.getPropertyName(queryParameter.name.name),
-                value: this.context.dynamicTypeInstantiationMapper.convert(queryParameter)
+        this.context.scopeError("queryParameters");
+        try {
+            const queryParameters = this.context.associateQueryParametersByWireValue({
+                parameters: request.queryParameters ?? [],
+                values: snippet.queryParameters ?? {}
             });
+            for (const queryParameter of queryParameters) {
+                this.context.scopeError(queryParameter.name.wireValue);
+                try {
+                    structFields.push({
+                        name: this.context.getPropertyName(queryParameter.name.name),
+                        value: this.context.dynamicTypeInstantiationMapper.convert(queryParameter)
+                    });
+                } finally {
+                    this.context.unscopeError();
+                }
+            }
+        } finally {
+            this.context.unscopeError();
+            this.context.errors.unscope();
         }
-        this.context.errors.unscope();
 
         // Headers
         this.context.errors.scope(Scope.Headers);
