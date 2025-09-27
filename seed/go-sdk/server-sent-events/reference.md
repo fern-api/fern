@@ -15,9 +15,7 @@
 ```go
 client.Completions.Stream(
         context.TODO(),
-        &fern.StreamCompletionRequest{
-            Query: "query",
-        },
+        request,
     )
 }
 ```

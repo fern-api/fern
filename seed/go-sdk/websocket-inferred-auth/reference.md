@@ -15,14 +15,7 @@
 ```go
 client.Auth.GetTokenWithClientCredentials(
         context.TODO(),
-        &fern.GetTokenRequest{
-            XApiKey: "X-Api-Key",
-            ClientId: "client_id",
-            ClientSecret: "client_secret",
-            Scope: fern.String(
-                "scope",
-            ),
-        },
+        request,
     )
 }
 ```
@@ -106,15 +99,7 @@ client.Auth.GetTokenWithClientCredentials(
 ```go
 client.Auth.RefreshToken(
         context.TODO(),
-        &fern.RefreshTokenRequest{
-            XApiKey: "X-Api-Key",
-            ClientId: "client_id",
-            ClientSecret: "client_secret",
-            RefreshToken: "refresh_token",
-            Scope: fern.String(
-                "scope",
-            ),
-        },
+        request,
     )
 }
 ```

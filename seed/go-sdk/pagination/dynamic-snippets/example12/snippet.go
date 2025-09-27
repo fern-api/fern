@@ -3,9 +3,9 @@ package example
 import (
     client "github.com/pagination/fern/client"
     option "github.com/pagination/fern/option"
-    context "context"
     inlineusers "github.com/pagination/fern/inlineusers"
     fern "github.com/pagination/fern"
+    context "context"
 )
 
 func do() {
@@ -17,12 +17,13 @@ func do() {
             "<token>",
         ),
     )
+    request := &inlineusers.ListWithGlobalConfigRequest{
+        Offset: fern.Int(
+            1,
+        ),
+    }
     client.InlineUsers.InlineUsers.ListWithGlobalConfig(
         context.TODO(),
-        &inlineusers.ListWithGlobalConfigRequest{
-            Offset: fern.Int(
-                1,
-            ),
-        },
+        request,
     )
 }

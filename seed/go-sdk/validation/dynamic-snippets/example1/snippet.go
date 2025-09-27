@@ -3,8 +3,8 @@ package example
 import (
     client "github.com/validation/fern/client"
     option "github.com/validation/fern/option"
-    context "context"
     fern "github.com/validation/fern"
+    context "context"
 )
 
 func do() {
@@ -13,12 +13,13 @@ func do() {
             "https://api.fern.com",
         ),
     )
+    request := &fern.GetRequest{
+        Decimal: 2.2,
+        Even: 100,
+        Name: "fern",
+    }
     client.Get(
         context.TODO(),
-        &fern.GetRequest{
-            Decimal: 2.2,
-            Even: 100,
-            Name: "fern",
-        },
+        request,
     )
 }

@@ -9,6 +9,4 @@ $client = new SeedClient(
         'baseUrl' => 'https://api.fern.com',
     ],
 );
-$client->service->post(
-    'endpointParam',
-);
+$client->service->post();

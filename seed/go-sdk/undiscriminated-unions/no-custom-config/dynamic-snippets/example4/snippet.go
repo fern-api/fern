@@ -3,8 +3,8 @@ package example
 import (
     client "github.com/fern-api/undiscriminated-go/client"
     option "github.com/fern-api/undiscriminated-go/option"
-    context "context"
     undiscriminatedgo "github.com/fern-api/undiscriminated-go"
+    context "context"
 )
 
 func do() {
@@ -13,16 +13,17 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    client.Union.Call(
-        context.TODO(),
-        &undiscriminatedgo.Request{
-            Union: &undiscriminatedgo.MetadataUnion{
-                OptionalMetadata: map[string]any{
-                    "union": map[string]any{
-                        "key": "value",
-                    },
+    request := &undiscriminatedgo.Request{
+        Union: &undiscriminatedgo.MetadataUnion{
+            OptionalMetadata: map[string]any{
+                "union": map[string]any{
+                    "key": "value",
                 },
             },
         },
+    }
+    client.Union.Call(
+        context.TODO(),
+        request,
     )
 }

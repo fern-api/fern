@@ -43,9 +43,7 @@ client.User.Head(
 ```go
 client.User.List(
         context.TODO(),
-        &fern.ListUsersRequest{
-            Limit: 1,
-        },
+        request,
     )
 }
 ```

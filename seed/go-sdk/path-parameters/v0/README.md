@@ -17,22 +17,23 @@ package example
 
 import (
     client "github.com/path-parameters/fern/client"
-    context "context"
     fern "github.com/path-parameters/fern"
+    context "context"
 )
 
 func do() {
     client := client.NewClient()
+    request := &fern.User{
+        Name: "name",
+        Tags: []string{
+            "tags",
+            "tags",
+        },
+    }
     client.User.CreateUser(
         context.TODO(),
         "tenant_id",
-        &fern.User{
-            Name: "name",
-            Tags: []string{
-                "tags",
-                "tags",
-            },
-        },
+        request,
     )
 }
 ```

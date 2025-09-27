@@ -18,8 +18,8 @@ package example
 import (
     client "github.com/go-content-type/fern/client"
     option "github.com/go-content-type/fern/option"
-    context "context"
     fern "github.com/go-content-type/fern"
+    context "context"
 )
 
 func do() {
@@ -28,12 +28,13 @@ func do() {
             "<token>",
         ),
     )
+    request := &fern.CreateMovieRequest{
+        Title: "title",
+        Rating: 1.1,
+    }
     client.Imdb.CreateMovie(
         context.TODO(),
-        &fern.CreateMovieRequest{
-            Title: "title",
-            Rating: 1.1,
-        },
+        request,
     )
 }
 ```

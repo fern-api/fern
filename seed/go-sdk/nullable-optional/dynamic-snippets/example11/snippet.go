@@ -3,8 +3,8 @@ package example
 import (
     client "github.com/nullable-optional/fern/client"
     option "github.com/nullable-optional/fern/option"
-    context "context"
     fern "github.com/nullable-optional/fern"
+    context "context"
 )
 
 func do() {
@@ -13,22 +13,23 @@ func do() {
             "https://api.fern.com",
         ),
     )
+    request := &fern.UpdateTagsRequest{
+        Tags: []string{
+            "tags",
+            "tags",
+        },
+        Categories: []string{
+            "categories",
+            "categories",
+        },
+        Labels: []string{
+            "labels",
+            "labels",
+        },
+    }
     client.NullableOptional.UpdateTags(
         context.TODO(),
         "userId",
-        &fern.UpdateTagsRequest{
-            Tags: []string{
-                "tags",
-                "tags",
-            },
-            Categories: []string{
-                "categories",
-                "categories",
-            },
-            Labels: []string{
-                "labels",
-                "labels",
-            },
-        },
+        request,
     )
 }

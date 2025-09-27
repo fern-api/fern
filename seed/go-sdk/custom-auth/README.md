@@ -27,11 +27,12 @@ func do() {
             "<value>",
         ),
     )
+    request := map[string]any{
+        "key": "value",
+    }
     client.CustomAuth.PostWithCustomAuth(
         context.TODO(),
-        map[string]any{
-            "key": "value",
-        },
+        request,
     )
 }
 ```

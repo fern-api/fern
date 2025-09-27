@@ -3,6 +3,7 @@ package com.seed.oauthClientCredentials;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.oauthClientCredentials.SeedOauthClientCredentialsClient;
+import com.seed.oauthClientCredentials.core.ObjectMappers;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
@@ -14,7 +15,7 @@ import org.junit.jupiter.api.Test;
 public class NestedNoAuthApiWireTest {
     private MockWebServer server;
     private SeedOauthClientCredentialsClient client;
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private ObjectMapper objectMapper = ObjectMappers.JSON_MAPPER;
     @BeforeEach
     public void setup() throws Exception {
         server = new MockWebServer();

@@ -12,12 +12,13 @@ func do() {
             "https://api.fern.com",
         ),
     )
+    request := map[string]any{
+        "string": map[string]any{
+            "key": "value",
+        },
+    }
     client.Optional.SendOptionalBody(
         context.TODO(),
-        map[string]any{
-            "string": map[string]any{
-                "key": "value",
-            },
-        },
+        request,
     )
 }

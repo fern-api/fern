@@ -3,8 +3,8 @@ package example
 import (
     client "github.com/client-side-params/fern/client"
     option "github.com/client-side-params/fern/option"
-    context "context"
     fern "github.com/client-side-params/fern"
+    context "context"
 )
 
 func do() {
@@ -16,12 +16,13 @@ func do() {
             "<token>",
         ),
     )
+    request := &fern.GetResourceRequest{
+        IncludeMetadata: true,
+        Format: "json",
+    }
     client.Service.GetResource(
         context.TODO(),
         "resourceId",
-        &fern.GetResourceRequest{
-            IncludeMetadata: true,
-            Format: "json",
-        },
+        request,
     )
 }

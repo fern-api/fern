@@ -22,11 +22,12 @@ import (
 
 func do() {
     client := client.NewClient()
+    request := map[string]any{
+        "key": "value",
+    }
     client.Unknown.Post(
         context.TODO(),
-        map[string]any{
-            "key": "value",
-        },
+        request,
     )
 }
 ```

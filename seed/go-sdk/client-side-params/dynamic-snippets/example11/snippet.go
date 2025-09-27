@@ -3,8 +3,8 @@ package example
 import (
     client "github.com/client-side-params/fern/client"
     option "github.com/client-side-params/fern/option"
-    context "context"
     fern "github.com/client-side-params/fern"
+    context "context"
 )
 
 func do() {
@@ -16,16 +16,17 @@ func do() {
             "<token>",
         ),
     )
+    request := &fern.GetClientRequest{
+        Fields: fern.String(
+            "fields",
+        ),
+        IncludeFields: fern.Bool(
+            true,
+        ),
+    }
     client.Service.GetClient(
         context.TODO(),
         "clientId",
-        &fern.GetClientRequest{
-            Fields: fern.String(
-                "fields",
-            ),
-            IncludeFields: fern.Bool(
-                true,
-            ),
-        },
+        request,
     )
 }

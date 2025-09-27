@@ -13,6 +13,7 @@ public class Example5 {
             .build();
 
         client.user().updateUser(
+            "tenant_id",
             "user_id",
             UpdateUserRequest
                 .builder()

@@ -29,10 +29,7 @@ Add a movie to the database using the movies/* /... path.
 ```go
 client.Imdb.CreateMovie(
         context.TODO(),
-        &please.CreateMovieRequest{
-            Title: "title",
-            Rating: 1.1,
-        },
+        request,
     )
 }
 ```

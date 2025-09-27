@@ -3,6 +3,7 @@ package com.seed.pagination;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.pagination.SeedPaginationClient;
+import com.seed.pagination.core.ObjectMappers;
 import com.seed.pagination.core.pagination.SyncPagingIterable;
 import com.seed.pagination.resources.complex.types.Conversation;
 import com.seed.pagination.resources.complex.types.SearchRequest;
@@ -21,7 +22,7 @@ import org.junit.jupiter.api.Test;
 public class ComplexWireTest {
     private MockWebServer server;
     private SeedPaginationClient client;
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private ObjectMapper objectMapper = ObjectMappers.JSON_MAPPER;
     @BeforeEach
     public void setup() throws Exception {
         server = new MockWebServer();
