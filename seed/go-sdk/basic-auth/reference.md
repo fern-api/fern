@@ -71,9 +71,7 @@ POST request with basic auth scheme
 ```go
 client.BasicAuth.PostWithBasicAuth(
         context.TODO(),
-        map[string]any{
-            "key": "value",
-        },
+        request,
     )
 }
 ```

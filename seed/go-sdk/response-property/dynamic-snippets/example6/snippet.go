@@ -12,8 +12,9 @@ func do() {
             "https://api.fern.com",
         ),
     )
+    request := "string"
     client.Service.GetMovie(
         context.TODO(),
-        "string",
+        request,
     )
 }

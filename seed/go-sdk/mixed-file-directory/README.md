@@ -17,17 +17,18 @@ package example
 
 import (
     client "github.com/mixed-file-directory/fern/client"
-    context "context"
     fern "github.com/mixed-file-directory/fern"
+    context "context"
 )
 
 func do() {
     client := client.NewClient()
+    request := &fern.CreateOrganizationRequest{
+        Name: "name",
+    }
     client.Organization.Create(
         context.TODO(),
-        &fern.CreateOrganizationRequest{
-            Name: "name",
-        },
+        request,
     )
 }
 ```

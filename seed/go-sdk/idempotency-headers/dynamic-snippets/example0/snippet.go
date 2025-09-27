@@ -3,8 +3,8 @@ package example
 import (
     client "github.com/idempotency-headers/fern/client"
     option "github.com/idempotency-headers/fern/option"
-    context "context"
     fern "github.com/idempotency-headers/fern"
+    context "context"
 )
 
 func do() {
@@ -16,11 +16,12 @@ func do() {
             "<token>",
         ),
     )
+    request := &fern.CreatePaymentRequest{
+        Amount: 1,
+        Currency: fern.CurrencyUsd,
+    }
     client.Payment.Create(
         context.TODO(),
-        &fern.CreatePaymentRequest{
-            Amount: 1,
-            Currency: fern.CurrencyUsd,
-        },
+        request,
     )
 }

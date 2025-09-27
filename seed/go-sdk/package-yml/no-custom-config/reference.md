@@ -15,10 +15,7 @@
 client.Echo(
         context.TODO(),
         "id-ksfd9c1",
-        &fern.EchoRequest{
-            Name: "Hello world!",
-            Size: 20,
-        },
+        request,
     )
 }
 ```

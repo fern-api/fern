@@ -17,20 +17,21 @@ package example
 
 import (
     client "github.com/oauth-client-credentials-default/fern/client"
-    context "context"
     fern "github.com/oauth-client-credentials-default/fern"
+    context "context"
 )
 
 func do() {
     client := client.NewClient(
         nil,
     )
+    request := &fern.GetTokenRequest{
+        ClientId: "client_id",
+        ClientSecret: "client_secret",
+    }
     client.Auth.GetToken(
         context.TODO(),
-        &fern.GetTokenRequest{
-            ClientId: "client_id",
-            ClientSecret: "client_secret",
-        },
+        request,
     )
 }
 ```

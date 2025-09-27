@@ -15,11 +15,7 @@
 ```go
 client.Optional.SendOptionalBody(
         context.TODO(),
-        map[string]any{
-            "string": map[string]any{
-                "key": "value",
-            },
-        },
+        request,
     )
 }
 ```

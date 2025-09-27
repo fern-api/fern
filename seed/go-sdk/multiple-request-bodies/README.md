@@ -18,8 +18,8 @@ package example
 import (
     client "github.com/multiple-request-bodies/fern/client"
     option "github.com/multiple-request-bodies/fern/option"
-    context "context"
     fern "github.com/multiple-request-bodies/fern"
+    context "context"
 )
 
 func do() {
@@ -28,9 +28,10 @@ func do() {
             "<token>",
         ),
     )
+    request := &fern.UploadDocumentRequest{}
     client.UploadJsonDocument(
         context.TODO(),
-        &fern.UploadDocumentRequest{},
+        request,
     )
 }
 ```

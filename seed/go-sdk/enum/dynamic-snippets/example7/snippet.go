@@ -3,8 +3,8 @@ package example
 import (
     client "github.com/enum/fern/client"
     option "github.com/enum/fern/option"
-    context "context"
     fern "github.com/enum/fern"
+    context "context"
 )
 
 func do() {
@@ -13,25 +13,26 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    client.QueryParam.SendList(
-        context.TODO(),
-        &fern.SendEnumListAsQueryParamRequest{
-            Operand: []fern.Operand{
-                fern.OperandGreaterThan,
-            },
-            MaybeOperand: []*fern.Operand{
-                fern.OperandGreaterThan.Ptr(),
-            },
-            OperandOrColor: []*fern.ColorOrOperand{
-                &fern.ColorOrOperand{
-                    Color: fern.ColorRed,
-                },
-            },
-            MaybeOperandOrColor: []*fern.ColorOrOperand{
-                &fern.ColorOrOperand{
-                    Color: fern.ColorRed,
-                },
+    request := &fern.SendEnumListAsQueryParamRequest{
+        Operand: []fern.Operand{
+            fern.OperandGreaterThan,
+        },
+        MaybeOperand: []*fern.Operand{
+            fern.OperandGreaterThan.Ptr(),
+        },
+        OperandOrColor: []*fern.ColorOrOperand{
+            &fern.ColorOrOperand{
+                Color: fern.ColorRed,
             },
         },
+        MaybeOperandOrColor: []*fern.ColorOrOperand{
+            &fern.ColorOrOperand{
+                Color: fern.ColorRed,
+            },
+        },
+    }
+    client.QueryParam.SendList(
+        context.TODO(),
+        request,
     )
 }

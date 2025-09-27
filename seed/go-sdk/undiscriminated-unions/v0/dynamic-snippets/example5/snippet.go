@@ -3,8 +3,8 @@ package example
 import (
     client "github.com/undiscriminated-unions/fern/client"
     option "github.com/undiscriminated-unions/fern/option"
-    context "context"
     fern "github.com/undiscriminated-unions/fern"
+    context "context"
 )
 
 func do() {
@@ -13,10 +13,11 @@ func do() {
             "https://api.fern.com",
         ),
     )
+    request := &fern.UnionWithDuplicateTypes{
+        String: "string",
+    }
     client.Union.DuplicateTypesUnion(
         context.TODO(),
-        &fern.UnionWithDuplicateTypes{
-            String: "string",
-        },
+        request,
     )
 }

@@ -59,12 +59,7 @@ client.Service.GetResource(
 ```go
 client.Service.ListResources(
         context.TODO(),
-        &fern.ListResourcesRequest{
-            PageLimit: 10,
-            BeforeDate: fern.MustParseDateTime(
-                "2023-01-01",
-            ),
-        },
+        request,
     )
 }
 ```

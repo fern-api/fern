@@ -3,8 +3,8 @@ package example
 import (
     client "github.com/extra-properties/fern/client"
     option "github.com/extra-properties/fern/option"
-    context "context"
     fern "github.com/extra-properties/fern"
+    context "context"
 )
 
 func do() {
@@ -13,10 +13,11 @@ func do() {
             "https://api.fern.com",
         ),
     )
+    request := &fern.CreateUserRequest{
+        Name: "name",
+    }
     client.User.CreateUser(
         context.TODO(),
-        &fern.CreateUserRequest{
-            Name: "name",
-        },
+        request,
     )
 }

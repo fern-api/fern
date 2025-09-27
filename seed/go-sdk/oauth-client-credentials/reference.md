@@ -15,13 +15,7 @@
 ```go
 client.Auth.GetTokenWithClientCredentials(
         context.TODO(),
-        &fern.GetTokenRequest{
-            ClientId: "my_oauth_app_123",
-            ClientSecret: "sk_live_abcdef123456789",
-            Scope: fern.String(
-                "read:users",
-            ),
-        },
+        request,
     )
 }
 ```
@@ -97,14 +91,7 @@ client.Auth.GetTokenWithClientCredentials(
 ```go
 client.Auth.RefreshToken(
         context.TODO(),
-        &fern.RefreshTokenRequest{
-            ClientId: "my_oauth_app_123",
-            ClientSecret: "sk_live_abcdef123456789",
-            RefreshToken: "refresh_token",
-            Scope: fern.String(
-                "read:users",
-            ),
-        },
+        request,
     )
 }
 ```

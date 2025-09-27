@@ -3,8 +3,8 @@ package example
 import (
     client "github.com/examples/fern/pleaseinhere/client"
     option "github.com/examples/fern/pleaseinhere/option"
-    context "context"
     file "github.com/examples/fern/pleaseinhere/file"
+    context "context"
 )
 
 func do() {
@@ -16,11 +16,12 @@ func do() {
             "<token>",
         ),
     )
+    request := &file.GetFileRequest{
+        XFileApiVersion: "X-File-API-Version",
+    }
     client.File.Service.GetFile(
         context.TODO(),
         "filename",
-        &file.GetFileRequest{
-            XFileApiVersion: "X-File-API-Version",
-        },
+        request,
     )
 }

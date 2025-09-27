@@ -11,6 +11,7 @@ public class Example1 {
             .build();
 
         client.organizations().getOrganizationUser(
+            "tenant_id",
             "organization_id",
             "user_id",
             GetOrganizationUserRequest

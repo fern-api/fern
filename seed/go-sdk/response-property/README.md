@@ -22,9 +22,10 @@ import (
 
 func do() {
     client := client.NewClient()
+    request := "string"
     client.Service.GetMovie(
         context.TODO(),
-        "string",
+        request,
     )
 }
 ```

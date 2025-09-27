@@ -22,13 +22,14 @@ import (
 
 func do() {
     client := client.NewClient()
+    request := map[string]any{
+        "string": map[string]any{
+            "key": "value",
+        },
+    }
     client.Optional.SendOptionalBody(
         context.TODO(),
-        map[string]any{
-            "string": map[string]any{
-                "key": "value",
-            },
-        },
+        request,
     )
 }
 ```

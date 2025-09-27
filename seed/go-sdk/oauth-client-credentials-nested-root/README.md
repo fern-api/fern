@@ -17,24 +17,25 @@ package example
 
 import (
     client "github.com/oauth-client-credentials-nested-root/fern/client"
-    context "context"
     auth "github.com/oauth-client-credentials-nested-root/fern/auth"
     fern "github.com/oauth-client-credentials-nested-root/fern"
+    context "context"
 )
 
 func do() {
     client := client.NewClient(
         nil,
     )
+    request := &auth.GetTokenRequest{
+        ClientId: "client_id",
+        ClientSecret: "client_secret",
+        Scope: fern.String(
+            "scope",
+        ),
+    }
     client.Auth.GetToken(
         context.TODO(),
-        &auth.GetTokenRequest{
-            ClientId: "client_id",
-            ClientSecret: "client_secret",
-            Scope: fern.String(
-                "scope",
-            ),
-        },
+        request,
     )
 }
 ```

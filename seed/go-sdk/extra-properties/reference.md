@@ -15,9 +15,7 @@
 ```go
 client.User.CreateUser(
         context.TODO(),
-        &fern.CreateUserRequest{
-            Name: "name",
-        },
+        request,
     )
 }
 ```

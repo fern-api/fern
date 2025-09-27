@@ -3,8 +3,8 @@ package example
 import (
     client "github.com/nullable/fern/client"
     option "github.com/nullable/fern/option"
-    context "context"
     fern "github.com/nullable/fern"
+    context "context"
 )
 
 func do() {
@@ -13,30 +13,31 @@ func do() {
             "https://api.fern.com",
         ),
     )
-    client.Nullable.GetUsers(
-        context.TODO(),
-        &fern.GetUsersRequest{
-            Usernames: []*string{
-                fern.String(
-                    "usernames",
-                ),
-            },
-            Avatar: fern.String(
-                "avatar",
+    request := &fern.GetUsersRequest{
+        Usernames: []*string{
+            fern.String(
+                "usernames",
             ),
-            Activated: []*bool{
-                fern.Bool(
-                    true,
-                ),
-            },
-            Tags: []*string{
-                fern.String(
-                    "tags",
-                ),
-            },
-            Extra: fern.Bool(
+        },
+        Avatar: fern.String(
+            "avatar",
+        ),
+        Activated: []*bool{
+            fern.Bool(
                 true,
             ),
         },
+        Tags: []*string{
+            fern.String(
+                "tags",
+            ),
+        },
+        Extra: fern.Bool(
+            true,
+        ),
+    }
+    client.Nullable.GetUsers(
+        context.TODO(),
+        request,
     )
 }

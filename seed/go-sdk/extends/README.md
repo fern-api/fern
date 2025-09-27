@@ -17,19 +17,20 @@ package example
 
 import (
     client "github.com/extends/fern/client"
-    context "context"
     fern "github.com/extends/fern"
+    context "context"
 )
 
 func do() {
     client := client.NewClient()
+    request := &fern.Inlined{
+        Name: "name",
+        Docs: "docs",
+        Unique: "unique",
+    }
     client.ExtendedInlineRequestBody(
         context.TODO(),
-        &fern.Inlined{
-            Name: "name",
-            Docs: "docs",
-            Unique: "unique",
-        },
+        request,
     )
 }
 ```

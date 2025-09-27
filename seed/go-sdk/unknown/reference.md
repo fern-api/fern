@@ -15,9 +15,7 @@
 ```go
 client.Unknown.Post(
         context.TODO(),
-        map[string]any{
-            "key": "value",
-        },
+        request,
     )
 }
 ```
@@ -61,11 +59,7 @@ client.Unknown.Post(
 ```go
 client.Unknown.PostObject(
         context.TODO(),
-        &fern.MyObject{
-            Unknown: map[string]any{
-                "key": "value",
-            },
-        },
+        request,
     )
 }
 ```

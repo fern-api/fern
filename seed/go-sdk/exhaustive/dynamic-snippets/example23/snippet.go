@@ -3,8 +3,8 @@ package example
 import (
     client "github.com/exhaustive/fern/client"
     option "github.com/exhaustive/fern/option"
-    context "context"
     endpoints "github.com/exhaustive/fern/endpoints"
+    context "context"
 )
 
 func do() {
@@ -16,11 +16,12 @@ func do() {
             "<token>",
         ),
     )
+    request := &endpoints.GetWithQuery{
+        Query: "query",
+        Number: 1,
+    }
     client.Endpoints.Params.GetWithQuery(
         context.TODO(),
-        &endpoints.GetWithQuery{
-            Query: "query",
-            Number: 1,
-        },
+        request,
     )
 }

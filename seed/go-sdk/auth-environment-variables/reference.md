@@ -71,9 +71,7 @@ GET request with custom api key
 ```go
 client.Service.GetWithHeader(
         context.TODO(),
-        &fern.HeaderAuthRequest{
-            XEndpointHeader: "X-Endpoint-Header",
-        },
+        request,
     )
 }
 ```

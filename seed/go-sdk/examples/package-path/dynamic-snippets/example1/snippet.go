@@ -15,8 +15,9 @@ func do() {
             "<token>",
         ),
     )
+    request := "string"
     client.Echo(
         context.TODO(),
-        "string",
+        request,
     )
 }

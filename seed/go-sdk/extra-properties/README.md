@@ -17,17 +17,18 @@ package example
 
 import (
     client "github.com/extra-properties/fern/client"
-    context "context"
     fern "github.com/extra-properties/fern"
+    context "context"
 )
 
 func do() {
     client := client.NewClient()
+    request := &fern.CreateUserRequest{
+        Name: "name",
+    }
     client.User.CreateUser(
         context.TODO(),
-        &fern.CreateUserRequest{
-            Name: "name",
-        },
+        request,
     )
 }
 ```

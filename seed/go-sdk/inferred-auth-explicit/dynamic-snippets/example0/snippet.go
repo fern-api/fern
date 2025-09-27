@@ -3,8 +3,8 @@ package example
 import (
     client "github.com/inferred-auth-explicit/fern/client"
     option "github.com/inferred-auth-explicit/fern/option"
-    context "context"
     fern "github.com/inferred-auth-explicit/fern"
+    context "context"
 )
 
 func do() {
@@ -13,15 +13,16 @@ func do() {
             "https://api.fern.com",
         ),
     )
+    request := &fern.GetTokenRequest{
+        XApiKey: "X-Api-Key",
+        ClientId: "client_id",
+        ClientSecret: "client_secret",
+        Scope: fern.String(
+            "scope",
+        ),
+    }
     client.Auth.GetTokenWithClientCredentials(
         context.TODO(),
-        &fern.GetTokenRequest{
-            XApiKey: "X-Api-Key",
-            ClientId: "client_id",
-            ClientSecret: "client_secret",
-            Scope: fern.String(
-                "scope",
-            ),
-        },
+        request,
     )
 }

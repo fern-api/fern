@@ -17,21 +17,22 @@ package example
 
 import (
     client "github.com/enum/fern/client"
-    context "context"
     fern "github.com/enum/fern"
+    context "context"
 )
 
 func do() {
     client := client.NewClient()
+    request := &fern.SendEnumAsHeaderRequest{
+        Operand: fern.OperandGreaterThan,
+        MaybeOperand: fern.OperandGreaterThan.Ptr(),
+        OperandOrColor: &fern.ColorOrOperand{
+            Color: fern.ColorRed,
+        },
+    }
     client.Headers.Send(
         context.TODO(),
-        &fern.SendEnumAsHeaderRequest{
-            Operand: fern.OperandGreaterThan,
-            MaybeOperand: fern.OperandGreaterThan.Ptr(),
-            OperandOrColor: &fern.ColorOrOperand{
-                Color: fern.ColorRed,
-            },
-        },
+        request,
     )
 }
 ```
