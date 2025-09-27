@@ -2,7 +2,9 @@ use seed_path_parameters::{ClientConfig, PathParametersClient, SearchOrganizatio
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        base_url: "https://api.fern.com".to_string(),
+    };
     let client = PathParametersClient::new(config).expect("Failed to build client");
     client
         .organizations_search_organizations(

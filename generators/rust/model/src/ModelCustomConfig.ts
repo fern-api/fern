@@ -1,4 +1,4 @@
-import { BaseRustCustomConfigSchema } from "@fern-api/rust-base";
+import { BaseRustCustomConfigSchema } from "@fern-api/rust-codegen";
 import { z } from "zod";
 
 export const ModelCustomConfigSchema = BaseRustCustomConfigSchema.extend({

@@ -1,4 +1,4 @@
-use crate::api::resources::OptionalClient;
+use crate::api::resources::ObjectsWithImportsClient;
 use crate::{ApiError, ClientConfig};
 use std::collections::HashMap;
 use std::time::Duration;
@@ -86,7 +86,7 @@ impl ApiClientBuilder {
     }
 
     /// Build the client with validation
-    pub fn build(self) -> Result<OptionalClient, ApiError> {
-        OptionalClient::new(self.config)
+    pub fn build(self) -> Result<ObjectsWithImportsClient, ApiError> {
+        ObjectsWithImportsClient::new(self.config)
     }
 }

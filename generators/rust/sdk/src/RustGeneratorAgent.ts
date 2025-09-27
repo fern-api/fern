@@ -9,37 +9,39 @@ import { ReadmeConfigBuilder } from "./readme";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 
 export class RustGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorContext> {
+    private readmeConfigBuilder: ReadmeConfigBuilder;
     private publishConfig: PublishingConfig | undefined;
 
     public constructor({
         logger,
         config,
+        readmeConfigBuilder,
         ir
     }: {
         logger: Logger;
         config: FernGeneratorExec.GeneratorConfig;
+        readmeConfigBuilder: ReadmeConfigBuilder;
         ir: IntermediateRepresentation;
     }) {
         super({ logger, config, selfHosted: ir.selfHosted });
+        this.readmeConfigBuilder = readmeConfigBuilder;
         this.publishConfig = ir.publishConfig;
     }
 
     public getReadmeConfig(
         args: AbstractGeneratorAgent.ReadmeConfigArgs<SdkGeneratorContext>
     ): FernGeneratorCli.ReadmeConfig {
-        const readmeConfigBuilder = new ReadmeConfigBuilder({
-            endpointSnippets: args.endpointSnippets
-        });
-        return readmeConfigBuilder.build({
+        return this.readmeConfigBuilder.build({
             context: args.context,
             remote: args.remote,
-            featureConfig: args.featureConfig
+            featureConfig: args.featureConfig,
+            endpointSnippets: args.endpointSnippets
         });
     }
 
     public getLanguage(): FernGeneratorCli.Language {
         // TODO: Update when Rust is added to FernGeneratorCli.Language enum
-        return "rust" as FernGeneratorCli.Language;
+        return FernGeneratorCli.Language.Rust;
     }
 
     public getGitHubConfig(

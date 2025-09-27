@@ -1,4 +1,4 @@
-use crate::api::resources::BasicAuthClient;
+use crate::api::resources::BasicAuthEnvironmentVariablesClient;
 use crate::{ApiError, ClientConfig};
 use std::collections::HashMap;
 use std::time::Duration;
@@ -86,7 +86,7 @@ impl ApiClientBuilder {
     }
 
     /// Build the client with validation
-    pub fn build(self) -> Result<BasicAuthClient, ApiError> {
-        BasicAuthClient::new(self.config)
+    pub fn build(self) -> Result<BasicAuthEnvironmentVariablesClient, ApiError> {
+        BasicAuthEnvironmentVariablesClient::new(self.config)
     }
 }

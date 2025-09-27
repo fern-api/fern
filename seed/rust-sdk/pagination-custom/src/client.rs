@@ -1,4 +1,4 @@
-use crate::api::resources::UsersClient;
+use crate::api::resources::PaginationClient;
 use crate::{ApiError, ClientConfig};
 use std::collections::HashMap;
 use std::time::Duration;
@@ -86,7 +86,7 @@ impl ApiClientBuilder {
     }
 
     /// Build the client with validation
-    pub fn build(self) -> Result<UsersClient, ApiError> {
-        UsersClient::new(self.config)
+    pub fn build(self) -> Result<PaginationClient, ApiError> {
+        PaginationClient::new(self.config)
     }
 }

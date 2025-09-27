@@ -2,7 +2,9 @@ use seed_validation::{ClientConfig, CreateRequest, ValidationClient};
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        base_url: "https://api.fern.com".to_string(),
+    };
     let client = ValidationClient::new(config).expect("Failed to build client");
     client
         .create(CreateRequest {

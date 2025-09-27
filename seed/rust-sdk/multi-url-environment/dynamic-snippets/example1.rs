@@ -3,6 +3,7 @@ use seed_multi_url_environment::{ClientConfig, GetPresignedUrlRequest, MultiUrlE
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
+        base_url: "https://api.fern.com".to_string(),
         api_key: Some("<token>".to_string()),
     };
     let client = MultiUrlEnvironmentClient::new(config).expect("Failed to build client");

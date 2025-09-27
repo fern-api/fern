@@ -1,4 +1,4 @@
-use crate::api::resources::UnionClient;
+use crate::api::resources::UndiscriminatedUnionsClient;
 use crate::{ApiError, ClientConfig};
 use std::collections::HashMap;
 use std::time::Duration;
@@ -86,7 +86,7 @@ impl ApiClientBuilder {
     }
 
     /// Build the client with validation
-    pub fn build(self) -> Result<UnionClient, ApiError> {
-        UnionClient::new(self.config)
+    pub fn build(self) -> Result<UndiscriminatedUnionsClient, ApiError> {
+        UndiscriminatedUnionsClient::new(self.config)
     }
 }

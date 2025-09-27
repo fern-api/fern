@@ -117,8 +117,9 @@ export class EnvironmentGenerator {
     }
 
     private createEnvironmentEnum(environments: SingleBaseUrlEnvironment[]): Enum {
+        const environmentEnumName = this.getEnvironmentEnumName();
         return rust.enum_({
-            name: "Environment",
+            name: environmentEnumName,
             visibility: PUBLIC,
             attributes: [Attribute.derive(["Debug", "Clone", "Copy", "PartialEq", "Eq", "Serialize", "Deserialize"])],
             variants: environments.map((env) => this.createEnumVariant(env))
@@ -136,9 +137,10 @@ export class EnvironmentGenerator {
 
     private createEnvironmentImplBlock(environments: SingleBaseUrlEnvironment[]): ImplBlock {
         const urlMethod = this.createUrlMethod(environments);
+        const environmentEnumName = this.getEnvironmentEnumName();
 
         return rust.implBlock({
-            targetType: Type.reference(new Reference({ name: "Environment" })),
+            targetType: Type.reference(new Reference({ name: environmentEnumName })),
             methods: [urlMethod]
         });
     }
@@ -172,6 +174,7 @@ export class EnvironmentGenerator {
     private createDefaultImplBlock(environments: SingleBaseUrlEnvironment[]): ImplBlock {
         const defaultEnvId = this.context.ir.environments?.defaultEnvironment;
         const defaultEnv = environments.find((env) => env.id === defaultEnvId) || environments[0];
+        const environmentEnumName = this.getEnvironmentEnumName();
 
         if (!defaultEnv) {
             throw new Error("No environments found for Default implementation");
@@ -185,7 +188,7 @@ export class EnvironmentGenerator {
         });
 
         return rust.implBlock({
-            targetType: Type.reference(new Reference({ name: "Environment" })),
+            targetType: Type.reference(new Reference({ name: environmentEnumName })),
             traitName: "Default",
             methods: [defaultMethod]
         });
@@ -207,8 +210,9 @@ export class EnvironmentGenerator {
     }
 
     private createMultiUrlEnvironmentEnum(environments: MultipleBaseUrlsEnvironment[]): Enum {
+        const environmentEnumName = this.getEnvironmentEnumName();
         return rust.enum_({
-            name: "Environment",
+            name: environmentEnumName,
             visibility: PUBLIC,
             attributes: [Attribute.derive(["Debug", "Clone", "Serialize", "Deserialize"])],
             variants: environments.map((env) =>
@@ -222,9 +226,10 @@ export class EnvironmentGenerator {
 
     private createMultiUrlImplBlock(config: MultipleBaseUrlsEnvironments): ImplBlock {
         const getUrlMethod = this.createMultiUrlGetUrlMethod(config);
+        const environmentEnumName = this.getEnvironmentEnumName();
 
         return rust.implBlock({
-            targetType: Type.reference(new Reference({ name: "Environment" })),
+            targetType: Type.reference(new Reference({ name: environmentEnumName })),
             methods: [getUrlMethod]
         });
     }
@@ -253,5 +258,10 @@ export class EnvironmentGenerator {
             returnType: Type.reference(new Reference({ name: "&str" })),
             body: CodeBlock.fromStatements([matchStatement])
         });
+    }
+
+    private getEnvironmentEnumName(): string {
+        const customConfig = this.context.customConfig;
+        return customConfig.environmentEnumName || "Environment";
     }
 }

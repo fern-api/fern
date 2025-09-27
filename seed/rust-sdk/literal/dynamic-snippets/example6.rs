@@ -2,7 +2,9 @@ use seed_literal::{ClientConfig, LiteralClient, SendLiteralsInQueryRequest};
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        base_url: "https://api.fern.com".to_string(),
+    };
     let client = LiteralClient::new(config).expect("Failed to build client");
     client
         .query_send(SendLiteralsInQueryRequest {

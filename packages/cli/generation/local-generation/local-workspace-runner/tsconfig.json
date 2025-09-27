@@ -78,6 +78,9 @@
     },
     {
       "path": "../../../../../generators/swift/dynamic-snippets"
+    },
+    {
+      "path": "../../../../../generators/rust/dynamic-snippets"
     }
   ]
 }

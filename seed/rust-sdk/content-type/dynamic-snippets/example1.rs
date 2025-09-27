@@ -2,7 +2,9 @@ use seed_content_types::{ClientConfig, ContentTypesClient, PatchComplexRequest};
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        base_url: "https://api.fern.com".to_string(),
+    };
     let client = ContentTypesClient::new(config).expect("Failed to build client");
     client
         .service_patch_complex(

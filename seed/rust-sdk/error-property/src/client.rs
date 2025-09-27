@@ -1,4 +1,4 @@
-use crate::api::resources::PropertyBasedErrorClient;
+use crate::api::resources::ErrorPropertyClient;
 use crate::{ApiError, ClientConfig};
 use std::collections::HashMap;
 use std::time::Duration;
@@ -86,7 +86,7 @@ impl ApiClientBuilder {
     }
 
     /// Build the client with validation
-    pub fn build(self) -> Result<PropertyBasedErrorClient, ApiError> {
-        PropertyBasedErrorClient::new(self.config)
+    pub fn build(self) -> Result<ErrorPropertyClient, ApiError> {
+        ErrorPropertyClient::new(self.config)
     }
 }

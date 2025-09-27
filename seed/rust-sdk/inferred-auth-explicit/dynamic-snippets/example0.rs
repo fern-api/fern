@@ -2,7 +2,9 @@ use seed_inferred_auth_explicit::{ClientConfig, GetTokenRequest, InferredAuthExp
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        base_url: "https://api.fern.com".to_string(),
+    };
     let client = InferredAuthExplicitClient::new(config).expect("Failed to build client");
     client
         .auth_get_token_with_client_credentials(GetTokenRequest {

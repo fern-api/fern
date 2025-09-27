@@ -2,7 +2,9 @@ use seed_websocket_auth::{ClientConfig, RefreshTokenRequest, WebsocketAuthClient
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        base_url: "https://api.fern.com".to_string(),
+    };
     let client = WebsocketAuthClient::new(config).expect("Failed to build client");
     client
         .auth_refresh_token(RefreshTokenRequest {

@@ -1,4 +1,4 @@
-irVersion: v58
+irVersion: v59
 displayName: Rust SDK
 image: fernapi/fern-rust-sdk
 changelogLocation: ../../generators/rust/sdk/versions.yml
@@ -43,7 +43,77 @@ fixtures:
   simple:
     - customConfig: null
       outputFolder: basic
+    - customConfig:
+        crateName: custom_simple_sdk
+        crateVersion: "1.2.0"
+        clientClassName: CustomSimpleClient
+      outputFolder: basic-custom-config
   imdb:
     - customConfig:
         clientName: ImdbClient
-      outputFolder: imdb 
+      outputFolder: imdb
+    - customConfig:
+        crateName: custom_imdb_sdk
+        crateVersion: "2.1.0"
+        clientClassName: CustomImdbClient
+        extraDependencies:
+          serde_derive: "1.0"
+          tokio-util: "0.7"
+      outputFolder: imdb-custom-config
+  single-url-environment-default:
+    - customConfig: null
+      outputFolder: basic
+    - customConfig:
+        environmentEnumName: CustomApiEnvironment
+        crateName: environment_test_sdk
+        crateVersion: "0.2.0"
+      outputFolder: custom-environment
+    - customConfig:
+        environmentEnumName: MyCustomEnvironment
+        customReadmeSections:
+          - title: "Custom Installation"
+            content: "Add this line to your Cargo.toml:\n```toml\n[dependencies]\ncustom_sdk = \"1.0.0\"\n```"
+          - title: "Advanced Usage"
+            content: "For advanced users, you can configure custom retry policies and timeouts."
+        crateName: full_custom_sdk
+        crateVersion: "1.0.0"
+      outputFolder: full-custom
+  examples:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        customReadmeSections:
+          - title: "Override Section"
+            content: "Override Content"
+          - title: "Generator Invocation Custom Section"
+            content: "Generator Invocation Custom Content for {{ packageName }}:{{ version }}"
+      readmeConfig:
+        apiName: "CustomName"
+        disabledSections:
+          - apiReference
+        bannerLink: https://www.fernapi.com
+        apiReferenceLink: https://www.docs.fernapi.com
+        defaultEndpoint: POST /movie
+        customSections:
+          - title: "Base Readme Custom Section"
+            language: rust
+            content: "Base Readme Custom Content for {{ packageName }}:{{ version }}"
+          - title: "Override Section"
+            language: rust
+            content: "Base Content"
+        features:
+          timeouts:
+            - GET /movie/{movieId}
+      outputFolder: readme-config
+
+allowedFailures:
+  - bytes-download
+  - circular-references
+  - circular-references-advanced
+  - empty-clients
+  - literals-unions
+  - object
+  - objects-with-imports
+  - public-object
+  - websocket
+  - websocket-bearer-auth
