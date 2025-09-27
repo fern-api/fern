@@ -1,7 +1,8 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`validate > docs 1`] = `
-"Misconfigured fern directory: please see the docs at https://buildwithfern.com/learn/api-definition/introduction/what-is-the-fern-folder
+"Detected empty API definiton: fern. Remove to resolve error.
+Misconfigured fern directory: please see the docs at https://buildwithfern.com/learn/api-definition/introduction/what-is-the-fern-folder
 [docs]: ✓ All checks passed"
 `;
 
@@ -10,7 +11,10 @@ exports[`validate > no-api 1`] = `
 [api]: Missing file: api.yml"
 `;
 
-exports[`validate > no-generator 1`] = `"Misconfigured fern directory: please see the docs at https://buildwithfern.com/learn/api-definition/introduction/what-is-the-fern-folder"`;
+exports[`validate > no-generator 1`] = `
+"Detected empty API definiton: api1. Remove to resolve error.
+Misconfigured fern directory: please see the docs at https://buildwithfern.com/learn/api-definition/introduction/what-is-the-fern-folder"
+`;
 
 exports[`validate > simple 1`] = `
 "[api]: api.yml -> error-discrimination
