@@ -128,15 +128,16 @@ client.Organizations.GetOrganizationUser(
 <dd>
 
 ```go
+request := &fern.SearchOrganizationsRequest{
+        Limit: fern.Int(
+            1,
+        ),
+    }
 client.Organizations.SearchOrganizations(
         context.TODO(),
         "tenant_id",
         "organization_id",
-        &fern.SearchOrganizationsRequest{
-            Limit: fern.Int(
-                1,
-            ),
-        },
+        request,
     )
 }
 ```
@@ -248,16 +249,17 @@ client.User.GetUser(
 <dd>
 
 ```go
+request := &fern.User{
+        Name: "name",
+        Tags: []string{
+            "tags",
+            "tags",
+        },
+    }
 client.User.CreateUser(
         context.TODO(),
         "tenant_id",
-        &fern.User{
-            Name: "name",
-            Tags: []string{
-                "tags",
-                "tags",
-            },
-        },
+        request,
     )
 }
 ```
@@ -307,19 +309,20 @@ client.User.CreateUser(
 <dd>
 
 ```go
+request := &fern.UpdateUserRequest{
+        Body: &fern.User{
+            Name: "name",
+            Tags: []string{
+                "tags",
+                "tags",
+            },
+        },
+    }
 client.User.UpdateUser(
         context.TODO(),
         "tenant_id",
         "user_id",
-        &fern.UpdateUserRequest{
-            Body: &fern.User{
-                Name: "name",
-                Tags: []string{
-                    "tags",
-                    "tags",
-                },
-            },
-        },
+        request,
     )
 }
 ```
@@ -377,15 +380,16 @@ client.User.UpdateUser(
 <dd>
 
 ```go
+request := &fern.SearchUsersRequest{
+        Limit: fern.Int(
+            1,
+        ),
+    }
 client.User.SearchUsers(
         context.TODO(),
         "tenant_id",
         "user_id",
-        &fern.SearchUsersRequest{
-            Limit: fern.Int(
-                1,
-            ),
-        },
+        request,
     )
 }
 ```

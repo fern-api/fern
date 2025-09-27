@@ -177,7 +177,10 @@ export class EndpointSnippetsGenerator {
 
     private extractMethodCall(fullSnippet: string): string {
         // Extract just the method call from the full Golang snippet
+        // also extract the request struct instantiation if present
         // Look for the pattern: client.service().method(...);
+
+        const requestInstantiation = this.extractRequestInstantiation(fullSnippet);
 
         const lines = fullSnippet.split("\n");
         let methodCallLines: string[] = [];
@@ -234,7 +237,60 @@ export class EndpointSnippetsGenerator {
 
         const extracted = result.trim();
         this.context.logger.debug(`Extracted method call: ${extracted}`);
-        return extracted;
+        return requestInstantiation ? requestInstantiation + "\n" + extracted : extracted;
+    }
+
+    private extractRequestInstantiation(fullSnippet: string): string {
+        const lines = fullSnippet.split("\n");
+
+        // Find the line that starts with "request :="
+        let requestStartIndex = -1;
+        for (let i = 0; i < lines.length; i++) {
+            const trimmedLine = lines[i]?.trim() ?? "";
+            if (trimmedLine.startsWith("request :=")) {
+                requestStartIndex = i;
+                break;
+            }
+        }
+
+        if (requestStartIndex === -1) {
+            return ""; // No request body instantiation found
+        }
+
+        // Track braces to find the end of the request body
+        let braceCount = 0;
+        let requestEndIndex = -1;
+        let foundOpenBrace = false;
+
+        for (let i = requestStartIndex; i < lines.length; i++) {
+            const line = lines[i] ?? "";
+
+            for (let j = 0; j < line.length; j++) {
+                const char = line[j];
+                if (char === "{") {
+                    braceCount++;
+                    foundOpenBrace = true;
+                } else if (char === "}") {
+                    braceCount--;
+                    if (foundOpenBrace && braceCount === 0) {
+                        requestEndIndex = i;
+                        break;
+                    }
+                }
+            }
+
+            if (requestEndIndex !== -1) {
+                break;
+            }
+        }
+
+        if (requestEndIndex === -1) {
+            return ""; // No matching closing brace found
+        }
+
+        // Extract the request body lines
+        const requestBodyLines = lines.slice(requestStartIndex, requestEndIndex + 1);
+        return requestBodyLines.join("\n");
     }
 
     private getIrEndpointById(endpointId: string): HttpEndpoint | undefined {
