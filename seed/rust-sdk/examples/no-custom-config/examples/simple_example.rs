@@ -25,7 +25,8 @@ async fn main() {
             book: Some("book".to_string()),
             metadata: todo!("Unhandled type reference"),
             revenue: 1000000,
-            cast: vec!["cast".to_string(), "cast".to_string()]
+            cast: vec!["cast".to_string(), "cast".to_string()],
+            movie_fields: todo!()
         }),
         entity: Some(Entity {
             r#type: "primitive".to_string(),

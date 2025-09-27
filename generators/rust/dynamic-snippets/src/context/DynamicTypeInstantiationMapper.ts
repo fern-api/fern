@@ -60,11 +60,45 @@ export class DynamicTypeInstantiationMapper {
     }): rust.Expression {
         switch (primitive) {
             case "STRING":
-                return rust.Expression.stringLiteral(value as string);
+                return rust.Expression.methodCall({
+                    target: rust.Expression.stringLiteral(value as string),
+                    method: "to_string",
+                    args: []
+                });
             case "INTEGER":
+                return rust.Expression.numberLiteral(value as number);
+            case "LONG":
+                return rust.Expression.numberLiteral(value as number);
+            case "DOUBLE":
                 return rust.Expression.numberLiteral(value as number);
             case "BOOLEAN":
                 return rust.Expression.booleanLiteral(value as boolean);
+            case "UUID":
+                return rust.Expression.methodCall({
+                    target: rust.Expression.stringLiteral(value as string),
+                    method: "to_string",
+                    args: []
+                });
+            case "DATE":
+                return rust.Expression.methodCall({
+                    target: rust.Expression.stringLiteral(value as string),
+                    method: "to_string",
+                    args: []
+                });
+            case "DATE_TIME":
+                return rust.Expression.methodCall({
+                    target: rust.Expression.stringLiteral(value as string),
+                    method: "to_string",
+                    args: []
+                });
+            case "BASE_64":
+                return rust.Expression.methodCall({
+                    target: rust.Expression.stringLiteral(value as string),
+                    method: "to_string",
+                    args: []
+                });
+            case "BIG_INTEGER":
+                return rust.Expression.numberLiteral(value as number);
             default:
                 return rust.Expression.raw(`todo!("Unhandled primitive: ${primitive}")`);
         }
@@ -80,7 +114,11 @@ export class DynamicTypeInstantiationMapper {
         if (typeof literal?.value === "boolean") {
             return rust.Expression.booleanLiteral(literal.value);
         } else if (typeof literal?.value === "string") {
-            return rust.Expression.stringLiteral(literal.value);
+            return rust.Expression.methodCall({
+                target: rust.Expression.stringLiteral(literal.value),
+                method: "to_string",
+                args: []
+            });
         }
         return rust.Expression.raw('todo!("Unknown literal type")');
     }
@@ -91,7 +129,11 @@ export class DynamicTypeInstantiationMapper {
         }
 
         if (typeof value === "string") {
-            return rust.Expression.stringLiteral(value);
+            return rust.Expression.methodCall({
+                target: rust.Expression.stringLiteral(value),
+                method: "to_string",
+                args: []
+            });
         }
 
         if (typeof value === "number") {
@@ -122,13 +164,59 @@ export class DynamicTypeInstantiationMapper {
         typeReference: FernIr.dynamic.TypeReference;
         value: unknown;
     }): rust.Expression {
-        // For now, use JSON for named types - this removes the todo!() error
-        // TODO: Implement proper struct instantiation in the future
-        if (typeof value === "object" && value != null) {
-            return rust.Expression.raw(`serde_json::json!(${JSON.stringify(value)})`);
+        if (typeReference.type !== "named") {
+            return rust.Expression.raw('todo!("Invalid named type reference")');
         }
 
-        return rust.Expression.stringLiteral(String(value));
+        const typeId = typeReference.value;
+        const namedType = this.context.ir.types[typeId];
+
+        if (!namedType) {
+            // Fallback to JSON if type not found
+            if (typeof value === "object" && value != null) {
+                return rust.Expression.raw(`serde_json::json!(${JSON.stringify(value)})`);
+            }
+            return rust.Expression.methodCall({
+                target: rust.Expression.stringLiteral(String(value)),
+                method: "to_string",
+                args: []
+            });
+        }
+
+        switch (namedType.type) {
+            case "object":
+                return this.convertObjectType({ objectType: namedType, value });
+            case "alias": {
+                // For aliases, create the type constructor with the converted value
+                const aliasTypeName = this.context.getStructName(namedType.declaration.name);
+                const innerValue = this.convert({ typeReference: namedType.typeReference, value });
+                return rust.Expression.functionCall(aliasTypeName, [innerValue]);
+            }
+            case "enum":
+                // For enums, use the enum variant
+                return this.convertEnumType({ enumType: namedType, value });
+            case "discriminatedUnion":
+            case "undiscriminatedUnion":
+                // For now, fallback to JSON for unions
+                if (typeof value === "object" && value != null) {
+                    return rust.Expression.raw(`serde_json::json!(${JSON.stringify(value)})`);
+                }
+                return rust.Expression.methodCall({
+                    target: rust.Expression.stringLiteral(String(value)),
+                    method: "to_string",
+                    args: []
+                });
+            default:
+                // Fallback to JSON for unknown types
+                if (typeof value === "object" && value != null) {
+                    return rust.Expression.raw(`serde_json::json!(${JSON.stringify(value)})`);
+                }
+                return rust.Expression.methodCall({
+                    target: rust.Expression.stringLiteral(String(value)),
+                    method: "to_string",
+                    args: []
+                });
+        }
     }
 
     private convertOptional({
@@ -165,5 +253,65 @@ export class DynamicTypeInstantiationMapper {
             ({ type: "unknown" } as FernIr.dynamic.TypeReference);
         const elements = value.map((item) => this.convert({ typeReference: innerTypeRef, value: item }));
         return rust.Expression.vec(elements);
+    }
+
+    private convertObjectType({
+        objectType,
+        value
+    }: {
+        objectType: FernIr.dynamic.ObjectType;
+        value: unknown;
+    }): rust.Expression {
+        if (typeof value !== "object" || value == null) {
+            return rust.Expression.raw('todo!("Expected object value for object type")');
+        }
+
+        const valueObj = value as Record<string, unknown>;
+        const structName = this.context.getStructName(objectType.declaration.name);
+        const structFields: Array<{ name: string; value: rust.Expression }> = [];
+
+        // Convert each property of the object
+        for (const property of objectType.properties) {
+            const fieldName = this.context.getPropertyName(property.name.name);
+            const fieldValue = valueObj[property.name.wireValue];
+
+            if (fieldValue !== undefined) {
+                const convertedValue = this.convert({
+                    typeReference: property.typeReference,
+                    value: fieldValue
+                });
+                structFields.push({
+                    name: fieldName,
+                    value: convertedValue
+                });
+            }
+        }
+
+        // Use struct construction for better type safety
+        const mappedFields = structFields.map((field) => ({ name: field.name, value: field.value }));
+        return rust.Expression.structConstruction(structName, mappedFields);
+    }
+
+    private convertEnumType({
+        enumType,
+        value
+    }: {
+        enumType: FernIr.dynamic.EnumType;
+        value: unknown;
+    }): rust.Expression {
+        if (typeof value !== "string") {
+            return rust.Expression.raw('todo!("Expected string value for enum type")');
+        }
+
+        const enumName = this.context.getEnumName(enumType.declaration.name);
+
+        // Find the enum variant that matches the wire value
+        const enumVariant = enumType.values.find((variant) => variant.wireValue === value);
+        if (!enumVariant) {
+            return rust.Expression.raw(`todo!("Unknown enum variant: ${value}")`);
+        }
+
+        const variantName = enumVariant.name.pascalCase.safeName;
+        return rust.Expression.reference(`${enumName}::${variantName}`);
     }
 }
