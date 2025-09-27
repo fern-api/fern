@@ -20,6 +20,7 @@ func main() {
 	cmd.Run(usage, run)
 }
 
+// Adding a comment to force seed update
 func run(config *cmd.Config, coordinator *coordinator.Client) ([]*generator.File, generator.Mode, error) {
 	_, includeReadme := config.Writer.Mode.(*writer.GithubConfig)
 	generatorConfig, err := generator.NewConfig(
