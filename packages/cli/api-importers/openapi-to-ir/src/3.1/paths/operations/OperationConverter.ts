@@ -238,7 +238,12 @@ export class OperationConverter extends AbstractOperationConverter {
                               userSpecifiedExamples: fernExamples.streamExamples
                           },
                           v2Responses: {
-                              responses: convertedResponseBody?.v2Responses
+                              responses: [
+                                  {
+                                      statusCode: 200,
+                                      body: streamResponse.body
+                                  }
+                              ]
                           }
                       }
                     : undefined,
@@ -374,7 +379,7 @@ export class OperationConverter extends AbstractOperationConverter {
             const responseBodyConverter = new ResponseBodyConverter({
                 context: this.context,
                 breadcrumbs: [...breadcrumbs, "stream"],
-                responseBody: undefined as unknown as OpenAPIV3_1.ResponseObject,
+                responseBody: { description: "" },
                 group: group ?? [],
                 method,
                 statusCode: "stream",
@@ -395,7 +400,6 @@ export class OperationConverter extends AbstractOperationConverter {
                     body: converted.streamResponseBody
                 };
                 convertedResponseBody.v2Responses = [
-                    ...(convertedResponseBody.v2Responses ?? []),
                     {
                         statusCode: 200,
                         body: converted.responseBody
@@ -481,6 +485,10 @@ export class OperationConverter extends AbstractOperationConverter {
             return { examples: {}, streamExamples: {} };
         }
         if (this.streamingExtension?.type === "streamCondition") {
+            console.log(
+                "[OperationConverter] Streaming extension is of type 'streamCondition' for operation:",
+                this.operation.operationId ?? "<unknown>"
+            );
             return this.convertStreamConditionExamples({ httpPath, httpMethod, baseUrl, fernExamples });
         }
         return {
