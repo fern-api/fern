@@ -8861,17 +8861,14 @@
               "type": "stream",
               "value": [
                 {
-                  "type": "json",
-                  "value": {
-                    "state": "INITIATED",
-                    "meta": {
-                      "model_name": "string",
-                      "latency": 1,
-                      "deployment_release_tag": "string",
-                      "prompt_version_id": "string"
-                    },
-                    "execution_id": "string"
-                  }
+                  "state": "INITIATED",
+                  "meta": {
+                    "model_name": "string",
+                    "latency": 1,
+                    "deployment_release_tag": "string",
+                    "prompt_version_id": "string"
+                  },
+                  "execution_id": "string"
                 }
               ]
             }
@@ -9028,27 +9025,24 @@
               "type": "stream",
               "value": [
                 {
-                  "type": "json",
-                  "value": {
-                    "run_id": "string",
-                    "external_id": "string",
-                    "type": "string",
-                    "data": {
-                      "id": "string",
+                  "run_id": "string",
+                  "external_id": "string",
+                  "type": "string",
+                  "data": {
+                    "id": "string",
+                    "state": "INITIATED",
+                    "ts": "2024-01-15T09:30:00Z",
+                    "output": {
+                      "name": "string",
                       "state": "INITIATED",
-                      "ts": "2024-01-15T09:30:00Z",
-                      "output": {
-                        "name": "string",
-                        "state": "INITIATED",
-                        "node_id": "string",
-                        "type": "string",
-                        "delta": "string",
-                        "value": "string"
-                      },
-                      "error": {
-                        "message": "string",
-                        "code": "WORKFLOW_INITIALIZATION"
-                      }
+                      "node_id": "string",
+                      "type": "string",
+                      "delta": "string",
+                      "value": "string"
+                    },
+                    "error": {
+                      "message": "string",
+                      "code": "WORKFLOW_INITIALIZATION"
                     }
                   }
                 }
@@ -9503,35 +9497,32 @@
               "type": "stream",
               "value": [
                 {
-                  "type": "json",
-                  "value": {
-                    "delta": {
-                      "request_index": 1,
-                      "data": {
-                        "completion_index": 1,
-                        "completion": {
-                          "id": "string",
-                          "external_id": "string",
-                          "text": "string",
-                          "finish_reason": "LENGTH",
-                          "logprobs": {
-                            "tokens": [
-                              {
-                                "token": "string",
-                                "logprob": 1.1,
-                                "top_logprobs": {},
-                                "text_offset": 1
-                              }
-                            ],
-                            "likelihood": 1.1
-                          },
-                          "model_version_id": "string",
-                          "type": "STRING"
-                        }
-                      },
-                      "error": {
-                        "message": "string"
+                  "delta": {
+                    "request_index": 1,
+                    "data": {
+                      "completion_index": 1,
+                      "completion": {
+                        "id": "string",
+                        "external_id": "string",
+                        "text": "string",
+                        "finish_reason": "LENGTH",
+                        "logprobs": {
+                          "tokens": [
+                            {
+                              "token": "string",
+                              "logprob": 1.1,
+                              "top_logprobs": {},
+                              "text_offset": 1
+                            }
+                          ],
+                          "likelihood": 1.1
+                        },
+                        "model_version_id": "string",
+                        "type": "STRING"
                       }
+                    },
+                    "error": {
+                      "message": "string"
                     }
                   }
                 }
