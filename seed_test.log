@@ -1,0 +1,113 @@
+
+> fern@ seed /Users/namananand/Desktop/open-source/fern
+> node --enable-source-maps packages/seed/dist/cli.cjs "test" "--generator" "rust-sdk" "--fixture" "examples"
+
++ bash /private/var/folders/b6/d3f6d3v16r19hd797pdxsfv40000gn/T/tmp-8622-ffvMypoJ4q4D
+
+> fern@ fern:build /Users/namananand/Desktop/open-source/fern
+> cross-env POSTHOG_API_KEY="" pnpm --filter @fern-api/cli dist:cli:prod && echo 'Run node --enable-source-maps packages/cli/cli/dist/prod/cli.cjs'
+
+
+> @fern-api/rust-sdk@0.0.0 dist:cli /Users/namananand/Desktop/open-source/fern/generators/rust/sdk
+> rm -rf ./lib && rm -rf ./dist && pnpm compile && node build.mjs
+
+
+> @fern-api/rust-sdk@0.0.0 compile /Users/namananand/Desktop/open-source/fern/generators/rust/sdk
+> tsc --build
+
+
+> @fern-api/cli@0.0.0 dist:cli:prod /Users/namananand/Desktop/open-source/fern/packages/cli/cli
+> pnpm compile && node build.prod.cjs
+
+
+> @fern-api/cli@0.0.0 compile /Users/namananand/Desktop/open-source/fern/packages/cli/cli
+> tsc --build
+
+CLI Building entry: src/cli.ts
+CLI Using tsconfig: tsconfig.json
+CLI tsup v8.5.0
+CLI Using tsup config: /Users/namananand/Desktop/open-source/fern/generators/rust/sdk/tsup.config.ts
+CLI Target: esnext
+CLI Cleaning output folder
+CJS Build start
+CJS dist/cli.cjs 3.95 MB
+CJS ⚡️ Build success in 387ms
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 935B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/node:22.12-alpine3.20
+CLI Building entry: src/cli.ts
+CLI Using tsconfig: tsconfig.json
+CLI tsup v8.5.0
+CLI Target: esnext
+CJS Build start
+#2 DONE 1.1s
+
+#3 [1/9] FROM docker.io/library/node:22.12-alpine3.20@sha256:027911463b296bdaf6df82b5ccf2c6b290fee725d5fba6513a037ed019400625
+#3 DONE 0.0s
+
+#4 [internal] load build context
+#4 transferring context: 4.17MB 0.1s done
+#4 DONE 0.1s
+
+#5 [3/9] RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain 1.78.0 --profile minimal --component rustfmt
+#5 CACHED
+
+#6 [5/9] RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github.com" &&     git config --global user.name "fern-api"
+#6 CACHED
+
+#7 [7/9] COPY generators/rust/sdk/dist/asIs /asIs
+#7 CACHED
+
+#8 [6/9] COPY generators/rust/sdk/dist /dist
+#8 CACHED
+
+#9 [4/9] RUN rustfmt --version  # Verify rustfmt is available
+#9 CACHED
+
+#10 [8/9] COPY generators/rust/sdk/features.yml /assets/features.yml
+#10 CACHED
+
+#11 [2/9] RUN apk --no-cache add bash curl git zip
+#11 CACHED
+
+#12 [9/9] RUN npm install -f -g @fern-api/generator-cli
+#12 CACHED
+
+#13 exporting to image
+#13 exporting layers done
+#13 writing image sha256:61e87bccfb06cc4e2172dff3c6846007ba1ebedaed0c420423411ae205a313aa done
+#13 naming to docker.io/fernapi/fern-rust-sdk:latest done
+#13 DONE 0.0s
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/vd6xvw6ysg8bxir3jysfznla2
+[rust-sdk:examples:readme-config]:  Running generator...
+[rust-sdk:examples:readme-config]:  Started.
+[rust-sdk:examples:readme-config]:  Starting generation for fernapi/fern-rust-sdk
+[rust-sdk:examples:no-custom-config]:  Running generator...
+[rust-sdk:examples:no-custom-config]:  Started.
+[rust-sdk:examples:no-custom-config]:  Starting generation for fernapi/fern-rust-sdk
+[rust-sdk:examples:readme-config]:  Executing generator fernapi/fern-rust-sdk using Docker image: fernapi/fern-rust-sdk:latest
+[rust-sdk:examples:no-custom-config]:  Executing generator fernapi/fern-rust-sdk using Docker image: fernapi/fern-rust-sdk:latest
+CJS dist/prod/cli.cjs     37.04 MB
+CJS dist/prod/cli.cjs.map 119.95 MB
+CJS ⚡️ Build success in 6427ms
+Run node --enable-source-maps packages/cli/cli/dist/prod/cli.cjs
+[rust-sdk:examples:readme-config]:  Generator logs here: /private/var/folders/b6/d3f6d3v16r19hd797pdxsfv40000gn/T/tmp-8622-TzZ15LbA3Ko6
+[rust-sdk:examples:readme-config]:  Wrote files to /Users/namananand/Desktop/open-source/fern/seed/rust-sdk/examples/readme-config
+[rust-sdk:examples:readme-config]:  Generating dynamic snippet tests for rust...
+[rust-sdk:examples:no-custom-config]:  Generator logs here: /private/var/folders/b6/d3f6d3v16r19hd797pdxsfv40000gn/T/tmp-8622-tQnkvFUdT4GM
+[rust-sdk:examples:no-custom-config]:  Wrote files to /Users/namananand/Desktop/open-source/fern/seed/rust-sdk/examples/no-custom-config
+[rust-sdk:examples:no-custom-config]:  Generating dynamic snippet tests for rust...
+[rust-sdk:examples:no-custom-config]:  Finished.
+[rust-sdk:examples:readme-config]:  Finished.
+┌──────────┬──────────────────┬─────────┬─────────────────┬──────────────┬──────────────┬─────────────────┐
+│[37m [0m[01m    Name[0m │[37m [0m[01m   Output Folder[0m │[37m [0m[01m Result[0m │[37m [0m[01mGeneration Time[0m │[37m [0m[01mCompile Time[0m │[37m [0m[01mFailure Type[0m │[37m [0m[01mFailure Message[0m │
+├──────────┼──────────────────┼─────────┼─────────────────┼──────────────┼──────────────┼─────────────────┤
+│[37m [0m[37mexamples[0m │[37m [0m[37mno-custom-config[0m │[37m [0m[37msuccess[0m │[37m [0m[37m          14.6s[0m │[37m [0m[37m         1ms[0m │[37m [0m[37m            [0m │[37m [0m[37m               [0m │
+│[37m [0m[37mexamples[0m │[37m [0m[37m   readme-config[0m │[37m [0m[37msuccess[0m │[37m [0m[37m          15.5s[0m │[37m [0m[37m         1ms[0m │[37m [0m[37m            [0m │[37m [0m[37m               [0m │
+└──────────┴──────────────────┴─────────┴─────────────────┴──────────────┴──────────────┴─────────────────┘
+2/2 test cases passed ✅

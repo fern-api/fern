@@ -149,7 +149,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         }
 
         // Add re-exports
-        useStatements.push(new UseStatement({ path: "resources", items: [clientName], isPublic: true }));
+        useStatements.push(new UseStatement({ path: "resources", items: ["*"], isPublic: true }));
         if (hasTypes) {
             useStatements.push(new UseStatement({ path: "types", items: ["*"], isPublic: true }));
         }
@@ -259,7 +259,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         }
 
         if (hasTypes) {
-            useStatements.push(new UseStatement({ path: "api::types", items: ["*"], isPublic: true }));
+            useStatements.push(new UseStatement({ path: "api", items: ["*"], isPublic: true }));
         }
 
         // Add re-exports
