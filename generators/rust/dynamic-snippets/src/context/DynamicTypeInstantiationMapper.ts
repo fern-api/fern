@@ -32,6 +32,7 @@ export class DynamicTypeInstantiationMapper {
             return rust.Expression.none();
         }
 
+
         switch (args.typeReference.type) {
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value });
@@ -196,16 +197,9 @@ export class DynamicTypeInstantiationMapper {
                 // For enums, use the enum variant
                 return this.convertEnumType({ enumType: namedType, value });
             case "discriminatedUnion":
+                return this.convertDiscriminatedUnionType({ unionType: namedType, value });
             case "undiscriminatedUnion":
-                // For now, fallback to JSON for unions
-                if (typeof value === "object" && value != null) {
-                    return rust.Expression.raw(`serde_json::json!(${JSON.stringify(value)})`);
-                }
-                return rust.Expression.methodCall({
-                    target: rust.Expression.stringLiteral(String(value)),
-                    method: "to_string",
-                    args: []
-                });
+                return this.convertUndiscriminatedUnionType({ unionType: namedType, value });
             default:
                 // Fallback to JSON for unknown types
                 if (typeof value === "object" && value != null) {
@@ -313,5 +307,115 @@ export class DynamicTypeInstantiationMapper {
 
         const variantName = enumVariant.name.pascalCase.safeName;
         return rust.Expression.reference(`${enumName}::${variantName}`);
+    }
+
+    private convertDiscriminatedUnionType({
+        unionType,
+        value
+    }: {
+        unionType: FernIr.dynamic.DiscriminatedUnionType;
+        value: unknown;
+    }): rust.Expression {
+        const discriminatedUnionTypeInstance = this.context.resolveDiscriminatedUnionTypeInstance({
+            discriminatedUnion: unionType,
+            value
+        });
+
+        if (discriminatedUnionTypeInstance == null) {
+            return rust.Expression.raw('todo!("Could not resolve discriminated union variant")');
+        }
+
+        const unionVariant = discriminatedUnionTypeInstance.singleDiscriminatedUnionType;
+        const unionName = this.context.getStructName(unionType.declaration.name);
+        const variantName = unionVariant.discriminantValue.name.pascalCase.safeName;
+
+        switch (unionVariant.type) {
+            case "singleProperty": {
+                // For single property variants, get the property value directly
+                const record = this.context.getRecord(discriminatedUnionTypeInstance.value);
+                if (record == null) {
+                    return rust.Expression.reference(`${unionName}::${variantName}`);
+                }
+
+                const propertyValue = this.convert({
+                    typeReference: unionVariant.typeReference,
+                    value: record[unionVariant.discriminantValue.wireValue]
+                });
+
+                return rust.Expression.functionCall(`${unionName}::${variantName}`, [propertyValue]);
+            }
+            case "samePropertiesAsObject": {
+                // For object-based variants, create the struct for the referenced type
+                const referencedType = this.context.ir.types[unionVariant.typeId];
+                if (!referencedType || referencedType.type !== "object") {
+                    return rust.Expression.raw('todo!("Referenced type not found or not an object")');
+                }
+
+                const convertedObject = this.convertObjectType({
+                    objectType: referencedType,
+                    value: discriminatedUnionTypeInstance.value
+                });
+
+                return rust.Expression.functionCall(`${unionName}::${variantName}`, [convertedObject]);
+            }
+            case "noProperties": {
+                return rust.Expression.reference(`${unionName}::${variantName}`);
+            }
+            default:
+                return rust.Expression.raw('todo!("Unsupported union variant type")');
+        }
+    }
+
+    private convertUndiscriminatedUnionType({
+        unionType,
+        value
+    }: {
+        unionType: FernIr.dynamic.UndiscriminatedUnionType;
+        value: unknown;
+    }): rust.Expression {
+        const unionName = this.context.getStructName(unionType.declaration.name);
+
+        // Try each type in the union until one works
+        for (let i = 0; i < unionType.types.length; i++) {
+            const typeReference = unionType.types[i];
+            if (!typeReference) {
+                continue;
+            }
+
+            try {
+                const converted = this.convert({ typeReference, value });
+
+                // For undiscriminated unions in Rust, we need to create the appropriate variant
+                // The variant name is typically based on the type (e.g., Actor, Director)
+                const variantName = this.getUndiscriminatedUnionVariantName(typeReference);
+
+                return rust.Expression.functionCall(`${unionName}::${variantName}`, [converted]);
+            } catch (e) {
+                continue;
+            }
+        }
+        return rust.Expression.raw('todo!("No matching type in undiscriminated union")');
+    }
+
+    private getUndiscriminatedUnionVariantName(typeReference: FernIr.dynamic.TypeReference): string {
+        switch (typeReference.type) {
+            case "named":
+                const namedType = this.context.ir.types[typeReference.value];
+                if (namedType) {
+                    return namedType.declaration.name.pascalCase.safeName;
+                }
+                return "Unknown";
+            case "primitive":
+                // Map primitive types to Rust variant names
+                switch (typeReference.value) {
+                    case "STRING": return "String";
+                    case "INTEGER": return "Integer";
+                    case "BOOLEAN": return "Boolean";
+                    case "DOUBLE": return "Double";
+                    default: return "Unknown";
+                }
+            default:
+                return "Unknown";
+        }
     }
 }
