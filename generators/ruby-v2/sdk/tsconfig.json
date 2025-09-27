@@ -4,7 +4,10 @@
   "include": ["./src/**/*"],
   "references": [
     {
-      "path": "../../base"
+      "path": "../model"
+    },
+    {
+      "path": "../dynamic-snippets"
     },
     {
       "path": "../base"
@@ -12,11 +15,23 @@
     {
       "path": "../ast"
     },
-    { "path": "../../../packages/commons/core-utils" },
-    { "path": "../../../packages/commons/fs-utils" },
-    { "path": "../../base" },
-    { "path": "../ast" },
-    { "path": "../base" },
-    { "path": "../model" }
+    {
+      "path": "../../../packages/commons/path-utils"
+    },
+    {
+      "path": "../../../packages/cli/logger"
+    },
+    {
+      "path": "../../../packages/commons/fs-utils"
+    },
+    {
+      "path": "../../../packages/commons/core-utils"
+    },
+    {
+      "path": "../../base"
+    },
+    {
+      "path": "../../../packages/commons/logging-execa"
+    }
   ]
 }

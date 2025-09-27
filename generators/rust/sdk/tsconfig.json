@@ -8,6 +8,12 @@
   "include": ["./src/**/*"],
   "references": [
     {
+      "path": "../dynamic-snippets"
+    },
+    {
+      "path": "../../../packages/commons/core-utils"
+    },
+    {
       "path": "../model"
     },
     {
@@ -15,9 +21,6 @@
     },
     {
       "path": "../base"
-    },
-    {
-      "path": "../dynamic-snippets"
     },
     {
       "path": "../../../packages/cli/logger"

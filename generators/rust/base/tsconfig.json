@@ -8,6 +8,9 @@
   "include": ["./src/**/*"],
   "references": [
     {
+      "path": "../../../packages/cli/logger"
+    },
+    {
       "path": "../../../packages/commons/fs-utils"
     },
     {

@@ -8,13 +8,10 @@
   "include": ["./src/**/*"],
   "references": [
     {
-      "path": "../../commons/core-utils"
+      "path": "../task-context"
     },
     {
       "path": "../../ir-sdk"
-    },
-    {
-      "path": "../task-context"
     }
   ]
 }
