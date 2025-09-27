@@ -36,28 +36,15 @@ class EnumGenerator(AbstractTypeGenerator):
         self._name = name
         self._enum = enum
 
-    def escape_quotes(self, s: str) -> str:
-        """
-        Escapes double quotes and backslashes in a string for safe code generation,
-        and ensures that double double-quotes are not produced (which can cause
-        syntax errors in generated Python code).
-        """
-        # First escape backslashes, then double quotes
-        s = s.replace('\\', '\\\\')
-        s = s.replace('"', '\\"')
-        # Prevent accidental double double-quotes (e.g. '""id""')
-        while '\\"\\"' in s:
-            s = s.replace('\\"\\"', '\\"')
-        return s
-
     def generate(self) -> None:
         if self._use_str_enums:
             # Create a list of string literals for enum values
             enum_literals = []
             for v in self._enum.values:
-                # Escape double quotes and backslashes in the wire_value
-                wire_value = self.escape_quotes(v.name.wire_value)
-                enum_literals.append(f'"{wire_value}"')
+                if '"' not in v.name.wire_value:
+                    enum_literals.append(f'"{v.name.wire_value}"')
+                else:
+                    enum_literals.append(f"'{v.name.wire_value}'")
 
             # Join the literals with commas
             literals_expression = AST.Expression(", ".join(enum_literals))
@@ -97,7 +84,7 @@ class EnumGenerator(AbstractTypeGenerator):
                 enum_class.add_class_var(
                     AST.VariableDeclaration(
                         name=_get_class_var_name(value.name.name),
-                        initializer=AST.Expression(f'"{self.escape_quotes(value.name.wire_value)}"'),
+                        initializer=AST.Expression(f'"{value.name.wire_value}"'),
                         docstring=AST.Docstring(value.docs) if value.docs is not None else None,
                     )
                 )
