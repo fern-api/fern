@@ -41,9 +41,7 @@ language: python
 generatorType: SDK
 defaultOutputMode: github
 customFixtureConfig:
-  customConfig:
-    use_typeddict_requests: true
-  outputFolder: client-filename
+  customConfig: {}
 fixtures:
   alias-extends:
     - customConfig: null
