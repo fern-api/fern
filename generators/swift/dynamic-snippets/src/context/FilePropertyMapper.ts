@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { swift } from "@fern-api/swift-codegen";
+import { sanitizeSelf, swift } from "@fern-api/swift-codegen";
 
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
 
@@ -32,7 +32,7 @@ export class FilePropertyMapper {
             switch (property.type) {
                 case "file": {
                     const arg = swift.functionArgument({
-                        label: property.name.camelCase.unsafeName,
+                        label: sanitizeSelf(property.name.camelCase.unsafeName),
                         value: this.getSingleFileProperty({ property, record })
                     });
                     if (!arg.value.isNop()) {
@@ -42,7 +42,7 @@ export class FilePropertyMapper {
                 }
                 case "fileArray": {
                     const arg = swift.functionArgument({
-                        label: property.name.camelCase.unsafeName,
+                        label: sanitizeSelf(property.name.camelCase.unsafeName),
                         value: this.getArrayFileProperty({ property, record })
                     });
                     if (!arg.value.isNop()) {
@@ -52,7 +52,7 @@ export class FilePropertyMapper {
                 }
                 case "bodyProperty": {
                     const arg = swift.functionArgument({
-                        label: property.name.name.camelCase.unsafeName,
+                        label: sanitizeSelf(property.name.name.camelCase.unsafeName),
                         value: this.getBodyProperty({ property, record })
                     });
                     if (!arg.value.isNop()) {

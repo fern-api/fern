@@ -1,9 +1,9 @@
+import { isReservedKeyword } from "../syntax";
 import { AccessLevel } from "./AccessLevel";
 import { AstNode, Writer } from "./core";
 import { DeclarationType } from "./DeclarationType";
 import { DocComment } from "./DocComment";
 import { Expression } from "./Expression";
-import { isReservedKeyword } from "./syntax";
 import { Type } from "./Type";
 
 export declare namespace Property {

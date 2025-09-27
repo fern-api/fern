@@ -1,3 +1,4 @@
+import { isReservedKeyword } from "../syntax";
 import { AccessLevel } from "./AccessLevel";
 import { AstNode, Writer } from "./core";
 import { DocComment } from "./DocComment";
@@ -6,7 +7,6 @@ import { Initializer } from "./Initializer";
 import { Method } from "./Method";
 import { Protocol } from "./Protocol";
 import { Struct } from "./Struct";
-import { isReservedKeyword } from "./syntax";
 import { Type } from "./Type";
 
 export declare namespace EnumWithAssociatedValues {
