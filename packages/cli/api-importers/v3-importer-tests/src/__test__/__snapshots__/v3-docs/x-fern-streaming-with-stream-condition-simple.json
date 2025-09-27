@@ -514,7 +514,6 @@
             "statusCode": 200,
             "body": {
               "value": {
-                "docs": "",
                 "payload": {
                   "fernFilepath": {
                     "allParts": [],
@@ -578,7 +577,6 @@
                 "statusCode": 200,
                 "body": {
                   "value": {
-                    "docs": "",
                     "payload": {
                       "fernFilepath": {
                         "allParts": [],
