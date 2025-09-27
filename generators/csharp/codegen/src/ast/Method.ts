@@ -2,7 +2,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { type CSharp } from "../csharp";
 import { Access } from "./Access";
 import { Annotation } from "./Annotation";
-import { type ClassReference } from "./ClassReference";
+import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
@@ -19,9 +19,8 @@ export enum MethodType {
 export class Method extends AstNode {
     public readonly name: string;
     public readonly isAsync: boolean;
-    public readonly isAsyncEnumerable: boolean;
     public readonly access: Access | undefined;
-    public readonly return: Type | TypeParameter | undefined;
+    public readonly return: ClassReference | Type | TypeParameter | undefined;
     public readonly noBody: boolean;
     public readonly body: CodeBlock | undefined;
     private readonly bodyType: Method.BodyType;
@@ -39,7 +38,6 @@ export class Method extends AstNode {
         {
             name,
             isAsync,
-            isAsyncEnumerable,
             override,
             access,
             return_,
@@ -61,7 +59,6 @@ export class Method extends AstNode {
         super(csharp);
         this.name = name;
         this.isAsync = isAsync ?? false;
-        this.isAsyncEnumerable = isAsyncEnumerable ?? false;
         this.override = override ?? false;
         this.access = access;
         this.return = return_;
@@ -76,6 +73,10 @@ export class Method extends AstNode {
         this.typeParameters = typeParameters ?? [];
         this.annotations = annotations ?? [];
         this.interfaceReference = interfaceReference;
+    }
+
+    public get isAsyncEnumerable(): boolean {
+        return this.return?.isAsyncEnumerable ?? false;
     }
 
     public addParameter(parameter: Parameter): void {
@@ -110,13 +111,8 @@ export class Method extends AstNode {
                 writer.write("void ");
             }
         } else {
-            if (this.isAsync) {
-                if (this.isAsyncEnumerable) {
-                    // if the return type is an async enumerable, we don't want to add a class reference for Task<T>
-                    this.return.write(writer);
-                } else {
-                    writer.writeNode(this.csharp.System.Threading.Tasks.Task(this.return));
-                }
+            if (this.isAsync && !this.isAsyncEnumerable) {
+                writer.writeNode(this.csharp.System.Threading.Tasks.Task(this.return));
             } else {
                 this.return.write(writer);
             }
@@ -189,10 +185,8 @@ export namespace Method {
         override?: boolean;
         /* Whether the method is sync or async. Defaults to false. */
         isAsync?: boolean;
-        /* Whether the method is an async enumerable. Defaults to false. */
-        isAsyncEnumerable?: boolean;
         /* The return type of the method */
-        return_?: Type | TypeParameter;
+        return_?: ClassReference | Type | TypeParameter;
         /* The name of the method */
         name: string;
         /* The parameters of the method */

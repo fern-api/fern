@@ -1,4 +1,5 @@
 import { type CSharp } from "../csharp";
+import { ClassReference } from "./ClassReference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Type } from "./Type";
@@ -9,7 +10,7 @@ export declare namespace Parameter {
         /* The name of the parameter */
         name: string;
         /* The type of the parameter */
-        type: Type;
+        type: ClassReference | Type;
         /* Docs for the parameter */
         docs?: string;
         /* The initializer for the parameter */
@@ -30,7 +31,7 @@ export class Parameter extends AstNode {
     constructor({ name, type, docs, initializer, ref, out }: Parameter.Args, csharp: CSharp) {
         super(csharp);
         this.name = name;
-        this.type = type;
+        this.type = type instanceof ClassReference ? this.csharp.Type.reference(type) : type;
         this.docs = docs;
         this.initializer = initializer;
         this.ref = ref ?? false;

@@ -12,9 +12,7 @@ public class Example0
             }
         );
 
-        await client.Service.PostAsync(
-            "endpointParam"
-        );
+        await client.Service.PostAsync();
     }
 
 }

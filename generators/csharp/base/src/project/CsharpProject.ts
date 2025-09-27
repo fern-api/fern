@@ -184,6 +184,17 @@ export class CsharpProject extends AbstractProject<BaseCsharpGeneratorContext<Ba
             );
         }
 
+        if (this.context.hasWebSocketEndpoints) {
+            for (const filename of this.context.getAsyncCoreAsIsFiles()) {
+                this.coreFiles.push(
+                    await this.createAsIsFile({
+                        filename,
+                        namespace: this.context.getCoreNamespace()
+                    })
+                );
+            }
+        }
+
         for (const filename of this.context.getPublicCoreTestAsIsFiles()) {
             this.publicCoreTestFiles.push(
                 await this.createAsIsTestFile({
@@ -216,7 +227,7 @@ export class CsharpProject extends AbstractProject<BaseCsharpGeneratorContext<Ba
         await this.createCoreTestDirectory({ absolutePathToTestProjectDirectory });
         await this.createPublicCoreDirectory({ absolutePathToProjectDirectory });
 
-        if (this.context.shouldUseDotnetFormat()) {
+        if (this.context.useDotnetFormat) {
             // apply dotnet analyzer and formatter pass 1
             await this.dotnetFormat(
                 absolutePathToSrcDirectory,
@@ -637,7 +648,7 @@ ${projectGroup.join("\n")}
     <ItemGroup Condition="'$(UsePortableDateOnly)' == 'false'">
         <Compile Remove="Core\\DateOnlyConverter.cs" />
     </ItemGroup>
-
+${this.getWebSocketAsyncDependencies().join(`\n${FOUR_SPACES}`)}
     <ItemGroup>
         ${dependencies.join(`\n${FOUR_SPACES}${FOUR_SPACES}`)}
     </ItemGroup>
@@ -674,6 +685,23 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
             result.push(`<PackageReference Include="${name}" Version="${version}" />`);
         }
         return result;
+    }
+
+    /**
+     * Adds the nuget dependencies for the websocket api client.
+     *
+     * @returns an array of strings that represent the nuget dependencies.
+     */
+    private getWebSocketAsyncDependencies(): string[] {
+        return this.context.hasWebSocketEndpoints
+            ? [
+                  "",
+                  "<ItemGroup>",
+                  '    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.2" />',
+                  '    <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" />',
+                  "</ItemGroup>"
+              ]
+            : [];
     }
 
     private getProtobufDependencies(protobufSourceFilePaths: RelativeFilePath[]): string[] {

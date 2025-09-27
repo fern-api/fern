@@ -17,7 +17,7 @@ public partial class DummyClient
     }
 
     /// <example><code>
-    /// await client.Dummy.GenerateStreamAsync(new GenerateStreamRequest { Stream = true, NumEvents = 1 });
+    /// client.Dummy.GenerateStreamAsync(new GenerateStreamRequest { Stream = true, NumEvents = 1 });
     /// </code></example>
     public async IAsyncEnumerable<StreamResponse> GenerateStreamAsync(
         GenerateStreamRequest request,

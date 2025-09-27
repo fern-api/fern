@@ -231,13 +231,13 @@ export abstract class AbstractEndpointGenerator {
         for (const endParameter of additionalEndParameters ?? []) {
             args.push(endParameter);
         }
-        getEndpointReturnType({ context: this.context, endpoint });
         return this.csharp.invokeMethod({
             method: this.context.getEndpointMethodName(endpoint),
             arguments_: args,
             on,
             async: true,
             configureAwait: true,
+            isAsyncEnumerable: getEndpointReturnType({ context: this.context, endpoint })?.isAsyncEnumerable,
             generics: []
         });
     }

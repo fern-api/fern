@@ -184,9 +184,24 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                             writer.writeTextStatement("Assert.That(response, Is.EqualTo(mockResponse))");
                         }
                     } else {
-                        writer.write("Assert.DoesNotThrowAsync(async () => ");
-                        writer.writeNode(endpointSnippet);
-                        writer.write(");");
+                        if (endpointSnippet?.isAsyncEnumerable) {
+                            writer.write("Assert.DoesNotThrowAsync(async () => {");
+                            writer.indent();
+                            writer.write("await foreach (var item in ");
+                            writer.writeNode(endpointSnippet);
+                            writer.writeLine(") {");
+                            writer.indent();
+                            writer.writeLine("/* consume each item */");
+                            writer.dedent();
+                            writer.writeLine("}");
+                            writer.dedent();
+                            writer.write("}");
+                            writer.write(");");
+                        } else {
+                            writer.write("Assert.DoesNotThrowAsync(async () => ");
+                            writer.writeNode(endpointSnippet);
+                            writer.write(");");
+                        }
                     }
                 }
             });
