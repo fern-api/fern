@@ -919,7 +919,8 @@ function isExampleServerSentEvent(obj: unknown): obj is { event: string; data: u
         typeof obj === "object" &&
         obj !== null &&
         "event" in obj &&
-        typeof (obj as any).event === "string" &&
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        typeof (obj as any)?.event === "string" &&
         "data" in obj
     );
 }

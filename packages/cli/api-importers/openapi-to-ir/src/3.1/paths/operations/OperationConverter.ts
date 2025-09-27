@@ -485,10 +485,6 @@ export class OperationConverter extends AbstractOperationConverter {
             return { examples: {}, streamExamples: {} };
         }
         if (this.streamingExtension?.type === "streamCondition") {
-            console.log(
-                "[OperationConverter] Streaming extension is of type 'streamCondition' for operation:",
-                this.operation.operationId ?? "<unknown>"
-            );
             return this.convertStreamConditionExamples({ httpPath, httpMethod, baseUrl, fernExamples });
         }
         return {
