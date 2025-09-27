@@ -929,7 +929,7 @@
             "statusCode": 200,
             "body": {
               "value": {
-                "docs": "A response to a chat request.",
+                "docs": "",
                 "payload": {
                   "fernFilepath": {
                     "allParts": [],
@@ -995,38 +995,38 @@
                 "statusCode": 200,
                 "body": {
                   "value": {
-                    "responseBodyType": {
+                    "docs": "",
+                    "payload": {
                       "fernFilepath": {
                         "allParts": [],
                         "packagePath": []
                       },
                       "name": {
-                        "originalName": "ChatFullResponse",
+                        "originalName": "ChatStreamedResponse",
                         "camelCase": {
-                          "unsafeName": "chatFullResponse",
-                          "safeName": "chatFullResponse"
+                          "unsafeName": "chatStreamedResponse",
+                          "safeName": "chatStreamedResponse"
                         },
                         "snakeCase": {
-                          "unsafeName": "chat_full_response",
-                          "safeName": "chat_full_response"
+                          "unsafeName": "chat_streamed_response",
+                          "safeName": "chat_streamed_response"
                         },
                         "screamingSnakeCase": {
-                          "unsafeName": "CHAT_FULL_RESPONSE",
-                          "safeName": "CHAT_FULL_RESPONSE"
+                          "unsafeName": "CHAT_STREAMED_RESPONSE",
+                          "safeName": "CHAT_STREAMED_RESPONSE"
                         },
                         "pascalCase": {
-                          "unsafeName": "ChatFullResponse",
-                          "safeName": "ChatFullResponse"
+                          "unsafeName": "ChatStreamedResponse",
+                          "safeName": "ChatStreamedResponse"
                         }
                       },
-                      "typeId": "ChatFullResponse",
+                      "typeId": "ChatStreamedResponse",
                       "inline": false,
                       "type": "named"
                     },
-                    "docs": "A response to a chat request.",
-                    "type": "response"
+                    "type": "json"
                   },
-                  "type": "json"
+                  "type": "streaming"
                 }
               }
             ]
@@ -1835,7 +1835,7 @@
                   "inline": false,
                   "type": "named"
                 },
-                "docs": "A response to a chat request.",
+                "docs": "",
                 "type": "response"
               },
               "type": "json"
@@ -1901,7 +1901,7 @@
                       "inline": false,
                       "type": "named"
                     },
-                    "docs": "A response to a chat request.",
+                    "docs": "",
                     "type": "response"
                   },
                   "type": "json"
