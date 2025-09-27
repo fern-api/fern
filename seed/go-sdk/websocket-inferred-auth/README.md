@@ -17,24 +17,25 @@ package example
 
 import (
     client "github.com/websocket-inferred-auth/fern/client"
-    context "context"
     fern "github.com/websocket-inferred-auth/fern"
+    context "context"
 )
 
 func do() {
     client := client.NewClient(
         nil,
     )
+    request := &fern.GetTokenRequest{
+        XApiKey: "X-Api-Key",
+        ClientId: "client_id",
+        ClientSecret: "client_secret",
+        Scope: fern.String(
+            "scope",
+        ),
+    }
     client.Auth.GetTokenWithClientCredentials(
         context.TODO(),
-        &fern.GetTokenRequest{
-            XApiKey: "X-Api-Key",
-            ClientId: "client_id",
-            ClientSecret: "client_secret",
-            Scope: fern.String(
-                "scope",
-            ),
-        },
+        request,
     )
 }
 ```

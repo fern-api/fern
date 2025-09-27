@@ -1,1 +1,2 @@
-export declare const any: () => import("../../Schema").Schema<any, any>;
+import { Schema } from "../../Schema";
+export declare const any: () => Schema<any, any>;

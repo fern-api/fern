@@ -92,12 +92,7 @@ This endpoint is used to create a new user.
 ```go
 client.User.CreateUser(
         context.TODO(),
-        &fern.CreateUserRequest{
-            Name: "name",
-            Age: fern.Int(
-                1,
-            ),
-        },
+        request,
     )
 }
 ```

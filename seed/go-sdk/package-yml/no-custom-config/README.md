@@ -17,19 +17,20 @@ package example
 
 import (
     client "github.com/package-yml/fern/client"
-    context "context"
     fern "github.com/package-yml/fern"
+    context "context"
 )
 
 func do() {
     client := client.NewClient()
+    request := &fern.EchoRequest{
+        Name: "Hello world!",
+        Size: 20,
+    }
     client.Echo(
         context.TODO(),
         "id-ksfd9c1",
-        &fern.EchoRequest{
-            Name: "Hello world!",
-            Size: 20,
-        },
+        request,
     )
 }
 ```
