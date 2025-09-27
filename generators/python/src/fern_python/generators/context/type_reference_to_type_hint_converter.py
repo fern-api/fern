@@ -185,15 +185,14 @@ class TypeReferenceToTypeHintConverter:
             # Escape all double quotes and backslashes
             escaped = s.replace("\\", "\\\\").replace('"', '\\"')
             return escaped
-            
 
         value = wrapped_type.visit(
             lambda string: AST.Expression(f'"{escape_string(string)}"'),
             lambda boolean: AST.Expression(f"{boolean}"),
         )
-        
+
         result = AST.TypeHint.literal(value=value)
-        
+
         return result
 
     def _get_type_hint_for_named(
