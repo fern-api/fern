@@ -7,22 +7,19 @@ import {
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import {
     convertToPascalCase,
-    convertToSnakeCase,
     escapeRustKeyword,
     generateDefaultCrateName,
     getName,
     validateAndSanitizeCrateName
 } from "@fern-api/rust-base";
 import { BaseRustCustomConfigSchema } from "@fern-api/rust-codegen";
-import { DynamicTypeInstantiationMapper } from "./DynamicTypeInstantiationMapper";
 import { DynamicTypeMapper } from "./DynamicTypeMapper";
 import { FilePropertyMapper } from "./FilePropertyMapper";
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation;
     public customConfig: BaseRustCustomConfigSchema | undefined;
-    public dynamicTypeMapper: DynamicTypeMapper;
-    public dynamicTypeInstantiationMapper: DynamicTypeInstantiationMapper;
+    public dynamicTypeInstantiationMapper: DynamicTypeMapper;
     public filePropertyMapper: FilePropertyMapper;
     private errorStack: string[] = [];
 
@@ -38,8 +35,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         super({ ir, config, options });
         this.ir = ir;
         this.customConfig = config.customConfig as BaseRustCustomConfigSchema | undefined;
-        this.dynamicTypeMapper = new DynamicTypeMapper({ context: this });
-        this.dynamicTypeInstantiationMapper = new DynamicTypeInstantiationMapper({ context: this });
+        this.dynamicTypeInstantiationMapper = new DynamicTypeMapper({ context: this });
         this.filePropertyMapper = new FilePropertyMapper({ context: this });
     }
 
@@ -52,10 +48,14 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getStructName(name: FernIr.Name): string {
-        return getName(name.pascalCase.safeName);
+        return this.getTypeName(name);
     }
 
     public getEnumName(name: FernIr.Name): string {
+        return this.getTypeName(name);
+    }
+
+    private getTypeName(name: FernIr.Name): string {
         return getName(name.pascalCase.safeName);
     }
 
@@ -92,14 +92,9 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return this.customConfig?.clientClassName ?? `${convertToPascalCase(this.config.workspaceName)}Client`;
     }
 
-    // Module and path methods
-    public getModulePath(fernFilepath: FernIr.FernFilepath): string {
-        const parts = fernFilepath.packagePath.map((path) => convertToSnakeCase(path.pascalCase.safeName));
-        return parts.join("::");
-    }
 
     // Environment resolution stub
-    public resolveEnvironmentName(environmentID: string): FernIr.Name | undefined {
+    public resolveEnvironmentName(_environmentID: string): FernIr.Name | undefined {
         return undefined; // TODO: Implement proper environment resolution
     }
 
@@ -276,19 +271,4 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return typeRef.type === "nullable" || typeRef.type === "optional";
     }
 
-    // Type-safe value extraction
-    public extractTypedValue<T>(
-        typeRef: FernIr.dynamic.TypeReference,
-        value: unknown,
-        converter: (val: unknown) => T | undefined
-    ): T | undefined {
-        if (!this.validateTypeReference(typeRef, value)) {
-            this.addScopedError(
-                `Type validation failed for ${typeRef.type}`,
-                Severity.Critical
-            );
-            return undefined;
-        }
-        return converter(value);
-    }
 }

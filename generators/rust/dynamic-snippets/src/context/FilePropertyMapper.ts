@@ -118,27 +118,4 @@ export class FilePropertyMapper {
         ]);
     }
 
-    private getMimeType(filename: string): string {
-        const extension = filename.split(".").pop()?.toLowerCase();
-
-        switch (extension) {
-            case "json":
-                return "application/json";
-            case "pdf":
-                return "application/pdf";
-            case "png":
-                return "image/png";
-            case "jpg":
-            case "jpeg":
-                return "image/jpeg";
-            case "txt":
-                return "text/plain";
-            case "csv":
-                return "text/csv";
-            case "xml":
-                return "application/xml";
-            default:
-                return "application/octet-stream";
-        }
-    }
 }

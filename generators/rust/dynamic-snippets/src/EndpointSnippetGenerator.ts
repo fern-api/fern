@@ -902,24 +902,16 @@ export class EndpointSnippetGenerator {
     }
 
     private shouldUseStructConstruction(structFields: Array<{ name: string; value: rust.Expression }>): boolean {
-        // Use struct construction for:
-        // 1. More than 2 fields
-        // 2. Any field has complex nested structure
-        // 3. Better type safety than JSON
+        // Use struct construction for more than 2 fields
         if (structFields.length > 2) {
             return true;
         }
 
         // Check for complex nested objects
-        for (const field of structFields) {
+        return structFields.some(field => {
             const fieldString = field.value.toString();
-            // If field contains nested structures, use struct construction
-            if (fieldString.includes("json!") || fieldString.includes("{") || fieldString.length > 30) {
-                return true;
-            }
-        }
-
-        return false;
+            return fieldString.includes("json!") || fieldString.includes("{") || fieldString.length > 30;
+        });
     }
 
     private getCorrectRequestStructName(
