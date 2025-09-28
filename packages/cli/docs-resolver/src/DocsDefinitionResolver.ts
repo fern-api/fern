@@ -473,13 +473,14 @@ export class DocsDefinitionResolver {
                 this.parsedDocsConfig.announcement != null
                     ? { text: this.parsedDocsConfig.announcement.message }
                     : undefined,
+            pageActions: this.parsedDocsConfig.pageActions,
             // deprecated
             logo: undefined,
             logoV2: undefined,
             colors: undefined,
             colorsV2: undefined,
             typography: undefined,
-            backgroundImage: undefined
+            backgroundImage: undefined,
         };
         return config;
     }

@@ -9,10 +9,9 @@ import {
     DocsInstance,
     ExperimentalConfig,
     PlaygroundSettings,
-    VersionAvailability
+    VersionAvailability, 
+    AnnouncementConfig
 } from "./schemas";
-// TODO: Update this import
-import { AnnouncementConfig } from "./schemas/sdk/api/resources/docs/types/AnnouncementConfig";
 
 export interface ParsedDocsConfiguration {
     instances: DocsInstance[];
@@ -55,6 +54,8 @@ export interface ParsedDocsConfiguration {
     aiChatConfig: AiChatConfig | undefined;
 
     experimental: ExperimentalConfig | undefined;
+
+    pageActions: CjsFdrSdk.docs.v1.commons.PageActionsConfig | undefined;
 }
 
 export interface AbsoluteJsFileConfig {

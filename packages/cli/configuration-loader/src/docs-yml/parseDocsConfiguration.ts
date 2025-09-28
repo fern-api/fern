@@ -181,7 +181,16 @@ export async function parseDocsConfiguration({
 
         aiChatConfig: aiSearch ?? aiChat,
 
-        experimental
+        experimental, 
+
+        pageActions: {
+            copyPage: true,
+            viewAsMarkdown: true,
+            openAi: rawDocsConfiguration.pageActions?.chatgpt ?? false,
+            claude: rawDocsConfiguration.pageActions?.claude ?? false,
+            vscode: rawDocsConfiguration.pageActions?.vscode ?? false,
+            cursor: rawDocsConfiguration.pageActions?.cursor ?? false
+        }
     };
 }
 
