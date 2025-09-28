@@ -764,7 +764,7 @@
             "statusCode": 200,
             "body": {
               "value": {
-                "docs": "Success!",
+                "docs": "",
                 "payload": {
                   "fernFilepath": {
                     "allParts": [],
@@ -828,38 +828,38 @@
                 "statusCode": 200,
                 "body": {
                   "value": {
-                    "responseBodyType": {
+                    "docs": "",
+                    "payload": {
                       "fernFilepath": {
                         "allParts": [],
                         "packagePath": []
                       },
                       "name": {
-                        "originalName": "Completion",
+                        "originalName": "CompletionChunk",
                         "camelCase": {
-                          "unsafeName": "completion",
-                          "safeName": "completion"
+                          "unsafeName": "completionChunk",
+                          "safeName": "completionChunk"
                         },
                         "snakeCase": {
-                          "unsafeName": "completion",
-                          "safeName": "completion"
+                          "unsafeName": "completion_chunk",
+                          "safeName": "completion_chunk"
                         },
                         "screamingSnakeCase": {
-                          "unsafeName": "COMPLETION",
-                          "safeName": "COMPLETION"
+                          "unsafeName": "COMPLETION_CHUNK",
+                          "safeName": "COMPLETION_CHUNK"
                         },
                         "pascalCase": {
-                          "unsafeName": "Completion",
-                          "safeName": "Completion"
+                          "unsafeName": "CompletionChunk",
+                          "safeName": "CompletionChunk"
                         }
                       },
-                      "typeId": "Completion",
+                      "typeId": "CompletionChunk",
                       "inline": false,
                       "type": "named"
                     },
-                    "docs": "Success!",
-                    "type": "response"
+                    "type": "json"
                   },
-                  "type": "json"
+                  "type": "streaming"
                 }
               }
             ]
@@ -1399,7 +1399,7 @@
                   "inline": false,
                   "type": "named"
                 },
-                "docs": "Success!",
+                "docs": "",
                 "type": "response"
               },
               "type": "json"
@@ -1463,7 +1463,7 @@
                       "inline": false,
                       "type": "named"
                     },
-                    "docs": "Success!",
+                    "docs": "",
                     "type": "response"
                   },
                   "type": "json"

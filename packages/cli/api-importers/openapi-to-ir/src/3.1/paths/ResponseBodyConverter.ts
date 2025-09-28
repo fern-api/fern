@@ -192,6 +192,10 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
         if (convertedStreamingSchema == null || convertedNonStreamingSchema == null) {
             return undefined;
         }
+        let description = this.responseBody.description;
+        if (this.streamingExtension?.type === "streamCondition" && this.streamingExtension.streamDescription != null) {
+            description = this.streamingExtension.streamDescription;
+        }
         return {
             responseBody: HttpResponseBody.json(
                 JsonResponse.response({
@@ -202,8 +206,7 @@ export class ResponseBodyConverter extends Converters.AbstractConverters.Abstrac
             ),
             streamResponseBody: HttpResponseBody.streaming(
                 StreamingResponse.json({
-                    // TODO: Use the streamExtension.streamDescription
-                    docs: this.responseBody.description,
+                    docs: description,
                     payload: convertedStreamingSchema.type,
                     terminator: undefined,
                     v2Examples: convertedStreamingSchema.schema?.typeDeclaration.v2Examples

@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: |
+        Even when no success status codes are defined for the endpoint, `x-fern-streaming` responses are still respected.
+      type: fix
+  irVersion: 60
+  createdAt: "2025-09-26"
+  version: 0.82.4
+
+- changelogEntry:
     - summary: Allow `wrap-references-to-nullable-in-optional` setting in more API specs.
       type: fix
   irVersion: 60
@@ -8,7 +16,7 @@
 
 - changelogEntry:
     - summary: |
-        Update display names for undiscriminated unions without titles. 
+        Update display names for undiscriminated unions without titles.
 
         Now, if no title or description is provided, and one cannot be generated from the object properties, the display name will be undefined.
       type: fix
@@ -593,9 +601,9 @@
               request:
                 body:
                   properties:
-                    author: optional<string>
-                    tags: optional<list<string>>
-                    title: optional<string>
+                    author: `optional<string>`
+                    tags: `optional<list<string>>`
+                    title: `optional<string>`
                 content-type: application/json
                 name: UploadDocumentRequest
                 ...
@@ -3922,7 +3930,7 @@
         ```yml docs.yml
         navigation:
           - api: API Reference
-            openrpc: <path to openrpc file>
+            openrpc: `<path to openrpc file>`
         ```
       type: fix
   irVersion: 55
@@ -3985,7 +3993,7 @@
           User:
             properties:
               name: string
-              email: nullable<string>
+              email: `nullable<string>`
         ```
       type: feat
   irVersion: 55
@@ -5649,13 +5657,13 @@
 
         ```yml
         types:
-          GenericTest<T>:
+          `GenericTest<T>`:
             properties:
               value: T
               other-value: string
 
           GenericApplication:
-            type: GenericTest<string>
+            type: `GenericTest<string>`
         ```
 
         More information can be found here: https://buildwithfern.com/learn/api-definition/fern/types#generics.
@@ -9266,8 +9274,8 @@
 - changelogEntry:
     - summary: "## What's Changed\r\n* feature: allow specifying OpenAPI overrides in\
         \ generators.yml by @dsinghvi in https://github.com/fern-api/fern/pull/2613\r\
-        \n  ```yaml\r\n  # generators.yml \r\n  openapi: <path to openapi> \r\n  openapi-overrides:\
-        \ <path to openapi overrides> \r\n  ```\r\n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.16.29...0.16.30"
+        \n  ```yaml\r\n  # generators.yml \r\n  openapi: `<path to openapi>` \r\n  openapi-overrides:\
+        \ `<path to openapi overrides>` \r\n  ```\r\n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.16.29...0.16.30"
       type: chore
   createdAt: "2024-01-12"
   irVersion: 32
@@ -10220,7 +10228,7 @@
   version: 0.15.0-rc15
 - changelogEntry:
     - summary: "- Support specifying instance when running docs generation `fern generate
-        --docs --instance <url>`"
+        --docs --instance` `<url>`"
       type: chore
   createdAt: "2023-09-06"
   irVersion: 25
@@ -10411,9 +10419,9 @@
         \ what types are referenced from exactly one service (@amckinney).\r\n```yaml\r\
         \n  ServiceTypeReferenceInfo:\r\n    properties:\r\n      typesReferencedOnlyByService:\r\
         \n        docs: \"Types referenced by exactly one service.\"\r\n        type:\
-        \ map<commons.ServiceId, list<commons.TypeId>>\r\n      sharedTypes:\r\n   \
+        \ `map<commons.ServiceId, list<commons.TypeId>>`\r\n      sharedTypes:\r\n   \
         \     docs: \"Types referenced by either zero or multiple services.\"\r\n  \
-        \      type: list<commons.TypeId>\r\n```"
+        \      type: `list<commons.TypeId>`\r\n```"
       type: chore
   createdAt: "2023-08-01"
   irVersion: 22
