@@ -70,3 +70,55 @@ def test_parse_wrapped_aliases() -> None:
         match="Wrapped aliases are only supported in Pydantic V1, V1_ON_V2, or V2, please update your `version` field appropriately to continue using wrapped aliases.",
     ):
         SDKCustomConfig.parse_obj(both)
+
+
+def test_annotated_field_aliases() -> None:
+    # Test that annotated field aliases work with v2
+    v2_config = {
+        "pydantic_config": {
+            "version": "v2",
+            "use_annotated_field_aliases": True,
+        },
+    }
+    sdk_custom_config = SDKCustomConfig.parse_obj(v2_config)
+    assert (
+        sdk_custom_config.pydantic_config.version == "v2"
+        and sdk_custom_config.pydantic_config.use_annotated_field_aliases is True
+    )
+
+    # Test that annotated field aliases fail with non-v2 versions
+    v1_config = {
+        "pydantic_config": {
+            "version": "v1",
+            "use_annotated_field_aliases": True,
+        },
+    }
+    with pytest.raises(
+        pydantic.ValidationError,
+        match="use_annotated_field_aliases is only supported with Pydantic v2, please set version to 'v2' to use this feature.",
+    ):
+        SDKCustomConfig.parse_obj(v1_config)
+
+    both_config = {
+        "pydantic_config": {
+            "version": "both",
+            "use_annotated_field_aliases": True,
+        },
+    }
+    with pytest.raises(
+        pydantic.ValidationError,
+        match="use_annotated_field_aliases is only supported with Pydantic v2, please set version to 'v2' to use this feature.",
+    ):
+        SDKCustomConfig.parse_obj(both_config)
+
+    v1_on_v2_config = {
+        "pydantic_config": {
+            "version": "v1_on_v2",
+            "use_annotated_field_aliases": True,
+        },
+    }
+    with pytest.raises(
+        pydantic.ValidationError,
+        match="use_annotated_field_aliases is only supported with Pydantic v2, please set version to 'v2' to use this feature.",
+    ):
+        SDKCustomConfig.parse_obj(v1_on_v2_config)
