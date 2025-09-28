@@ -5,12 +5,12 @@ import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 import { Audiences } from "../commons";
 import {
     AiChatConfig,
+    AnnouncementConfig,
     Availability,
     DocsInstance,
     ExperimentalConfig,
     PlaygroundSettings,
-    VersionAvailability, 
-    AnnouncementConfig
+    VersionAvailability
 } from "./schemas";
 
 export interface ParsedDocsConfiguration {

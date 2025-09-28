@@ -132,6 +132,16 @@
         }
       ]
     },
+    "page-actions": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/docs.PageActionsConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "experimental": {
       "oneOf": [
         {
@@ -2599,6 +2609,52 @@
           "oneOf": [
             {
               "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "docs.PageActionsConfig": {
+      "type": "object",
+      "properties": {
+        "chatgpt": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "claude": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vscode": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cursor": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"

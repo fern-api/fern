@@ -181,7 +181,7 @@ export async function parseDocsConfiguration({
 
         aiChatConfig: aiSearch ?? aiChat,
 
-        experimental, 
+        experimental,
 
         pageActions: {
             copyPage: true,

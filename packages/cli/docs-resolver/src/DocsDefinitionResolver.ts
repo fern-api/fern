@@ -480,7 +480,7 @@ export class DocsDefinitionResolver {
             colors: undefined,
             colorsV2: undefined,
             typography: undefined,
-            backgroundImage: undefined,
+            backgroundImage: undefined
         };
         return config;
     }
