@@ -6,8 +6,8 @@ import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 
 import { loadCliWorkspace } from "../../loadGeneratorWorkspaces";
-import { assertValidSemVerChangeOrThrow, assertValidSemVerOrThrow } from "./semVerUtils";
 import { validateAngleBracketEscaping } from "./angleBracketValidator";
+import { assertValidSemVerChangeOrThrow, assertValidSemVerOrThrow } from "./semVerUtils";
 
 export async function validateCliRelease({ context }: { context: TaskContext }): Promise<void> {
     const cliWorkspace = await loadCliWorkspace();
@@ -46,7 +46,9 @@ async function validateCliChangelog({
     if (Array.isArray(changelogs)) {
         for (const entry of changelogs) {
             const angleBracketErrors = validateAngleBracketEscaping(entry);
-            context.logger.debug(`Checking version ${entry.version}: Found ${angleBracketErrors.length} angle bracket errors`);
+            context.logger.debug(
+                `Checking version ${entry.version}: Found ${angleBracketErrors.length} angle bracket errors`
+            );
             if (angleBracketErrors.length > 0) {
                 hasErrors = true;
                 for (const error of angleBracketErrors) {

@@ -43,12 +43,10 @@ export function findUnescapedAngleBrackets(text: string): string[] {
 
     const textWithoutBackticks = textWithoutCodeBlocks.replace(/`[^`]*`/g, "");
 
-    // Find angle bracket patterns like <T>, <User>, <string, object>, <br>, etc.
     const anglePattern = /<[^>]+>/g;
     const matches = textWithoutBackticks.match(anglePattern);
 
     if (matches) {
-        // Deduplicate patterns while preserving order
         const uniquePatterns = [...new Set(matches)];
         patterns.push(...uniquePatterns);
     }
