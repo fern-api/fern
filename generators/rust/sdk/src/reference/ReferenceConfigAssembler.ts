@@ -1,5 +1,4 @@
 import { ReferenceConfigBuilder } from "@fern-api/base-generator";
-import { assertNever } from "@fern-api/core-utils";
 import { DynamicSnippetsGenerator } from "@fern-api/rust-dynamic-snippets";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { HttpEndpoint, HttpService, TypeReference } from "@fern-fern/ir-sdk/api";
@@ -48,12 +47,14 @@ export class ReferenceConfigAssembler {
 
     private getReferenceSectionTitle(service: HttpService): string {
         return (
-            service.displayName ??
-            service.name.fernFilepath.allParts.map((part) => part.pascalCase.safeName).join(" ")
+            service.displayName ?? service.name.fernFilepath.allParts.map((part) => part.pascalCase.safeName).join(" ")
         );
     }
 
-    private getEndpointReferencesForService(service: HttpService, serviceId: string): FernGeneratorCli.EndpointReference[] {
+    private getEndpointReferencesForService(
+        service: HttpService,
+        serviceId: string
+    ): FernGeneratorCli.EndpointReference[] {
         return service.endpoints
             .map((endpoint) => {
                 const firstExample = this.context.ir.dynamic?.endpoints[endpoint.id]?.examples?.[0];
@@ -112,7 +113,11 @@ export class ReferenceConfigAssembler {
         };
     }
 
-    private buildMethodSignature(endpoint: HttpEndpoint, service: HttpService, serviceId: string): {
+    private buildMethodSignature(
+        endpoint: HttpEndpoint,
+        service: HttpService,
+        serviceId: string
+    ): {
         clientPath: string;
         methodName: string;
         parameters: string;
@@ -146,16 +151,14 @@ export class ReferenceConfigAssembler {
         }
 
         // For subpackage services, use snake_case path
-        return service.name.fernFilepath.allParts
-            .map(part => part.snakeCase.safeName)
-            .join("().");
+        return service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName).join("().");
     }
 
     private buildParameterSignature(endpoint: HttpEndpoint): string {
         const params: string[] = [];
 
         // Add path parameters
-        endpoint.allPathParameters.forEach(pathParam => {
+        endpoint.allPathParameters.forEach((pathParam) => {
             const rustType = this.getRustTypeForTypeReference(pathParam.valueType);
             params.push(`${pathParam.name.snakeCase.safeName}: ${rustType}`);
         });
@@ -172,8 +175,8 @@ export class ReferenceConfigAssembler {
 
         // Add query parameters (if any are required)
         endpoint.queryParameters
-            .filter(qp => !qp.allowMultiple) // Simplified for reference
-            .forEach(qp => {
+            .filter((qp) => !qp.allowMultiple) // Simplified for reference
+            .forEach((qp) => {
                 const rustType = this.getRustTypeForTypeReference(qp.valueType);
                 const optional = qp.allowMultiple ? rustType : `Option<${rustType}>`;
                 params.push(`${qp.name.name.snakeCase.safeName}: ${optional}`);
@@ -204,7 +207,7 @@ export class ReferenceConfigAssembler {
         const params: FernGeneratorCli.EndpointReference["parameters"] = [];
 
         // Path parameters
-        endpoint.allPathParameters.forEach(pathParam => {
+        endpoint.allPathParameters.forEach((pathParam) => {
             params.push({
                 name: pathParam.name.snakeCase.safeName,
                 type: this.getRustTypeForTypeReference(pathParam.valueType),
@@ -215,7 +218,7 @@ export class ReferenceConfigAssembler {
 
         // Request body parameters
         if (endpoint.requestBody?.type === "inlinedRequestBody") {
-            endpoint.requestBody.properties.forEach(prop => {
+            endpoint.requestBody.properties.forEach((prop) => {
                 params.push({
                     name: prop.name.name.snakeCase.safeName,
                     type: this.getRustTypeForTypeReference(prop.valueType),
@@ -226,7 +229,7 @@ export class ReferenceConfigAssembler {
         }
 
         // Query parameters
-        endpoint.queryParameters.forEach(qp => {
+        endpoint.queryParameters.forEach((qp) => {
             params.push({
                 name: qp.name.name.snakeCase.safeName,
                 type: this.getRustTypeForTypeReference(qp.valueType),
