@@ -151,6 +151,14 @@ jobs:
           run: |
             echo "Contents of file: $(cat artifacts/${{ matrix.sdk-name }}-seed-test-log.txt)"
 
+        - name: Package Seed Tests
+          uses: fern-api/package-seed-test@mallinson/packaging-setup
+          with:
+            seed-generator-alias: ${{ matrix.sdk-name }}
+            max-runner-count: 10 #CHRISM - move to setting for everyone to use
+            seed-test-log-file-path: artifacts/${{ matrix.sdk-name }}-seed-test-log.txt
+
+
        
     #   - name: Get output log data seed test and time data
     #     id: output-seed-test-and-time-data
