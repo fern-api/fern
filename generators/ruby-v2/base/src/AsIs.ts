@@ -48,6 +48,7 @@ export const AsIsFiles = {
     TypesUtils: "internal/types/utils.Template.rb",
 
     // Test files
+    TestHelper: "test/test_helper.Template.rb",
     TestCursorItemIterator: "test/unit/internal/iterators/test_cursor_item_iterator.Template.rb",
     TestOffsetItemIterator: "test/unit/internal/iterators/test_offset_item_iterator.Template.rb"
 } as const;

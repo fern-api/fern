@@ -23,17 +23,15 @@ TestIteratorConfig = Struct.new(
 end
 
 LAZY_TEST_ITERATOR_CONFIG = TestIteratorConfig.new(initial_page: 1, step: false, has_next_field: :has_next, total_item_count: 65, per_page: 10)
-ALL_TEST_ITERATOR_CONFIGS = []
-
-for step in [true, false]
-  for has_next_field in [:has_next, nil]
-    for total_item_count in [0, 5, 10, 60, 63]
-      for per_page in [5, 10]
+ALL_TEST_ITERATOR_CONFIGS = [true, false].map do |step|
+  [:has_next, nil].map do |has_next_field|
+    [0, 5, 10, 60, 63].map do |total_item_count|
+      [5, 10].map do |per_page|
         initial_pages = [nil, 3, 100]
         initial_pages << (step ? 0 : 1)
 
-        for initial_page in initial_pages
-          ALL_TEST_ITERATOR_CONFIGS << TestIteratorConfig.new(
+        initial_pages.map do |initial_page|
+          TestIteratorConfig.new(
             step: step,
             has_next_field: has_next_field,
             total_item_count: total_item_count,
@@ -44,7 +42,7 @@ for step in [true, false]
       end
     end
   end
-end
+end.flatten
 
 class OffsetItemIteratorTest < Minitest::Test
   def make_iterator(config)
