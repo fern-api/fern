@@ -90,9 +90,14 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
 
     private async generateReadme(context: SdkGeneratorContext): Promise<void> {
         try {
+            const endpointSnippets = this.generateSnippets(context);
+            if (endpointSnippets.length === 0) {
+                context.logger.debug("No snippets were produced; skipping README.md generation.");
+                return;
+            }
             const content = await context.generatorAgent.generateReadme({
                 context,
-                endpointSnippets: this.generateSnippets(context)
+                endpointSnippets
             });
             context.project.addRootFiles(new File("README.md", RelativeFilePath.of(""), content));
         } catch (e) {
