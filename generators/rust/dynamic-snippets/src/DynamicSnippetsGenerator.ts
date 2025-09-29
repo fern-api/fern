@@ -1,7 +1,7 @@
 import {
     AbstractDynamicSnippetsGenerator,
-    AbstractFormatter,
-    FernGeneratorExec
+    FernGeneratorExec,
+    Options
 } from "@fern-api/browser-compatible-base-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
@@ -11,32 +11,33 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<
     DynamicSnippetsGeneratorContext,
     EndpointSnippetGenerator
 > {
-    private formatter: AbstractFormatter | undefined;
-
     constructor({
         ir,
         config,
-        formatter
+        options = {}
     }: {
         ir: FernIr.dynamic.DynamicIntermediateRepresentation;
         config: FernGeneratorExec.GeneratorConfig;
-        formatter?: AbstractFormatter;
+        options?: Options;
     }) {
-        super(new DynamicSnippetsGeneratorContext({ ir, config }));
-        this.formatter = formatter;
+        super(new DynamicSnippetsGeneratorContext({ ir, config, options }));
     }
 
     public async generate(
-        request: FernIr.dynamic.EndpointSnippetRequest
+        request: FernIr.dynamic.EndpointSnippetRequest,
+        options: Options = {}
     ): Promise<FernIr.dynamic.EndpointSnippetResponse> {
-        return super.generate(request);
+        return super.generate(request, options);
     }
 
-    public generateSync(request: FernIr.dynamic.EndpointSnippetRequest): FernIr.dynamic.EndpointSnippetResponse {
-        return super.generateSync(request);
+    public generateSync(
+        request: FernIr.dynamic.EndpointSnippetRequest,
+        options: Options = {}
+    ): FernIr.dynamic.EndpointSnippetResponse {
+        return super.generateSync(request, options);
     }
 
     protected createSnippetGenerator(context: DynamicSnippetsGeneratorContext): EndpointSnippetGenerator {
-        return new EndpointSnippetGenerator({ context, formatter: this.formatter });
+        return new EndpointSnippetGenerator({ context });
     }
 }

@@ -2,7 +2,9 @@ use seed_server_sent_events::{ClientConfig, ServerSentEventsClient, StreamComple
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        base_url: "https://api.fern.com".to_string(),
+    };
     let client = ServerSentEventsClient::new(config).expect("Failed to build client");
     client
         .completions_stream(StreamCompletionRequest { query: "query" })

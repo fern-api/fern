@@ -1,15 +1,12 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
+import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractRustGeneratorCli, formatRustCode, RustFile } from "@fern-api/rust-base";
 import { Module, ModuleDeclaration, UseStatement } from "@fern-api/rust-codegen";
 import { DynamicSnippetsGenerator } from "@fern-api/rust-dynamic-snippets";
 import { generateModels } from "@fern-api/rust-model";
-
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { HttpRequestBody, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { mkdir, writeFile } from "fs/promises";
-import { join } from "path";
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
 import { ErrorGenerator } from "./error/ErrorGenerator";
 import { ClientConfigGenerator } from "./generators/ClientConfigGenerator";
@@ -71,10 +68,6 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         context.logger.info("=== CALLING persist ===");
         await context.project.persist();
         context.logger.info("=== PERSIST COMPLETE ===");
-
-        // Generate dynamic-snippets directory with individual .rs files
-        await this.generateDynamicSnippetFiles(context);
-        context.logger.info("=== dynamic-snippets COMPLETE ===");
 
         context.logger.info("=== RUNNING rustfmt ===");
         await formatRustCode({
@@ -295,7 +288,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             // Use centralized method to get unique filename and extract module name from it
             const filename = context.getUniqueFilenameForType(typeDeclaration);
             const rawModuleName = filename.replace(".rs", ""); // Remove .rs extension
-            const escapedModuleName = context.configManager.escapeRustKeyword(rawModuleName);
+            const escapedModuleName = context.escapeRustKeyword(rawModuleName);
 
             // Only add if we haven't seen this module name before
             if (!uniqueModuleNames.has(escapedModuleName)) {
@@ -320,7 +313,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
                     // Use centralized method for consistent snake_case conversion
                     const rawModuleName = context.getModuleNameForInlinedRequestBody(requestName);
-                    const escapedModuleName = context.configManager.escapeRustKeyword(rawModuleName);
+                    const escapedModuleName = context.escapeRustKeyword(rawModuleName);
 
                     // Only add if we haven't seen this module name before
                     if (!uniqueModuleNames.has(escapedModuleName)) {
@@ -345,7 +338,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
                 if (endpoint.queryParameters.length > 0 && !endpoint.requestBody) {
                     const queryRequestTypeName = `${endpoint.name.pascalCase.safeName}QueryRequest`;
                     const rawModuleName = context.getModuleNameForQueryRequest(queryRequestTypeName);
-                    const escapedModuleName = context.configManager.escapeRustKeyword(rawModuleName);
+                    const escapedModuleName = context.escapeRustKeyword(rawModuleName);
 
                     // Only add if we haven't seen this module name before
                     if (!uniqueModuleNames.has(escapedModuleName)) {
@@ -377,145 +370,59 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     private async generateReadme(context: SdkGeneratorContext): Promise<void> {
         try {
             context.logger.info("Starting README generation...");
-
-            // Generate endpoint snippets using dynamic snippets
-            const endpointSnippets = this.generateDynamicSnippets(context);
-
-            context.logger.debug(`Generated ${endpointSnippets.length} endpoint snippets`);
-
             // Generate README content using the agent
             const readmeContent = await context.generatorAgent.generateReadme({
                 context,
-                endpointSnippets
+                endpointSnippets: this.generateSnippets(context)
             });
 
             context.logger.debug(`Generated README content length: ${readmeContent.length}`);
-
             // Add README to the project
             const readmeFile = new RustFile({
                 filename: "README.md",
                 directory: RelativeFilePath.of(""),
                 fileContents: readmeContent
             });
-
             context.project.addSourceFiles(readmeFile);
+
             context.logger.info("Successfully added README.md to project");
         } catch (error) {
-            context.logger.error("Failed to generate README.md");
-            if (error instanceof Error) {
-                context.logger.error("Error details:", error.message);
-                if (error.stack) {
-                    context.logger.debug("Stack trace:", error.stack);
-                }
-            }
+            throw new Error(`Failed to generate README.md: ${extractErrorMessage(error)}`);
         }
     }
 
-    private generateDynamicSnippets(context: SdkGeneratorContext): Endpoint[] {
-        const endpointSnippets: Endpoint[] = [];
-
+    private generateSnippets(context: SdkGeneratorContext) {
+        const endpointSnippets: FernGeneratorExec.Endpoint[] = [];
         const dynamicIr = context.ir.dynamic;
-        if (dynamicIr == null) {
-            context.logger.warn("Cannot generate README without dynamic IR");
-            return endpointSnippets;
+        if (!dynamicIr) {
+            throw new Error("Cannot generate dynamic snippets without dynamic IR");
         }
-
-        try {
-            context.logger.info("Using DynamicSnippetsGenerator for Rust snippet generation");
-
-            const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
-                // biome-ignore lint/suspicious/noExplicitAny: allow
-                ir: convertIr(dynamicIr) as any,
-                config: context.config
-            });
-
-            for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
-                const path = FernGeneratorExec.EndpointPath(endpoint.location.path);
-                for (const endpointExample of endpoint.examples ?? []) {
-                    endpointSnippets.push({
-                        exampleIdentifier: endpointExample.id,
-                        id: {
-                            method: endpoint.location.method,
-                            path,
-                            identifierOverride: endpointId
-                        },
-                        snippet: FernGeneratorExec.EndpointSnippet.go({
-                            client: dynamicSnippetsGenerator.generateSync(
-                                convertDynamicEndpointSnippetRequest(endpointExample)
-                            ).snippet
-                        })
-                    });
-                }
-            }
-
-            context.logger.info(`Generated ${endpointSnippets.length} dynamic snippets`);
-            return endpointSnippets;
-        } catch (error) {
-            context.logger.error(`Failed to generate dynamic snippets: ${error}`);
-            return endpointSnippets;
-        }
-    }
-
-    // ===========================
-    // DYNAMIC SNIPPETS GENERATION
-    // ===========================
-
-    private async generateDynamicSnippetFiles(context: SdkGeneratorContext): Promise<void> {
-        context.logger.info("=== GENERATING DYNAMIC SNIPPETS ===");
-
-        // Check if we have output directory configured
-        if (!context.config.output.path) {
-            context.logger.info("No output path configured, skipping dynamic snippets");
-            return;
-        }
-
-        // Check if we have dynamic IR
-        const dynamicIr = context.ir.dynamic;
-        if (dynamicIr == null) {
-            context.logger.info("No dynamic IR available, skipping dynamic snippets");
-            return;
-        }
-
-        // Create dynamic snippets generator
         const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
             ir: convertIr(dynamicIr),
             config: context.config
         });
-
-        let exampleIndex = 0;
-
-        // Process each endpoint from dynamic IR
         for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
-            // Get examples for this endpoint
-            const examples = endpoint.examples ?? [];
-
-            for (const example of examples) {
-                try {
-                    // Convert example to dynamic snippet request
-                    const snippetRequest = convertDynamicEndpointSnippetRequest(example);
-
-                    // Generate the snippet
-                    const snippetResponse = await dynamicSnippetsGenerator.generate(snippetRequest);
-
-                    if (snippetResponse.snippet) {
-                        // Create dynamic-snippets directory if it doesn't exist
-                        const dynamicSnippetsDir = join(context.config.output.path, "dynamic-snippets");
-                        await mkdir(dynamicSnippetsDir, { recursive: true });
-
-                        // Write the Rust snippet file directly
-                        const snippetPath = join(dynamicSnippetsDir, `example${exampleIndex}.rs`);
-                        await writeFile(snippetPath, snippetResponse.snippet);
-
-                        context.logger.info(`Generated dynamic snippet: ${snippetPath}`);
-                        exampleIndex++;
-                    }
-                } catch (error) {
-                    context.logger.warn(`Failed to generate dynamic snippet for ${endpointId}: ${error}`);
-                }
+            const method = endpoint.location.method;
+            const path = FernGeneratorExec.EndpointPath(endpoint.location.path);
+            for (const endpointExample of endpoint.examples ?? []) {
+                const generatedSnippet = dynamicSnippetsGenerator.generateSync(
+                    convertDynamicEndpointSnippetRequest(endpointExample)
+                );
+                endpointSnippets.push({
+                    exampleIdentifier: endpointExample.id,
+                    id: {
+                        method,
+                        path,
+                        identifierOverride: endpointId
+                    },
+                    // Snippets are marked as 'typescript' for compatibility with FernGeneratorExec, which will be deprecated.
+                    snippet: FernGeneratorExec.EndpointSnippet.typescript({
+                        client: generatedSnippet.snippet
+                    })
+                });
             }
         }
-
-        context.logger.info(`=== DYNAMIC SNIPPETS COMPLETE (${exampleIndex} files) ===`);
+        return endpointSnippets;
     }
 
     // ===========================

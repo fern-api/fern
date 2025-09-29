@@ -1,4 +1,4 @@
-use crate::api::resources::AuthClient;
+use crate::api::resources::WebsocketAuthClient;
 use crate::{ApiError, ClientConfig};
 use std::collections::HashMap;
 use std::time::Duration;
@@ -86,7 +86,7 @@ impl ApiClientBuilder {
     }
 
     /// Build the client with validation
-    pub fn build(self) -> Result<AuthClient, ApiError> {
-        AuthClient::new(self.config)
+    pub fn build(self) -> Result<WebsocketAuthClient, ApiError> {
+        WebsocketAuthClient::new(self.config)
     }
 }
