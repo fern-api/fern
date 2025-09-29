@@ -142,8 +142,8 @@ jobs:
           uses: actions/download-artifact@v5
           with:
               path: ./artifacts
-            #   name: ${{ matrix.sdk-name }}-seed-test-log.txt.zip
-              run-id: 18098307806 #CHRISM - temporary for testing
+              name: ${{ matrix.sdk-name }}-seed-test-log.txt
+              run-id: 18098307806 #CHRISM - temporary for testing, artifact ID = 4132496421
               github-token: ${{ secrets.FERN_GITHUB_PAT }}
               repository: ${{ github.repository }}
               merge-multiple: true
