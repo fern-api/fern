@@ -478,7 +478,8 @@ export class SdkGenerator {
             relativeTestPath: this.relativeTestPath,
             neverThrowErrors: config.neverThrowErrors,
             generateReadWriteOnlyTypes: config.generateReadWriteOnlyTypes,
-            testFramework: config.testFramework
+            testFramework: config.testFramework,
+            useLegacyExports: config.useLegacyExports
         });
         this.referenceConfigBuilder = new ReferenceConfigBuilder();
         this.generatorAgent = new TypeScriptGeneratorAgent({
