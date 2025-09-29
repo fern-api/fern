@@ -110,7 +110,7 @@ jobs:
           name: ${{ matrix.sdk-name }}-seed-test-log.txt
           path: ${{ matrix.sdk-name }}-seed-test-log.txt
           if-no-files-found: error
-          retention-days: 10 # CHRISM - temp
+          retention-days: 1
 
       - name: Echo info for this run    
         run: |
@@ -120,8 +120,32 @@ jobs:
           echo "GitHub workflow name: ${{ github.workflow }}"
           echo "GitHub workflow run ID: ${{ github.run_id }}"
 
-  commit-package-file-to-repo:
+  build-test-packages:
     runs-on: ubuntu-latest
+    outputs:
+    #   ruby-model: ${{ steps.set-test-matrix.outputs.ruby-model-test-matrix }}
+    #   ruby-sdk: ${{ steps.set-test-matrix.outputs.ruby-sdk-test-matrix }}
+    #   ruby-sdk-v2: ${{ steps.set-test-matrix.outputs.ruby-sdk-v2-test-matrix }}
+      pydantic: ${{ steps.output-packages.outputs.pydantic-packages }}
+    #   python-sdk: ${{ steps.set-test-matrix.outputs.python-sdk-test-matrix }}
+    #   fastapi: ${{ steps.set-test-matrix.outputs.fastapi-test-matrix }}
+    #   openapi: ${{ steps.set-test-matrix.outputs.openapi-test-matrix }}
+    #   postman: ${{ steps.set-test-matrix.outputs.postman-test-matrix }}
+    #   java-sdk: ${{ steps.set-test-matrix.outputs.java-sdk-test-matrix }}
+    #   java-model: ${{ steps.set-test-matrix.outputs.java-model-test-matrix }}
+    #   java-spring: ${{ steps.set-test-matrix.outputs.java-spring-test-matrix }}
+    #   ts-sdk: ${{ steps.set-test-matrix.outputs.ts-sdk-test-matrix }}
+    #   ts-express: ${{ steps.set-test-matrix.outputs.ts-express-test-matrix }}
+    #   go-fiber: ${{ steps.set-test-matrix.outputs.go-fiber-test-matrix }}
+    #   go-model: ${{ steps.set-test-matrix.outputs.go-model-test-matrix }}
+    #   go-sdk: ${{ steps.set-test-matrix.outputs.go-sdk-test-matrix }}
+    #   csharp-model: ${{ steps.set-test-matrix.outputs.csharp-model-test-matrix }}
+    #   csharp-sdk: ${{ steps.set-test-matrix.outputs.csharp-sdk-test-matrix }}
+    #   php-model: ${{ steps.set-test-matrix.outputs.php-model-test-matrix }}
+    #   php-sdk: ${{ steps.set-test-matrix.outputs.php-sdk-test-matrix }}
+    #   swift-sdk: ${{ steps.set-test-matrix.outputs.swift-sdk-test-matrix }}
+    #   rust-model: ${{ steps.set-test-matrix.outputs.rust-model-test-matrix }}
+    #   rust-sdk: ${{ steps.set-test-matrix.outputs.rust-sdk-test-matrix }}
     strategy:
       matrix:
         sdk-name:
@@ -147,17 +171,25 @@ jobs:
               github-token: ${{ secrets.FERN_GITHUB_PAT }}
               repository: ${{ github.repository }}
               merge-multiple: true
-        - name: Echo contents of file
-          run: |
-            echo "Contents of file: $(cat artifacts/${{ matrix.sdk-name }}-seed-test-log.txt)"
+        # - name: Echo contents of file
+        #   run: |
+        #     echo "Contents of file: $(cat artifacts/${{ matrix.sdk-name }}-seed-test-log.txt)"
 
         - name: Package Seed Tests
+          id: package-tests
           uses: fern-api/package-seed-test@mallinson/packaging-setup
           with:
             seed-generator-alias: ${{ matrix.sdk-name }}
             max-runner-count: 10 #CHRISM - move to setting for everyone to use
             seed-test-log-file-path: artifacts/${{ matrix.sdk-name }}-seed-test-log.txt
        
+        - name: Output Packages
+          id: output-packages
+          run: |
+            #  CHRISM - add back split tests
+            echo "${{ steps.package-tests.outputs.test-matrix }}" | jq .
+            echo "${{ matrix.sdk-name }}-packages=${{ steps.package-tests.outputs.test-matrix }}"
+
     #   - name: Get output log data seed test and time data
     #     id: output-seed-test-and-time-data
     #     uses: ./.github/actions/parse-test-and-times
@@ -185,3 +217,36 @@ jobs:
 
     #   - name: PR JSON File
     #     id: pr-json-file
+
+
+  run-balanced-pydantic:
+    runs-on: ubuntu-latest
+    needs: [build-test-packages]
+    strategy:
+      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
+      max-parallel: 10 # Limit the number of runners for this job to 10
+
+      matrix:
+        include: ${{ fromJSON(needs.build-test-packages.outputs.pydantic) }}
+    steps:
+      - name: Echo package
+        run: echo '${{toJson(matrix.fixtures)}}' | jq .
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run seed
+        uses: ./.github/actions/cached-seed
+        with:
+          generator-name: pydantic
+          generator-path: generators/python
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
