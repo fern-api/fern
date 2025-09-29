@@ -1,0 +1,184 @@
+# Reference
+## Auth
+<details><summary><code>client.Auth.GetTokenWithClientCredentials(request) -> Seed::Auth::Types::TokenResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.auth.get_token_with_client_credentials({
+  xApiKey:'X-Api-Key',
+  clientId:'client_id',
+  clientSecret:'client_secret',
+  audience:'https://api.example.com',
+  grantType:'client_credentials',
+  scope:'scope'
+});
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**xApiKey:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**clientId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**clientSecret:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**audience:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**grantType:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scope:** `String` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Auth.RefreshToken(request) -> Seed::Auth::Types::TokenResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.auth.refresh_token({
+  xApiKey:'X-Api-Key',
+  clientId:'client_id',
+  clientSecret:'client_secret',
+  refreshToken:'refresh_token',
+  audience:'https://api.example.com',
+  grantType:'refresh_token',
+  scope:'scope'
+});
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**xApiKey:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**clientId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**clientSecret:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**refreshToken:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**audience:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**grantType:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**scope:** `String` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
