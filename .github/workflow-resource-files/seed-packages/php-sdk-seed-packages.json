@@ -1,0 +1,159 @@
+{
+  "total-test-time": 7612,
+  "split-cutoff-time": 9600,
+  "split-tests": false,
+  "packages": [
+    {
+      "fixtures": [
+        "query-parameters-openapi",
+        "unions:no-custom-config",
+        "no-environment",
+        "request-parameters",
+        "file-upload",
+        "path-parameters:no-custom-config",
+        "imdb:no-custom-config",
+        "query-parameters:private",
+        "empty-clients",
+        "literal"
+      ],
+      "packageTotalTime": 773
+    },
+    {
+      "fixtures": [
+        "accept-header",
+        "oauth-client-credentials-environment-variables",
+        "oauth-client-credentials",
+        "any-auth",
+        "license",
+        "imdb:clientName",
+        "file-download",
+        "websocket",
+        "simple-api",
+        "public-object"
+      ],
+      "packageTotalTime": 773
+    },
+    {
+      "fixtures": [
+        "bearer-token-environment-variable",
+        "pagination:property-accessors",
+        "inferred-auth-implicit",
+        "server-sent-event-examples",
+        "mixed-case",
+        "multi-line-docs",
+        "imdb:packageName",
+        "circular-references-advanced",
+        "unknown",
+        "multi-url-environment",
+        "multi-url-environment-no-default",
+        "pagination-custom"
+      ],
+      "packageTotalTime": 719
+    },
+    {
+      "fixtures": [
+        "query-parameters-openapi-as-objects",
+        "response-property",
+        "mixed-file-directory",
+        "pagination:no-custom-config",
+        "custom-auth",
+        "idempotency-headers",
+        "inferred-auth-implicit-no-expiry",
+        "optional",
+        "cross-package-type-names",
+        "examples:no-custom-config"
+      ],
+      "packageTotalTime": 761
+    },
+    {
+      "fixtures": [
+        "alias-extends",
+        "oauth-client-credentials-default",
+        "oauth-client-credentials-nested-root",
+        "path-parameters:inline-path-parameters-private",
+        "errors",
+        "plain-text",
+        "package-yml:no-custom-config",
+        "simple-fhir",
+        "streaming-parameter",
+        "exhaustive"
+      ],
+      "packageTotalTime": 742
+    },
+    {
+      "fixtures": [
+        "version-no-default",
+        "unions:property-accessors",
+        "objects-with-imports",
+        "validation",
+        "oauth-client-credentials-custom",
+        "nullable",
+        "basic-auth",
+        "audiences",
+        "alias:no-custom-config",
+        "folders"
+      ],
+      "packageTotalTime": 772
+    },
+    {
+      "fixtures": [
+        "content-type",
+        "bytes-download",
+        "oauth-client-credentials-with-variables",
+        "enum",
+        "path-parameters:inline-path-parameters",
+        "query-parameters:no-custom-config",
+        "package-yml:private",
+        "single-url-environment-no-default",
+        "client-side-params",
+        "literals-unions"
+      ],
+      "packageTotalTime": 771
+    },
+    {
+      "fixtures": [
+        "extends:no-custom-config",
+        "api-wide-base-path",
+        "inferred-auth-explicit",
+        "imdb:private",
+        "websocket-inferred-auth",
+        "alias:composer-json",
+        "server-sent-events",
+        "undiscriminated-unions",
+        "http-head",
+        "multiple-request-bodies"
+      ],
+      "packageTotalTime": 771
+    },
+    {
+      "fixtures": [
+        "version",
+        "bytes-upload",
+        "basic-auth-environment-variables",
+        "extra-properties",
+        "property-access",
+        "reserved-keywords",
+        "streaming",
+        "circular-references",
+        "object",
+        "examples:readme-config"
+      ],
+      "packageTotalTime": 768
+    },
+    {
+      "fixtures": [
+        "extends:private",
+        "auth-environment-variables",
+        "error-property",
+        "imdb:package-path",
+        "imdb:namespace",
+        "single-url-environment-default",
+        "variables",
+        "nullable-optional",
+        "websocket-bearer-auth",
+        "trace"
+      ],
+      "packageTotalTime": 762
+    }
+  ]
+}
