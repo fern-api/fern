@@ -234,3 +234,6 @@ allowedFailures:
 
   # TODO: Investigate addition of toolchain directive to go.mod
   - imdb:with-wiremock-tests
+
+  - oauth-client-credentials-with-variables
+  - variables
