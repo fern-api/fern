@@ -1,0 +1,51 @@
+{
+  "type": "object",
+  "properties": {
+    "bar": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nullable_bar": {
+      "oneOf": [
+        {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "nullable_required_bar": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "required_bar": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "nullable_required_bar",
+    "required_bar"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

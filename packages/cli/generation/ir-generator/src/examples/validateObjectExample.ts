@@ -66,7 +66,7 @@ export function validateObjectExample({
             continue;
         }
 
-        if (example[requiredProperty.wireKey] == null) {
+        if (typeof example[requiredProperty.wireKey] === "undefined") {
             const propertyReference =
                 breadcrumbs.length > 0
                     ? `${breadcrumbs.join(".")}.${requiredProperty.wireKey}`

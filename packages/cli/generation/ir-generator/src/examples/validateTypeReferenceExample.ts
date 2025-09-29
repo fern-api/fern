@@ -200,7 +200,7 @@ export function validateTypeReferenceExample({
                 );
             },
             optional: (itemType) => {
-                if (example == null) {
+                if (typeof example === "undefined") {
                     return [];
                 }
                 return validateTypeReferenceExample({
@@ -215,7 +215,7 @@ export function validateTypeReferenceExample({
                 });
             },
             nullable: (itemType) => {
-                if (example == null) {
+                if (example === null) {
                     return [];
                 }
                 return validateTypeReferenceExample({
