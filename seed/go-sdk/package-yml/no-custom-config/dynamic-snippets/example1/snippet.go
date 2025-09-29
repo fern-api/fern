@@ -3,8 +3,8 @@ package example
 import (
     client "github.com/package-yml/fern/client"
     option "github.com/package-yml/fern/option"
-    context "context"
     fern "github.com/package-yml/fern"
+    context "context"
 )
 
 func do() {
@@ -13,12 +13,13 @@ func do() {
             "https://api.fern.com",
         ),
     )
+    request := &fern.EchoRequest{
+        Name: "name",
+        Size: 1,
+    }
     client.Echo(
         context.TODO(),
         "id",
-        &fern.EchoRequest{
-            Name: "name",
-            Size: 1,
-        },
+        request,
     )
 }

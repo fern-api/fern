@@ -3,8 +3,8 @@ package example
 import (
     client "github.com/fern-api/path-parameters-go/client"
     option "github.com/fern-api/path-parameters-go/option"
-    context "context"
     pathparametersgo "github.com/fern-api/path-parameters-go"
+    context "context"
 )
 
 func do() {
@@ -13,14 +13,15 @@ func do() {
             "https://api.fern.com",
         ),
     )
+    request := &pathparametersgo.SearchUsersRequest{
+        Limit: pathparametersgo.Int(
+            1,
+        ),
+    }
     client.User.SearchUsers(
         context.TODO(),
         "tenant_id",
         "user_id",
-        &pathparametersgo.SearchUsersRequest{
-            Limit: pathparametersgo.Int(
-                1,
-            ),
-        },
+        request,
     )
 }

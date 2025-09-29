@@ -364,11 +364,11 @@ func TestQueryValuesWithDefaults(t *testing.T) {
 			enabled = false
 		)
 		values, err := QueryValuesWithDefaults(&example{
-			Name:    &name, // explicit empty string should override default
-			Age:     &age,  // explicit zero should override default
+			Name:    &name,    // explicit empty string should override default
+			Age:     &age,     // explicit zero should override default
 			Enabled: &enabled, // explicit false should override default
 		}, defaults)
 		require.NoError(t, err)
 		assert.Equal(t, "age=0&enabled=false&name=", values.Encode())
-})
+	})
 }

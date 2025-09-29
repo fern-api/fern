@@ -473,6 +473,7 @@ export class DocsDefinitionResolver {
                 this.parsedDocsConfig.announcement != null
                     ? { text: this.parsedDocsConfig.announcement.message }
                     : undefined,
+            pageActions: this.parsedDocsConfig.pageActions,
             // deprecated
             logo: undefined,
             logoV2: undefined,
@@ -868,10 +869,6 @@ export class DocsDefinitionResolver {
             });
         }
 
-        this.taskContext.logger.debug(
-            "registering api with typescript config:",
-            snippetsConfig.typescriptSdk?.package ?? " PACKAGE IS UNDEFINED"
-        );
         const apiDefinitionId = await this.registerApi({
             ir,
             snippetsConfig,

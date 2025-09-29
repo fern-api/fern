@@ -3,8 +3,8 @@ package example
 import (
     client "github.com/examples/fern/pleaseinhere/client"
     option "github.com/examples/fern/pleaseinhere/option"
-    context "context"
     pleaseinhere "github.com/examples/fern/pleaseinhere"
+    context "context"
 )
 
 func do() {
@@ -16,10 +16,11 @@ func do() {
             "<token>",
         ),
     )
+    request := &pleaseinhere.RefreshTokenRequest{
+        Ttl: 420,
+    }
     client.Service.RefreshToken(
         context.TODO(),
-        &pleaseinhere.RefreshTokenRequest{
-            Ttl: 420,
-        },
+        request,
     )
 }

@@ -17,17 +17,18 @@ package example
 
 import (
     client "github.com/undiscriminated-unions/fern/client"
-    context "context"
     fern "github.com/undiscriminated-unions/fern"
+    context "context"
 )
 
 func do() {
     client := client.NewClient()
+    request := &fern.MyUnion{
+        String: "string",
+    }
     client.Union.Get(
         context.TODO(),
-        &fern.MyUnion{
-            String: "string",
-        },
+        request,
     )
 }
 ```

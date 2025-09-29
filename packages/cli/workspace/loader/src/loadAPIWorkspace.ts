@@ -5,7 +5,7 @@ import {
     loadGeneratorsConfiguration,
     OPENAPI_DIRECTORY
 } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, isPathEmpty, join, RelativeFilePath } from "@fern-api/fs-utils";
 import {
     ConjureWorkspace,
     LazyFernWorkspace,
@@ -318,6 +318,12 @@ export async function loadAPIWorkspace({
             didSucceed: true,
             workspace: fernWorkspace
         };
+    }
+
+    // check if directory is empty
+    if (await isPathEmpty(join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY)))) {
+        const apiFolderName = absolutePathToWorkspace.split("/").pop();
+        context.logger.warn(`Detected empty API definiton: ${apiFolderName}. Remove to resolve error.`);
     }
 
     return {
