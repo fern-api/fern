@@ -30,10 +30,11 @@ use seed_single_url_environment_default::{ClientConfig, SingleUrlEnvironmentDefa
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
-        api_key: Some("<token>".to_string()),
+        token: Some("<token>".to_string()),
+        ..Default::default()
     };
     let client = SingleUrlEnvironmentDefaultClient::new(config).expect("Failed to build client");
-    client.dummy_get_dummy().await;
+    client.dummy.get_dummy(None).await;
 }
 ```
 

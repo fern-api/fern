@@ -1,6 +1,6 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::{EnumClient};
+pub use resources::{*};
 pub use types::{*};
 

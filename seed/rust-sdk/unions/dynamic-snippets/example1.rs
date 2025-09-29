@@ -1,10 +1,30 @@
-use seed_unions::{ClientConfig, UnionsClient};
+use chrono::{DateTime, Utc};
+use seed_unions::{
+    ActiveDiamond, AttractiveScript, BigUnion, CircularCard, ClientConfig, ColorfulCover,
+    DiligentDeal, DisloyalValue, DistinctFailure, FalseMirror, FrozenSleep, GaseousRoad,
+    GruesomeCoach, HarmoniousPlay, HastyPain, HoarseMouse, JumboEnd, LimpingStep, MistySnow,
+    NormalSweet, PopularLimit, PotableBad, PracticalPrinciple, PrimaryBlock, RotatingRatio,
+    ThankfulFactor, TotalWork, TriangularRepair, UnionsClient, UniqueStress, UnwillingSmoke,
+    VibrantExcitement,
+};
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         base_url: "https://api.fern.com".to_string(),
+        ..Default::default()
     };
     let client = UnionsClient::new(config).expect("Failed to build client");
-    client.bigunion_update(serde_json::json!({"type":"normalSweet","value":"value","id":"id","created-at":"2024-01-15T09:30:00Z","archived-at":"2024-01-15T09:30:00Z"})).await;
+    client
+        .bigunion
+        .update(
+            &BigUnion::NormalSweet {
+                data: NormalSweet {
+                    value: "value".to_string(),
+                },
+            },
+            None,
+        )
+        .await;
 }

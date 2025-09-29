@@ -1,5 +1,5 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::UnionsClient;
+pub use resources::*;
 pub use types::*;

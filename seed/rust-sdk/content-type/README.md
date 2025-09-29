@@ -26,16 +26,23 @@ Instantiate and use the client with the following:
 
 ```rust
 use seed_content_types::{ClientConfig, ContentTypesClient, PatchProxyRequest};
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        ..Default::default()
+    };
     let client = ContentTypesClient::new(config).expect("Failed to build client");
     client
-        .service_patch(PatchProxyRequest {
-            application: Some("application"),
-            require_auth: Some(true),
-        })
+        .service
+        .patch(
+            &PatchProxyRequest {
+                application: Some("application".to_string()),
+                require_auth: Some(true),
+            },
+            None,
+        )
         .await;
 }
 ```

@@ -30,10 +30,11 @@ use seed_simple_api::{ClientConfig, SimpleApiClient};
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
-        api_key: Some("<token>".to_string()),
+        token: Some("<token>".to_string()),
+        ..Default::default()
     };
     let client = SimpleApiClient::new(config).expect("Failed to build client");
-    client.user_get("id").await;
+    client.user.get(&"id".to_string(), None).await;
 }
 ```
 

@@ -1,13 +1,21 @@
-use seed_pagination::{ClientConfig, ListUsersMixedTypeCursorPaginationRequest, PaginationClient};
+use seed_pagination::{
+    ClientConfig, ListWithMixedTypeCursorPaginationQueryRequest, PaginationClient,
+};
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         base_url: "https://api.fern.com".to_string(),
-        api_key: Some("<token>".to_string()),
+        token: Some("<token>".to_string()),
+        ..Default::default()
     };
     let client = PaginationClient::new(config).expect("Failed to build client");
     client
-        .users_list_with_mixed_type_cursor_pagination(ListUsersMixedTypeCursorPaginationRequest {})
+        .users
+        .list_with_mixed_type_cursor_pagination(
+            &ListWithMixedTypeCursorPaginationQueryRequest {},
+            None,
+        )
         .await;
 }

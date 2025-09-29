@@ -26,13 +26,22 @@ Instantiate and use the client with the following:
 
 ```rust
 use seed_server_sent_events::{ClientConfig, ServerSentEventsClient, StreamCompletionRequest};
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        ..Default::default()
+    };
     let client = ServerSentEventsClient::new(config).expect("Failed to build client");
     client
-        .completions_stream(StreamCompletionRequest { query: "query" })
+        .completions
+        .stream(
+            &StreamCompletionRequest {
+                query: "query".to_string(),
+            },
+            None,
+        )
         .await;
 }
 ```

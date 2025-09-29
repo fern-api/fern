@@ -25,14 +25,23 @@ cargo add seed_errors
 Instantiate and use the client with the following:
 
 ```rust
-use seed_errors::{ClientConfig, ErrorsClient};
+use seed_errors::{ClientConfig, ErrorsClient, FooRequest};
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        ..Default::default()
+    };
     let client = ErrorsClient::new(config).expect("Failed to build client");
     client
-        .simple_foo_without_endpoint_error(serde_json::json!({"bar":"bar"}))
+        .simple
+        .foo_without_endpoint_error(
+            &FooRequest {
+                bar: "bar".to_string(),
+            },
+            None,
+        )
         .await;
 }
 ```

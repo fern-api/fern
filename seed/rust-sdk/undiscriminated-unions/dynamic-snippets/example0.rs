@@ -1,10 +1,14 @@
-use seed_undiscriminated_unions::{ClientConfig, UndiscriminatedUnionsClient};
+use seed_undiscriminated_unions::{ClientConfig, MyUnion, UndiscriminatedUnionsClient};
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         base_url: "https://api.fern.com".to_string(),
+        ..Default::default()
     };
     let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
-    client.union__get("string").await;
+    client
+        .union_
+        .get(&MyUnion::String("string".to_string()), None)
+        .await;
 }

@@ -4,8 +4,12 @@ use seed_trace::{ClientConfig, TraceClient};
 async fn main() {
     let config = ClientConfig {
         base_url: "https://api.fern.com".to_string(),
-        api_key: Some("<token>".to_string()),
+        token: Some("<token>".to_string()),
+        ..Default::default()
     };
     let client = TraceClient::new(config).expect("Failed to build client");
-    client.sysprop_set_num_warm_instances("JAVA", 1).await;
+    client
+        .sysprop
+        .set_num_warm_instances(&Language::Java, &1, None)
+        .await;
 }
