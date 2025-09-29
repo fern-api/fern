@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 module Seed
   module NullableOptional
@@ -12,15 +13,21 @@ module Seed
       # @return [Seed::NullableOptional::Types::UserResponse]
       def get_user(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
-          path: "/api/users/#{"
+          path: "/api/users/#{params[:userId]}"
         )
-        _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return Seed::NullableOptional::Types::UserResponse.load(_response.body)
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        if code.between?(200, 299)
+          Seed::NullableOptional::Types::UserResponse.load(_response.body)
         else
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
       end
 
@@ -29,16 +36,22 @@ module Seed
       # @return [Seed::NullableOptional::Types::UserResponse]
       def create_user(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "/api/users",
-          body: Seed::NullableOptional::Types::CreateUserRequest.new(params).to_h,
+          body: Seed::NullableOptional::Types::CreateUserRequest.new(params).to_h
         )
-        _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return Seed::NullableOptional::Types::UserResponse.load(_response.body)
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        if code.between?(200, 299)
+          Seed::NullableOptional::Types::UserResponse.load(_response.body)
         else
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
       end
 
@@ -47,16 +60,22 @@ module Seed
       # @return [Seed::NullableOptional::Types::UserResponse]
       def update_user(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "PATCH",
           path: "/api/users/#{params[:userId]}",
-          body: Seed::NullableOptional::Types::UpdateUserRequest.new(params).to_h,
+          body: Seed::NullableOptional::Types::UpdateUserRequest.new(params).to_h
         )
-        _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return Seed::NullableOptional::Types::UserResponse.load(_response.body)
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        if code.between?(200, 299)
+          Seed::NullableOptional::Types::UserResponse.load(_response.body)
         else
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
       end
 
@@ -64,44 +83,58 @@ module Seed
       #
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def list_users(request_options: {}, **params)
-        _query_param_names = ["limit", "offset", "includeDeleted", "sortBy"]
+        _query_param_names = [
+          %w[limit offset includeDeleted sortBy],
+          %i[limit offset includeDeleted sortBy]
+        ].flatten
         _query = params.slice(*_query_param_names)
-        params = params.except(*_query_param_names)
+        params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "/api/users",
-          query: _query,
+          query: _query
         )
-        _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return 
-        else
-          raise _response.body
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
         end
+        code = _response.code.to_i
+        return if code.between?(200, 299)
+
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(_response.body, code: code)
       end
 
       # Search users
       #
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def search_users(request_options: {}, **params)
-        _query_param_names = ["query", "department", "role", "isActive"]
+        _query_param_names = [
+          %w[query department role isActive],
+          %i[query department role isActive]
+        ].flatten
         _query = params.slice(*_query_param_names)
-        params = params.except(*_query_param_names)
+        params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "/api/users/search",
-          query: _query,
+          query: _query
         )
-        _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return 
-        else
-          raise _response.body
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
         end
+        code = _response.code.to_i
+        return if code.between?(200, 299)
+
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(_response.body, code: code)
       end
 
       # Create a complex profile to test nullable enums and unions
@@ -109,16 +142,22 @@ module Seed
       # @return [Seed::NullableOptional::Types::ComplexProfile]
       def create_complex_profile(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "/api/profiles/complex",
-          body: Seed::NullableOptional::Types::ComplexProfile.new(params).to_h,
+          body: Seed::NullableOptional::Types::ComplexProfile.new(params).to_h
         )
-        _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return Seed::NullableOptional::Types::ComplexProfile.load(_response.body)
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        if code.between?(200, 299)
+          Seed::NullableOptional::Types::ComplexProfile.load(_response.body)
         else
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
       end
 
@@ -127,15 +166,21 @@ module Seed
       # @return [Seed::NullableOptional::Types::ComplexProfile]
       def get_complex_profile(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
-          path: "/api/profiles/complex/#{"
+          path: "/api/profiles/complex/#{params[:profileId]}"
         )
-        _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return Seed::NullableOptional::Types::ComplexProfile.load(_response.body)
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        if code.between?(200, 299)
+          Seed::NullableOptional::Types::ComplexProfile.load(_response.body)
         else
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
       end
 
@@ -146,16 +191,22 @@ module Seed
         _path_param_names = ["profileId"]
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "PATCH",
           path: "/api/profiles/complex/#{params[:profileId]}",
-          body: params.except(*_path_param_names),
+          body: params.except(*_path_param_names)
         )
-        _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return Seed::NullableOptional::Types::ComplexProfile.load(_response.body)
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        if code.between?(200, 299)
+          Seed::NullableOptional::Types::ComplexProfile.load(_response.body)
         else
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
       end
 
@@ -164,16 +215,22 @@ module Seed
       # @return [Seed::NullableOptional::Types::DeserializationTestResponse]
       def test_deserialization(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "/api/test/deserialization",
-          body: Seed::NullableOptional::Types::DeserializationTestRequest.new(params).to_h,
+          body: Seed::NullableOptional::Types::DeserializationTestRequest.new(params).to_h
         )
-        _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return Seed::NullableOptional::Types::DeserializationTestResponse.load(_response.body)
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        if code.between?(200, 299)
+          Seed::NullableOptional::Types::DeserializationTestResponse.load(_response.body)
         else
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
       end
 
@@ -181,22 +238,29 @@ module Seed
       #
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def filter_by_role(request_options: {}, **params)
-        _query_param_names = ["role", "status", "secondaryRole"]
+        _query_param_names = [
+          %w[role status secondaryRole],
+          %i[role status secondaryRole]
+        ].flatten
         _query = params.slice(*_query_param_names)
-        params = params.except(*_query_param_names)
+        params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "/api/users/filter",
-          query: _query,
+          query: _query
         )
-        _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return 
-        else
-          raise _response.body
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
         end
+        code = _response.code.to_i
+        return if code.between?(200, 299)
+
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(_response.body, code: code)
       end
 
       # Get notification settings which may be null
@@ -204,16 +268,20 @@ module Seed
       # @return [Seed::NullableOptional::Types::NotificationMethod | nil]
       def get_notification_settings(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
-          path: "/api/users/#{/notifications"
+          path: "/api/users/#{params[:userId]}/notifications"
         )
-        _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return 
-        else
-          raise _response.body
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
         end
+        code = _response.code.to_i
+        return if code.between?(200, 299)
+
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(_response.body, code: code)
       end
 
       # Update tags to test array handling
@@ -223,17 +291,21 @@ module Seed
         _path_param_names = ["userId"]
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "PUT",
           path: "/api/users/#{params[:userId]}/tags",
-          body: params.except(*_path_param_names),
+          body: params.except(*_path_param_names)
         )
-        _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return 
-        else
-          raise _response.body
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
         end
+        code = _response.code.to_i
+        return if code.between?(200, 299)
+
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(_response.body, code: code)
       end
 
       # Get search results with nullable unions
@@ -241,19 +313,22 @@ module Seed
       # @return [Array[Seed::NullableOptional::Types::SearchResult] | nil]
       def get_search_results(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "/api/search",
-          body: params,
+          body: params
         )
-        _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return 
-        else
-          raise _response.body
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
         end
-      end
+        code = _response.code.to_i
+        return if code.between?(200, 299)
 
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(_response.body, code: code)
+      end
     end
   end
 end

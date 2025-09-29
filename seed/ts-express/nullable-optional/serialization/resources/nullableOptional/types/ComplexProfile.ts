@@ -43,23 +43,23 @@ export const ComplexProfile: core.serialization.ObjectSchema<
 export declare namespace ComplexProfile {
     export interface Raw {
         id: string;
-        nullableRole: serializers.UserRole.Raw | null;
+        nullableRole?: serializers.UserRole.Raw | null;
         optionalRole?: serializers.UserRole.Raw | null;
-        optionalNullableRole?: (serializers.UserRole.Raw | null) | null;
-        nullableStatus: serializers.UserStatus.Raw | null;
+        optionalNullableRole?: (serializers.UserRole.Raw | null | undefined) | null;
+        nullableStatus?: serializers.UserStatus.Raw | null;
         optionalStatus?: serializers.UserStatus.Raw | null;
-        optionalNullableStatus?: (serializers.UserStatus.Raw | null) | null;
-        nullableNotification: serializers.NotificationMethod.Raw | null;
+        optionalNullableStatus?: (serializers.UserStatus.Raw | null | undefined) | null;
+        nullableNotification?: serializers.NotificationMethod.Raw | null;
         optionalNotification?: serializers.NotificationMethod.Raw | null;
-        optionalNullableNotification?: (serializers.NotificationMethod.Raw | null) | null;
-        nullableSearchResult: serializers.SearchResult.Raw | null;
+        optionalNullableNotification?: (serializers.NotificationMethod.Raw | null | undefined) | null;
+        nullableSearchResult?: serializers.SearchResult.Raw | null;
         optionalSearchResult?: serializers.SearchResult.Raw | null;
-        nullableArray: string[] | null;
+        nullableArray?: string[] | null;
         optionalArray?: string[] | null;
-        optionalNullableArray?: (string[] | null) | null;
-        nullableListOfNullables: (string | null)[] | null;
-        nullableMapOfNullables: Record<string, serializers.Address.Raw | null> | null;
-        nullableListOfUnions: serializers.NotificationMethod.Raw[] | null;
+        optionalNullableArray?: (string[] | null | undefined) | null;
+        nullableListOfNullables?: (string | null | undefined)[] | null;
+        nullableMapOfNullables?: Record<string, serializers.Address.Raw | null | undefined> | null;
+        nullableListOfUnions?: serializers.NotificationMethod.Raw[] | null;
         optionalMapOfEnums?: Record<string, serializers.UserRole.Raw> | null;
     }
 }

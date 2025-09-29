@@ -66,13 +66,15 @@ export function generateIr({
     openApi = runResolutions({ openapi: openApi });
 
     const securitySchemes: Record<string, SecurityScheme> = Object.fromEntries(
-        Object.entries(openApi.components?.securitySchemes ?? {}).map(([key, securityScheme]) => {
-            const convertedSecurityScheme = convertSecurityScheme(securityScheme, source);
-            if (convertedSecurityScheme == null) {
-                return [];
-            }
-            return [key, convertSecurityScheme(securityScheme, source)];
-        })
+        Object.entries(openApi.components?.securitySchemes ?? {})
+            .map(([key, securityScheme]) => {
+                const convertedSecurityScheme = convertSecurityScheme(securityScheme, source, taskContext);
+                if (convertedSecurityScheme == null) {
+                    return null;
+                }
+                return [key, convertedSecurityScheme];
+            })
+            .filter((entry): entry is [string, SecurityScheme] => entry !== null)
     );
     const authHeaders = new Set(
         ...Object.entries(securitySchemes).map(([_, securityScheme]) => {
@@ -168,6 +170,7 @@ export function generateIr({
                                 // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                                 { ...schema, "x-fern-type-name": `${key}Body` } as any as OpenAPIV3.SchemaObject,
                                 false,
+                                false,
                                 context,
                                 [key],
                                 source,
@@ -176,7 +179,7 @@ export function generateIr({
                         ];
                     }
                 }
-                return [key, convertSchema(schema, false, context, [key], source, schemaNamespace ?? namespace)];
+                return [key, convertSchema(schema, false, false, context, [key], source, schemaNamespace ?? namespace)];
             })
             .filter((entry) => entry.length > 0)
     );
@@ -349,7 +352,8 @@ export function generateIr({
                     source: error.source,
                     examples
                 };
-            })
+            }),
+            retries: endpointWithExample.retries
         };
     });
 
@@ -368,7 +372,9 @@ export function generateIr({
                 return [key, { summary: value.summary ?? undefined, description: value.description ?? undefined }];
             })
         ),
-        servers: (openApi.servers ?? []).map((server) => convertServer(server)),
+        servers: (openApi.servers ?? []).map((server) =>
+            convertServer(server, { groupMultiApiEnvironments: options.groupMultiApiEnvironments })
+        ),
         websocketServers: [],
         tags: {
             tagsById: Object.fromEntries(

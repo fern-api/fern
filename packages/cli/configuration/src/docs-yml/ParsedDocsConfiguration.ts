@@ -3,9 +3,15 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/path-utils";
 import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 
 import { Audiences } from "../commons";
-import { AiChatConfig, DocsInstance, ExperimentalConfig, PlaygroundSettings, VersionAvailability } from "./schemas";
-// TODO: Update this import
-import { AnnouncementConfig } from "./schemas/sdk/api/resources/docs/types/AnnouncementConfig";
+import {
+    AiChatConfig,
+    AnnouncementConfig,
+    Availability,
+    DocsInstance,
+    ExperimentalConfig,
+    PlaygroundSettings,
+    VersionAvailability
+} from "./schemas";
 
 export interface ParsedDocsConfiguration {
     instances: DocsInstance[];
@@ -48,6 +54,8 @@ export interface ParsedDocsConfiguration {
     aiChatConfig: AiChatConfig | undefined;
 
     experimental: ExperimentalConfig | undefined;
+
+    pageActions: CjsFdrSdk.docs.v1.commons.PageActionsConfig | undefined;
 }
 
 export interface AbsoluteJsFileConfig {
@@ -230,6 +238,7 @@ export declare namespace DocsNavigationItem {
         slug: string | undefined;
         hidden: boolean | undefined;
         noindex: boolean | undefined;
+        availability: Availability | undefined;
     }
 
     export interface Section
@@ -244,6 +253,7 @@ export declare namespace DocsNavigationItem {
         hidden: boolean | undefined;
         skipUrlSlug: boolean | undefined;
         overviewAbsolutePath: AbsoluteFilePath | undefined;
+        availability: Availability | undefined;
     }
 
     export interface ApiSection
@@ -255,6 +265,7 @@ export declare namespace DocsNavigationItem {
         apiName: string | undefined;
         openrpc: string | undefined;
         audiences: Audiences;
+        availability: Availability | undefined;
         showErrors: boolean;
         snippetsConfiguration: SnippetsConfiguration | undefined;
         overviewAbsolutePath: AbsoluteFilePath | undefined;
@@ -298,6 +309,8 @@ export declare namespace DocsNavigationItem {
         java: string | VersionedSnippetLanguageConfiguration | undefined;
         ruby: string | VersionedSnippetLanguageConfiguration | undefined;
         csharp: string | VersionedSnippetLanguageConfiguration | undefined;
+        php: string | VersionedSnippetLanguageConfiguration | undefined;
+        swift: string | VersionedSnippetLanguageConfiguration | undefined;
     }
 }
 

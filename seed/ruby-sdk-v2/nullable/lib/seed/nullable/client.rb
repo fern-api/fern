@@ -10,48 +10,71 @@ module Seed
 
       # @return [Array[Seed::Nullable::Types::User]]
       def get_users(request_options: {}, **params)
-        _query_param_names = %w[usernames avatar activated tags extra]
+        _query_param_names = [
+          %w[usernames avatar activated tags extra],
+          %i[usernames avatar activated tags extra]
+        ].flatten
         _query = params.slice(*_query_param_names)
         params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "/users",
           query: _query
         )
-        _response = @client.send(_request)
-        return if _response.code >= "200" && _response.code < "300"
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        return if code.between?(200, 299)
 
-        raise _response.body
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(_response.body, code: code)
       end
 
       # @return [Seed::Nullable::Types::User]
       def create_user(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "/users",
           body: params
         )
-        _response = @client.send(_request)
-        return Seed::Nullable::Types::User.load(_response.body) if _response.code >= "200" && _response.code < "300"
-
-        raise _response.body
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        if code.between?(200, 299)
+          Seed::Nullable::Types::User.load(_response.body)
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
+        end
       end
 
       # @return [bool]
       def delete_user(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url],
           method: "DELETE",
           path: "/users",
           body: params
         )
-        _response = @client.send(_request)
-        return if _response.code >= "200" && _response.code < "300"
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        return if code.between?(200, 299)
 
-        raise _response.body
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(_response.body, code: code)
       end
     end
   end

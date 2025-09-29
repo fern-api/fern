@@ -23,7 +23,7 @@ groups:
           package-name: "@fern-api/dynamic-ir-sdk"
           token: ${NPM_TOKEN}
         config:
-          noOptionalProperties: true
+          noOptionalProperties: false
           noSerdeLayer: true
   node:
     generators:
@@ -43,7 +43,7 @@ groups:
         output:
           location: maven
           url: maven.buildwithfern.com
-          coordinate: com.fern.fern:irV59
+          coordinate: com.fern.fern:irV60
         config:
           wrapped-aliases: true
           enable-forward-compatible-enums: true
@@ -54,7 +54,7 @@ groups:
         output:
           location: pypi
           url: pypi.buildwithfern.com
-          package-name: fern_fern_ir_v59
+          package-name: fern_fern_ir_v60
         config:
           # wrapped_aliases: true
           include_union_utils: true

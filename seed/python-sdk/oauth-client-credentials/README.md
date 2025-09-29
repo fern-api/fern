@@ -28,15 +28,15 @@ client = SeedOauthClientCredentials(
     client_secret="YOUR_CLIENT_SECRET",
 )
 client.auth.get_token_with_client_credentials(
-    client_id="client_id",
-    client_secret="client_secret",
-    scope="scope",
+    client_id="my_oauth_app_123",
+    client_secret="sk_live_abcdef123456789",
+    scope="read:users",
 )
 ```
 
 ## Async Client
 
-The SDK also exports an `async` client so that you can make non-blocking calls to our API.
+The SDK also exports an `async` client so that you can make non-blocking calls to our API. Note that if you are constructing an Async httpx client class to pass into this client, use `httpx.AsyncClient()` instead of `httpx.Client()` (e.g. for the `httpx_client` parameter of this client).
 
 ```python
 import asyncio
@@ -52,9 +52,9 @@ client = AsyncSeedOauthClientCredentials(
 
 async def main() -> None:
     await client.auth.get_token_with_client_credentials(
-        client_id="client_id",
-        client_secret="client_secret",
-        scope="scope",
+        client_id="my_oauth_app_123",
+        client_secret="sk_live_abcdef123456789",
+        scope="read:users",
     )
 
 
@@ -146,7 +146,7 @@ from seed import SeedOauthClientCredentials
 client = SeedOauthClientCredentials(
     ...,
     httpx_client=httpx.Client(
-        proxies="http://my.test.proxy.example.com",
+        proxy="http://my.test.proxy.example.com",
         transport=httpx.HTTPTransport(local_address="0.0.0.0"),
     ),
 )

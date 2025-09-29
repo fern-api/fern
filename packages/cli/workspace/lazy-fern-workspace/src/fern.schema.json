@@ -1503,6 +1503,34 @@
         }
       ]
     },
+    "auth.AuthScope": {
+      "type": "string"
+    },
+    "service.HttpEndpointSecurityItem": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "$ref": "#/definitions/auth.AuthScope"
+        }
+      }
+    },
+    "service.HttpEndpointSecurity": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/service.HttpEndpointSecurityItem"
+      }
+    },
+    "service.HttpEndpointAuth": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "$ref": "#/definitions/service.HttpEndpointSecurity"
+        }
+      ]
+    },
     "service.QueryParameterTypeReferenceDetailed": {
       "type": "object",
       "properties": {
@@ -2601,6 +2629,29 @@
         }
       ]
     },
+    "service.RetriesDisabledSchema": {
+      "type": "object",
+      "properties": {
+        "disabled": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "service.RetriesConfiguration": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/service.RetriesDisabledSchema"
+        }
+      ]
+    },
     "service.HttpEndpointSchema": {
       "type": "object",
       "properties": {
@@ -2696,7 +2747,7 @@
         "auth": {
           "oneOf": [
             {
-              "type": "boolean"
+              "$ref": "#/definitions/service.HttpEndpointAuth"
             },
             {
               "type": "null"
@@ -2800,6 +2851,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/source.SourceSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "retries": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/service.RetriesConfiguration"
             },
             {
               "type": "null"

@@ -26,7 +26,7 @@ Instantiate and use the client with the following:
 ```csharp
 using SeedCsharpSystemCollision;
 
-var client = new System();
+var client = new SeedCsharpSystemCollision.System();
 await client.CreateUserAsync(
     new User
     {

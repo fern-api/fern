@@ -9243,7 +9243,9 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -9274,7 +9276,9 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             }
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -9305,7 +9309,9 @@
                                 "type": "named",
                                 "value": "type_commons/metadata:Metadata"
                             }
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -9371,7 +9377,9 @@
                                     "value": "type_:Node"
                                 }
                             }
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -9508,7 +9516,9 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -9546,7 +9556,9 @@
                                     "value": "STRING"
                                 }
                             }
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -9644,7 +9656,9 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -9672,7 +9686,9 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -9700,7 +9716,9 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_file:FileInfo"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -9950,7 +9968,9 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -9984,7 +10004,9 @@
                                     "value": "type_file:File"
                                 }
                             }
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -10018,7 +10040,9 @@
                                     "value": "type_file/directory:Directory"
                                 }
                             }
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -10028,6 +10052,7 @@
         "endpoints": {},
         "pathParameters": [],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,

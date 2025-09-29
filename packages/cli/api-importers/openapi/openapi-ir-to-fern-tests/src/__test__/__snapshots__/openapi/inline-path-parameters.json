@@ -10,7 +10,7 @@
           "base-path": "",
           "endpoints": {
             "GetOrganizationUser": {
-              "auth": false,
+              "auth": undefined,
               "docs": "Returns the user with the provided user ID.",
               "examples": [
                 {
@@ -53,7 +53,7 @@
               },
             },
             "GetUser": {
-              "auth": false,
+              "auth": undefined,
               "docs": "Returns the user with the provided user ID.",
               "examples": [
                 {
@@ -100,7 +100,6 @@
     GetUser:
       path: /users/{user_id}
       method: GET
-      auth: false
       docs: Returns the user with the provided user ID.
       source:
         openapi: ../openapi.yml
@@ -114,7 +113,6 @@
     GetOrganizationUser:
       path: /organizations/{organization_id}/users/{user_id}
       method: GET
-      auth: false
       docs: Returns the user with the provided user ID.
       source:
         openapi: ../openapi.yml
@@ -157,7 +155,7 @@ types:
           "base-path": "",
           "endpoints": {
             "Search": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Search an organization",
               "docs": "",
               "examples": [
@@ -256,7 +254,6 @@ service:
     Search:
       path: /organizations/{organization_id}/search
       method: POST
-      auth: false
       docs: ''
       source:
         openapi: ../openapi.yml
@@ -264,8 +261,8 @@ service:
       request:
         name: SearchRequest
         path-parameters:
-          id: string
           organization_id: string
+          id: string
         body:
           properties:
             access:
@@ -278,8 +275,8 @@ service:
         status-code: 200
       examples:
         - path-parameters:
-            id: id
             organization_id: organization_id
+            id: id
           request: {}
           response:
             body:

@@ -169,6 +169,7 @@ function convertResolvedResponse({
                     schema: convertSchema(
                         textEventStreamObject.schema,
                         false,
+                        false,
                         context,
                         responseBreadcrumbs,
                         source,
@@ -183,6 +184,7 @@ function convertResolvedResponse({
                     fullExamples: textEventStreamObject.examples,
                     schema: convertSchema(
                         textEventStreamObject.schema,
+                        false,
                         false,
                         context,
                         responseBreadcrumbs,
@@ -210,6 +212,7 @@ function convertResolvedResponse({
                         schema: convertSchema(
                             jsonMediaObject.schema,
                             false,
+                            false,
                             context,
                             responseBreadcrumbs,
                             source,
@@ -226,6 +229,7 @@ function convertResolvedResponse({
                         schema: convertSchema(
                             jsonMediaObject.schema,
                             false,
+                            false,
                             context,
                             responseBreadcrumbs,
                             source,
@@ -238,7 +242,15 @@ function convertResolvedResponse({
         }
         return ResponseWithExample.json({
             description: resolvedResponse.description,
-            schema: convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs, source, namespace),
+            schema: convertSchema(
+                jsonMediaObject.schema,
+                false,
+                false,
+                context,
+                responseBreadcrumbs,
+                source,
+                namespace
+            ),
             responseProperty: getExtension<string>(operationContext.operation, FernOpenAPIExtension.RESPONSE_PROPERTY),
             fullExamples: jsonMediaObject.examples,
             source,
@@ -314,7 +326,15 @@ function markErrorSchemas({
             nameOverride: undefined,
             generatedName: errorName,
             description: resolvedResponse.description,
-            schema: convertSchema(mediaObject?.schema ?? {}, false, context, [errorName, "Body"], source, namespace),
+            schema: convertSchema(
+                mediaObject?.schema ?? {},
+                false,
+                false,
+                context,
+                [errorName, "Body"],
+                source,
+                namespace
+            ),
             fullExamples: mediaObject?.examples,
             source
         };

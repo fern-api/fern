@@ -87,6 +87,7 @@ export class DynamicSnippetsConverter {
             endpoints: this.convertEndpoints({ disableExamples }),
             pathParameters: this.convertPathParameters({ pathParameters: this.ir.pathParameters }),
             environments: this.ir.environments,
+            variables: this.convertVariables(),
             generatorConfig: this.generatorConfig
         };
     }
@@ -102,6 +103,17 @@ export class DynamicSnippetsConverter {
 
     private convertHeaders(): DynamicSnippets.NamedParameter[] {
         return this.convertWireValueParameters({ wireValueParameters: this.ir.headers });
+    }
+
+    private convertVariables(): DynamicSnippets.VariableDeclaration[] | undefined {
+        if (this.ir.variables.length === 0) {
+            return undefined;
+        }
+        return this.ir.variables.map((variable) => ({
+            id: variable.id,
+            name: variable.name,
+            typeReference: this.convertTypeReference(variable.type)
+        }));
     }
 
     private convertEndpoints({
@@ -229,7 +241,7 @@ export class DynamicSnippetsConverter {
             case "inlinedRequestBody": {
                 const properties = [...(body.extendedProperties ?? []), ...body.properties];
                 return DynamicSnippets.InlinedRequestBody.properties(
-                    this.convertWireValueParameters({ wireValueParameters: properties })
+                    this.convertBodyPropertiesToParameters({ properties })
                 );
             }
             case "reference":
@@ -273,7 +285,9 @@ export class DynamicSnippetsConverter {
                 case "bodyProperty":
                     return DynamicSnippets.FileUploadRequestBodyProperty.bodyProperty({
                         name: property.name,
-                        typeReference: this.convertTypeReference(property.valueType)
+                        typeReference: this.convertTypeReference(property.valueType),
+                        propertyAccess: property.propertyAccess,
+                        variable: undefined
                     });
                 default:
                     assertNever(property);
@@ -306,7 +320,25 @@ export class DynamicSnippetsConverter {
                 name: pathParameter.name,
                 wireValue: pathParameter.name.originalName
             },
-            typeReference: this.convertTypeReference(pathParameter.valueType)
+            typeReference: this.convertTypeReference(pathParameter.valueType),
+            propertyAccess: undefined,
+            variable: pathParameter.variable
+        }));
+    }
+
+    private convertBodyPropertiesToParameters({
+        properties
+    }: {
+        properties: ObjectProperty[];
+    }): DynamicSnippets.NamedParameter[] {
+        return properties.map((property) => ({
+            name: {
+                name: property.name.name,
+                wireValue: property.name.wireValue
+            },
+            typeReference: this.convertTypeReference(property.valueType),
+            propertyAccess: property.propertyAccess,
+            variable: undefined
         }));
     }
 
@@ -320,7 +352,9 @@ export class DynamicSnippetsConverter {
                 name: parameter.name.name,
                 wireValue: parameter.name.wireValue
             },
-            typeReference: this.convertTypeReference(parameter.valueType)
+            typeReference: this.convertTypeReference(parameter.valueType),
+            propertyAccess: undefined,
+            variable: undefined
         }));
     }
 
@@ -340,7 +374,9 @@ export class DynamicSnippetsConverter {
                     name: queryParameter.name.name,
                     wireValue: queryParameter.name.wireValue
                 },
-                typeReference
+                typeReference,
+                propertyAccess: undefined,
+                variable: undefined
             });
         }
         return parameters;
@@ -457,7 +493,7 @@ export class DynamicSnippetsConverter {
     }): DynamicSnippets.NamedType {
         return DynamicSnippets.NamedType.object({
             declaration,
-            properties: this.convertWireValueParameters({ wireValueParameters: properties }),
+            properties: this.convertBodyPropertiesToParameters({ properties }),
             additionalProperties
         });
     }
@@ -530,7 +566,7 @@ export class DynamicSnippetsConverter {
         return DynamicSnippets.SingleDiscriminatedUnionType.samePropertiesAsObject({
             typeId: declaredTypeName.typeId,
             discriminantValue,
-            properties: this.convertWireValueParameters({ wireValueParameters: inheritedProperties })
+            properties: this.convertBodyPropertiesToParameters({ properties: inheritedProperties })
         });
     }
 
@@ -548,7 +584,7 @@ export class DynamicSnippetsConverter {
             discriminantValue,
             properties:
                 inheritedProperties.length > 0
-                    ? this.convertWireValueParameters({ wireValueParameters: inheritedProperties })
+                    ? this.convertBodyPropertiesToParameters({ properties: inheritedProperties })
                     : undefined
         });
     }
@@ -564,7 +600,7 @@ export class DynamicSnippetsConverter {
             discriminantValue,
             properties:
                 inheritedProperties.length > 0
-                    ? this.convertWireValueParameters({ wireValueParameters: inheritedProperties })
+                    ? this.convertBodyPropertiesToParameters({ properties: inheritedProperties })
                     : undefined
         });
     }
@@ -615,7 +651,9 @@ export class DynamicSnippetsConverter {
                 return DynamicSnippets.Auth.header({
                     header: {
                         name: scheme.name,
-                        typeReference: this.convertTypeReference(scheme.valueType)
+                        typeReference: this.convertTypeReference(scheme.valueType),
+                        propertyAccess: undefined,
+                        variable: undefined
                     }
                 });
             case "oauth":
@@ -736,6 +774,19 @@ export class DynamicSnippetsConverter {
     }): DynamicSnippets.EndpointExample[] {
         const requests: DynamicSnippets.EndpointExample[] = [];
         for (const example of [...endpoint.userSpecifiedExamples, ...endpoint.autogeneratedExamples]) {
+            const variableReferencedParams = new Set<string>();
+            [...this.ir.pathParameters, ...endpoint.pathParameters].forEach((param) => {
+                if (param.variable != null) {
+                    variableReferencedParams.add(param.name.originalName);
+                }
+            });
+
+            const pathParameterExamples = [
+                ...(example.example?.rootPathParameters ?? []),
+                ...(example.example?.servicePathParameters ?? []),
+                ...(example.example?.endpointPathParameters ?? [])
+            ].filter((param) => !variableReferencedParams.has(param.name.originalName));
+
             requests.push({
                 id: example?.example?.id ?? uuidv4(),
                 name: example?.example?.name?.originalName,
@@ -751,11 +802,7 @@ export class DynamicSnippetsConverter {
                     )
                 ),
                 pathParameters: Object.fromEntries(
-                    [
-                        ...(example.example?.rootPathParameters ?? []),
-                        ...(example.example?.servicePathParameters ?? []),
-                        ...(example.example?.endpointPathParameters ?? [])
-                    ].map((parameter) => {
+                    pathParameterExamples.map((parameter) => {
                         return [parameter.name.originalName, parameter.value.jsonExample];
                     })
                 ),

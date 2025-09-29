@@ -33,20 +33,51 @@ const AsIsFileSpecs = {
         filenameWithoutExtension: "HTTPClient",
         symbolNames: ["HTTPClient"]
     },
+    MultipartFormData: {
+        relativePathToDir: "Core/Networking",
+        filenameWithoutExtension: "MultipartFormData",
+        symbolNames: ["MultipartFormData"]
+    },
+    MultipartFormDataConvertible: {
+        relativePathToDir: "Core/Networking",
+        filenameWithoutExtension: "MultipartFormDataConvertible",
+        symbolNames: ["MultipartFormDataConvertible"]
+    },
+    MultipartFormField: {
+        relativePathToDir: "Core/Networking",
+        filenameWithoutExtension: "MultipartFormField",
+        symbolNames: ["MultipartFormField"]
+    },
     QueryParameter: {
         relativePathToDir: "Core/Networking",
         filenameWithoutExtension: "QueryParameter",
         symbolNames: ["QueryParameter"]
     },
-
     // Core/Serde
     DecoderPlusAdditionalProperties: {
         relativePathToDir: "Core/Serde",
         filenameWithoutExtension: "Decoder+AdditionalProperties"
     },
+    EncodableValue: {
+        relativePathToDir: "Core/Serde",
+        filenameWithoutExtension: "EncodableValue",
+        symbolNames: ["EncodableValue"]
+    },
     EncoderPlusAdditionalProperties: {
         relativePathToDir: "Core/Serde",
         filenameWithoutExtension: "Encoder+AdditionalProperties"
+    },
+    JSONEncoderPlusEncodableValue: {
+        relativePathToDir: "Core/Serde",
+        filenameWithoutExtension: "JSONEncoder+EncodableValue"
+    },
+    KeyedDecodingContainerPlusNullable: {
+        relativePathToDir: "Core/Serde",
+        filenameWithoutExtension: "KeyedDecodingContainer+Nullable"
+    },
+    KeyedEncodingContainerPlusNullable: {
+        relativePathToDir: "Core/Serde",
+        filenameWithoutExtension: "KeyedEncodingContainer+Nullable"
     },
     Serde: {
         relativePathToDir: "Core/Serde",
@@ -60,6 +91,15 @@ const AsIsFileSpecs = {
     },
 
     // Core
+    CalendarDate: {
+        relativePathToDir: "Core",
+        filenameWithoutExtension: "CalendarDate",
+        symbolNames: ["CalendarDate"]
+    },
+    DataPlusString: {
+        relativePathToDir: "Core",
+        filenameWithoutExtension: "Data+String"
+    },
     StringPlusUrlEncoding: {
         relativePathToDir: "Core",
         filenameWithoutExtension: "String+URLEncoding"
@@ -81,10 +121,20 @@ const AsIsFileSpecs = {
         filenameWithoutExtension: "ClientError",
         symbolNames: ["ClientError"]
     },
+    FormFile: {
+        relativePathToDir: "Public",
+        filenameWithoutExtension: "FormFile",
+        symbolNames: ["FormFile"]
+    },
     JsonValue: {
         relativePathToDir: "Public",
         filenameWithoutExtension: "JSONValue",
         symbolNames: ["JSONValue"]
+    },
+    Nullable: {
+        relativePathToDir: "Public",
+        filenameWithoutExtension: "Nullable",
+        symbolNames: ["Nullable"]
     },
     RequestOptions: {
         relativePathToDir: "Public",

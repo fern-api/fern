@@ -3,8 +3,9 @@ package example
 import (
     client "github.com/pagination/fern/client"
     option "github.com/pagination/fern/option"
-    context "context"
+    inlineusers "github.com/pagination/fern/inlineusers"
     fern "github.com/pagination/fern"
+    context "context"
 )
 
 func do() {
@@ -16,16 +17,17 @@ func do() {
             "<token>",
         ),
     )
-    client.Users.ListWithOffsetStepPagination(
+    request := &inlineusers.ListUsersOffsetStepPaginationRequest{
+        Page: fern.Int(
+            1,
+        ),
+        Limit: fern.Int(
+            1,
+        ),
+        Order: inlineusers.OrderAsc.Ptr(),
+    }
+    client.InlineUsers.InlineUsers.ListWithOffsetStepPagination(
         context.TODO(),
-        &fern.ListUsersOffsetStepPaginationRequest{
-            Page: fern.Int(
-                1,
-            ),
-            Limit: fern.Int(
-                1,
-            ),
-            Order: fern.OrderAsc.Ptr(),
-        },
+        request,
     )
 }

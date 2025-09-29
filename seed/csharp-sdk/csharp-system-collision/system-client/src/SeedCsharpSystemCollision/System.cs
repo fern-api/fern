@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using global::System.Threading.Tasks;
 using SeedCsharpSystemCollision.Core;
 
 namespace SeedCsharpSystemCollision;
@@ -45,7 +44,7 @@ public partial class System
     ///     }
     /// );
     /// </code></example>
-    public async Task<User> CreateUserAsync(
+    public async global::System.Threading.Tasks.Task<User> CreateUserAsync(
         User request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -89,7 +88,7 @@ public partial class System
 
     /// <example><code>
     /// await client.CreateTaskAsync(
-    ///     new Task
+    ///     new SeedCsharpSystemCollision.Task
     ///     {
     ///         Name = "name",
     ///         User = new User
@@ -104,7 +103,7 @@ public partial class System
     ///     }
     /// );
     /// </code></example>
-    public async Task<Task> CreateTaskAsync(
+    public async global::System.Threading.Tasks.Task<Task> CreateTaskAsync(
         Task request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -148,7 +147,7 @@ public partial class System
 
     /// <example><code>
     /// await client.EmptyResponseAsync(
-    ///     new Task
+    ///     new SeedCsharpSystemCollision.Task
     ///     {
     ///         Name = "name",
     ///         User = new User

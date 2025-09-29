@@ -150,11 +150,13 @@
               },
               "wireValue": "id",
             },
+            "propertyAccess": undefined,
             "typeReference": {
               "_visit": [Function],
               "type": "primitive",
               "value": "STRING",
             },
+            "variable": undefined,
           },
           {
             "name": {
@@ -179,11 +181,13 @@
               },
               "wireValue": "userId",
             },
+            "propertyAccess": undefined,
             "typeReference": {
               "_visit": [Function],
               "type": "primitive",
               "value": "STRING",
             },
+            "variable": undefined,
           },
           {
             "name": {
@@ -208,6 +212,7 @@
               },
               "wireValue": "items",
             },
+            "propertyAccess": undefined,
             "typeReference": {
               "_visit": [Function],
               "type": "list",
@@ -217,6 +222,7 @@
                 "value": "type_types:OrderItem",
               },
             },
+            "variable": undefined,
           },
           {
             "name": {
@@ -241,11 +247,13 @@
               },
               "wireValue": "total",
             },
+            "propertyAccess": undefined,
             "typeReference": {
               "_visit": [Function],
               "type": "primitive",
               "value": "DOUBLE",
             },
+            "variable": undefined,
           },
           {
             "name": {
@@ -270,11 +278,13 @@
               },
               "wireValue": "createdAt",
             },
+            "propertyAccess": undefined,
             "typeReference": {
               "_visit": [Function],
               "type": "primitive",
               "value": "STRING",
             },
+            "variable": undefined,
           },
           {
             "name": {
@@ -299,11 +309,13 @@
               },
               "wireValue": "status",
             },
+            "propertyAccess": undefined,
             "typeReference": {
               "_visit": [Function],
               "type": "named",
               "value": "type_types:OrderStatus",
             },
+            "variable": undefined,
           },
         ],
         "type": "object",
@@ -399,11 +411,13 @@
               },
               "wireValue": "productId",
             },
+            "propertyAccess": undefined,
             "typeReference": {
               "_visit": [Function],
               "type": "primitive",
               "value": "STRING",
             },
+            "variable": undefined,
           },
           {
             "name": {
@@ -428,11 +442,13 @@
               },
               "wireValue": "quantity",
             },
+            "propertyAccess": undefined,
             "typeReference": {
               "_visit": [Function],
               "type": "primitive",
               "value": "INTEGER",
             },
+            "variable": undefined,
           },
           {
             "name": {
@@ -457,11 +473,13 @@
               },
               "wireValue": "unitPrice",
             },
+            "propertyAccess": undefined,
             "typeReference": {
               "_visit": [Function],
               "type": "primitive",
               "value": "DOUBLE",
             },
+            "variable": undefined,
           },
         ],
         "type": "object",
@@ -647,6 +665,7 @@
         ],
       },
     },
+    "variables": undefined,
     "version": "1.0.0",
   },
   "environments": undefined,

@@ -31,14 +31,7 @@ $client = new SeedClient(
     token: '<token>',
 );
 $client->uploadJsonDocument(
-    new UploadDocumentRequest([
-        'author' => 'author',
-        'tags' => [
-            'tags',
-            'tags',
-        ],
-        'title' => 'title',
-    ]),
+    new UploadDocumentRequest([]),
 );
 
 ```

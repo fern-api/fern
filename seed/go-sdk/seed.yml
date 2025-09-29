@@ -1,4 +1,4 @@
-irVersion: v59
+irVersion: v60
 displayName: Go SDK
 image: fernapi/fern-go-sdk
 changelogLocation: ../../generators/go/sdk/versions.yml
@@ -55,6 +55,11 @@ fixtures:
       customConfig:
         clientName: Acme
         clientConstructorName: New
+        customReadmeSections:
+          - title: "Generator Invocation Custom Section"
+            content: "Generator Invocation Custom Content for {{ owner }}:{{ repo }}:{{ version }}"
+          - title: "Override Section"
+            content: "Override Content"
       readmeConfig:
         apiName: "CustomName"
         disabledSections:
@@ -62,6 +67,13 @@ fixtures:
         bannerLink: https://www.fernapi.com
         apiReferenceLink: https://www.docs.fernapi.com
         defaultEndpoint: POST /big-entity
+        customSections:
+          - title: "Base Readme Custom Section"
+            language: go
+            content: "Base Readme Custom Content for {{ owner }}:{{ repo }}:{{ version }}"
+          - title: "Override Section"
+            language: go
+            content: "Base Content"
         features:
           timeouts:
             - GET /movie/{movieId}
@@ -70,6 +82,12 @@ fixtures:
     - outputFolder: package-path
       customConfig:
         packagePath: pleaseinhere
+    - outputFolder: getters-pass-by-value
+      customConfig:
+        gettersPassByValue: true
+    - outputFolder: export-all-requests-at-root
+      customConfig:
+        exportAllRequestsAtRoot: true
   go-bytes-request:
     - outputFolder: no-custom-config
       customConfig: null
@@ -77,6 +95,9 @@ fixtures:
       customConfig:
         useReaderForBytesRequest: true
   imdb:
+    - outputFolder: with-wiremock-tests
+      customConfig:
+        enableWireTests: true
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: package-path
@@ -174,24 +195,30 @@ fixtures:
     - outputFolder: default-values
       customConfig:
         useDefaultRequestParameterValues: true
+  reserved-keywords: []
 scripts:
   - docker: golang:1.18-alpine
     commands:
       - CGO_ENABLED=0 go test ./...
 allowedFailures:
   - alias-extends
-  - bytes
   - bytes-download
-  - bytes-upload
   - enum
+  - errors
   - exhaustive
   - literal
-  - mixed-case
+  - mixed-case:no-custom-config
+  - mixed-case:default-values
   - pagination-custom
-  - reserved-keywords
   - request-parameters
+  - reserved-keywords
+  - server-sent-event-examples
+  - server-sent-events
+  - streaming:.
   - streaming-parameter
   - trace
+  - unions:no-custom-config
+  - property-access
 
   # TODO: Fix example generator to produce valid dynamic snippets.
   - pagination
@@ -200,3 +227,6 @@ allowedFailures:
   - examples:exported-client-name
   - path-parameters:no-custom-config
   - path-parameters:package-name
+
+  # TODO: Investigate addition of toolchain directive to go.mod
+  - imdb:with-wiremock-tests

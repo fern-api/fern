@@ -21,6 +21,7 @@ export function convertDiscriminatedOneOf({
     description,
     availability,
     required,
+    wrapAsOptional,
     wrapAsNullable,
     discriminator,
     context,
@@ -37,6 +38,7 @@ export function convertDiscriminatedOneOf({
     description: string | undefined;
     availability: Availability | undefined;
     required: string[] | undefined;
+    wrapAsOptional: boolean;
     wrapAsNullable: boolean;
     discriminator: OpenAPIV3.DiscriminatorObject;
     context: SchemaParserContext;
@@ -52,6 +54,7 @@ export function convertDiscriminatedOneOf({
                 {
                     $ref: schema
                 },
+                false,
                 false,
                 context,
                 [schema],
@@ -75,9 +78,13 @@ export function convertDiscriminatedOneOf({
         })
         .map(([propertyName, propertySchema]) => {
             const isRequired = required != null && required.includes(propertyName);
+            const [isOptional, isNullable] = context.options.coerceOptionalSchemasToNullable
+                ? [false, !isRequired]
+                : [!isRequired, false];
             const schema = convertSchema(
                 propertySchema,
-                !isRequired,
+                isOptional,
+                isNullable,
                 context,
                 [...breadcrumbs, propertyName],
                 source,
@@ -92,6 +99,7 @@ export function convertDiscriminatedOneOf({
         nameOverride,
         generatedName,
         title,
+        wrapAsOptional,
         wrapAsNullable,
         properties: convertedProperties,
         description,
@@ -113,6 +121,7 @@ export function convertDiscriminatedOneOfWithVariants({
     description,
     availability,
     required,
+    wrapAsOptional,
     wrapAsNullable,
     discriminant,
     variants,
@@ -130,6 +139,7 @@ export function convertDiscriminatedOneOfWithVariants({
     description: string | undefined;
     availability: Availability | undefined;
     required: string[] | undefined;
+    wrapAsOptional: boolean;
     wrapAsNullable: boolean;
     discriminant: string;
     variants: Record<string, OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject>;
@@ -145,6 +155,7 @@ export function convertDiscriminatedOneOfWithVariants({
                 const subtypeReference = convertReferenceObject(
                     schema,
                     false,
+                    false,
                     context,
                     [schema.$ref],
                     encoding,
@@ -156,6 +167,7 @@ export function convertDiscriminatedOneOfWithVariants({
             } else {
                 const variantSchema = convertSchemaObject(
                     schema,
+                    false,
                     false,
                     context,
                     [...breadcrumbs, discriminantValue],
@@ -174,9 +186,13 @@ export function convertDiscriminatedOneOfWithVariants({
         })
         .map(([propertyName, propertySchema]) => {
             const isRequired = required != null && required.includes(propertyName);
+            const [isOptional, isNullable] = context.options.coerceOptionalSchemasToNullable
+                ? [false, !isRequired]
+                : [!isRequired, false];
             const schema = convertSchema(
                 propertySchema,
-                !isRequired,
+                isOptional,
+                isNullable,
                 context,
                 [...breadcrumbs, propertyName],
                 source,
@@ -191,6 +207,7 @@ export function convertDiscriminatedOneOfWithVariants({
         nameOverride,
         generatedName,
         title,
+        wrapAsOptional,
         wrapAsNullable,
         properties: convertedProperties,
         description,
@@ -207,6 +224,7 @@ export function wrapDiscriminatedOneOf({
     nameOverride,
     generatedName,
     title,
+    wrapAsOptional,
     wrapAsNullable,
     properties,
     description,
@@ -220,6 +238,7 @@ export function wrapDiscriminatedOneOf({
     nameOverride: string | undefined;
     generatedName: string;
     title: string | undefined;
+    wrapAsOptional: boolean;
     wrapAsNullable: boolean;
     properties: CommonPropertyWithExample[];
     description: string | undefined;
@@ -230,36 +249,7 @@ export function wrapDiscriminatedOneOf({
     groupName: SdkGroupName | undefined;
     source: Source;
 }): SchemaWithExample {
-    if (wrapAsNullable) {
-        return SchemaWithExample.nullable({
-            nameOverride,
-            generatedName,
-            title,
-            value: SchemaWithExample.oneOf(
-                OneOfSchemaWithExample.discriminated({
-                    description,
-                    availability,
-                    discriminantProperty: discriminant,
-                    nameOverride,
-                    generatedName,
-                    title,
-                    schemas: subtypes,
-                    commonProperties: properties,
-                    namespace,
-                    groupName,
-                    encoding: undefined,
-                    source,
-                    inline: undefined
-                })
-            ),
-            namespace,
-            groupName,
-            description,
-            availability,
-            inline: undefined
-        });
-    }
-    return SchemaWithExample.oneOf(
+    let result: SchemaWithExample = SchemaWithExample.oneOf(
         OneOfSchemaWithExample.discriminated({
             description,
             availability,
@@ -276,4 +266,31 @@ export function wrapDiscriminatedOneOf({
             inline: undefined
         })
     );
+    if (wrapAsNullable) {
+        result = SchemaWithExample.nullable({
+            nameOverride,
+            generatedName,
+            title,
+            value: result,
+            namespace,
+            groupName,
+            description,
+            availability,
+            inline: undefined
+        });
+    }
+    if (wrapAsOptional) {
+        result = SchemaWithExample.optional({
+            nameOverride,
+            generatedName,
+            title,
+            value: result,
+            namespace,
+            groupName,
+            description,
+            availability,
+            inline: undefined
+        });
+    }
+    return result;
 }

@@ -240,13 +240,19 @@ export abstract class AbstractDynamicSnippetsGeneratorContext {
         return this.resolveEndpointLocationOrThrow(parsedEndpoint);
     }
 
-    public resolveEndpointLocationOrThrow(location: FernIr.dynamic.EndpointLocation): FernIr.dynamic.Endpoint[] {
+    public resolveEndpointLocation(location: FernIr.dynamic.EndpointLocation): FernIr.dynamic.Endpoint[] {
         const endpoints: FernIr.dynamic.Endpoint[] = [];
         for (const endpoint of Object.values(this._ir.endpoints)) {
             if (this.parsedEndpointMatches({ endpoint, parsedEndpoint: location })) {
                 endpoints.push(endpoint);
             }
         }
+
+        return endpoints;
+    }
+
+    public resolveEndpointLocationOrThrow(location: FernIr.dynamic.EndpointLocation): FernIr.dynamic.Endpoint[] {
+        const endpoints = this.resolveEndpointLocation(location);
         if (endpoints.length === 0) {
             throw new Error(`Failed to find endpoint identified by "${location.method} ${location.path}"`);
         }

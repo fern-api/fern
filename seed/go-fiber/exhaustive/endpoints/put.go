@@ -6,16 +6,27 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/exhaustive/fern/internal"
+	big "math/big"
 )
 
 type PutRequest struct {
 }
+
+var (
+	errorFieldCategory = big.NewInt(1 << 0)
+	errorFieldCode     = big.NewInt(1 << 1)
+	errorFieldDetail   = big.NewInt(1 << 2)
+	errorFieldField    = big.NewInt(1 << 3)
+)
 
 type Error struct {
 	Category ErrorCategory `json:"category" url:"category"`
 	Code     ErrorCode     `json:"code" url:"code"`
 	Detail   *string       `json:"detail,omitempty" url:"detail,omitempty"`
 	Field    *string       `json:"field,omitempty" url:"field,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -52,6 +63,41 @@ func (e *Error) GetExtraProperties() map[string]interface{} {
 	return e.extraProperties
 }
 
+func (e *Error) require(field *big.Int) {
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
+	}
+	e.explicitFields.Or(e.explicitFields, field)
+}
+
+// SetCategory sets the Category field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *Error) SetCategory(category ErrorCategory) {
+	e.Category = category
+	e.require(errorFieldCategory)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *Error) SetCode(code ErrorCode) {
+	e.Code = code
+	e.require(errorFieldCode)
+}
+
+// SetDetail sets the Detail field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *Error) SetDetail(detail *string) {
+	e.Detail = detail
+	e.require(errorFieldDetail)
+}
+
+// SetField sets the Field field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *Error) SetField(field *string) {
+	e.Field = field
+	e.require(errorFieldField)
+}
+
 func (e *Error) UnmarshalJSON(data []byte) error {
 	type unmarshaler Error
 	var value unmarshaler
@@ -65,6 +111,17 @@ func (e *Error) UnmarshalJSON(data []byte) error {
 	}
 	e.extraProperties = extraProperties
 	return nil
+}
+
+func (e *Error) MarshalJSON() ([]byte, error) {
+	type embed Error
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*e),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (e *Error) String() string {
@@ -148,8 +205,15 @@ func (e ErrorCode) Ptr() *ErrorCode {
 	return &e
 }
 
+var (
+	putResponseFieldErrors = big.NewInt(1 << 0)
+)
+
 type PutResponse struct {
 	Errors []*Error `json:"errors,omitempty" url:"errors,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -165,6 +229,20 @@ func (p *PutResponse) GetExtraProperties() map[string]interface{} {
 	return p.extraProperties
 }
 
+func (p *PutResponse) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
+	}
+	p.explicitFields.Or(p.explicitFields, field)
+}
+
+// SetErrors sets the Errors field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PutResponse) SetErrors(errors []*Error) {
+	p.Errors = errors
+	p.require(putResponseFieldErrors)
+}
+
 func (p *PutResponse) UnmarshalJSON(data []byte) error {
 	type unmarshaler PutResponse
 	var value unmarshaler
@@ -178,6 +256,17 @@ func (p *PutResponse) UnmarshalJSON(data []byte) error {
 	}
 	p.extraProperties = extraProperties
 	return nil
+}
+
+func (p *PutResponse) MarshalJSON() ([]byte, error) {
+	type embed PutResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*p),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (p *PutResponse) String() string {

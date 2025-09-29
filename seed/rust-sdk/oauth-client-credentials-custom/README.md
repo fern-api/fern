@@ -3,7 +3,7 @@
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FRust)
 [![crates.io shield](https://img.shields.io/crates/v/seed_oauth_client_credentials)](https://crates.io/crates/seed_oauth_client_credentials)
 
-The Seed Rust library provides convenient access to the Seed API from Rust.
+The Seed Rust library provides convenient access to the Seed APIs from Rust.
 
 ## Installation
 
@@ -25,12 +25,23 @@ cargo add seed_oauth_client_credentials
 Instantiate and use the client with the following:
 
 ```rust
-use seed_oauth_client_credentials::{ClientConfig, OauthClientCredentialsClient};
+use seed_oauth_client_credentials::{ClientConfig, GetTokenRequest, OauthClientCredentialsClient};
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {};
     let client = OauthClientCredentialsClient::new(config).expect("Failed to build client");
+    client
+        .auth_get_token_with_client_credentials(GetTokenRequest {
+            cid: "cid",
+            csr: "csr",
+            scp: "scp",
+            entity_id: "entity_id",
+            audience: "https://api.example.com",
+            grant_type: "client_credentials",
+            scope: Some("scope"),
+        })
+        .await;
 }
 ```
 
@@ -39,10 +50,10 @@ async fn main() {
 When the API returns a non-success status code (4xx or 5xx response), an error will be returned.
 
 ```rust
-use seed_oauth_client_credentials::{ClientError, ClientConfig, OauthClientCredentialsClient};
+use seed_oauth_client_credentials::{ApiError, ClientConfig, OauthClientCredentialsClient};
 
 #[tokio::main]
-async fn main() -> Result<(), ClientError> {
+async fn main() -> Result<(), ApiError> {
     let config = ClientConfig {
         base_url: " ".to_string(),
         api_key: Some("your-api-key".to_string())
@@ -52,8 +63,8 @@ async fn main() -> Result<(), ClientError> {
         Ok(response) => {
             println!("Success: {:?}", response);
         },
-        Err(ClientError::ApiError { status_code, body, .. }) => {
-            println!("API Error {}: {:?}", status_code, body);
+        Err(ApiError::HTTP { status, message }) => {
+            println!("API Error {}: {:?}", status, message);
         },
         Err(e) => {
             println!("Other error: {:?}", e);

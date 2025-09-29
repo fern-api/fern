@@ -1,7 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedExamples.Core;
 
 namespace SeedExamples;
@@ -216,16 +216,16 @@ public partial class ServiceClient
     ///             Revenue = 1000000,
     ///         },
     ///         Entity = new Entity { Type = BasicType.Primitive, Name = "name" },
-    ///         Metadata = new Metadata(new Metadata.Html("metadata")),
-    ///         CommonMetadata = new Metadata
+    ///         Metadata = new SeedExamples.Metadata(new SeedExamples.Metadata.Html("metadata")),
+    ///         CommonMetadata = new SeedExamples.Commons.Metadata
     ///         {
     ///             Id = "id",
     ///             Data = new Dictionary&lt;string, string&gt;() { { "data", "data" } },
     ///             JsonString = "jsonString",
     ///         },
     ///         EventInfo = new EventInfo(
-    ///             new EventInfo.Metadata(
-    ///                 new Metadata
+    ///             new SeedExamples.Commons.EventInfo.Metadata(
+    ///                 new SeedExamples.Commons.Metadata
     ///                 {
     ///                     Id = "id",
     ///                     Data = new Dictionary&lt;string, string&gt;() { { "data", "data" } },
@@ -235,8 +235,8 @@ public partial class ServiceClient
     ///         ),
     ///         Data = new Data(new Data.String("data")),
     ///         Migration = new Migration { Name = "name", Status = MigrationStatus.Running },
-    ///         Exception = new Exception(
-    ///             new Exception.Generic(
+    ///         Exception = new SeedExamples.Exception(
+    ///             new SeedExamples.Exception.Generic(
     ///                 new ExceptionInfo
     ///                 {
     ///                     ExceptionType = "exceptionType",
@@ -245,7 +245,7 @@ public partial class ServiceClient
     ///                 }
     ///             )
     ///         ),
-    ///         Test = new Test(new Test.And(true)),
+    ///         Test = new SeedExamples.Test(new SeedExamples.Test.And(true)),
     ///         Node = new Node
     ///         {
     ///             Name = "name",
@@ -340,7 +340,7 @@ public partial class ServiceClient
     ///                 },
     ///             },
     ///         },
-    ///         Directory = new Directory
+    ///         Directory = new SeedExamples.Directory
     ///         {
     ///             Name = "name",
     ///             Files = new List&lt;SeedExamples.File&gt;()
@@ -348,9 +348,9 @@ public partial class ServiceClient
     ///                 new SeedExamples.File { Name = "name", Contents = "contents" },
     ///                 new SeedExamples.File { Name = "name", Contents = "contents" },
     ///             },
-    ///             Directories = new List&lt;Directory&gt;()
+    ///             Directories = new List&lt;SeedExamples.Directory&gt;()
     ///             {
-    ///                 new Directory
+    ///                 new SeedExamples.Directory
     ///                 {
     ///                     Name = "name",
     ///                     Files = new List&lt;SeedExamples.File&gt;()
@@ -358,23 +358,23 @@ public partial class ServiceClient
     ///                         new SeedExamples.File { Name = "name", Contents = "contents" },
     ///                         new SeedExamples.File { Name = "name", Contents = "contents" },
     ///                     },
-    ///                     Directories = new List&lt;Directory&gt;()
+    ///                     Directories = new List&lt;SeedExamples.Directory&gt;()
     ///                     {
-    ///                         new Directory
+    ///                         new SeedExamples.Directory
     ///                         {
     ///                             Name = "name",
     ///                             Files = new List&lt;SeedExamples.File&gt;() { },
-    ///                             Directories = new List&lt;Directory&gt;() { },
+    ///                             Directories = new List&lt;SeedExamples.Directory&gt;() { },
     ///                         },
-    ///                         new Directory
+    ///                         new SeedExamples.Directory
     ///                         {
     ///                             Name = "name",
     ///                             Files = new List&lt;SeedExamples.File&gt;() { },
-    ///                             Directories = new List&lt;Directory&gt;() { },
+    ///                             Directories = new List&lt;SeedExamples.Directory&gt;() { },
     ///                         },
     ///                     },
     ///                 },
-    ///                 new Directory
+    ///                 new SeedExamples.Directory
     ///                 {
     ///                     Name = "name",
     ///                     Files = new List&lt;SeedExamples.File&gt;()
@@ -382,19 +382,19 @@ public partial class ServiceClient
     ///                         new SeedExamples.File { Name = "name", Contents = "contents" },
     ///                         new SeedExamples.File { Name = "name", Contents = "contents" },
     ///                     },
-    ///                     Directories = new List&lt;Directory&gt;()
+    ///                     Directories = new List&lt;SeedExamples.Directory&gt;()
     ///                     {
-    ///                         new Directory
+    ///                         new SeedExamples.Directory
     ///                         {
     ///                             Name = "name",
     ///                             Files = new List&lt;SeedExamples.File&gt;() { },
-    ///                             Directories = new List&lt;Directory&gt;() { },
+    ///                             Directories = new List&lt;SeedExamples.Directory&gt;() { },
     ///                         },
-    ///                         new Directory
+    ///                         new SeedExamples.Directory
     ///                         {
     ///                             Name = "name",
     ///                             Files = new List&lt;SeedExamples.File&gt;() { },
-    ///                             Directories = new List&lt;Directory&gt;() { },
+    ///                             Directories = new List&lt;SeedExamples.Directory&gt;() { },
     ///                         },
     ///                     },
     ///                 },
@@ -454,7 +454,7 @@ public partial class ServiceClient
     /// <example><code>
     /// await client.Service.RefreshTokenAsync(null);
     /// </code></example>
-    public async global::System.Threading.Tasks.Task RefreshTokenAsync(
+    public async Task RefreshTokenAsync(
         RefreshTokenRequest? request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

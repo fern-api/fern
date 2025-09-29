@@ -134,7 +134,21 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const clientClassReference = this.context.getRootClientClassReference();
         const endpointMethodInvocation = this.getMethodCall(endpoint, [ReadmeSnippetBuilder.ELLIPSES]);
 
-        const clientBuilder = java.TypeLiteral.builder({ classReference: clientClassReference, parameters: [] });
+        const builderParameters: Array<{ name: string; value: java.TypeLiteral }> = [];
+        if (this.context.ir.variables != null && this.context.ir.variables.length > 0) {
+            for (const variable of this.context.ir.variables) {
+                const variableName = variable.name.camelCase.unsafeName;
+                builderParameters.push({
+                    name: variableName,
+                    value: java.TypeLiteral.string(`YOUR_${variable.name.screamingSnakeCase.unsafeName}`)
+                });
+            }
+        }
+
+        const clientBuilder = java.TypeLiteral.builder({
+            classReference: clientClassReference,
+            parameters: builderParameters
+        });
 
         const snippet = java.codeblock((writer) => {
             writer.writeNode(clientClassReference);
@@ -474,6 +488,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             }
             if (endpointSnippet.snippet.type !== "java") {
                 throw new Error(`Internal error; expected java snippet but got: ${endpointSnippet.snippet.type}`);
+            }
+            if (snippets[endpointSnippet.id.identifierOverride] != null) {
+                continue;
             }
             snippets[endpointSnippet.id.identifierOverride] = endpointSnippet.snippet.syncClient;
         }

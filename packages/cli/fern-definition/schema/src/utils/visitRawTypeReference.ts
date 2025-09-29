@@ -9,7 +9,7 @@ export const FernContainerRegex = {
     OPTIONAL: /^optional<\s*(.*)\s*>$/,
     NULLABLE: /^nullable<\s*(.*)\s*>$/,
     LITERAL: /^literal<\s*(?:"(.*)"|(true|false))\s*>$/
-};
+} as const;
 
 export interface RawTypeReferenceVisitor<R> {
     primitive: (primitive: PrimitiveType) => R;

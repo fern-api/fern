@@ -17,7 +17,7 @@ import { runWithCustomFixture } from "./commands/run/runWithCustomFixture";
 import { DockerScriptRunner, LocalScriptRunner, ScriptRunner } from "./commands/test";
 import { TaskContextFactory } from "./commands/test/TaskContextFactory";
 import { DockerTestRunner, LocalTestRunner, TestRunner } from "./commands/test/test-runner";
-import { FIXTURES, testGenerator } from "./commands/test/testWorkspaceFixtures";
+import { FIXTURES, LANGUAGE_SPECIFIC_FIXTURE_PREFIXES, testGenerator } from "./commands/test/testWorkspaceFixtures";
 import { validateCliRelease } from "./commands/validate/validateCliChangelog";
 import { validateGenerator } from "./commands/validate/validateGeneratorChangelog";
 import { GeneratorWorkspace, loadGeneratorWorkspaces } from "./loadGeneratorWorkspaces";
@@ -39,6 +39,7 @@ export async function tryRunCli(): Promise<void> {
 
     addTestCommand(cli);
     addRunCommand(cli);
+    addGetAvailableFixturesCommand(cli);
     addRegisterCommands(cli);
     addPublishCommands(cli);
     addValidateCommands(cli);
@@ -69,8 +70,7 @@ function addTestCommand(cli: Argv) {
                 .option("fixture", {
                     type: "array",
                     string: true,
-                    default: FIXTURES,
-                    choices: FIXTURES,
+                    // default: FIXTURES,
                     demandOption: false,
                     description: "Runs on all fixtures if not provided"
                 })
@@ -128,6 +128,34 @@ function addTestCommand(cli: Argv) {
                 }
                 let testRunner: TestRunner;
                 let scriptRunner: ScriptRunner;
+
+                // If no fixtures passed in, use all available fixtures (without output folders)
+                if (argv.fixture == null) {
+                    argv.fixture = await getAvailableFixtures(generator, false);
+                }
+
+                // Get both formats of fixtures and check if the fixtures passed in are of one of the two formats allowed
+                const availableFixtures = await getAvailableFixtures(generator, false);
+                const availableFixturesWithOutputFolders = await getAvailableFixtures(generator, true);
+
+                for (const fixture of argv.fixture) {
+                    if (!availableFixtures.includes(fixture) && !availableFixturesWithOutputFolders.includes(fixture)) {
+                        throw new Error(
+                            `Fixture ${fixture} not found. Please make sure that it is a valid fixture for the generator ${generator.workspaceName}.`
+                        );
+                    }
+                }
+
+                // Verify if there are multiple fixtures passed in or a fixture has a colon separated output folder, that
+                // the flag for the output folder is not also used
+                if (
+                    (argv.fixture.length > 1 || argv.fixture.some((fixture) => fixture.includes(":"))) &&
+                    argv.outputFolder != null
+                ) {
+                    throw new Error(
+                        `Output folder cannot be specified if multiple fixtures are passed in or if the fixture is passed in with colon separated output folders.`
+                    );
+                }
 
                 if (argv.local) {
                     if (generator.workspaceConfig.test.local == null) {
@@ -284,6 +312,74 @@ function addRunCommand(cli: Argv) {
             });
         }
     );
+}
+
+function addGetAvailableFixturesCommand(cli: Argv) {
+    cli.command(
+        "get-available-fixtures",
+        "Get the available fixtures and output folder options for the given generator",
+        (yargs) =>
+            yargs
+                .option("generator", {
+                    string: true,
+                    demandOption: true,
+                    description: "Generator to get fixtures for"
+                })
+                .option("include-subfolders", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false,
+                    description:
+                        "Whether to separate by test subfolders or not (e.g., imdb:noScripts, imdb:no-custom-config, etc.)"
+                }),
+        async (argv) => {
+            const generators = await loadGeneratorWorkspaces();
+            throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator] });
+
+            const generator = generators.find((g) => g.workspaceName === argv.generator);
+            if (generator == null) {
+                throw new Error(
+                    `Generator ${argv.generator} not found. Please make sure that there is a folder with the name ${argv.generator} in the seed directory.`
+                );
+            }
+
+            const availableFixtures = await getAvailableFixtures(generator, argv["include-subfolders"]);
+
+            // Note: HAVE to log the output for CI to pick it up
+            console.log(JSON.stringify({ fixtures: availableFixtures }, null, 2));
+        }
+    );
+}
+
+async function getAvailableFixtures(generator: GeneratorWorkspace, withOutputFolders: boolean) {
+    // Get all available fixtures
+    const availableFixtures = FIXTURES.filter((fixture) => {
+        const matchingPrefix = LANGUAGE_SPECIFIC_FIXTURE_PREFIXES.filter((prefix) => fixture.startsWith(prefix))[0];
+        return matchingPrefix == null || generator.workspaceName.startsWith(matchingPrefix);
+    });
+
+    // Optionally, include output folders in format fixture:outputFolder (note: this will replace the fixture name without the output folder)
+    if (withOutputFolders) {
+        // Add fixtures that have subfolders with their subfoldered version
+        const allOptions: string[] = [];
+        for (const fixture of availableFixtures) {
+            const config = generator.workspaceConfig.fixtures?.[fixture];
+            if (config != null && config.length > 0) {
+                // This fixture has subfolders, add to map as fixture:outputFolder
+                for (const outputFolder of config.map((c) => c.outputFolder)) {
+                    allOptions.push(`${fixture}:${outputFolder}`);
+                }
+            } else {
+                // This fixture has no subfolders, keep as is
+                allOptions.push(fixture);
+            }
+        }
+        // Return map with output folders
+        return allOptions;
+    }
+
+    // Don't include subfolders, return the original fixtures
+    return availableFixtures;
 }
 
 function addPublishCommands(cli: Argv) {

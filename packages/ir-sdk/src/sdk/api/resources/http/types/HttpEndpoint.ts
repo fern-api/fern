@@ -26,6 +26,11 @@ export interface HttpEndpoint extends FernIr.Declaration {
     v2Responses: FernIr.V2HttpResponses | undefined;
     errors: FernIr.ResponseErrors;
     auth: boolean;
+    /**
+     * A list of auth scheme collections.
+     * To satisfy the security requirements, the caller must satisfy at least one collection of schemes.
+     */
+    security: FernIr.HttpEndpointSecurityItem[] | undefined;
     idempotent: boolean;
     pagination: FernIr.Pagination | undefined;
     userSpecifiedExamples: FernIr.UserSpecifiedEndpointExample[];
@@ -34,4 +39,5 @@ export interface HttpEndpoint extends FernIr.Declaration {
     transport: FernIr.Transport | undefined;
     source: FernIr.HttpEndpointSource | undefined;
     audiences: FernIr.AudienceReference[] | undefined;
+    retries: FernIr.RetriesConfiguration | undefined;
 }

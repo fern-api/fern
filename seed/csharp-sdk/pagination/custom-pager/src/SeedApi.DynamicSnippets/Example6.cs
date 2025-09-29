@@ -1,11 +1,11 @@
-using global::System.Threading.Tasks;
 using SeedPagination;
+using System.Threading.Tasks;
 
 namespace Usage;
 
 public class Example6
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do() {
         var client = new SeedPaginationClient(
             token: "<token>",
             clientOptions: new ClientOptions{
@@ -13,8 +13,8 @@ public class Example6
             }
         );
 
-        await client.Users.ListWithMixedTypeCursorPaginationAsync(
-            new ListUsersMixedTypeCursorPaginationRequest()
+        await client.InlineUsers.InlineUsers.ListWithMixedTypeCursorPaginationAsync(
+            new SeedPagination.InlineUsers.ListUsersMixedTypeCursorPaginationRequest()
         );
     }
 

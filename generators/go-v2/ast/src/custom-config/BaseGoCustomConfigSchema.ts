@@ -1,5 +1,5 @@
 import { z } from "zod";
-
+import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema";
 import { moduleConfigSchema } from "./ModuleConfigSchema";
 import { relativePathSchema } from "./RelativePathSchema";
 
@@ -19,7 +19,11 @@ export const baseGoCustomConfigSchema = z.object({
     inlineFileProperties: z.boolean().optional(),
     union: z.enum(["v0", "v1"]).optional(),
     useReaderForBytesRequest: z.boolean().optional(),
-    useDefaultRequestParameterValues: z.boolean().optional()
+    useDefaultRequestParameterValues: z.boolean().optional(),
+    gettersPassByValue: z.boolean().optional(),
+    enableWireTests: z.boolean().optional(),
+    exportAllRequestsAtRoot: z.boolean().optional(),
+    customReadmeSections: z.array(CustomReadmeSectionSchema).optional()
 });
 
 export type BaseGoCustomConfigSchema = z.infer<typeof baseGoCustomConfigSchema>;

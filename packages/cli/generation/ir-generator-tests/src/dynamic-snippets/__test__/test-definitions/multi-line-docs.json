@@ -191,7 +191,9 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -219,7 +221,9 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -250,7 +254,9 @@
                             "type": "primitive",
                             "value": "INTEGER"
                         }
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -357,7 +363,9 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "body": null
@@ -535,7 +543,9 @@
                             "typeReference": {
                                 "type": "primitive",
                                 "value": "STRING"
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -566,7 +576,9 @@
                                     "type": "primitive",
                                     "value": "INTEGER"
                                 }
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ]
                 },
@@ -583,5 +595,6 @@
     },
     "pathParameters": [],
     "environments": null,
+    "variables": null,
     "generatorConfig": null
 }

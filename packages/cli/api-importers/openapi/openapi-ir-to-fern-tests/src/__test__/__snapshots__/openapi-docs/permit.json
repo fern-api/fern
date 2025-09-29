@@ -6257,7 +6257,11 @@ types:
           "display-name": "Bulk Operations",
           "endpoints": {
             "bulk_create_tenants": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Bulk Create Tenants",
               "docs": undefined,
               "errors": [
@@ -6325,7 +6329,11 @@ types:
               },
             },
             "bulk_create_users": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Bulk Create Users",
               "docs": undefined,
               "errors": [
@@ -6397,7 +6405,11 @@ types:
               },
             },
             "bulk_delete_tenants": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Bulk Delete Tenants",
               "docs": undefined,
               "errors": [
@@ -6456,7 +6468,11 @@ types:
               },
             },
             "bulk_delete_users": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Bulk Delete Users",
               "docs": undefined,
               "errors": [
@@ -6515,7 +6531,11 @@ types:
               },
             },
             "bulk_replace_users": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Bulk Replace Users",
               "docs": undefined,
               "errors": [
@@ -6601,7 +6621,8 @@ service:
     bulk_create_users:
       path: /v2/facts/{proj_id}/{env_id}/bulk/users
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -6650,7 +6671,8 @@ service:
     bulk_replace_users:
       path: /v2/facts/{proj_id}/{env_id}/bulk/users
       method: PUT
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -6699,7 +6721,8 @@ service:
     bulk_delete_users:
       path: /v2/facts/{proj_id}/{env_id}/bulk/users
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -6739,7 +6762,8 @@ service:
     bulk_create_tenants:
       path: /v2/facts/{proj_id}/{env_id}/bulk/tenants
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -6784,7 +6808,8 @@ service:
     bulk_delete_tenants:
       path: /v2/facts/{proj_id}/{env_id}/bulk/tenants
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -6851,7 +6876,11 @@ Example:
           "display-name": "Condition Set Rules",
           "endpoints": {
             "assign_set_permissions": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Assign Set Permissions",
               "docs": "Grant permissions to a user set *on* a resource set.
 
@@ -6944,7 +6973,11 @@ If the permission is already granted, it is skipped.",
               },
             },
             "list_set_permissions": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "List Set Permissions",
               "docs": "Lists the condition set rules matching the filter.
 - If the `user_set` filter is present, will only return the permissions set of that user set.
@@ -6958,6 +6991,13 @@ If the permission is already granted, it is skipped.",
                   "path-parameters": {
                     "env_id": "env_id",
                     "proj_id": "proj_id",
+                  },
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
+                    "permission": "permission",
+                    "resource_set": "resource_set",
+                    "user_set": "user_set",
                   },
                   "response": {
                     "body": [
@@ -7041,7 +7081,11 @@ If the permission is already granted, it is skipped.",
               },
             },
             "unassign_set_permissions": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Unassign Set Permissions",
               "docs": "Revokes permissions to a user set *on* a resource set.
 
@@ -7127,7 +7171,8 @@ service:
     list_set_permissions:
       path: /v2/facts/{proj_id}/{env_id}/set_rules
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: >-
         Lists the condition set rules matching the filter.
 
@@ -7194,6 +7239,12 @@ service:
         - path-parameters:
             proj_id: proj_id
             env_id: env_id
+          query-parameters:
+            user_set: user_set
+            permission: permission
+            resource_set: resource_set
+            page: 1
+            per_page: 1
           response:
             body:
               - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
@@ -7209,7 +7260,8 @@ service:
     assign_set_permissions:
       path: /v2/facts/{proj_id}/{env_id}/set_rules
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: |-
         Grant permissions to a user set *on* a resource set.
 
@@ -7291,7 +7343,8 @@ service:
     unassign_set_permissions:
       path: /v2/facts/{proj_id}/{env_id}/set_rules
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: |-
         Revokes permissions to a user set *on* a resource set.
 
@@ -7403,7 +7456,11 @@ If we check the checkbox where `us_based_employees` and `private_repos->clone` a
           "display-name": "Condition Sets",
           "endpoints": {
             "create_condition_set": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Create Condition Set",
               "docs": "Creates a new condition set (can be either a user set or a resource set).",
               "errors": [
@@ -7596,7 +7653,11 @@ If we check the checkbox where `us_based_employees` and `private_repos->clone` a
               },
             },
             "delete_condition_set": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Delete Condition Set",
               "docs": "Deletes a condition set and all its related data.
 This includes any permissions granted to said condition set (i.e: any matching condition set rules).",
@@ -7634,7 +7695,11 @@ This includes any permissions granted to said condition set (i.e: any matching c
               },
             },
             "get_condition_set": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Get Condition Set",
               "docs": "Gets a single condition set, if such condition set exists.",
               "errors": [
@@ -7750,7 +7815,11 @@ This includes any permissions granted to said condition set (i.e: any matching c
               },
             },
             "get_condition_set_ancestors": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Get Condition Set Ancestors",
               "docs": "Gets all ancestors (parent, parent of parent, and so on)",
               "errors": [
@@ -7762,6 +7831,10 @@ This includes any permissions granted to said condition set (i.e: any matching c
                     "condition_set_id": "condition_set_id",
                     "env_id": "env_id",
                     "proj_id": "proj_id",
+                  },
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
                   },
                   "response": {
                     "body": [
@@ -7897,7 +7970,11 @@ This includes any permissions granted to said condition set (i.e: any matching c
               },
             },
             "get_condition_set_descendants": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Get Condition Set Descendants",
               "docs": "Gets all descendants (children, children of children, and so on)",
               "errors": [
@@ -7909,6 +7986,10 @@ This includes any permissions granted to said condition set (i.e: any matching c
                     "condition_set_id": "condition_set_id",
                     "env_id": "env_id",
                     "proj_id": "proj_id",
+                  },
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
                   },
                   "response": {
                     "body": [
@@ -8044,7 +8125,11 @@ This includes any permissions granted to said condition set (i.e: any matching c
               },
             },
             "list_condition_sets": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "List Condition Sets",
               "docs": "Lists all condition sets matching a filter.",
               "errors": [
@@ -8055,6 +8140,13 @@ This includes any permissions granted to said condition set (i.e: any matching c
                   "path-parameters": {
                     "env_id": "env_id",
                     "proj_id": "proj_id",
+                  },
+                  "query-parameters": {
+                    "include_total_count": true,
+                    "page": 1,
+                    "per_page": 1,
+                    "search": "search",
+                    "type": "userset",
                   },
                   "response": {
                     "body": {
@@ -8198,7 +8290,11 @@ This includes any permissions granted to said condition set (i.e: any matching c
               },
             },
             "update_condition_set": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Update Condition Set",
               "docs": "Partially updates a condition set.
 Fields that will be provided will be completely overwritten.",
@@ -8405,7 +8501,8 @@ service:
     list_condition_sets:
       path: /v2/schema/{proj_id}/{env_id}/condition_sets
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Lists all condition sets matching a filter.
       source:
         openapi: ../openapi.json
@@ -8459,6 +8556,12 @@ service:
         - path-parameters:
             proj_id: proj_id
             env_id: env_id
+          query-parameters:
+            search: search
+            type: userset
+            include_total_count: true
+            page: 1
+            per_page: 1
           response:
             body:
               data:
@@ -8517,7 +8620,8 @@ service:
     create_condition_set:
       path: /v2/schema/{proj_id}/{env_id}/condition_sets
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: >-
         Creates a new condition set (can be either a user set or a resource
         set).
@@ -8654,7 +8758,8 @@ service:
     get_condition_set:
       path: /v2/schema/{proj_id}/{env_id}/condition_sets/{condition_set_id}
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Gets a single condition set, if such condition set exists.
       source:
         openapi: ../openapi.json
@@ -8742,7 +8847,8 @@ service:
     delete_condition_set:
       path: /v2/schema/{proj_id}/{env_id}/condition_sets/{condition_set_id}
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: >-
         Deletes a condition set and all its related data.
 
@@ -8777,7 +8883,8 @@ service:
     update_condition_set:
       path: /v2/schema/{proj_id}/{env_id}/condition_sets/{condition_set_id}
       method: PATCH
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: |-
         Partially updates a condition set.
         Fields that will be provided will be completely overwritten.
@@ -8899,7 +9006,8 @@ service:
       path: >-
         /v2/schema/{proj_id}/{env_id}/condition_sets/{condition_set_id}/ancestors
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Gets all ancestors (parent, parent of parent, and so on)
       source:
         openapi: ../openapi.json
@@ -8947,6 +9055,9 @@ service:
             proj_id: proj_id
             env_id: env_id
             condition_set_id: condition_set_id
+          query-parameters:
+            page: 1
+            per_page: 1
           response:
             body:
               - key: na_based_employees
@@ -9006,7 +9117,8 @@ service:
       path: >-
         /v2/schema/{proj_id}/{env_id}/condition_sets/{condition_set_id}/descendants
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Gets all descendants (children, children of children, and so on)
       source:
         openapi: ../openapi.json
@@ -9054,6 +9166,9 @@ service:
             proj_id: proj_id
             env_id: env_id
             condition_set_id: condition_set_id
+          query-parameters:
+            page: 1
+            per_page: 1
           response:
             body:
               - key: na_based_employees
@@ -9174,7 +9289,11 @@ You can later safely merge the changes, after you tested them.
           "display-name": "Environments",
           "endpoints": {
             "copy_environment": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Copy Environment",
               "docs": "Copy environment
 
@@ -9275,7 +9394,11 @@ allowed.",
               },
             },
             "create_environment": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Create Environment",
               "docs": "Creates a new environment under a given project.",
               "errors": [
@@ -9340,7 +9463,11 @@ allowed.",
               },
             },
             "delete_environment": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Delete Environment",
               "docs": "Deletes an environment and all its related data.",
               "errors": [
@@ -9372,7 +9499,11 @@ allowed.",
               },
             },
             "get_environment": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Get Environment",
               "docs": "Gets a single environment matching the given env_id, if such environment exists.",
               "errors": [
@@ -9432,7 +9563,11 @@ allowed.",
               },
             },
             "list_environments": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "List Environments",
               "docs": "Lists all the environments under a given project.",
               "errors": [
@@ -9442,6 +9577,10 @@ allowed.",
                 {
                   "path-parameters": {
                     "proj_id": "proj_id",
+                  },
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
                   },
                   "response": {
                     "body": [
@@ -9518,7 +9657,11 @@ allowed.",
               },
             },
             "stats_environments": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Stats Environments",
               "docs": undefined,
               "errors": [
@@ -9647,7 +9790,11 @@ allowed.",
               },
             },
             "update_environment": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Update Environment",
               "docs": "Updates the environment.",
               "errors": [
@@ -9767,7 +9914,8 @@ service:
     stats_environments:
       path: /v2/projects/{proj_id}/envs/{env_id}/stats
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -9864,7 +10012,8 @@ service:
     list_environments:
       path: /v2/projects/{proj_id}/envs
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Lists all the environments under a given project.
       source:
         openapi: ../openapi.json
@@ -9900,6 +10049,9 @@ service:
       examples:
         - path-parameters:
             proj_id: proj_id
+          query-parameters:
+            page: 1
+            per_page: 1
           response:
             body:
               - key: key
@@ -9919,7 +10071,8 @@ service:
     create_environment:
       path: /v2/projects/{proj_id}/envs
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Creates a new environment under a given project.
       source:
         openapi: ../openapi.json
@@ -9965,7 +10118,8 @@ service:
     get_environment:
       path: /v2/projects/{proj_id}/envs/{env_id}
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: >-
         Gets a single environment matching the given env_id, if such environment
         exists.
@@ -10012,7 +10166,8 @@ service:
     delete_environment:
       path: /v2/projects/{proj_id}/envs/{env_id}
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Deletes an environment and all its related data.
       source:
         openapi: ../openapi.json
@@ -10037,7 +10192,8 @@ service:
     update_environment:
       path: /v2/projects/{proj_id}/envs/{env_id}
       method: PATCH
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Updates the environment.
       source:
         openapi: ../openapi.json
@@ -10105,7 +10261,8 @@ service:
     copy_environment:
       path: /v2/projects/{proj_id}/envs/{env_id}/copy
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: >-
         Copy environment
 
@@ -10250,7 +10407,11 @@ may control an organization simultaniously (each member has access according to 
           "display-name": "Organizations",
           "endpoints": {
             "create_organization": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Create Organization",
               "docs": "Creates a new organization that will be owned by the
 authenticated actor (i.e: human team member or api key).",
@@ -10328,7 +10489,11 @@ authenticated actor (i.e: human team member or api key).",
               },
             },
             "delete_organization": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Delete Organization",
               "docs": "Deletes an organization (Permit.io account) and all its related data.",
               "errors": [
@@ -10355,7 +10520,11 @@ authenticated actor (i.e: human team member or api key).",
               },
             },
             "get_active_organization": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Get Active Organization",
               "docs": "Gets a single organization (Permit.io account) matching the given org_id,
 if such org exists and can be accessed by the authenticated actor.",
@@ -10392,7 +10561,11 @@ if such org exists and can be accessed by the authenticated actor.",
               },
             },
             "get_organization": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Get Organization",
               "docs": "Gets a single organization (Permit.io account) matching the given org_id,
 if such org exists and can be accessed by the authenticated actor.",
@@ -10438,7 +10611,11 @@ if such org exists and can be accessed by the authenticated actor.",
               },
             },
             "list_organizations": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "List Organizations",
               "docs": "Lists all the organizations that can be accessed by the
 authenticated actor (i.e: human team member or api key).",
@@ -10447,6 +10624,10 @@ authenticated actor (i.e: human team member or api key).",
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
+                  },
                   "response": {
                     "body": [
                       {
@@ -10506,7 +10687,11 @@ authenticated actor (i.e: human team member or api key).",
               },
             },
             "update_organization": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Update Organization",
               "docs": "Updates the organization's profile.",
               "errors": [
@@ -10591,7 +10776,8 @@ service:
     list_organizations:
       path: /v2/orgs
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: |-
         Lists all the organizations that can be accessed by the
         authenticated actor (i.e: human team member or api key).
@@ -10621,7 +10807,10 @@ service:
       errors:
         - root.ListOrganizationsRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            page: 1
+            per_page: 1
+          response:
             body:
               - key: key
                 id: id
@@ -10634,7 +10823,8 @@ service:
     create_organization:
       path: /v2/orgs
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: |-
         Creates a new organization that will be owned by the
         authenticated actor (i.e: human team member or api key).
@@ -10687,7 +10877,8 @@ service:
     get_organization:
       path: /v2/orgs/{org_id}
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: >-
         Gets a single organization (Permit.io account) matching the given
         org_id,
@@ -10724,7 +10915,8 @@ service:
     delete_organization:
       path: /v2/orgs/{org_id}
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Deletes an organization (Permit.io account) and all its related data.
       source:
         openapi: ../openapi.json
@@ -10743,7 +10935,8 @@ service:
     update_organization:
       path: /v2/orgs/{org_id}
       method: PATCH
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Updates the organization's profile.
       source:
         openapi: ../openapi.json
@@ -10790,7 +10983,8 @@ service:
     get_active_organization:
       path: /v2/orgs/active/org
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: >-
         Gets a single organization (Permit.io account) matching the given
         org_id,
@@ -10853,7 +11047,11 @@ Every project is a separate silo, and has its own unique set of environments and
           "display-name": "Projects",
           "endpoints": {
             "create_project": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Create Project",
               "docs": "Creates a new project under the active organization.",
               "errors": [
@@ -10949,7 +11147,11 @@ Every project is a separate silo, and has its own unique set of environments and
               },
             },
             "delete_project": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Delete Project",
               "docs": "Deletes the project and all its related data.",
               "errors": [
@@ -10976,7 +11178,11 @@ Every project is a separate silo, and has its own unique set of environments and
               },
             },
             "get_project": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Get Project",
               "docs": "Gets a single project matching the given proj_id, if such project exists.",
               "errors": [
@@ -11024,7 +11230,11 @@ Every project is a separate silo, and has its own unique set of environments and
               },
             },
             "list_projects": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "List Projects",
               "docs": "Lists all the projects under the active organization.",
               "errors": [
@@ -11032,6 +11242,10 @@ Every project is a separate silo, and has its own unique set of environments and
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
+                  },
                   "response": {
                     "body": [
                       {
@@ -11094,7 +11308,11 @@ Every project is a separate silo, and has its own unique set of environments and
               },
             },
             "update_project": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Update Project",
               "docs": "Updates the project.",
               "errors": [
@@ -11190,7 +11408,8 @@ service:
     list_projects:
       path: /v2/projects
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Lists all the projects under the active organization.
       source:
         openapi: ../openapi.json
@@ -11218,7 +11437,10 @@ service:
       errors:
         - root.ListProjectsRequestUnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            page: 1
+            per_page: 1
+          response:
             body:
               - key: key
                 urn_namespace: urn_namespace
@@ -11234,7 +11456,8 @@ service:
     create_project:
       path: /v2/projects
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Creates a new project under the active organization.
       source:
         openapi: ../openapi.json
@@ -11299,7 +11522,8 @@ service:
     get_project:
       path: /v2/projects/{proj_id}
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: >-
         Gets a single project matching the given proj_id, if such project
         exists.
@@ -11337,7 +11561,8 @@ service:
     delete_project:
       path: /v2/projects/{proj_id}
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Deletes the project and all its related data.
       source:
         openapi: ../openapi.json
@@ -11356,7 +11581,8 @@ service:
     update_project:
       path: /v2/projects/{proj_id}
       method: PATCH
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Updates the project.
       source:
         openapi: ../openapi.json
@@ -11441,7 +11667,11 @@ to a role as one action.
           "display-name": "Resource Action Groups",
           "endpoints": {
             "create_resource_action_group": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Create Resource Action Group",
               "docs": "Creates a new action group that can affect the resource.",
               "errors": [
@@ -11549,7 +11779,11 @@ to a role as one action.
               },
             },
             "delete_resource_action_group": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Delete Resource Action Group",
               "docs": "Deletes the action and all its related data.
 This includes any permissions granted to perform the action.",
@@ -11592,7 +11826,11 @@ This includes any permissions granted to perform the action.",
               },
             },
             "get_resource_action_group": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Get Resource Action Group",
               "docs": "Gets a single action group defined on the resource, if such action exists.",
               "errors": [
@@ -11660,7 +11898,11 @@ This includes any permissions granted to perform the action.",
               },
             },
             "list_resource_action_groups": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "List Resource Action Groups",
               "docs": "Lists all the action groups defined on the resource.",
               "errors": [
@@ -11672,6 +11914,10 @@ This includes any permissions granted to perform the action.",
                     "env_id": "env_id",
                     "proj_id": "proj_id",
                     "resource_id": "resource_id",
+                  },
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
                   },
                   "response": {
                     "body": [
@@ -11754,7 +12000,11 @@ This includes any permissions granted to perform the action.",
               },
             },
             "update_resource_action_group": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Update Resource Action Group",
               "docs": "Partially updates the action defined on a resource.
 Fields that will be provided will be completely overwritten.",
@@ -11864,7 +12114,8 @@ service:
     list_resource_action_groups:
       path: /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/action_groups
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Lists all the action groups defined on the resource.
       source:
         openapi: ../openapi.json
@@ -11912,6 +12163,9 @@ service:
             proj_id: proj_id
             env_id: env_id
             resource_id: resource_id
+          query-parameters:
+            page: 1
+            per_page: 1
           response:
             body:
               - name: Writer
@@ -11932,7 +12186,8 @@ service:
     create_resource_action_group:
       path: /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/action_groups
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Creates a new action group that can affect the resource.
       source:
         openapi: ../openapi.json
@@ -12022,7 +12277,8 @@ service:
       path: >-
         /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/action_groups/{action_group_id}
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: >-
         Gets a single action group defined on the resource, if such action
         exists.
@@ -12083,7 +12339,8 @@ service:
       path: >-
         /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/action_groups/{action_group_id}
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: |-
         Deletes the action and all its related data.
         This includes any permissions granted to perform the action.
@@ -12123,23 +12380,14 @@ service:
       path: >-
         /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/action_groups/{action_group_id}
       method: PATCH
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: |-
         Partially updates the action defined on a resource.
         Fields that will be provided will be completely overwritten.
       source:
         openapi: ../openapi.json
       path-parameters:
-        resource_id:
-          type: string
-          docs: >-
-            Either the unique id of the resource, or the URL-friendly key of the
-            resource (i.e: the "slug").
-        action_group_id:
-          type: string
-          docs: >-
-            Either the unique id of the action group, or the URL-friendly key of
-            the action group (i.e: the "slug").
         proj_id:
           type: string
           docs: >-
@@ -12150,6 +12398,16 @@ service:
           docs: >-
             Either the unique id of the environment, or the URL-friendly key of
             the environment (i.e: the "slug").
+        resource_id:
+          type: string
+          docs: >-
+            Either the unique id of the resource, or the URL-friendly key of the
+            resource (i.e: the "slug").
+        action_group_id:
+          type: string
+          docs: >-
+            Either the unique id of the action group, or the URL-friendly key of
+            the action group (i.e: the "slug").
       display-name: Update Resource Action Group
       request:
         name: ResourceActionGroupUpdate
@@ -12181,10 +12439,10 @@ service:
         - root.UpdateResourceActionGroupRequestUnprocessableEntityError
       examples:
         - path-parameters:
-            resource_id: resource_id
-            action_group_id: action_group_id
             proj_id: proj_id
             env_id: env_id
+            resource_id: resource_id
+            action_group_id: action_group_id
           request: {}
           response:
             body:
@@ -12228,7 +12486,11 @@ Each (resource, action) pair defines a unique permission level.
           "display-name": "Resource Actions",
           "endpoints": {
             "create_resource_action": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Create Resource Action",
               "docs": "Creates a new action that can affect the resource.",
               "errors": [
@@ -12326,7 +12588,11 @@ Each (resource, action) pair defines a unique permission level.
               },
             },
             "delete_resource_action": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Delete Resource Action",
               "docs": "Deletes the action and all its related data.
 This includes any permissions granted to perform the action.",
@@ -12369,7 +12635,11 @@ This includes any permissions granted to perform the action.",
               },
             },
             "get_resource_action": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Get Resource Action",
               "docs": "Gets a single action defined on the resource, if such action exists.",
               "errors": [
@@ -12434,7 +12704,11 @@ This includes any permissions granted to perform the action.",
               },
             },
             "list_resource_actions": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "List Resource Actions",
               "docs": "Lists all the actions defined on the resource.",
               "errors": [
@@ -12446,6 +12720,10 @@ This includes any permissions granted to perform the action.",
                     "env_id": "env_id",
                     "proj_id": "proj_id",
                     "resource_id": "resource_id",
+                  },
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
                   },
                   "response": {
                     "body": [
@@ -12525,7 +12803,11 @@ This includes any permissions granted to perform the action.",
               },
             },
             "update_resource_action": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Update Resource Action",
               "docs": "Partially updates the action defined on a resource.
 Fields that will be provided will be completely overwritten.",
@@ -12631,7 +12913,8 @@ service:
     list_resource_actions:
       path: /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/actions
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Lists all the actions defined on the resource.
       source:
         openapi: ../openapi.json
@@ -12679,6 +12962,9 @@ service:
             proj_id: proj_id
             env_id: env_id
             resource_id: resource_id
+          query-parameters:
+            page: 1
+            per_page: 1
           response:
             body:
               - name: read
@@ -12697,7 +12983,8 @@ service:
     create_resource_action:
       path: /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/actions
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Creates a new action that can affect the resource.
       source:
         openapi: ../openapi.json
@@ -12779,7 +13066,8 @@ service:
       path: >-
         /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/actions/{action_id}
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Gets a single action defined on the resource, if such action exists.
       source:
         openapi: ../openapi.json
@@ -12836,7 +13124,8 @@ service:
       path: >-
         /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/actions/{action_id}
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: |-
         Deletes the action and all its related data.
         This includes any permissions granted to perform the action.
@@ -12876,7 +13165,8 @@ service:
       path: >-
         /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/actions/{action_id}
       method: PATCH
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: |-
         Partially updates the action defined on a resource.
         Fields that will be provided will be completely overwritten.
@@ -12985,7 +13275,11 @@ define a boolean `private` attributes that we can now use in our policies.
           "display-name": "Resource Attributes",
           "endpoints": {
             "create_resource_attribute": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Create Resource Attribute",
               "docs": "Creates a new attribute as part of the resource definition.",
               "errors": [
@@ -13054,7 +13348,11 @@ define a boolean `private` attributes that we can now use in our policies.
               },
             },
             "delete_resource_attribute": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Delete Resource Attribute",
               "docs": "Deletes the attribute and all its related data.
 
@@ -13070,6 +13368,10 @@ attribute to evaluate as `undefined`.",
                     "env_id": "env_id",
                     "proj_id": "proj_id",
                     "resource_id": "resource_id",
+                  },
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
                   },
                 },
               ],
@@ -13128,7 +13430,11 @@ attribute to evaluate as `undefined`.",
               },
             },
             "get_resource_attribute": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Get Resource Attribute",
               "docs": "Gets a single attribute defined on the resource, if such attribute exists.",
               "errors": [
@@ -13191,7 +13497,11 @@ attribute to evaluate as `undefined`.",
               },
             },
             "list_resource_attributes": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "List Resource Attributes",
               "docs": "Lists all the attributes defined on the resource.",
               "errors": [
@@ -13203,6 +13513,10 @@ attribute to evaluate as `undefined`.",
                     "env_id": "env_id",
                     "proj_id": "proj_id",
                     "resource_id": "resource_id",
+                  },
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
                   },
                   "response": {
                     "body": [
@@ -13280,7 +13594,11 @@ attribute to evaluate as `undefined`.",
               },
             },
             "update_resource_attribute": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Update Resource Attribute",
               "docs": "Partially updates the attribute defined on a resource.
 Fields that will be provided will be completely overwritten.",
@@ -13367,7 +13685,8 @@ service:
     list_resource_attributes:
       path: /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/attributes
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Lists all the attributes defined on the resource.
       source:
         openapi: ../openapi.json
@@ -13415,6 +13734,9 @@ service:
             proj_id: proj_id
             env_id: env_id
             resource_id: resource_id
+          query-parameters:
+            page: 1
+            per_page: 1
           response:
             body:
               - type: bool
@@ -13432,7 +13754,8 @@ service:
     create_resource_attribute:
       path: /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/attributes
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Creates a new attribute as part of the resource definition.
       source:
         openapi: ../openapi.json
@@ -13490,7 +13813,8 @@ service:
       path: >-
         /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/attributes/{attribute_id}
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: >-
         Gets a single attribute defined on the resource, if such attribute
         exists.
@@ -13548,7 +13872,8 @@ service:
       path: >-
         /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/attributes/{attribute_id}
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: |-
         Deletes the attribute and all its related data.
 
@@ -13602,11 +13927,15 @@ service:
             env_id: env_id
             resource_id: resource_id
             attribute_id: attribute_id
+          query-parameters:
+            page: 1
+            per_page: 1
     update_resource_attribute:
       path: >-
         /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/attributes/{attribute_id}
       method: PATCH
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: |-
         Partially updates the attribute defined on a resource.
         Fields that will be provided will be completely overwritten.
@@ -13707,7 +14036,11 @@ You can use this API to store tenancy data (tenant) and arbitraty data (attribut
           "display-name": "Resource Instances",
           "endpoints": {
             "create_resource_instance": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Create Resource Instance",
               "docs": "Creates a new instance inside the Permit.io system.
 
@@ -13808,7 +14141,11 @@ and will return the existing instance object in the response body.",
               },
             },
             "delete_resource_instance": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Delete Resource Instance",
               "docs": "Deletes the instance and all its related data.",
               "errors": [
@@ -13845,7 +14182,11 @@ and will return the existing instance object in the response body.",
               },
             },
             "get_resource_instance": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Get Resource Instance",
               "docs": "Gets a instance, if such instance exists. Otherwise returns 404.",
               "errors": [
@@ -13906,7 +14247,11 @@ and will return the existing instance object in the response body.",
               },
             },
             "list_resource_instances": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "List Resource Instances",
               "docs": "Lists all the resource instances defined within an environment.",
               "errors": [
@@ -13917,6 +14262,10 @@ and will return the existing instance object in the response body.",
                   "path-parameters": {
                     "env_id": "env_id",
                     "proj_id": "proj_id",
+                  },
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
                   },
                   "response": {
                     "body": [
@@ -13993,7 +14342,11 @@ and will return the existing instance object in the response body.",
               },
             },
             "update_resource_instance": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Update Resource Instance",
               "docs": "Partially updates the instance definition.
 Fields that will be provided will be completely overwritten.",
@@ -14090,7 +14443,8 @@ service:
     list_resource_instances:
       path: /v2/facts/{proj_id}/{env_id}/resource_instances
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Lists all the resource instances defined within an environment.
       source:
         openapi: ../openapi.json
@@ -14132,6 +14486,9 @@ service:
         - path-parameters:
             proj_id: proj_id
             env_id: env_id
+          query-parameters:
+            page: 1
+            per_page: 1
           response:
             body:
               - key: react
@@ -14151,7 +14508,8 @@ service:
     create_resource_instance:
       path: /v2/facts/{proj_id}/{env_id}/resource_instances
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: |-
         Creates a new instance inside the Permit.io system.
 
@@ -14239,7 +14597,8 @@ service:
     get_resource_instance:
       path: /v2/facts/{proj_id}/{env_id}/resource_instances/{instance_id}
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Gets a instance, if such instance exists. Otherwise returns 404.
       source:
         openapi: ../openapi.json
@@ -14290,7 +14649,8 @@ service:
     delete_resource_instance:
       path: /v2/facts/{proj_id}/{env_id}/resource_instances/{instance_id}
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Deletes the instance and all its related data.
       source:
         openapi: ../openapi.json
@@ -14321,7 +14681,8 @@ service:
     update_resource_instance:
       path: /v2/facts/{proj_id}/{env_id}/resource_instances/{instance_id}
       method: PATCH
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: |-
         Partially updates the instance definition.
         Fields that will be provided will be completely overwritten.
@@ -14422,7 +14783,11 @@ define hierarchy (inheritance) between two roles or define relationships between
           "display-name": "Resource Roles",
           "endpoints": {
             "assign_permissions_to_resource_role": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Assign Permissions to Role",
               "docs": "Assign permissions to role.
 
@@ -14505,7 +14870,11 @@ If some of the permissions specified are already assigned, will skip them.",
               },
             },
             "create_resource_role": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Create Resource Role",
               "docs": "Creates a new role associated with the resource.",
               "errors": [
@@ -14622,7 +14991,11 @@ If some of the permissions specified are already assigned, will skip them.",
               },
             },
             "delete_resource_role": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Delete Resource Role",
               "docs": "Deletes the role and all its related data.
 This includes any permissions granted to said role.",
@@ -14665,7 +15038,11 @@ This includes any permissions granted to said role.",
               },
             },
             "get_resource_role": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Get Resource Role",
               "docs": "Gets a single role defined on the resource, if such role exists.",
               "errors": [
@@ -14735,7 +15112,11 @@ This includes any permissions granted to said role.",
               },
             },
             "get_resource_role_ancestors": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Get Resource Role Ancestors",
               "docs": undefined,
               "errors": [
@@ -14809,7 +15190,11 @@ This includes any permissions granted to said role.",
               },
             },
             "get_resource_role_descendants": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Get Resource Role Descendants",
               "docs": undefined,
               "errors": [
@@ -14883,7 +15268,11 @@ This includes any permissions granted to said role.",
               },
             },
             "list_resource_roles": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "List Resource Roles",
               "docs": "Lists all the roles defined on the resource.",
               "errors": [
@@ -14895,6 +15284,10 @@ This includes any permissions granted to said role.",
                     "env_id": "env_id",
                     "proj_id": "proj_id",
                     "resource_id": "resource_id",
+                  },
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
                   },
                   "response": {
                     "body": [
@@ -14979,7 +15372,11 @@ This includes any permissions granted to said role.",
               },
             },
             "remove_permissions_from_resource_role": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Remove Permissions from Role",
               "docs": "Remove permissions from role.
 
@@ -15062,7 +15459,11 @@ If some of the permissions specified are already unassigned, will skip them.",
               },
             },
             "update_resource_role": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Update Resource Role",
               "docs": "Partially updates the role defined on a resource.
 Fields that will be provided will be completely overwritten.",
@@ -15184,7 +15585,8 @@ service:
     list_resource_roles:
       path: /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/roles
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Lists all the roles defined on the resource.
       source:
         openapi: ../openapi.json
@@ -15232,6 +15634,9 @@ service:
             proj_id: proj_id
             env_id: env_id
             resource_id: resource_id
+          query-parameters:
+            page: 1
+            per_page: 1
           response:
             body:
               - name: Maintainer
@@ -15253,7 +15658,8 @@ service:
     create_resource_role:
       path: /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/roles
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Creates a new role associated with the resource.
       source:
         openapi: ../openapi.json
@@ -15352,7 +15758,8 @@ service:
     get_resource_role:
       path: /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/roles/{role_id}
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Gets a single role defined on the resource, if such role exists.
       source:
         openapi: ../openapi.json
@@ -15411,7 +15818,8 @@ service:
     delete_resource_role:
       path: /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/roles/{role_id}
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: |-
         Deletes the role and all its related data.
         This includes any permissions granted to said role.
@@ -15450,7 +15858,8 @@ service:
     update_resource_role:
       path: /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/roles/{role_id}
       method: PATCH
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: |-
         Partially updates the role defined on a resource.
         Fields that will be provided will be completely overwritten.
@@ -15547,7 +15956,8 @@ service:
       path: >-
         /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/roles/{role_id}/permissions
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: >-
         Assign permissions to role.
 
@@ -15619,7 +16029,8 @@ service:
       path: >-
         /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/roles/{role_id}/permissions
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: >-
         Remove permissions from role.
 
@@ -15691,7 +16102,8 @@ service:
       path: >-
         /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/roles/{role_id}/ancestors
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -15751,7 +16163,8 @@ service:
       path: >-
         /v2/schema/{proj_id}/{env_id}/resources/{resource_id}/roles/{role_id}/descendants
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -15855,7 +16268,11 @@ A resource may also contain:
           "display-name": "Resources",
           "endpoints": {
             "create_resource": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Create Resource",
               "docs": "Creates a new resource (a type of object you may protect with permissions).",
               "errors": [
@@ -16017,7 +16434,11 @@ A resource may also contain:
               },
             },
             "delete_resource": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Delete Resource",
               "docs": "Deletes the resource and all its related data.",
               "errors": [
@@ -16054,7 +16475,11 @@ A resource may also contain:
               },
             },
             "get_resource": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Get Resource",
               "docs": "Gets a single resource, if such resource exists.",
               "errors": [
@@ -16158,7 +16583,11 @@ A resource may also contain:
               },
             },
             "list_resources": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "List Resources",
               "docs": "Lists all the resources defined in your schema.",
               "errors": [
@@ -16169,6 +16598,13 @@ A resource may also contain:
                   "path-parameters": {
                     "env_id": "env_id",
                     "proj_id": "proj_id",
+                  },
+                  "query-parameters": {
+                    "include_built_in": true,
+                    "include_total_count": true,
+                    "page": 1,
+                    "per_page": 1,
+                    "search": "search",
                   },
                   "response": {
                     "body": {
@@ -16286,7 +16722,11 @@ A resource may also contain:
               },
             },
             "replace_resource": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Replace Resource",
               "docs": "Completely replaces the resource definition.
 
@@ -16436,7 +16876,11 @@ TODO: we need to decide if we are auto-revoking, or if we are rejecting the PUT 
               },
             },
             "update_resource": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Update Resource",
               "docs": "Partially updates the resource definition.
 Fields that will be provided will be completely overwritten.",
@@ -16615,7 +17059,8 @@ service:
     list_resources:
       path: /v2/schema/{proj_id}/{env_id}/resources
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Lists all the resources defined in your schema.
       source:
         openapi: ../openapi.json
@@ -16668,6 +17113,12 @@ service:
         - path-parameters:
             proj_id: proj_id
             env_id: env_id
+          query-parameters:
+            search: search
+            include_built_in: true
+            include_total_count: true
+            page: 1
+            per_page: 1
           response:
             body:
               data:
@@ -16707,7 +17158,8 @@ service:
     create_resource:
       path: /v2/schema/{proj_id}/{env_id}/resources
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: >-
         Creates a new resource (a type of object you may protect with
         permissions).
@@ -16838,7 +17290,8 @@ service:
     get_resource:
       path: /v2/schema/{proj_id}/{env_id}/resources/{resource_id}
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Gets a single resource, if such resource exists.
       source:
         openapi: ../openapi.json
@@ -16921,7 +17374,8 @@ service:
     replace_resource:
       path: /v2/schema/{proj_id}/{env_id}/resources/{resource_id}
       method: PUT
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: >-
         Completely replaces the resource definition.
 
@@ -17052,7 +17506,8 @@ service:
     delete_resource:
       path: /v2/schema/{proj_id}/{env_id}/resources/{resource_id}
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Deletes the resource and all its related data.
       source:
         openapi: ../openapi.json
@@ -17083,7 +17538,8 @@ service:
     update_resource:
       path: /v2/schema/{proj_id}/{env_id}/resources/{resource_id}
       method: PATCH
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: |-
         Partially updates the resource definition.
         Fields that will be provided will be completely overwritten.
@@ -17245,7 +17701,11 @@ Role assignment define the relationship between users and tenants.
           "display-name": "Role Assignments",
           "endpoints": {
             "assign_role": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Assign Role",
               "docs": "Assigns a role to a user within a tenant.
 
@@ -17310,7 +17770,11 @@ The tenant defines the scope of the assignment. In other words, the role is effe
               },
             },
             "bulk_assign_role": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Bulk Assign Role",
               "docs": undefined,
               "errors": [
@@ -17365,7 +17829,11 @@ The tenant defines the scope of the assignment. In other words, the role is effe
               },
             },
             "bulk_unassign_role": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Bulk Unassign Role",
               "docs": undefined,
               "errors": [
@@ -17420,7 +17888,11 @@ The tenant defines the scope of the assignment. In other words, the role is effe
               },
             },
             "list_role_assignments": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "List Role Assignments",
               "docs": "Lists the role assignments defined within an environment.
 
@@ -17435,6 +17907,13 @@ The tenant defines the scope of the assignment. In other words, the role is effe
                   "path-parameters": {
                     "env_id": "env_id",
                     "proj_id": "proj_id",
+                  },
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
+                    "role": "role",
+                    "tenant": "tenant",
+                    "user": "user",
                   },
                   "response": {
                     "body": [
@@ -17519,7 +17998,11 @@ The tenant defines the scope of the assignment. In other words, the role is effe
               },
             },
             "unassign_role": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Unassign Role",
               "docs": "Unassigns a user role within a tenant.
 
@@ -17580,7 +18063,8 @@ service:
     list_role_assignments:
       path: /v2/facts/{proj_id}/{env_id}/role_assignments
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: >-
         Lists the role assignments defined within an environment.
 
@@ -17648,6 +18132,12 @@ service:
         - path-parameters:
             proj_id: proj_id
             env_id: env_id
+          query-parameters:
+            user: user
+            role: role
+            tenant: tenant
+            page: 1
+            per_page: 1
           response:
             body:
               - id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
@@ -17664,7 +18154,8 @@ service:
     assign_role:
       path: /v2/facts/{proj_id}/{env_id}/role_assignments
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: >-
         Assigns a role to a user within a tenant.
 
@@ -17719,7 +18210,8 @@ service:
     unassign_role:
       path: /v2/facts/{proj_id}/{env_id}/role_assignments
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: >-
         Unassigns a user role within a tenant.
 
@@ -17760,7 +18252,8 @@ service:
     bulk_assign_role:
       path: /v2/facts/{proj_id}/{env_id}/role_assignments/bulk
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -17799,7 +18292,8 @@ service:
     bulk_unassign_role:
       path: /v2/facts/{proj_id}/{env_id}/role_assignments/bulk
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -17870,7 +18364,11 @@ assigned on a tenant.
           "display-name": "Roles",
           "endpoints": {
             "assign_permissions_to_role": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Assign Permissions To Role",
               "docs": "Assign permissions to role.
 
@@ -17947,7 +18445,11 @@ If some of the permissions specified are already assigned, will skip them.",
               },
             },
             "create_role": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Create Role",
               "docs": "Creates a new tenant role.",
               "errors": [
@@ -18058,7 +18560,11 @@ If some of the permissions specified are already assigned, will skip them.",
               },
             },
             "delete_role": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Delete Role",
               "docs": "Deletes a tenant role and all its related data.
 This includes any permissions granted to said role.",
@@ -18096,7 +18602,11 @@ This includes any permissions granted to said role.",
               },
             },
             "get_role": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Get Role",
               "docs": "Gets a single tenant role, if such role exists.",
               "errors": [
@@ -18160,7 +18670,11 @@ This includes any permissions granted to said role.",
               },
             },
             "get_role_ancestors": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Get Role Ancestors",
               "docs": undefined,
               "errors": [
@@ -18228,7 +18742,11 @@ This includes any permissions granted to said role.",
               },
             },
             "get_role_descendants": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Get Role Descendants",
               "docs": undefined,
               "errors": [
@@ -18296,7 +18814,11 @@ This includes any permissions granted to said role.",
               },
             },
             "list_roles": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "List Roles",
               "docs": "Lists all tenant roles.",
               "errors": [
@@ -18307,6 +18829,12 @@ This includes any permissions granted to said role.",
                   "path-parameters": {
                     "env_id": "env_id",
                     "proj_id": "proj_id",
+                  },
+                  "query-parameters": {
+                    "include_total_count": true,
+                    "page": 1,
+                    "per_page": 1,
+                    "search": "search",
                   },
                   "response": {
                     "body": {
@@ -18399,7 +18927,11 @@ This includes any permissions granted to said role.",
               },
             },
             "remove_permissions_from_role": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Remove Permissions From Role",
               "docs": "Remove permissions from role.
 
@@ -18476,7 +19008,11 @@ If some of the permissions specified are already unassigned, will skip them.",
               },
             },
             "update_role": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Update Role",
               "docs": "Partially updates a tenant role.
 Fields that will be provided will be completely overwritten.",
@@ -18617,7 +19153,8 @@ service:
     list_roles:
       path: /v2/schema/{proj_id}/{env_id}/roles
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Lists all tenant roles.
       source:
         openapi: ../openapi.json
@@ -18666,6 +19203,11 @@ service:
         - path-parameters:
             proj_id: proj_id
             env_id: env_id
+          query-parameters:
+            search: search
+            include_total_count: true
+            page: 1
+            per_page: 1
           response:
             body:
               data:
@@ -18689,7 +19231,8 @@ service:
     create_role:
       path: /v2/schema/{proj_id}/{env_id}/roles
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Creates a new tenant role.
       source:
         openapi: ../openapi.json
@@ -18781,7 +19324,8 @@ service:
     get_role:
       path: /v2/schema/{proj_id}/{env_id}/roles/{role_id}
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Gets a single tenant role, if such role exists.
       source:
         openapi: ../openapi.json
@@ -18833,7 +19377,8 @@ service:
     delete_role:
       path: /v2/schema/{proj_id}/{env_id}/roles/{role_id}
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: |-
         Deletes a tenant role and all its related data.
         This includes any permissions granted to said role.
@@ -18866,7 +19411,8 @@ service:
     update_role:
       path: /v2/schema/{proj_id}/{env_id}/roles/{role_id}
       method: PATCH
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: |-
         Partially updates a tenant role.
         Fields that will be provided will be completely overwritten.
@@ -18955,7 +19501,8 @@ service:
     assign_permissions_to_role:
       path: /v2/schema/{proj_id}/{env_id}/roles/{role_id}/permissions
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: >-
         Assign permissions to role.
 
@@ -19019,7 +19566,8 @@ service:
     remove_permissions_from_role:
       path: /v2/schema/{proj_id}/{env_id}/roles/{role_id}/permissions
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: >-
         Remove permissions from role.
 
@@ -19083,7 +19631,8 @@ service:
     get_role_ancestors:
       path: /v2/schema/{proj_id}/{env_id}/roles/{role_id}/ancestors
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -19135,7 +19684,8 @@ service:
     get_role_descendants:
       path: /v2/schema/{proj_id}/{env_id}/roles/{role_id}/descendants
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -19227,7 +19777,11 @@ multi-tenancy straight out of the box.
           "display-name": "Tenants",
           "endpoints": {
             "create_tenant": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Create Tenant",
               "docs": "Creates a new tenant inside the Permit.io system.
 
@@ -19303,7 +19857,11 @@ and will return the existing tenant object in the response body.",
               },
             },
             "delete_tenant": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Delete Tenant",
               "docs": "Deletes the tenant and all its related data.",
               "errors": [
@@ -19340,7 +19898,11 @@ and will return the existing tenant object in the response body.",
               },
             },
             "delete_tenant_user": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Delete Tenant User",
               "docs": "Deletes a user under a tenant.",
               "errors": [
@@ -19382,7 +19944,11 @@ and will return the existing tenant object in the response body.",
               },
             },
             "get_tenant": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Get Tenant",
               "docs": "Gets a tenant, if such tenant exists. Otherwise returns 404.",
               "errors": [
@@ -19444,7 +20010,11 @@ and will return the existing tenant object in the response body.",
               },
             },
             "list_tenant_users": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "List Tenant Users",
               "docs": undefined,
               "errors": [
@@ -19456,6 +20026,12 @@ and will return the existing tenant object in the response body.",
                     "env_id": "env_id",
                     "proj_id": "proj_id",
                     "tenant_id": "tenant_id",
+                  },
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
+                    "role": "role",
+                    "search": "search",
                   },
                   "response": {
                     "body": {
@@ -19565,7 +20141,11 @@ and will return the existing tenant object in the response body.",
               },
             },
             "list_tenants": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "List Tenants",
               "docs": "Lists all the tenants defined within an environment.",
               "errors": [
@@ -19576,6 +20156,12 @@ and will return the existing tenant object in the response body.",
                   "path-parameters": {
                     "env_id": "env_id",
                     "proj_id": "proj_id",
+                  },
+                  "query-parameters": {
+                    "include_total_count": true,
+                    "page": 1,
+                    "per_page": 1,
+                    "search": "search",
                   },
                   "response": {
                     "body": {
@@ -19666,7 +20252,11 @@ and will return the existing tenant object in the response body.",
               },
             },
             "update_tenant": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Update Tenant",
               "docs": "Partially updates the tenant definition.
 Fields that will be provided will be completely overwritten.",
@@ -19784,7 +20374,8 @@ service:
     list_tenant_users:
       path: /v2/facts/{proj_id}/{env_id}/tenants/{tenant_id}/users
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -19793,16 +20384,16 @@ service:
           docs: >-
             Either the unique id of the project, or the URL-friendly key of the
             project (i.e: the "slug").
-        tenant_id:
-          type: string
-          docs: >-
-            Either the unique id of the tenant, or the URL-friendly key of the
-            tenant (i.e: the "slug").
         env_id:
           type: string
           docs: >-
             Either the unique id of the environment, or the URL-friendly key of
             the environment (i.e: the "slug").
+        tenant_id:
+          type: string
+          docs: >-
+            Either the unique id of the tenant, or the URL-friendly key of the
+            tenant (i.e: the "slug").
       display-name: List Tenant Users
       request:
         name: ListTenantUsersRequest
@@ -19835,8 +20426,13 @@ service:
       examples:
         - path-parameters:
             proj_id: proj_id
-            tenant_id: tenant_id
             env_id: env_id
+            tenant_id: tenant_id
+          query-parameters:
+            search: search
+            role: role
+            page: 1
+            per_page: 1
           response:
             body:
               data:
@@ -19868,7 +20464,8 @@ service:
     list_tenants:
       path: /v2/facts/{proj_id}/{env_id}/tenants
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Lists all the tenants defined within an environment.
       source:
         openapi: ../openapi.json
@@ -19917,6 +20514,11 @@ service:
         - path-parameters:
             proj_id: proj_id
             env_id: env_id
+          query-parameters:
+            search: search
+            include_total_count: true
+            page: 1
+            per_page: 1
           response:
             body:
               data:
@@ -19939,7 +20541,8 @@ service:
     create_tenant:
       path: /v2/facts/{proj_id}/{env_id}/tenants
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: |-
         Creates a new tenant inside the Permit.io system.
 
@@ -19999,7 +20602,8 @@ service:
     get_tenant:
       path: /v2/facts/{proj_id}/{env_id}/tenants/{tenant_id}
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Gets a tenant, if such tenant exists. Otherwise returns 404.
       source:
         openapi: ../openapi.json
@@ -20050,7 +20654,8 @@ service:
     delete_tenant:
       path: /v2/facts/{proj_id}/{env_id}/tenants/{tenant_id}
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Deletes the tenant and all its related data.
       source:
         openapi: ../openapi.json
@@ -20081,7 +20686,8 @@ service:
     update_tenant:
       path: /v2/facts/{proj_id}/{env_id}/tenants/{tenant_id}
       method: PATCH
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: |-
         Partially updates the tenant definition.
         Fields that will be provided will be completely overwritten.
@@ -20151,7 +20757,8 @@ service:
     delete_tenant_user:
       path: /v2/facts/{proj_id}/{env_id}/tenants/{tenant_id}/users/{user_id}
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Deletes a user under a tenant.
       source:
         openapi: ../openapi.json
@@ -20244,7 +20851,11 @@ define a string `owner` attribute that we can now use in our policies.
           "display-name": "User Attributes",
           "endpoints": {
             "create_user_attribute": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Create User Attribute",
               "docs": "Creates a new attribute for the User resource.",
               "errors": [
@@ -20255,6 +20866,9 @@ define a string `owner` attribute that we can now use in our policies.
                   "path-parameters": {
                     "env_id": "env_id",
                     "proj_id": "proj_id",
+                  },
+                  "query-parameters": {
+                    "resource_id": "resource_id",
                   },
                   "request": {
                     "description": "whether or not the github repository is private",
@@ -20315,7 +20929,11 @@ define a string `owner` attribute that we can now use in our policies.
               },
             },
             "delete_user_attribute": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Delete User Attribute",
               "docs": "Deletes the attribute and all its related data.
 
@@ -20330,6 +20948,11 @@ attribute to evaluate as `undefined`.",
                     "attribute_id": "attribute_id",
                     "env_id": "env_id",
                     "proj_id": "proj_id",
+                  },
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
+                    "resource_id": "resource_id",
                   },
                 },
               ],
@@ -20388,7 +21011,11 @@ attribute to evaluate as `undefined`.",
               },
             },
             "get_user_attribute": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Get User Attribute",
               "docs": "Gets a single attribute defined on the User resource, if such attribute exists.",
               "errors": [
@@ -20400,6 +21027,9 @@ attribute to evaluate as `undefined`.",
                     "attribute_id": "attribute_id",
                     "env_id": "env_id",
                     "proj_id": "proj_id",
+                  },
+                  "query-parameters": {
+                    "resource_id": "resource_id",
                   },
                   "response": {
                     "body": {
@@ -20455,7 +21085,11 @@ attribute to evaluate as `undefined`.",
               },
             },
             "list_user_attributes": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "List User Attributes",
               "docs": "Lists all the attributes defined on the User resource.",
               "errors": [
@@ -20466,6 +21100,11 @@ attribute to evaluate as `undefined`.",
                   "path-parameters": {
                     "env_id": "env_id",
                     "proj_id": "proj_id",
+                  },
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
+                    "resource_id": "resource_id",
                   },
                   "response": {
                     "body": [
@@ -20543,7 +21182,11 @@ attribute to evaluate as `undefined`.",
               },
             },
             "update_user_attribute": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Update User Attribute",
               "docs": "Partially updates the attribute defined on the User resource.
 Fields that will be provided will be completely overwritten.",
@@ -20556,6 +21199,9 @@ Fields that will be provided will be completely overwritten.",
                     "attribute_id": "attribute_id",
                     "env_id": "env_id",
                     "proj_id": "proj_id",
+                  },
+                  "query-parameters": {
+                    "resource_id": "resource_id",
                   },
                   "request": {
                     "description": "whether or not the github repository is private",
@@ -20632,7 +21278,8 @@ service:
     list_user_attributes:
       path: /v2/schema/{proj_id}/{env_id}/users/attributes
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Lists all the attributes defined on the User resource.
       source:
         openapi: ../openapi.json
@@ -20677,6 +21324,10 @@ service:
         - path-parameters:
             proj_id: proj_id
             env_id: env_id
+          query-parameters:
+            resource_id: resource_id
+            page: 1
+            per_page: 1
           response:
             body:
               - type: bool
@@ -20694,7 +21345,8 @@ service:
     create_user_attribute:
       path: /v2/schema/{proj_id}/{env_id}/users/attributes
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Creates a new attribute for the User resource.
       source:
         openapi: ../openapi.json
@@ -20729,6 +21381,8 @@ service:
         - path-parameters:
             proj_id: proj_id
             env_id: env_id
+          query-parameters:
+            resource_id: resource_id
           request:
             key: private
             type: bool
@@ -20750,7 +21404,8 @@ service:
     get_user_attribute:
       path: /v2/schema/{proj_id}/{env_id}/users/attributes/{attribute_id}
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: >-
         Gets a single attribute defined on the User resource, if such attribute
         exists.
@@ -20790,6 +21445,8 @@ service:
             proj_id: proj_id
             env_id: env_id
             attribute_id: attribute_id
+          query-parameters:
+            resource_id: resource_id
           response:
             body:
               type: bool
@@ -20807,7 +21464,8 @@ service:
     delete_user_attribute:
       path: /v2/schema/{proj_id}/{env_id}/users/attributes/{attribute_id}
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: |-
         Deletes the attribute and all its related data.
 
@@ -20858,10 +21516,15 @@ service:
             proj_id: proj_id
             env_id: env_id
             attribute_id: attribute_id
+          query-parameters:
+            resource_id: resource_id
+            page: 1
+            per_page: 1
     update_user_attribute:
       path: /v2/schema/{proj_id}/{env_id}/users/attributes/{attribute_id}
       method: PATCH
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: |-
         Partially updates the attribute defined on the User resource.
         Fields that will be provided will be completely overwritten.
@@ -20904,6 +21567,8 @@ service:
             proj_id: proj_id
             env_id: env_id
             attribute_id: attribute_id
+          query-parameters:
+            resource_id: resource_id
           request:
             description: whether or not the github repository is private
           response:
@@ -20967,7 +21632,11 @@ You may create users via the API (shown below), with one of the SDKs, or via the
           "display-name": "Users",
           "endpoints": {
             "assign_role_to_user": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Assign Role To User",
               "docs": "Assigns a role to the user within the tenant.
 
@@ -21049,7 +21718,11 @@ The tenant defines the scope of the assignment. In other words, the role is effe
               },
             },
             "create_user": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Create User",
               "docs": "Creates a new user inside the Permit.io system, from that point forward
 you may run permission checks on that user.
@@ -21146,7 +21819,11 @@ and will return the existing user object in the response body.",
               },
             },
             "delete_user": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Delete User",
               "docs": "Deletes the user and all its related data.",
               "errors": [
@@ -21183,7 +21860,11 @@ and will return the existing user object in the response body.",
               },
             },
             "get_user": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Get User",
               "docs": "Gets a user, if such user exists. Otherwise returns 404.",
               "errors": [
@@ -21261,7 +21942,11 @@ and will return the existing user object in the response body.",
               },
             },
             "list_users": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "List Users",
               "docs": "Lists all the users defined within an environment.",
               "errors": [
@@ -21272,6 +21957,12 @@ and will return the existing user object in the response body.",
                   "path-parameters": {
                     "env_id": "env_id",
                     "proj_id": "proj_id",
+                  },
+                  "query-parameters": {
+                    "page": 1,
+                    "per_page": 1,
+                    "role": "role",
+                    "search": "search",
                   },
                   "response": {
                     "body": {
@@ -21377,7 +22068,11 @@ and will return the existing user object in the response body.",
               },
             },
             "replace_user": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Replace User",
               "docs": undefined,
               "errors": [
@@ -21475,7 +22170,11 @@ and will return the existing user object in the response body.",
               },
             },
             "unassign_role_from_user": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Unassign Role From User",
               "docs": "Unassigns the role from the user within the tenant.
 
@@ -21539,7 +22238,11 @@ If the role is not actually assigned, will return 404.",
               },
             },
             "update_user": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Update User",
               "docs": "Partially updates the user definition.
 Fields that will be provided will be completely overwritten.",
@@ -21666,7 +22369,8 @@ service:
     list_users:
       path: /v2/facts/{proj_id}/{env_id}/users
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Lists all the users defined within an environment.
       source:
         openapi: ../openapi.json
@@ -21714,6 +22418,11 @@ service:
         - path-parameters:
             proj_id: proj_id
             env_id: env_id
+          query-parameters:
+            search: search
+            role: role
+            page: 1
+            per_page: 1
           response:
             body:
               data:
@@ -21745,7 +22454,8 @@ service:
     create_user:
       path: /v2/facts/{proj_id}/{env_id}/users
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: |-
         Creates a new user inside the Permit.io system, from that point forward
         you may run permission checks on that user.
@@ -21819,7 +22529,8 @@ service:
     get_user:
       path: /v2/facts/{proj_id}/{env_id}/users/{user_id}
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Gets a user, if such user exists. Otherwise returns 404.
       source:
         openapi: ../openapi.json
@@ -21879,7 +22590,8 @@ service:
     replace_user:
       path: /v2/facts/{proj_id}/{env_id}/users/{user_id}
       method: PUT
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.json
       path-parameters:
@@ -21953,7 +22665,8 @@ service:
     delete_user:
       path: /v2/facts/{proj_id}/{env_id}/users/{user_id}
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Deletes the user and all its related data.
       source:
         openapi: ../openapi.json
@@ -21984,7 +22697,8 @@ service:
     update_user:
       path: /v2/facts/{proj_id}/{env_id}/users/{user_id}
       method: PATCH
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: |-
         Partially updates the user definition.
         Fields that will be provided will be completely overwritten.
@@ -22070,7 +22784,8 @@ service:
     assign_role_to_user:
       path: /v2/facts/{proj_id}/{env_id}/users/{user_id}/roles
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: >-
         Assigns a role to the user within the tenant.
 
@@ -22141,7 +22856,8 @@ service:
     unassign_role_from_user:
       path: /v2/facts/{proj_id}/{env_id}/users/{user_id}/roles
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: >-
         Unassigns the role from the user within the tenant.
 

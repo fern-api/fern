@@ -10,9 +10,9 @@ import { writeFile } from "fs/promises";
 import { buildReference } from "./reference/buildReference";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
+import { SdkWireTestGenerator } from "./sdk-wire-tests/SdkWireTestGenerator";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
 import { convertIr } from "./utils/convertIr";
-import { WireTestGenerator } from "./wire-tests/WireTestGenerator";
 
 export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -91,8 +91,7 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
             }
         }
 
-        // Generate wire tests if enabled
-        const wireTestGenerator = new WireTestGenerator(context);
+        const wireTestGenerator = new SdkWireTestGenerator(context);
         await wireTestGenerator.generate();
 
         await context.project.persist();
@@ -106,9 +105,10 @@ export class SdkGeneratorCLI extends AbstractJavaGeneratorCli<SdkCustomConfigSch
             throw new Error("Cannot generate dynamic snippets without dynamic IR");
         }
 
+        const convertedIr = convertIr(dynamicIr);
         const dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
             // NOTE: This will eventually become a shared library. See the generators/go-v2/sdk/src/SdkGeneratorCli.ts
-            ir: convertIr(dynamicIr),
+            ir: convertedIr,
             config: context.config
         });
 

@@ -28,11 +28,11 @@ export declare namespace User {
     export interface Raw {
         name: string;
         id: serializers.UserId.Raw;
-        tags: string[] | null;
-        metadata?: (serializers.Metadata.Raw | null) | null;
-        email: serializers.Email.Raw;
+        tags?: string[] | null;
+        metadata?: (serializers.Metadata.Raw | null | undefined) | null;
+        email?: serializers.Email.Raw;
         "favorite-number": serializers.WeirdNumber.Raw;
-        numbers?: (number[] | null) | null;
-        strings?: (Record<string, unknown> | null) | null;
+        numbers?: (number[] | null | undefined) | null;
+        strings?: (Record<string, unknown> | null | undefined) | null;
     }
 }

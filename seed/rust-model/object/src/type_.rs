@@ -1,0 +1,39 @@
+use crate::name::Name;
+use chrono::{DateTime, NaiveDate, Utc};
+use std::collections::HashMap;
+use ordered_float::OrderedFloat;
+use uuid::Uuid;
+use serde::{Deserialize, Serialize};
+
+/// Exercises all of the built-in types.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct Type {
+    pub one: i32,
+    pub two: f64,
+    pub three: String,
+    pub four: bool,
+    pub five: i64,
+    pub six: DateTime<Utc>,
+    pub seven: NaiveDate,
+    pub eight: uuid::Uuid,
+    pub nine: String,
+    pub ten: Vec<i32>,
+    pub eleven: std::collections::HashSet<ordered_float::OrderedFloat<f64>>,
+    pub twelve: HashMap<String, bool>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub thirteen: Option<i64>,
+    pub fourteen: serde_json::Value,
+    pub fifteen: Vec<Vec<i32>>,
+    pub sixteen: Vec<HashMap<String, i32>>,
+    pub seventeen: Vec<Option<uuid::Uuid>>,
+    pub eighteen: String,
+    pub nineteen: Name,
+    pub twenty: u32,
+    pub twentyone: u64,
+    pub twentytwo: f32,
+    pub twentythree: num_bigint::BigInt,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub twentyfour: Option<DateTime<Utc>>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub twentyfive: Option<NaiveDate>,
+}

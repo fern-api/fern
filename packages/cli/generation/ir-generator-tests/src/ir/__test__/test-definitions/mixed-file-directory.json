@@ -1349,6 +1349,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -3202,6 +3203,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": "Create a new organization."
                 }
@@ -3293,6 +3295,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -4484,6 +4487,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": "List all users."
                 }
@@ -4614,6 +4618,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -5911,6 +5916,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": "List all user events."
                 }
@@ -6079,6 +6085,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -7046,6 +7053,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": "Get event metadata."
                 }
@@ -7236,7 +7244,9 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:Id"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -7264,7 +7274,9 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -7295,7 +7307,9 @@
                                 "type": "named",
                                 "value": "type_user:User"
                             }
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -7393,7 +7407,9 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -7491,7 +7507,9 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:Id"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -7519,7 +7537,9 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -7547,7 +7567,9 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "INTEGER"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -7684,7 +7706,9 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:Id"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -7712,7 +7736,9 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -7887,7 +7913,9 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:Id"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -7914,7 +7942,9 @@
                         },
                         "typeReference": {
                             "type": "unknown"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -8175,7 +8205,9 @@
                                     "type": "primitive",
                                     "value": "INTEGER"
                                 }
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ],
                     "headers": [],
@@ -8435,7 +8467,9 @@
                                     "type": "primitive",
                                     "value": "INTEGER"
                                 }
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ],
                     "headers": [],
@@ -8768,7 +8802,9 @@
                             "typeReference": {
                                 "type": "named",
                                 "value": "type_:Id"
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ],
                     "headers": [],
@@ -8786,6 +8822,7 @@
         },
         "pathParameters": [],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,

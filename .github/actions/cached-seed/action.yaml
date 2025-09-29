@@ -8,6 +8,10 @@ inputs:
   generator-path:
     description: The path to the source code of the generator (e.g., generators/go, generators/ruby)
     required: true
+  fixtures-to-run:
+    description: Specific fixtures to run. If not supplied, will run all fixtures. Note - for multiple fixtures at once, separate by space, not comma.
+    required: false
+    default: ""
   validate-git-diff:
     description: Whether to validate that no git-tracked files were changed
     required: false
@@ -24,6 +28,10 @@ inputs:
     description: "Whether to skip caching and always regenerate"
     required: false
     default: "true"
+  validation-exclude-paths:
+    description: "Comma separated list of paths to exclude from validation step, typically package manager/lock files"
+    required: false
+    default: "seed/*/.mock/*"
 
 runs:
   using: "composite"
@@ -76,9 +84,15 @@ runs:
       env:
         FORCE_COLOR: "2"
       run: |
+        FORMATTED_FIXTURES_COMMAND=""
+        if [[ "${{ inputs.fixtures-to-run }}" != "all" ]]; then
+          FORMATTED_FIXTURES_COMMAND="--fixture ${{ inputs.fixtures-to-run }}"
+        fi
+
         pnpm seed:local test \
           --generator ${{ inputs.generator-name }} \
           --parallel 16 \
+          ${FORMATTED_FIXTURES_COMMAND} \
           ${{ inputs.skip-scripts == 'true' && '--skip-scripts' || '' }} \
           ${{ inputs.allow-unexpected-failures == 'true' && '--allow-unexpected-failures' || '' }}
 
@@ -87,7 +101,28 @@ runs:
       id: validate
       shell: bash
       run: |
-        if git --no-pager diff --exit-code -- ":(exclude)seed/*/.mock/*"; then
+        # Validate results
+        # Split the input string into an array
+        IFS=',' read -ra FOLDERS <<< "${{ inputs.validation-exclude-paths }}"
+
+        # Build the exclude string
+        EXCLUDE_STRING=""
+        for folder in "${FOLDERS[@]}"; do
+          # Trim whitespace
+          folder=$(echo "$folder" | xargs)
+          if [ -n "$folder" ]; then
+            EXCLUDE_STRING="$EXCLUDE_STRING\":(exclude)$folder\" "
+          fi
+        done
+
+        # Remove trailing space
+        EXCLUDE_STRING=$(echo "$EXCLUDE_STRING" | sed 's/[[:space:]]*$//')
+
+        echo "exclude_string=$EXCLUDE_STRING" >> $GITHUB_OUTPUT
+        echo "Built git diff exclude string as: "
+        echo "$EXCLUDE_STRING"
+
+        if git --no-pager diff --exit-code -- $EXCLUDE_STRING; then
           echo "Results are valid, saving to cache if not already."
           echo "valid=true" >> $GITHUB_OUTPUT
         else

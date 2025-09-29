@@ -1,3 +1,5 @@
 //! Generated models by Fern
 
-pub mod streamed_completion;
+pub mod types;
+
+pub use types::*;

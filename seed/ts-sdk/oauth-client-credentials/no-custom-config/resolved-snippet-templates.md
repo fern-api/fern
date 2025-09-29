@@ -7,9 +7,44 @@ const client = new SeedOauthClientCredentialsClient({
   clientSecret: "YOUR_AUTHORIZATION",
 });
 await client.auth.getTokenWithClientCredentials({
+  client_id: "my_oauth_app_123",
+  client_secret: "sk_live_abcdef123456789",
+  scope: "read:users",
+});
+
+```
+
+
+```typescript
+import { SeedOauthClientCredentialsClient } from "@fern/oauth-client-credentials";
+
+const client = new SeedOauthClientCredentialsClient({
+  environment: "YOUR_BASE_URL",
+  clientId: "YOUR_AUTHORIZATION",
+  clientSecret: "YOUR_AUTHORIZATION",
+});
+await client.auth.getTokenWithClientCredentials({
   client_id: "client_id",
   client_secret: "client_secret",
   scope: "scope",
+});
+
+```
+
+
+```typescript
+import { SeedOauthClientCredentialsClient } from "@fern/oauth-client-credentials";
+
+const client = new SeedOauthClientCredentialsClient({
+  environment: "YOUR_BASE_URL",
+  clientId: "YOUR_AUTHORIZATION",
+  clientSecret: "YOUR_AUTHORIZATION",
+});
+await client.auth.refreshToken({
+  client_id: "my_oauth_app_123",
+  client_secret: "sk_live_abcdef123456789",
+  refresh_token: "refresh_token",
+  scope: "read:users",
 });
 
 ```

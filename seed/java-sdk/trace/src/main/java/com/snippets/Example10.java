@@ -1,7 +1,6 @@
 package com.snippets;
 
 import com.seed.trace.SeedTraceClient;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Example10 {
@@ -13,9 +12,7 @@ public class Example10 {
             .build();
 
         client.homepage().setHomepageProblems(
-            new ArrayList<String>(
-                Arrays.asList("string", "string")
-            )
+            Arrays.asList("string", "string")
         );
     }
 }

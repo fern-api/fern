@@ -16,25 +16,7 @@
 client.Complex.Search(
         context.TODO(),
         "index",
-        &fern.SearchRequest{
-            Pagination: &fern.StartingAfterPaging{
-                PerPage: 1,
-                StartingAfter: fern.String(
-                    "starting_after",
-                ),
-            },
-            Query: &fern.SearchRequestQuery{
-                SingleFilterSearchRequest: &fern.SingleFilterSearchRequest{
-                    Field: fern.String(
-                        "field",
-                    ),
-                    Operator: fern.SingleFilterSearchRequestOperatorEquals.Ptr(),
-                    Value: fern.String(
-                        "value",
-                    ),
-                },
-            },
-        },
+        request,
     )
 }
 ```
@@ -71,6 +53,665 @@ client.Complex.Search(
 </dl>
 </details>
 
+## InlineUsers InlineUsers
+<details><summary><code>client.InlineUsers.InlineUsers.ListWithCursorPagination() -> *inlineusers.ListUsersPaginationResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.InlineUsers.InlineUsers.ListWithCursorPagination(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `*int` — Defaults to first page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — Defaults to per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**order:** `*inlineusers.Order` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**startingAfter:** `*string` 
+
+The cursor used for pagination in order to fetch
+the next page of results.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.InlineUsers.InlineUsers.ListWithMixedTypeCursorPagination() -> *inlineusers.ListUsersMixedTypePaginationResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.InlineUsers.InlineUsers.ListWithMixedTypeCursorPagination(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `*string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.InlineUsers.InlineUsers.ListWithBodyCursorPagination(request) -> *inlineusers.ListUsersPaginationResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.InlineUsers.InlineUsers.ListWithMixedTypeCursorPagination(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pagination:** `*inlineusers.WithCursor` 
+
+The object that contains the cursor used for pagination
+in order to fetch the next page of results.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.InlineUsers.InlineUsers.ListWithOffsetPagination() -> *inlineusers.ListUsersPaginationResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.InlineUsers.InlineUsers.ListWithCursorPagination(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `*int` — Defaults to first page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*int` — Defaults to per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**order:** `*inlineusers.Order` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**startingAfter:** `*string` 
+
+The cursor used for pagination in order to fetch
+the next page of results.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.InlineUsers.InlineUsers.ListWithDoubleOffsetPagination() -> *inlineusers.ListUsersPaginationResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.InlineUsers.InlineUsers.ListWithCursorPagination(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `*float64` — Defaults to first page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**perPage:** `*float64` — Defaults to per page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**order:** `*inlineusers.Order` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**startingAfter:** `*string` 
+
+The cursor used for pagination in order to fetch
+the next page of results.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.InlineUsers.InlineUsers.ListWithBodyOffsetPagination(request) -> *inlineusers.ListUsersPaginationResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.InlineUsers.InlineUsers.ListWithMixedTypeCursorPagination(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pagination:** `*inlineusers.WithPage` 
+
+The object that contains the offset used for pagination
+in order to fetch the next page of results.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.InlineUsers.InlineUsers.ListWithOffsetStepPagination() -> *inlineusers.ListUsersPaginationResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.InlineUsers.InlineUsers.ListWithOffsetStepPagination(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `*int` — Defaults to first page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `*int` 
+
+The maximum number of elements to return.
+This is also used as the step size in this
+paginated endpoint.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**order:** `*inlineusers.Order` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.InlineUsers.InlineUsers.ListWithOffsetPaginationHasNextPage() -> *inlineusers.ListUsersPaginationResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.InlineUsers.InlineUsers.ListWithOffsetStepPagination(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**page:** `*int` — Defaults to first page
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**limit:** `*int` 
+
+The maximum number of elements to return.
+This is also used as the step size in this
+paginated endpoint.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**order:** `*inlineusers.Order` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.InlineUsers.InlineUsers.ListWithExtendedResults() -> *inlineusers.ListUsersExtendedResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.InlineUsers.InlineUsers.ListWithExtendedResults(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `*uuid.UUID` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.InlineUsers.InlineUsers.ListWithExtendedResultsAndOptionalData() -> *inlineusers.ListUsersExtendedOptionalListResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.InlineUsers.InlineUsers.ListWithExtendedResults(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**cursor:** `*uuid.UUID` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.InlineUsers.InlineUsers.ListUsernames() -> *fern.UsernameCursor</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.InlineUsers.InlineUsers.ListWithCursorPagination(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**startingAfter:** `*string` 
+
+The cursor used for pagination in order to fetch
+the next page of results.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.InlineUsers.InlineUsers.ListWithGlobalConfig() -> *inlineusers.UsernameContainer</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.InlineUsers.InlineUsers.ListWithGlobalConfig(
+        context.TODO(),
+        request,
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**offset:** `*int` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Users
 <details><summary><code>client.Users.ListWithCursorPagination() -> *fern.ListUsersPaginationResponse</code></summary>
 <dl>
@@ -87,18 +728,7 @@ client.Complex.Search(
 ```go
 client.Users.ListWithCursorPagination(
         context.TODO(),
-        &fern.ListUsersCursorPaginationRequest{
-            Page: fern.Int(
-                1,
-            ),
-            PerPage: fern.Int(
-                1,
-            ),
-            Order: fern.OrderAsc.Ptr(),
-            StartingAfter: fern.String(
-                "starting_after",
-            ),
-        },
+        request,
     )
 }
 ```
@@ -169,11 +799,7 @@ the next page of results.
 ```go
 client.Users.ListWithMixedTypeCursorPagination(
         context.TODO(),
-        &fern.ListUsersMixedTypeCursorPaginationRequest{
-            Cursor: fern.String(
-                "cursor",
-            ),
-        },
+        request,
     )
 }
 ```
@@ -217,7 +843,7 @@ client.Users.ListWithMixedTypeCursorPagination(
 ```go
 client.Users.ListWithMixedTypeCursorPagination(
         context.TODO(),
-        &fern.ListUsersMixedTypeCursorPaginationRequest{},
+        request,
     )
 }
 ```
@@ -264,18 +890,7 @@ in order to fetch the next page of results.
 ```go
 client.Users.ListWithCursorPagination(
         context.TODO(),
-        &fern.ListUsersCursorPaginationRequest{
-            Page: fern.Int(
-                1,
-            ),
-            PerPage: fern.Int(
-                1,
-            ),
-            Order: fern.OrderAsc.Ptr(),
-            StartingAfter: fern.String(
-                "starting_after",
-            ),
-        },
+        request,
     )
 }
 ```
@@ -346,18 +961,7 @@ the next page of results.
 ```go
 client.Users.ListWithCursorPagination(
         context.TODO(),
-        &fern.ListUsersCursorPaginationRequest{
-            Page: fern.Int(
-                1.1,
-            ),
-            PerPage: fern.Int(
-                1.1,
-            ),
-            Order: fern.OrderAsc.Ptr(),
-            StartingAfter: fern.String(
-                "starting_after",
-            ),
-        },
+        request,
     )
 }
 ```
@@ -428,7 +1032,7 @@ the next page of results.
 ```go
 client.Users.ListWithMixedTypeCursorPagination(
         context.TODO(),
-        &fern.ListUsersMixedTypeCursorPaginationRequest{},
+        request,
     )
 }
 ```
@@ -475,15 +1079,7 @@ in order to fetch the next page of results.
 ```go
 client.Users.ListWithOffsetStepPagination(
         context.TODO(),
-        &fern.ListUsersOffsetStepPaginationRequest{
-            Page: fern.Int(
-                1,
-            ),
-            Limit: fern.Int(
-                1,
-            ),
-            Order: fern.OrderAsc.Ptr(),
-        },
+        request,
     )
 }
 ```
@@ -547,15 +1143,7 @@ paginated endpoint.
 ```go
 client.Users.ListWithOffsetStepPagination(
         context.TODO(),
-        &fern.ListUsersOffsetStepPaginationRequest{
-            Page: fern.Int(
-                1,
-            ),
-            Limit: fern.Int(
-                1,
-            ),
-            Order: fern.OrderAsc.Ptr(),
-        },
+        request,
     )
 }
 ```
@@ -619,13 +1207,7 @@ paginated endpoint.
 ```go
 client.Users.ListWithExtendedResults(
         context.TODO(),
-        &fern.ListUsersExtendedRequest{
-            Cursor: fern.UUID(
-                uuid.MustParse(
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                ),
-            ),
-        },
+        request,
     )
 }
 ```
@@ -669,13 +1251,7 @@ client.Users.ListWithExtendedResults(
 ```go
 client.Users.ListWithExtendedResults(
         context.TODO(),
-        &fern.ListUsersExtendedRequest{
-            Cursor: fern.UUID(
-                uuid.MustParse(
-                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                ),
-            ),
-        },
+        request,
     )
 }
 ```
@@ -719,11 +1295,7 @@ client.Users.ListWithExtendedResults(
 ```go
 client.Users.ListWithCursorPagination(
         context.TODO(),
-        &fern.ListUsersCursorPaginationRequest{
-            StartingAfter: fern.String(
-                "starting_after",
-            ),
-        },
+        request,
     )
 }
 ```
@@ -770,11 +1342,7 @@ the next page of results.
 ```go
 client.Users.ListWithGlobalConfig(
         context.TODO(),
-        &fern.ListWithGlobalConfigRequest{
-            Offset: fern.Int(
-                1,
-            ),
-        },
+        request,
     )
 }
 ```

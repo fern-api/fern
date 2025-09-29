@@ -1,5 +1,7 @@
 export type { APIResponse } from "./APIResponse";
 export type { BinaryResponse } from "./BinaryResponse";
+export type { EndpointMetadata } from "./EndpointMetadata";
+export { EndpointSupplier } from "./EndpointSupplier";
 export type { Fetcher, FetchFunction } from "./Fetcher";
 export { fetcher } from "./Fetcher";
 export { getHeader } from "./getHeader";

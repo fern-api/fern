@@ -1,4 +1,4 @@
-import { base64Decode, base64Encode } from "../../../../src/test-packagePath/core/base64.js";
+import { base64Decode, base64Encode } from "../../../../src/test-packagePath/core/base64";
 
 describe("base64", () => {
     describe("base64Encode", () => {

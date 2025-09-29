@@ -303,7 +303,9 @@ public final class ProblemInfoV2 {
     )
     public _FinalStage testcases(List<TestCaseV2> testcases) {
       this.testcases.clear();
-      this.testcases.addAll(testcases);
+      if (testcases != null) {
+        this.testcases.addAll(testcases);
+      }
       return this;
     }
 
@@ -329,7 +331,9 @@ public final class ProblemInfoV2 {
     )
     public _FinalStage customTestCaseTemplates(List<TestCaseTemplate> customTestCaseTemplates) {
       this.customTestCaseTemplates.clear();
-      this.customTestCaseTemplates.addAll(customTestCaseTemplates);
+      if (customTestCaseTemplates != null) {
+        this.customTestCaseTemplates.addAll(customTestCaseTemplates);
+      }
       return this;
     }
 
@@ -354,7 +358,9 @@ public final class ProblemInfoV2 {
     )
     public _FinalStage supportedLanguages(Set<Language> supportedLanguages) {
       this.supportedLanguages.clear();
-      this.supportedLanguages.addAll(supportedLanguages);
+      if (supportedLanguages != null) {
+        this.supportedLanguages.addAll(supportedLanguages);
+      }
       return this;
     }
 

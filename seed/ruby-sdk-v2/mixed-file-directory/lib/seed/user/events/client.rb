@@ -13,20 +13,29 @@ module Seed
         #
         # @return [Array[Seed::User::Events::Types::Event]]
         def list_events(request_options: {}, **params)
-          _query_param_names = ["limit"]
+          _query_param_names = [
+            ["limit"],
+            %i[limit]
+          ].flatten
           _query = params.slice(*_query_param_names)
           params.except(*_query_param_names)
 
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url],
             method: "GET",
             path: "/users/events/",
             query: _query
           )
-          _response = @client.send(_request)
-          return if _response.code >= "200" && _response.code < "300"
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          return if code.between?(200, 299)
 
-          raise _response.body
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
 
         # @return [Seed::Metadata::Client]

@@ -297,13 +297,17 @@ class ClientWrapperGenerator:
         has_base_url = get_client_wrapper_url_type(ir=self._context.ir) == ClientWrapperUrlStorage.URL
 
         def _write_derived_client_wrapper_constructor_body(writer: AST.NodeWriter) -> None:
+            # Avoid repeating parameters by tracking names
+            seen_param_names = set()
+            param_assignments = []
+            for param in constructor_parameters:
+                if param.constructor_parameter_name not in seen_param_names:
+                    param_assignments.append(f"{param.constructor_parameter_name}={param.constructor_parameter_name}")
+                    seen_param_names.add(param.constructor_parameter_name)
             writer.write_line(
                 "super().__init__("
                 + ", ".join(
-                    [
-                        f"{param.constructor_parameter_name}={param.constructor_parameter_name}"
-                        for param in constructor_parameters
-                    ]
+                    param_assignments
                     + [
                         f"{literal_header.constructor_parameter_name}={literal_header.constructor_parameter_name}"
                         for literal_header in literal_headers
@@ -780,6 +784,7 @@ class ClientWrapperGenerator:
                 # TODO: We need to support the token prefix. This will actually need to be handled as a
                 #       custom header auth scheme.
                 return ir_types.BearerAuthScheme(
+                    key="bearer",
                     token=ir_types.Name(
                         original_name="token",
                         camel_case=ir_types.SafeAndUnsafeString(
@@ -798,7 +803,7 @@ class ClientWrapperGenerator:
                             safe_name="TOKEN",
                             unsafe_name="TOKEN",
                         ),
-                    )
+                    ),
                 )
         return None
 

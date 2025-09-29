@@ -189,6 +189,16 @@ export const FernOpenAPIExtension = {
     ASYNC_CONFIG: "x-fern-async-config",
 
     /**
+     * Used to configure retry behavior for an endpoint
+     * Example usage:
+     *   paths:
+     *    /path/to/my/endpoint:
+     *      x-fern-retries:
+     *        disabled: true
+     **/
+    RETRIES: "x-fern-retries",
+
+    /**
      * Used to create variables in the fern definition
      * Example usage:
      * x-fern-sdk-variables:

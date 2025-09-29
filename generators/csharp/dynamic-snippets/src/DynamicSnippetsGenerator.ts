@@ -23,6 +23,10 @@ export class DynamicSnippetsGenerator extends AbstractDynamicSnippetsGenerator<
         super(new DynamicSnippetsGeneratorContext({ ir, config, options }));
     }
 
+    public precalculate(requests: FernIr.dynamic.EndpointSnippetRequest[]): void {
+        this.context.precalculate(requests);
+    }
+
     public async generate(
         request: FernIr.dynamic.EndpointSnippetRequest,
         options: Options = {}

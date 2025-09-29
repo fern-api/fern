@@ -4,13 +4,14 @@ import (
 	"crypto/rand"
 	"math/big"
 	"net/http"
+	"strconv"
 	"time"
 )
 
 const (
 	defaultRetryAttempts = 2
-	minRetryDelay        = 500 * time.Millisecond
-	maxRetryDelay        = 5000 * time.Millisecond
+	minRetryDelay        = 1000 * time.Millisecond
+	maxRetryDelay        = 60000 * time.Millisecond
 )
 
 // RetryOption adapts the behavior the *Retrier.
@@ -105,7 +106,7 @@ func (r *Retrier) run(
 	if r.shouldRetry(response) {
 		defer response.Body.Close()
 
-		delay, err := r.retryDelay(retryAttempt)
+		delay, err := r.retryDelay(response, retryAttempt)
 		if err != nil {
 			return nil, err
 		}
@@ -133,31 +134,95 @@ func (r *Retrier) shouldRetry(response *http.Response) bool {
 		response.StatusCode >= http.StatusInternalServerError
 }
 
-// retryDelay calculates the delay time in milliseconds based on the retry attempt.
-func (r *Retrier) retryDelay(retryAttempt uint) (time.Duration, error) {
-	// Apply exponential backoff.
-	delay := minRetryDelay + minRetryDelay*time.Duration(retryAttempt*retryAttempt)
+// retryDelay calculates the delay time based on response headers,
+// falling back to exponential backoff if no headers are present.
+func (r *Retrier) retryDelay(response *http.Response, retryAttempt uint) (time.Duration, error) {
+	// Check for Retry-After header first (RFC 7231), applying no jitter
+	if retryAfter := response.Header.Get("Retry-After"); retryAfter != "" {
+		// Parse as number of seconds...
+		if seconds, err := strconv.Atoi(retryAfter); err == nil {
+			delay := time.Duration(seconds) * time.Second
+			if delay > 0 {
+				if delay > maxRetryDelay {
+					delay = maxRetryDelay
+				}
+				return delay, nil
+			}
+		}
 
-	// Do not allow the number to exceed maxRetryDelay.
+		// ...or as an HTTP date; both are valid
+		if retryTime, err := time.Parse(time.RFC1123, retryAfter); err == nil {
+			delay := time.Until(retryTime)
+			if delay > 0 {
+				if delay > maxRetryDelay {
+					delay = maxRetryDelay
+				}
+				return delay, nil
+			}
+		}
+	}
+
+	// Then check for industry-standard X-RateLimit-Reset header, applying positive jitter
+	if rateLimitReset := response.Header.Get("X-RateLimit-Reset"); rateLimitReset != "" {
+		if resetTimestamp, err := strconv.ParseInt(rateLimitReset, 10, 64); err == nil {
+			// Assume Unix timestamp in seconds
+			resetTime := time.Unix(resetTimestamp, 0)
+			delay := time.Until(resetTime)
+			if delay > 0 {
+				if delay > maxRetryDelay {
+					delay = maxRetryDelay
+				}
+				return r.addPositiveJitter(delay)
+			}
+		}
+	}
+
+	// Fall back to exponential backoff
+	return r.exponentialBackoff(retryAttempt)
+}
+
+// exponentialBackoff calculates the delay time based on the retry attempt
+// and applies symmetric jitter (±10% around the delay).
+func (r *Retrier) exponentialBackoff(retryAttempt uint) (time.Duration, error) {
+	if retryAttempt > 63 { // 2^63+ would overflow uint64
+		retryAttempt = 63
+	}
+
+	delay := minRetryDelay << retryAttempt
 	if delay > maxRetryDelay {
 		delay = maxRetryDelay
 	}
 
-	// Apply some jitter by randomizing the value in the range of 75%-100%.
-	max := big.NewInt(int64(delay / 4))
-	jitter, err := rand.Int(rand.Reader, max)
+	return r.addSymmetricJitter(delay)
+}
+
+// addJitterWithRange applies jitter to the given delay.
+// minPercent and maxPercent define the jitter range (e.g., 100, 120 for +0% to +20%).
+func (r *Retrier) addJitterWithRange(delay time.Duration, minPercent, maxPercent int) (time.Duration, error) {
+	jitterRange := big.NewInt(int64(delay * time.Duration(maxPercent-minPercent) / 100))
+	jitter, err := rand.Int(rand.Reader, jitterRange)
 	if err != nil {
 		return 0, err
 	}
 
-	delay -= time.Duration(jitter.Int64())
-
-	// Never sleep less than the base sleep seconds.
-	if delay < minRetryDelay {
-		delay = minRetryDelay
+	jitteredDelay := delay + time.Duration(jitter.Int64()) + delay*time.Duration(minPercent-100)/100
+	if jitteredDelay < minRetryDelay {
+		jitteredDelay = minRetryDelay
 	}
+	if jitteredDelay > maxRetryDelay {
+		jitteredDelay = maxRetryDelay
+	}
+	return jitteredDelay, nil
+}
 
-	return delay, nil
+// addPositiveJitter applies positive jitter to the given delay (100%-120% range).
+func (r *Retrier) addPositiveJitter(delay time.Duration) (time.Duration, error) {
+	return r.addJitterWithRange(delay, 100, 120)
+}
+
+// addSymmetricJitter applies symmetric jitter to the given delay (90%-110% range).
+func (r *Retrier) addSymmetricJitter(delay time.Duration) (time.Duration, error) {
+	return r.addJitterWithRange(delay, 90, 110)
 }
 
 type retryOptions struct {

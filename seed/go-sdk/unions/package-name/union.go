@@ -6,10 +6,18 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/fern-api/unions-go/internal"
+	big "math/big"
+)
+
+var (
+	circleFieldRadius = big.NewInt(1 << 0)
 )
 
 type Circle struct {
 	Radius float64 `json:"radius" url:"radius"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -24,6 +32,20 @@ func (c *Circle) GetRadius() float64 {
 
 func (c *Circle) GetExtraProperties() map[string]interface{} {
 	return c.extraProperties
+}
+
+func (c *Circle) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetRadius sets the Radius field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Circle) SetRadius(radius float64) {
+	c.Radius = radius
+	c.require(circleFieldRadius)
 }
 
 func (c *Circle) UnmarshalJSON(data []byte) error {
@@ -42,6 +64,17 @@ func (c *Circle) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (c *Circle) MarshalJSON() ([]byte, error) {
+	type embed Circle
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (c *Circle) String() string {
 	if len(c.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
@@ -54,8 +87,15 @@ func (c *Circle) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	getShapeRequestFieldId = big.NewInt(1 << 0)
+)
+
 type GetShapeRequest struct {
 	Id string `json:"id" url:"id"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -70,6 +110,20 @@ func (g *GetShapeRequest) GetId() string {
 
 func (g *GetShapeRequest) GetExtraProperties() map[string]interface{} {
 	return g.extraProperties
+}
+
+func (g *GetShapeRequest) require(field *big.Int) {
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
+	}
+	g.explicitFields.Or(g.explicitFields, field)
+}
+
+// SetId sets the Id field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetShapeRequest) SetId(id string) {
+	g.Id = id
+	g.require(getShapeRequestFieldId)
 }
 
 func (g *GetShapeRequest) UnmarshalJSON(data []byte) error {
@@ -88,6 +142,17 @@ func (g *GetShapeRequest) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (g *GetShapeRequest) MarshalJSON() ([]byte, error) {
+	type embed GetShapeRequest
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*g),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (g *GetShapeRequest) String() string {
 	if len(g.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(g.rawJSON); err == nil {
@@ -102,6 +167,7 @@ func (g *GetShapeRequest) String() string {
 
 type Shape struct {
 	Type   string
+	Name   string
 	Id     string
 	Circle *Circle
 	Square *Square
@@ -112,6 +178,13 @@ func (s *Shape) GetType() string {
 		return ""
 	}
 	return s.Type
+}
+
+func (s *Shape) GetName() string {
+	if s == nil {
+		return ""
+	}
+	return s.Name
 }
 
 func (s *Shape) GetId() string {
@@ -138,12 +211,14 @@ func (s *Shape) GetSquare() *Square {
 func (s *Shape) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
+		Name string `json:"name" url:"name"`
 		Id   string `json:"id"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
 	s.Type = unmarshaler.Type
+	s.Name = unmarshaler.Name
 	s.Id = unmarshaler.Id
 	if unmarshaler.Type == "" {
 		return fmt.Errorf("%T did not include discriminant type", s)
@@ -227,8 +302,15 @@ func (s *Shape) validate() error {
 	return nil
 }
 
+var (
+	squareFieldLength = big.NewInt(1 << 0)
+)
+
 type Square struct {
 	Length float64 `json:"length" url:"length"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -243,6 +325,20 @@ func (s *Square) GetLength() float64 {
 
 func (s *Square) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
+}
+
+func (s *Square) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetLength sets the Length field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *Square) SetLength(length float64) {
+	s.Length = length
+	s.require(squareFieldLength)
 }
 
 func (s *Square) UnmarshalJSON(data []byte) error {
@@ -261,6 +357,17 @@ func (s *Square) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (s *Square) MarshalJSON() ([]byte, error) {
+	type embed Square
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (s *Square) String() string {
 	if len(s.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
@@ -271,4 +378,82 @@ func (s *Square) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)
+}
+
+var (
+	withNameFieldName = big.NewInt(1 << 0)
+)
+
+type WithName struct {
+	Name string `json:"name" url:"name"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (w *WithName) GetName() string {
+	if w == nil {
+		return ""
+	}
+	return w.Name
+}
+
+func (w *WithName) GetExtraProperties() map[string]interface{} {
+	return w.extraProperties
+}
+
+func (w *WithName) require(field *big.Int) {
+	if w.explicitFields == nil {
+		w.explicitFields = big.NewInt(0)
+	}
+	w.explicitFields.Or(w.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (w *WithName) SetName(name string) {
+	w.Name = name
+	w.require(withNameFieldName)
+}
+
+func (w *WithName) UnmarshalJSON(data []byte) error {
+	type unmarshaler WithName
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*w = WithName(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *w)
+	if err != nil {
+		return err
+	}
+	w.extraProperties = extraProperties
+	w.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (w *WithName) MarshalJSON() ([]byte, error) {
+	type embed WithName
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*w),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, w.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (w *WithName) String() string {
+	if len(w.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(w.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(w); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", w)
 }

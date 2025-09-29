@@ -1,3 +1,4 @@
+// Re-export all configuration schemas
 export * from "./commons/Audiences";
 export * from "./constants";
 export { DocsLinks } from "./DocsLinks";

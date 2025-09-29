@@ -5,5 +5,5 @@
 import * as FernIr from "../../../../../index";
 
 export interface BearerAuth {
-    token: FernIr.Name;
+    token: FernIr.dynamic.Name;
 }

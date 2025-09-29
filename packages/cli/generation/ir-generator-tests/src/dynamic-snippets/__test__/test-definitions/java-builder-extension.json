@@ -94,7 +94,9 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -285,5 +287,6 @@
             ]
         }
     },
+    "variables": null,
     "generatorConfig": null
 }

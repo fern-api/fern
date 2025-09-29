@@ -15,3 +15,5 @@ export * from "./UnionWithSubTypes.js";
 export * from "./Foo.js";
 export * from "./FooExtended.js";
 export * from "./Bar.js";
+export * from "./UnionWithSameStringTypes.js";
+export * from "./UnionWithSameNumberTypes.js";

@@ -1,7 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedClientSideParams.Core;
 
 namespace SeedClientSideParams;
@@ -526,7 +526,7 @@ public partial class ServiceClient
     /// <example><code>
     /// await client.Service.DeleteUserAsync("userId");
     /// </code></example>
-    public async global::System.Threading.Tasks.Task DeleteUserAsync(
+    public async Task DeleteUserAsync(
         string userId,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

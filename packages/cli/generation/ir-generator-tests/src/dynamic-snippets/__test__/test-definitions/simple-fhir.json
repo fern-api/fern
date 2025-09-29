@@ -56,7 +56,9 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -87,7 +89,9 @@
                             "type": "named",
                             "value": "type_:Account"
                         }
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -147,7 +151,9 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -178,7 +184,9 @@
                             "type": "named",
                             "value": "type_:ResourceList"
                         }
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -206,7 +214,9 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_:Memo"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -313,7 +323,9 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -344,7 +356,9 @@
                             "type": "named",
                             "value": "type_:ResourceList"
                         }
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -372,7 +386,9 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_:Memo"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -403,7 +419,9 @@
                             "type": "string",
                             "value": "Account"
                         }
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -431,7 +449,9 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -462,7 +482,9 @@
                             "type": "named",
                             "value": "type_:Patient"
                         }
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -493,7 +515,9 @@
                             "type": "named",
                             "value": "type_:Practitioner"
                         }
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -553,7 +577,9 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -584,7 +610,9 @@
                             "type": "named",
                             "value": "type_:ResourceList"
                         }
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -612,7 +640,9 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_:Memo"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -643,7 +673,9 @@
                             "type": "string",
                             "value": "Patient"
                         }
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -671,7 +703,9 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -702,7 +736,9 @@
                             "type": "named",
                             "value": "type_:Script"
                         }
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -762,7 +798,9 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -793,7 +831,9 @@
                             "type": "named",
                             "value": "type_:ResourceList"
                         }
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -821,7 +861,9 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_:Memo"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -852,7 +894,9 @@
                             "type": "string",
                             "value": "Practitioner"
                         }
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -880,7 +924,9 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -940,7 +986,9 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -971,7 +1019,9 @@
                             "type": "named",
                             "value": "type_:ResourceList"
                         }
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -999,7 +1049,9 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_:Memo"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -1030,7 +1082,9 @@
                             "type": "string",
                             "value": "Script"
                         }
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -1058,7 +1112,9 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -1127,7 +1183,9 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "body": null
@@ -1140,5 +1198,6 @@
     },
     "pathParameters": [],
     "environments": null,
+    "variables": null,
     "generatorConfig": null
 }

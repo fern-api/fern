@@ -3,8 +3,8 @@ package example
 import (
     client "github.com/oauth-client-credentials-environment-variables/fern/client"
     option "github.com/oauth-client-credentials-environment-variables/fern/option"
-    context "context"
     fern "github.com/oauth-client-credentials-environment-variables/fern"
+    context "context"
 )
 
 func do() {
@@ -14,15 +14,16 @@ func do() {
         ),
         nil,
     )
+    request := &fern.RefreshTokenRequest{
+        ClientId: "client_id",
+        ClientSecret: "client_secret",
+        RefreshToken: "refresh_token",
+        Scope: fern.String(
+            "scope",
+        ),
+    }
     client.Auth.RefreshToken(
         context.TODO(),
-        &fern.RefreshTokenRequest{
-            ClientId: "client_id",
-            ClientSecret: "client_secret",
-            RefreshToken: "refresh_token",
-            Scope: fern.String(
-                "scope",
-            ),
-        },
+        request,
     )
 }

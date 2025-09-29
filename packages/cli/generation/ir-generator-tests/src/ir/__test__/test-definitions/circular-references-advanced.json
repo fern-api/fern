@@ -4253,7 +4253,9 @@
                                 "type": "named",
                                 "value": "type_a:A"
                             }
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -4313,7 +4315,9 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -4411,7 +4415,9 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -4740,7 +4746,9 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_ast:Fruit"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -4838,7 +4846,9 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_ast:Fruit"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -4936,7 +4946,9 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_ast:Animal"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -5034,7 +5046,9 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_ast:Animal"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -5132,7 +5146,9 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_ast:Animal"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -5233,7 +5249,9 @@
                                 "type": "named",
                                 "value": "type_ast:Node"
                             }
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -5406,7 +5424,9 @@
                                     "value": "type_ast:Node"
                                 }
                             }
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -6092,7 +6112,9 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_ast:FieldName"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -6120,7 +6142,9 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_ast:FieldValue"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -6130,6 +6154,7 @@
         "endpoints": {},
         "pathParameters": [],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,

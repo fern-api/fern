@@ -46,7 +46,7 @@ export function convertAuth({
             case "oauth": {
                 const tokenPath =
                     scheme.configuration.tokenEndpoint.responseProperties.accessToken.propertyPath
-                        ?.map((p) => p.originalName)
+                        ?.map((p) => p.name.originalName)
                         .join(".") || "$.body.access_token";
 
                 return playgroundConfig?.oauth

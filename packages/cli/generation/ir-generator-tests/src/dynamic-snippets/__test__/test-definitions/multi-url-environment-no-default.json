@@ -192,7 +192,9 @@
                             "typeReference": {
                                 "type": "primitive",
                                 "value": "STRING"
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ]
                 },
@@ -395,7 +397,9 @@
                             "typeReference": {
                                 "type": "primitive",
                                 "value": "STRING"
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ]
                 },
@@ -519,5 +523,6 @@
             ]
         }
     },
+    "variables": null,
     "generatorConfig": null
 }

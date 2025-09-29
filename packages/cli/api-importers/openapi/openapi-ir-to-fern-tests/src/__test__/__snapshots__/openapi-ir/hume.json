@@ -209,12 +209,59 @@
       "servers": [],
       "description": "Sort and filter jobs.",
       "authed": true,
+      "security": [
+        {
+          "Authentication": []
+        }
+      ],
       "method": "GET",
       "path": "/v0/batch/jobs",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "when",
+              "value": {
+                "value": "created_before",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "timestamp_ms",
+              "value": {
+                "value": {
+                  "value": 1000000,
+                  "type": "int64"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "sort_by",
+              "value": {
+                "value": "created",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "direction",
+              "value": {
+                "value": "asc",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -375,6 +422,11 @@
       "servers": [],
       "description": "Start a new batch job.",
       "authed": true,
+      "security": [
+        {
+          "Authentication": []
+        }
+      ],
       "method": "POST",
       "path": "/v0/batch/jobs",
       "examples": [
@@ -466,6 +518,11 @@
       "servers": [],
       "description": "Get the JSON predictions of a completed job.",
       "authed": true,
+      "security": [
+        {
+          "Authentication": []
+        }
+      ],
       "method": "GET",
       "path": "/v0/batch/jobs/{id}/predictions",
       "examples": [
@@ -626,6 +683,11 @@
       "servers": [],
       "description": "Get the artifacts ZIP of a completed job.",
       "authed": true,
+      "security": [
+        {
+          "Authentication": []
+        }
+      ],
       "method": "GET",
       "path": "/v0/batch/jobs/{id}/artifacts",
       "examples": [],
@@ -685,6 +747,11 @@
       "servers": [],
       "description": "Get the request details and state of a given job.",
       "authed": true,
+      "security": [
+        {
+          "Authentication": []
+        }
+      ],
       "method": "GET",
       "path": "/v0/batch/jobs/{id}",
       "examples": [

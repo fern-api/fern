@@ -8,12 +8,14 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { ClientGenerator } from "./client/ClientGenerator";
+import { InternalFilesGenerator } from "./internal/InternalFilesGenerator";
 import { RawClientGenerator } from "./raw-client/RawClientGenerator";
 import { buildReference } from "./reference/buildReference";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
 import { convertIr } from "./utils/convertIr";
+import { WireTestGenerator } from "./wire-tests/WireTestGenerator";
 
 export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -47,6 +49,9 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
         await this.generate(context);
+        if (context.isSelfHosted()) {
+            await this.generateGitHub({ context });
+        }
     }
 
     protected async writeForDownload(context: SdkGeneratorContext): Promise<void> {
@@ -56,8 +61,22 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         this.generateClients(context);
         this.generateRawClients(context);
+        this.generateInternalFiles(context);
 
         await context.snippetGenerator.populateSnippetsCache();
+
+        if (context.customConfig.enableWireTests) {
+            try {
+                const wireTestGenerator = new WireTestGenerator(context);
+                await wireTestGenerator.generate();
+            } catch (e) {
+                context.logger.error("Failed to generate Wiremock tests");
+                if (e instanceof Error) {
+                    context.logger.debug(e.message);
+                    context.logger.debug(e.stack ?? "");
+                }
+            }
+        }
 
         if (this.shouldGenerateReadme(context)) {
             try {
@@ -85,7 +104,7 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
             }
         }
 
-        await context.project.persist();
+        await context.project.persist({ tidy: true });
     }
 
     private generateRawClients(context: SdkGeneratorContext) {
@@ -144,6 +163,15 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
                     : undefined
         });
         context.project.addGoFiles(client.generate());
+    }
+
+    private generateInternalFiles(context: SdkGeneratorContext) {
+        const internalFiles = new InternalFilesGenerator({
+            context
+        });
+        for (const file of internalFiles.generate()) {
+            context.project.addGoFiles(file);
+        }
     }
 
     private generateSnippets({ context }: { context: SdkGeneratorContext }): Endpoint[] {
@@ -218,5 +246,9 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
         context.project.addRawFiles(
             new File(context.generatorAgent.REFERENCE_FILENAME, RelativeFilePath.of("."), content)
         );
+    }
+
+    private async generateGitHub({ context }: { context: SdkGeneratorContext }): Promise<void> {
+        await context.generatorAgent.pushToGitHub({ context });
     }
 }

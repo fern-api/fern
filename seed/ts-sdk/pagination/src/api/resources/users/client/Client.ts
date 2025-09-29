@@ -14,7 +14,7 @@ export declare namespace Users {
         baseUrl?: core.Supplier<string>;
         token?: core.Supplier<core.BearerToken | undefined>;
         /** Additional headers to include in requests. */
-        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 
     export interface RequestOptions {
@@ -27,7 +27,7 @@ export declare namespace Users {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -852,7 +852,7 @@ export class Users {
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) =>
                 response?.next != null && !(typeof response?.next === "string" && response?.next === ""),
-            getItems: (response) => response?.data?.users ?? [],
+            getItems: (response) => response?.data.users ?? [],
             loadPage: (response) => {
                 return list(core.setObjectProperty(request, "cursor", response?.next));
             },
@@ -936,7 +936,7 @@ export class Users {
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) =>
                 response?.next != null && !(typeof response?.next === "string" && response?.next === ""),
-            getItems: (response) => response?.data?.users ?? [],
+            getItems: (response) => response?.data.users ?? [],
             loadPage: (response) => {
                 return list(core.setObjectProperty(request, "cursor", response?.next));
             },
@@ -1019,11 +1019,11 @@ export class Users {
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) =>
-                response?.cursor?.after != null &&
-                !(typeof response?.cursor?.after === "string" && response?.cursor?.after === ""),
-            getItems: (response) => response?.cursor?.data ?? [],
+                response?.cursor.after != null &&
+                !(typeof response?.cursor.after === "string" && response?.cursor.after === ""),
+            getItems: (response) => response?.cursor.data ?? [],
             loadPage: (response) => {
-                return list(core.setObjectProperty(request, "starting_after", response?.cursor?.after));
+                return list(core.setObjectProperty(request, "starting_after", response?.cursor.after));
             },
         });
     }

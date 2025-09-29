@@ -4,7 +4,7 @@ using NUnit.Framework;
 using OneOf;
 using SeedTrace.Core;
 
-namespace SeedTrace.Test.Core.Json;
+namespace SeedTrace.Test_.Core.Json;
 
 [TestFixture]
 [Parallelizable(ParallelScope.All)]

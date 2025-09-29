@@ -1,7 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedExamples;
 using SeedExamples.Core;
 
@@ -22,7 +22,7 @@ public partial class ServiceClient
     /// <example><code>
     /// await client.Health.Service.CheckAsync("id-2sdx82h");
     /// </code></example>
-    public async global::System.Threading.Tasks.Task CheckAsync(
+    public async Task CheckAsync(
         string id,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

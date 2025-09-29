@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 module Seed
   module Sysprop
@@ -10,33 +11,40 @@ module Seed
       # @return [untyped]
       def set_num_warm_instances(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "PUT",
-          path: "/sysprop/num-warm-instances/#{/#{"
+          path: "/sysprop/num-warm-instances/#{params[:language]}/#{params[:numWarmInstances]}"
         )
-        _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return
-        else
-          raise _response.body
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
         end
+        code = _response.code.to_i
+        return if code.between?(200, 299)
+
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(_response.body, code: code)
       end
 
       # @return [Hash[Seed::Commons::Types::Language, Integer]]
-      def get_num_warm_instances(request_options: {}, **params)
+      def get_num_warm_instances(request_options: {}, **_params)
         _request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+          base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "GET",
           path: "/sysprop/num-warm-instances"
         )
-        _response = @client.send(_request)
-        if _response.code >= "200" && _response.code < "300"
-          return 
-        else
-          raise _response.body
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
         end
-      end
+        code = _response.code.to_i
+        return if code.between?(200, 299)
 
+        error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+        raise error_class.new(_response.body, code: code)
+      end
     end
   end
 end

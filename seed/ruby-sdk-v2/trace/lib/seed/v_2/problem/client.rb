@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 module Seed
   module V2
@@ -11,35 +12,43 @@ module Seed
         # Returns lightweight versions of all problems
         #
         # @return [Array[Seed::V2::Problem::Types::LightweightProblemInfoV2]]
-        def get_lightweight_problems(request_options: {}, **params)
+        def get_lightweight_problems(request_options: {}, **_params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url] || Seed::Environment::PROD,
             method: "GET",
             path: "/problems-v2/lightweight-problem-info"
           )
-          _response = @client.send(_request)
-          if _response.code >= "200" && _response.code < "300"
-            return 
-          else
-            raise _response.body
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
           end
+          code = _response.code.to_i
+          return if code.between?(200, 299)
+
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
 
         # Returns latest versions of all problems
         #
         # @return [Array[Seed::V2::Problem::Types::ProblemInfoV2]]
-        def get_problems(request_options: {}, **params)
+        def get_problems(request_options: {}, **_params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url] || Seed::Environment::PROD,
             method: "GET",
             path: "/problems-v2/problem-info"
           )
-          _response = @client.send(_request)
-          if _response.code >= "200" && _response.code < "300"
-            return 
-          else
-            raise _response.body
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
           end
+          code = _response.code.to_i
+          return if code.between?(200, 299)
+
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
         end
 
         # Returns latest version of a problem
@@ -47,15 +56,21 @@ module Seed
         # @return [Seed::V2::Problem::Types::ProblemInfoV2]
         def get_latest_problem(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url] || Seed::Environment::PROD,
             method: "GET",
-            path: "/problems-v2/problem-info/#{"
+            path: "/problems-v2/problem-info/#{params[:problemId]}"
           )
-          _response = @client.send(_request)
-          if _response.code >= "200" && _response.code < "300"
-            return Seed::V2::Problem::Types::ProblemInfoV2.load(_response.body)
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          if code.between?(200, 299)
+            Seed::V2::Problem::Types::ProblemInfoV2.load(_response.body)
           else
-            raise _response.body
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(_response.body, code: code)
           end
         end
 
@@ -64,18 +79,23 @@ module Seed
         # @return [Seed::V2::Problem::Types::ProblemInfoV2]
         def get_problem_version(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
-            base_url: request_options[:base_url] || Seed::Environment::SANDBOX,
+            base_url: request_options[:base_url] || Seed::Environment::PROD,
             method: "GET",
-            path: "/problems-v2/problem-info/#{/version/#{"
+            path: "/problems-v2/problem-info/#{params[:problemId]}/version/#{params[:problemVersion]}"
           )
-          _response = @client.send(_request)
-          if _response.code >= "200" && _response.code < "300"
-            return Seed::V2::Problem::Types::ProblemInfoV2.load(_response.body)
+          begin
+            _response = @client.send(_request)
+          rescue Net::HTTPRequestTimeout
+            raise Seed::Errors::TimeoutError
+          end
+          code = _response.code.to_i
+          if code.between?(200, 299)
+            Seed::V2::Problem::Types::ProblemInfoV2.load(_response.body)
           else
-            raise _response.body
+            error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+            raise error_class.new(_response.body, code: code)
           end
         end
-
       end
     end
   end

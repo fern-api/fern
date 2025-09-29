@@ -11,3 +11,5 @@ export * from "./OptionalMetadata";
 export * from "./Metadata";
 export * from "./Key";
 export * from "./KeyType";
+export * from "./UnionWithIdenticalStrings";
+export * from "./UnionWithIdenticalPrimitives";

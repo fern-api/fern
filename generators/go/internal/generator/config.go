@@ -26,6 +26,8 @@ type Config struct {
 	InlinePathParameters         bool
 	InlineFileProperties         bool
 	UseReaderForBytesRequest     bool
+	GettersPassByValue           bool
+	ExportAllRequestsAtRoot      bool
 	Organization                 string
 	Version                      string
 	IRFilepath                   string
@@ -69,6 +71,8 @@ func NewConfig(
 	inlinePathParameters bool,
 	inlineFileProperties bool,
 	useReaderForBytesRequest bool,
+	gettersPassByValue bool,
+	exportAllRequestsAtRoot bool,
 	organization string,
 	version string,
 	irFilepath string,
@@ -97,6 +101,8 @@ func NewConfig(
 		InlinePathParameters:         inlinePathParameters,
 		InlineFileProperties:         inlineFileProperties,
 		UseReaderForBytesRequest:     useReaderForBytesRequest,
+		GettersPassByValue:           gettersPassByValue,
+		ExportAllRequestsAtRoot:      exportAllRequestsAtRoot,
 		Version:                      version,
 		IRFilepath:                   irFilepath,
 		SnippetFilepath:              snippetFilepath,

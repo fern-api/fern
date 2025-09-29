@@ -7,7 +7,7 @@ import { SeedErrorsClient } from "../../src/Client";
 import * as SeedErrors from "../../src/api/index";
 
 describe("Simple", () => {
-    test("fooWithoutEndpointError (2410f9ff)", async () => {
+    test("fooWithoutEndpointError (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorsClient({ environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
@@ -29,7 +29,7 @@ describe("Simple", () => {
         });
     });
 
-    test("fooWithoutEndpointError (91e10777)", async () => {
+    test("fooWithoutEndpointError (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorsClient({ environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
@@ -47,15 +47,10 @@ describe("Simple", () => {
             return await client.simple.fooWithoutEndpointError({
                 bar: "bar",
             });
-        }).rejects.toThrow(
-            new SeedErrors.NotFoundError({
-                message: "message",
-                code: 1,
-            }),
-        );
+        }).rejects.toThrow(SeedErrors.NotFoundError);
     });
 
-    test("fooWithoutEndpointError (fb1f6bc1)", async () => {
+    test("fooWithoutEndpointError (3)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorsClient({ environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
@@ -73,15 +68,10 @@ describe("Simple", () => {
             return await client.simple.fooWithoutEndpointError({
                 bar: "bar",
             });
-        }).rejects.toThrow(
-            new SeedErrors.BadRequestError({
-                message: "message",
-                code: 1,
-            }),
-        );
+        }).rejects.toThrow(SeedErrors.BadRequestError);
     });
 
-    test("fooWithoutEndpointError (d5eb8f1d)", async () => {
+    test("fooWithoutEndpointError (4)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorsClient({ environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
@@ -99,15 +89,10 @@ describe("Simple", () => {
             return await client.simple.fooWithoutEndpointError({
                 bar: "bar",
             });
-        }).rejects.toThrow(
-            new SeedErrors.InternalServerError({
-                message: "message",
-                code: 1,
-            }),
-        );
+        }).rejects.toThrow(SeedErrors.InternalServerError);
     });
 
-    test("foo (2410f9ff)", async () => {
+    test("foo (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorsClient({ environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
@@ -129,7 +114,7 @@ describe("Simple", () => {
         });
     });
 
-    test("foo (b3c4361f)", async () => {
+    test("foo (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorsClient({ environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
@@ -147,15 +132,10 @@ describe("Simple", () => {
             return await client.simple.foo({
                 bar: "bar",
             });
-        }).rejects.toThrow(
-            new SeedErrors.FooTooMuch({
-                message: "message",
-                code: 1,
-            }),
-        );
+        }).rejects.toThrow(SeedErrors.FooTooMuch);
     });
 
-    test("foo (85e7d2ef)", async () => {
+    test("foo (3)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorsClient({ environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
@@ -173,15 +153,10 @@ describe("Simple", () => {
             return await client.simple.foo({
                 bar: "bar",
             });
-        }).rejects.toThrow(
-            new SeedErrors.FooTooLittle({
-                message: "message",
-                code: 1,
-            }),
-        );
+        }).rejects.toThrow(SeedErrors.FooTooLittle);
     });
 
-    test("foo (91e10777)", async () => {
+    test("foo (4)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorsClient({ environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
@@ -199,15 +174,10 @@ describe("Simple", () => {
             return await client.simple.foo({
                 bar: "bar",
             });
-        }).rejects.toThrow(
-            new SeedErrors.NotFoundError({
-                message: "message",
-                code: 1,
-            }),
-        );
+        }).rejects.toThrow(SeedErrors.NotFoundError);
     });
 
-    test("foo (fb1f6bc1)", async () => {
+    test("foo (5)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorsClient({ environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
@@ -225,15 +195,10 @@ describe("Simple", () => {
             return await client.simple.foo({
                 bar: "bar",
             });
-        }).rejects.toThrow(
-            new SeedErrors.BadRequestError({
-                message: "message",
-                code: 1,
-            }),
-        );
+        }).rejects.toThrow(SeedErrors.BadRequestError);
     });
 
-    test("foo (d5eb8f1d)", async () => {
+    test("foo (6)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorsClient({ environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
@@ -251,15 +216,10 @@ describe("Simple", () => {
             return await client.simple.foo({
                 bar: "bar",
             });
-        }).rejects.toThrow(
-            new SeedErrors.InternalServerError({
-                message: "message",
-                code: 1,
-            }),
-        );
+        }).rejects.toThrow(SeedErrors.InternalServerError);
     });
 
-    test("fooWithExamples (200aeafb)", async () => {
+    test("fooWithExamples (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorsClient({ environment: server.baseUrl });
         const rawRequestBody = { bar: "hello" };
@@ -281,7 +241,7 @@ describe("Simple", () => {
         });
     });
 
-    test("fooWithExamples (2a092bdd)", async () => {
+    test("fooWithExamples (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorsClient({ environment: server.baseUrl });
         const rawRequestBody = { bar: "hello" };
@@ -299,15 +259,10 @@ describe("Simple", () => {
             return await client.simple.fooWithExamples({
                 bar: "hello",
             });
-        }).rejects.toThrow(
-            new SeedErrors.FooTooMuch({
-                message: "Too much foo",
-                code: 1,
-            }),
-        );
+        }).rejects.toThrow(SeedErrors.FooTooMuch);
     });
 
-    test("fooWithExamples (65d7c262)", async () => {
+    test("fooWithExamples (3)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorsClient({ environment: server.baseUrl });
         const rawRequestBody = { bar: "hello" };
@@ -325,11 +280,6 @@ describe("Simple", () => {
             return await client.simple.fooWithExamples({
                 bar: "hello",
             });
-        }).rejects.toThrow(
-            new SeedErrors.FooTooLittle({
-                message: "Too little foo",
-                code: 2,
-            }),
-        );
+        }).rejects.toThrow(SeedErrors.FooTooLittle);
     });
 });

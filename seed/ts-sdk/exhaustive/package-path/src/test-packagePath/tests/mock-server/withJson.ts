@@ -1,6 +1,6 @@
 import { HttpResponseResolver, passthrough } from "msw";
 
-import { fromJson, toJson } from "../../core/json.js";
+import { fromJson, toJson } from "../../core/json";
 
 /**
  * Creates a request matcher that validates if the request JSON body exactly matches the expected object

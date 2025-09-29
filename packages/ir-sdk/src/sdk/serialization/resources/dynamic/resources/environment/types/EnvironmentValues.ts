@@ -5,7 +5,7 @@
 import * as serializers from "../../../../../index";
 import * as FernIr from "../../../../../../api/index";
 import * as core from "../../../../../../core";
-import { EnvironmentId } from "../../../../environment/types/EnvironmentId";
+import { EnvironmentId } from "./EnvironmentId";
 import { MultipleEnvironmentUrlValues } from "./MultipleEnvironmentUrlValues";
 
 export const EnvironmentValues: core.serialization.Schema<

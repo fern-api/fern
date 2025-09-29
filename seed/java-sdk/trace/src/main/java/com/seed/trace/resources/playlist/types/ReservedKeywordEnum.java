@@ -3,22 +3,81 @@
  */
 package com.seed.trace.resources.playlist.types;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum ReservedKeywordEnum {
-    IS("is"),
+public final class ReservedKeywordEnum {
+    public static final ReservedKeywordEnum IS = new ReservedKeywordEnum(Value.IS, "is");
 
-    AS("as");
+    public static final ReservedKeywordEnum AS = new ReservedKeywordEnum(Value.AS, "as");
 
-    private final String value;
+    private final Value value;
 
-    ReservedKeywordEnum(String value) {
+    private final String string;
+
+    ReservedKeywordEnum(Value value, String string) {
         this.value = value;
+        this.string = string;
     }
 
-    @JsonValue
+    public Value getEnumValue() {
+        return value;
+    }
+
     @java.lang.Override
+    @JsonValue
     public String toString() {
-        return this.value;
+        return this.string;
+    }
+
+    @java.lang.Override
+    public boolean equals(Object other) {
+        return (this == other)
+                || (other instanceof ReservedKeywordEnum && this.string.equals(((ReservedKeywordEnum) other).string));
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+        return this.string.hashCode();
+    }
+
+    public <T> T visit(Visitor<T> visitor) {
+        switch (value) {
+            case IS:
+                return visitor.visitIs();
+            case AS:
+                return visitor.visitAs();
+            case UNKNOWN:
+            default:
+                return visitor.visitUnknown(string);
+        }
+    }
+
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+    public static ReservedKeywordEnum valueOf(String value) {
+        switch (value) {
+            case "is":
+                return IS;
+            case "as":
+                return AS;
+            default:
+                return new ReservedKeywordEnum(Value.UNKNOWN, value);
+        }
+    }
+
+    public enum Value {
+        IS,
+
+        AS,
+
+        UNKNOWN
+    }
+
+    public interface Visitor<T> {
+        T visitIs();
+
+        T visitAs();
+
+        T visitUnknown(String unknownType);
     }
 }

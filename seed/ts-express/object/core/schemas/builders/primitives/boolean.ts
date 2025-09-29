@@ -1,8 +1,8 @@
-import { SchemaType } from "../../Schema";
+import { Schema, SchemaType } from "../../Schema";
 import { createIdentitySchemaCreator } from "../../utils/createIdentitySchemaCreator";
 import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType";
 
-export const boolean = createIdentitySchemaCreator<boolean>(
+export const boolean: () => Schema<boolean, boolean> = createIdentitySchemaCreator<boolean>(
     SchemaType.BOOLEAN,
     (value, { breadcrumbsPrefix = [] } = {}) => {
         if (typeof value === "boolean") {

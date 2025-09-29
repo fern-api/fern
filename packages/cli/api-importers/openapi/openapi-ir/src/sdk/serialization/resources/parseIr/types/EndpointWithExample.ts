@@ -5,6 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernOpenapiIr from "../../../../api/index";
 import * as core from "../../../../core";
+import { EndpointSecurity } from "../../finalIr/types/EndpointSecurity";
 import { HttpMethod } from "../../finalIr/types/HttpMethod";
 import { TagId } from "../../commons/types/TagId";
 import { PathParameterWithExample } from "./PathParameterWithExample";
@@ -18,6 +19,7 @@ import { HttpErrorWithExample } from "./HttpErrorWithExample";
 import { HttpEndpointServer } from "../../finalIr/types/HttpEndpointServer";
 import { EndpointExample } from "../../finalIr/types/EndpointExample";
 import { Pagination } from "../../finalIr/types/Pagination";
+import { RetriesConfiguration } from "../../finalIr/types/RetriesConfiguration";
 import { WithDescription } from "../../commons/types/WithDescription";
 import { WithAvailability } from "../../commons/types/WithAvailability";
 import { WithSource } from "../../commons/types/WithSource";
@@ -29,6 +31,7 @@ export const EndpointWithExample: core.serialization.ObjectSchema<
 > = core.serialization
     .objectWithoutOptionalProperties({
         authed: core.serialization.boolean(),
+        security: EndpointSecurity,
         internal: core.serialization.boolean().optional(),
         idempotent: core.serialization.boolean().optional(),
         method: HttpMethod,
@@ -49,6 +52,7 @@ export const EndpointWithExample: core.serialization.ObjectSchema<
         servers: core.serialization.list(HttpEndpointServer),
         examples: core.serialization.list(EndpointExample),
         pagination: Pagination.optional(),
+        retries: RetriesConfiguration.optional(),
     })
     .extend(WithDescription)
     .extend(WithAvailability)
@@ -58,6 +62,7 @@ export const EndpointWithExample: core.serialization.ObjectSchema<
 export declare namespace EndpointWithExample {
     export interface Raw extends WithDescription.Raw, WithAvailability.Raw, WithSource.Raw, WithNamespace.Raw {
         authed: boolean;
+        security: EndpointSecurity.Raw;
         internal?: boolean | null;
         idempotent?: boolean | null;
         method: HttpMethod.Raw;
@@ -78,5 +83,6 @@ export declare namespace EndpointWithExample {
         servers: HttpEndpointServer.Raw[];
         examples: EndpointExample.Raw[];
         pagination?: Pagination.Raw | null;
+        retries?: RetriesConfiguration.Raw | null;
     }
 }

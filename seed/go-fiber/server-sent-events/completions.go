@@ -6,15 +6,24 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/server-sent-events/fern/internal"
+	big "math/big"
 )
 
 type StreamCompletionRequest struct {
 	Query string `json:"query" url:"-"`
 }
 
+var (
+	streamedCompletionFieldDelta  = big.NewInt(1 << 0)
+	streamedCompletionFieldTokens = big.NewInt(1 << 1)
+)
+
 type StreamedCompletion struct {
 	Delta  string `json:"delta" url:"delta"`
 	Tokens *int   `json:"tokens,omitempty" url:"tokens,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 }
@@ -37,6 +46,27 @@ func (s *StreamedCompletion) GetExtraProperties() map[string]interface{} {
 	return s.extraProperties
 }
 
+func (s *StreamedCompletion) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetDelta sets the Delta field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *StreamedCompletion) SetDelta(delta string) {
+	s.Delta = delta
+	s.require(streamedCompletionFieldDelta)
+}
+
+// SetTokens sets the Tokens field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *StreamedCompletion) SetTokens(tokens *int) {
+	s.Tokens = tokens
+	s.require(streamedCompletionFieldTokens)
+}
+
 func (s *StreamedCompletion) UnmarshalJSON(data []byte) error {
 	type unmarshaler StreamedCompletion
 	var value unmarshaler
@@ -50,6 +80,17 @@ func (s *StreamedCompletion) UnmarshalJSON(data []byte) error {
 	}
 	s.extraProperties = extraProperties
 	return nil
+}
+
+func (s *StreamedCompletion) MarshalJSON() ([]byte, error) {
+	type embed StreamedCompletion
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (s *StreamedCompletion) String() string {

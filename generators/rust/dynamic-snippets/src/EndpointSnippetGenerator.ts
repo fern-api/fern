@@ -1,6 +1,7 @@
-import { AbstractFormatter, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
+import { Scope, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
+import { formatRustSnippet, formatRustSnippetAsync } from "@fern-api/rust-base";
 import { rust } from "@fern-api/rust-codegen";
 
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
@@ -9,11 +10,9 @@ const CLIENT_VAR_NAME = "client";
 
 export class EndpointSnippetGenerator {
     private context: DynamicSnippetsGeneratorContext;
-    private formatter: AbstractFormatter | undefined;
 
-    constructor({ context, formatter }: { context: DynamicSnippetsGeneratorContext; formatter?: AbstractFormatter }) {
+    constructor({ context }: { context: DynamicSnippetsGeneratorContext }) {
         this.context = context;
-        this.formatter = formatter;
     }
 
     public async generateSnippet({
@@ -24,7 +23,10 @@ export class EndpointSnippetGenerator {
         request: FernIr.dynamic.EndpointSnippetRequest;
     }): Promise<string> {
         const components = this.buildCodeComponents({ endpoint, snippet: request });
-        return components.join("\n") + "\n";
+        const rawCode = components.join("\n") + "\n";
+        // Try to format with rustfmt
+        const formattedCode = await formatRustSnippetAsync(rawCode);
+        return formattedCode;
     }
 
     public generateSnippetSync({
@@ -35,54 +37,10 @@ export class EndpointSnippetGenerator {
         request: FernIr.dynamic.EndpointSnippetRequest;
     }): string {
         const components = this.buildCodeComponents({ endpoint, snippet: request });
-        return components.join("\n") + "\n";
-    }
-
-    private buildCodeBlock({
-        endpoint,
-        snippet
-    }: {
-        endpoint: FernIr.dynamic.Endpoint;
-        snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): rust.AstNode {
-        // Create use statements using AST
-        const useStatements = this.getUseStatements({ endpoint, snippet });
-
-        // Create the main function body
-        const mainBody = rust.CodeBlock.fromStatements([
-            // Create config variable
-            rust.Statement.let({
-                name: "config",
-                value: this.getClientConfigStruct({ endpoint, snippet })
-            }),
-            // Create client variable
-            rust.Statement.let({
-                name: CLIENT_VAR_NAME,
-                value: rust.Expression.methodCall({
-                    target: rust.Expression.raw(`${this.getClientName({ endpoint })}::new(config)`),
-                    method: "expect",
-                    args: [rust.Expression.stringLiteral("Failed to build client")]
-                })
-            })
-        ]);
-
-        // Create the standalone function
-        const mainFunction = rust.standaloneFunction({
-            name: "main",
-            attributes: [rust.attribute({ name: "tokio::main" })],
-            parameters: [],
-            isAsync: true,
-            body: mainBody
-        });
-
-        // Create code block with use statements and function
-        const statements = [
-            ...useStatements.map((use) => rust.Statement.raw(use.toString())),
-            rust.Statement.raw(""),
-            rust.Statement.raw(mainFunction.toString())
-        ];
-
-        return rust.CodeBlock.fromStatements(statements);
+        const rawCode = components.join("\n") + "\n";
+        // Try sync formatting with rustfmt, but fallback to raw code if it fails
+        const formattedCode = formatRustSnippet(rawCode);
+        return formattedCode;
     }
 
     private buildCodeComponents({
@@ -110,7 +68,9 @@ export class EndpointSnippetGenerator {
                     method: "expect",
                     args: [rust.Expression.stringLiteral("Failed to build client")]
                 })
-            })
+            }),
+            // Add the actual API method call
+            this.callMethod({ endpoint, snippet })
         ]);
 
         // Create the standalone function
@@ -146,14 +106,20 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): rust.UseStatement[] {
-        const imports = [
+        const imports = ["ClientConfig", this.getClientName({ endpoint })];
+
+        // Add request struct import if this endpoint uses an inlined request
+        if (endpoint.request.type === "inlined") {
+            const requestStructName = this.context.getStructName(endpoint.request.declaration.name);
+            imports.push(requestStructName);
+        }
+
+        return [
             new rust.UseStatement({
-                path: this.context.getPackageName(),
-                items: ["ClientConfig", this.getClientName({ endpoint })]
+                path: this.context.getCrateName(),
+                items: imports
             })
         ];
-
-        return imports;
     }
 
     private getClientConfigStruct({
@@ -246,57 +212,8 @@ export class EndpointSnippetGenerator {
     }
 
     private getClientName({ endpoint }: { endpoint?: FernIr.dynamic.Endpoint } = {}): string {
-        // Always use the main client name derived from workspace name
-        // This ensures we show the root client (e.g., OauthClientCredentialsClient)
-        // rather than individual service clients (e.g., AuthClient)
-
-        // Use workspace name for client name
-        const workspaceName = this.context.config.workspaceName?.replace(/-/g, "_") || "Api";
-        const pascalCase = workspaceName
-            .split("_")
-            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-            .join("");
-        return `${pascalCase}Client`;
-    }
-
-    private constructClientCode({
-        endpoint,
-        snippet
-    }: {
-        endpoint: FernIr.dynamic.Endpoint;
-        snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): string {
-        const clientBuilder = this.getClientBuilderCall(this.getConstructorArgs({ endpoint, snippet }));
-        return `let ${CLIENT_VAR_NAME} = ${clientBuilder.toString()};`;
-    }
-
-    private callMethodCode({
-        endpoint,
-        snippet
-    }: {
-        endpoint: FernIr.dynamic.Endpoint;
-        snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): string {
-        const methodCall = rust.Expression.methodCall({
-            target: rust.Expression.reference(CLIENT_VAR_NAME),
-            method: this.getMethodName({ endpoint }),
-            args: this.getMethodArgs({ endpoint, snippet }),
-            isAsync: true
-        });
-        return `${methodCall.toString()};`;
-    }
-
-    private constructClient({
-        endpoint,
-        snippet
-    }: {
-        endpoint: FernIr.dynamic.Endpoint;
-        snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): rust.Statement {
-        return rust.Statement.let({
-            name: CLIENT_VAR_NAME,
-            value: this.getClientBuilderCall(this.getConstructorArgs({ endpoint, snippet }))
-        });
+        // Use the configured client class name from custom config
+        return this.context.getClientStructName();
     }
 
     private callMethod({
@@ -314,64 +231,6 @@ export class EndpointSnippetGenerator {
                 isAsync: true
             })
         );
-    }
-
-    private getConstructorArgs({
-        endpoint,
-        snippet
-    }: {
-        endpoint: FernIr.dynamic.Endpoint;
-        snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): rust.Expression[] {
-        const args: rust.Expression[] = [];
-
-        // Add base URL
-        const baseUrlArg = this.getConstructorBaseUrlArg({
-            baseUrl: snippet.baseURL,
-            environment: snippet.environment
-        });
-        if (baseUrlArg != null) {
-            args.push(baseUrlArg);
-        }
-
-        // Add auth
-        if (endpoint.auth != null) {
-            if (snippet.auth != null) {
-                args.push(this.getConstructorAuthArg({ auth: endpoint.auth, values: snippet.auth }));
-            } else {
-                this.context.errors.add({
-                    severity: Severity.Warning,
-                    message: `Auth with ${endpoint.auth.type} configuration is required for this endpoint`
-                });
-            }
-        }
-
-        // Add headers
-        this.context.errors.scope(Scope.Headers);
-        if (this.context.ir.headers != null && snippet.headers != null) {
-            args.push(...this.getConstructorHeaderArgs({ headers: this.context.ir.headers, values: snippet.headers }));
-        }
-        this.context.errors.unscope();
-
-        return args;
-    }
-
-    private getConstructorBaseUrlArg({
-        baseUrl,
-        environment
-    }: {
-        baseUrl: string | undefined;
-        environment: FernIr.dynamic.EnvironmentValues | undefined;
-    }): rust.Expression | undefined {
-        const baseUrlValue = this.getBaseUrlValue({ baseUrl, environment });
-        if (baseUrlValue == null) {
-            return undefined;
-        }
-        return rust.Expression.methodCall({
-            target: rust.Expression.reference(this.context.getClientBuilderName()),
-            method: "base_url",
-            args: [rust.Expression.stringLiteral(baseUrlValue)]
-        });
     }
 
     private getBaseUrlValue({
@@ -411,128 +270,6 @@ export class EndpointSnippetGenerator {
             }
         }
         return undefined;
-    }
-
-    private getConstructorAuthArg({
-        auth,
-        values
-    }: {
-        auth: FernIr.dynamic.Auth;
-        values: FernIr.dynamic.AuthValues;
-    }): rust.Expression {
-        const mismatchResult = () => rust.Expression.raw('todo!("Auth mismatch error")');
-        if (values.type !== auth.type) {
-            this.addError(this.context.newAuthMismatchError({ auth, values }).message);
-            return mismatchResult();
-        }
-
-        const notImplementedResult = (name: string) => rust.Expression.raw(`todo!("${name}not implemented")`);
-        switch (auth.type) {
-            case "basic":
-                return values.type === "basic" ? this.getConstructorBasicAuthArg({ auth, values }) : mismatchResult();
-            case "bearer":
-                return values.type === "bearer" ? this.getConstructorBearerAuthArg({ auth, values }) : mismatchResult();
-            case "header":
-                return values.type === "header" ? this.getConstructorHeaderAuthArg({ auth, values }) : mismatchResult();
-            case "oauth":
-                return values.type === "oauth" ? notImplementedResult("Oauth") : mismatchResult();
-            case "inferred":
-                return values.type === "inferred" ? notImplementedResult("Inferred Auth Scheme") : mismatchResult();
-            default:
-                assertNever(auth);
-        }
-    }
-
-    private addError(message: string): void {
-        this.context.errors.add({ severity: Severity.Critical, message });
-    }
-
-    private addWarning(message: string): void {
-        this.context.errors.add({ severity: Severity.Warning, message });
-    }
-
-    private getConstructorBasicAuthArg({
-        auth,
-        values
-    }: {
-        auth: FernIr.dynamic.BasicAuth;
-        values: FernIr.dynamic.BasicAuthValues;
-    }): rust.Expression {
-        return rust.Expression.methodCall({
-            target: rust.Expression.reference("BasicAuth"),
-            method: "new",
-            args: [rust.Expression.stringLiteral(values.username), rust.Expression.stringLiteral(values.password)]
-        });
-    }
-
-    private getConstructorBearerAuthArg({
-        auth,
-        values
-    }: {
-        auth: FernIr.dynamic.BearerAuth;
-        values: FernIr.dynamic.BearerAuthValues;
-    }): rust.Expression {
-        return rust.Expression.methodCall({
-            target: rust.Expression.reference("BearerAuth"),
-            method: "new",
-            args: [rust.Expression.stringLiteral(values.token)]
-        });
-    }
-
-    private getConstructorHeaderAuthArg({
-        auth,
-        values
-    }: {
-        auth: FernIr.dynamic.HeaderAuth;
-        values: FernIr.dynamic.HeaderAuthValues;
-    }): rust.Expression {
-        return rust.Expression.methodCall({
-            target: rust.Expression.reference("HeaderAuth"),
-            method: "new",
-            args: [
-                rust.Expression.stringLiteral(auth.header.name.name.snakeCase.safeName),
-                this.context.dynamicTypeInstantiationMapper.convert({
-                    typeReference: auth.header.typeReference,
-                    value: values.value
-                })
-            ]
-        });
-    }
-
-    private getConstructorHeaderArgs({
-        headers,
-        values
-    }: {
-        headers: FernIr.dynamic.NamedParameter[];
-        values: FernIr.dynamic.Values;
-    }): rust.Expression[] {
-        const args: rust.Expression[] = [];
-        for (const header of headers) {
-            const arg = this.getConstructorHeaderArg({ header, value: values.value });
-            if (arg != null) {
-                args.push(arg);
-            }
-        }
-        return args;
-    }
-
-    private getConstructorHeaderArg({
-        header,
-        value
-    }: {
-        header: FernIr.dynamic.NamedParameter;
-        value: unknown;
-    }): rust.Expression | undefined {
-        const headerValue = this.context.dynamicTypeInstantiationMapper.convert({
-            typeReference: header.typeReference,
-            value
-        });
-
-        return rust.Expression.methodCall({
-            target: rust.Expression.reference("HeaderValue"),
-            method: "new",
-            args: [rust.Expression.stringLiteral(header.name.name.snakeCase.safeName), headerValue]
-        });
     }
 
     private getMethodArgs({
@@ -809,59 +546,5 @@ export class EndpointSnippetGenerator {
                 .join("_")}_${this.context.getMethodName(endpoint.declaration.name)}`;
         }
         return this.context.getMethodName(endpoint.declaration.name);
-    }
-
-    private getClientBuilderCallNew({
-        endpoint,
-        snippet
-    }: {
-        endpoint: FernIr.dynamic.Endpoint;
-        snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): rust.Expression {
-        const methods: Array<{ method: string; args: rust.Expression[] }> = [];
-
-        // Add base URL
-        const baseUrlValue = this.getBaseUrlValue({
-            baseUrl: snippet.baseURL,
-            environment: snippet.environment
-        });
-        if (baseUrlValue != null) {
-            methods.push({ method: "base_url", args: [rust.Expression.stringLiteral(baseUrlValue)] });
-        }
-
-        // Add auth
-        if (endpoint.auth != null && snippet.auth != null) {
-            const authExpr = this.getConstructorAuthArg({ auth: endpoint.auth, values: snippet.auth });
-            methods.push({ method: "auth", args: [authExpr] });
-        }
-
-        // Add headers
-        if (this.context.ir.headers != null && snippet.headers != null) {
-            for (const header of this.context.ir.headers) {
-                const headerValues = snippet.headers.value as Record<string, unknown>;
-                const value = headerValues?.[header.name.wireValue];
-                if (value != null) {
-                    methods.push({
-                        method: "header",
-                        args: [
-                            rust.Expression.stringLiteral(header.name.wireValue),
-                            rust.Expression.stringLiteral(String(value))
-                        ]
-                    });
-                }
-            }
-        }
-
-        // Add build() at the end
-        methods.push({ method: "build", args: [] });
-
-        return rust.Expression.methodChain(rust.Expression.reference(this.context.getClientBuilderName()), methods);
-    }
-
-    private getClientBuilderCall(arguments_: rust.Expression[]): rust.Expression {
-        return rust.Expression.methodChain(rust.Expression.reference(this.context.getClientBuilderName()), [
-            ...arguments_.map((arg) => ({ method: "with_arg", args: [arg] })),
-            { method: "build", args: [] }
-        ]);
     }
 }

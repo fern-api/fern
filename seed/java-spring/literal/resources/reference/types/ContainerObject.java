@@ -77,7 +77,9 @@ public final class ContainerObject {
     )
     public Builder nestedObjects(List<NestedObjectWithLiterals> nestedObjects) {
       this.nestedObjects.clear();
-      this.nestedObjects.addAll(nestedObjects);
+      if (nestedObjects != null) {
+        this.nestedObjects.addAll(nestedObjects);
+      }
       return this;
     }
 

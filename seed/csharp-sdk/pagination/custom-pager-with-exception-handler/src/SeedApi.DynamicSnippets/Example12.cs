@@ -1,11 +1,11 @@
-using global::System.Threading.Tasks;
 using SeedPagination;
+using System.Threading.Tasks;
 
 namespace Usage;
 
 public class Example12
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do() {
         var client = new SeedPaginationClient(
             token: "<token>",
             clientOptions: new ClientOptions{
@@ -13,8 +13,8 @@ public class Example12
             }
         );
 
-        await client.Users.ListWithGlobalConfigAsync(
-            new ListWithGlobalConfigRequest{
+        await client.InlineUsers.InlineUsers.ListWithGlobalConfigAsync(
+            new SeedPagination.InlineUsers.ListWithGlobalConfigRequest{
                 Offset = 1
             }
         );

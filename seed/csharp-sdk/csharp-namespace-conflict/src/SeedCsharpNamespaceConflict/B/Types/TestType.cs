@@ -13,7 +13,7 @@ public record TestType : IJsonOnDeserialized
         new Dictionary<string, JsonElement>();
 
     [JsonPropertyName("a")]
-    public required A.Aa.A A { get; set; }
+    public required SeedCsharpNamespaceConflict.A.Aa.A A { get; set; }
 
     [JsonPropertyName("b")]
     public required SeedCsharpNamespaceConflict.A.Aa.B B { get; set; }

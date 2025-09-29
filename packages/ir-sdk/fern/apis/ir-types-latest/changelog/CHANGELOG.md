@@ -5,7 +5,51 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [v59.4.0] - 2025-09-05
+## [v60.5.0] - 2025-09-24
+
+- Feature: Add `variable` field to `NamedParameter` in dynamic IR to track which parameters reference client-level variables
+
+## [v60.4.0] - 2025-09-24
+
+- Feature: Add variables support to Dynamic IR for client-level variable configuration in SDK snippet generation
+
+## [v60.3.1] - 2025-09-23
+
+- - Fix: Pushing new version to fix ir migrations for java and python
+
+## [v60.3.0] - 2025-09-23
+
+- Feature: added mode to ir.GithubPublish to support pull-request mode for selfhosted sdk generation.
+
+## [v60.2.0] - 2025-09-19
+
+- Feature: Add `security` property to `HttpEndpoint` which mirrors OpenAPI's security requirement object.
+
+## [v60.1.0] - 2025-09-18
+
+- Feature: added `x-fern-retries` OpenAPI extension flag 
+
+## [v60.0.1] - 2025-09-15
+
+- Chore: Bump version to 60.0.1 to trigger a release
+
+## [v60.0.0] - 2025-09-15
+
+- Feature: Add type reference to property paths
+
+## [v59.7.0] - 2025-09-12
+
+- Add customSections property to ReadmeConfig
+
+## [v59.6.1] - 2025-09-11
+
+- Fix: Allow optional properties in Dynamic IR SDK
+
+## [v59.6.0] - 2025-09-05
+
+- Feature: Add propertyAccess to named parameters in Dynamic IR
+
+## [v59.5.0] - 2025-09-05
 
 - Feature: Add propertyAccess to object property examples
 

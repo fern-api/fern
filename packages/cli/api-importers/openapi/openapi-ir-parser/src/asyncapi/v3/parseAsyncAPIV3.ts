@@ -63,7 +63,7 @@ export function parseAsyncAPIV3({
     const parsedChannels: Record<string, WebsocketChannel> = {};
 
     for (const [schemaId, schema] of Object.entries(document.components?.schemas ?? {})) {
-        schemas[schemaId] = convertSchema(schema, false, context, [schemaId], source, context.namespace);
+        schemas[schemaId] = convertSchema(schema, false, false, context, [schemaId], source, context.namespace);
     }
 
     for (const [channelId, channel] of Object.entries(document.channels ?? {})) {
@@ -101,6 +101,7 @@ export function parseAsyncAPIV3({
             messageSchemas[occurrenceChannelId][originalMessageId] = convertSchema(
                 occurrence.payload,
                 false,
+                false,
                 context,
                 [originalMessageId],
                 source,
@@ -116,6 +117,7 @@ export function parseAsyncAPIV3({
                 }
                 messageSchemas[channelId][newSchemaId] = convertSchema(
                     payload,
+                    false,
                     false,
                     context,
                     [newSchemaId],
@@ -135,6 +137,7 @@ export function parseAsyncAPIV3({
     const servers: Record<string, ServerContext> = {};
     for (const [serverId, server] of Object.entries(document.servers ?? {})) {
         servers[serverId] = {
+            // Always preserve server names from AsyncAPI spec
             name: serverId,
             url: constructServerUrl(server.protocol, server.host)
         };
@@ -229,6 +232,7 @@ export function parseAsyncAPIV3({
                 let parameterSchema: SchemaWithExample = convertSchema(
                     parameterSchemaObject,
                     false,
+                    false,
                     context,
                     [parameterKey],
                     source,
@@ -314,6 +318,11 @@ export function parseAsyncAPIV3({
                 }
             }
 
+            const groupName = getExtension<string | string[] | undefined>(
+                channel,
+                FernAsyncAPIExtension.FERN_SDK_GROUP_NAME
+            );
+
             parsedChannels[channelPath] = {
                 audiences: getExtension<string[] | undefined>(channel, FernOpenAPIExtension.AUDIENCES) ?? [],
                 handshake: {
@@ -332,14 +341,18 @@ export function parseAsyncAPIV3({
                         schema: convertSchemaWithExampleToSchema(param.schema)
                     }))
                 },
-                groupName: context.resolveGroupName([
-                    getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_SDK_GROUP_NAME) ?? channelPath
-                ]),
+                groupName: context.resolveGroupName(
+                    typeof groupName === "string" ? [groupName] : (groupName ?? [channelPath])
+                ),
                 messages,
                 summary: getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_DISPLAY_NAME),
-                servers:
+                servers: (
                     channel.servers?.map((serverRef) => getServerNameFromServerRef(servers, serverRef)) ??
-                    Object.values(servers),
+                    Object.values(servers)
+                ).map((server) => ({
+                    ...server,
+                    name: server.name as string
+                })),
                 // TODO (Eden): This can be a LOT more complicated than this. See the link below for more details:
                 // https://www.asyncapi.com/docs/reference/specification/v3.0.0#channelObject
                 path: channel.address?.split("?")[0] ?? transformToValidPath(channelPath),
@@ -353,7 +366,10 @@ export function parseAsyncAPIV3({
     return {
         groupedSchemas: getSchemas(context.namespace, schemas),
         channels: parsedChannels,
-        servers: Object.values(servers),
+        servers: Object.values(servers).map((server) => ({
+            ...server,
+            name: server.name as string
+        })),
         basePath: getExtension<string | undefined>(document, FernAsyncAPIExtension.BASE_PATH)
     };
 }

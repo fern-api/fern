@@ -1,6 +1,7 @@
+import { Logger } from "@fern-api/logger";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-
+import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder";
 
@@ -50,6 +51,7 @@ export class ReadmeConfigBuilder {
             apiName: context.ir.readmeConfig?.apiName,
             disabledFeatures: context.ir.readmeConfig?.disabledFeatures,
             whiteLabel: context.ir.readmeConfig?.whiteLabel,
+            customSections: getCustomSections(context),
             features
         };
     }
@@ -82,5 +84,40 @@ export class ReadmeConfigBuilder {
             context.logger.debug("Unable to populate Java language info.");
         }
         return FernGeneratorCli.LanguageInfo.java({});
+    }
+}
+
+function getCustomSections(context: SdkGeneratorContext): FernGeneratorCli.CustomSection[] | undefined {
+    const irCustomSections = context.ir.readmeConfig?.customSections;
+    const customConfigSections = parseCustomConfigOrUndefined(context.logger, context.config.customConfig)?.[
+        "custom-readme-sections"
+    ];
+
+    let sections: FernGeneratorCli.CustomSection[] = [];
+    for (const section of irCustomSections ?? []) {
+        if (section.language === "java" && !customConfigSections?.some((s) => s.title === section.title)) {
+            sections.push({
+                name: section.title,
+                language: FernGeneratorCli.Language.Java,
+                content: section.content
+            });
+        }
+    }
+    for (const section of customConfigSections ?? []) {
+        sections.push({
+            name: section.title,
+            language: FernGeneratorCli.Language.Java,
+            content: section.content
+        });
+    }
+    return sections.length > 0 ? sections : undefined;
+}
+
+function parseCustomConfigOrUndefined(logger: Logger, customConfig: unknown): SdkCustomConfigSchema | undefined {
+    try {
+        return SdkCustomConfigSchema.parse(customConfig);
+    } catch (error) {
+        logger.error(`Error parsing custom config during readme generation: ${error}`);
+        return undefined;
     }
 }

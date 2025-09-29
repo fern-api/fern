@@ -42,7 +42,7 @@ export function convertFields({
                 }),
                 valueType: convertedField.type,
                 docs: context.getCommentForPath([...sourceCodeInfoPath, PATH_FIELD_NUMBERS.MESSAGE.FIELD, index]),
-                availability: undefined,
+                availability: convertedField.availability,
                 propertyAccess: undefined,
                 v2Examples: undefined
             };

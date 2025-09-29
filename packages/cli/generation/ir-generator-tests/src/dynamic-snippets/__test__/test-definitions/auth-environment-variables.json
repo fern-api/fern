@@ -28,7 +28,9 @@
             "typeReference": {
                 "type": "primitive",
                 "value": "STRING"
-            }
+            },
+            "propertyAccess": null,
+            "variable": null
         },
         {
             "name": {
@@ -59,7 +61,9 @@
                     "type": "string",
                     "value": "01-01-2000"
                 }
-            }
+            },
+            "propertyAccess": null,
+            "variable": null
         }
     ],
     "endpoints": {
@@ -92,7 +96,9 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 }
             },
             "declaration": {
@@ -202,7 +208,9 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 }
             },
             "declaration": {
@@ -368,7 +376,9 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "body": null,
@@ -385,5 +395,6 @@
     },
     "pathParameters": [],
     "environments": null,
+    "variables": null,
     "generatorConfig": null
 }

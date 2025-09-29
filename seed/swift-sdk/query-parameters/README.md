@@ -24,6 +24,10 @@ dependencies: [
 ]
 ```
 
+## Reference
+
+A full reference for this library is available [here](./reference.md).
+
 ## Usage
 
 Instantiate and use the client with the following:
@@ -38,7 +42,7 @@ private func main() async throws {
     try await client.user.getUsername(request: .init(
         limit: 1,
         id: UUID(uuidString: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-        date: try! Date("2023-01-15T00:00:00Z", strategy: .iso8601),
+        date: try! CalendarDate("2023-01-15"),
         deadline: try! Date("2024-01-15T09:30:00Z", strategy: .iso8601),
         bytes: "SGVsbG8gd29ybGQh",
         user: User(
@@ -102,6 +106,56 @@ private func main() async throws {
 }
 
 try await main()
+```
+
+## Advanced
+
+### Additional Headers
+
+If you would like to send additional headers as part of the request, use the `additionalHeaders` request option.
+
+```swift
+try await client.user.getUsername(..., requestOptions: .init(
+    additionalHeaders: [
+        "X-Custom-Header": "custom value"
+    ]
+))
+```
+
+### Additional Query String Parameters
+
+If you would like to send additional query string parameters as part of the request, use the `additionalQueryParameters` request option.
+
+```swift
+try await client.user.getUsername(..., requestOptions: .init(
+    additionalQueryParameters: [
+        "custom_query_param_key": "custom_query_param_value"
+    ]
+))
+```
+
+### Timeouts
+
+The SDK defaults to a 60-second timeout. Use the `timeout` option to configure this behavior.
+
+```swift
+try await client.user.getUsername(..., requestOptions: .init(
+    timeout: 30
+))
+```
+
+### Custom Networking Client
+
+The SDK allows you to customize the underlying `URLSession` used for HTTP requests. Use the `urlSession` option to provide your own configured `URLSession` instance.
+
+```swift
+import Foundation
+import QueryParameters
+
+let client = QueryParametersClient(
+    ...,
+    urlSession: // Provide your implementation here
+)
 ```
 
 ## Contributing

@@ -1,5 +1,5 @@
 displayName: TypeScript SDK
-irVersion: v59
+irVersion: v60
 image: fernapi/fern-typescript-sdk
 imageAliases: [fernapi/fern-typescript-node-sdk]
 changelogLocation: ../../generators/typescript/sdk/versions.yml
@@ -56,7 +56,8 @@ fixtures:
       outputFolder: allow-custom-fetcher
     - outputFolder: wrapper
       customConfig:
-        streamType: 'wrapper'
+        streamType: wrapper
+        testFramework: jest
   audiences:
     - customConfig: null
       outputFolder: no-custom-config
@@ -66,8 +67,11 @@ fixtures:
       outputFolder: with-partner-audience
   exhaustive:
     - customConfig:
-        packageManager: pnpm
-      outputFolder: use-pnpm
+        packageManager: yarn
+      outputFolder: use-yarn
+    - customConfig:
+        testFramework: jest
+      outputFolder: use-jest
     - customConfig:
         omitFernHeaders: true
       outputFolder: omit-fern-headers
@@ -146,10 +150,12 @@ fixtures:
     - outputFolder: bigint
       customConfig:
         useBigInt: true
+        testFramework: jest
     - outputFolder: bigint-serde-layer
       customConfig:
         useBigInt: true
         noSerdeLayer: false
+        testFramework: jest
     - outputFolder: web-stream-wrapper
       customConfig:
         streamType: web
@@ -168,6 +174,9 @@ fixtures:
     - customConfig:
         exportAllRequestsAtRoot: true
       outputFolder: export-all-requests-at-root
+    - customConfig:
+        consolidateTypeFiles: true
+      outputFolder: consolidate-type-files
   error-property:
     - customConfig:
         private: true
@@ -188,7 +197,8 @@ fixtures:
       outputFolder: file-download-response-headers
     - outputFolder: wrapper
       customConfig:
-        streamType: 'wrapper'
+        streamType: wrapper
+        testFramework: jest
     - customConfig:
         fileResponseType: 'stream'
       outputFolder: stream
@@ -204,10 +214,14 @@ fixtures:
       outputFolder: serde
     - outputFolder: wrapper
       customConfig:
-        streamType: 'wrapper'
+        streamType: wrapper
+        testFramework: jest
     - outputFolder: form-data-node16
       customConfig:
         formDataSupport: 'Node16'
+    - outputFolder: use-jest
+      customConfig:
+        testFramework: jest
   unknown:
     - customConfig: null
       outputFolder: no-custom-config
@@ -235,6 +249,7 @@ fixtures:
     - customConfig:
         useDefaultRequestParameterValues: true
         useBigInt: true
+        testFramework: jest
       outputFolder: use-big-int-and-default-request-parameter-values
     - customConfig:
         flattenRequestParameters: true
@@ -260,6 +275,11 @@ fixtures:
   examples:
     - customConfig:
         includeApiReference: true
+        customReadmeSections:
+          - title: "Override Section"
+            content: "Override Content"
+          - title: "Generator Invocation Custom Section"
+            content: "Generator Invocation Custom Content for {{ packageName }}"
       readmeConfig:
         apiName: "CustomName"
         disabledSections:
@@ -267,6 +287,13 @@ fixtures:
         bannerLink: https://www.fernapi.com
         apiReferenceLink: https://www.docs.fernapi.com
         defaultEndpoint: POST /movie
+        customSections:
+          - title: "Base Readme Custom Section"
+            language: typescript
+            content: "Base Readme Custom Content for {{ packageName }}"
+          - title: "Override Section"
+            language: typescript
+            content: "Base Content"
         features:
           timeouts:
             - GET /movie/{movieId}
@@ -327,6 +354,12 @@ fixtures:
         noSerdeLayer: true
         shouldGenerateWebsocketClients: true
       outputFolder: no-serde
+  property-access:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - customConfig:
+        experimentalGenerateReadWriteOnlyTypes: true
+      outputFolder: generate-read-write-only-types
   websocket-bearer-auth:
     - customConfig:
         shouldGenerateWebsocketClients: true
@@ -335,17 +368,31 @@ fixtures:
     - customConfig:
         shouldGenerateWebsocketClients: true
       outputFolder: websockets
+  any-auth:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        generateEndpointMetadata: true
+      outputFolder: generate-endpoint-metadata
 scripts:
   - docker: fernapi/ts-seed
     commands:
       - |
+        if [ ! -f "package.json" ]; then
+          echo "No package.json found, exiting..."
+          exit 0
+        fi
         if grep -q '"packageManager": "pnpm' package.json; then
           mkdir -p .pnpm-cache
           echo "Enabling corepack and preparing pnpm..."
           corepack enable
           corepack prepare pnpm@10.14.0 --activate
           echo "Running pnpm install..."
-          pnpm install
+          if [ -f "pnpm-lock.yaml" ]; then
+            pnpm install --prefer-offline --frozen-lockfile
+          else
+            pnpm install --prefer-offline
+          fi
           echo "Running pnpm build..."
           if grep -q '"build":' package.json; then pnpm build; fi
           echo "Running pnpm test..."
@@ -357,56 +404,28 @@ scripts:
           corepack enable
           corepack prepare yarn@1.22.22 --activate
           echo "Running yarn install..."
-          yarn install
+          if [ -f "yarn.lock" ]; then
+            yarn install --prefer-offline --frozen-lockfile
+          else
+            yarn install --prefer-offline
+          fi
           echo "Running yarn build..."
           if grep -q '"build":' package.json; then yarn build; fi
           echo "Running yarn test..."
           if grep -q '"test":' package.json; then yarn test; fi
         fi
 allowedFailures:
-  - accept-header
-  - alias
-  - alias-extends
-  - api-wide-base-path
-  - auth-environment-variables
-  - basic-auth
-  - basic-auth-environment-variables
-  - bearer-token-environment-variable
-  - bytes-upload
+  - bytes-download
   - circular-references
-  - circular-references-advanced
-  - content-type
-  - custom-auth
   - enum
-  - error-property
   - error-property:union-utils
   - errors
-  - exhaustive:custom-package-json
-  - exhaustive:dev-dependencies
-  - exhaustive:never-throw-errors
-  - extends
-  - file-download:file-download-response-headers
-  - file-download:no-custom-config
-  - file-download:wrapper
-  - literal
+  - examples:examples-with-api-reference
+  - examples:retain-original-casing
   - mixed-case:no-custom-config
   - mixed-case:retain-original-casing
   - oauth-client-credentials-custom
   - package-yml
-  - pagination
-  - query-parameters-openapi:no-custom-config
-  - query-parameters-openapi-as-objects:no-custom-config
   - trace:no-custom-config
   - trace:serde-trace
-  - trace:serde-no-throwing
-  - trace:exhaustive
   - unions
-  - version
-  - version-no-default
-
-  # the below are likely related to changes made to example generation
-  - examples:examples-with-api-reference
-  - examples:retain-original-casing
-
-  # unknown
-  - ts-inline-types:inline

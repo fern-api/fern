@@ -42,8 +42,6 @@ package com.example.usage;
 
 import com.seed.api.SeedApiClient;
 import com.seed.api.requests.UploadDocumentRequest;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Example {
     public static void main(String[] args) {
@@ -55,13 +53,6 @@ public class Example {
         client.uploadJsonDocument(
             UploadDocumentRequest
                 .builder()
-                .author("author")
-                .tags(
-                    new ArrayList<String>(
-                        Arrays.asList("tags", "tags")
-                    )
-                )
-                .title("title")
                 .build()
         );
     }

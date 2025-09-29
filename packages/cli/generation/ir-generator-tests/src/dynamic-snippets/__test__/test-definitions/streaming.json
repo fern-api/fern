@@ -94,7 +94,9 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -125,7 +127,9 @@
                             "type": "primitive",
                             "value": "STRING"
                         }
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -304,7 +308,9 @@
                                     "type": "boolean",
                                     "value": true
                                 }
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -332,7 +338,9 @@
                             "typeReference": {
                                 "type": "primitive",
                                 "value": "INTEGER"
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ]
                 },
@@ -517,7 +525,9 @@
                                     "type": "boolean",
                                     "value": false
                                 }
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -545,7 +555,9 @@
                             "typeReference": {
                                 "type": "primitive",
                                 "value": "INTEGER"
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ]
                 },
@@ -562,5 +574,6 @@
     },
     "pathParameters": [],
     "environments": null,
+    "variables": null,
     "generatorConfig": null
 }

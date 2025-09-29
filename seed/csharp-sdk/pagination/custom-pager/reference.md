@@ -60,6 +60,551 @@ await client.Complex.SearchAsync(
 </dl>
 </details>
 
+## InlineUsers InlineUsers
+<details><summary><code>client.InlineUsers.InlineUsers.<a href="/src/SeedPagination/InlineUsers/InlineUsers/InlineUsersClient.cs">ListWithCursorPaginationAsync</a>(InlineUsers.ListUsersCursorPaginationRequest { ... }) -> Core.Pager<InlineUsers.User></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.InlineUsers.InlineUsers.ListWithCursorPaginationAsync(
+    new SeedPagination.InlineUsers.ListUsersCursorPaginationRequest
+    {
+        Page = 1,
+        PerPage = 1,
+        Order = SeedPagination.InlineUsers.Order.Asc,
+        StartingAfter = "starting_after",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `InlineUsers.ListUsersCursorPaginationRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.InlineUsers.InlineUsers.<a href="/src/SeedPagination/InlineUsers/InlineUsers/InlineUsersClient.cs">ListWithMixedTypeCursorPaginationAsync</a>(InlineUsers.ListUsersMixedTypeCursorPaginationRequest { ... }) -> Core.Pager<InlineUsers.User></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.InlineUsers.InlineUsers.ListWithMixedTypeCursorPaginationAsync(
+    new SeedPagination.InlineUsers.ListUsersMixedTypeCursorPaginationRequest { Cursor = "cursor" }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `InlineUsers.ListUsersMixedTypeCursorPaginationRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.InlineUsers.InlineUsers.<a href="/src/SeedPagination/InlineUsers/InlineUsers/InlineUsersClient.cs">ListWithBodyCursorPaginationAsync</a>(InlineUsers.ListUsersBodyCursorPaginationRequest { ... }) -> Core.Pager<InlineUsers.User></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.InlineUsers.InlineUsers.ListWithBodyCursorPaginationAsync(
+    new SeedPagination.InlineUsers.ListUsersBodyCursorPaginationRequest
+    {
+        Pagination = new SeedPagination.InlineUsers.WithCursor { Cursor = "cursor" },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `InlineUsers.ListUsersBodyCursorPaginationRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.InlineUsers.InlineUsers.<a href="/src/SeedPagination/InlineUsers/InlineUsers/InlineUsersClient.cs">ListWithOffsetPaginationAsync</a>(InlineUsers.ListUsersOffsetPaginationRequest { ... }) -> Core.Pager<InlineUsers.User></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.InlineUsers.InlineUsers.ListWithOffsetPaginationAsync(
+    new SeedPagination.InlineUsers.ListUsersOffsetPaginationRequest
+    {
+        Page = 1,
+        PerPage = 1,
+        Order = SeedPagination.InlineUsers.Order.Asc,
+        StartingAfter = "starting_after",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `InlineUsers.ListUsersOffsetPaginationRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.InlineUsers.InlineUsers.<a href="/src/SeedPagination/InlineUsers/InlineUsers/InlineUsersClient.cs">ListWithDoubleOffsetPaginationAsync</a>(InlineUsers.ListUsersDoubleOffsetPaginationRequest { ... }) -> Core.Pager<InlineUsers.User></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.InlineUsers.InlineUsers.ListWithDoubleOffsetPaginationAsync(
+    new SeedPagination.InlineUsers.ListUsersDoubleOffsetPaginationRequest
+    {
+        Page = 1.1,
+        PerPage = 1.1,
+        Order = SeedPagination.InlineUsers.Order.Asc,
+        StartingAfter = "starting_after",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `InlineUsers.ListUsersDoubleOffsetPaginationRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.InlineUsers.InlineUsers.<a href="/src/SeedPagination/InlineUsers/InlineUsers/InlineUsersClient.cs">ListWithBodyOffsetPaginationAsync</a>(InlineUsers.ListUsersBodyOffsetPaginationRequest { ... }) -> Core.Pager<InlineUsers.User></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.InlineUsers.InlineUsers.ListWithBodyOffsetPaginationAsync(
+    new SeedPagination.InlineUsers.ListUsersBodyOffsetPaginationRequest
+    {
+        Pagination = new SeedPagination.InlineUsers.WithPage { Page = 1 },
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `InlineUsers.ListUsersBodyOffsetPaginationRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.InlineUsers.InlineUsers.<a href="/src/SeedPagination/InlineUsers/InlineUsers/InlineUsersClient.cs">ListWithOffsetStepPaginationAsync</a>(InlineUsers.ListUsersOffsetStepPaginationRequest { ... }) -> Core.Pager<InlineUsers.User></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.InlineUsers.InlineUsers.ListWithOffsetStepPaginationAsync(
+    new SeedPagination.InlineUsers.ListUsersOffsetStepPaginationRequest
+    {
+        Page = 1,
+        Limit = 1,
+        Order = SeedPagination.InlineUsers.Order.Asc,
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `InlineUsers.ListUsersOffsetStepPaginationRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.InlineUsers.InlineUsers.<a href="/src/SeedPagination/InlineUsers/InlineUsers/InlineUsersClient.cs">ListWithOffsetPaginationHasNextPageAsync</a>(InlineUsers.ListWithOffsetPaginationHasNextPageRequest { ... }) -> Core.Pager<InlineUsers.User></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.InlineUsers.InlineUsers.ListWithOffsetPaginationHasNextPageAsync(
+    new SeedPagination.InlineUsers.ListWithOffsetPaginationHasNextPageRequest
+    {
+        Page = 1,
+        Limit = 1,
+        Order = SeedPagination.InlineUsers.Order.Asc,
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `InlineUsers.ListWithOffsetPaginationHasNextPageRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.InlineUsers.InlineUsers.<a href="/src/SeedPagination/InlineUsers/InlineUsers/InlineUsersClient.cs">ListWithExtendedResultsAsync</a>(InlineUsers.ListUsersExtendedRequest { ... }) -> Core.Pager<InlineUsers.User></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.InlineUsers.InlineUsers.ListWithExtendedResultsAsync(
+    new SeedPagination.InlineUsers.ListUsersExtendedRequest
+    {
+        Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `InlineUsers.ListUsersExtendedRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.InlineUsers.InlineUsers.<a href="/src/SeedPagination/InlineUsers/InlineUsers/InlineUsersClient.cs">ListWithExtendedResultsAndOptionalDataAsync</a>(InlineUsers.ListUsersExtendedRequestForOptionalData { ... }) -> Core.Pager<InlineUsers.User></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.InlineUsers.InlineUsers.ListWithExtendedResultsAndOptionalDataAsync(
+    new SeedPagination.InlineUsers.ListUsersExtendedRequestForOptionalData
+    {
+        Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `InlineUsers.ListUsersExtendedRequestForOptionalData` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.InlineUsers.InlineUsers.<a href="/src/SeedPagination/InlineUsers/InlineUsers/InlineUsersClient.cs">ListUsernamesAsync</a>(InlineUsers.ListUsernamesRequest { ... }) -> Core.Pager<string></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.InlineUsers.InlineUsers.ListUsernamesAsync(
+    new SeedPagination.InlineUsers.ListUsernamesRequest { StartingAfter = "starting_after" }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `InlineUsers.ListUsernamesRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.InlineUsers.InlineUsers.<a href="/src/SeedPagination/InlineUsers/InlineUsers/InlineUsersClient.cs">ListWithGlobalConfigAsync</a>(InlineUsers.ListWithGlobalConfigRequest { ... }) -> Core.Pager<string></code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.InlineUsers.InlineUsers.ListWithGlobalConfigAsync(
+    new SeedPagination.InlineUsers.ListWithGlobalConfigRequest { Offset = 1 }
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `InlineUsers.ListWithGlobalConfigRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Users
 <details><summary><code>client.Users.<a href="/src/SeedPagination/Users/UsersClient.cs">ListWithCursorPaginationAsync</a>(ListUsersCursorPaginationRequest { ... }) -> Core.Pager<User></code></summary>
 <dl>
@@ -75,11 +620,11 @@ await client.Complex.SearchAsync(
 
 ```csharp
 await client.Users.ListWithCursorPaginationAsync(
-    new ListUsersCursorPaginationRequest
+    new SeedPagination.ListUsersCursorPaginationRequest
     {
         Page = 1,
         PerPage = 1,
-        Order = Order.Asc,
+        Order = SeedPagination.Order.Asc,
         StartingAfter = "starting_after",
     }
 );
@@ -123,7 +668,7 @@ await client.Users.ListWithCursorPaginationAsync(
 
 ```csharp
 await client.Users.ListWithMixedTypeCursorPaginationAsync(
-    new ListUsersMixedTypeCursorPaginationRequest { Cursor = "cursor" }
+    new SeedPagination.ListUsersMixedTypeCursorPaginationRequest { Cursor = "cursor" }
 );
 ```
 </dd>
@@ -165,7 +710,10 @@ await client.Users.ListWithMixedTypeCursorPaginationAsync(
 
 ```csharp
 await client.Users.ListWithBodyCursorPaginationAsync(
-    new ListUsersBodyCursorPaginationRequest { Pagination = new WithCursor { Cursor = "cursor" } }
+    new SeedPagination.ListUsersBodyCursorPaginationRequest
+    {
+        Pagination = new SeedPagination.WithCursor { Cursor = "cursor" },
+    }
 );
 ```
 </dd>
@@ -207,11 +755,11 @@ await client.Users.ListWithBodyCursorPaginationAsync(
 
 ```csharp
 await client.Users.ListWithOffsetPaginationAsync(
-    new ListUsersOffsetPaginationRequest
+    new SeedPagination.ListUsersOffsetPaginationRequest
     {
         Page = 1,
         PerPage = 1,
-        Order = Order.Asc,
+        Order = SeedPagination.Order.Asc,
         StartingAfter = "starting_after",
     }
 );
@@ -255,11 +803,11 @@ await client.Users.ListWithOffsetPaginationAsync(
 
 ```csharp
 await client.Users.ListWithDoubleOffsetPaginationAsync(
-    new ListUsersDoubleOffsetPaginationRequest
+    new SeedPagination.ListUsersDoubleOffsetPaginationRequest
     {
         Page = 1.1,
         PerPage = 1.1,
-        Order = Order.Asc,
+        Order = SeedPagination.Order.Asc,
         StartingAfter = "starting_after",
     }
 );
@@ -303,7 +851,10 @@ await client.Users.ListWithDoubleOffsetPaginationAsync(
 
 ```csharp
 await client.Users.ListWithBodyOffsetPaginationAsync(
-    new ListUsersBodyOffsetPaginationRequest { Pagination = new WithPage { Page = 1 } }
+    new SeedPagination.ListUsersBodyOffsetPaginationRequest
+    {
+        Pagination = new SeedPagination.WithPage { Page = 1 },
+    }
 );
 ```
 </dd>
@@ -345,11 +896,11 @@ await client.Users.ListWithBodyOffsetPaginationAsync(
 
 ```csharp
 await client.Users.ListWithOffsetStepPaginationAsync(
-    new ListUsersOffsetStepPaginationRequest
+    new SeedPagination.ListUsersOffsetStepPaginationRequest
     {
         Page = 1,
         Limit = 1,
-        Order = Order.Asc,
+        Order = SeedPagination.Order.Asc,
     }
 );
 ```
@@ -392,11 +943,11 @@ await client.Users.ListWithOffsetStepPaginationAsync(
 
 ```csharp
 await client.Users.ListWithOffsetPaginationHasNextPageAsync(
-    new ListWithOffsetPaginationHasNextPageRequest
+    new SeedPagination.ListWithOffsetPaginationHasNextPageRequest
     {
         Page = 1,
         Limit = 1,
-        Order = Order.Asc,
+        Order = SeedPagination.Order.Asc,
     }
 );
 ```
@@ -439,7 +990,7 @@ await client.Users.ListWithOffsetPaginationHasNextPageAsync(
 
 ```csharp
 await client.Users.ListWithExtendedResultsAsync(
-    new ListUsersExtendedRequest { Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32" }
+    new SeedPagination.ListUsersExtendedRequest { Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32" }
 );
 ```
 </dd>
@@ -481,7 +1032,10 @@ await client.Users.ListWithExtendedResultsAsync(
 
 ```csharp
 await client.Users.ListWithExtendedResultsAndOptionalDataAsync(
-    new ListUsersExtendedRequestForOptionalData { Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32" }
+    new SeedPagination.ListUsersExtendedRequestForOptionalData
+    {
+        Cursor = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    }
 );
 ```
 </dd>
@@ -523,7 +1077,7 @@ await client.Users.ListWithExtendedResultsAndOptionalDataAsync(
 
 ```csharp
 await client.Users.ListUsernamesAsync(
-    new ListUsernamesRequest { StartingAfter = "starting_after" }
+    new SeedPagination.ListUsernamesRequest { StartingAfter = "starting_after" }
 );
 ```
 </dd>
@@ -564,7 +1118,9 @@ await client.Users.ListUsernamesAsync(
 <dd>
 
 ```csharp
-await client.Users.ListWithGlobalConfigAsync(new ListWithGlobalConfigRequest { Offset = 1 });
+await client.Users.ListWithGlobalConfigAsync(
+    new SeedPagination.ListWithGlobalConfigRequest { Offset = 1 }
+);
 ```
 </dd>
 </dl>

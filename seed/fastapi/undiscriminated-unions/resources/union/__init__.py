@@ -16,6 +16,8 @@ from .types import (
     Request,
     TypeWithOptionalUnion,
     UnionWithDuplicateTypes,
+    UnionWithIdenticalPrimitives,
+    UnionWithIdenticalStrings,
 )
 
 __all__ = [
@@ -32,4 +34,6 @@ __all__ = [
     "Request",
     "TypeWithOptionalUnion",
     "UnionWithDuplicateTypes",
+    "UnionWithIdenticalPrimitives",
+    "UnionWithIdenticalStrings",
 ]

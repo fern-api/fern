@@ -1,5 +1,6 @@
 import { UnnamedArgument } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
+import { type CSharp } from "../csharp";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Type } from "./Type";
@@ -34,8 +35,8 @@ export class Dictionary extends AstNode {
     private valueType: Type;
     private values: Dictionary.Values | undefined;
 
-    constructor({ keyType, valueType, values }: Dictionary.Args) {
-        super();
+    constructor({ keyType, valueType, values }: Dictionary.Args, csharp: CSharp) {
+        super(csharp);
         this.keyType = keyType;
         this.valueType = valueType;
         this.values = values;

@@ -21,6 +21,7 @@ export function convertEnum({
     _default,
     description,
     availability,
+    wrapAsOptional,
     wrapAsNullable,
     namespace,
     groupName,
@@ -37,6 +38,7 @@ export function convertEnum({
     _default: string | undefined;
     description: string | undefined;
     availability: Availability | undefined;
+    wrapAsOptional: boolean;
     wrapAsNullable: boolean;
     namespace: string | undefined;
     groupName: SdkGroupName | undefined;
@@ -76,6 +78,7 @@ export function convertEnum({
     });
     const _defaultEnumValue = _default != null ? values.find((value) => value.value === _default) : undefined;
     return wrapEnum({
+        wrapAsOptional,
         wrapAsNullable,
         nameOverride,
         generatedName,
@@ -92,6 +95,7 @@ export function convertEnum({
 }
 
 export function wrapEnum({
+    wrapAsOptional,
     wrapAsNullable,
     nameOverride,
     generatedName,
@@ -105,6 +109,7 @@ export function wrapEnum({
     source,
     inline
 }: {
+    wrapAsOptional: boolean;
     wrapAsNullable: boolean;
     nameOverride: string | undefined;
     generatedName: string;
@@ -118,33 +123,7 @@ export function wrapEnum({
     source: Source;
     inline: boolean | undefined;
 }): SchemaWithExample {
-    if (wrapAsNullable) {
-        return SchemaWithExample.nullable({
-            nameOverride,
-            generatedName,
-            title,
-            value: SchemaWithExample.enum({
-                nameOverride,
-                generatedName,
-                title,
-                values,
-                description,
-                default: _default,
-                availability,
-                example: undefined,
-                namespace,
-                groupName,
-                source,
-                inline
-            }),
-            description,
-            availability,
-            namespace,
-            groupName,
-            inline
-        });
-    }
-    return SchemaWithExample.enum({
+    let result: SchemaWithExample = SchemaWithExample.enum({
         nameOverride,
         generatedName,
         title,
@@ -158,6 +137,33 @@ export function wrapEnum({
         source,
         inline
     });
+    if (wrapAsNullable) {
+        result = SchemaWithExample.nullable({
+            nameOverride,
+            generatedName,
+            title,
+            value: result,
+            description,
+            availability,
+            namespace,
+            groupName,
+            inline
+        });
+    }
+    if (wrapAsOptional) {
+        result = SchemaWithExample.optional({
+            nameOverride,
+            generatedName,
+            title,
+            value: result,
+            description,
+            availability,
+            namespace,
+            groupName,
+            inline
+        });
+    }
+    return result;
 }
 
 function stripCommonPrefix(names: string[]): string[] {

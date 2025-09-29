@@ -5,6 +5,6 @@
 import * as FernIr from "../../../../../index";
 
 export interface ReferencedRequestBody {
-    bodyKey: FernIr.Name;
+    bodyKey: FernIr.dynamic.Name;
     bodyType: FernIr.dynamic.ReferencedRequestBodyType;
 }

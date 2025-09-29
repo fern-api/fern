@@ -7,7 +7,7 @@ import { SeedBasicAuthEnvironmentVariablesClient } from "../../src/Client";
 import * as SeedBasicAuthEnvironmentVariables from "../../src/api/index";
 
 describe("BasicAuth", () => {
-    test("getWithBasicAuth (14b143fa)", async () => {
+    test("getWithBasicAuth (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedBasicAuthEnvironmentVariablesClient({
             username: "test",
@@ -22,7 +22,7 @@ describe("BasicAuth", () => {
         expect(response).toEqual(true);
     });
 
-    test("getWithBasicAuth (93582a4e)", async () => {
+    test("getWithBasicAuth (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedBasicAuthEnvironmentVariablesClient({
             username: "test",
@@ -35,14 +35,10 @@ describe("BasicAuth", () => {
 
         await expect(async () => {
             return await client.basicAuth.getWithBasicAuth();
-        }).rejects.toThrow(
-            new SeedBasicAuthEnvironmentVariables.UnauthorizedRequest({
-                message: "message",
-            }),
-        );
+        }).rejects.toThrow(SeedBasicAuthEnvironmentVariables.UnauthorizedRequest);
     });
 
-    test("postWithBasicAuth (91843eb7)", async () => {
+    test("postWithBasicAuth (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedBasicAuthEnvironmentVariablesClient({
             username: "test",
@@ -66,7 +62,7 @@ describe("BasicAuth", () => {
         expect(response).toEqual(true);
     });
 
-    test("postWithBasicAuth (97a6b3dd)", async () => {
+    test("postWithBasicAuth (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedBasicAuthEnvironmentVariablesClient({
             username: "test",
@@ -88,14 +84,10 @@ describe("BasicAuth", () => {
             return await client.basicAuth.postWithBasicAuth({
                 key: "value",
             });
-        }).rejects.toThrow(
-            new SeedBasicAuthEnvironmentVariables.UnauthorizedRequest({
-                message: "message",
-            }),
-        );
+        }).rejects.toThrow(SeedBasicAuthEnvironmentVariables.UnauthorizedRequest);
     });
 
-    test("postWithBasicAuth (7eabe5c4)", async () => {
+    test("postWithBasicAuth (3)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedBasicAuthEnvironmentVariablesClient({
             username: "test",
@@ -110,6 +102,6 @@ describe("BasicAuth", () => {
             return await client.basicAuth.postWithBasicAuth({
                 key: "value",
             });
-        }).rejects.toThrow(SeedBasicAuthEnvironmentVariables.BadRequest());
+        }).rejects.toThrow(SeedBasicAuthEnvironmentVariables.BadRequest);
     });
 });

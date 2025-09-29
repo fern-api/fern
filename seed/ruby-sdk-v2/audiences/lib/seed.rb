@@ -4,7 +4,6 @@ require "json"
 require "net/http"
 require "securerandom"
 
-# Internal Types
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
 require_relative "seed/internal/types/utils"
@@ -25,16 +24,23 @@ require_relative "seed/internal/types/boolean"
 require_relative "seed/internal/types/enum"
 require_relative "seed/internal/types/hash"
 require_relative "seed/internal/types/unknown"
-
-# API Types
+require_relative "seed/errors/api_error"
+require_relative "seed/errors/response_error"
+require_relative "seed/errors/client_error"
+require_relative "seed/errors/redirect_error"
+require_relative "seed/errors/server_error"
+require_relative "seed/errors/timeout_error"
+require_relative "seed/internal/iterators/item_iterator"
+require_relative "seed/internal/iterators/cursor_item_iterator"
+require_relative "seed/internal/iterators/offset_item_iterator"
+require_relative "seed/internal/iterators/cursor_page_iterator"
+require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/folder_c/common/types/folder_c_foo"
 require_relative "seed/folder_b/common/types/foo"
 require_relative "seed/folder_a/service/types/response"
 require_relative "seed/folder_d/service/types/response"
 require_relative "seed/foo/types/importing_type"
 require_relative "seed/foo/types/filtered_type"
-
-# Client Types
 require_relative "seed/client"
 require_relative "seed/folder_a/client"
 require_relative "seed/folder_a/service/client"
@@ -43,5 +49,8 @@ require_relative "seed/folder_d/service/client"
 require_relative "seed/foo/client"
 require_relative "seed/foo/types/find_request"
 require_relative "seed/environment"
+<<<<<<< HEAD
 require_relative "../README.md"
 require_relative "../reference.md"
+=======
+>>>>>>> main

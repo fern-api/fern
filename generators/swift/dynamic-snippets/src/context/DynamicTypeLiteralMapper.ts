@@ -155,7 +155,7 @@ export class DynamicTypeLiteralMapper {
         value: unknown;
     }): swift.Expression {
         const discriminatedUnionTypeInstance = this.context.resolveDiscriminatedUnionTypeInstance({
-            discriminatedUnion,
+            discriminatedUnion: discriminatedUnion,
             value
         });
         if (discriminatedUnionTypeInstance == null) {
@@ -488,12 +488,7 @@ export class DynamicTypeLiteralMapper {
                 if (date == null) {
                     return swift.Expression.nop();
                 }
-                const timestampMs = new Date(date).getTime();
-                const timestampSec = Math.round(timestampMs / 1000);
-                const roundedDateTime = new Date(timestampSec * 1000).toISOString();
-                // Remove fractional seconds (.000Z -> Z) for Swift compatibility
-                const dateTimeWithoutFractional = roundedDateTime.replace(/\.\d{3}Z$/, "Z");
-                return swift.Expression.dateLiteral(dateTimeWithoutFractional);
+                return swift.Expression.calendarDateLiteral(date);
             }
             case "DATE_TIME": {
                 const dateTime = this.context.getValueAsString({ value });

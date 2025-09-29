@@ -1,6 +1,8 @@
 import {
     EndpointSdkName,
+    EndpointSecurity,
     EndpointWithExample,
+    PathParameterWithExample,
     PrimitiveSchemaValueWithExample,
     RequestWithExample,
     SchemaWithExample,
@@ -16,6 +18,7 @@ import { OpenAPIExtension } from "../../extensions/extensions";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
 import { getExamplesFromExtension } from "../../extensions/getExamplesFromExtension";
 import { getFernAvailability } from "../../extensions/getFernAvailability";
+import { getFernRetriesExtension } from "../../extensions/getFernRetriesExtension";
 import { OperationContext } from "../contexts";
 import { convertServer } from "../convertServer";
 import { ConvertedParameters, convertParameters } from "../endpoint/convertParameters";
@@ -54,44 +57,63 @@ export function convertHttpOperation({
         source
     });
 
-    // Parse path parameters from URL
+    // Parse path parameters from URL to get their order
     const PATH_PARAM_REGEX = /{([^}]+)}/g;
-    const pathParams = [...path.matchAll(PATH_PARAM_REGEX)].map((match) => match[1]);
+    const paramNamesInUrlOrder = [...path.matchAll(PATH_PARAM_REGEX)]
+        .map((match) => match[1])
+        .filter((paramName): paramName is string => paramName !== undefined);
 
-    // Check if any path parameters are missing from convertedParameters
-    const missingPathParams = pathParams.filter(
-        (param) => !convertedParameters.pathParameters.some((p) => p.name === param)
-    );
+    // Reorder path parameters to match URL order
+    if (paramNamesInUrlOrder.length > 0) {
+        const urlParams = new Map(convertedParameters.pathParameters.map((param) => [param.name, param]));
 
-    // Add missing path parameters
-    if (missingPathParams.length > 0) {
-        for (const param of missingPathParams) {
-            convertedParameters.pathParameters.push({
-                name: param ?? "",
-                variableReference: undefined,
-                parameterNameOverride: undefined,
-                availability: undefined,
-                source,
-                schema: SchemaWithExample.primitive({
-                    schema: PrimitiveSchemaValueWithExample.string({
-                        default: undefined,
-                        example: undefined,
-                        format: undefined,
-                        maxLength: undefined,
-                        minLength: undefined,
-                        pattern: undefined
-                    }),
-                    description: undefined,
-                    generatedName: "",
-                    nameOverride: undefined,
-                    namespace: undefined,
-                    groupName: undefined,
+        // If there's a path parameter listed only in the URL, add it to the list
+        const reorderedPathParameters: PathParameterWithExample[] = [];
+        const usedParams = new Set<string>();
+
+        for (const paramName of paramNamesInUrlOrder) {
+            const urlParam = urlParams.get(paramName);
+            usedParams.add(paramName);
+
+            if (urlParam) {
+                reorderedPathParameters.push(urlParam);
+            } else {
+                reorderedPathParameters.push({
+                    name: paramName,
+                    variableReference: undefined,
+                    parameterNameOverride: undefined,
                     availability: undefined,
-                    title: undefined
-                }),
-                description: undefined
-            });
+                    source,
+                    schema: SchemaWithExample.primitive({
+                        schema: PrimitiveSchemaValueWithExample.string({
+                            default: undefined,
+                            example: undefined,
+                            format: undefined,
+                            maxLength: undefined,
+                            minLength: undefined,
+                            pattern: undefined
+                        }),
+                        description: undefined,
+                        generatedName: "",
+                        nameOverride: undefined,
+                        namespace: undefined,
+                        groupName: undefined,
+                        availability: undefined,
+                        title: undefined
+                    }),
+                    description: undefined
+                });
+            }
         }
+
+        // Add any remaining path parameters that don't appear in the URL at the end
+        for (const param of convertedParameters.pathParameters) {
+            if (!usedParams.has(param.name)) {
+                reorderedPathParameters.push(param);
+            }
+        }
+
+        convertedParameters.pathParameters = reorderedPathParameters;
     }
 
     let convertedRequests = (() => {
@@ -234,6 +256,7 @@ export function convertHttpOperation({
         source
     });
 
+    const retries = getFernRetriesExtension(operation);
     const availability = getFernAvailability(operation);
     const examples = getExamplesFromExtension(operationContext, operation, context);
     const serverName = getExtension<string>(operation, FernOpenAPIExtension.SERVER_NAME_V2);
@@ -265,15 +288,19 @@ export function convertHttpOperation({
         servers:
             serverName != null
                 ? [{ name: serverName, url: undefined, audiences: undefined }]
-                : (operation.servers ?? []).map((server) => convertServer(server)),
+                : (operation.servers ?? []).map((server) =>
+                      convertServer(server, { groupMultiApiEnvironments: context.options.groupMultiApiEnvironments })
+                  ),
         description: operation.description,
         authed: isEndpointAuthed(operation, document),
+        security: generateSecurity(operation),
         availability,
         method,
         path,
         examples,
         pagination: operationContext.pagination,
-        source
+        source,
+        retries
     }));
 }
 
@@ -320,6 +347,10 @@ function createOperationSdkMethodName({
         groupName: [],
         methodName: request.sdkMethodName
     };
+}
+
+function generateSecurity(operation: OpenAPIV3.OperationObject): EndpointSecurity {
+    return operation.security ?? [];
 }
 
 function isEndpointAuthed(operation: OpenAPIV3.OperationObject, document: OpenAPIV3.Document): boolean {

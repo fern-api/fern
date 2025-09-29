@@ -1,3 +1,4 @@
+import { type CSharp } from "../csharp";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
@@ -11,8 +12,8 @@ export declare namespace CoreClassReference {
 export class CoreClassReference extends AstNode {
     public readonly name: string;
 
-    constructor({ name }: CoreClassReference.Args) {
-        super();
+    constructor({ name }: CoreClassReference.Args, csharp: CSharp) {
+        super(csharp);
         this.name = name;
     }
 

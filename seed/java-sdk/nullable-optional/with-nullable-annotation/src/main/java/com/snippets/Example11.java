@@ -2,8 +2,8 @@ package com.snippets;
 
 import com.seed.nullableOptional.SeedNullableOptionalClient;
 import com.seed.nullableOptional.resources.nullableoptional.requests.UpdateTagsRequest;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
 
 public class Example11 {
     public static void main(String[] args) {
@@ -17,17 +17,17 @@ public class Example11 {
             UpdateTagsRequest
                 .builder()
                 .tags(
-                    new ArrayList<String>(
+                    Optional.of(
                         Arrays.asList("tags", "tags")
                     )
                 )
                 .categories(
-                    new ArrayList<String>(
+                    Optional.of(
                         Arrays.asList("categories", "categories")
                     )
                 )
                 .labels(
-                    new ArrayList<String>(
+                    Optional.of(
                         Arrays.asList("labels", "labels")
                     )
                 )

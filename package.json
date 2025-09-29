@@ -45,7 +45,7 @@
     "fern-local:build": "pnpm --filter @fern-api/cli dist:cli:local && echo 'Run node --enable-source-maps packages/cli/cli/dist/local/cli.cjs'",
     "seed:build": "pnpm --filter @fern-api/seed-cli dist:cli && echo 'Run node --enable-source-maps packages/seed/dist/cli.cjs'",
     "publish": "pnpm -r publish --access public --no-git-checks --loglevel=verbose",
-    "jsonschema": "pnpm definition-yml:jsonschema && pnpm api-yml:jsonschema && pnpm package-yml:jsonschema && pnpm docs-yml:jsonschema && pnpm generators-yml:jsonschema && pnpm versions-yml:jsonschema",
+    "jsonschema": "pnpm definition-yml:jsonschema && pnpm api-yml:jsonschema && pnpm package-yml:jsonschema && pnpm docs-yml:jsonschema && pnpm generators-yml:jsonschema && pnpm versions-yml:jsonschema && pnpm products-yml:jsonschema",
     "definition-yml:jsonschema": "pnpm fern jsonschema fern.schema.json --api fern-definition --type file.DefinitionFileSchema && pnpm fern jsonschema packages/cli/workspace/lazy-fern-workspace/src/fern.schema.json --api fern-definition --type file.DefinitionFileSchema",
     "api-yml:jsonschema": "pnpm fern jsonschema api-yml.schema.json --api fern-definition --type file.RootApiFileSchema && pnpm fern jsonschema packages/cli/workspace/lazy-fern-workspace/src/api-yml.schema.json --api fern-definition --type file.RootApiFileSchema",
     "package-yml:jsonschema": "pnpm fern jsonschema package-yml.schema.json --api fern-definition --type file.PackageMarkerFileSchema && pnpm fern jsonschema packages/cli/workspace/lazy-fern-workspace/src/package-yml.schema.json --api fern-definition --type file.PackageMarkerFileSchema",
@@ -60,6 +60,7 @@
     "seed": "node --enable-source-maps packages/seed/dist/cli.cjs",
     "seed:local": "pnpm --filter @fern-api/seed-cli dist:cli && node --enable-source-maps packages/seed/dist/cli.cjs",
     "ir:generate": "pnpm --filter @fern-api/ir-sdk generate",
+    "ir:generate:go": "cd packages/ir-sdk && fern ir ../../generators/go/internal/fern/ir.json --api ir-types-latest --language go && cd ../../generators/go && make install && make generate",
     "openapi-ir:generate": "pnpm --filter @fern-api/openapi-ir generate",
     "conjure-sdk:generate": "pnpm --filter @fern-api/conjure-sdk generate",
     "seed-config:generate": "pnpm --filter @fern-api/seed-cli generate",
@@ -69,7 +70,8 @@
     "update:generators": "pnpm generators:generate && pnpm generators-yml:jsonschema",
     "prepare": "husky",
     "pre-commit": "tsx scripts/pre-commit.ts",
-    "fix:references": "npx nx g @nx/js:typescript-sync --updateReferences=true --updatePaths=false"
+    "fix:references": "npx nx g @nx/js:typescript-sync --updateReferences=true --updatePaths=false",
+    "test:update-package": "sh -c 'for arg in \"$@\"; do if [[ $arg == --package=* ]]; then PACKAGE=${arg#--package=}; break; fi; done; pnpm --filter \"$PACKAGE\" compile && pnpm --filter \"$PACKAGE\" test:update' --"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
@@ -80,7 +82,6 @@
     "@blueprintjs/stylelint-plugin": "^4.1.14",
     "@fern-api/configs": "workspace:*",
     "@nx/js": "^21.3.8",
-    "ajv-cli": "^5.0.0",
     "cross-env": "^7.0.3",
     "cspell": "^8.17.2",
     "depcheck": "^1.4.7",

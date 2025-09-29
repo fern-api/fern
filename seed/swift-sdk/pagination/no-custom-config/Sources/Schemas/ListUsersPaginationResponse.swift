@@ -5,7 +5,7 @@ public struct ListUsersPaginationResponse: Codable, Hashable, Sendable {
     public let page: Page?
     /// The totall number of /users
     public let totalCount: Int
-    public let data: [User]
+    public let data: Users
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
@@ -13,7 +13,7 @@ public struct ListUsersPaginationResponse: Codable, Hashable, Sendable {
         hasNextPage: Bool? = nil,
         page: Page? = nil,
         totalCount: Int,
-        data: [User],
+        data: Users,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.hasNextPage = hasNextPage
@@ -28,7 +28,7 @@ public struct ListUsersPaginationResponse: Codable, Hashable, Sendable {
         self.hasNextPage = try container.decodeIfPresent(Bool.self, forKey: .hasNextPage)
         self.page = try container.decodeIfPresent(Page.self, forKey: .page)
         self.totalCount = try container.decode(Int.self, forKey: .totalCount)
-        self.data = try container.decode([User].self, forKey: .data)
+        self.data = try container.decode(Users.self, forKey: .data)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

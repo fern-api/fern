@@ -3,8 +3,8 @@ package example
 import (
     client "github.com/imdb/fern/all/the/way/in/here/please/client"
     option "github.com/imdb/fern/all/the/way/in/here/please/option"
-    context "context"
     please "github.com/imdb/fern/all/the/way/in/here/please"
+    context "context"
 )
 
 func do() {
@@ -16,11 +16,12 @@ func do() {
             "<token>",
         ),
     )
+    request := &please.CreateMovieRequest{
+        Title: "title",
+        Rating: 1.1,
+    }
     client.Imdb.CreateMovie(
         context.TODO(),
-        &please.CreateMovieRequest{
-            Title: "title",
-            Rating: 1.1,
-        },
+        request,
     )
 }

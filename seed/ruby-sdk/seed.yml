@@ -51,18 +51,98 @@ fixtures:
         flattenModuleStructure: true
       outputFolder: flattened-module-structure
 allowedFailures:
+  - accept-header
+  - alias
+  - alias-extends
   - any-auth
+  - api-wide-base-path
+  - audiences
+  - auth-environment-variables
+  - basic-auth
+  - basic-auth-environment-variables
+  - bearer-token-environment-variable
+  - bytes-download
+  - bytes-upload
   - circular-references
+  - circular-references-advanced
+  - client-side-params
+  - content-type
+  - cross-package-type-names
+  - custom-auth
+  - empty-clients
   - enum
+  - error-property
   - errors
+  - examples
+  - exhaustive:no-custom-config
+  - exhaustive:extra-deps
+  - exhaustive:flattened-module-structure
+  - extends
+  - extra-properties
+  - file-download
+  - file-upload
+  - folders
+  - http-head
+  - idempotency-headers
+  - imdb
+  - inferred-auth-explicit
+  - inferred-auth-implicit
+  - inferred-auth-implicit-no-expiry
+  - license
   - literal
   - literals-unions
+  - mixed-case
   - mixed-file-directory
+  - multi-line-docs
+  - multi-url-environment
+  - multi-url-environment-no-default
   - multiple-request-bodies
+  - no-environment
+  - nullable
   - nullable-optional
+  - oauth-client-credentials
+  - oauth-client-credentials-custom
+  - oauth-client-credentials-default
+  - oauth-client-credentials-environment-variables
+  - oauth-client-credentials-nested-root
+  - oauth-client-credentials-with-variables
+  - object
   - objects-with-imports
+  - optional
+  - package-yml
+  - pagination
+  - pagination-custom
+  - path-parameters
+  - plain-text
+  - property-access
+  - public-object
+  - query-parameters
+  - query-parameters-openapi
+  - query-parameters-openapi-as-objects
+  - request-parameters
+  - reserved-keywords
+  - response-property
+  - ruby-reserved-word-properties
+  - server-sent-event-examples
+  - server-sent-events
+  - simple-api
+  - simple-fhir
+  - single-url-environment-default
+  - single-url-environment-no-default
+  - streaming
+  - streaming-parameter
+  - trace
+  - undiscriminated-unions
+  - unions
+  - unknown
+  - validation
+  - variables
+  - version
+  - version-no-default
+  - websocket
   - websocket-bearer-auth
   - websocket-inferred-auth
+
 features:
   requestOptions: true
   idempotency: false

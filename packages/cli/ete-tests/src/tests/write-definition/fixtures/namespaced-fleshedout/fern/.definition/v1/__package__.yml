@@ -236,7 +236,6 @@ service:
     chat:
       audiences:
         - public
-      auth: true
       display-name: Chat
       docs: >
         Generates a text response to a user message.
@@ -257,7 +256,9 @@ service:
         - ServiceUnavailableError
         - GatewayTimeoutError
       examples:
-        - request:
+        - headers:
+            Accepts: text/event-stream
+          request:
             message: message
           response:
             body:

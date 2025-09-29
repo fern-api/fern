@@ -3,14 +3,8 @@ from collections import defaultdict
 from typing import DefaultDict, Dict, Optional, Set
 
 from . import AST
-from .reference_resolver import ReferenceResolver
+from .reference_resolver import ReferenceResolver, ResolvedImport
 from ordered_set import OrderedSet
-
-
-@dataclasses.dataclass
-class ResolvedImport:
-    import_: Optional[AST.ReferenceImport]
-    prefix_for_qualified_names: AST.QualifiedName
 
 
 class ReferenceResolverImpl(ReferenceResolver):

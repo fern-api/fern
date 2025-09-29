@@ -4,7 +4,6 @@ require "json"
 require "net/http"
 require "securerandom"
 
-# Internal Types
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
 require_relative "seed/internal/types/utils"
@@ -25,8 +24,17 @@ require_relative "seed/internal/types/boolean"
 require_relative "seed/internal/types/enum"
 require_relative "seed/internal/types/hash"
 require_relative "seed/internal/types/unknown"
-
-# API Types
+require_relative "seed/errors/api_error"
+require_relative "seed/errors/response_error"
+require_relative "seed/errors/client_error"
+require_relative "seed/errors/redirect_error"
+require_relative "seed/errors/server_error"
+require_relative "seed/errors/timeout_error"
+require_relative "seed/internal/iterators/item_iterator"
+require_relative "seed/internal/iterators/cursor_item_iterator"
+require_relative "seed/internal/iterators/offset_item_iterator"
+require_relative "seed/internal/iterators/cursor_page_iterator"
+require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/admin/types/test"
 require_relative "seed/commons/types/map_type"
 require_relative "seed/commons/types/list_type"
@@ -225,8 +233,6 @@ require_relative "seed/v_2/v_3/problem/types/get_basic_solution_file_request"
 require_relative "seed/v_2/v_3/problem/types/get_basic_solution_file_response"
 require_relative "seed/v_2/v_3/problem/types/get_generated_test_case_file_request"
 require_relative "seed/v_2/v_3/problem/types/get_generated_test_case_template_file_request"
-
-# Client Types
 require_relative "seed/client"
 require_relative "seed/v_2/client"
 require_relative "seed/admin/client"
@@ -246,5 +252,8 @@ require_relative "seed/v_2/problem/client"
 require_relative "seed/v_2/v_3/client"
 require_relative "seed/v_2/v_3/problem/client"
 require_relative "seed/environment"
+<<<<<<< HEAD
 require_relative "../README.md"
 require_relative "../reference.md"
+=======
+>>>>>>> main

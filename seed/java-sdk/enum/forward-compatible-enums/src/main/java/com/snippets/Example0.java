@@ -18,7 +18,7 @@ public class Example0 {
                 .builder()
                 .operand(Operand.GREATER_THAN)
                 .operandOrColor(
-                    ColorOrOperand.ofColor(Color.RED)
+                    ColorOrOperand.of(Color.RED)
                 )
                 .maybeOperand(Operand.GREATER_THAN)
                 .build()

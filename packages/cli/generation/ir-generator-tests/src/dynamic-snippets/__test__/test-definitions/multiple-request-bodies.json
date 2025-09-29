@@ -59,7 +59,9 @@
                             "type": "primitive",
                             "value": "STRING"
                         }
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -90,7 +92,9 @@
                             "type": "primitive",
                             "value": "INTEGER"
                         }
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -123,7 +127,9 @@
                                 "type": "unknown"
                             }
                         }
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -154,7 +160,9 @@
                             "type": "primitive",
                             "value": "STRING"
                         }
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -217,7 +225,9 @@
                             "type": "primitive",
                             "value": "STRING"
                         }
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -248,7 +258,9 @@
                             "type": "primitive",
                             "value": "STRING"
                         }
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -411,7 +423,9 @@
                                     "type": "primitive",
                                     "value": "STRING"
                                 }
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -445,7 +459,9 @@
                                         "value": "STRING"
                                     }
                                 }
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -476,7 +492,9 @@
                                     "type": "primitive",
                                     "value": "STRING"
                                 }
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ]
                 },
@@ -589,5 +607,6 @@
             ]
         }
     },
+    "variables": null,
     "generatorConfig": null
 }

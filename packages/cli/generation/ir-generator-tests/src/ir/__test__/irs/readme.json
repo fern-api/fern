@@ -834,6 +834,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -1509,6 +1510,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": "Add a movie to the database"
                 },
@@ -1535,6 +1537,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -3667,6 +3670,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": "Retrieve a movie from the database based on the ID"
                 }
@@ -3725,6 +3729,18 @@
         "apiReferenceLink": "https://www.docs.fernapi.com",
         "bannerLink": "https://www.fernapi.com",
         "introduction": null,
+        "customSections": [
+            {
+                "title": "Custom Section",
+                "language": "typescript",
+                "content": "This is a custom section piped through the readme config in generators.yml"
+            },
+            {
+                "title": "Custom Section Multiline",
+                "language": "typescript",
+                "content": "This is a custom section with a multiline content.\nIt is piped through the readme config in generators.yml.\n"
+            }
+        ],
         "whiteLabel": false,
         "defaultEndpoint": "endpoint_imdb.createMovie",
         "features": {
@@ -3903,7 +3919,9 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_imdb:MovieId"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -3931,7 +3949,9 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -3959,7 +3979,9 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "DOUBLE"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -4057,7 +4079,9 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -4085,7 +4109,9 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "DOUBLE"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -4278,7 +4304,9 @@
                             "typeReference": {
                                 "type": "named",
                                 "value": "type_imdb:MovieId"
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ],
                     "body": null
@@ -4291,6 +4319,7 @@
         },
         "pathParameters": [],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,

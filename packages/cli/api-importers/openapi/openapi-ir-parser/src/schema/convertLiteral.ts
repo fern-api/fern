@@ -15,6 +15,7 @@ export function convertLiteral({
     nameOverride,
     generatedName,
     title,
+    wrapAsOptional,
     wrapAsNullable,
     value,
     description,
@@ -26,35 +27,14 @@ export function convertLiteral({
     generatedName: string;
     title: string | undefined;
     value: unknown;
+    wrapAsOptional: boolean;
     wrapAsNullable: boolean;
     description: string | undefined;
     availability: Availability | undefined;
     namespace: string | undefined;
     groupName: SdkGroupName | undefined;
 }): SchemaWithExample {
-    if (wrapAsNullable) {
-        return SchemaWithExample.nullable({
-            nameOverride,
-            generatedName,
-            title,
-            value: SchemaWithExample.literal({
-                nameOverride,
-                generatedName,
-                title,
-                value: createLiteralSchemaValue(value),
-                description,
-                availability,
-                namespace,
-                groupName
-            }),
-            description,
-            availability,
-            namespace,
-            groupName,
-            inline: undefined
-        });
-    }
-    return SchemaWithExample.literal({
+    let result: SchemaWithExample = SchemaWithExample.literal({
         nameOverride,
         generatedName,
         title,
@@ -64,4 +44,31 @@ export function convertLiteral({
         namespace,
         groupName
     });
+    if (wrapAsNullable) {
+        result = SchemaWithExample.nullable({
+            nameOverride,
+            generatedName,
+            title,
+            value: result,
+            description,
+            availability,
+            namespace,
+            groupName,
+            inline: undefined
+        });
+    }
+    if (wrapAsOptional) {
+        result = SchemaWithExample.optional({
+            nameOverride,
+            generatedName,
+            title,
+            value: result,
+            description,
+            availability,
+            namespace,
+            groupName,
+            inline: undefined
+        });
+    }
+    return result;
 }

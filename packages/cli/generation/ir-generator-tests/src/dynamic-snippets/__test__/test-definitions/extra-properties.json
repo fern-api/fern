@@ -59,7 +59,9 @@
                             "type": "string",
                             "value": "failure"
                         }
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": true
@@ -157,7 +159,9 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": true
@@ -336,7 +340,9 @@
                                     "type": "string",
                                     "value": "CreateUserRequest"
                                 }
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -367,7 +373,9 @@
                                     "type": "string",
                                     "value": "v1"
                                 }
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -395,7 +403,9 @@
                             "typeReference": {
                                 "type": "primitive",
                                 "value": "STRING"
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ]
                 },
@@ -412,5 +422,6 @@
     },
     "pathParameters": [],
     "environments": null,
+    "variables": null,
     "generatorConfig": null
 }

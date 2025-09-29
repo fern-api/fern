@@ -1,12 +1,12 @@
-using global::System.Threading.Tasks;
 using SeedExhaustive;
+using System.Threading.Tasks;
 using SeedExhaustive.Core;
 
 namespace Usage;
 
 public class Example31
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do() {
         var client = new SeedExhaustiveClient(
             token: "<token>",
             clientOptions: new ClientOptions{
@@ -15,7 +15,7 @@ public class Example31
         );
 
         await client.Endpoints.Primitive.GetAndReturnLongAsync(
-            1000000l
+            1000000L
         );
     }
 

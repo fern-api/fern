@@ -6,10 +6,18 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/exhaustive/fern/internal"
+	big "math/big"
+)
+
+var (
+	badObjectRequestInfoFieldMessage = big.NewInt(1 << 0)
 )
 
 type BadObjectRequestInfo struct {
 	Message string `json:"message" url:"message"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -26,6 +34,20 @@ func (b *BadObjectRequestInfo) GetExtraProperties() map[string]interface{} {
 	return b.extraProperties
 }
 
+func (b *BadObjectRequestInfo) require(field *big.Int) {
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
+	}
+	b.explicitFields.Or(b.explicitFields, field)
+}
+
+// SetMessage sets the Message field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *BadObjectRequestInfo) SetMessage(message string) {
+	b.Message = message
+	b.require(badObjectRequestInfoFieldMessage)
+}
+
 func (b *BadObjectRequestInfo) UnmarshalJSON(data []byte) error {
 	type unmarshaler BadObjectRequestInfo
 	var value unmarshaler
@@ -40,6 +62,17 @@ func (b *BadObjectRequestInfo) UnmarshalJSON(data []byte) error {
 	b.extraProperties = extraProperties
 	b.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (b *BadObjectRequestInfo) MarshalJSON() ([]byte, error) {
+	type embed BadObjectRequestInfo
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*b),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (b *BadObjectRequestInfo) String() string {

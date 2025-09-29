@@ -2,6 +2,7 @@ export { type FernOrganizationToken, type FernToken, type FernUserToken } from "
 export { createOrganizationIfDoesNotExist } from "./orgs/createOrganizationIfDoesNotExist";
 export { getOrganizationNameValidationError } from "./orgs/getOrganizationNameValidationError";
 export { getAccessToken, getToken, getUserToken } from "./persistence/getToken";
+export { removeToken } from "./persistence/removeToken";
 export { storeToken } from "./persistence/storeToken";
 export { getCurrentUser } from "./users/getCurrentUser";
 export { getUserIdFromToken } from "./verify/getPropertiesFromJwtToken";

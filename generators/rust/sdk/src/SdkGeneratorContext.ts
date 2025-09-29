@@ -2,8 +2,17 @@ import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractRustGeneratorContext, AsIsFileDefinition, AsIsFiles } from "@fern-api/rust-base";
 import { ModelCustomConfigSchema, ModelGeneratorContext } from "@fern-api/rust-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { HttpService, IntermediateRepresentation, ServiceId, Subpackage, SubpackageId } from "@fern-fern/ir-sdk/api";
+import {
+    FernFilepath,
+    HttpService,
+    IntermediateRepresentation,
+    Package,
+    ServiceId,
+    Subpackage,
+    SubpackageId
+} from "@fern-fern/ir-sdk/api";
 import { RustGeneratorAgent } from "./RustGeneratorAgent";
+import { ReadmeConfigBuilder } from "./readme";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
 export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomConfigSchema> {
@@ -19,12 +28,13 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
         this.generatorAgent = new RustGeneratorAgent({
             logger: this.logger,
             config: generatorConfig,
+            readmeConfigBuilder: new ReadmeConfigBuilder(),
             ir
         });
     }
 
     public getClientName(): string {
-        return this.configManager.get("clientName", `${this.ir.apiName.pascalCase.safeName}Client`);
+        return this.getClientClassName(this.ir.apiName.pascalCase.safeName);
     }
 
     public getApiClientBuilderClientName(): string {
@@ -37,15 +47,9 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
             // Single service - use the sub-client name
             return `${subpackages[0].name.pascalCase.safeName}Client`;
         } else {
-            // Multiple services or no subpackages - use the root client name
+            // Multiple services or no subpackages - use the root client name (which now uses clientClassName config)
             return this.getClientName();
         }
-    }
-
-    public getClientBuilderName(): string {
-        // For README snippets, we need the client builder name (e.g., ImdbClientBuilder)
-        const clientName = this.getApiClientBuilderClientName();
-        return `${clientName}Builder`;
     }
 
     public getCoreAsIsFiles(): AsIsFileDefinition[] {
@@ -68,16 +72,26 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
         return service;
     }
 
+    public getSubpackagesOrThrow(packageOrSubpackage: Package | Subpackage): [string, Subpackage][] {
+        return packageOrSubpackage.subpackages.map((subpackageId) => {
+            return [subpackageId, this.getSubpackageOrThrow(subpackageId)];
+        });
+    }
+
+    public getDirectoryForFernFilepath(fernFilepath: FernFilepath): string {
+        return fernFilepath.allParts.map((path) => path.snakeCase.safeName).join("/");
+    }
+
     public toModelGeneratorContext(): ModelGeneratorContext {
         return new ModelGeneratorContext(
             this.ir,
             this.config,
             ModelCustomConfigSchema.parse({
                 // Convert SDK config to model config - use centralized configuration manager
-                packageName: this.configManager.get("packageName"),
-                packageVersion: this.configManager.get("packageVersion"),
-                extraDependencies: this.configManager.get("extraDependencies"),
-                extraDevDependencies: this.configManager.get("extraDevDependencies"),
+                crateName: this.getCrateName(),
+                crateVersion: this.getCrateVersion(),
+                extraDependencies: this.getExtraDependencies(),
+                extraDevDependencies: this.getExtraDevDependencies(),
                 generateBuilders: false,
                 deriveDebug: true,
                 deriveClone: true

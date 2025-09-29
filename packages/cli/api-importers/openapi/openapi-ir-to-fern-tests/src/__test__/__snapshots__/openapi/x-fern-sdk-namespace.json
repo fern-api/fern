@@ -67,7 +67,7 @@
           "base-path": "",
           "endpoints": {
             "get": {
-              "auth": false,
+              "auth": undefined,
               "docs": "This endpoint should be in `auth/user.yml`",
               "examples": [
                 {
@@ -105,7 +105,6 @@ service:
     get:
       path: /auth/user
       method: GET
-      auth: false
       docs: This endpoint should be in `auth/user.yml`
       source:
         openapi: ../openapi.yml

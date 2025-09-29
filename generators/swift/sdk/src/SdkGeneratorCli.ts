@@ -21,6 +21,7 @@ import {
     SingleUrlEnvironmentGenerator,
     SubClientGenerator
 } from "./generators";
+import { ReferenceConfigAssembler } from "./reference";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
@@ -76,7 +77,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
 
     private async generateRootFiles(context: SdkGeneratorContext): Promise<void> {
         this.generatePackageSwiftFile(context);
-        await this.generateReadme(context);
+        await Promise.all([this.generateReadme(context), this.generateReference(context)]);
     }
 
     private generatePackageSwiftFile(context: SdkGeneratorContext): void {
@@ -96,6 +97,16 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             context.project.addRootFiles(new File("README.md", RelativeFilePath.of(""), content));
         } catch (e) {
             throw new Error(`Failed to generate README.md: ${extractErrorMessage(e)}`);
+        }
+    }
+
+    private async generateReference(context: SdkGeneratorContext): Promise<void> {
+        try {
+            const builder = new ReferenceConfigAssembler(context).buildReferenceConfigBuilder();
+            const content = await context.generatorAgent.generateReference(builder);
+            context.project.addRootFiles(new File("reference.md", RelativeFilePath.of(""), content));
+        } catch (e) {
+            throw new Error(`Failed to generate reference.md: ${extractErrorMessage(e)}`);
         }
     }
 
@@ -123,6 +134,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         path,
                         identifierOverride: endpointId
                     },
+                    // Snippets are marked as 'typescript' for compatibility with FernGeneratorExec, which will be deprecated.
                     snippet: FernGeneratorExec.EndpointSnippet.typescript({
                         client: generatedSnippet.snippet
                     })
@@ -210,6 +222,173 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         nameCandidateWithoutExtension: `${requestsContainerSymbolName}+${struct.name}`,
                         directory: context.requestsDirectory,
                         contents: [extension]
+                    });
+                } else if (endpoint.requestBody?.type === "fileUpload") {
+                    const properties: swift.Property[] = endpoint.requestBody.properties
+                        .map((p) =>
+                            p._visit({
+                                file: (fileProperty) => {
+                                    return fileProperty._visit({
+                                        file: (property) => {
+                                            return swift.property({
+                                                unsafeName: property.key.name.camelCase.unsafeName,
+                                                accessLevel: "public",
+                                                declarationType: "let",
+                                                type: swift.Type.custom("FormFile"),
+                                                docs: property.docs
+                                                    ? swift.docComment({ summary: property.docs })
+                                                    : undefined
+                                            });
+                                        },
+                                        fileArray: (property) => {
+                                            return swift.property({
+                                                unsafeName: property.key.name.camelCase.unsafeName,
+                                                accessLevel: "public",
+                                                declarationType: "let",
+                                                type: swift.Type.array(swift.Type.custom("FormFile")),
+                                                docs: property.docs
+                                                    ? swift.docComment({ summary: property.docs })
+                                                    : undefined
+                                            });
+                                        },
+                                        _other: () => null
+                                    });
+                                },
+                                bodyProperty: (property) => {
+                                    return swift.property({
+                                        unsafeName: property.name.name.camelCase.unsafeName,
+                                        accessLevel: "public",
+                                        declarationType: "let",
+                                        type: context.getSwiftTypeForTypeReference(property.valueType),
+                                        docs: property.docs ? swift.docComment({ summary: property.docs }) : undefined
+                                    });
+                                },
+                                _other: () => null
+                            })
+                        )
+                        .filter((p) => p !== null);
+
+                    const struct = swift.struct({
+                        name: context.project.symbolRegistry.getRequestTypeSymbolOrThrow(
+                            endpoint.id,
+                            endpoint.requestBody.name.pascalCase.unsafeName
+                        ),
+                        accessLevel: "public",
+                        properties,
+                        initializers: [
+                            swift.initializer({
+                                accessLevel: "public",
+                                parameters: properties.map((p) =>
+                                    swift.functionParameter({
+                                        argumentLabel: p.unsafeName,
+                                        unsafeName: p.unsafeName,
+                                        type: p.type,
+                                        defaultValue: p.type.isOptional ? swift.Expression.rawValue("nil") : undefined
+                                    })
+                                ),
+                                body: swift.CodeBlock.withStatements(
+                                    properties.map((p) =>
+                                        swift.Statement.propertyAssignment(
+                                            p.unsafeName,
+                                            swift.Expression.reference(p.unsafeName)
+                                        )
+                                    )
+                                ),
+                                multiline: true
+                            })
+                        ],
+                        docs: endpoint.requestBody.docs
+                            ? swift.docComment({ summary: endpoint.requestBody.docs })
+                            : undefined
+                    });
+                    const requestContainerExtension = swift.extension({
+                        name: requestsContainerSymbolName,
+                        nestedTypes: [struct]
+                    });
+
+                    const multipartFormFields: swift.Expression[] = endpoint.requestBody.properties
+                        .map((p) =>
+                            p._visit({
+                                file: (fileProperty) => {
+                                    return fileProperty._visit({
+                                        file: (property) => {
+                                            return swift.Expression.contextualMethodCall({
+                                                methodName: "file",
+                                                arguments_: [
+                                                    swift.functionArgument({
+                                                        value: swift.Expression.reference(
+                                                            property.key.name.camelCase.unsafeName
+                                                        )
+                                                    }),
+                                                    swift.functionArgument({
+                                                        label: "fieldName",
+                                                        value: swift.Expression.stringLiteral(property.key.wireValue)
+                                                    })
+                                                ]
+                                            });
+                                        },
+                                        fileArray: (property) => {
+                                            return swift.Expression.contextualMethodCall({
+                                                methodName: "fileArray",
+                                                arguments_: [
+                                                    swift.functionArgument({
+                                                        value: swift.Expression.reference(
+                                                            property.key.name.camelCase.unsafeName
+                                                        )
+                                                    }),
+                                                    swift.functionArgument({
+                                                        label: "fieldName",
+                                                        value: swift.Expression.stringLiteral(property.key.wireValue)
+                                                    })
+                                                ]
+                                            });
+                                        },
+                                        _other: () => null
+                                    });
+                                },
+                                bodyProperty: (property) => {
+                                    return swift.Expression.contextualMethodCall({
+                                        methodName: "field",
+                                        arguments_: [
+                                            swift.functionArgument({
+                                                value: swift.Expression.reference(
+                                                    property.name.name.camelCase.unsafeName
+                                                )
+                                            }),
+                                            swift.functionArgument({
+                                                label: "fieldName",
+                                                value: swift.Expression.stringLiteral(property.name.wireValue)
+                                            })
+                                        ]
+                                    });
+                                },
+                                _other: () => null
+                            })
+                        )
+                        .filter((p) => p !== null);
+
+                    const requestStructExtension = swift.extension({
+                        name: context.project.symbolRegistry.getFullyQualifiedRequestTypeSymbolOrThrow(
+                            endpoint.id,
+                            endpoint.requestBody.name.pascalCase.unsafeName
+                        ),
+                        conformances: [swift.Protocol.MultipartFormDataConvertible],
+                        computedProperties: [
+                            swift.computedProperty({
+                                unsafeName: "multipartFormFields",
+                                type: swift.Type.array(swift.Type.custom("MultipartFormField")),
+                                body: swift.Expression.arrayLiteral({
+                                    elements: multipartFormFields,
+                                    multiline: true
+                                })
+                            })
+                        ]
+                    });
+
+                    context.project.addSourceFile({
+                        nameCandidateWithoutExtension: `${requestsContainerSymbolName}+${struct.name}`,
+                        directory: context.requestsDirectory,
+                        contents: [requestContainerExtension, swift.LineBreak.double(), requestStructExtension]
                     });
                 }
             });

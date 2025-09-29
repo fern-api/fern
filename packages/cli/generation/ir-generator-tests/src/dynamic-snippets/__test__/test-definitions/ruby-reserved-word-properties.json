@@ -1,0 +1,942 @@
+{
+    "version": "1.0.0",
+    "types": {
+        "type_service:Foo": {
+            "type": "object",
+            "declaration": {
+                "name": {
+                    "originalName": "Foo",
+                    "camelCase": {
+                        "unsafeName": "foo",
+                        "safeName": "foo"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "foo",
+                        "safeName": "foo"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "FOO",
+                        "safeName": "FOO"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Foo",
+                        "safeName": "Foo"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                }
+            },
+            "properties": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "id",
+                            "camelCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "id",
+                                "safeName": "id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ID",
+                                "safeName": "ID"
+                            }
+                        },
+                        "wireValue": "id"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "bar",
+                            "camelCase": {
+                                "unsafeName": "bar",
+                                "safeName": "bar"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "bar",
+                                "safeName": "bar"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "BAR",
+                                "safeName": "BAR"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Bar",
+                                "safeName": "Bar"
+                            }
+                        },
+                        "wireValue": "bar"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "baz",
+                            "camelCase": {
+                                "unsafeName": "baz",
+                                "safeName": "baz"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "baz",
+                                "safeName": "baz"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "BAZ",
+                                "safeName": "BAZ"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Baz",
+                                "safeName": "Baz"
+                            }
+                        },
+                        "wireValue": "baz"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "qux",
+                            "camelCase": {
+                                "unsafeName": "qux",
+                                "safeName": "qux"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "qux",
+                                "safeName": "qux"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "QUX",
+                                "safeName": "QUX"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Qux",
+                                "safeName": "Qux"
+                            }
+                        },
+                        "wireValue": "qux"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "object_id",
+                            "camelCase": {
+                                "unsafeName": "objectID",
+                                "safeName": "objectID"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "object_id",
+                                "safeName": "object_id"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "OBJECT_ID",
+                                "safeName": "OBJECT_ID"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ObjectID",
+                                "safeName": "ObjectID"
+                            }
+                        },
+                        "wireValue": "object_id"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "hash",
+                            "camelCase": {
+                                "unsafeName": "hash",
+                                "safeName": "hash"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "hash",
+                                "safeName": "hash"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "HASH",
+                                "safeName": "HASH"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Hash",
+                                "safeName": "Hash"
+                            }
+                        },
+                        "wireValue": "hash"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "eql",
+                            "camelCase": {
+                                "unsafeName": "eql",
+                                "safeName": "eql"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "eql",
+                                "safeName": "eql"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "EQL",
+                                "safeName": "EQL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Eql",
+                                "safeName": "Eql"
+                            }
+                        },
+                        "wireValue": "eql"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "equal",
+                            "camelCase": {
+                                "unsafeName": "equal",
+                                "safeName": "equal"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "equal",
+                                "safeName": "equal"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "EQUAL",
+                                "safeName": "EQUAL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Equal",
+                                "safeName": "Equal"
+                            }
+                        },
+                        "wireValue": "equal"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "method",
+                            "camelCase": {
+                                "unsafeName": "method",
+                                "safeName": "method"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "method",
+                                "safeName": "method"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "METHOD",
+                                "safeName": "METHOD"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Method",
+                                "safeName": "Method"
+                            }
+                        },
+                        "wireValue": "method"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "send",
+                            "camelCase": {
+                                "unsafeName": "send",
+                                "safeName": "send"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "send",
+                                "safeName": "send"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SEND",
+                                "safeName": "SEND"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Send",
+                                "safeName": "Send"
+                            }
+                        },
+                        "wireValue": "send"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "respond_to",
+                            "camelCase": {
+                                "unsafeName": "respondTo",
+                                "safeName": "respondTo"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "respond_to",
+                                "safeName": "respond_to"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "RESPOND_TO",
+                                "safeName": "RESPOND_TO"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "RespondTo",
+                                "safeName": "RespondTo"
+                            }
+                        },
+                        "wireValue": "respond_to"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "respond_to_missing",
+                            "camelCase": {
+                                "unsafeName": "respondToMissing",
+                                "safeName": "respondToMissing"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "respond_to_missing",
+                                "safeName": "respond_to_missing"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "RESPOND_TO_MISSING",
+                                "safeName": "RESPOND_TO_MISSING"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "RespondToMissing",
+                                "safeName": "RespondToMissing"
+                            }
+                        },
+                        "wireValue": "respond_to_missing"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "instance_of",
+                            "camelCase": {
+                                "unsafeName": "instanceOf",
+                                "safeName": "instanceOf"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "instance_of",
+                                "safeName": "instance_of"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "INSTANCE_OF",
+                                "safeName": "INSTANCE_OF"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "InstanceOf",
+                                "safeName": "InstanceOf"
+                            }
+                        },
+                        "wireValue": "instance_of"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "kind_of",
+                            "camelCase": {
+                                "unsafeName": "kindOf",
+                                "safeName": "kindOf"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "kind_of",
+                                "safeName": "kind_of"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "KIND_OF",
+                                "safeName": "KIND_OF"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "KindOf",
+                                "safeName": "KindOf"
+                            }
+                        },
+                        "wireValue": "kind_of"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "is_a",
+                            "camelCase": {
+                                "unsafeName": "isA",
+                                "safeName": "isA"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "is_a",
+                                "safeName": "is_a"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "IS_A",
+                                "safeName": "IS_A"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "IsA",
+                                "safeName": "IsA"
+                            }
+                        },
+                        "wireValue": "is_a"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "extend",
+                            "camelCase": {
+                                "unsafeName": "extend",
+                                "safeName": "extend"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "extend",
+                                "safeName": "extend"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "EXTEND",
+                                "safeName": "EXTEND"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Extend",
+                                "safeName": "Extend"
+                            }
+                        },
+                        "wireValue": "extend"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "singleton_class",
+                            "camelCase": {
+                                "unsafeName": "singletonClass",
+                                "safeName": "singletonClass"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "singleton_class",
+                                "safeName": "singleton_class"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SINGLETON_CLASS",
+                                "safeName": "SINGLETON_CLASS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "SingletonClass",
+                                "safeName": "SingletonClass"
+                            }
+                        },
+                        "wireValue": "singleton_class"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "instance_variables",
+                            "camelCase": {
+                                "unsafeName": "instanceVariables",
+                                "safeName": "instanceVariables"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "instance_variables",
+                                "safeName": "instance_variables"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "INSTANCE_VARIABLES",
+                                "safeName": "INSTANCE_VARIABLES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "InstanceVariables",
+                                "safeName": "InstanceVariables"
+                            }
+                        },
+                        "wireValue": "instance_variables"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "instance_variable_get",
+                            "camelCase": {
+                                "unsafeName": "instanceVariableGet",
+                                "safeName": "instanceVariableGet"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "instance_variable_get",
+                                "safeName": "instance_variable_get"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "INSTANCE_VARIABLE_GET",
+                                "safeName": "INSTANCE_VARIABLE_GET"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "InstanceVariableGet",
+                                "safeName": "InstanceVariableGet"
+                            }
+                        },
+                        "wireValue": "instance_variable_get"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "instance_variable_set",
+                            "camelCase": {
+                                "unsafeName": "instanceVariableSet",
+                                "safeName": "instanceVariableSet"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "instance_variable_set",
+                                "safeName": "instance_variable_set"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "INSTANCE_VARIABLE_SET",
+                                "safeName": "INSTANCE_VARIABLE_SET"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "InstanceVariableSet",
+                                "safeName": "InstanceVariableSet"
+                            }
+                        },
+                        "wireValue": "instance_variable_set"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "instance_variable_defined",
+                            "camelCase": {
+                                "unsafeName": "instanceVariableDefined",
+                                "safeName": "instanceVariableDefined"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "instance_variable_defined",
+                                "safeName": "instance_variable_defined"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "INSTANCE_VARIABLE_DEFINED",
+                                "safeName": "INSTANCE_VARIABLE_DEFINED"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "InstanceVariableDefined",
+                                "safeName": "InstanceVariableDefined"
+                            }
+                        },
+                        "wireValue": "instance_variable_defined"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "remove_instance_variable",
+                            "camelCase": {
+                                "unsafeName": "removeInstanceVariable",
+                                "safeName": "removeInstanceVariable"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "remove_instance_variable",
+                                "safeName": "remove_instance_variable"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REMOVE_INSTANCE_VARIABLE",
+                                "safeName": "REMOVE_INSTANCE_VARIABLE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "RemoveInstanceVariable",
+                                "safeName": "RemoveInstanceVariable"
+                            }
+                        },
+                        "wireValue": "remove_instance_variable"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "public_methods",
+                            "camelCase": {
+                                "unsafeName": "publicMethods",
+                                "safeName": "publicMethods"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "public_methods",
+                                "safeName": "public_methods"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PUBLIC_METHODS",
+                                "safeName": "PUBLIC_METHODS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "PublicMethods",
+                                "safeName": "PublicMethods"
+                            }
+                        },
+                        "wireValue": "public_methods"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "private_methods",
+                            "camelCase": {
+                                "unsafeName": "privateMethods",
+                                "safeName": "privateMethods"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "private_methods",
+                                "safeName": "private_methods"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PRIVATE_METHODS",
+                                "safeName": "PRIVATE_METHODS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "PrivateMethods",
+                                "safeName": "PrivateMethods"
+                            }
+                        },
+                        "wireValue": "private_methods"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "protected_methods",
+                            "camelCase": {
+                                "unsafeName": "protectedMethods",
+                                "safeName": "protectedMethods"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "protected_methods",
+                                "safeName": "protected_methods"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "PROTECTED_METHODS",
+                                "safeName": "PROTECTED_METHODS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ProtectedMethods",
+                                "safeName": "ProtectedMethods"
+                            }
+                        },
+                        "wireValue": "protected_methods"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "singleton_methods",
+                            "camelCase": {
+                                "unsafeName": "singletonMethods",
+                                "safeName": "singletonMethods"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "singleton_methods",
+                                "safeName": "singleton_methods"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SINGLETON_METHODS",
+                                "safeName": "SINGLETON_METHODS"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "SingletonMethods",
+                                "safeName": "SingletonMethods"
+                            }
+                        },
+                        "wireValue": "singleton_methods"
+                    },
+                    "typeReference": {
+                        "type": "primitive",
+                        "value": "STRING"
+                    },
+                    "propertyAccess": null,
+                    "variable": null
+                }
+            ],
+            "additionalProperties": false
+        }
+    },
+    "headers": [],
+    "endpoints": {
+        "endpoint_service.get": {
+            "auth": null,
+            "declaration": {
+                "name": {
+                    "originalName": "get",
+                    "camelCase": {
+                        "unsafeName": "get",
+                        "safeName": "get"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "get",
+                        "safeName": "get"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "GET",
+                        "safeName": "GET"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Get",
+                        "safeName": "Get"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                }
+            },
+            "location": {
+                "method": "GET",
+                "path": "/ruby-reserved-word-properties/getFoo"
+            },
+            "request": {
+                "type": "body",
+                "pathParameters": [],
+                "body": null
+            },
+            "response": {
+                "type": "json"
+            },
+            "examples": null
+        }
+    },
+    "pathParameters": [],
+    "environments": null,
+    "variables": null,
+    "generatorConfig": null
+}

@@ -1,0 +1,115 @@
+{
+  "type": "object",
+  "properties": {
+    "hasNextPage": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "page": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/inline-users.inline-users.Page"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "total_count": {
+      "type": "integer"
+    },
+    "data": {
+      "$ref": "#/definitions/inline-users.inline-users.Users"
+    }
+  },
+  "required": [
+    "total_count",
+    "data"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "inline-users.inline-users.NextPage": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer"
+        },
+        "starting_after": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "page",
+        "starting_after"
+      ],
+      "additionalProperties": false
+    },
+    "inline-users.inline-users.Page": {
+      "type": "object",
+      "properties": {
+        "page": {
+          "type": "integer"
+        },
+        "next": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/inline-users.inline-users.NextPage"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "per_page": {
+          "type": "integer"
+        },
+        "total_page": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "page",
+        "per_page",
+        "total_page"
+      ],
+      "additionalProperties": false
+    },
+    "inline-users.inline-users.User": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "name",
+        "id"
+      ],
+      "additionalProperties": false
+    },
+    "inline-users.inline-users.Users": {
+      "type": "object",
+      "properties": {
+        "users": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/inline-users.inline-users.User"
+          }
+        }
+      },
+      "required": [
+        "users"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

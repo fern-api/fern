@@ -17,7 +17,9 @@ import {
     TypeParameter,
     YieldParameter
 } from "./ast";
+import { Begin } from "./ast/Begin";
 import { IfElse } from "./ast/IfElse";
+import { Raise } from "./ast/Raise";
 
 export {
     Class_,
@@ -41,6 +43,18 @@ export type { HashEntry } from "./ast/TypeLiteral";
 
 export function codeblock(arg: CodeBlock.Arg): CodeBlock {
     return new CodeBlock(arg);
+}
+
+export function trueValue(): CodeBlock {
+    return codeblock("true");
+}
+
+export function falseValue(): CodeBlock {
+    return codeblock("false");
+}
+
+export function nilValue(): CodeBlock {
+    return codeblock("nil");
 }
 
 export const parameters = {
@@ -107,6 +121,14 @@ export function positionalArgument(args: PositionalArgument.Args): PositionalArg
 
 export function ifElse(args: IfElse.Args): IfElse {
     return new IfElse(args);
+}
+
+export function begin(args: Begin.Args): Begin {
+    return new Begin(args);
+}
+
+export function raise(args: Raise.Args): Raise {
+    return new Raise(args);
 }
 
 export function wrapInModules(node: AstNode, modules: Module_[]): AstNode {

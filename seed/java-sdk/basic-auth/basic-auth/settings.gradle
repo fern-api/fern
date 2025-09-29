@@ -1,0 +1,3 @@
+rootProject.name = 'basic-auth'
+
+include 'sample-app'

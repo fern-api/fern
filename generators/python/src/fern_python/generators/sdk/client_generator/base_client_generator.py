@@ -8,8 +8,10 @@ from .constants import DEFAULT_BODY_PARAMETER_VALUE
 from .endpoint_metadata_collector import EndpointMetadataCollector
 from .endpoint_response_code_writer import EndpointResponseCodeWriter
 from fern_python.codegen import AST, SourceFile
-from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
+from fern_python.codegen.ast.ast_node.ast_node_metadata import AstNodeMetadata
+from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriter, CodeWriterFunction
 from fern_python.codegen.imports_manager import ImportsManager
+from fern_python.codegen.reference_resolver import ReferenceResolver
 from fern_python.snippet import SnippetRegistry, SnippetWriter
 from typing_extensions import Unpack
 
@@ -47,6 +49,7 @@ class BaseClientGeneratorKwargs(typing.TypedDict):
     endpoint_metadata_collector: EndpointMetadataCollector
     websocket: Optional[ir_types.WebSocketChannel]
     imports_manager: ImportsManager
+    reference_resolver: ReferenceResolver
 
 
 class BaseClientGenerator(ABC, typing.Generic[ConstructorParameterT]):
@@ -66,6 +69,7 @@ class BaseClientGenerator(ABC, typing.Generic[ConstructorParameterT]):
         self._endpoint_metadata_collector = kwargs["endpoint_metadata_collector"]
         self._websocket = kwargs["websocket"]
         self._imports_manager = kwargs["imports_manager"]
+        self._reference_resolver = kwargs["reference_resolver"]
         self._is_default_body_parameter_used = False
 
     def generate(self, source_file: SourceFile) -> None:
@@ -218,14 +222,13 @@ class BaseClientGenerator(ABC, typing.Generic[ConstructorParameterT]):
             kwargs=kwargs,
         )
 
-    def _write_lazy_import_property(
+    def _generate_lazy_import_property(
         self,
         *,
-        writer: AST.NodeWriter,
         subpackage: ir_types.Subpackage,
         subpackage_id: ir_types.SubpackageId,
         is_async: bool,
-    ) -> None:
+    ) -> list[AST.AstNode]:
         attr_name = f"self._{subpackage.name.snake_case.safe_name}"
         service_instantiation = self._get_subpackage_service_instantiation(
             subpackage_id=subpackage_id, is_async=is_async
@@ -234,18 +237,25 @@ class BaseClientGenerator(ABC, typing.Generic[ConstructorParameterT]):
         if service_import is None:
             raise ValueError(f"Could not evaluate import for {subpackage.name.snake_case.safe_name}")
 
-        writer.write_node(
+        lazy_import_statement = CodeWriter(
+            lambda writer: writer.write_line(
+                self._imports_manager.get_resolved_import_as_string(
+                    import_=service_import,
+                    reference_resolver=self._reference_resolver,
+                    noqas=["E402"],
+                )
+            )
+        )
+        # HACK(tjb9dc): We need this to be truly lazy, since we are managing the references/imports manually
+        lazy_import_statement.get_metadata = lambda: AstNodeMetadata()  # type:ignore[method-assign]
+
+        return [
             AST.ConditionalTree(
                 conditions=[
                     AST.IfConditionLeaf(
                         condition=AST.Expression(f"{attr_name} is None"),
                         code=[
-                            AST.Expression(
-                                self._imports_manager.get_import_as_string(
-                                    import_=service_import,
-                                    noqas=["E402"],
-                                )
-                            ),
+                            lazy_import_statement,
                             AST.VariableDeclaration(
                                 name=attr_name,
                                 initializer=AST.Expression(service_instantiation),
@@ -254,31 +264,15 @@ class BaseClientGenerator(ABC, typing.Generic[ConstructorParameterT]):
                     )
                 ],
                 else_code=None,
-            )
-        )
-        writer.write_node(AST.ReturnStatement(AST.Expression(attr_name)))
+            ),
+            AST.ReturnStatement(AST.Expression(attr_name)),
+        ]
 
     def _generate_lazy_import_properties(self, *, class_declaration: AST.ClassDeclaration, is_async: bool) -> None:
         if self._context.custom_config.lazy_imports:
             for subpackage_id in self._package.subpackages:
                 subpackage = self._context.ir.subpackages[subpackage_id]
                 if subpackage.has_endpoints_in_tree:
-
-                    def make_lazy_import_property(
-                        current_subpackage: ir_types.Subpackage, current_subpackage_id: ir_types.SubpackageId
-                    ) -> AST.CodeWriterFunction:
-                        # This creates a NEW local scope with NEW local variables
-                        def _write_lazy_import_property(writer: AST.NodeWriter) -> None:
-                            # These reference the LOCAL variables, not the outer ones
-                            self._write_lazy_import_property(
-                                writer=writer,
-                                subpackage=current_subpackage,
-                                subpackage_id=current_subpackage_id,
-                                is_async=is_async,
-                            )
-
-                        return _write_lazy_import_property
-
                     class_declaration.add_method(
                         declaration=AST.FunctionDeclaration(
                             name=subpackage.name.snake_case.safe_name,
@@ -289,10 +283,10 @@ class BaseClientGenerator(ABC, typing.Generic[ConstructorParameterT]):
                                     AST.Reference(qualified_name_excluding_import=("property",), import_=None)
                                 )
                             ],
-                            body=AST.CodeWriter(
-                                make_lazy_import_property(
-                                    current_subpackage=subpackage, current_subpackage_id=subpackage_id
-                                )
+                            body=self._generate_lazy_import_property(
+                                subpackage=subpackage,
+                                subpackage_id=subpackage_id,
+                                is_async=is_async,
                             ),
                         )
                     )

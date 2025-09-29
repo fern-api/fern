@@ -1,7 +1,6 @@
 import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
 
 interface RustCustomConfigSchema {
-    packageName?: string;
     crateName?: string;
     clientName?: string;
 }
@@ -23,7 +22,6 @@ const DEFAULT_CONFIG: FernGeneratorExec.GeneratorConfig = {
     writeUnitTests: false,
     generateOauthClients: false,
     customConfig: {
-        packageName: "acme",
         crateName: "acme_api",
         clientName: "Client"
     } as RustCustomConfigSchema

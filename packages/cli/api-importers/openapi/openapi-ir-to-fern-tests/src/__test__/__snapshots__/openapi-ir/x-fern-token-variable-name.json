@@ -60,6 +60,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/completions/chat",
       "examples": [

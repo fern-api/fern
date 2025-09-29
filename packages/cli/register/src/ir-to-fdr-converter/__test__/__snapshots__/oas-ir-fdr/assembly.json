@@ -4955,7 +4955,7 @@
                 "text": "string",
                 "words": [
                   {
-                    "confidence": 1.1,
+                    "confidence": 0.5,
                     "start": 1,
                     "end": 1,
                     "text": "string",
@@ -4965,13 +4965,13 @@
                 "utterances": [
                   {
                     "channel": "string",
-                    "confidence": 1.1,
+                    "confidence": 0.5,
                     "start": 1,
                     "end": 1,
                     "text": "string",
                     "words": [
                       {
-                        "confidence": 1.1,
+                        "confidence": 0.5,
                         "start": 1,
                         "end": 1,
                         "text": "string",
@@ -4980,7 +4980,7 @@
                     ]
                   }
                 ],
-                "confidence": 1.1,
+                "confidence": 0.5,
                 "audio_duration": 1.1,
                 "punctuate": true,
                 "format_text": true,
@@ -4995,7 +4995,7 @@
                   "results": [
                     {
                       "count": 1,
-                      "rank": 1.1,
+                      "rank": 0.5,
                       "text": "string",
                       "timestamps": [
                         {
@@ -5031,8 +5031,8 @@
                       "labels": [
                         {
                           "label": "string",
-                          "confidence": 1.1,
-                          "severity": 1.1
+                          "confidence": 0.5,
+                          "severity": 0.5
                         }
                       ],
                       "sentences_idx_start": 1,
@@ -5054,7 +5054,7 @@
                       "text": "string",
                       "labels": [
                         {
-                          "relevance": 1.1,
+                          "relevance": 0.5,
                           "label": "string"
                         }
                       ],
@@ -5101,7 +5101,7 @@
                     "start": 1,
                     "end": 1,
                     "sentiment": "POSITIVE",
-                    "confidence": 1.1,
+                    "confidence": 0.5,
                     "speaker": "string"
                   }
                 ],
@@ -5114,7 +5114,7 @@
                     "end": 1
                   }
                 ],
-                "speech_threshold": 1.1,
+                "speech_threshold": 0.5,
                 "throttled": true,
                 "error": "string"
               },
@@ -5130,7 +5130,7 @@
                   "text": "string",
                   "words": [
                     {
-                      "confidence": 1.1,
+                      "confidence": 0.5,
                       "start": 1,
                       "end": 1,
                       "text": "string",
@@ -5140,13 +5140,13 @@
                   "utterances": [
                     {
                       "channel": "string",
-                      "confidence": 1.1,
+                      "confidence": 0.5,
                       "start": 1,
                       "end": 1,
                       "text": "string",
                       "words": [
                         {
-                          "confidence": 1.1,
+                          "confidence": 0.5,
                           "start": 1,
                           "end": 1,
                           "text": "string",
@@ -5155,7 +5155,7 @@
                       ]
                     }
                   ],
-                  "confidence": 1.1,
+                  "confidence": 0.5,
                   "audio_duration": 1.1,
                   "punctuate": true,
                   "format_text": true,
@@ -5170,7 +5170,7 @@
                     "results": [
                       {
                         "count": 1,
-                        "rank": 1.1,
+                        "rank": 0.5,
                         "text": "string",
                         "timestamps": [
                           {
@@ -5206,8 +5206,8 @@
                         "labels": [
                           {
                             "label": "string",
-                            "confidence": 1.1,
-                            "severity": 1.1
+                            "confidence": 0.5,
+                            "severity": 0.5
                           }
                         ],
                         "sentences_idx_start": 1,
@@ -5229,7 +5229,7 @@
                         "text": "string",
                         "labels": [
                           {
-                            "relevance": 1.1,
+                            "relevance": 0.5,
                             "label": "string"
                           }
                         ],
@@ -5276,7 +5276,7 @@
                       "start": 1,
                       "end": 1,
                       "sentiment": "POSITIVE",
-                      "confidence": 1.1,
+                      "confidence": 0.5,
                       "speaker": "string"
                     }
                   ],
@@ -5289,7 +5289,7 @@
                       "end": 1
                     }
                   ],
-                  "speech_threshold": 1.1,
+                  "speech_threshold": 0.5,
                   "throttled": true,
                   "error": "string"
                 }
@@ -5486,7 +5486,7 @@
                 "text": "string",
                 "words": [
                   {
-                    "confidence": 1.1,
+                    "confidence": 0.5,
                     "start": 1,
                     "end": 1,
                     "text": "string",
@@ -5496,13 +5496,13 @@
                 "utterances": [
                   {
                     "channel": "string",
-                    "confidence": 1.1,
+                    "confidence": 0.5,
                     "start": 1,
                     "end": 1,
                     "text": "string",
                     "words": [
                       {
-                        "confidence": 1.1,
+                        "confidence": 0.5,
                         "start": 1,
                         "end": 1,
                         "text": "string",
@@ -5511,7 +5511,7 @@
                     ]
                   }
                 ],
-                "confidence": 1.1,
+                "confidence": 0.5,
                 "audio_duration": 1.1,
                 "punctuate": true,
                 "format_text": true,
@@ -5526,7 +5526,7 @@
                   "results": [
                     {
                       "count": 1,
-                      "rank": 1.1,
+                      "rank": 0.5,
                       "text": "string",
                       "timestamps": [
                         {
@@ -5562,8 +5562,8 @@
                       "labels": [
                         {
                           "label": "string",
-                          "confidence": 1.1,
-                          "severity": 1.1
+                          "confidence": 0.5,
+                          "severity": 0.5
                         }
                       ],
                       "sentences_idx_start": 1,
@@ -5585,7 +5585,7 @@
                       "text": "string",
                       "labels": [
                         {
-                          "relevance": 1.1,
+                          "relevance": 0.5,
                           "label": "string"
                         }
                       ],
@@ -5632,7 +5632,7 @@
                     "start": 1,
                     "end": 1,
                     "sentiment": "POSITIVE",
-                    "confidence": 1.1,
+                    "confidence": 0.5,
                     "speaker": "string"
                   }
                 ],
@@ -5645,7 +5645,7 @@
                     "end": 1
                   }
                 ],
-                "speech_threshold": 1.1,
+                "speech_threshold": 0.5,
                 "throttled": true,
                 "error": "string"
               },
@@ -5661,7 +5661,7 @@
                   "text": "string",
                   "words": [
                     {
-                      "confidence": 1.1,
+                      "confidence": 0.5,
                       "start": 1,
                       "end": 1,
                       "text": "string",
@@ -5671,13 +5671,13 @@
                   "utterances": [
                     {
                       "channel": "string",
-                      "confidence": 1.1,
+                      "confidence": 0.5,
                       "start": 1,
                       "end": 1,
                       "text": "string",
                       "words": [
                         {
-                          "confidence": 1.1,
+                          "confidence": 0.5,
                           "start": 1,
                           "end": 1,
                           "text": "string",
@@ -5686,7 +5686,7 @@
                       ]
                     }
                   ],
-                  "confidence": 1.1,
+                  "confidence": 0.5,
                   "audio_duration": 1.1,
                   "punctuate": true,
                   "format_text": true,
@@ -5701,7 +5701,7 @@
                     "results": [
                       {
                         "count": 1,
-                        "rank": 1.1,
+                        "rank": 0.5,
                         "text": "string",
                         "timestamps": [
                           {
@@ -5737,8 +5737,8 @@
                         "labels": [
                           {
                             "label": "string",
-                            "confidence": 1.1,
-                            "severity": 1.1
+                            "confidence": 0.5,
+                            "severity": 0.5
                           }
                         ],
                         "sentences_idx_start": 1,
@@ -5760,7 +5760,7 @@
                         "text": "string",
                         "labels": [
                           {
-                            "relevance": 1.1,
+                            "relevance": 0.5,
                             "label": "string"
                           }
                         ],
@@ -5807,7 +5807,7 @@
                       "start": 1,
                       "end": 1,
                       "sentiment": "POSITIVE",
-                      "confidence": 1.1,
+                      "confidence": 0.5,
                       "speaker": "string"
                     }
                   ],
@@ -5820,7 +5820,7 @@
                       "end": 1
                     }
                   ],
-                  "speech_threshold": 1.1,
+                  "speech_threshold": 0.5,
                   "throttled": true,
                   "error": "string"
                 }
@@ -6017,7 +6017,7 @@
                 "text": "string",
                 "words": [
                   {
-                    "confidence": 1.1,
+                    "confidence": 0.5,
                     "start": 1,
                     "end": 1,
                     "text": "string",
@@ -6027,13 +6027,13 @@
                 "utterances": [
                   {
                     "channel": "string",
-                    "confidence": 1.1,
+                    "confidence": 0.5,
                     "start": 1,
                     "end": 1,
                     "text": "string",
                     "words": [
                       {
-                        "confidence": 1.1,
+                        "confidence": 0.5,
                         "start": 1,
                         "end": 1,
                         "text": "string",
@@ -6042,7 +6042,7 @@
                     ]
                   }
                 ],
-                "confidence": 1.1,
+                "confidence": 0.5,
                 "audio_duration": 1.1,
                 "punctuate": true,
                 "format_text": true,
@@ -6057,7 +6057,7 @@
                   "results": [
                     {
                       "count": 1,
-                      "rank": 1.1,
+                      "rank": 0.5,
                       "text": "string",
                       "timestamps": [
                         {
@@ -6093,8 +6093,8 @@
                       "labels": [
                         {
                           "label": "string",
-                          "confidence": 1.1,
-                          "severity": 1.1
+                          "confidence": 0.5,
+                          "severity": 0.5
                         }
                       ],
                       "sentences_idx_start": 1,
@@ -6116,7 +6116,7 @@
                       "text": "string",
                       "labels": [
                         {
-                          "relevance": 1.1,
+                          "relevance": 0.5,
                           "label": "string"
                         }
                       ],
@@ -6163,7 +6163,7 @@
                     "start": 1,
                     "end": 1,
                     "sentiment": "POSITIVE",
-                    "confidence": 1.1,
+                    "confidence": 0.5,
                     "speaker": "string"
                   }
                 ],
@@ -6176,7 +6176,7 @@
                     "end": 1
                   }
                 ],
-                "speech_threshold": 1.1,
+                "speech_threshold": 0.5,
                 "throttled": true,
                 "error": "string"
               },
@@ -6192,7 +6192,7 @@
                   "text": "string",
                   "words": [
                     {
-                      "confidence": 1.1,
+                      "confidence": 0.5,
                       "start": 1,
                       "end": 1,
                       "text": "string",
@@ -6202,13 +6202,13 @@
                   "utterances": [
                     {
                       "channel": "string",
-                      "confidence": 1.1,
+                      "confidence": 0.5,
                       "start": 1,
                       "end": 1,
                       "text": "string",
                       "words": [
                         {
-                          "confidence": 1.1,
+                          "confidence": 0.5,
                           "start": 1,
                           "end": 1,
                           "text": "string",
@@ -6217,7 +6217,7 @@
                       ]
                     }
                   ],
-                  "confidence": 1.1,
+                  "confidence": 0.5,
                   "audio_duration": 1.1,
                   "punctuate": true,
                   "format_text": true,
@@ -6232,7 +6232,7 @@
                     "results": [
                       {
                         "count": 1,
-                        "rank": 1.1,
+                        "rank": 0.5,
                         "text": "string",
                         "timestamps": [
                           {
@@ -6268,8 +6268,8 @@
                         "labels": [
                           {
                             "label": "string",
-                            "confidence": 1.1,
-                            "severity": 1.1
+                            "confidence": 0.5,
+                            "severity": 0.5
                           }
                         ],
                         "sentences_idx_start": 1,
@@ -6291,7 +6291,7 @@
                         "text": "string",
                         "labels": [
                           {
-                            "relevance": 1.1,
+                            "relevance": 0.5,
                             "label": "string"
                           }
                         ],
@@ -6338,7 +6338,7 @@
                       "start": 1,
                       "end": 1,
                       "sentiment": "POSITIVE",
-                      "confidence": 1.1,
+                      "confidence": 0.5,
                       "speaker": "string"
                     }
                   ],
@@ -6351,7 +6351,7 @@
                       "end": 1
                     }
                   ],
-                  "speech_threshold": 1.1,
+                  "speech_threshold": 0.5,
                   "throttled": true,
                   "error": "string"
                 }
@@ -6752,17 +6752,17 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "id": "string",
-                "confidence": 1.1,
+                "confidence": 0.5,
                 "audio_duration": 1.1,
                 "sentences": [
                   {
                     "text": "string",
                     "start": 1,
                     "end": 1,
-                    "confidence": 1.1,
+                    "confidence": 0.5,
                     "words": [
                       {
-                        "confidence": 1.1,
+                        "confidence": 0.5,
                         "start": 1,
                         "end": 1,
                         "text": "string",
@@ -6776,17 +6776,17 @@
                 "type": "json",
                 "value": {
                   "id": "string",
-                  "confidence": 1.1,
+                  "confidence": 0.5,
                   "audio_duration": 1.1,
                   "sentences": [
                     {
                       "text": "string",
                       "start": 1,
                       "end": 1,
-                      "confidence": 1.1,
+                      "confidence": 0.5,
                       "words": [
                         {
-                          "confidence": 1.1,
+                          "confidence": 0.5,
                           "start": 1,
                           "end": 1,
                           "text": "string",
@@ -6981,17 +6981,17 @@
               "responseStatusCode": 200,
               "responseBody": {
                 "id": "string",
-                "confidence": 1.1,
+                "confidence": 0.5,
                 "audio_duration": 1.1,
                 "paragraphs": [
                   {
                     "text": "string",
                     "start": 1,
                     "end": 1,
-                    "confidence": 1.1,
+                    "confidence": 0.5,
                     "words": [
                       {
-                        "confidence": 1.1,
+                        "confidence": 0.5,
                         "start": 1,
                         "end": 1,
                         "text": "string",
@@ -7005,17 +7005,17 @@
                 "type": "json",
                 "value": {
                   "id": "string",
-                  "confidence": 1.1,
+                  "confidence": 0.5,
                   "audio_duration": 1.1,
                   "paragraphs": [
                     {
                       "text": "string",
                       "start": 1,
                       "end": 1,
-                      "confidence": 1.1,
+                      "confidence": 0.5,
                       "words": [
                         {
-                          "confidence": 1.1,
+                          "confidence": 0.5,
                           "start": 1,
                           "end": 1,
                           "text": "string",

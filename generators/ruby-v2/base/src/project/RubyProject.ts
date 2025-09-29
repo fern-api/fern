@@ -39,7 +39,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         await this.createTestFiles();
         await this.createVersionFile();
         await this.createModuleFile();
-        await this.createRubocoopFile();
+        await this.createRuboCopFile();
     }
 
     private async createGemspecfile(): Promise<void> {
@@ -75,11 +75,11 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         );
     }
 
-    private async createRubocoopFile(): Promise<void> {
-        const rubocoopFile = new RubocopFile({ context: this.context });
+    private async createRuboCopFile(): Promise<void> {
+        const ruboCopFile = new RubocopFile({ context: this.context });
         await writeFile(
             join(this.absolutePathToOutputDirectory, RelativeFilePath.of(RUBOCOP_FILENAME)),
-            await rubocoopFile.toString()
+            await ruboCopFile.toString()
         );
     }
 
@@ -135,7 +135,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
     }
 
     public getAsIsOutputDirectory(): RelativeFilePath {
-        return RelativeFilePath.of(`lib/${this.context.getRootFolderName()}/internal`);
+        return RelativeFilePath.of(`lib/${this.context.getRootFolderName()}`);
     }
 
     public getAsIsOutputFilename(templateFileName: string): string {
@@ -162,11 +162,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
     }
 
     private filePathFromRubyFile(file: File): AbsoluteFilePath {
-        return join(
-            this.absolutePathToOutputDirectory,
-            file.directory,
-            RelativeFilePath.of(file.filename.replaceAll(".rb", ""))
-        );
+        return join(this.absolutePathToOutputDirectory, file.directory, RelativeFilePath.of(file.filename));
     }
 }
 
@@ -205,7 +201,7 @@ class GemspecFile {
 
     public async toString(): Promise<string> {
         const moduleFolderName = this.context.getRootFolderName();
-        const moduleName = this.context.getRootModule().name;
+        const moduleName = this.context.getRootModuleName();
 
         return dedent`
             # frozen_string_literal: true
@@ -221,7 +217,7 @@ class GemspecFile {
             spec.version = ${moduleName}::VERSION
             spec.summary = "Ruby client library for the ${moduleName} API"
             spec.description = "The ${moduleName} Ruby library provides convenient access to the ${moduleName} API from Ruby."
-            spec.required_ruby_version = ">= 3.1.0"
+            spec.required_ruby_version = ">= 3.3.0"
             spec.metadata["rubygems_mfa_required"] = "true"
             
             # Specify which files should be added to the gem when it is released.
@@ -266,7 +262,7 @@ class CustomGemspecFile {
     }
 
     public async toString(): Promise<string> {
-        const moduleName = this.context.getRootModule().name;
+        const moduleName = this.context.getRootModuleName();
 
         return dedent`
             # frozen_string_literal: true
@@ -440,7 +436,7 @@ class VersionFile {
     }
 
     public toString(): string {
-        const seedName = this.context.getRootModule().name;
+        const seedName = this.context.getRootModuleName();
         const version = this.context.getVersionFromConfig();
 
         return dedent`
@@ -489,37 +485,29 @@ class ModuleFile {
         return join(
             this.project.absolutePathToOutputDirectory,
             this.context.getLocationForTypeId(typeDeclaration.name.typeId),
-            RelativeFilePath.of(this.context.getFileNameForTypeId(typeDeclaration.name.typeId).replaceAll(".rb", ""))
+            RelativeFilePath.of(this.context.getFileNameForTypeId(typeDeclaration.name.typeId))
         );
     }
 
     public toString(): string {
-        let contents = this.baseContents;
-        const visitedPaths = new Set<string>();
+        const relativeImportPaths: Set<RelativeFilePath> = new Set();
 
-        contents += `# Internal Types\n`;
         const coreFiles = this.context.getCoreAsIsFiles();
         coreFiles.sort((a, b) => topologicalCompareAsIsFiles(a, b));
         coreFiles.forEach((filename) => {
             const absoluteFilePath = join(
                 this.project.absolutePathToOutputDirectory,
                 this.project.getAsIsOutputDirectory(),
-                RelativeFilePath.of(this.project.getAsIsOutputFilename(filename).replaceAll(".rb", ""))
+                RelativeFilePath.of(this.project.getAsIsOutputFilename(filename))
             );
-            contents += `require_relative "${relative(this.filePath, absoluteFilePath)}"\n`;
-            visitedPaths.add(absoluteFilePath.toString());
+            relativeImportPaths.add(relative(this.filePath, absoluteFilePath));
         });
 
         const coreFilePaths = this.project.getCoreAbsoluteFilePaths();
         coreFilePaths.forEach((filePath) => {
-            if (!visitedPaths.has(filePath.toString())) {
-                contents += `require_relative "${relative(this.filePath, filePath)}"\n`;
-                visitedPaths.add(filePath.toString());
-            }
+            relativeImportPaths.add(relative(this.filePath, filePath));
         });
 
-        contents += "\n";
-        contents += `# API Types\n`;
         const typeDeclarations = this.context.getAllTypeDeclarations();
         const rubyFilePaths = this.project.getRawAbsoluteFilePaths();
         const filteredTypeDeclarations = typeDeclarations.filter((typeDeclaration) => {
@@ -533,22 +521,21 @@ class ModuleFile {
             const typeFilePath = join(
                 this.project.absolutePathToOutputDirectory,
                 this.context.getLocationForTypeId(typeDeclaration.name.typeId),
-                RelativeFilePath.of(
-                    this.context.getFileNameForTypeId(typeDeclaration.name.typeId).replaceAll(".rb", "")
-                )
+                RelativeFilePath.of(this.context.getFileNameForTypeId(typeDeclaration.name.typeId))
             );
-            contents += `require_relative '${relative(this.filePath, typeFilePath)}'\n`;
-            visitedPaths.add(typeFilePath);
+            relativeImportPaths.add(relative(this.filePath, typeFilePath));
         });
 
-        contents += "\n";
-        contents += `# Client Types\n`;
         rubyFilePaths.forEach((filePath) => {
-            if (!visitedPaths.has(filePath.toString())) {
-                contents += `require_relative '${relative(this.filePath, filePath)}'\n`;
-                visitedPaths.add(filePath.toString());
-            }
+            relativeImportPaths.add(relative(this.filePath, filePath));
         });
+
+        const contents =
+            this.baseContents +
+            Array.from(relativeImportPaths)
+                .filter((importPath) => importPath.endsWith(".rb"))
+                .map((importPath) => `require_relative '${importPath.replaceAll(".rb", "")}'`)
+                .join("\n");
         return dedent`${contents}`;
     }
 

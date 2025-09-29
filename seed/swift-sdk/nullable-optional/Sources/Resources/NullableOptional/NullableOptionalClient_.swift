@@ -48,7 +48,7 @@ public final class NullableOptionalClient_: Sendable {
     /// List all users
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func listUsers(limit: Int? = nil, offset: Int? = nil, includeDeleted: Bool? = nil, sortBy: JSONValue? = nil, requestOptions: RequestOptions? = nil) async throws -> [UserResponse] {
+    public func listUsers(limit: Int? = nil, offset: Int? = nil, includeDeleted: Bool? = nil, sortBy: Nullable<String>? = nil, requestOptions: RequestOptions? = nil) async throws -> [UserResponse] {
         return try await httpClient.performRequest(
             method: .get,
             path: "/api/users",
@@ -56,7 +56,7 @@ public final class NullableOptionalClient_: Sendable {
                 "limit": limit.map { .int($0) }, 
                 "offset": offset.map { .int($0) }, 
                 "includeDeleted": includeDeleted.map { .bool($0) }, 
-                "sortBy": sortBy.map { .unknown($0) }
+                "sortBy": sortBy?.wrappedValue.map { .string($0) }
             ],
             requestOptions: requestOptions,
             responseType: [UserResponse].self
@@ -66,15 +66,15 @@ public final class NullableOptionalClient_: Sendable {
     /// Search users
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func searchUsers(query: String, department: JSONValue, role: String? = nil, isActive: JSONValue? = nil, requestOptions: RequestOptions? = nil) async throws -> [UserResponse] {
+    public func searchUsers(query: String, department: Nullable<String>, role: String? = nil, isActive: Nullable<Bool>? = nil, requestOptions: RequestOptions? = nil) async throws -> [UserResponse] {
         return try await httpClient.performRequest(
             method: .get,
             path: "/api/users/search",
             queryParams: [
                 "query": .string(query), 
-                "department": .unknown(department), 
+                "department": department.wrappedValue.map { .string($0) }, 
                 "role": role.map { .string($0) }, 
-                "isActive": isActive.map { .unknown($0) }
+                "isActive": isActive?.wrappedValue.map { .bool($0) }
             ],
             requestOptions: requestOptions,
             responseType: [UserResponse].self
@@ -135,14 +135,14 @@ public final class NullableOptionalClient_: Sendable {
     /// Filter users by role with nullable enum
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func filterByRole(role: JSONValue, status: UserStatus? = nil, secondaryRole: JSONValue? = nil, requestOptions: RequestOptions? = nil) async throws -> [UserResponse] {
+    public func filterByRole(role: Nullable<UserRole>, status: UserStatus? = nil, secondaryRole: Nullable<UserRole>? = nil, requestOptions: RequestOptions? = nil) async throws -> [UserResponse] {
         return try await httpClient.performRequest(
             method: .get,
             path: "/api/users/filter",
             queryParams: [
-                "role": .unknown(role), 
+                "role": role.wrappedValue.map { .string($0) }, 
                 "status": status.map { .string($0.rawValue) }, 
-                "secondaryRole": secondaryRole.map { .unknown($0) }
+                "secondaryRole": secondaryRole?.wrappedValue.map { .string($0) }
             ],
             requestOptions: requestOptions,
             responseType: [UserResponse].self
@@ -152,12 +152,12 @@ public final class NullableOptionalClient_: Sendable {
     /// Get notification settings which may be null
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func getNotificationSettings(userId: String, requestOptions: RequestOptions? = nil) async throws -> JSONValue {
+    public func getNotificationSettings(userId: String, requestOptions: RequestOptions? = nil) async throws -> Nullable<NotificationMethod> {
         return try await httpClient.performRequest(
             method: .get,
             path: "/api/users/\(userId)/notifications",
             requestOptions: requestOptions,
-            responseType: JSONValue.self
+            responseType: Nullable<NotificationMethod>.self
         )
     }
 
@@ -177,13 +177,13 @@ public final class NullableOptionalClient_: Sendable {
     /// Get search results with nullable unions
     ///
     /// - Parameter requestOptions: Additional options for configuring the request, such as custom headers or timeout settings.
-    public func getSearchResults(request: Requests.SearchRequest, requestOptions: RequestOptions? = nil) async throws -> JSONValue {
+    public func getSearchResults(request: Requests.SearchRequest, requestOptions: RequestOptions? = nil) async throws -> Nullable<[SearchResult]> {
         return try await httpClient.performRequest(
             method: .post,
             path: "/api/search",
             body: request,
             requestOptions: requestOptions,
-            responseType: JSONValue.self
+            responseType: Nullable<[SearchResult]>.self
         )
     }
 }

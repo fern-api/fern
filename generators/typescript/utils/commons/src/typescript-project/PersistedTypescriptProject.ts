@@ -29,10 +29,6 @@ export class PersistedTypescriptProject {
     private buildCommand: string[];
     private formatCommand: string[];
 
-    private hasInstalled = false;
-    private hasFormatted = false;
-    private hasBuilt = false;
-
     private runScripts;
 
     constructor({
@@ -63,12 +59,12 @@ export class PersistedTypescriptProject {
         return this.directory;
     }
 
-    public async installDependencies(logger: Logger): Promise<void> {
-        if (!this.runScripts) {
-            return;
-        }
+    public getTestDirectory(): RelativeFilePath {
+        return this.testDirectory;
+    }
 
-        if (this.hasInstalled) {
+    public async generateLockfile(logger: Logger): Promise<void> {
+        if (!this.runScripts) {
             return;
         }
 
@@ -77,22 +73,44 @@ export class PersistedTypescriptProject {
             logger
         });
 
-        await pm(["install"], {
-            env:
-                this.packageManager === "yarn"
-                    ? {
-                          // set enableImmutableInstalls=false so we can modify yarn.lock, even when in CI
-                          YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
-                      }
-                    : this.packageManager === "pnpm"
-                      ? {
-                            // allow modifying pnpm-lock.yaml, even when in CI
-                            PNPM_FROZEN_LOCKFILE: "false"
-                        }
-                      : undefined
+        await (this.packageManager === "yarn"
+            ? pm(["install", "--mode=update-lockfile", "--ignore-scripts", "--prefer-offline"], {
+                  env: {
+                      // set enableImmutableInstalls=false so we can modify yarn.lock, even when in CI
+                      YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
+                  }
+              })
+            : pm(["install", "--lockfile-only", "--ignore-scripts", "--prefer-offline"], {
+                  env: {
+                      // allow modifying pnpm-lock.yaml, even when in CI
+                      PNPM_FROZEN_LOCKFILE: "false"
+                  }
+              }));
+    }
+
+    public async installDependencies(logger: Logger): Promise<void> {
+        if (!this.runScripts) {
+            return;
+        }
+
+        const pm = createLoggingExecutable(this.packageManager, {
+            cwd: this.directory,
+            logger
         });
 
-        this.hasInstalled = true;
+        await (this.packageManager === "yarn"
+            ? pm(["install", "--ignore-scripts", "--prefer-offline"], {
+                  env: {
+                      // set enableImmutableInstalls=false so we can modify yarn.lock, even when in CI
+                      YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
+                  }
+              })
+            : pm(["install", "--ignore-scripts", "--prefer-offline"], {
+                  env: {
+                      // allow modifying pnpm-lock.yaml, even when in CI
+                      PNPM_FROZEN_LOCKFILE: "false"
+                  }
+              }));
     }
 
     public async format(logger: Logger): Promise<void> {
@@ -100,19 +118,11 @@ export class PersistedTypescriptProject {
             return;
         }
 
-        if (this.hasFormatted) {
-            return;
-        }
-
-        await this.installDependencies(logger);
-
         const pm = createLoggingExecutable(this.packageManager, {
             cwd: this.directory,
             logger
         });
         await pm(this.formatCommand);
-
-        this.hasFormatted = true;
     }
 
     public async build(logger: Logger): Promise<void> {
@@ -120,19 +130,11 @@ export class PersistedTypescriptProject {
             return;
         }
 
-        if (this.hasBuilt) {
-            return;
-        }
-
-        await this.format(logger);
-
         const pm = createLoggingExecutable(this.packageManager, {
             cwd: this.directory,
             logger
         });
         await pm(this.buildCommand);
-
-        this.hasBuilt = true;
     }
 
     public async copyProjectTo({
@@ -160,8 +162,6 @@ export class PersistedTypescriptProject {
         unzipOutput?: boolean;
         logger: Logger;
     }): Promise<void> {
-        await this.build(logger);
-
         const npm = createLoggingExecutable("npm", {
             cwd: this.directory,
             logger
@@ -203,7 +203,6 @@ export class PersistedTypescriptProject {
         unzipOutput?: boolean;
         logger: Logger;
     }): Promise<void> {
-        await this.format(logger);
         await this.zipDirectoryContents(join(this.directory, this.srcDirectory), {
             logger,
             destinationPath,
@@ -223,7 +222,6 @@ export class PersistedTypescriptProject {
         unzipOutput?: boolean;
         logger: Logger;
     }): Promise<void> {
-        await this.build(logger);
         await this.zipDirectoryContents(join(this.directory, this.distDirectory), {
             logger,
             destinationPath,
@@ -274,8 +272,6 @@ export class PersistedTypescriptProject {
         dryRun: boolean;
         shouldTolerateRepublish: boolean;
     }): Promise<void> {
-        await this.build(logger);
-
         const npm = createLoggingExecutable("npm", {
             cwd: this.directory,
             logger

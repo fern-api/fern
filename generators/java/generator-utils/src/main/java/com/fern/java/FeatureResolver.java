@@ -5,6 +5,7 @@ import com.fern.generator.exec.model.logging.GeneratorUpdate;
 import com.fern.generator.exec.model.logging.LogLevel;
 import com.fern.generator.exec.model.logging.LogUpdate;
 import com.fern.ir.model.auth.AuthScheme;
+import com.fern.ir.model.auth.AuthSchemeKey;
 import com.fern.ir.model.auth.BearerAuthScheme;
 import com.fern.ir.model.auth.OAuthScheme;
 import com.fern.ir.model.commons.Name;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 public class FeatureResolver {
 
     public static final AuthScheme DEFAULT_BEARER_AUTH = AuthScheme.bearer(BearerAuthScheme.builder()
+            .key(AuthSchemeKey.of("bearer"))
             .token(Name.builder()
                     .originalName("token")
                     .camelCase(SafeAndUnsafeString.builder()

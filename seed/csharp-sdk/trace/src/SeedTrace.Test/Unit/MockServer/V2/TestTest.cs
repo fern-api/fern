@@ -1,7 +1,7 @@
 using NUnit.Framework;
-using SeedTrace.Test.Unit.MockServer;
+using SeedTrace.Test_.Unit.MockServer;
 
-namespace SeedTrace.Test.Unit.MockServer.V2;
+namespace SeedTrace.Test_.Unit.MockServer.V2;
 
 [TestFixture]
 public class TestTest : BaseMockServerTest

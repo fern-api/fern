@@ -9,6 +9,7 @@ import (
 	"unicode"
 
 	"github.com/fern-api/fern-go/internal/fern/ir"
+	"github.com/fern-api/fern-go/internal/fern/ir/common"
 	"github.com/fern-api/fern-go/internal/gospec"
 )
 
@@ -33,6 +34,7 @@ func (f *fileWriter) WriteType(
 		unionVersion:                 f.unionVersion,
 		alwaysSendRequiredProperties: f.alwaysSendRequiredProperties,
 		includeRawJSON:               includeRawJSON,
+		gettersPassByValue:           f.gettersPassByValue,
 	}
 	f.WriteDocs(typeDeclaration.Docs)
 	return typeDeclaration.Shape.Accept(visitor)
@@ -48,6 +50,7 @@ type typeVisitor struct {
 	unionVersion                 UnionVersion
 	includeRawJSON               bool
 	alwaysSendRequiredProperties bool
+	gettersPassByValue           bool
 }
 
 // Compile-time assertion.
@@ -131,6 +134,34 @@ func (t *typeVisitor) VisitEnum(enum *ir.EnumTypeDeclaration) error {
 }
 
 func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
+	// Collect all property names and types for bigint constants and setters
+	var propertyNames []string
+	var propertyTypes []string
+	var propertySafeNames []string
+
+	// Collect property names and types from extended objects recursively
+	var collectProperties func(*ir.ObjectTypeDeclaration)
+	collectProperties = func(obj *ir.ObjectTypeDeclaration) {
+		// First collect from extended objects
+		for _, extend := range obj.Extends {
+			collectProperties(t.writer.types[extend.TypeId].Shape.Object)
+		}
+		// Then collect from this object's properties
+		for _, property := range obj.Properties {
+			if property.ValueType.Container == nil || property.ValueType.Container.Literal == nil {
+				propertyNames = append(propertyNames, property.Name.Name.PascalCase.UnsafeName)
+				propertySafeNames = append(propertySafeNames, property.Name.Name.CamelCase.SafeName)
+				goType := typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false)
+				propertyTypes = append(propertyTypes, goType)
+			}
+		}
+	}
+
+	collectProperties(object)
+
+	// Write bigint constants for struct properties
+	t.writer.WriteStructPropertyBitConstants(t.typeName, propertyNames)
+
 	t.writer.P("type ", t.typeName, " struct {")
 	objectProperties := t.visitObjectProperties(
 		object,
@@ -139,6 +170,7 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 		false, // includeOptionals
 		false, // includeLiterals
 	)
+	t.writer.WriteExplicitFields()
 
 	// If the object has a literal, it needs custom [de]serialization logic,
 	// and a getter method to access the field so that it's impossible for
@@ -181,6 +213,12 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	t.writer.P("return ", receiver, ".", extraPropertiesFieldName)
 	t.writer.P("}")
 	t.writer.P()
+
+	// Write the require helper method
+	t.writer.WriteRequireMethod(t.typeName)
+
+	// Write setter methods for all properties
+	t.writer.WriteSetterMethods(t.typeName, propertyNames, propertyTypes, propertySafeNames)
 
 	// Implement the json.Unmarshaler interface.
 	if len(objectProperties.literals) == 0 && len(objectProperties.dates) == 0 && !object.ExtraProperties {
@@ -238,34 +276,33 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	}
 
 	// Implement the json.Marshaler interface.
-	if len(objectProperties.literals) > 0 || len(objectProperties.dates) > 0 || object.ExtraProperties {
-		t.writer.P("func (", receiver, " *", t.typeName, ") MarshalJSON() ([]byte, error) {")
-		t.writer.P("type embed ", t.typeName)
-		t.writer.P("var marshaler = struct{")
-		t.writer.P("embed")
-		for _, date := range objectProperties.dates {
-			t.writer.P(date.Name.Name.PascalCase.UnsafeName, " ", date.TypeDeclaration, " ", date.StructTag)
-		}
-		for _, literal := range objectProperties.literals {
-			t.writer.P(literal.Name.Name.PascalCase.UnsafeName, " ", literalToGoType(literal.Value), " `json:\"", literal.Name.WireValue, "\"`")
-		}
-		t.writer.P("}{")
-		t.writer.P("embed: embed(*", receiver, "),")
-		for _, date := range objectProperties.dates {
-			t.writer.P(date.Name.Name.PascalCase.UnsafeName, ": ", date.Constructor, "(", receiver, ".", date.Name.Name.PascalCase.UnsafeName, "),")
-		}
-		for _, literal := range objectProperties.literals {
-			t.writer.P(literal.Name.Name.PascalCase.UnsafeName, ": ", literalToValue(literal.Value), ",")
-		}
-		t.writer.P("}")
-		if object.ExtraProperties {
-			t.writer.P("return internal.MarshalJSONWithExtraProperties(marshaler, ", receiver, ".ExtraProperties)")
-		} else {
-			t.writer.P("return json.Marshal(marshaler)")
-		}
-		t.writer.P("}")
-		t.writer.P()
+	t.writer.P("func (", receiver, " *", t.typeName, ") MarshalJSON() ([]byte, error) {")
+	t.writer.P("type embed ", t.typeName)
+	t.writer.P("var marshaler = struct{")
+	t.writer.P("embed")
+	for _, date := range objectProperties.dates {
+		t.writer.P(date.Name.Name.PascalCase.UnsafeName, " ", date.TypeDeclaration, " ", date.StructTag)
 	}
+	for _, literal := range objectProperties.literals {
+		t.writer.P(literal.Name.Name.PascalCase.UnsafeName, " ", literalToGoType(literal.Value), " `json:\"", literal.Name.WireValue, "\"`")
+	}
+	t.writer.P("}{")
+	t.writer.P("embed: embed(*", receiver, "),")
+	for _, date := range objectProperties.dates {
+		t.writer.P(date.Name.Name.PascalCase.UnsafeName, ": ", date.Constructor, "(", receiver, ".", date.Name.Name.PascalCase.UnsafeName, "),")
+	}
+	for _, literal := range objectProperties.literals {
+		t.writer.P(literal.Name.Name.PascalCase.UnsafeName, ": ", literalToValue(literal.Value), ",")
+	}
+	t.writer.P("}")
+	t.writer.P("explicitMarshaler := internal.HandleExplicitFields(marshaler, ", receiver, ".explicitFields)")
+	if object.ExtraProperties {
+		t.writer.P("return internal.MarshalJSONWithExtraProperties(explicitMarshaler, ", receiver, ".ExtraProperties)")
+	} else {
+		t.writer.P("return json.Marshal(explicitMarshaler)")
+	}
+	t.writer.P("}")
+	t.writer.P()
 
 	// Implement fmt.Stringer.
 	t.writer.P("func (", receiver, " *", t.typeName, ") String() string {")
@@ -937,7 +974,7 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 // (e.g. containers, primitives, etc), but specifically for undiscriminated union generation.
 type undiscriminatedUnionTypeReferenceVisitor struct {
 	value string
-	types map[ir.TypeId]*ir.TypeDeclaration
+	types map[common.TypeId]*ir.TypeDeclaration
 	scope *gospec.Scope
 }
 
@@ -969,7 +1006,7 @@ func (u *undiscriminatedUnionTypeReferenceVisitor) VisitUnknown(unknown any) err
 type undiscriminatedUnionContainerTypeVisitor struct {
 	value string
 	scope *gospec.Scope
-	types map[ir.TypeId]*ir.TypeDeclaration
+	types map[common.TypeId]*ir.TypeDeclaration
 }
 
 // Compile-time assertion.
@@ -1028,7 +1065,7 @@ type objectProperties struct {
 // date contains the information required to generate code for date and date-time
 // properties.
 type date struct {
-	Name            *ir.NameAndWireValue
+	Name            *common.NameAndWireValue
 	ValueType       *ir.TypeReference
 	Constructor     string
 	TimeMethod      string
@@ -1040,7 +1077,7 @@ type date struct {
 
 // literal contains the information required to generate code for literal properties.
 type literal struct {
-	Name  *ir.NameAndWireValue
+	Name  *common.NameAndWireValue
 	Value *ir.Literal
 }
 
@@ -1105,20 +1142,100 @@ func (t *typeVisitor) visitObjectProperties(
 // typeField represent a single type field. This is used to generate getter methods for objects,
 // unions, and undiscriminated unions.
 type typeField struct {
-	Name      string
-	GoType    string
-	ZeroValue string
+	Name             string
+	GoType           string
+	ZeroValue        string
+	Optional         bool
+	NeedsDereference bool
 }
 
 func (t *typeVisitor) writeGetterMethod(receiver string, field *typeField) {
 	getterName := fmt.Sprintf("%s%s", "Get", field.Name)
-	t.writer.P("func (", receiver, " *", t.typeName, ") ", getterName, "()", field.GoType, " {")
-	t.writer.P("if ", receiver, " == nil {")
-	t.writer.P("return ", field.ZeroValue)
-	t.writer.P("}")
-	t.writer.P("return ", receiver, ".", field.Name)
+
+	if field.Optional && t.gettersPassByValue {
+		// For optional fields, GoType is already the correct return type (unwrapped if needed)
+		t.writer.P("func (", receiver, " *", t.typeName, ") ", getterName, "()", field.GoType, " {")
+		t.writer.P("if ", receiver, " == nil || ", receiver, ".", field.Name, " == nil {")
+		t.writer.P("return ", field.ZeroValue)
+		t.writer.P("}")
+		if field.NeedsDereference {
+			t.writer.P("return *", receiver, ".", field.Name)
+		} else {
+			t.writer.P("return ", receiver, ".", field.Name)
+		}
+	} else {
+		// For non-optional fields, return the value as-is
+		t.writer.P("func (", receiver, " *", t.typeName, ") ", getterName, "()", field.GoType, " {")
+		t.writer.P("if ", receiver, " == nil {")
+		t.writer.P("return ", field.ZeroValue)
+		t.writer.P("}")
+		t.writer.P("return ", receiver, ".", field.Name)
+	}
 	t.writer.P("}")
 	t.writer.P()
+}
+
+// isOptionalOrNullableType checks if a type reference is optional or nullable
+func isOptionalOrNullableType(typeReference *ir.TypeReference) bool {
+	return getOptionalOrNullableContainer(typeReference) != nil
+}
+
+// processTypeFieldForOptional handles the common logic for processing optional/nullable type fields
+// Returns the Go type, zero value, whether the field needs dereferencing, and whether the field is optional
+func processTypeFieldForOptional(typeReference *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration, scope *gospec.Scope, baseImportPath, importPath string, gettersPassByValue bool) (goType string, zeroValue string, needsDereference bool, isOptional bool) {
+	originalGoType := typeReferenceToGoType(typeReference, types, scope, baseImportPath, importPath, false)
+	isOptional = isOptionalOrNullableType(typeReference)
+
+	if isOptional && gettersPassByValue {
+		// Get the unwrapped type to check if it needs dereferencing
+		underlyingGoType := strings.TrimPrefix(originalGoType, "*")
+		needsDereference = strings.HasPrefix(originalGoType, "*")
+
+		// For optional fields that need dereferencing, return the unwrapped type
+		if needsDereference {
+			underlyingType := unwrapOptionalAndOrNullable(typeReference)
+			zeroValue = zeroValueForDereferencedType(underlyingType, types, scope, baseImportPath, importPath)
+			return underlyingGoType, zeroValue, needsDereference, isOptional
+		}
+	}
+
+	zeroValue = zeroValueForTypeReference(typeReference, types)
+	return originalGoType, zeroValue, needsDereference, isOptional
+}
+
+// unwrapOptionalAndOrNullable returns the type with one level of optional or nullable unwrapped.
+// Also handles the special case of optional<nullable<T>>.
+func unwrapOptionalAndOrNullable(typeReference *ir.TypeReference) *ir.TypeReference {
+	container := getOptionalOrNullableContainer(typeReference)
+	if container != nil {
+		// Check if this is optional<nullable<T>> pattern and unwrap both levels
+		if typeReference.Container != nil && typeReference.Container.Optional != nil {
+			innerContainer := getOptionalOrNullableContainer(typeReference.Container.Optional)
+			if innerContainer != nil {
+				return innerContainer
+			}
+		}
+		return container
+	}
+	return typeReference
+}
+
+// zeroValueForDereferencedType returns the zero value for the given type, handling
+// the special case of objects and unions that can take a default struct initialization.
+func zeroValueForDereferencedType(typeReference *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration, scope *gospec.Scope, baseImportPath, importPath string) string {
+	if typeReference.Named != nil {
+		typeDeclaration := types[typeReference.Named.TypeId]
+		if typeDeclaration.Shape.Alias == nil && typeDeclaration.Shape.Enum == nil {
+			name := typeDeclaration.Name.Name.PascalCase.UnsafeName
+			// Check if we need to qualify the name with package prefix
+			if typeImportPath := fernFilepathToImportPath(baseImportPath, typeDeclaration.Name.FernFilepath); typeImportPath != importPath {
+				packageName := scope.AddImport(typeImportPath)
+				name = packageName + "." + name
+			}
+			return fmt.Sprintf("%s{}", name)
+		}
+	}
+	return zeroValueForTypeReference(typeReference, types)
 }
 
 // getTypeFieldsForObject retrieves the type fields for the given object.
@@ -1132,10 +1249,13 @@ func (t *typeVisitor) getTypeFieldsForObject(object *ir.ObjectTypeDeclaration) [
 		if isLiteralType(property.ValueType, t.writer.types) {
 			continue
 		}
+		goType, zeroValue, needsDereference, isOptional := processTypeFieldForOptional(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, t.gettersPassByValue)
 		fields = append(fields, &typeField{
-			Name:      property.Name.Name.PascalCase.UnsafeName,
-			GoType:    typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false),
-			ZeroValue: zeroValueForTypeReference(property.ValueType, t.writer.types),
+			Name:             property.Name.Name.PascalCase.UnsafeName,
+			GoType:           goType,
+			ZeroValue:        zeroValue,
+			Optional:         isOptional,
+			NeedsDereference: needsDereference,
 		})
 	}
 	return fields
@@ -1147,9 +1267,11 @@ func (t *typeVisitor) getTypeFieldsForUnion(union *ir.UnionTypeDeclaration) []*t
 	fields = append(
 		fields,
 		&typeField{
-			Name:      union.Discriminant.Name.PascalCase.UnsafeName,
-			GoType:    "string",
-			ZeroValue: `""`,
+			Name:             union.Discriminant.Name.PascalCase.UnsafeName,
+			GoType:           "string",
+			ZeroValue:        `""`,
+			Optional:         false,
+			NeedsDereference: false,
 		},
 	)
 	for _, extend := range union.Extends {
@@ -1160,10 +1282,13 @@ func (t *typeVisitor) getTypeFieldsForUnion(union *ir.UnionTypeDeclaration) []*t
 		if isLiteralType(property.ValueType, t.writer.types) {
 			continue
 		}
+		goType, zeroValue, needsDereference, isOptional := processTypeFieldForOptional(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, t.gettersPassByValue)
 		fields = append(fields, &typeField{
-			Name:      property.Name.Name.PascalCase.UnsafeName,
-			GoType:    typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false),
-			ZeroValue: zeroValueForTypeReference(property.ValueType, t.writer.types),
+			Name:             property.Name.Name.PascalCase.UnsafeName,
+			GoType:           goType,
+			ZeroValue:        zeroValue,
+			Optional:         isOptional,
+			NeedsDereference: needsDereference,
 		})
 	}
 	for _, property := range union.Types {
@@ -1178,9 +1303,11 @@ func (t *typeVisitor) getTypeFieldsForUnion(union *ir.UnionTypeDeclaration) []*t
 func (t *typeVisitor) typeFieldForSingleUnionType(singleUnionType *ir.SingleUnionType) *typeField {
 	singleUnionProperty := singleUnionTypePropertiesToGoType(singleUnionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath)
 	return &typeField{
-		Name:      singleUnionType.DiscriminantValue.Name.PascalCase.UnsafeName,
-		GoType:    singleUnionProperty.goType,
-		ZeroValue: singleUnionProperty.zeroValue,
+		Name:             singleUnionType.DiscriminantValue.Name.PascalCase.UnsafeName,
+		GoType:           singleUnionProperty.goType,
+		ZeroValue:        singleUnionProperty.zeroValue,
+		Optional:         false, // Single union types are typically not optional
+		NeedsDereference: false,
 	}
 }
 
@@ -1190,10 +1317,13 @@ func (t *typeVisitor) getTypeFieldsForUndiscriminatedUnion(undiscriminatedUnion 
 		if isLiteralType(member.Type, t.writer.types) {
 			continue
 		}
+		goType, zeroValue, needsDereference, isOptional := processTypeFieldForOptional(member.Type, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, t.gettersPassByValue)
 		typeFields = append(typeFields, &typeField{
-			Name:      typeReferenceToUndiscriminatedUnionField(member.Type, t.writer.types, scope),
-			GoType:    typeReferenceToGoType(member.Type, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false),
-			ZeroValue: zeroValueForTypeReference(member.Type, t.writer.types),
+			Name:             typeReferenceToUndiscriminatedUnionField(member.Type, t.writer.types, scope),
+			GoType:           goType,
+			ZeroValue:        zeroValue,
+			Optional:         isOptional,
+			NeedsDereference: needsDereference,
 		})
 	}
 	return typeFields
@@ -1206,7 +1336,7 @@ type typeReferenceVisitor struct {
 	baseImportPath   string
 	importPath       string
 	scope            *gospec.Scope
-	types            map[ir.TypeId]*ir.TypeDeclaration
+	types            map[common.TypeId]*ir.TypeDeclaration
 	includeOptionals bool
 }
 
@@ -1248,7 +1378,7 @@ type containerTypeVisitor struct {
 	baseImportPath   string
 	importPath       string
 	scope            *gospec.Scope
-	types            map[ir.TypeId]*ir.TypeDeclaration
+	types            map[common.TypeId]*ir.TypeDeclaration
 	includeOptionals bool
 }
 
@@ -1327,7 +1457,7 @@ type singleUnionTypePropertiesVisitor struct {
 	baseImportPath string
 	importPath     string
 	scope          *gospec.Scope
-	types          map[ir.TypeId]*ir.TypeDeclaration
+	types          map[common.TypeId]*ir.TypeDeclaration
 }
 
 // Compile-time assertion.
@@ -1382,7 +1512,7 @@ type singleUnionTypePropertiesInitializerVisitor struct {
 	baseImportPath   string
 	importPath       string
 	scope            *gospec.Scope
-	types            map[ir.TypeId]*ir.TypeDeclaration
+	types            map[common.TypeId]*ir.TypeDeclaration
 }
 
 // Compile-time assertion.
@@ -1452,12 +1582,11 @@ func (l *literalTypeVisitor) VisitString(_ string) error {
 // typeReferenceToGoType maps the given type reference into its Go-equivalent.
 func typeReferenceToGoType(
 	typeReference *ir.TypeReference,
-	types map[ir.TypeId]*ir.TypeDeclaration,
+	types map[common.TypeId]*ir.TypeDeclaration,
 	scope *gospec.Scope,
 	baseImportPath string,
 	importPath string,
 	includeOptionals bool,
-	
 ) string {
 	visitor := &typeReferenceVisitor{
 		baseImportPath:   baseImportPath,
@@ -1465,7 +1594,6 @@ func typeReferenceToGoType(
 		scope:            scope,
 		types:            types,
 		includeOptionals: includeOptionals,
-		
 	}
 	_ = typeReference.Accept(visitor)
 	return visitor.value
@@ -1474,12 +1602,11 @@ func typeReferenceToGoType(
 // containerTypeToGoType maps the given container type into its Go-equivalent.
 func containerTypeToGoType(
 	containerType *ir.ContainerType,
-	types map[ir.TypeId]*ir.TypeDeclaration,
+	types map[common.TypeId]*ir.TypeDeclaration,
 	scope *gospec.Scope,
 	baseImportPath string,
 	importPath string,
 	includeOptionals bool,
-	
 ) string {
 	visitor := &containerTypeVisitor{
 		baseImportPath:   baseImportPath,
@@ -1487,7 +1614,6 @@ func containerTypeToGoType(
 		scope:            scope,
 		types:            types,
 		includeOptionals: includeOptionals,
-		
 	}
 	_ = containerType.Accept(visitor)
 	return visitor.value
@@ -1506,11 +1632,10 @@ type singleUnionProperty struct {
 // singleUnionTypePropertiesToGoType maps the given container type into its Go-equivalent.
 func singleUnionTypePropertiesToGoType(
 	singleUnionTypeProperties *ir.SingleUnionTypeProperties,
-	types map[ir.TypeId]*ir.TypeDeclaration,
+	types map[common.TypeId]*ir.TypeDeclaration,
 	scope *gospec.Scope,
 	baseImportPath string,
 	importPath string,
-	
 ) *singleUnionProperty {
 	visitor := &singleUnionTypePropertiesVisitor{
 		baseImportPath: baseImportPath,
@@ -1534,9 +1659,8 @@ func singleUnionTypePropertiesToGoType(
 // the given property, e.g. 'value := new(Foo)'
 func singleUnionTypePropertiesToInitializer(
 	singleUnionTypeProperties *ir.SingleUnionTypeProperties,
-	types map[ir.TypeId]*ir.TypeDeclaration,
+	types map[common.TypeId]*ir.TypeDeclaration,
 	scope *gospec.Scope,
-	
 	baseImportPath string,
 	importPath string,
 	discriminantName string,
@@ -1549,7 +1673,6 @@ func singleUnionTypePropertiesToInitializer(
 		importPath:       importPath,
 		scope:            scope,
 		types:            types,
-		
 	}
 	_ = singleUnionTypeProperties.Accept(visitor)
 	return visitor.value
@@ -1577,7 +1700,7 @@ func writeExtractExtraProperties(
 
 // typeReferenceToUndiscriminatedUnionField maps Fern's type references to the field name used in an
 // undiscriminated union.
-func typeReferenceToUndiscriminatedUnionField(typeReference *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration, scope *gospec.Scope) string {
+func typeReferenceToUndiscriminatedUnionField(typeReference *ir.TypeReference, types map[common.TypeId]*ir.TypeDeclaration, scope *gospec.Scope) string {
 	visitor := &undiscriminatedUnionTypeReferenceVisitor{
 		types: types,
 		scope: scope,
@@ -1588,7 +1711,7 @@ func typeReferenceToUndiscriminatedUnionField(typeReference *ir.TypeReference, t
 
 // containerToUndiscriminatedUnionField maps Fern's container types to the field name used in an
 // undiscriminated union.
-func containerToUndiscriminatedUnionField(container *ir.ContainerType, types map[ir.TypeId]*ir.TypeDeclaration, scope *gospec.Scope) string {
+func containerToUndiscriminatedUnionField(container *ir.ContainerType, types map[common.TypeId]*ir.TypeDeclaration, scope *gospec.Scope) string {
 	visitor := &undiscriminatedUnionContainerTypeVisitor{
 		types: types,
 		scope: scope,
@@ -1613,7 +1736,7 @@ func literalToValue(literal *ir.Literal) string {
 
 // fernFilepathToImportPath maps the given Fern filepath to its
 // Go import path.
-func fernFilepathToImportPath(baseImportPath string, fernFilepath *ir.FernFilepath) string {
+func fernFilepathToImportPath(baseImportPath string, fernFilepath *common.FernFilepath) string {
 	var packages []string
 	for _, packageName := range fernFilepath.PackagePath {
 		packages = append(packages, strings.ToLower(packageName.CamelCase.SafeName))
@@ -1665,7 +1788,7 @@ func firstLetterToLower(s string) string {
 func fullFieldTagForType(
 	wireValue string,
 	valueType *ir.TypeReference,
-	types map[ir.TypeId]*ir.TypeDeclaration,
+	types map[common.TypeId]*ir.TypeDeclaration,
 	alwaysSendRequiredProperties bool,
 ) string {
 	return structTagForType(
@@ -1681,7 +1804,7 @@ func fullFieldTagForType(
 func fullFieldTagForTypeWithIgnoredURL(
 	wireValue string,
 	valueType *ir.TypeReference,
-	types map[ir.TypeId]*ir.TypeDeclaration,
+	types map[common.TypeId]*ir.TypeDeclaration,
 	alwaysSendRequiredProperties bool,
 ) string {
 	return structTagForType(
@@ -1698,7 +1821,7 @@ func fullFieldTagForTypeWithIgnoredURL(
 func jsonTagForType(
 	wireValue string,
 	valueType *ir.TypeReference,
-	types map[ir.TypeId]*ir.TypeDeclaration,
+	types map[common.TypeId]*ir.TypeDeclaration,
 	alwaysSendRequiredProperties bool,
 ) string {
 	return structTagForType(
@@ -1716,7 +1839,7 @@ func jsonTagForType(
 func urlTagForType(
 	wireValue string,
 	valueType *ir.TypeReference,
-	types map[ir.TypeId]*ir.TypeDeclaration,
+	types map[common.TypeId]*ir.TypeDeclaration,
 	alwaysSendRequiredProperties bool,
 ) string {
 	tagFormat := tagFormatForType(valueType, types, alwaysSendRequiredProperties)
@@ -1736,7 +1859,7 @@ func urlTagForType(
 func structTagForType(
 	wireValue string,
 	valueType *ir.TypeReference,
-	types map[ir.TypeId]*ir.TypeDeclaration,
+	types map[common.TypeId]*ir.TypeDeclaration,
 	tags []string,
 	ignoreTags []string,
 	alwaysSendRequiredProperties bool,
@@ -1761,7 +1884,7 @@ func structTagForType(
 // tagFormatForType returns the string format string for the given type's struct tag.
 func tagFormatForType(
 	valueType *ir.TypeReference,
-	types map[ir.TypeId]*ir.TypeDeclaration,
+	types map[common.TypeId]*ir.TypeDeclaration,
 	alwaysSendRequiredProperties bool,
 ) string {
 	if alwaysSendRequiredProperties {
@@ -1826,34 +1949,34 @@ func primitiveToGoType(primitive *ir.PrimitiveType) string {
 		return "interface{}"
 	}
 	switch primitive.V1 {
-	case ir.PrimitiveTypeV1Integer:
+	case common.PrimitiveTypeV1Integer:
 		return "int"
-	case ir.PrimitiveTypeV1Long:
+	case common.PrimitiveTypeV1Long:
 		return "int64"
-	case ir.PrimitiveTypeV1Uint:
+	case common.PrimitiveTypeV1Uint:
 		// TODO: Add support for uint.
 		return "int"
-	case ir.PrimitiveTypeV1Uint64:
+	case common.PrimitiveTypeV1Uint64:
 		// TODO: Add support for uint64.
 		return "int64"
-	case ir.PrimitiveTypeV1Float:
+	case common.PrimitiveTypeV1Float:
 		// TODO: Add support for float32.
 		return "float64"
-	case ir.PrimitiveTypeV1Double:
+	case common.PrimitiveTypeV1Double:
 		return "float64"
-	case ir.PrimitiveTypeV1String:
+	case common.PrimitiveTypeV1String:
 		return "string"
-	case ir.PrimitiveTypeV1Boolean:
+	case common.PrimitiveTypeV1Boolean:
 		return "bool"
-	case ir.PrimitiveTypeV1DateTime:
+	case common.PrimitiveTypeV1DateTime:
 		return "time.Time"
-	case ir.PrimitiveTypeV1Date:
+	case common.PrimitiveTypeV1Date:
 		return "time.Time"
-	case ir.PrimitiveTypeV1Uuid:
+	case common.PrimitiveTypeV1Uuid:
 		return "uuid.UUID"
-	case ir.PrimitiveTypeV1Base64:
+	case common.PrimitiveTypeV1Base64:
 		return "[]byte"
-	case ir.PrimitiveTypeV1BigInteger:
+	case common.PrimitiveTypeV1BigInteger:
 		// TODO: Add support for big integer.
 		return "string"
 	default:
@@ -1868,34 +1991,34 @@ func primitiveToUndiscriminatedUnionField(primitive *ir.PrimitiveType) string {
 		return "Any"
 	}
 	switch primitive.V1 {
-	case ir.PrimitiveTypeV1Integer:
+	case common.PrimitiveTypeV1Integer:
 		return "Integer"
-	case ir.PrimitiveTypeV1Long:
+	case common.PrimitiveTypeV1Long:
 		return "Long"
-	case ir.PrimitiveTypeV1Uint:
+	case common.PrimitiveTypeV1Uint:
 		// TODO: Add support for uint.
 		return "Integer"
-	case ir.PrimitiveTypeV1Uint64:
+	case common.PrimitiveTypeV1Uint64:
 		// TODO: Add support for uint64.
 		return "Long"
-	case ir.PrimitiveTypeV1Float:
+	case common.PrimitiveTypeV1Float:
 		// TODO: Add support for float32.
 		return "Double"
-	case ir.PrimitiveTypeV1Double:
+	case common.PrimitiveTypeV1Double:
 		return "Double"
-	case ir.PrimitiveTypeV1String:
+	case common.PrimitiveTypeV1String:
 		return "String"
-	case ir.PrimitiveTypeV1Boolean:
+	case common.PrimitiveTypeV1Boolean:
 		return "Boolean"
-	case ir.PrimitiveTypeV1Date:
+	case common.PrimitiveTypeV1Date:
 		return "Date"
-	case ir.PrimitiveTypeV1DateTime:
+	case common.PrimitiveTypeV1DateTime:
 		return "DateTime"
-	case ir.PrimitiveTypeV1Uuid:
+	case common.PrimitiveTypeV1Uuid:
 		return "Uuid"
-	case ir.PrimitiveTypeV1Base64:
+	case common.PrimitiveTypeV1Base64:
 		return "Base64"
-	case ir.PrimitiveTypeV1BigInteger:
+	case common.PrimitiveTypeV1BigInteger:
 		// TODO: Implement big integer.
 		return "BigInteger"
 	default:
@@ -1903,8 +2026,8 @@ func primitiveToUndiscriminatedUnionField(primitive *ir.PrimitiveType) string {
 	}
 }
 
-func maybeDateProperty(valueType *ir.TypeReference, name *ir.NameAndWireValue, isOptional bool) *date {
-	if valueType.Primitive != nil && valueType.Primitive.V1 == ir.PrimitiveTypeV1Date {
+func maybeDateProperty(valueType *ir.TypeReference, name *common.NameAndWireValue, isOptional bool) *date {
+	if valueType.Primitive != nil && valueType.Primitive.V1 == common.PrimitiveTypeV1Date {
 		var (
 			typeDeclaration = "*internal.Date"
 			constructor     = "internal.NewDate"
@@ -1926,7 +2049,7 @@ func maybeDateProperty(valueType *ir.TypeReference, name *ir.NameAndWireValue, i
 			IsOptional:      isOptional,
 		}
 	}
-	if valueType.Primitive != nil && valueType.Primitive.V1 == ir.PrimitiveTypeV1DateTime {
+	if valueType.Primitive != nil && valueType.Primitive.V1 == common.PrimitiveTypeV1DateTime {
 		var (
 			typeDeclaration = "*internal.DateTime"
 			constructor     = "internal.NewDateTime"
@@ -1960,7 +2083,7 @@ func maybeDateProperty(valueType *ir.TypeReference, name *ir.NameAndWireValue, i
 // any property-oriented information. This is tailored to the undiscriminated
 // union use case.
 func maybeDate(valueType *ir.TypeReference, isOptional bool) *date {
-	if valueType.Primitive != nil && valueType.Primitive.V1 == ir.PrimitiveTypeV1Date {
+	if valueType.Primitive != nil && valueType.Primitive.V1 == common.PrimitiveTypeV1Date {
 		var (
 			typeDeclaration = "*internal.Date"
 			constructor     = "internal.NewDate"
@@ -1978,7 +2101,7 @@ func maybeDate(valueType *ir.TypeReference, isOptional bool) *date {
 			IsOptional:      isOptional,
 		}
 	}
-	if valueType.Primitive != nil && valueType.Primitive.V1 == ir.PrimitiveTypeV1DateTime {
+	if valueType.Primitive != nil && valueType.Primitive.V1 == common.PrimitiveTypeV1DateTime {
 		var (
 			typeDeclaration = "*internal.DateTime"
 			constructor     = "internal.NewDateTime"
@@ -2008,7 +2131,7 @@ func maybeDate(valueType *ir.TypeReference, isOptional bool) *date {
 // Note that we don't need to include a custom layout for DateTime because that
 // is the default format used for time.Time types.
 func maybeFormatStructTag(valueType *ir.TypeReference) string {
-	if valueType.Primitive != nil && valueType.Primitive.V1 == ir.PrimitiveTypeV1Date {
+	if valueType.Primitive != nil && valueType.Primitive.V1 == common.PrimitiveTypeV1Date {
 		return `format:"date"`
 	}
 	if valueType.Type != "container" {
@@ -2076,31 +2199,31 @@ func defaultValueForPrimitiveType(primitiveType *ir.PrimitiveType) string {
 		return "nil"
 	}
 	switch primitiveType.V1 {
-	case ir.PrimitiveTypeV1Integer:
+	case common.PrimitiveTypeV1Integer:
 		return "0"
-	case ir.PrimitiveTypeV1Long:
+	case common.PrimitiveTypeV1Long:
 		return "0"
-	case ir.PrimitiveTypeV1Uint:
+	case common.PrimitiveTypeV1Uint:
 		return "0"
-	case ir.PrimitiveTypeV1Uint64:
+	case common.PrimitiveTypeV1Uint64:
 		return "0"
-	case ir.PrimitiveTypeV1Float:
+	case common.PrimitiveTypeV1Float:
 		return "0"
-	case ir.PrimitiveTypeV1Double:
+	case common.PrimitiveTypeV1Double:
 		return "0"
-	case ir.PrimitiveTypeV1String:
+	case common.PrimitiveTypeV1String:
 		return `""`
-	case ir.PrimitiveTypeV1Boolean:
+	case common.PrimitiveTypeV1Boolean:
 		return "false"
-	case ir.PrimitiveTypeV1DateTime:
+	case common.PrimitiveTypeV1DateTime:
 		return "time.Time{}"
-	case ir.PrimitiveTypeV1Date:
+	case common.PrimitiveTypeV1Date:
 		return "time.Time{}"
-	case ir.PrimitiveTypeV1Uuid:
+	case common.PrimitiveTypeV1Uuid:
 		return "uuid.Nil"
-	case ir.PrimitiveTypeV1Base64:
+	case common.PrimitiveTypeV1Base64:
 		return "nil"
-	case ir.PrimitiveTypeV1BigInteger:
+	case common.PrimitiveTypeV1BigInteger:
 		// TODO: Implement big integer types.
 		return `""`
 	}

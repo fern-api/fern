@@ -32367,8 +32367,8 @@
                     "name": "Cuenta Perfiles- M.N. - MXN-666",
                     "number": "4057068115181",
                     "balance": {
-                      "current": 5874.13,
-                      "available": 5621.12
+                      "current": 5870,
+                      "available": 5620
                     },
                     "currency": "MXN",
                     "public_identification_name": "CLABE",
@@ -32379,8 +32379,8 @@
                       "collected_at": "2019-09-27T13:01:41.941Z",
                       "cutting_date": "2019-12-11",
                       "next_payment_date": "2019-12-13",
-                      "minimum_payment": 2400.3,
-                      "no_interest_payment": 2690.83,
+                      "minimum_payment": 2400,
+                      "no_interest_payment": 2690,
                       "interest_rate": 4,
                       "end_date": "string",
                       "monthly_payment": 1.1,
@@ -32392,7 +32392,7 @@
                       "principal": 192000,
                       "loan_type": "Consignado",
                       "payment_day": "27",
-                      "outstanding_principal": 142023,
+                      "outstanding_principal": 142000,
                       "outstanding_balance": 182000,
                       "monthly_payment": 1000,
                       "interest_rates": [
@@ -32433,14 +32433,14 @@
                             "value": "05.954.445/0221-68"
                           }
                         ],
-                        "balance": 88427.94,
+                        "balance": 88400,
                         "percentage": 100
                       }
                     ],
                     "receivables_data": {
-                      "current": 2193.83,
-                      "available": 800.37,
-                      "anticipated": 1393.46,
+                      "current": 2190,
+                      "available": 800,
+                      "anticipated": 1390,
                       "collected_at": "2022-02-09T08:45:50.406032Z"
                     },
                     "bank_product_id": "string",
@@ -32470,8 +32470,8 @@
                       "name": "Cuenta Perfiles- M.N. - MXN-666",
                       "number": "4057068115181",
                       "balance": {
-                        "current": 5874.13,
-                        "available": 5621.12
+                        "current": 5870,
+                        "available": 5620
                       },
                       "currency": "MXN",
                       "public_identification_name": "CLABE",
@@ -32482,8 +32482,8 @@
                         "collected_at": "2019-09-27T13:01:41.941Z",
                         "cutting_date": "2019-12-11",
                         "next_payment_date": "2019-12-13",
-                        "minimum_payment": 2400.3,
-                        "no_interest_payment": 2690.83,
+                        "minimum_payment": 2400,
+                        "no_interest_payment": 2690,
                         "interest_rate": 4,
                         "end_date": "string",
                         "monthly_payment": 1.1,
@@ -32495,7 +32495,7 @@
                         "principal": 192000,
                         "loan_type": "Consignado",
                         "payment_day": "27",
-                        "outstanding_principal": 142023,
+                        "outstanding_principal": 142000,
                         "outstanding_balance": 182000,
                         "monthly_payment": 1000,
                         "interest_rates": [
@@ -32536,14 +32536,14 @@
                               "value": "05.954.445/0221-68"
                             }
                           ],
-                          "balance": 88427.94,
+                          "balance": 88400,
                           "percentage": 100
                         }
                       ],
                       "receivables_data": {
-                        "current": 2193.83,
-                        "available": 800.37,
-                        "anticipated": 1393.46,
+                        "current": 2190,
+                        "available": 800,
+                        "anticipated": 1390,
                         "collected_at": "2022-02-09T08:45:50.406032Z"
                       },
                       "bank_product_id": "string",
@@ -47321,7 +47321,7 @@
                           "tax_type": "string",
                           "tax": "ISR",
                           "tax_percentage": 10,
-                          "retained_tax_amount": 209.79
+                          "retained_tax_amount": 210
                         }
                       ],
                       "collected_at": "2019-09-27T13:01:41.941Z"
@@ -47339,7 +47339,7 @@
                       "payment_type": "03",
                       "currency": "BRL",
                       "exchange_rate": "3.75",
-                      "amount": 8000.5,
+                      "amount": 8000,
                       "operation_number": "831840",
                       "beneficiary_rfc": "BNM840515VB1",
                       "beneficiary_account_number": "12343453245633",
@@ -47352,9 +47352,9 @@
                           "currency": "MXN",
                           "payment_method": "PPD",
                           "partiality_number": 1,
-                          "previous_balance": 18877.84,
+                          "previous_balance": 18900,
                           "amount_paid": 8000,
-                          "outstanding_balance": 10877.84
+                          "outstanding_balance": 10900
                         }
                       ]
                     }
@@ -47362,7 +47362,7 @@
                   "payroll": {
                     "days": 30,
                     "type": "O",
-                    "amount": 20400.1,
+                    "amount": 20400,
                     "version": "1.2",
                     "date_from": "2018-07-01",
                     "date_to": "2018-07-31",
@@ -47428,7 +47428,7 @@
                             "tax_type": "string",
                             "tax": "ISR",
                             "tax_percentage": 10,
-                            "retained_tax_amount": 209.79
+                            "retained_tax_amount": 210
                           }
                         ],
                         "collected_at": "2019-09-27T13:01:41.941Z"
@@ -47446,7 +47446,7 @@
                         "payment_type": "03",
                         "currency": "BRL",
                         "exchange_rate": "3.75",
-                        "amount": 8000.5,
+                        "amount": 8000,
                         "operation_number": "831840",
                         "beneficiary_rfc": "BNM840515VB1",
                         "beneficiary_account_number": "12343453245633",
@@ -47459,9 +47459,9 @@
                             "currency": "MXN",
                             "payment_method": "PPD",
                             "partiality_number": 1,
-                            "previous_balance": 18877.84,
+                            "previous_balance": 18900,
                             "amount_paid": 8000,
-                            "outstanding_balance": 10877.84
+                            "outstanding_balance": 10900
                           }
                         ]
                       }
@@ -47469,7 +47469,7 @@
                     "payroll": {
                       "days": 30,
                       "type": "O",
-                      "amount": 20400.1,
+                      "amount": 20400,
                       "version": "1.2",
                       "date_from": "2018-07-01",
                       "date_to": "2018-07-31",
@@ -47553,7 +47553,7 @@
                           "tax_type": "string",
                           "tax": "ISR",
                           "tax_percentage": 10,
-                          "retained_tax_amount": 209.79
+                          "retained_tax_amount": 210
                         }
                       ],
                       "collected_at": "2019-09-27T13:01:41.941Z"
@@ -47571,7 +47571,7 @@
                       "payment_type": "03",
                       "currency": "BRL",
                       "exchange_rate": "3.75",
-                      "amount": 8000.5,
+                      "amount": 8000,
                       "operation_number": "831840",
                       "beneficiary_rfc": "BNM840515VB1",
                       "beneficiary_account_number": "12343453245633",
@@ -47584,9 +47584,9 @@
                           "currency": "MXN",
                           "payment_method": "PPD",
                           "partiality_number": 1,
-                          "previous_balance": 18877.84,
+                          "previous_balance": 18900,
                           "amount_paid": 8000,
-                          "outstanding_balance": 10877.84
+                          "outstanding_balance": 10900
                         }
                       ]
                     }
@@ -47594,7 +47594,7 @@
                   "payroll": {
                     "days": 30,
                     "type": "O",
-                    "amount": 20400.1,
+                    "amount": 20400,
                     "version": "1.2",
                     "date_from": "2018-07-01",
                     "date_to": "2018-07-31",
@@ -47660,7 +47660,7 @@
                             "tax_type": "string",
                             "tax": "ISR",
                             "tax_percentage": 10,
-                            "retained_tax_amount": 209.79
+                            "retained_tax_amount": 210
                           }
                         ],
                         "collected_at": "2019-09-27T13:01:41.941Z"
@@ -47678,7 +47678,7 @@
                         "payment_type": "03",
                         "currency": "BRL",
                         "exchange_rate": "3.75",
-                        "amount": 8000.5,
+                        "amount": 8000,
                         "operation_number": "831840",
                         "beneficiary_rfc": "BNM840515VB1",
                         "beneficiary_account_number": "12343453245633",
@@ -47691,9 +47691,9 @@
                             "currency": "MXN",
                             "payment_method": "PPD",
                             "partiality_number": 1,
-                            "previous_balance": 18877.84,
+                            "previous_balance": 18900,
                             "amount_paid": 8000,
-                            "outstanding_balance": 10877.84
+                            "outstanding_balance": 10900
                           }
                         ]
                       }
@@ -47701,7 +47701,7 @@
                     "payroll": {
                       "days": 30,
                       "type": "O",
-                      "amount": 20400.1,
+                      "amount": 20400,
                       "version": "1.2",
                       "date_from": "2018-07-01",
                       "date_to": "2018-07-31",
@@ -61664,16 +61664,16 @@
                     "first_transaction_date": "2022-06-09",
                     "last_transaction_date": "2023-02-09",
                     "number_of_income_streams": 12,
-                    "monthly_average": 1705.46,
+                    "monthly_average": 1710,
                     "monthly_average_regular": 2500,
-                    "monthly_average_irregular": 1308.18,
-                    "monthly_average_low_confidence": 1308.18,
+                    "monthly_average_irregular": 1310,
+                    "monthly_average_low_confidence": 1310,
                     "monthly_average_medium_confidence": 2500,
                     "monthly_average_high_confidence": 0,
-                    "total_income_amount": 12616.37,
+                    "total_income_amount": 12600,
                     "total_regular_income_amount": 10000,
-                    "total_irregular_income_amount": 2616.37,
-                    "total_low_confidence": 2616.37,
+                    "total_irregular_income_amount": 2620,
+                    "total_low_confidence": 2620,
                     "total_medium_confidence": 10000,
                     "total_high_confidence": 0
                   }
@@ -61715,16 +61715,16 @@
                       "first_transaction_date": "2022-06-09",
                       "last_transaction_date": "2023-02-09",
                       "number_of_income_streams": 12,
-                      "monthly_average": 1705.46,
+                      "monthly_average": 1710,
                       "monthly_average_regular": 2500,
-                      "monthly_average_irregular": 1308.18,
-                      "monthly_average_low_confidence": 1308.18,
+                      "monthly_average_irregular": 1310,
+                      "monthly_average_low_confidence": 1310,
                       "monthly_average_medium_confidence": 2500,
                       "monthly_average_high_confidence": 0,
-                      "total_income_amount": 12616.37,
+                      "total_income_amount": 12600,
                       "total_regular_income_amount": 10000,
-                      "total_irregular_income_amount": 2616.37,
-                      "total_low_confidence": 2616.37,
+                      "total_irregular_income_amount": 2620,
+                      "total_low_confidence": 2620,
                       "total_medium_confidence": 10000,
                       "total_high_confidence": 0
                     }
@@ -61996,16 +61996,16 @@
                 "first_transaction_date": "2022-06-09",
                 "last_transaction_date": "2023-02-09",
                 "number_of_income_streams": 12,
-                "monthly_average": 1705.46,
+                "monthly_average": 1710,
                 "monthly_average_regular": 2500,
-                "monthly_average_irregular": 1308.18,
-                "monthly_average_low_confidence": 1308.18,
+                "monthly_average_irregular": 1310,
+                "monthly_average_low_confidence": 1310,
                 "monthly_average_medium_confidence": 2500,
                 "monthly_average_high_confidence": 0,
-                "total_income_amount": 12616.37,
+                "total_income_amount": 12600,
                 "total_regular_income_amount": 10000,
-                "total_irregular_income_amount": 2616.37,
-                "total_low_confidence": 2616.37,
+                "total_irregular_income_amount": 2620,
+                "total_low_confidence": 2620,
                 "total_medium_confidence": 10000,
                 "total_high_confidence": 0
               },
@@ -62040,16 +62040,16 @@
                   "first_transaction_date": "2022-06-09",
                   "last_transaction_date": "2023-02-09",
                   "number_of_income_streams": 12,
-                  "monthly_average": 1705.46,
+                  "monthly_average": 1710,
                   "monthly_average_regular": 2500,
-                  "monthly_average_irregular": 1308.18,
-                  "monthly_average_low_confidence": 1308.18,
+                  "monthly_average_irregular": 1310,
+                  "monthly_average_low_confidence": 1310,
                   "monthly_average_medium_confidence": 2500,
                   "monthly_average_high_confidence": 0,
-                  "total_income_amount": 12616.37,
+                  "total_income_amount": 12600,
                   "total_regular_income_amount": 10000,
-                  "total_irregular_income_amount": 2616.37,
-                  "total_low_confidence": 2616.37,
+                  "total_irregular_income_amount": 2620,
+                  "total_low_confidence": 2620,
                   "total_medium_confidence": 10000,
                   "total_high_confidence": 0
                 }
@@ -62100,16 +62100,16 @@
                 "first_transaction_date": "2022-06-09",
                 "last_transaction_date": "2023-02-09",
                 "number_of_income_streams": 12,
-                "monthly_average": 1705.46,
+                "monthly_average": 1710,
                 "monthly_average_regular": 2500,
-                "monthly_average_irregular": 1308.18,
-                "monthly_average_low_confidence": 1308.18,
+                "monthly_average_irregular": 1310,
+                "monthly_average_low_confidence": 1310,
                 "monthly_average_medium_confidence": 2500,
                 "monthly_average_high_confidence": 0,
-                "total_income_amount": 12616.37,
+                "total_income_amount": 12600,
                 "total_regular_income_amount": 10000,
-                "total_irregular_income_amount": 2616.37,
-                "total_low_confidence": 2616.37,
+                "total_irregular_income_amount": 2620,
+                "total_low_confidence": 2620,
                 "total_medium_confidence": 10000,
                 "total_high_confidence": 0
               },
@@ -62144,16 +62144,16 @@
                   "first_transaction_date": "2022-06-09",
                   "last_transaction_date": "2023-02-09",
                   "number_of_income_streams": 12,
-                  "monthly_average": 1705.46,
+                  "monthly_average": 1710,
                   "monthly_average_regular": 2500,
-                  "monthly_average_irregular": 1308.18,
-                  "monthly_average_low_confidence": 1308.18,
+                  "monthly_average_irregular": 1310,
+                  "monthly_average_low_confidence": 1310,
                   "monthly_average_medium_confidence": 2500,
                   "monthly_average_high_confidence": 0,
-                  "total_income_amount": 12616.37,
+                  "total_income_amount": 12600,
                   "total_regular_income_amount": 10000,
-                  "total_irregular_income_amount": 2616.37,
-                  "total_low_confidence": 2616.37,
+                  "total_irregular_income_amount": 2620,
+                  "total_low_confidence": 2620,
                   "total_medium_confidence": 10000,
                   "total_high_confidence": 0
                 }
@@ -62435,16 +62435,16 @@
                   "first_transaction_date": "2022-06-09",
                   "last_transaction_date": "2023-02-09",
                   "number_of_income_streams": 12,
-                  "monthly_average": 1705.46,
+                  "monthly_average": 1710,
                   "monthly_average_regular": 2500,
-                  "monthly_average_irregular": 1308.18,
-                  "monthly_average_low_confidence": 1308.18,
+                  "monthly_average_irregular": 1310,
+                  "monthly_average_low_confidence": 1310,
                   "monthly_average_medium_confidence": 2500,
                   "monthly_average_high_confidence": 0,
-                  "total_income_amount": 12616.37,
+                  "total_income_amount": 12600,
                   "total_regular_income_amount": 10000,
-                  "total_irregular_income_amount": 2616.37,
-                  "total_low_confidence": 2616.37,
+                  "total_irregular_income_amount": 2620,
+                  "total_low_confidence": 2620,
                   "total_medium_confidence": 10000,
                   "total_high_confidence": 0
                 }
@@ -62481,16 +62481,16 @@
                     "first_transaction_date": "2022-06-09",
                     "last_transaction_date": "2023-02-09",
                     "number_of_income_streams": 12,
-                    "monthly_average": 1705.46,
+                    "monthly_average": 1710,
                     "monthly_average_regular": 2500,
-                    "monthly_average_irregular": 1308.18,
-                    "monthly_average_low_confidence": 1308.18,
+                    "monthly_average_irregular": 1310,
+                    "monthly_average_low_confidence": 1310,
                     "monthly_average_medium_confidence": 2500,
                     "monthly_average_high_confidence": 0,
-                    "total_income_amount": 12616.37,
+                    "total_income_amount": 12600,
                     "total_regular_income_amount": 10000,
-                    "total_irregular_income_amount": 2616.37,
-                    "total_low_confidence": 2616.37,
+                    "total_irregular_income_amount": 2620,
+                    "total_low_confidence": 2620,
                     "total_medium_confidence": 10000,
                     "total_high_confidence": 0
                   }
@@ -62545,16 +62545,16 @@
                   "first_transaction_date": "2022-06-09",
                   "last_transaction_date": "2023-02-09",
                   "number_of_income_streams": 12,
-                  "monthly_average": 1705.46,
+                  "monthly_average": 1710,
                   "monthly_average_regular": 2500,
-                  "monthly_average_irregular": 1308.18,
-                  "monthly_average_low_confidence": 1308.18,
+                  "monthly_average_irregular": 1310,
+                  "monthly_average_low_confidence": 1310,
                   "monthly_average_medium_confidence": 2500,
                   "monthly_average_high_confidence": 0,
-                  "total_income_amount": 12616.37,
+                  "total_income_amount": 12600,
                   "total_regular_income_amount": 10000,
-                  "total_irregular_income_amount": 2616.37,
-                  "total_low_confidence": 2616.37,
+                  "total_irregular_income_amount": 2620,
+                  "total_low_confidence": 2620,
                   "total_medium_confidence": 10000,
                   "total_high_confidence": 0
                 }
@@ -62591,16 +62591,16 @@
                     "first_transaction_date": "2022-06-09",
                     "last_transaction_date": "2023-02-09",
                     "number_of_income_streams": 12,
-                    "monthly_average": 1705.46,
+                    "monthly_average": 1710,
                     "monthly_average_regular": 2500,
-                    "monthly_average_irregular": 1308.18,
-                    "monthly_average_low_confidence": 1308.18,
+                    "monthly_average_irregular": 1310,
+                    "monthly_average_low_confidence": 1310,
                     "monthly_average_medium_confidence": 2500,
                     "monthly_average_high_confidence": 0,
-                    "total_income_amount": 12616.37,
+                    "total_income_amount": 12600,
                     "total_regular_income_amount": 10000,
-                    "total_irregular_income_amount": 2616.37,
-                    "total_low_confidence": 2616.37,
+                    "total_irregular_income_amount": 2620,
+                    "total_low_confidence": 2620,
                     "total_medium_confidence": 10000,
                     "total_high_confidence": 0
                   }
@@ -62803,16 +62803,16 @@
                   "first_transaction_date": "2022-06-09",
                   "last_transaction_date": "2023-02-09",
                   "number_of_income_streams": 12,
-                  "monthly_average": 1705.46,
+                  "monthly_average": 1710,
                   "monthly_average_regular": 2500,
-                  "monthly_average_irregular": 1308.18,
-                  "monthly_average_low_confidence": 1308.18,
+                  "monthly_average_irregular": 1310,
+                  "monthly_average_low_confidence": 1310,
                   "monthly_average_medium_confidence": 2500,
                   "monthly_average_high_confidence": 0,
-                  "total_income_amount": 12616.37,
+                  "total_income_amount": 12600,
                   "total_regular_income_amount": 10000,
-                  "total_irregular_income_amount": 2616.37,
-                  "total_low_confidence": 2616.37,
+                  "total_irregular_income_amount": 2620,
+                  "total_low_confidence": 2620,
                   "total_medium_confidence": 10000,
                   "total_high_confidence": 0
                 }
@@ -62849,16 +62849,16 @@
                     "first_transaction_date": "2022-06-09",
                     "last_transaction_date": "2023-02-09",
                     "number_of_income_streams": 12,
-                    "monthly_average": 1705.46,
+                    "monthly_average": 1710,
                     "monthly_average_regular": 2500,
-                    "monthly_average_irregular": 1308.18,
-                    "monthly_average_low_confidence": 1308.18,
+                    "monthly_average_irregular": 1310,
+                    "monthly_average_low_confidence": 1310,
                     "monthly_average_medium_confidence": 2500,
                     "monthly_average_high_confidence": 0,
-                    "total_income_amount": 12616.37,
+                    "total_income_amount": 12600,
                     "total_regular_income_amount": 10000,
-                    "total_irregular_income_amount": 2616.37,
-                    "total_low_confidence": 2616.37,
+                    "total_irregular_income_amount": 2620,
+                    "total_low_confidence": 2620,
                     "total_medium_confidence": 10000,
                     "total_high_confidence": 0
                   }
@@ -63267,8 +63267,8 @@
                       "name": "Cuenta Perfiles- M.N. - MXN-666",
                       "number": "4057068115181",
                       "balance": {
-                        "current": 5874.13,
-                        "available": 5621.12
+                        "current": 5870,
+                        "available": 5620
                       },
                       "currency": "MXN",
                       "public_identification_name": "CLABE",
@@ -63279,8 +63279,8 @@
                         "collected_at": "2019-09-27T13:01:41.941Z",
                         "cutting_date": "2019-12-11",
                         "next_payment_date": "2019-12-13",
-                        "minimum_payment": 2400.3,
-                        "no_interest_payment": 2690.83,
+                        "minimum_payment": 2400,
+                        "no_interest_payment": 2690,
                         "interest_rate": 4,
                         "end_date": "string",
                         "monthly_payment": 1.1,
@@ -63292,7 +63292,7 @@
                         "principal": 192000,
                         "loan_type": "Consignado",
                         "payment_day": "27",
-                        "outstanding_principal": 142023,
+                        "outstanding_principal": 142000,
                         "outstanding_balance": 182000,
                         "monthly_payment": 1000,
                         "interest_rates": [
@@ -63333,14 +63333,14 @@
                               "value": "05.954.445/0221-68"
                             }
                           ],
-                          "balance": 88427.94,
+                          "balance": 88400,
                           "percentage": 100
                         }
                       ],
                       "receivables_data": {
-                        "current": 2193.83,
-                        "available": 800.37,
-                        "anticipated": 1393.46,
+                        "current": 2190,
+                        "available": 800,
+                        "anticipated": 1390,
                         "collected_at": "2022-02-09T08:45:50.406032Z"
                       },
                       "bank_product_id": "string",
@@ -63349,7 +63349,7 @@
                     "name": "Netflix",
                     "transactions": [
                       {
-                        "amount": 2145.45,
+                        "amount": 2150,
                         "description": "Netflix.com/march",
                         "value_date": "2019-10-23"
                       }
@@ -63387,8 +63387,8 @@
                         "name": "Cuenta Perfiles- M.N. - MXN-666",
                         "number": "4057068115181",
                         "balance": {
-                          "current": 5874.13,
-                          "available": 5621.12
+                          "current": 5870,
+                          "available": 5620
                         },
                         "currency": "MXN",
                         "public_identification_name": "CLABE",
@@ -63399,8 +63399,8 @@
                           "collected_at": "2019-09-27T13:01:41.941Z",
                           "cutting_date": "2019-12-11",
                           "next_payment_date": "2019-12-13",
-                          "minimum_payment": 2400.3,
-                          "no_interest_payment": 2690.83,
+                          "minimum_payment": 2400,
+                          "no_interest_payment": 2690,
                           "interest_rate": 4,
                           "end_date": "string",
                           "monthly_payment": 1.1,
@@ -63412,7 +63412,7 @@
                           "principal": 192000,
                           "loan_type": "Consignado",
                           "payment_day": "27",
-                          "outstanding_principal": 142023,
+                          "outstanding_principal": 142000,
                           "outstanding_balance": 182000,
                           "monthly_payment": 1000,
                           "interest_rates": [
@@ -63453,14 +63453,14 @@
                                 "value": "05.954.445/0221-68"
                               }
                             ],
-                            "balance": 88427.94,
+                            "balance": 88400,
                             "percentage": 100
                           }
                         ],
                         "receivables_data": {
-                          "current": 2193.83,
-                          "available": 800.37,
-                          "anticipated": 1393.46,
+                          "current": 2190,
+                          "available": 800,
+                          "anticipated": 1390,
                           "collected_at": "2022-02-09T08:45:50.406032Z"
                         },
                         "bank_product_id": "string",
@@ -63469,7 +63469,7 @@
                       "name": "Netflix",
                       "transactions": [
                         {
-                          "amount": 2145.45,
+                          "amount": 2150,
                           "description": "Netflix.com/march",
                           "value_date": "2019-10-23"
                         }
@@ -63747,8 +63747,8 @@
                     "name": "Cuenta Perfiles- M.N. - MXN-666",
                     "number": "4057068115181",
                     "balance": {
-                      "current": 5874.13,
-                      "available": 5621.12
+                      "current": 5870,
+                      "available": 5620
                     },
                     "currency": "MXN",
                     "public_identification_name": "CLABE",
@@ -63759,8 +63759,8 @@
                       "collected_at": "2019-09-27T13:01:41.941Z",
                       "cutting_date": "2019-12-11",
                       "next_payment_date": "2019-12-13",
-                      "minimum_payment": 2400.3,
-                      "no_interest_payment": 2690.83,
+                      "minimum_payment": 2400,
+                      "no_interest_payment": 2690,
                       "interest_rate": 4,
                       "end_date": "string",
                       "monthly_payment": 1.1,
@@ -63772,7 +63772,7 @@
                       "principal": 192000,
                       "loan_type": "Consignado",
                       "payment_day": "27",
-                      "outstanding_principal": 142023,
+                      "outstanding_principal": 142000,
                       "outstanding_balance": 182000,
                       "monthly_payment": 1000,
                       "interest_rates": [
@@ -63813,14 +63813,14 @@
                             "value": "05.954.445/0221-68"
                           }
                         ],
-                        "balance": 88427.94,
+                        "balance": 88400,
                         "percentage": 100
                       }
                     ],
                     "receivables_data": {
-                      "current": 2193.83,
-                      "available": 800.37,
-                      "anticipated": 1393.46,
+                      "current": 2190,
+                      "available": 800,
+                      "anticipated": 1390,
                       "collected_at": "2022-02-09T08:45:50.406032Z"
                     },
                     "bank_product_id": "string",
@@ -63829,7 +63829,7 @@
                   "name": "Netflix",
                   "transactions": [
                     {
-                      "amount": 2145.45,
+                      "amount": 2150,
                       "description": "Netflix.com/march",
                       "value_date": "2019-10-23"
                     }
@@ -63862,8 +63862,8 @@
                       "name": "Cuenta Perfiles- M.N. - MXN-666",
                       "number": "4057068115181",
                       "balance": {
-                        "current": 5874.13,
-                        "available": 5621.12
+                        "current": 5870,
+                        "available": 5620
                       },
                       "currency": "MXN",
                       "public_identification_name": "CLABE",
@@ -63874,8 +63874,8 @@
                         "collected_at": "2019-09-27T13:01:41.941Z",
                         "cutting_date": "2019-12-11",
                         "next_payment_date": "2019-12-13",
-                        "minimum_payment": 2400.3,
-                        "no_interest_payment": 2690.83,
+                        "minimum_payment": 2400,
+                        "no_interest_payment": 2690,
                         "interest_rate": 4,
                         "end_date": "string",
                         "monthly_payment": 1.1,
@@ -63887,7 +63887,7 @@
                         "principal": 192000,
                         "loan_type": "Consignado",
                         "payment_day": "27",
-                        "outstanding_principal": 142023,
+                        "outstanding_principal": 142000,
                         "outstanding_balance": 182000,
                         "monthly_payment": 1000,
                         "interest_rates": [
@@ -63928,14 +63928,14 @@
                               "value": "05.954.445/0221-68"
                             }
                           ],
-                          "balance": 88427.94,
+                          "balance": 88400,
                           "percentage": 100
                         }
                       ],
                       "receivables_data": {
-                        "current": 2193.83,
-                        "available": 800.37,
-                        "anticipated": 1393.46,
+                        "current": 2190,
+                        "available": 800,
+                        "anticipated": 1390,
                         "collected_at": "2022-02-09T08:45:50.406032Z"
                       },
                       "bank_product_id": "string",
@@ -63944,7 +63944,7 @@
                     "name": "Netflix",
                     "transactions": [
                       {
-                        "amount": 2145.45,
+                        "amount": 2150,
                         "description": "Netflix.com/march",
                         "value_date": "2019-10-23"
                       }
@@ -63993,8 +63993,8 @@
                     "name": "Cuenta Perfiles- M.N. - MXN-666",
                     "number": "4057068115181",
                     "balance": {
-                      "current": 5874.13,
-                      "available": 5621.12
+                      "current": 5870,
+                      "available": 5620
                     },
                     "currency": "MXN",
                     "public_identification_name": "CLABE",
@@ -64005,8 +64005,8 @@
                       "collected_at": "2019-09-27T13:01:41.941Z",
                       "cutting_date": "2019-12-11",
                       "next_payment_date": "2019-12-13",
-                      "minimum_payment": 2400.3,
-                      "no_interest_payment": 2690.83,
+                      "minimum_payment": 2400,
+                      "no_interest_payment": 2690,
                       "interest_rate": 4,
                       "end_date": "string",
                       "monthly_payment": 1.1,
@@ -64018,7 +64018,7 @@
                       "principal": 192000,
                       "loan_type": "Consignado",
                       "payment_day": "27",
-                      "outstanding_principal": 142023,
+                      "outstanding_principal": 142000,
                       "outstanding_balance": 182000,
                       "monthly_payment": 1000,
                       "interest_rates": [
@@ -64059,14 +64059,14 @@
                             "value": "05.954.445/0221-68"
                           }
                         ],
-                        "balance": 88427.94,
+                        "balance": 88400,
                         "percentage": 100
                       }
                     ],
                     "receivables_data": {
-                      "current": 2193.83,
-                      "available": 800.37,
-                      "anticipated": 1393.46,
+                      "current": 2190,
+                      "available": 800,
+                      "anticipated": 1390,
                       "collected_at": "2022-02-09T08:45:50.406032Z"
                     },
                     "bank_product_id": "string",
@@ -64075,7 +64075,7 @@
                   "name": "Netflix",
                   "transactions": [
                     {
-                      "amount": 2145.45,
+                      "amount": 2150,
                       "description": "Netflix.com/march",
                       "value_date": "2019-10-23"
                     }
@@ -64108,8 +64108,8 @@
                       "name": "Cuenta Perfiles- M.N. - MXN-666",
                       "number": "4057068115181",
                       "balance": {
-                        "current": 5874.13,
-                        "available": 5621.12
+                        "current": 5870,
+                        "available": 5620
                       },
                       "currency": "MXN",
                       "public_identification_name": "CLABE",
@@ -64120,8 +64120,8 @@
                         "collected_at": "2019-09-27T13:01:41.941Z",
                         "cutting_date": "2019-12-11",
                         "next_payment_date": "2019-12-13",
-                        "minimum_payment": 2400.3,
-                        "no_interest_payment": 2690.83,
+                        "minimum_payment": 2400,
+                        "no_interest_payment": 2690,
                         "interest_rate": 4,
                         "end_date": "string",
                         "monthly_payment": 1.1,
@@ -64133,7 +64133,7 @@
                         "principal": 192000,
                         "loan_type": "Consignado",
                         "payment_day": "27",
-                        "outstanding_principal": 142023,
+                        "outstanding_principal": 142000,
                         "outstanding_balance": 182000,
                         "monthly_payment": 1000,
                         "interest_rates": [
@@ -64174,14 +64174,14 @@
                               "value": "05.954.445/0221-68"
                             }
                           ],
-                          "balance": 88427.94,
+                          "balance": 88400,
                           "percentage": 100
                         }
                       ],
                       "receivables_data": {
-                        "current": 2193.83,
-                        "available": 800.37,
-                        "anticipated": 1393.46,
+                        "current": 2190,
+                        "available": 800,
+                        "anticipated": 1390,
                         "collected_at": "2022-02-09T08:45:50.406032Z"
                       },
                       "bank_product_id": "string",
@@ -64190,7 +64190,7 @@
                     "name": "Netflix",
                     "transactions": [
                       {
-                        "amount": 2145.45,
+                        "amount": 2150,
                         "description": "Netflix.com/march",
                         "value_date": "2019-10-23"
                       }
@@ -64469,8 +64469,8 @@
                     "name": "Cuenta Perfiles- M.N. - MXN-666",
                     "number": "4057068115181",
                     "balance": {
-                      "current": 5874.13,
-                      "available": 5621.12
+                      "current": 5870,
+                      "available": 5620
                     },
                     "currency": "MXN",
                     "public_identification_name": "CLABE",
@@ -64481,8 +64481,8 @@
                       "collected_at": "2019-09-27T13:01:41.941Z",
                       "cutting_date": "2019-12-11",
                       "next_payment_date": "2019-12-13",
-                      "minimum_payment": 2400.3,
-                      "no_interest_payment": 2690.83,
+                      "minimum_payment": 2400,
+                      "no_interest_payment": 2690,
                       "interest_rate": 4,
                       "end_date": "string",
                       "monthly_payment": 1.1,
@@ -64494,7 +64494,7 @@
                       "principal": 192000,
                       "loan_type": "Consignado",
                       "payment_day": "27",
-                      "outstanding_principal": 142023,
+                      "outstanding_principal": 142000,
                       "outstanding_balance": 182000,
                       "monthly_payment": 1000,
                       "interest_rates": [
@@ -64535,14 +64535,14 @@
                             "value": "05.954.445/0221-68"
                           }
                         ],
-                        "balance": 88427.94,
+                        "balance": 88400,
                         "percentage": 100
                       }
                     ],
                     "receivables_data": {
-                      "current": 2193.83,
-                      "available": 800.37,
-                      "anticipated": 1393.46,
+                      "current": 2190,
+                      "available": 800,
+                      "anticipated": 1390,
                       "collected_at": "2022-02-09T08:45:50.406032Z"
                     },
                     "bank_product_id": "string",
@@ -64551,7 +64551,7 @@
                   "name": "Netflix",
                   "transactions": [
                     {
-                      "amount": 2145.45,
+                      "amount": 2150,
                       "description": "Netflix.com/march",
                       "value_date": "2019-10-23"
                     }
@@ -64584,8 +64584,8 @@
                       "name": "Cuenta Perfiles- M.N. - MXN-666",
                       "number": "4057068115181",
                       "balance": {
-                        "current": 5874.13,
-                        "available": 5621.12
+                        "current": 5870,
+                        "available": 5620
                       },
                       "currency": "MXN",
                       "public_identification_name": "CLABE",
@@ -64596,8 +64596,8 @@
                         "collected_at": "2019-09-27T13:01:41.941Z",
                         "cutting_date": "2019-12-11",
                         "next_payment_date": "2019-12-13",
-                        "minimum_payment": 2400.3,
-                        "no_interest_payment": 2690.83,
+                        "minimum_payment": 2400,
+                        "no_interest_payment": 2690,
                         "interest_rate": 4,
                         "end_date": "string",
                         "monthly_payment": 1.1,
@@ -64609,7 +64609,7 @@
                         "principal": 192000,
                         "loan_type": "Consignado",
                         "payment_day": "27",
-                        "outstanding_principal": 142023,
+                        "outstanding_principal": 142000,
                         "outstanding_balance": 182000,
                         "monthly_payment": 1000,
                         "interest_rates": [
@@ -64650,14 +64650,14 @@
                               "value": "05.954.445/0221-68"
                             }
                           ],
-                          "balance": 88427.94,
+                          "balance": 88400,
                           "percentage": 100
                         }
                       ],
                       "receivables_data": {
-                        "current": 2193.83,
-                        "available": 800.37,
-                        "anticipated": 1393.46,
+                        "current": 2190,
+                        "available": 800,
+                        "anticipated": 1390,
                         "collected_at": "2022-02-09T08:45:50.406032Z"
                       },
                       "bank_product_id": "string",
@@ -64666,7 +64666,7 @@
                     "name": "Netflix",
                     "transactions": [
                       {
-                        "amount": 2145.45,
+                        "amount": 2150,
                         "description": "Netflix.com/march",
                         "value_date": "2019-10-23"
                       }
@@ -64717,8 +64717,8 @@
                     "name": "Cuenta Perfiles- M.N. - MXN-666",
                     "number": "4057068115181",
                     "balance": {
-                      "current": 5874.13,
-                      "available": 5621.12
+                      "current": 5870,
+                      "available": 5620
                     },
                     "currency": "MXN",
                     "public_identification_name": "CLABE",
@@ -64729,8 +64729,8 @@
                       "collected_at": "2019-09-27T13:01:41.941Z",
                       "cutting_date": "2019-12-11",
                       "next_payment_date": "2019-12-13",
-                      "minimum_payment": 2400.3,
-                      "no_interest_payment": 2690.83,
+                      "minimum_payment": 2400,
+                      "no_interest_payment": 2690,
                       "interest_rate": 4,
                       "end_date": "string",
                       "monthly_payment": 1.1,
@@ -64742,7 +64742,7 @@
                       "principal": 192000,
                       "loan_type": "Consignado",
                       "payment_day": "27",
-                      "outstanding_principal": 142023,
+                      "outstanding_principal": 142000,
                       "outstanding_balance": 182000,
                       "monthly_payment": 1000,
                       "interest_rates": [
@@ -64783,14 +64783,14 @@
                             "value": "05.954.445/0221-68"
                           }
                         ],
-                        "balance": 88427.94,
+                        "balance": 88400,
                         "percentage": 100
                       }
                     ],
                     "receivables_data": {
-                      "current": 2193.83,
-                      "available": 800.37,
-                      "anticipated": 1393.46,
+                      "current": 2190,
+                      "available": 800,
+                      "anticipated": 1390,
                       "collected_at": "2022-02-09T08:45:50.406032Z"
                     },
                     "bank_product_id": "string",
@@ -64799,7 +64799,7 @@
                   "name": "Netflix",
                   "transactions": [
                     {
-                      "amount": 2145.45,
+                      "amount": 2150,
                       "description": "Netflix.com/march",
                       "value_date": "2019-10-23"
                     }
@@ -64832,8 +64832,8 @@
                       "name": "Cuenta Perfiles- M.N. - MXN-666",
                       "number": "4057068115181",
                       "balance": {
-                        "current": 5874.13,
-                        "available": 5621.12
+                        "current": 5870,
+                        "available": 5620
                       },
                       "currency": "MXN",
                       "public_identification_name": "CLABE",
@@ -64844,8 +64844,8 @@
                         "collected_at": "2019-09-27T13:01:41.941Z",
                         "cutting_date": "2019-12-11",
                         "next_payment_date": "2019-12-13",
-                        "minimum_payment": 2400.3,
-                        "no_interest_payment": 2690.83,
+                        "minimum_payment": 2400,
+                        "no_interest_payment": 2690,
                         "interest_rate": 4,
                         "end_date": "string",
                         "monthly_payment": 1.1,
@@ -64857,7 +64857,7 @@
                         "principal": 192000,
                         "loan_type": "Consignado",
                         "payment_day": "27",
-                        "outstanding_principal": 142023,
+                        "outstanding_principal": 142000,
                         "outstanding_balance": 182000,
                         "monthly_payment": 1000,
                         "interest_rates": [
@@ -64898,14 +64898,14 @@
                               "value": "05.954.445/0221-68"
                             }
                           ],
-                          "balance": 88427.94,
+                          "balance": 88400,
                           "percentage": 100
                         }
                       ],
                       "receivables_data": {
-                        "current": 2193.83,
-                        "available": 800.37,
-                        "anticipated": 1393.46,
+                        "current": 2190,
+                        "available": 800,
+                        "anticipated": 1390,
                         "collected_at": "2022-02-09T08:45:50.406032Z"
                       },
                       "bank_product_id": "string",
@@ -64914,7 +64914,7 @@
                     "name": "Netflix",
                     "transactions": [
                       {
-                        "amount": 2145.45,
+                        "amount": 2150,
                         "description": "Netflix.com/march",
                         "value_date": "2019-10-23"
                       }
@@ -65112,8 +65112,8 @@
                     "name": "Cuenta Perfiles- M.N. - MXN-666",
                     "number": "4057068115181",
                     "balance": {
-                      "current": 5874.13,
-                      "available": 5621.12
+                      "current": 5870,
+                      "available": 5620
                     },
                     "currency": "MXN",
                     "public_identification_name": "CLABE",
@@ -65124,8 +65124,8 @@
                       "collected_at": "2019-09-27T13:01:41.941Z",
                       "cutting_date": "2019-12-11",
                       "next_payment_date": "2019-12-13",
-                      "minimum_payment": 2400.3,
-                      "no_interest_payment": 2690.83,
+                      "minimum_payment": 2400,
+                      "no_interest_payment": 2690,
                       "interest_rate": 4,
                       "end_date": "string",
                       "monthly_payment": 1.1,
@@ -65137,7 +65137,7 @@
                       "principal": 192000,
                       "loan_type": "Consignado",
                       "payment_day": "27",
-                      "outstanding_principal": 142023,
+                      "outstanding_principal": 142000,
                       "outstanding_balance": 182000,
                       "monthly_payment": 1000,
                       "interest_rates": [
@@ -65178,14 +65178,14 @@
                             "value": "05.954.445/0221-68"
                           }
                         ],
-                        "balance": 88427.94,
+                        "balance": 88400,
                         "percentage": 100
                       }
                     ],
                     "receivables_data": {
-                      "current": 2193.83,
-                      "available": 800.37,
-                      "anticipated": 1393.46,
+                      "current": 2190,
+                      "available": 800,
+                      "anticipated": 1390,
                       "collected_at": "2022-02-09T08:45:50.406032Z"
                     },
                     "bank_product_id": "string",
@@ -65194,7 +65194,7 @@
                   "name": "Netflix",
                   "transactions": [
                     {
-                      "amount": 2145.45,
+                      "amount": 2150,
                       "description": "Netflix.com/march",
                       "value_date": "2019-10-23"
                     }
@@ -65227,8 +65227,8 @@
                       "name": "Cuenta Perfiles- M.N. - MXN-666",
                       "number": "4057068115181",
                       "balance": {
-                        "current": 5874.13,
-                        "available": 5621.12
+                        "current": 5870,
+                        "available": 5620
                       },
                       "currency": "MXN",
                       "public_identification_name": "CLABE",
@@ -65239,8 +65239,8 @@
                         "collected_at": "2019-09-27T13:01:41.941Z",
                         "cutting_date": "2019-12-11",
                         "next_payment_date": "2019-12-13",
-                        "minimum_payment": 2400.3,
-                        "no_interest_payment": 2690.83,
+                        "minimum_payment": 2400,
+                        "no_interest_payment": 2690,
                         "interest_rate": 4,
                         "end_date": "string",
                         "monthly_payment": 1.1,
@@ -65252,7 +65252,7 @@
                         "principal": 192000,
                         "loan_type": "Consignado",
                         "payment_day": "27",
-                        "outstanding_principal": 142023,
+                        "outstanding_principal": 142000,
                         "outstanding_balance": 182000,
                         "monthly_payment": 1000,
                         "interest_rates": [
@@ -65293,14 +65293,14 @@
                               "value": "05.954.445/0221-68"
                             }
                           ],
-                          "balance": 88427.94,
+                          "balance": 88400,
                           "percentage": 100
                         }
                       ],
                       "receivables_data": {
-                        "current": 2193.83,
-                        "available": 800.37,
-                        "anticipated": 1393.46,
+                        "current": 2190,
+                        "available": 800,
+                        "anticipated": 1390,
                         "collected_at": "2022-02-09T08:45:50.406032Z"
                       },
                       "bank_product_id": "string",
@@ -65309,7 +65309,7 @@
                     "name": "Netflix",
                     "transactions": [
                       {
-                        "amount": 2145.45,
+                        "amount": 2150,
                         "description": "Netflix.com/march",
                         "value_date": "2019-10-23"
                       }
@@ -65720,7 +65720,7 @@
                     "type": "FIXED_INCOME",
                     "balance_type": "ASSET",
                     "balance_gross": 76000,
-                    "balance_net": 77370.69,
+                    "balance_net": 77400,
                     "currency": "BRL",
                     "instruments": [
                       {
@@ -65735,11 +65735,11 @@
                         "subtype": "CBD",
                         "name": "CBD DIGITAL ESPECIAL",
                         "currency": "USD",
-                        "price": 10.41,
-                        "quantity": 27.46,
-                        "balance_gross": 100.09,
-                        "balance_net": 99.09,
-                        "average_acquisition_price": 10.01,
+                        "price": 10.4,
+                        "quantity": 27.5,
+                        "balance_gross": 100,
+                        "balance_net": 99.1,
+                        "average_acquisition_price": 10,
                         "profit": 3.08,
                         "open_date": "2021-08-10",
                         "redemption_conditions": [
@@ -65751,13 +65751,13 @@
                         "fees": [
                           {
                             "type": "OPERATION_FEE",
-                            "value": 123.09
+                            "value": 123
                           }
                         ],
                         "interest_rates": [
                           {
                             "type": "yearly",
-                            "value": 11.31,
+                            "value": 11.3,
                             "index": "CDI"
                           }
                         ]
@@ -65779,7 +65779,7 @@
                       "type": "FIXED_INCOME",
                       "balance_type": "ASSET",
                       "balance_gross": 76000,
-                      "balance_net": 77370.69,
+                      "balance_net": 77400,
                       "currency": "BRL",
                       "instruments": [
                         {
@@ -65794,11 +65794,11 @@
                           "subtype": "CBD",
                           "name": "CBD DIGITAL ESPECIAL",
                           "currency": "USD",
-                          "price": 10.41,
-                          "quantity": 27.46,
-                          "balance_gross": 100.09,
-                          "balance_net": 99.09,
-                          "average_acquisition_price": 10.01,
+                          "price": 10.4,
+                          "quantity": 27.5,
+                          "balance_gross": 100,
+                          "balance_net": 99.1,
+                          "average_acquisition_price": 10,
                           "profit": 3.08,
                           "open_date": "2021-08-10",
                           "redemption_conditions": [
@@ -65810,13 +65810,13 @@
                           "fees": [
                             {
                               "type": "OPERATION_FEE",
-                              "value": 123.09
+                              "value": 123
                             }
                           ],
                           "interest_rates": [
                             {
                               "type": "yearly",
-                              "value": 11.31,
+                              "value": 11.3,
                               "index": "CDI"
                             }
                           ]
@@ -66052,7 +66052,7 @@
                 "type": "FIXED_INCOME",
                 "balance_type": "ASSET",
                 "balance_gross": 76000,
-                "balance_net": 77370.69,
+                "balance_net": 77400,
                 "currency": "BRL",
                 "instruments": [
                   {
@@ -66067,11 +66067,11 @@
                     "subtype": "CBD",
                     "name": "CBD DIGITAL ESPECIAL",
                     "currency": "USD",
-                    "price": 10.41,
-                    "quantity": 27.46,
-                    "balance_gross": 100.09,
-                    "balance_net": 99.09,
-                    "average_acquisition_price": 10.01,
+                    "price": 10.4,
+                    "quantity": 27.5,
+                    "balance_gross": 100,
+                    "balance_net": 99.1,
+                    "average_acquisition_price": 10,
                     "profit": 3.08,
                     "open_date": "2021-08-10",
                     "redemption_conditions": [
@@ -66083,13 +66083,13 @@
                     "fees": [
                       {
                         "type": "OPERATION_FEE",
-                        "value": 123.09
+                        "value": 123
                       }
                     ],
                     "interest_rates": [
                       {
                         "type": "yearly",
-                        "value": 11.31,
+                        "value": 11.3,
                         "index": "CDI"
                       }
                     ]
@@ -66104,7 +66104,7 @@
                   "type": "FIXED_INCOME",
                   "balance_type": "ASSET",
                   "balance_gross": 76000,
-                  "balance_net": 77370.69,
+                  "balance_net": 77400,
                   "currency": "BRL",
                   "instruments": [
                     {
@@ -66119,11 +66119,11 @@
                       "subtype": "CBD",
                       "name": "CBD DIGITAL ESPECIAL",
                       "currency": "USD",
-                      "price": 10.41,
-                      "quantity": 27.46,
-                      "balance_gross": 100.09,
-                      "balance_net": 99.09,
-                      "average_acquisition_price": 10.01,
+                      "price": 10.4,
+                      "quantity": 27.5,
+                      "balance_gross": 100,
+                      "balance_net": 99.1,
+                      "average_acquisition_price": 10,
                       "profit": 3.08,
                       "open_date": "2021-08-10",
                       "redemption_conditions": [
@@ -66135,13 +66135,13 @@
                       "fees": [
                         {
                           "type": "OPERATION_FEE",
-                          "value": 123.09
+                          "value": 123
                         }
                       ],
                       "interest_rates": [
                         {
                           "type": "yearly",
-                          "value": 11.31,
+                          "value": 11.3,
                           "index": "CDI"
                         }
                       ]
@@ -66172,7 +66172,7 @@
                 "type": "FIXED_INCOME",
                 "balance_type": "ASSET",
                 "balance_gross": 76000,
-                "balance_net": 77370.69,
+                "balance_net": 77400,
                 "currency": "BRL",
                 "instruments": [
                   {
@@ -66187,11 +66187,11 @@
                     "subtype": "CBD",
                     "name": "CBD DIGITAL ESPECIAL",
                     "currency": "USD",
-                    "price": 10.41,
-                    "quantity": 27.46,
-                    "balance_gross": 100.09,
-                    "balance_net": 99.09,
-                    "average_acquisition_price": 10.01,
+                    "price": 10.4,
+                    "quantity": 27.5,
+                    "balance_gross": 100,
+                    "balance_net": 99.1,
+                    "average_acquisition_price": 10,
                     "profit": 3.08,
                     "open_date": "2021-08-10",
                     "redemption_conditions": [
@@ -66203,13 +66203,13 @@
                     "fees": [
                       {
                         "type": "OPERATION_FEE",
-                        "value": 123.09
+                        "value": 123
                       }
                     ],
                     "interest_rates": [
                       {
                         "type": "yearly",
-                        "value": 11.31,
+                        "value": 11.3,
                         "index": "CDI"
                       }
                     ]
@@ -66224,7 +66224,7 @@
                   "type": "FIXED_INCOME",
                   "balance_type": "ASSET",
                   "balance_gross": 76000,
-                  "balance_net": 77370.69,
+                  "balance_net": 77400,
                   "currency": "BRL",
                   "instruments": [
                     {
@@ -66239,11 +66239,11 @@
                       "subtype": "CBD",
                       "name": "CBD DIGITAL ESPECIAL",
                       "currency": "USD",
-                      "price": 10.41,
-                      "quantity": 27.46,
-                      "balance_gross": 100.09,
-                      "balance_net": 99.09,
-                      "average_acquisition_price": 10.01,
+                      "price": 10.4,
+                      "quantity": 27.5,
+                      "balance_gross": 100,
+                      "balance_net": 99.1,
+                      "average_acquisition_price": 10,
                       "profit": 3.08,
                       "open_date": "2021-08-10",
                       "redemption_conditions": [
@@ -66255,13 +66255,13 @@
                       "fees": [
                         {
                           "type": "OPERATION_FEE",
-                          "value": 123.09
+                          "value": 123
                         }
                       ],
                       "interest_rates": [
                         {
                           "type": "yearly",
-                          "value": 11.31,
+                          "value": 11.3,
                           "index": "CDI"
                         }
                       ]
@@ -66497,7 +66497,7 @@
                 "type": "FIXED_INCOME",
                 "balance_type": "ASSET",
                 "balance_gross": 76000,
-                "balance_net": 77370.69,
+                "balance_net": 77400,
                 "currency": "BRL",
                 "instruments": [
                   {
@@ -66512,11 +66512,11 @@
                     "subtype": "CBD",
                     "name": "CBD DIGITAL ESPECIAL",
                     "currency": "USD",
-                    "price": 10.41,
-                    "quantity": 27.46,
-                    "balance_gross": 100.09,
-                    "balance_net": 99.09,
-                    "average_acquisition_price": 10.01,
+                    "price": 10.4,
+                    "quantity": 27.5,
+                    "balance_gross": 100,
+                    "balance_net": 99.1,
+                    "average_acquisition_price": 10,
                     "profit": 3.08,
                     "open_date": "2021-08-10",
                     "redemption_conditions": [
@@ -66528,13 +66528,13 @@
                     "fees": [
                       {
                         "type": "OPERATION_FEE",
-                        "value": 123.09
+                        "value": 123
                       }
                     ],
                     "interest_rates": [
                       {
                         "type": "yearly",
-                        "value": 11.31,
+                        "value": 11.3,
                         "index": "CDI"
                       }
                     ]
@@ -66549,7 +66549,7 @@
                   "type": "FIXED_INCOME",
                   "balance_type": "ASSET",
                   "balance_gross": 76000,
-                  "balance_net": 77370.69,
+                  "balance_net": 77400,
                   "currency": "BRL",
                   "instruments": [
                     {
@@ -66564,11 +66564,11 @@
                       "subtype": "CBD",
                       "name": "CBD DIGITAL ESPECIAL",
                       "currency": "USD",
-                      "price": 10.41,
-                      "quantity": 27.46,
-                      "balance_gross": 100.09,
-                      "balance_net": 99.09,
-                      "average_acquisition_price": 10.01,
+                      "price": 10.4,
+                      "quantity": 27.5,
+                      "balance_gross": 100,
+                      "balance_net": 99.1,
+                      "average_acquisition_price": 10,
                       "profit": 3.08,
                       "open_date": "2021-08-10",
                       "redemption_conditions": [
@@ -66580,13 +66580,13 @@
                       "fees": [
                         {
                           "type": "OPERATION_FEE",
-                          "value": 123.09
+                          "value": 123
                         }
                       ],
                       "interest_rates": [
                         {
                           "type": "yearly",
-                          "value": 11.31,
+                          "value": 11.3,
                           "index": "CDI"
                         }
                       ]
@@ -66619,7 +66619,7 @@
                 "type": "FIXED_INCOME",
                 "balance_type": "ASSET",
                 "balance_gross": 76000,
-                "balance_net": 77370.69,
+                "balance_net": 77400,
                 "currency": "BRL",
                 "instruments": [
                   {
@@ -66634,11 +66634,11 @@
                     "subtype": "CBD",
                     "name": "CBD DIGITAL ESPECIAL",
                     "currency": "USD",
-                    "price": 10.41,
-                    "quantity": 27.46,
-                    "balance_gross": 100.09,
-                    "balance_net": 99.09,
-                    "average_acquisition_price": 10.01,
+                    "price": 10.4,
+                    "quantity": 27.5,
+                    "balance_gross": 100,
+                    "balance_net": 99.1,
+                    "average_acquisition_price": 10,
                     "profit": 3.08,
                     "open_date": "2021-08-10",
                     "redemption_conditions": [
@@ -66650,13 +66650,13 @@
                     "fees": [
                       {
                         "type": "OPERATION_FEE",
-                        "value": 123.09
+                        "value": 123
                       }
                     ],
                     "interest_rates": [
                       {
                         "type": "yearly",
-                        "value": 11.31,
+                        "value": 11.3,
                         "index": "CDI"
                       }
                     ]
@@ -66671,7 +66671,7 @@
                   "type": "FIXED_INCOME",
                   "balance_type": "ASSET",
                   "balance_gross": 76000,
-                  "balance_net": 77370.69,
+                  "balance_net": 77400,
                   "currency": "BRL",
                   "instruments": [
                     {
@@ -66686,11 +66686,11 @@
                       "subtype": "CBD",
                       "name": "CBD DIGITAL ESPECIAL",
                       "currency": "USD",
-                      "price": 10.41,
-                      "quantity": 27.46,
-                      "balance_gross": 100.09,
-                      "balance_net": 99.09,
-                      "average_acquisition_price": 10.01,
+                      "price": 10.4,
+                      "quantity": 27.5,
+                      "balance_gross": 100,
+                      "balance_net": 99.1,
+                      "average_acquisition_price": 10,
                       "profit": 3.08,
                       "open_date": "2021-08-10",
                       "redemption_conditions": [
@@ -66702,13 +66702,13 @@
                       "fees": [
                         {
                           "type": "OPERATION_FEE",
-                          "value": 123.09
+                          "value": 123
                         }
                       ],
                       "interest_rates": [
                         {
                           "type": "yearly",
-                          "value": 11.31,
+                          "value": 11.3,
                           "index": "CDI"
                         }
                       ]
@@ -66883,7 +66883,7 @@
                 "type": "FIXED_INCOME",
                 "balance_type": "ASSET",
                 "balance_gross": 76000,
-                "balance_net": 77370.69,
+                "balance_net": 77400,
                 "currency": "BRL",
                 "instruments": [
                   {
@@ -66898,11 +66898,11 @@
                     "subtype": "CBD",
                     "name": "CBD DIGITAL ESPECIAL",
                     "currency": "USD",
-                    "price": 10.41,
-                    "quantity": 27.46,
-                    "balance_gross": 100.09,
-                    "balance_net": 99.09,
-                    "average_acquisition_price": 10.01,
+                    "price": 10.4,
+                    "quantity": 27.5,
+                    "balance_gross": 100,
+                    "balance_net": 99.1,
+                    "average_acquisition_price": 10,
                     "profit": 3.08,
                     "open_date": "2021-08-10",
                     "redemption_conditions": [
@@ -66914,13 +66914,13 @@
                     "fees": [
                       {
                         "type": "OPERATION_FEE",
-                        "value": 123.09
+                        "value": 123
                       }
                     ],
                     "interest_rates": [
                       {
                         "type": "yearly",
-                        "value": 11.31,
+                        "value": 11.3,
                         "index": "CDI"
                       }
                     ]
@@ -66935,7 +66935,7 @@
                   "type": "FIXED_INCOME",
                   "balance_type": "ASSET",
                   "balance_gross": 76000,
-                  "balance_net": 77370.69,
+                  "balance_net": 77400,
                   "currency": "BRL",
                   "instruments": [
                     {
@@ -66950,11 +66950,11 @@
                       "subtype": "CBD",
                       "name": "CBD DIGITAL ESPECIAL",
                       "currency": "USD",
-                      "price": 10.41,
-                      "quantity": 27.46,
-                      "balance_gross": 100.09,
-                      "balance_net": 99.09,
-                      "average_acquisition_price": 10.01,
+                      "price": 10.4,
+                      "quantity": 27.5,
+                      "balance_gross": 100,
+                      "balance_net": 99.1,
+                      "average_acquisition_price": 10,
                       "profit": 3.08,
                       "open_date": "2021-08-10",
                       "redemption_conditions": [
@@ -66966,13 +66966,13 @@
                       "fees": [
                         {
                           "type": "OPERATION_FEE",
-                          "value": 123.09
+                          "value": 123
                         }
                       ],
                       "interest_rates": [
                         {
                           "type": "yearly",
-                          "value": 11.31,
+                          "value": 11.3,
                           "index": "CDI"
                         }
                       ]
@@ -67499,8 +67499,8 @@
                     "institution_transaction_id": "134532345",
                     "currency": "BRL",
                     "type": "VISA_CREDIT",
-                    "gross_amount": 106.7,
-                    "net_amount": 104.58,
+                    "gross_amount": 107,
+                    "net_amount": 105,
                     "fees": [
                       {
                         "type": "TRANSACTION_FEE",
@@ -67538,8 +67538,8 @@
                       "institution_transaction_id": "134532345",
                       "currency": "BRL",
                       "type": "VISA_CREDIT",
-                      "gross_amount": 106.7,
-                      "net_amount": 104.58,
+                      "gross_amount": 107,
+                      "net_amount": 105,
                       "fees": [
                         {
                           "type": "TRANSACTION_FEE",
@@ -67795,8 +67795,8 @@
                 "institution_transaction_id": "134532345",
                 "currency": "BRL",
                 "type": "VISA_CREDIT",
-                "gross_amount": 106.7,
-                "net_amount": 104.58,
+                "gross_amount": 107,
+                "net_amount": 105,
                 "fees": [
                   {
                     "type": "TRANSACTION_FEE",
@@ -67827,8 +67827,8 @@
                   "institution_transaction_id": "134532345",
                   "currency": "BRL",
                   "type": "VISA_CREDIT",
-                  "gross_amount": 106.7,
-                  "net_amount": 104.58,
+                  "gross_amount": 107,
+                  "net_amount": 105,
                   "fees": [
                     {
                       "type": "TRANSACTION_FEE",
@@ -67879,8 +67879,8 @@
                 "institution_transaction_id": "134532345",
                 "currency": "BRL",
                 "type": "VISA_CREDIT",
-                "gross_amount": 106.7,
-                "net_amount": 104.58,
+                "gross_amount": 107,
+                "net_amount": 105,
                 "fees": [
                   {
                     "type": "TRANSACTION_FEE",
@@ -67911,8 +67911,8 @@
                   "institution_transaction_id": "134532345",
                   "currency": "BRL",
                   "type": "VISA_CREDIT",
-                  "gross_amount": 106.7,
-                  "net_amount": 104.58,
+                  "gross_amount": 107,
+                  "net_amount": 105,
                   "fees": [
                     {
                       "type": "TRANSACTION_FEE",
@@ -68103,8 +68103,8 @@
                 "institution_transaction_id": "134532345",
                 "currency": "BRL",
                 "type": "VISA_CREDIT",
-                "gross_amount": 106.7,
-                "net_amount": 104.58,
+                "gross_amount": 107,
+                "net_amount": 105,
                 "fees": [
                   {
                     "type": "TRANSACTION_FEE",
@@ -68135,8 +68135,8 @@
                   "institution_transaction_id": "134532345",
                   "currency": "BRL",
                   "type": "VISA_CREDIT",
-                  "gross_amount": 106.7,
-                  "net_amount": 104.58,
+                  "gross_amount": 107,
+                  "net_amount": 105,
                   "fees": [
                     {
                       "type": "TRANSACTION_FEE",
@@ -68528,33 +68528,33 @@
                       "num_outgoing_transactions_1w": 0,
                       "num_outgoing_transactions_1m": 0,
                       "num_outgoing_transactions_3m": 0,
-                      "sum_incoming_amount_1w": 10022.01,
-                      "sum_incoming_amount_1m": 10022.01,
-                      "sum_incoming_amount_3m": 10022.01,
-                      "sum_outgoing_amount_1w": 10237.03,
-                      "sum_outgoing_amount_1m": 10237.03,
-                      "sum_outgoing_amount_3m": 10237.03,
+                      "sum_incoming_amount_1w": 10000,
+                      "sum_incoming_amount_1m": 10000,
+                      "sum_incoming_amount_3m": 10000,
+                      "sum_outgoing_amount_1w": 10200,
+                      "sum_outgoing_amount_1m": 10200,
+                      "sum_outgoing_amount_3m": 10200,
                       "max_incoming_amount_1w": 3030,
                       "max_incoming_amount_1m": 3030,
                       "max_incoming_amount_3m": 3030,
-                      "max_outgoing_amount_1w": 3027.44,
-                      "max_outgoing_amount_1m": 3027.44,
-                      "max_outgoing_amount_3m": 3027.44,
+                      "max_outgoing_amount_1w": 3030,
+                      "max_outgoing_amount_1m": 3030,
+                      "max_outgoing_amount_3m": 3030,
                       "mean_incoming_amount_1w": 3030,
                       "mean_incoming_amount_1m": 3030,
                       "mean_incoming_amount_3m": 3030,
-                      "mean_outgoing_amount_1w": 3027.44,
-                      "mean_outgoing_amount_1m": 3027.44,
-                      "mean_outgoing_amount_3m": 3027.44
+                      "mean_outgoing_amount_1w": 3030,
+                      "mean_outgoing_amount_1m": 3030,
+                      "mean_outgoing_amount_3m": 3030
                     },
                     "balances_metrics": {
                       "min_balance_1w": 0.51,
                       "min_balance_1m": 0.51,
                       "min_balance_3m": 0.51,
-                      "max_balance_1w": 3062.11,
-                      "max_balance_1m": 3062.11,
-                      "max_balance_3m": 3062.11,
-                      "closing_balance": 24.19,
+                      "max_balance_1w": 3060,
+                      "max_balance_1m": 3060,
+                      "max_balance_3m": 3060,
+                      "closing_balance": 24.2,
                       "days_balance_below_0_1w": 0,
                       "days_balance_below_0_1m": 0,
                       "days_balance_below_0_3m": 0,
@@ -68564,20 +68564,20 @@
                       "balance_threshold_x": 267
                     },
                     "cashflow_metrics": {
-                      "sum_positive_1w": 10022.01,
-                      "sum_positive_1m": 10022.01,
-                      "sum_positive_3m": 10022.01,
-                      "sum_negative_1w": 10237.03,
-                      "sum_negative_1m": 10237.03,
-                      "sum_negative_3m": 10237.03,
+                      "sum_positive_1w": 10000,
+                      "sum_positive_1m": 10000,
+                      "sum_positive_3m": 10000,
+                      "sum_negative_1w": 10200,
+                      "sum_negative_1m": 10200,
+                      "sum_negative_3m": 10200,
                       "positive_to_negative_ratio_1w": 0.98,
                       "positive_to_negative_ratio_1m": 0.98,
                       "positive_to_negative_ratio_3m": 0.98
                     },
                     "credit_cards_metrics": {
                       "num_accounts": 2,
-                      "sum_credit_limit": 600.5,
-                      "sum_credit_used": 200.5
+                      "sum_credit_limit": 601,
+                      "sum_credit_used": 201
                     },
                     "loans_metrics": {
                       "num_accounts": 5,
@@ -68614,33 +68614,33 @@
                         "num_outgoing_transactions_1w": 0,
                         "num_outgoing_transactions_1m": 0,
                         "num_outgoing_transactions_3m": 0,
-                        "sum_incoming_amount_1w": 10022.01,
-                        "sum_incoming_amount_1m": 10022.01,
-                        "sum_incoming_amount_3m": 10022.01,
-                        "sum_outgoing_amount_1w": 10237.03,
-                        "sum_outgoing_amount_1m": 10237.03,
-                        "sum_outgoing_amount_3m": 10237.03,
+                        "sum_incoming_amount_1w": 10000,
+                        "sum_incoming_amount_1m": 10000,
+                        "sum_incoming_amount_3m": 10000,
+                        "sum_outgoing_amount_1w": 10200,
+                        "sum_outgoing_amount_1m": 10200,
+                        "sum_outgoing_amount_3m": 10200,
                         "max_incoming_amount_1w": 3030,
                         "max_incoming_amount_1m": 3030,
                         "max_incoming_amount_3m": 3030,
-                        "max_outgoing_amount_1w": 3027.44,
-                        "max_outgoing_amount_1m": 3027.44,
-                        "max_outgoing_amount_3m": 3027.44,
+                        "max_outgoing_amount_1w": 3030,
+                        "max_outgoing_amount_1m": 3030,
+                        "max_outgoing_amount_3m": 3030,
                         "mean_incoming_amount_1w": 3030,
                         "mean_incoming_amount_1m": 3030,
                         "mean_incoming_amount_3m": 3030,
-                        "mean_outgoing_amount_1w": 3027.44,
-                        "mean_outgoing_amount_1m": 3027.44,
-                        "mean_outgoing_amount_3m": 3027.44
+                        "mean_outgoing_amount_1w": 3030,
+                        "mean_outgoing_amount_1m": 3030,
+                        "mean_outgoing_amount_3m": 3030
                       },
                       "balances_metrics": {
                         "min_balance_1w": 0.51,
                         "min_balance_1m": 0.51,
                         "min_balance_3m": 0.51,
-                        "max_balance_1w": 3062.11,
-                        "max_balance_1m": 3062.11,
-                        "max_balance_3m": 3062.11,
-                        "closing_balance": 24.19,
+                        "max_balance_1w": 3060,
+                        "max_balance_1m": 3060,
+                        "max_balance_3m": 3060,
+                        "closing_balance": 24.2,
                         "days_balance_below_0_1w": 0,
                         "days_balance_below_0_1m": 0,
                         "days_balance_below_0_3m": 0,
@@ -68650,20 +68650,20 @@
                         "balance_threshold_x": 267
                       },
                       "cashflow_metrics": {
-                        "sum_positive_1w": 10022.01,
-                        "sum_positive_1m": 10022.01,
-                        "sum_positive_3m": 10022.01,
-                        "sum_negative_1w": 10237.03,
-                        "sum_negative_1m": 10237.03,
-                        "sum_negative_3m": 10237.03,
+                        "sum_positive_1w": 10000,
+                        "sum_positive_1m": 10000,
+                        "sum_positive_3m": 10000,
+                        "sum_negative_1w": 10200,
+                        "sum_negative_1m": 10200,
+                        "sum_negative_3m": 10200,
                         "positive_to_negative_ratio_1w": 0.98,
                         "positive_to_negative_ratio_1m": 0.98,
                         "positive_to_negative_ratio_3m": 0.98
                       },
                       "credit_cards_metrics": {
                         "num_accounts": 2,
-                        "sum_credit_limit": 600.5,
-                        "sum_credit_used": 200.5
+                        "sum_credit_limit": 601,
+                        "sum_credit_used": 201
                       },
                       "loans_metrics": {
                         "num_accounts": 5,
@@ -68940,33 +68940,33 @@
                     "num_outgoing_transactions_1w": 0,
                     "num_outgoing_transactions_1m": 0,
                     "num_outgoing_transactions_3m": 0,
-                    "sum_incoming_amount_1w": 10022.01,
-                    "sum_incoming_amount_1m": 10022.01,
-                    "sum_incoming_amount_3m": 10022.01,
-                    "sum_outgoing_amount_1w": 10237.03,
-                    "sum_outgoing_amount_1m": 10237.03,
-                    "sum_outgoing_amount_3m": 10237.03,
+                    "sum_incoming_amount_1w": 10000,
+                    "sum_incoming_amount_1m": 10000,
+                    "sum_incoming_amount_3m": 10000,
+                    "sum_outgoing_amount_1w": 10200,
+                    "sum_outgoing_amount_1m": 10200,
+                    "sum_outgoing_amount_3m": 10200,
                     "max_incoming_amount_1w": 3030,
                     "max_incoming_amount_1m": 3030,
                     "max_incoming_amount_3m": 3030,
-                    "max_outgoing_amount_1w": 3027.44,
-                    "max_outgoing_amount_1m": 3027.44,
-                    "max_outgoing_amount_3m": 3027.44,
+                    "max_outgoing_amount_1w": 3030,
+                    "max_outgoing_amount_1m": 3030,
+                    "max_outgoing_amount_3m": 3030,
                     "mean_incoming_amount_1w": 3030,
                     "mean_incoming_amount_1m": 3030,
                     "mean_incoming_amount_3m": 3030,
-                    "mean_outgoing_amount_1w": 3027.44,
-                    "mean_outgoing_amount_1m": 3027.44,
-                    "mean_outgoing_amount_3m": 3027.44
+                    "mean_outgoing_amount_1w": 3030,
+                    "mean_outgoing_amount_1m": 3030,
+                    "mean_outgoing_amount_3m": 3030
                   },
                   "balances_metrics": {
                     "min_balance_1w": 0.51,
                     "min_balance_1m": 0.51,
                     "min_balance_3m": 0.51,
-                    "max_balance_1w": 3062.11,
-                    "max_balance_1m": 3062.11,
-                    "max_balance_3m": 3062.11,
-                    "closing_balance": 24.19,
+                    "max_balance_1w": 3060,
+                    "max_balance_1m": 3060,
+                    "max_balance_3m": 3060,
+                    "closing_balance": 24.2,
                     "days_balance_below_0_1w": 0,
                     "days_balance_below_0_1m": 0,
                     "days_balance_below_0_3m": 0,
@@ -68976,20 +68976,20 @@
                     "balance_threshold_x": 267
                   },
                   "cashflow_metrics": {
-                    "sum_positive_1w": 10022.01,
-                    "sum_positive_1m": 10022.01,
-                    "sum_positive_3m": 10022.01,
-                    "sum_negative_1w": 10237.03,
-                    "sum_negative_1m": 10237.03,
-                    "sum_negative_3m": 10237.03,
+                    "sum_positive_1w": 10000,
+                    "sum_positive_1m": 10000,
+                    "sum_positive_3m": 10000,
+                    "sum_negative_1w": 10200,
+                    "sum_negative_1m": 10200,
+                    "sum_negative_3m": 10200,
                     "positive_to_negative_ratio_1w": 0.98,
                     "positive_to_negative_ratio_1m": 0.98,
                     "positive_to_negative_ratio_3m": 0.98
                   },
                   "credit_cards_metrics": {
                     "num_accounts": 2,
-                    "sum_credit_limit": 600.5,
-                    "sum_credit_used": 200.5
+                    "sum_credit_limit": 601,
+                    "sum_credit_used": 201
                   },
                   "loans_metrics": {
                     "num_accounts": 5,
@@ -69021,33 +69021,33 @@
                       "num_outgoing_transactions_1w": 0,
                       "num_outgoing_transactions_1m": 0,
                       "num_outgoing_transactions_3m": 0,
-                      "sum_incoming_amount_1w": 10022.01,
-                      "sum_incoming_amount_1m": 10022.01,
-                      "sum_incoming_amount_3m": 10022.01,
-                      "sum_outgoing_amount_1w": 10237.03,
-                      "sum_outgoing_amount_1m": 10237.03,
-                      "sum_outgoing_amount_3m": 10237.03,
+                      "sum_incoming_amount_1w": 10000,
+                      "sum_incoming_amount_1m": 10000,
+                      "sum_incoming_amount_3m": 10000,
+                      "sum_outgoing_amount_1w": 10200,
+                      "sum_outgoing_amount_1m": 10200,
+                      "sum_outgoing_amount_3m": 10200,
                       "max_incoming_amount_1w": 3030,
                       "max_incoming_amount_1m": 3030,
                       "max_incoming_amount_3m": 3030,
-                      "max_outgoing_amount_1w": 3027.44,
-                      "max_outgoing_amount_1m": 3027.44,
-                      "max_outgoing_amount_3m": 3027.44,
+                      "max_outgoing_amount_1w": 3030,
+                      "max_outgoing_amount_1m": 3030,
+                      "max_outgoing_amount_3m": 3030,
                       "mean_incoming_amount_1w": 3030,
                       "mean_incoming_amount_1m": 3030,
                       "mean_incoming_amount_3m": 3030,
-                      "mean_outgoing_amount_1w": 3027.44,
-                      "mean_outgoing_amount_1m": 3027.44,
-                      "mean_outgoing_amount_3m": 3027.44
+                      "mean_outgoing_amount_1w": 3030,
+                      "mean_outgoing_amount_1m": 3030,
+                      "mean_outgoing_amount_3m": 3030
                     },
                     "balances_metrics": {
                       "min_balance_1w": 0.51,
                       "min_balance_1m": 0.51,
                       "min_balance_3m": 0.51,
-                      "max_balance_1w": 3062.11,
-                      "max_balance_1m": 3062.11,
-                      "max_balance_3m": 3062.11,
-                      "closing_balance": 24.19,
+                      "max_balance_1w": 3060,
+                      "max_balance_1m": 3060,
+                      "max_balance_3m": 3060,
+                      "closing_balance": 24.2,
                       "days_balance_below_0_1w": 0,
                       "days_balance_below_0_1m": 0,
                       "days_balance_below_0_3m": 0,
@@ -69057,20 +69057,20 @@
                       "balance_threshold_x": 267
                     },
                     "cashflow_metrics": {
-                      "sum_positive_1w": 10022.01,
-                      "sum_positive_1m": 10022.01,
-                      "sum_positive_3m": 10022.01,
-                      "sum_negative_1w": 10237.03,
-                      "sum_negative_1m": 10237.03,
-                      "sum_negative_3m": 10237.03,
+                      "sum_positive_1w": 10000,
+                      "sum_positive_1m": 10000,
+                      "sum_positive_3m": 10000,
+                      "sum_negative_1w": 10200,
+                      "sum_negative_1m": 10200,
+                      "sum_negative_3m": 10200,
                       "positive_to_negative_ratio_1w": 0.98,
                       "positive_to_negative_ratio_1m": 0.98,
                       "positive_to_negative_ratio_3m": 0.98
                     },
                     "credit_cards_metrics": {
                       "num_accounts": 2,
-                      "sum_credit_limit": 600.5,
-                      "sum_credit_used": 200.5
+                      "sum_credit_limit": 601,
+                      "sum_credit_used": 201
                     },
                     "loans_metrics": {
                       "num_accounts": 5,
@@ -69118,33 +69118,33 @@
                     "num_outgoing_transactions_1w": 0,
                     "num_outgoing_transactions_1m": 0,
                     "num_outgoing_transactions_3m": 0,
-                    "sum_incoming_amount_1w": 10022.01,
-                    "sum_incoming_amount_1m": 10022.01,
-                    "sum_incoming_amount_3m": 10022.01,
-                    "sum_outgoing_amount_1w": 10237.03,
-                    "sum_outgoing_amount_1m": 10237.03,
-                    "sum_outgoing_amount_3m": 10237.03,
+                    "sum_incoming_amount_1w": 10000,
+                    "sum_incoming_amount_1m": 10000,
+                    "sum_incoming_amount_3m": 10000,
+                    "sum_outgoing_amount_1w": 10200,
+                    "sum_outgoing_amount_1m": 10200,
+                    "sum_outgoing_amount_3m": 10200,
                     "max_incoming_amount_1w": 3030,
                     "max_incoming_amount_1m": 3030,
                     "max_incoming_amount_3m": 3030,
-                    "max_outgoing_amount_1w": 3027.44,
-                    "max_outgoing_amount_1m": 3027.44,
-                    "max_outgoing_amount_3m": 3027.44,
+                    "max_outgoing_amount_1w": 3030,
+                    "max_outgoing_amount_1m": 3030,
+                    "max_outgoing_amount_3m": 3030,
                     "mean_incoming_amount_1w": 3030,
                     "mean_incoming_amount_1m": 3030,
                     "mean_incoming_amount_3m": 3030,
-                    "mean_outgoing_amount_1w": 3027.44,
-                    "mean_outgoing_amount_1m": 3027.44,
-                    "mean_outgoing_amount_3m": 3027.44
+                    "mean_outgoing_amount_1w": 3030,
+                    "mean_outgoing_amount_1m": 3030,
+                    "mean_outgoing_amount_3m": 3030
                   },
                   "balances_metrics": {
                     "min_balance_1w": 0.51,
                     "min_balance_1m": 0.51,
                     "min_balance_3m": 0.51,
-                    "max_balance_1w": 3062.11,
-                    "max_balance_1m": 3062.11,
-                    "max_balance_3m": 3062.11,
-                    "closing_balance": 24.19,
+                    "max_balance_1w": 3060,
+                    "max_balance_1m": 3060,
+                    "max_balance_3m": 3060,
+                    "closing_balance": 24.2,
                     "days_balance_below_0_1w": 0,
                     "days_balance_below_0_1m": 0,
                     "days_balance_below_0_3m": 0,
@@ -69154,20 +69154,20 @@
                     "balance_threshold_x": 267
                   },
                   "cashflow_metrics": {
-                    "sum_positive_1w": 10022.01,
-                    "sum_positive_1m": 10022.01,
-                    "sum_positive_3m": 10022.01,
-                    "sum_negative_1w": 10237.03,
-                    "sum_negative_1m": 10237.03,
-                    "sum_negative_3m": 10237.03,
+                    "sum_positive_1w": 10000,
+                    "sum_positive_1m": 10000,
+                    "sum_positive_3m": 10000,
+                    "sum_negative_1w": 10200,
+                    "sum_negative_1m": 10200,
+                    "sum_negative_3m": 10200,
                     "positive_to_negative_ratio_1w": 0.98,
                     "positive_to_negative_ratio_1m": 0.98,
                     "positive_to_negative_ratio_3m": 0.98
                   },
                   "credit_cards_metrics": {
                     "num_accounts": 2,
-                    "sum_credit_limit": 600.5,
-                    "sum_credit_used": 200.5
+                    "sum_credit_limit": 601,
+                    "sum_credit_used": 201
                   },
                   "loans_metrics": {
                     "num_accounts": 5,
@@ -69199,33 +69199,33 @@
                       "num_outgoing_transactions_1w": 0,
                       "num_outgoing_transactions_1m": 0,
                       "num_outgoing_transactions_3m": 0,
-                      "sum_incoming_amount_1w": 10022.01,
-                      "sum_incoming_amount_1m": 10022.01,
-                      "sum_incoming_amount_3m": 10022.01,
-                      "sum_outgoing_amount_1w": 10237.03,
-                      "sum_outgoing_amount_1m": 10237.03,
-                      "sum_outgoing_amount_3m": 10237.03,
+                      "sum_incoming_amount_1w": 10000,
+                      "sum_incoming_amount_1m": 10000,
+                      "sum_incoming_amount_3m": 10000,
+                      "sum_outgoing_amount_1w": 10200,
+                      "sum_outgoing_amount_1m": 10200,
+                      "sum_outgoing_amount_3m": 10200,
                       "max_incoming_amount_1w": 3030,
                       "max_incoming_amount_1m": 3030,
                       "max_incoming_amount_3m": 3030,
-                      "max_outgoing_amount_1w": 3027.44,
-                      "max_outgoing_amount_1m": 3027.44,
-                      "max_outgoing_amount_3m": 3027.44,
+                      "max_outgoing_amount_1w": 3030,
+                      "max_outgoing_amount_1m": 3030,
+                      "max_outgoing_amount_3m": 3030,
                       "mean_incoming_amount_1w": 3030,
                       "mean_incoming_amount_1m": 3030,
                       "mean_incoming_amount_3m": 3030,
-                      "mean_outgoing_amount_1w": 3027.44,
-                      "mean_outgoing_amount_1m": 3027.44,
-                      "mean_outgoing_amount_3m": 3027.44
+                      "mean_outgoing_amount_1w": 3030,
+                      "mean_outgoing_amount_1m": 3030,
+                      "mean_outgoing_amount_3m": 3030
                     },
                     "balances_metrics": {
                       "min_balance_1w": 0.51,
                       "min_balance_1m": 0.51,
                       "min_balance_3m": 0.51,
-                      "max_balance_1w": 3062.11,
-                      "max_balance_1m": 3062.11,
-                      "max_balance_3m": 3062.11,
-                      "closing_balance": 24.19,
+                      "max_balance_1w": 3060,
+                      "max_balance_1m": 3060,
+                      "max_balance_3m": 3060,
+                      "closing_balance": 24.2,
                       "days_balance_below_0_1w": 0,
                       "days_balance_below_0_1m": 0,
                       "days_balance_below_0_3m": 0,
@@ -69235,20 +69235,20 @@
                       "balance_threshold_x": 267
                     },
                     "cashflow_metrics": {
-                      "sum_positive_1w": 10022.01,
-                      "sum_positive_1m": 10022.01,
-                      "sum_positive_3m": 10022.01,
-                      "sum_negative_1w": 10237.03,
-                      "sum_negative_1m": 10237.03,
-                      "sum_negative_3m": 10237.03,
+                      "sum_positive_1w": 10000,
+                      "sum_positive_1m": 10000,
+                      "sum_positive_3m": 10000,
+                      "sum_negative_1w": 10200,
+                      "sum_negative_1m": 10200,
+                      "sum_negative_3m": 10200,
                       "positive_to_negative_ratio_1w": 0.98,
                       "positive_to_negative_ratio_1m": 0.98,
                       "positive_to_negative_ratio_3m": 0.98
                     },
                     "credit_cards_metrics": {
                       "num_accounts": 2,
-                      "sum_credit_limit": 600.5,
-                      "sum_credit_used": 200.5
+                      "sum_credit_limit": 601,
+                      "sum_credit_used": 201
                     },
                     "loans_metrics": {
                       "num_accounts": 5,
@@ -69526,33 +69526,33 @@
                     "num_outgoing_transactions_1w": 0,
                     "num_outgoing_transactions_1m": 0,
                     "num_outgoing_transactions_3m": 0,
-                    "sum_incoming_amount_1w": 10022.01,
-                    "sum_incoming_amount_1m": 10022.01,
-                    "sum_incoming_amount_3m": 10022.01,
-                    "sum_outgoing_amount_1w": 10237.03,
-                    "sum_outgoing_amount_1m": 10237.03,
-                    "sum_outgoing_amount_3m": 10237.03,
+                    "sum_incoming_amount_1w": 10000,
+                    "sum_incoming_amount_1m": 10000,
+                    "sum_incoming_amount_3m": 10000,
+                    "sum_outgoing_amount_1w": 10200,
+                    "sum_outgoing_amount_1m": 10200,
+                    "sum_outgoing_amount_3m": 10200,
                     "max_incoming_amount_1w": 3030,
                     "max_incoming_amount_1m": 3030,
                     "max_incoming_amount_3m": 3030,
-                    "max_outgoing_amount_1w": 3027.44,
-                    "max_outgoing_amount_1m": 3027.44,
-                    "max_outgoing_amount_3m": 3027.44,
+                    "max_outgoing_amount_1w": 3030,
+                    "max_outgoing_amount_1m": 3030,
+                    "max_outgoing_amount_3m": 3030,
                     "mean_incoming_amount_1w": 3030,
                     "mean_incoming_amount_1m": 3030,
                     "mean_incoming_amount_3m": 3030,
-                    "mean_outgoing_amount_1w": 3027.44,
-                    "mean_outgoing_amount_1m": 3027.44,
-                    "mean_outgoing_amount_3m": 3027.44
+                    "mean_outgoing_amount_1w": 3030,
+                    "mean_outgoing_amount_1m": 3030,
+                    "mean_outgoing_amount_3m": 3030
                   },
                   "balances_metrics": {
                     "min_balance_1w": 0.51,
                     "min_balance_1m": 0.51,
                     "min_balance_3m": 0.51,
-                    "max_balance_1w": 3062.11,
-                    "max_balance_1m": 3062.11,
-                    "max_balance_3m": 3062.11,
-                    "closing_balance": 24.19,
+                    "max_balance_1w": 3060,
+                    "max_balance_1m": 3060,
+                    "max_balance_3m": 3060,
+                    "closing_balance": 24.2,
                     "days_balance_below_0_1w": 0,
                     "days_balance_below_0_1m": 0,
                     "days_balance_below_0_3m": 0,
@@ -69562,20 +69562,20 @@
                     "balance_threshold_x": 267
                   },
                   "cashflow_metrics": {
-                    "sum_positive_1w": 10022.01,
-                    "sum_positive_1m": 10022.01,
-                    "sum_positive_3m": 10022.01,
-                    "sum_negative_1w": 10237.03,
-                    "sum_negative_1m": 10237.03,
-                    "sum_negative_3m": 10237.03,
+                    "sum_positive_1w": 10000,
+                    "sum_positive_1m": 10000,
+                    "sum_positive_3m": 10000,
+                    "sum_negative_1w": 10200,
+                    "sum_negative_1m": 10200,
+                    "sum_negative_3m": 10200,
                     "positive_to_negative_ratio_1w": 0.98,
                     "positive_to_negative_ratio_1m": 0.98,
                     "positive_to_negative_ratio_3m": 0.98
                   },
                   "credit_cards_metrics": {
                     "num_accounts": 2,
-                    "sum_credit_limit": 600.5,
-                    "sum_credit_used": 200.5
+                    "sum_credit_limit": 601,
+                    "sum_credit_used": 201
                   },
                   "loans_metrics": {
                     "num_accounts": 5,
@@ -69607,33 +69607,33 @@
                       "num_outgoing_transactions_1w": 0,
                       "num_outgoing_transactions_1m": 0,
                       "num_outgoing_transactions_3m": 0,
-                      "sum_incoming_amount_1w": 10022.01,
-                      "sum_incoming_amount_1m": 10022.01,
-                      "sum_incoming_amount_3m": 10022.01,
-                      "sum_outgoing_amount_1w": 10237.03,
-                      "sum_outgoing_amount_1m": 10237.03,
-                      "sum_outgoing_amount_3m": 10237.03,
+                      "sum_incoming_amount_1w": 10000,
+                      "sum_incoming_amount_1m": 10000,
+                      "sum_incoming_amount_3m": 10000,
+                      "sum_outgoing_amount_1w": 10200,
+                      "sum_outgoing_amount_1m": 10200,
+                      "sum_outgoing_amount_3m": 10200,
                       "max_incoming_amount_1w": 3030,
                       "max_incoming_amount_1m": 3030,
                       "max_incoming_amount_3m": 3030,
-                      "max_outgoing_amount_1w": 3027.44,
-                      "max_outgoing_amount_1m": 3027.44,
-                      "max_outgoing_amount_3m": 3027.44,
+                      "max_outgoing_amount_1w": 3030,
+                      "max_outgoing_amount_1m": 3030,
+                      "max_outgoing_amount_3m": 3030,
                       "mean_incoming_amount_1w": 3030,
                       "mean_incoming_amount_1m": 3030,
                       "mean_incoming_amount_3m": 3030,
-                      "mean_outgoing_amount_1w": 3027.44,
-                      "mean_outgoing_amount_1m": 3027.44,
-                      "mean_outgoing_amount_3m": 3027.44
+                      "mean_outgoing_amount_1w": 3030,
+                      "mean_outgoing_amount_1m": 3030,
+                      "mean_outgoing_amount_3m": 3030
                     },
                     "balances_metrics": {
                       "min_balance_1w": 0.51,
                       "min_balance_1m": 0.51,
                       "min_balance_3m": 0.51,
-                      "max_balance_1w": 3062.11,
-                      "max_balance_1m": 3062.11,
-                      "max_balance_3m": 3062.11,
-                      "closing_balance": 24.19,
+                      "max_balance_1w": 3060,
+                      "max_balance_1m": 3060,
+                      "max_balance_3m": 3060,
+                      "closing_balance": 24.2,
                       "days_balance_below_0_1w": 0,
                       "days_balance_below_0_1m": 0,
                       "days_balance_below_0_3m": 0,
@@ -69643,20 +69643,20 @@
                       "balance_threshold_x": 267
                     },
                     "cashflow_metrics": {
-                      "sum_positive_1w": 10022.01,
-                      "sum_positive_1m": 10022.01,
-                      "sum_positive_3m": 10022.01,
-                      "sum_negative_1w": 10237.03,
-                      "sum_negative_1m": 10237.03,
-                      "sum_negative_3m": 10237.03,
+                      "sum_positive_1w": 10000,
+                      "sum_positive_1m": 10000,
+                      "sum_positive_3m": 10000,
+                      "sum_negative_1w": 10200,
+                      "sum_negative_1m": 10200,
+                      "sum_negative_3m": 10200,
                       "positive_to_negative_ratio_1w": 0.98,
                       "positive_to_negative_ratio_1m": 0.98,
                       "positive_to_negative_ratio_3m": 0.98
                     },
                     "credit_cards_metrics": {
                       "num_accounts": 2,
-                      "sum_credit_limit": 600.5,
-                      "sum_credit_used": 200.5
+                      "sum_credit_limit": 601,
+                      "sum_credit_used": 201
                     },
                     "loans_metrics": {
                       "num_accounts": 5,
@@ -69706,33 +69706,33 @@
                     "num_outgoing_transactions_1w": 0,
                     "num_outgoing_transactions_1m": 0,
                     "num_outgoing_transactions_3m": 0,
-                    "sum_incoming_amount_1w": 10022.01,
-                    "sum_incoming_amount_1m": 10022.01,
-                    "sum_incoming_amount_3m": 10022.01,
-                    "sum_outgoing_amount_1w": 10237.03,
-                    "sum_outgoing_amount_1m": 10237.03,
-                    "sum_outgoing_amount_3m": 10237.03,
+                    "sum_incoming_amount_1w": 10000,
+                    "sum_incoming_amount_1m": 10000,
+                    "sum_incoming_amount_3m": 10000,
+                    "sum_outgoing_amount_1w": 10200,
+                    "sum_outgoing_amount_1m": 10200,
+                    "sum_outgoing_amount_3m": 10200,
                     "max_incoming_amount_1w": 3030,
                     "max_incoming_amount_1m": 3030,
                     "max_incoming_amount_3m": 3030,
-                    "max_outgoing_amount_1w": 3027.44,
-                    "max_outgoing_amount_1m": 3027.44,
-                    "max_outgoing_amount_3m": 3027.44,
+                    "max_outgoing_amount_1w": 3030,
+                    "max_outgoing_amount_1m": 3030,
+                    "max_outgoing_amount_3m": 3030,
                     "mean_incoming_amount_1w": 3030,
                     "mean_incoming_amount_1m": 3030,
                     "mean_incoming_amount_3m": 3030,
-                    "mean_outgoing_amount_1w": 3027.44,
-                    "mean_outgoing_amount_1m": 3027.44,
-                    "mean_outgoing_amount_3m": 3027.44
+                    "mean_outgoing_amount_1w": 3030,
+                    "mean_outgoing_amount_1m": 3030,
+                    "mean_outgoing_amount_3m": 3030
                   },
                   "balances_metrics": {
                     "min_balance_1w": 0.51,
                     "min_balance_1m": 0.51,
                     "min_balance_3m": 0.51,
-                    "max_balance_1w": 3062.11,
-                    "max_balance_1m": 3062.11,
-                    "max_balance_3m": 3062.11,
-                    "closing_balance": 24.19,
+                    "max_balance_1w": 3060,
+                    "max_balance_1m": 3060,
+                    "max_balance_3m": 3060,
+                    "closing_balance": 24.2,
                     "days_balance_below_0_1w": 0,
                     "days_balance_below_0_1m": 0,
                     "days_balance_below_0_3m": 0,
@@ -69742,20 +69742,20 @@
                     "balance_threshold_x": 267
                   },
                   "cashflow_metrics": {
-                    "sum_positive_1w": 10022.01,
-                    "sum_positive_1m": 10022.01,
-                    "sum_positive_3m": 10022.01,
-                    "sum_negative_1w": 10237.03,
-                    "sum_negative_1m": 10237.03,
-                    "sum_negative_3m": 10237.03,
+                    "sum_positive_1w": 10000,
+                    "sum_positive_1m": 10000,
+                    "sum_positive_3m": 10000,
+                    "sum_negative_1w": 10200,
+                    "sum_negative_1m": 10200,
+                    "sum_negative_3m": 10200,
                     "positive_to_negative_ratio_1w": 0.98,
                     "positive_to_negative_ratio_1m": 0.98,
                     "positive_to_negative_ratio_3m": 0.98
                   },
                   "credit_cards_metrics": {
                     "num_accounts": 2,
-                    "sum_credit_limit": 600.5,
-                    "sum_credit_used": 200.5
+                    "sum_credit_limit": 601,
+                    "sum_credit_used": 201
                   },
                   "loans_metrics": {
                     "num_accounts": 5,
@@ -69787,33 +69787,33 @@
                       "num_outgoing_transactions_1w": 0,
                       "num_outgoing_transactions_1m": 0,
                       "num_outgoing_transactions_3m": 0,
-                      "sum_incoming_amount_1w": 10022.01,
-                      "sum_incoming_amount_1m": 10022.01,
-                      "sum_incoming_amount_3m": 10022.01,
-                      "sum_outgoing_amount_1w": 10237.03,
-                      "sum_outgoing_amount_1m": 10237.03,
-                      "sum_outgoing_amount_3m": 10237.03,
+                      "sum_incoming_amount_1w": 10000,
+                      "sum_incoming_amount_1m": 10000,
+                      "sum_incoming_amount_3m": 10000,
+                      "sum_outgoing_amount_1w": 10200,
+                      "sum_outgoing_amount_1m": 10200,
+                      "sum_outgoing_amount_3m": 10200,
                       "max_incoming_amount_1w": 3030,
                       "max_incoming_amount_1m": 3030,
                       "max_incoming_amount_3m": 3030,
-                      "max_outgoing_amount_1w": 3027.44,
-                      "max_outgoing_amount_1m": 3027.44,
-                      "max_outgoing_amount_3m": 3027.44,
+                      "max_outgoing_amount_1w": 3030,
+                      "max_outgoing_amount_1m": 3030,
+                      "max_outgoing_amount_3m": 3030,
                       "mean_incoming_amount_1w": 3030,
                       "mean_incoming_amount_1m": 3030,
                       "mean_incoming_amount_3m": 3030,
-                      "mean_outgoing_amount_1w": 3027.44,
-                      "mean_outgoing_amount_1m": 3027.44,
-                      "mean_outgoing_amount_3m": 3027.44
+                      "mean_outgoing_amount_1w": 3030,
+                      "mean_outgoing_amount_1m": 3030,
+                      "mean_outgoing_amount_3m": 3030
                     },
                     "balances_metrics": {
                       "min_balance_1w": 0.51,
                       "min_balance_1m": 0.51,
                       "min_balance_3m": 0.51,
-                      "max_balance_1w": 3062.11,
-                      "max_balance_1m": 3062.11,
-                      "max_balance_3m": 3062.11,
-                      "closing_balance": 24.19,
+                      "max_balance_1w": 3060,
+                      "max_balance_1m": 3060,
+                      "max_balance_3m": 3060,
+                      "closing_balance": 24.2,
                       "days_balance_below_0_1w": 0,
                       "days_balance_below_0_1m": 0,
                       "days_balance_below_0_3m": 0,
@@ -69823,20 +69823,20 @@
                       "balance_threshold_x": 267
                     },
                     "cashflow_metrics": {
-                      "sum_positive_1w": 10022.01,
-                      "sum_positive_1m": 10022.01,
-                      "sum_positive_3m": 10022.01,
-                      "sum_negative_1w": 10237.03,
-                      "sum_negative_1m": 10237.03,
-                      "sum_negative_3m": 10237.03,
+                      "sum_positive_1w": 10000,
+                      "sum_positive_1m": 10000,
+                      "sum_positive_3m": 10000,
+                      "sum_negative_1w": 10200,
+                      "sum_negative_1m": 10200,
+                      "sum_negative_3m": 10200,
                       "positive_to_negative_ratio_1w": 0.98,
                       "positive_to_negative_ratio_1m": 0.98,
                       "positive_to_negative_ratio_3m": 0.98
                     },
                     "credit_cards_metrics": {
                       "num_accounts": 2,
-                      "sum_credit_limit": 600.5,
-                      "sum_credit_used": 200.5
+                      "sum_credit_limit": 601,
+                      "sum_credit_used": 201
                     },
                     "loans_metrics": {
                       "num_accounts": 5,
@@ -70034,33 +70034,33 @@
                     "num_outgoing_transactions_1w": 0,
                     "num_outgoing_transactions_1m": 0,
                     "num_outgoing_transactions_3m": 0,
-                    "sum_incoming_amount_1w": 10022.01,
-                    "sum_incoming_amount_1m": 10022.01,
-                    "sum_incoming_amount_3m": 10022.01,
-                    "sum_outgoing_amount_1w": 10237.03,
-                    "sum_outgoing_amount_1m": 10237.03,
-                    "sum_outgoing_amount_3m": 10237.03,
+                    "sum_incoming_amount_1w": 10000,
+                    "sum_incoming_amount_1m": 10000,
+                    "sum_incoming_amount_3m": 10000,
+                    "sum_outgoing_amount_1w": 10200,
+                    "sum_outgoing_amount_1m": 10200,
+                    "sum_outgoing_amount_3m": 10200,
                     "max_incoming_amount_1w": 3030,
                     "max_incoming_amount_1m": 3030,
                     "max_incoming_amount_3m": 3030,
-                    "max_outgoing_amount_1w": 3027.44,
-                    "max_outgoing_amount_1m": 3027.44,
-                    "max_outgoing_amount_3m": 3027.44,
+                    "max_outgoing_amount_1w": 3030,
+                    "max_outgoing_amount_1m": 3030,
+                    "max_outgoing_amount_3m": 3030,
                     "mean_incoming_amount_1w": 3030,
                     "mean_incoming_amount_1m": 3030,
                     "mean_incoming_amount_3m": 3030,
-                    "mean_outgoing_amount_1w": 3027.44,
-                    "mean_outgoing_amount_1m": 3027.44,
-                    "mean_outgoing_amount_3m": 3027.44
+                    "mean_outgoing_amount_1w": 3030,
+                    "mean_outgoing_amount_1m": 3030,
+                    "mean_outgoing_amount_3m": 3030
                   },
                   "balances_metrics": {
                     "min_balance_1w": 0.51,
                     "min_balance_1m": 0.51,
                     "min_balance_3m": 0.51,
-                    "max_balance_1w": 3062.11,
-                    "max_balance_1m": 3062.11,
-                    "max_balance_3m": 3062.11,
-                    "closing_balance": 24.19,
+                    "max_balance_1w": 3060,
+                    "max_balance_1m": 3060,
+                    "max_balance_3m": 3060,
+                    "closing_balance": 24.2,
                     "days_balance_below_0_1w": 0,
                     "days_balance_below_0_1m": 0,
                     "days_balance_below_0_3m": 0,
@@ -70070,20 +70070,20 @@
                     "balance_threshold_x": 267
                   },
                   "cashflow_metrics": {
-                    "sum_positive_1w": 10022.01,
-                    "sum_positive_1m": 10022.01,
-                    "sum_positive_3m": 10022.01,
-                    "sum_negative_1w": 10237.03,
-                    "sum_negative_1m": 10237.03,
-                    "sum_negative_3m": 10237.03,
+                    "sum_positive_1w": 10000,
+                    "sum_positive_1m": 10000,
+                    "sum_positive_3m": 10000,
+                    "sum_negative_1w": 10200,
+                    "sum_negative_1m": 10200,
+                    "sum_negative_3m": 10200,
                     "positive_to_negative_ratio_1w": 0.98,
                     "positive_to_negative_ratio_1m": 0.98,
                     "positive_to_negative_ratio_3m": 0.98
                   },
                   "credit_cards_metrics": {
                     "num_accounts": 2,
-                    "sum_credit_limit": 600.5,
-                    "sum_credit_used": 200.5
+                    "sum_credit_limit": 601,
+                    "sum_credit_used": 201
                   },
                   "loans_metrics": {
                     "num_accounts": 5,
@@ -70115,33 +70115,33 @@
                       "num_outgoing_transactions_1w": 0,
                       "num_outgoing_transactions_1m": 0,
                       "num_outgoing_transactions_3m": 0,
-                      "sum_incoming_amount_1w": 10022.01,
-                      "sum_incoming_amount_1m": 10022.01,
-                      "sum_incoming_amount_3m": 10022.01,
-                      "sum_outgoing_amount_1w": 10237.03,
-                      "sum_outgoing_amount_1m": 10237.03,
-                      "sum_outgoing_amount_3m": 10237.03,
+                      "sum_incoming_amount_1w": 10000,
+                      "sum_incoming_amount_1m": 10000,
+                      "sum_incoming_amount_3m": 10000,
+                      "sum_outgoing_amount_1w": 10200,
+                      "sum_outgoing_amount_1m": 10200,
+                      "sum_outgoing_amount_3m": 10200,
                       "max_incoming_amount_1w": 3030,
                       "max_incoming_amount_1m": 3030,
                       "max_incoming_amount_3m": 3030,
-                      "max_outgoing_amount_1w": 3027.44,
-                      "max_outgoing_amount_1m": 3027.44,
-                      "max_outgoing_amount_3m": 3027.44,
+                      "max_outgoing_amount_1w": 3030,
+                      "max_outgoing_amount_1m": 3030,
+                      "max_outgoing_amount_3m": 3030,
                       "mean_incoming_amount_1w": 3030,
                       "mean_incoming_amount_1m": 3030,
                       "mean_incoming_amount_3m": 3030,
-                      "mean_outgoing_amount_1w": 3027.44,
-                      "mean_outgoing_amount_1m": 3027.44,
-                      "mean_outgoing_amount_3m": 3027.44
+                      "mean_outgoing_amount_1w": 3030,
+                      "mean_outgoing_amount_1m": 3030,
+                      "mean_outgoing_amount_3m": 3030
                     },
                     "balances_metrics": {
                       "min_balance_1w": 0.51,
                       "min_balance_1m": 0.51,
                       "min_balance_3m": 0.51,
-                      "max_balance_1w": 3062.11,
-                      "max_balance_1m": 3062.11,
-                      "max_balance_3m": 3062.11,
-                      "closing_balance": 24.19,
+                      "max_balance_1w": 3060,
+                      "max_balance_1m": 3060,
+                      "max_balance_3m": 3060,
+                      "closing_balance": 24.2,
                       "days_balance_below_0_1w": 0,
                       "days_balance_below_0_1m": 0,
                       "days_balance_below_0_3m": 0,
@@ -70151,20 +70151,20 @@
                       "balance_threshold_x": 267
                     },
                     "cashflow_metrics": {
-                      "sum_positive_1w": 10022.01,
-                      "sum_positive_1m": 10022.01,
-                      "sum_positive_3m": 10022.01,
-                      "sum_negative_1w": 10237.03,
-                      "sum_negative_1m": 10237.03,
-                      "sum_negative_3m": 10237.03,
+                      "sum_positive_1w": 10000,
+                      "sum_positive_1m": 10000,
+                      "sum_positive_3m": 10000,
+                      "sum_negative_1w": 10200,
+                      "sum_negative_1m": 10200,
+                      "sum_negative_3m": 10200,
                       "positive_to_negative_ratio_1w": 0.98,
                       "positive_to_negative_ratio_1m": 0.98,
                       "positive_to_negative_ratio_3m": 0.98
                     },
                     "credit_cards_metrics": {
                       "num_accounts": 2,
-                      "sum_credit_limit": 600.5,
-                      "sum_credit_used": 200.5
+                      "sum_credit_limit": 601,
+                      "sum_credit_used": 201
                     },
                     "loans_metrics": {
                       "num_accounts": 5,
@@ -70589,10 +70589,10 @@
                     "receiver_nationality": "NATIONAL",
                     "receiver_id": "GYGK3207809L1",
                     "receiver_name": "ACME LTD",
-                    "total_invoice_amount": 53249.8,
-                    "total_exempt_amount": 1000.8,
-                    "total_retained_amount": 1550.7,
-                    "total_taxable_amount": 43249,
+                    "total_invoice_amount": 53200,
+                    "total_exempt_amount": 1000,
+                    "total_retained_amount": 1550,
+                    "total_taxable_amount": 43200,
                     "retention_breakdown": [
                       {
                         "base_amount": 0.03,
@@ -70628,10 +70628,10 @@
                       "receiver_nationality": "NATIONAL",
                       "receiver_id": "GYGK3207809L1",
                       "receiver_name": "ACME LTD",
-                      "total_invoice_amount": 53249.8,
-                      "total_exempt_amount": 1000.8,
-                      "total_retained_amount": 1550.7,
-                      "total_taxable_amount": 43249,
+                      "total_invoice_amount": 53200,
+                      "total_exempt_amount": 1000,
+                      "total_retained_amount": 1550,
+                      "total_taxable_amount": 43200,
                       "retention_breakdown": [
                         {
                           "base_amount": 0.03,
@@ -70897,10 +70897,10 @@
                   "receiver_nationality": "NATIONAL",
                   "receiver_id": "GYGK3207809L1",
                   "receiver_name": "ACME LTD",
-                  "total_invoice_amount": 53249.8,
-                  "total_exempt_amount": 1000.8,
-                  "total_retained_amount": 1550.7,
-                  "total_taxable_amount": 43249,
+                  "total_invoice_amount": 53200,
+                  "total_exempt_amount": 1000,
+                  "total_retained_amount": 1550,
+                  "total_taxable_amount": 43200,
                   "retention_breakdown": [
                     {
                       "base_amount": 0.03,
@@ -70931,10 +70931,10 @@
                     "receiver_nationality": "NATIONAL",
                     "receiver_id": "GYGK3207809L1",
                     "receiver_name": "ACME LTD",
-                    "total_invoice_amount": 53249.8,
-                    "total_exempt_amount": 1000.8,
-                    "total_retained_amount": 1550.7,
-                    "total_taxable_amount": 43249,
+                    "total_invoice_amount": 53200,
+                    "total_exempt_amount": 1000,
+                    "total_retained_amount": 1550,
+                    "total_taxable_amount": 43200,
                     "retention_breakdown": [
                       {
                         "base_amount": 0.03,
@@ -70987,10 +70987,10 @@
                   "receiver_nationality": "NATIONAL",
                   "receiver_id": "GYGK3207809L1",
                   "receiver_name": "ACME LTD",
-                  "total_invoice_amount": 53249.8,
-                  "total_exempt_amount": 1000.8,
-                  "total_retained_amount": 1550.7,
-                  "total_taxable_amount": 43249,
+                  "total_invoice_amount": 53200,
+                  "total_exempt_amount": 1000,
+                  "total_retained_amount": 1550,
+                  "total_taxable_amount": 43200,
                   "retention_breakdown": [
                     {
                       "base_amount": 0.03,
@@ -71021,10 +71021,10 @@
                     "receiver_nationality": "NATIONAL",
                     "receiver_id": "GYGK3207809L1",
                     "receiver_name": "ACME LTD",
-                    "total_invoice_amount": 53249.8,
-                    "total_exempt_amount": 1000.8,
-                    "total_retained_amount": 1550.7,
-                    "total_taxable_amount": 43249,
+                    "total_invoice_amount": 53200,
+                    "total_exempt_amount": 1000,
+                    "total_retained_amount": 1550,
+                    "total_taxable_amount": 43200,
                     "retention_breakdown": [
                       {
                         "base_amount": 0.03,
@@ -71214,10 +71214,10 @@
                 "receiver_nationality": "NATIONAL",
                 "receiver_id": "GYGK3207809L1",
                 "receiver_name": "ACME LTD",
-                "total_invoice_amount": 53249.8,
-                "total_exempt_amount": 1000.8,
-                "total_retained_amount": 1550.7,
-                "total_taxable_amount": 43249,
+                "total_invoice_amount": 53200,
+                "total_exempt_amount": 1000,
+                "total_retained_amount": 1550,
+                "total_taxable_amount": 43200,
                 "retention_breakdown": [
                   {
                     "base_amount": 0.03,
@@ -71246,10 +71246,10 @@
                   "receiver_nationality": "NATIONAL",
                   "receiver_id": "GYGK3207809L1",
                   "receiver_name": "ACME LTD",
-                  "total_invoice_amount": 53249.8,
-                  "total_exempt_amount": 1000.8,
-                  "total_retained_amount": 1550.7,
-                  "total_taxable_amount": 43249,
+                  "total_invoice_amount": 53200,
+                  "total_exempt_amount": 1000,
+                  "total_retained_amount": 1550,
+                  "total_taxable_amount": 43200,
                   "retention_breakdown": [
                     {
                       "base_amount": 0.03,
@@ -71790,31 +71790,31 @@
                       }
                     },
                     "equity_statement": {
-                      "total_gross_equity": 4648000,
-                      "total_debts": 77626000,
+                      "total_gross_equity": 4650000,
+                      "total_debts": 77600000,
                       "total_net_equity": 0
                     },
                     "annual_income_statement": {
                       "gross_income": {
-                        "earned_income": 115004000,
+                        "earned_income": 115000000,
                         "fee_based_income": 0,
                         "capital_income": 0,
                         "non_labor_income": 0
                       },
                       "non_taxable_income": {
-                        "earned_income": 115004000,
+                        "earned_income": 115000000,
                         "fee_based_income": 0,
                         "capital_income": 0,
                         "non_labor_income": 0
                       },
                       "net_income": {
-                        "earned_income": 115004000,
+                        "earned_income": 115000000,
                         "fee_based_income": 0,
                         "capital_income": 0,
                         "non_labor_income": 0
                       },
                       "annual_totals": {
-                        "total_exempt_income": 115004000,
+                        "total_exempt_income": 115000000,
                         "total_applicable_deductions": 0,
                         "total_exemptions_and_deductions": 0,
                         "total_ordinary_net_income": 0
@@ -71826,11 +71826,11 @@
                     },
                     "tax_assessment": {
                       "fortuitous_profit_tax": 0,
-                      "total_tax_on_taxable_net_income": 9144000,
-                      "net_income_tax": 9144000,
-                      "total_tax_due": 9144000,
-                      "previous_year_balance": 1514000,
-                      "total_withheld_tax": 7714000,
+                      "total_tax_on_taxable_net_income": 9140000,
+                      "net_income_tax": 9140000,
+                      "total_tax_due": 9140000,
+                      "previous_year_balance": 1510000,
+                      "total_withheld_tax": 7710000,
                       "balance_payable": 0,
                       "balance_refundable": 84000,
                       "total_payment": 0
@@ -71874,31 +71874,31 @@
                         }
                       },
                       "equity_statement": {
-                        "total_gross_equity": 4648000,
-                        "total_debts": 77626000,
+                        "total_gross_equity": 4650000,
+                        "total_debts": 77600000,
                         "total_net_equity": 0
                       },
                       "annual_income_statement": {
                         "gross_income": {
-                          "earned_income": 115004000,
+                          "earned_income": 115000000,
                           "fee_based_income": 0,
                           "capital_income": 0,
                           "non_labor_income": 0
                         },
                         "non_taxable_income": {
-                          "earned_income": 115004000,
+                          "earned_income": 115000000,
                           "fee_based_income": 0,
                           "capital_income": 0,
                           "non_labor_income": 0
                         },
                         "net_income": {
-                          "earned_income": 115004000,
+                          "earned_income": 115000000,
                           "fee_based_income": 0,
                           "capital_income": 0,
                           "non_labor_income": 0
                         },
                         "annual_totals": {
-                          "total_exempt_income": 115004000,
+                          "total_exempt_income": 115000000,
                           "total_applicable_deductions": 0,
                           "total_exemptions_and_deductions": 0,
                           "total_ordinary_net_income": 0
@@ -71910,11 +71910,11 @@
                       },
                       "tax_assessment": {
                         "fortuitous_profit_tax": 0,
-                        "total_tax_on_taxable_net_income": 9144000,
-                        "net_income_tax": 9144000,
-                        "total_tax_due": 9144000,
-                        "previous_year_balance": 1514000,
-                        "total_withheld_tax": 7714000,
+                        "total_tax_on_taxable_net_income": 9140000,
+                        "net_income_tax": 9140000,
+                        "total_tax_due": 9140000,
+                        "previous_year_balance": 1510000,
+                        "total_withheld_tax": 7710000,
                         "balance_payable": 0,
                         "balance_refundable": 84000,
                         "total_payment": 0
@@ -72187,39 +72187,39 @@
                     }
                   },
                   "equity_statement": {
-                    "cash_and_cash_equivalents": 4648000,
-                    "investments_and_derivative_financial_instruments": 77626000,
+                    "cash_and_cash_equivalents": 4650000,
+                    "investments_and_derivative_financial_instruments": 77600000,
                     "accounts_documents_and_finance_leases_receivable": 0,
                     "inventory": 0,
                     "property_plant_and_equipment_investment_properties": 0,
-                    "total_gross_equity": 220860000,
-                    "debts": 207030000,
-                    "total_net_equity": 13830000
+                    "total_gross_equity": 221000000,
+                    "debts": 207000000,
+                    "total_net_equity": 13800000
                   },
                   "annual_income_statement": {
-                    "gross_income_from_ordinary_activities": 210043000,
+                    "gross_income_from_ordinary_activities": 210000000,
                     "dividends": 0,
                     "other_income": 0,
-                    "total_gross_income": 210043000,
+                    "total_gross_income": 210000000,
                     "returns_rebates_and_discounts_on_sales": 0,
-                    "total_net_income": 210043000
+                    "total_net_income": 210000000
                   },
                   "annual_costs_and_deductions_statement": {
-                    "costs": 1881843000,
-                    "administration_expenses": 3266000,
+                    "costs": 1880000000,
+                    "administration_expenses": 3270000,
                     "distribution_and_sales_expenses": 0,
                     "financial_expenses": 0,
-                    "total_costs_and_deductible_expenses": 191449000
+                    "total_costs_and_deductible_expenses": 191000000
                   },
                   "tax_assessment": {
-                    "net_income_taxable": 18594000,
+                    "net_income_taxable": 18600000,
                     "fortuitous_profit_tax": 0,
-                    "total_tax_on_taxable_net_income": 5764000,
-                    "net_income_tax": 5764000,
-                    "total_tax_due": 5764000,
-                    "total_withholdings_for_the_taxable_year_to_be_declared": 7361000,
+                    "total_tax_on_taxable_net_income": 5760000,
+                    "net_income_tax": 5760000,
+                    "total_tax_due": 5760000,
+                    "total_withholdings_for_the_taxable_year_to_be_declared": 7360000,
                     "total_balance_payable": 0,
-                    "total_balance_in_favor": 1889000,
+                    "total_balance_in_favor": 1890000,
                     "total_payment": 0
                   },
                   "date_issued": "2022-09-02",
@@ -72257,39 +72257,39 @@
                       }
                     },
                     "equity_statement": {
-                      "cash_and_cash_equivalents": 4648000,
-                      "investments_and_derivative_financial_instruments": 77626000,
+                      "cash_and_cash_equivalents": 4650000,
+                      "investments_and_derivative_financial_instruments": 77600000,
                       "accounts_documents_and_finance_leases_receivable": 0,
                       "inventory": 0,
                       "property_plant_and_equipment_investment_properties": 0,
-                      "total_gross_equity": 220860000,
-                      "debts": 207030000,
-                      "total_net_equity": 13830000
+                      "total_gross_equity": 221000000,
+                      "debts": 207000000,
+                      "total_net_equity": 13800000
                     },
                     "annual_income_statement": {
-                      "gross_income_from_ordinary_activities": 210043000,
+                      "gross_income_from_ordinary_activities": 210000000,
                       "dividends": 0,
                       "other_income": 0,
-                      "total_gross_income": 210043000,
+                      "total_gross_income": 210000000,
                       "returns_rebates_and_discounts_on_sales": 0,
-                      "total_net_income": 210043000
+                      "total_net_income": 210000000
                     },
                     "annual_costs_and_deductions_statement": {
-                      "costs": 1881843000,
-                      "administration_expenses": 3266000,
+                      "costs": 1880000000,
+                      "administration_expenses": 3270000,
                       "distribution_and_sales_expenses": 0,
                       "financial_expenses": 0,
-                      "total_costs_and_deductible_expenses": 191449000
+                      "total_costs_and_deductible_expenses": 191000000
                     },
                     "tax_assessment": {
-                      "net_income_taxable": 18594000,
+                      "net_income_taxable": 18600000,
                       "fortuitous_profit_tax": 0,
-                      "total_tax_on_taxable_net_income": 5764000,
-                      "net_income_tax": 5764000,
-                      "total_tax_due": 5764000,
-                      "total_withholdings_for_the_taxable_year_to_be_declared": 7361000,
+                      "total_tax_on_taxable_net_income": 5760000,
+                      "net_income_tax": 5760000,
+                      "total_tax_due": 5760000,
+                      "total_withholdings_for_the_taxable_year_to_be_declared": 7360000,
                       "total_balance_payable": 0,
-                      "total_balance_in_favor": 1889000,
+                      "total_balance_in_favor": 1890000,
                       "total_payment": 0
                     },
                     "date_issued": "2022-09-02",
@@ -72347,39 +72347,39 @@
                     }
                   },
                   "equity_statement": {
-                    "cash_and_cash_equivalents": 4648000,
-                    "investments_and_derivative_financial_instruments": 77626000,
+                    "cash_and_cash_equivalents": 4650000,
+                    "investments_and_derivative_financial_instruments": 77600000,
                     "accounts_documents_and_finance_leases_receivable": 0,
                     "inventory": 0,
                     "property_plant_and_equipment_investment_properties": 0,
-                    "total_gross_equity": 220860000,
-                    "debts": 207030000,
-                    "total_net_equity": 13830000
+                    "total_gross_equity": 221000000,
+                    "debts": 207000000,
+                    "total_net_equity": 13800000
                   },
                   "annual_income_statement": {
-                    "gross_income_from_ordinary_activities": 210043000,
+                    "gross_income_from_ordinary_activities": 210000000,
                     "dividends": 0,
                     "other_income": 0,
-                    "total_gross_income": 210043000,
+                    "total_gross_income": 210000000,
                     "returns_rebates_and_discounts_on_sales": 0,
-                    "total_net_income": 210043000
+                    "total_net_income": 210000000
                   },
                   "annual_costs_and_deductions_statement": {
-                    "costs": 1881843000,
-                    "administration_expenses": 3266000,
+                    "costs": 1880000000,
+                    "administration_expenses": 3270000,
                     "distribution_and_sales_expenses": 0,
                     "financial_expenses": 0,
-                    "total_costs_and_deductible_expenses": 191449000
+                    "total_costs_and_deductible_expenses": 191000000
                   },
                   "tax_assessment": {
-                    "net_income_taxable": 18594000,
+                    "net_income_taxable": 18600000,
                     "fortuitous_profit_tax": 0,
-                    "total_tax_on_taxable_net_income": 5764000,
-                    "net_income_tax": 5764000,
-                    "total_tax_due": 5764000,
-                    "total_withholdings_for_the_taxable_year_to_be_declared": 7361000,
+                    "total_tax_on_taxable_net_income": 5760000,
+                    "net_income_tax": 5760000,
+                    "total_tax_due": 5760000,
+                    "total_withholdings_for_the_taxable_year_to_be_declared": 7360000,
                     "total_balance_payable": 0,
-                    "total_balance_in_favor": 1889000,
+                    "total_balance_in_favor": 1890000,
                     "total_payment": 0
                   },
                   "date_issued": "2022-09-02",
@@ -72417,39 +72417,39 @@
                       }
                     },
                     "equity_statement": {
-                      "cash_and_cash_equivalents": 4648000,
-                      "investments_and_derivative_financial_instruments": 77626000,
+                      "cash_and_cash_equivalents": 4650000,
+                      "investments_and_derivative_financial_instruments": 77600000,
                       "accounts_documents_and_finance_leases_receivable": 0,
                       "inventory": 0,
                       "property_plant_and_equipment_investment_properties": 0,
-                      "total_gross_equity": 220860000,
-                      "debts": 207030000,
-                      "total_net_equity": 13830000
+                      "total_gross_equity": 221000000,
+                      "debts": 207000000,
+                      "total_net_equity": 13800000
                     },
                     "annual_income_statement": {
-                      "gross_income_from_ordinary_activities": 210043000,
+                      "gross_income_from_ordinary_activities": 210000000,
                       "dividends": 0,
                       "other_income": 0,
-                      "total_gross_income": 210043000,
+                      "total_gross_income": 210000000,
                       "returns_rebates_and_discounts_on_sales": 0,
-                      "total_net_income": 210043000
+                      "total_net_income": 210000000
                     },
                     "annual_costs_and_deductions_statement": {
-                      "costs": 1881843000,
-                      "administration_expenses": 3266000,
+                      "costs": 1880000000,
+                      "administration_expenses": 3270000,
                       "distribution_and_sales_expenses": 0,
                       "financial_expenses": 0,
-                      "total_costs_and_deductible_expenses": 191449000
+                      "total_costs_and_deductible_expenses": 191000000
                     },
                     "tax_assessment": {
-                      "net_income_taxable": 18594000,
+                      "net_income_taxable": 18600000,
                       "fortuitous_profit_tax": 0,
-                      "total_tax_on_taxable_net_income": 5764000,
-                      "net_income_tax": 5764000,
-                      "total_tax_due": 5764000,
-                      "total_withholdings_for_the_taxable_year_to_be_declared": 7361000,
+                      "total_tax_on_taxable_net_income": 5760000,
+                      "net_income_tax": 5760000,
+                      "total_tax_due": 5760000,
+                      "total_withholdings_for_the_taxable_year_to_be_declared": 7360000,
                       "total_balance_payable": 0,
-                      "total_balance_in_favor": 1889000,
+                      "total_balance_in_favor": 1890000,
                       "total_payment": 0
                     },
                     "date_issued": "2022-09-02",
@@ -72645,31 +72645,31 @@
                   }
                 },
                 "equity_statement": {
-                  "total_gross_equity": 4648000,
-                  "total_debts": 77626000,
+                  "total_gross_equity": 4650000,
+                  "total_debts": 77600000,
                   "total_net_equity": 0
                 },
                 "annual_income_statement": {
                   "gross_income": {
-                    "earned_income": 115004000,
+                    "earned_income": 115000000,
                     "fee_based_income": 0,
                     "capital_income": 0,
                     "non_labor_income": 0
                   },
                   "non_taxable_income": {
-                    "earned_income": 115004000,
+                    "earned_income": 115000000,
                     "fee_based_income": 0,
                     "capital_income": 0,
                     "non_labor_income": 0
                   },
                   "net_income": {
-                    "earned_income": 115004000,
+                    "earned_income": 115000000,
                     "fee_based_income": 0,
                     "capital_income": 0,
                     "non_labor_income": 0
                   },
                   "annual_totals": {
-                    "total_exempt_income": 115004000,
+                    "total_exempt_income": 115000000,
                     "total_applicable_deductions": 0,
                     "total_exemptions_and_deductions": 0,
                     "total_ordinary_net_income": 0
@@ -72681,11 +72681,11 @@
                 },
                 "tax_assessment": {
                   "fortuitous_profit_tax": 0,
-                  "total_tax_on_taxable_net_income": 9144000,
-                  "net_income_tax": 9144000,
-                  "total_tax_due": 9144000,
-                  "previous_year_balance": 1514000,
-                  "total_withheld_tax": 7714000,
+                  "total_tax_on_taxable_net_income": 9140000,
+                  "net_income_tax": 9140000,
+                  "total_tax_due": 9140000,
+                  "previous_year_balance": 1510000,
+                  "total_withheld_tax": 7710000,
                   "balance_payable": 0,
                   "balance_refundable": 84000,
                   "total_payment": 0
@@ -72722,31 +72722,31 @@
                     }
                   },
                   "equity_statement": {
-                    "total_gross_equity": 4648000,
-                    "total_debts": 77626000,
+                    "total_gross_equity": 4650000,
+                    "total_debts": 77600000,
                     "total_net_equity": 0
                   },
                   "annual_income_statement": {
                     "gross_income": {
-                      "earned_income": 115004000,
+                      "earned_income": 115000000,
                       "fee_based_income": 0,
                       "capital_income": 0,
                       "non_labor_income": 0
                     },
                     "non_taxable_income": {
-                      "earned_income": 115004000,
+                      "earned_income": 115000000,
                       "fee_based_income": 0,
                       "capital_income": 0,
                       "non_labor_income": 0
                     },
                     "net_income": {
-                      "earned_income": 115004000,
+                      "earned_income": 115000000,
                       "fee_based_income": 0,
                       "capital_income": 0,
                       "non_labor_income": 0
                     },
                     "annual_totals": {
-                      "total_exempt_income": 115004000,
+                      "total_exempt_income": 115000000,
                       "total_applicable_deductions": 0,
                       "total_exemptions_and_deductions": 0,
                       "total_ordinary_net_income": 0
@@ -72758,11 +72758,11 @@
                   },
                   "tax_assessment": {
                     "fortuitous_profit_tax": 0,
-                    "total_tax_on_taxable_net_income": 9144000,
-                    "net_income_tax": 9144000,
-                    "total_tax_due": 9144000,
-                    "previous_year_balance": 1514000,
-                    "total_withheld_tax": 7714000,
+                    "total_tax_on_taxable_net_income": 9140000,
+                    "net_income_tax": 9140000,
+                    "total_tax_due": 9140000,
+                    "previous_year_balance": 1510000,
+                    "total_withheld_tax": 7710000,
                     "balance_payable": 0,
                     "balance_refundable": 84000,
                     "total_payment": 0
@@ -73117,13 +73117,13 @@
                         "end_date": "2019-12-31",
                         "weeks_employed": 12,
                         "state": "DISTRITO FEDERAL",
-                        "most_recent_base_salary": 762.54,
+                        "most_recent_base_salary": 763,
                         "monthly_salary": 1.1,
                         "currency": "MXN",
                         "employment_status_updates": [
                           {
                             "event": "DISMISSED_RESIGNED",
-                            "base_salary": 1033.09,
+                            "base_salary": 1030,
                             "update_date": "2021-09-01"
                           }
                         ]
@@ -73185,13 +73185,13 @@
                           "end_date": "2019-12-31",
                           "weeks_employed": 12,
                           "state": "DISTRITO FEDERAL",
-                          "most_recent_base_salary": 762.54,
+                          "most_recent_base_salary": 763,
                           "monthly_salary": 1.1,
                           "currency": "MXN",
                           "employment_status_updates": [
                             {
                               "event": "DISMISSED_RESIGNED",
-                              "base_salary": 1033.09,
+                              "base_salary": 1030,
                               "update_date": "2021-09-01"
                             }
                           ]
@@ -73493,13 +73493,13 @@
                       "end_date": "2019-12-31",
                       "weeks_employed": 12,
                       "state": "DISTRITO FEDERAL",
-                      "most_recent_base_salary": 762.54,
+                      "most_recent_base_salary": 763,
                       "monthly_salary": 1.1,
                       "currency": "MXN",
                       "employment_status_updates": [
                         {
                           "event": "DISMISSED_RESIGNED",
-                          "base_salary": 1033.09,
+                          "base_salary": 1030,
                           "update_date": "2021-09-01"
                         }
                       ]
@@ -73556,13 +73556,13 @@
                         "end_date": "2019-12-31",
                         "weeks_employed": 12,
                         "state": "DISTRITO FEDERAL",
-                        "most_recent_base_salary": 762.54,
+                        "most_recent_base_salary": 763,
                         "monthly_salary": 1.1,
                         "currency": "MXN",
                         "employment_status_updates": [
                           {
                             "event": "DISMISSED_RESIGNED",
-                            "base_salary": 1033.09,
+                            "base_salary": 1030,
                             "update_date": "2021-09-01"
                           }
                         ]
@@ -73635,13 +73635,13 @@
                       "end_date": "2019-12-31",
                       "weeks_employed": 12,
                       "state": "DISTRITO FEDERAL",
-                      "most_recent_base_salary": 762.54,
+                      "most_recent_base_salary": 763,
                       "monthly_salary": 1.1,
                       "currency": "MXN",
                       "employment_status_updates": [
                         {
                           "event": "DISMISSED_RESIGNED",
-                          "base_salary": 1033.09,
+                          "base_salary": 1030,
                           "update_date": "2021-09-01"
                         }
                       ]
@@ -73698,13 +73698,13 @@
                         "end_date": "2019-12-31",
                         "weeks_employed": 12,
                         "state": "DISTRITO FEDERAL",
-                        "most_recent_base_salary": 762.54,
+                        "most_recent_base_salary": 763,
                         "monthly_salary": 1.1,
                         "currency": "MXN",
                         "employment_status_updates": [
                           {
                             "event": "DISMISSED_RESIGNED",
-                            "base_salary": 1033.09,
+                            "base_salary": 1030,
                             "update_date": "2021-09-01"
                           }
                         ]
@@ -73920,13 +73920,13 @@
                     "end_date": "2019-12-31",
                     "weeks_employed": 12,
                     "state": "DISTRITO FEDERAL",
-                    "most_recent_base_salary": 762.54,
+                    "most_recent_base_salary": 763,
                     "monthly_salary": 1.1,
                     "currency": "MXN",
                     "employment_status_updates": [
                       {
                         "event": "DISMISSED_RESIGNED",
-                        "base_salary": 1033.09,
+                        "base_salary": 1030,
                         "update_date": "2021-09-01"
                       }
                     ]
@@ -73981,13 +73981,13 @@
                       "end_date": "2019-12-31",
                       "weeks_employed": 12,
                       "state": "DISTRITO FEDERAL",
-                      "most_recent_base_salary": 762.54,
+                      "most_recent_base_salary": 763,
                       "monthly_salary": 1.1,
                       "currency": "MXN",
                       "employment_status_updates": [
                         {
                           "event": "DISMISSED_RESIGNED",
-                          "base_salary": 1033.09,
+                          "base_salary": 1030,
                           "update_date": "2021-09-01"
                         }
                       ]
@@ -74340,7 +74340,7 @@
                     "value_date": "2022-11-18",
                     "description": "SALÁRIO MENSAL",
                     "type": "INFLOW",
-                    "amount": 650.89,
+                    "amount": 651,
                     "currency": "BRL",
                     "institution": "Erebor Retail Brasil"
                   }
@@ -74360,7 +74360,7 @@
                       "value_date": "2022-11-18",
                       "description": "SALÁRIO MENSAL",
                       "type": "INFLOW",
-                      "amount": 650.89,
+                      "amount": 651,
                       "currency": "BRL",
                       "institution": "Erebor Retail Brasil"
                     }
@@ -74691,7 +74691,7 @@
                     "value_date": "2022-11-18",
                     "description": "APPL3STORE",
                     "type": "INFLOW",
-                    "amount": 650.89,
+                    "amount": 651,
                     "currency": "BRL",
                     "institution": "BBVA"
                   }
@@ -74711,7 +74711,7 @@
                       "value_date": "2022-11-18",
                       "description": "APPL3STORE",
                       "type": "INFLOW",
-                      "amount": 650.89,
+                      "amount": 651,
                       "currency": "BRL",
                       "institution": "BBVA"
                     }

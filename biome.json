@@ -6,6 +6,7 @@
     "useIgnoreFile": false
   },
   "files": {
+    "includes": ["**", "!seed/"],
     "ignoreUnknown": false,
     "maxSize": 80000000
   },
@@ -394,6 +395,8 @@
         ".turbo",
         ".nx",
         "**/node_modules/**",
+        "**/.venv/**",
+        "**/.mypy_cache/**",
         "packages/**/build/**",
         "packages/**/lib/**",
         "packages/**/dist/**",
@@ -409,6 +412,7 @@
         "seed/**/gradlew.bat",
         "seed/**/gradle",
         "generators/csharp/playground/**/obj/**",
+        "generators/go/internal/fern/ir.json",
         "!generators/ruby/playground/lib/**",
         ".next",
         "next-env.d.ts",

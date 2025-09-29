@@ -208,6 +208,7 @@ function getPublishConfig({
             repo: "",
             uri: generatorInvocation.raw.github.uri,
             token: generatorInvocation.raw.github.token,
+            mode: generatorInvocation.raw.github.mode,
             target: FernIr.PublishTarget.postman({
                 apiKey: "",
                 workspaceId: "",
@@ -224,6 +225,59 @@ function getPublishConfig({
                 packageName
             });
             context.logger.debug(`Created PyPiPublishTarget: version ${version} package name: ${packageName}`);
+        } else if (generatorInvocation.language === "java") {
+            const config = generatorInvocation.raw?.config;
+
+            interface JavaGeneratorConfig {
+                group?: unknown;
+                artifact?: unknown;
+                "package-prefix"?: unknown;
+                [key: string]: unknown;
+            }
+
+            // Support both styles: package-prefix/package_name and group/artifact
+            const mavenCoordinate = (() => {
+                if (!config || typeof config !== "object" || config === null) {
+                    return undefined;
+                }
+
+                const configObj = config as JavaGeneratorConfig;
+
+                if (typeof configObj.group === "string" && typeof configObj.artifact === "string") {
+                    return {
+                        groupId: configObj.group,
+                        artifactId: configObj.artifact
+                    };
+                } else if (typeof configObj["package-prefix"] === "string" && packageName) {
+                    return {
+                        groupId: configObj["package-prefix"],
+                        artifactId: packageName
+                    };
+                } else if (typeof configObj["package-prefix"] === "string" && !packageName) {
+                    context.logger.warn("Java generator has package-prefix configured but packageName is missing");
+                }
+
+                return undefined;
+            })();
+
+            const coordinate = mavenCoordinate ? `${mavenCoordinate.groupId}:${mavenCoordinate.artifactId}` : undefined;
+
+            if (coordinate) {
+                const mavenVersion = version ?? "0.0.0";
+                publishTarget = PublishTarget.maven({
+                    coordinate,
+                    version: mavenVersion,
+                    usernameEnvironmentVariable: "MAVEN_USERNAME",
+                    passwordEnvironmentVariable: "MAVEN_PASSWORD",
+                    mavenUrlEnvironmentVariable: "MAVEN_PUBLISH_REGISTRY_URL"
+                });
+                context.logger.debug(`Created MavenPublishTarget: coordinate ${coordinate} version ${mavenVersion}`);
+            } else if (config && typeof config === "object") {
+                context.logger.debug(
+                    "Java generator config provided but could not construct Maven coordinate. " +
+                        "Expected either 'group' and 'artifact' or 'package-prefix' with packageName."
+                );
+            }
         }
 
         return FernIr.PublishingConfig.filesystem({
@@ -267,5 +321,6 @@ const emptyReadmeConfig: FernIr.ReadmeConfig = {
     apiName: undefined,
     disabledFeatures: undefined,
     whiteLabel: undefined,
+    customSections: undefined,
     features: undefined
 };

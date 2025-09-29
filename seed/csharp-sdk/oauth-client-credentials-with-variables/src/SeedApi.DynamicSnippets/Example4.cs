@@ -1,11 +1,11 @@
-using global::System.Threading.Tasks;
 using SeedOauthClientCredentialsWithVariables;
+using System.Threading.Tasks;
 
 namespace Usage;
 
 public class Example4
 {
-    public async global::System.Threading.Tasks.Task Do() {
+    public async Task Do() {
         var client = new SeedOauthClientCredentialsWithVariablesClient(
             clientId: "<clientId>",
             clientSecret: "<clientSecret>",
@@ -14,9 +14,7 @@ public class Example4
             }
         );
 
-        await client.Service.PostAsync(
-            "endpointParam"
-        );
+        await client.Service.PostAsync();
     }
 
 }

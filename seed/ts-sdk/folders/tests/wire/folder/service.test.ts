@@ -17,7 +17,7 @@ describe("Service", () => {
         expect(response).toEqual(undefined);
     });
 
-    test("unknownRequest (f7429229)", async () => {
+    test("unknownRequest (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ environment: server.baseUrl });
         const rawRequestBody = { key: "value" };
@@ -30,7 +30,7 @@ describe("Service", () => {
         expect(response).toEqual(undefined);
     });
 
-    test("unknownRequest (c2fbef78)", async () => {
+    test("unknownRequest (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ environment: server.baseUrl });
         const rawRequestBody = { key: "value" };
@@ -48,6 +48,6 @@ describe("Service", () => {
             return await client.folder.service.unknownRequest({
                 key: "value",
             });
-        }).rejects.toThrow(new SeedApi.folder.NotFoundError("string"));
+        }).rejects.toThrow(SeedApi.folder.NotFoundError);
     });
 });

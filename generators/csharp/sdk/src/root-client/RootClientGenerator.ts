@@ -1,8 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { csharp, escapeForCSharpString } from "@fern-api/csharp-codegen";
+import { ast, escapeForCSharpString, GrpcClientInfo } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-
 import {
     AuthScheme,
     HttpHeader,
@@ -15,7 +14,6 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { RawClient } from "../endpoint/http/RawClient";
-import { GrpcClientInfo } from "../grpc/GrpcClientInfo";
 import { OauthTokenProviderGenerator } from "../oauth/OauthTokenProviderGenerator";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
@@ -69,36 +67,36 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
     }
 
     public doGenerate(): CSharpFile {
-        const class_ = csharp.class_({
+        const class_ = this.csharp.class_({
             ...this.context.getRootClientClassReference(),
             partial: true,
             access: this.context.getRootClientAccess()
         });
 
         class_.addField(
-            csharp.field({
-                access: csharp.Access.Private,
+            this.csharp.field({
+                access: ast.Access.Private,
                 name: CLIENT_MEMBER_NAME,
-                type: csharp.Type.reference(this.context.getRawClientClassReference()),
+                type: this.csharp.Type.reference(this.context.getRawClientClassReference()),
                 readonly: true
             })
         );
 
         if (this.grpcClientInfo != null) {
             class_.addField(
-                csharp.field({
-                    access: csharp.Access.Private,
+                this.csharp.field({
+                    access: ast.Access.Private,
                     name: GRPC_CLIENT_MEMBER_NAME,
-                    type: csharp.Type.reference(this.context.getRawGrpcClientClassReference()),
+                    type: this.csharp.Type.reference(this.context.getRawGrpcClientClassReference()),
                     readonly: true
                 })
             );
 
             class_.addField(
-                csharp.field({
-                    access: csharp.Access.Private,
+                this.csharp.field({
+                    access: ast.Access.Private,
                     name: this.grpcClientInfo.privatePropertyName,
-                    type: csharp.Type.reference(this.grpcClientInfo.classReference)
+                    type: this.csharp.Type.reference(this.grpcClientInfo.classReference)
                 })
             );
         }
@@ -111,11 +109,11 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                 continue;
             }
             class_.addField(
-                csharp.field({
-                    access: csharp.Access.Public,
+                this.csharp.field({
+                    access: ast.Access.Public,
                     get: true,
                     name: subpackage.name.pascalCase.safeName,
-                    type: csharp.Type.reference(this.context.getSubpackageClassReference(subpackage))
+                    type: this.csharp.Type.reference(this.context.getSubpackageClassReference(subpackage))
                 })
             );
         }
@@ -150,12 +148,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         });
     }
 
-    private getConstructorMethod(): csharp.Class.Constructor {
+    private getConstructorMethod(): ast.Class.Constructor {
         const { requiredParameters, optionalParameters, literalParameters } = this.getConstructorParameters();
-        const parameters: csharp.Parameter[] = [];
+        const parameters: ast.Parameter[] = [];
         for (const param of requiredParameters) {
             parameters.push(
-                csharp.parameter({
+                this.csharp.parameter({
                     name: param.name,
                     type: this.context.csharpTypeMapper.convert({ reference: param.typeReference }),
                     docs: param.docs
@@ -164,7 +162,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         }
         for (const param of optionalParameters) {
             parameters.push(
-                csharp.parameter({
+                this.csharp.parameter({
                     name: param.name,
                     type: this.context.csharpTypeMapper
                         .convert({ reference: param.typeReference })
@@ -176,19 +174,21 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         }
 
         parameters.push(
-            csharp.parameter({
+            this.csharp.parameter({
                 name: CLIENT_OPTIONS_PARAMETER_NAME,
-                type: csharp.Type.optional(csharp.Type.reference(this.context.getClientOptionsClassReference())),
+                type: this.csharp.Type.optional(
+                    this.csharp.Type.reference(this.context.getClientOptionsClassReference())
+                ),
                 initializer: "null"
             })
         );
 
-        const headerEntries: csharp.Dictionary.MapEntry[] = [];
+        const headerEntries: ast.Dictionary.MapEntry[] = [];
         for (const param of [...requiredParameters, ...optionalParameters]) {
             if (param.header != null) {
                 headerEntries.push({
-                    key: csharp.codeblock(csharp.string_({ string: param.header.name })),
-                    value: csharp.codeblock(
+                    key: this.csharp.codeblock(this.csharp.string_({ string: param.header.name })),
+                    value: this.csharp.codeblock(
                         param.header.prefix != null ? `$"${param.header.prefix} {${param.name}}"` : param.name
                     )
                 });
@@ -198,10 +198,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         for (const param of literalParameters) {
             if (param.header != null) {
                 headerEntries.push({
-                    key: csharp.codeblock(csharp.string_({ string: param.header.name })),
-                    value: csharp.codeblock(
+                    key: this.csharp.codeblock(this.csharp.string_({ string: param.header.name })),
+                    value: this.csharp.codeblock(
                         param.value.type === "string"
-                            ? csharp.string_({ string: param.value.string })
+                            ? this.csharp.string_({ string: param.value.string })
                             : param.value
                               ? `"${true.toString()}"`
                               : `"${false.toString()}"`
@@ -212,26 +212,26 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
 
         const platformHeaders = this.context.ir.sdkConfig.platformHeaders;
         headerEntries.push({
-            key: csharp.codeblock(`"${platformHeaders.language}"`),
-            value: csharp.codeblock('"C#"')
+            key: this.csharp.codeblock(`"${platformHeaders.language}"`),
+            value: this.csharp.codeblock('"C#"')
         });
         headerEntries.push({
-            key: csharp.codeblock(`"${platformHeaders.sdkName}"`),
-            value: csharp.codeblock(`"${this.context.getNamespace()}"`)
+            key: this.csharp.codeblock(`"${platformHeaders.sdkName}"`),
+            value: this.csharp.codeblock(`"${this.context.getNamespace()}"`)
         });
         headerEntries.push({
-            key: csharp.codeblock(`"${platformHeaders.sdkVersion}"`),
+            key: this.csharp.codeblock(`"${platformHeaders.sdkVersion}"`),
             value: this.context.getCurrentVersionValueAccess()
         });
         if (platformHeaders.userAgent != null) {
             headerEntries.push({
-                key: csharp.codeblock(`"${platformHeaders.userAgent.header}"`),
-                value: csharp.codeblock(`"${platformHeaders.userAgent.value}"`)
+                key: this.csharp.codeblock(`"${platformHeaders.userAgent.header}"`),
+                value: this.csharp.codeblock(`"${platformHeaders.userAgent.value}"`)
             });
         }
-        const headerDictionary = csharp.dictionary({
-            keyType: csharp.Types.string(),
-            valueType: csharp.Types.string(),
+        const headerDictionary = this.csharp.dictionary({
+            keyType: this.csharp.Type.string(),
+            valueType: this.csharp.Type.string(),
             values: {
                 type: "entries",
                 entries: headerEntries
@@ -239,14 +239,14 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         });
 
         return {
-            access: csharp.Access.Public,
+            access: ast.Access.Public,
             parameters,
-            body: csharp.codeblock((writer) => {
+            body: this.csharp.codeblock((writer) => {
                 for (const param of optionalParameters) {
                     if (param.environmentVariable != null) {
                         writer.writeLine(`${param.name} ??= ${GetFromEnvironmentOrThrow}(`);
                         writer.indent();
-                        writer.writeNode(csharp.string_({ string: param.environmentVariable }));
+                        writer.writeNode(this.csharp.string_({ string: param.environmentVariable }));
                         writer.writeLine(",");
                         writer.writeLine(
                             `"Please pass in ${escapeForCSharpString(param.name)} or set the environment variable ${escapeForCSharpString(param.environmentVariable)}."`
@@ -257,7 +257,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                 }
                 writer.write("var defaultHeaders = ");
                 writer.writeNodeStatement(
-                    csharp.instantiateClass({
+                    this.csharp.instantiateClass({
                         classReference: this.context.getHeadersClassReference(),
                         arguments_: [headerDictionary]
                     })
@@ -265,7 +265,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
 
                 writer.write("clientOptions ??= ");
                 writer.writeNodeStatement(
-                    csharp.instantiateClass({
+                    this.csharp.instantiateClass({
                         classReference: this.context.getClientOptionsClassReference(),
                         arguments_: []
                     })
@@ -273,7 +273,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
 
                 for (const param of literalParameters) {
                     if (param.header != null) {
-                        writer.controlFlow("if", csharp.codeblock(`clientOptions.${param.name} != null`));
+                        writer.controlFlow("if", this.csharp.codeblock(`clientOptions.${param.name} != null`));
                         writer.write(`defaultHeaders["${param.header.name}"] = `);
                         if (param.value.type === "string") {
                             writer.write(`clientOptions.${param.name}`);
@@ -285,8 +285,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     }
                 }
 
-                writer.controlFlow("foreach", csharp.codeblock("var header in defaultHeaders"));
-                writer.controlFlow("if", csharp.codeblock("!clientOptions.Headers.ContainsKey(header.Key)"));
+                writer.controlFlow("foreach", this.csharp.codeblock("var header in defaultHeaders"));
+                writer.controlFlow("if", this.csharp.codeblock("!clientOptions.Headers.ContainsKey(header.Key)"));
                 writer.writeLine("clientOptions.Headers[header.Key] = header.Value;");
                 writer.endControlFlow();
                 writer.endControlFlow();
@@ -295,10 +295,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     const authClientClassReference = this.context.getSubpackageClassReferenceForServiceIdOrThrow(
                         this.oauth.configuration.tokenEndpoint.endpointReference.serviceId
                     );
-                    const arguments_ = [csharp.codeblock("new RawClient(clientOptions.Clone())")];
+                    const arguments_ = [this.csharp.codeblock("new RawClient(clientOptions.Clone())")];
                     writer.write("var tokenProvider = new OAuthTokenProvider(clientId, clientSecret, ");
                     writer.writeNode(
-                        csharp.instantiateClass({
+                        this.csharp.instantiateClass({
                             classReference: authClientClassReference,
                             arguments_,
                             forceUseConstructor: true
@@ -307,7 +307,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     writer.writeTextStatement(")");
 
                     writer.writeNode(
-                        csharp.codeblock((writer) => {
+                        this.csharp.codeblock((writer) => {
                             writer.write(
                                 `clientOptions.Headers["Authorization"] = new Func<string>( () => tokenProvider.${OauthTokenProviderGenerator.GET_ACCESS_TOKEN_ASYNC_METHOD_NAME}().Result );`
                             );
@@ -317,9 +317,9 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
 
                 writer.writeLine("_client = ");
                 writer.writeNodeStatement(
-                    csharp.instantiateClass({
+                    this.csharp.instantiateClass({
                         classReference: this.context.getRawClientClassReference(),
-                        arguments_: [csharp.codeblock("clientOptions")]
+                        arguments_: [this.csharp.codeblock("clientOptions")]
                     })
                 );
                 if (this.grpcClientInfo != null) {
@@ -327,13 +327,13 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     writer.write(this.grpcClientInfo.privatePropertyName);
                     writer.write(" = ");
                     writer.writeNodeStatement(
-                        csharp.instantiateClass({
+                        this.csharp.instantiateClass({
                             classReference: this.grpcClientInfo.classReference,
-                            arguments_: [csharp.codeblock("_grpc.Channel")]
+                            arguments_: [this.csharp.codeblock("_grpc.Channel")]
                         })
                     );
                 }
-                const arguments_ = [csharp.codeblock("_client")];
+                const arguments_ = [this.csharp.codeblock("_client")];
                 for (const subpackage of this.getSubpackages()) {
                     // skip subpackages that have no endpoints (recursively)
                     if (!this.context.subPackageHasEndpoints(subpackage)) {
@@ -341,7 +341,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     }
                     writer.writeLine(`${subpackage.name.pascalCase.safeName} = `);
                     writer.writeNodeStatement(
-                        csharp.instantiateClass({
+                        this.csharp.instantiateClass({
                             classReference: this.context.getSubpackageClassReference(subpackage),
                             arguments_
                         })
@@ -356,10 +356,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         includeEnvVarArguments,
         asSnippet
     }: {
-        clientOptionsArgument?: csharp.ClassInstantiation;
+        clientOptionsArgument?: ast.ClassInstantiation;
         includeEnvVarArguments?: boolean;
         asSnippet?: boolean;
-    }): csharp.ClassInstantiation {
+    }): ast.ClassInstantiation {
         const arguments_ = [];
         for (const header of this.context.ir.headers) {
             if (
@@ -368,7 +368,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
             ) {
                 continue;
             }
-            arguments_.push(csharp.codeblock(`"${header.name.name.screamingSnakeCase.safeName}"`));
+            arguments_.push(this.csharp.codeblock(`"${header.name.name.screamingSnakeCase.safeName}"`));
         }
         if (this.context.ir.auth.requirement) {
             for (const scheme of this.context.ir.auth.schemes) {
@@ -376,30 +376,30 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     case "header":
                         if (scheme.headerEnvVar == null || includeEnvVarArguments) {
                             // assuming type is string for now to avoid generating complex example types here.
-                            arguments_.push(csharp.codeblock(`"${scheme.name.name.screamingSnakeCase.safeName}"`));
+                            arguments_.push(this.csharp.codeblock(`"${scheme.name.name.screamingSnakeCase.safeName}"`));
                         }
                         break;
                     case "basic": {
                         if (scheme.usernameEnvVar == null || includeEnvVarArguments) {
-                            arguments_.push(csharp.codeblock(`"${scheme.username.screamingSnakeCase.safeName}"`));
+                            arguments_.push(this.csharp.codeblock(`"${scheme.username.screamingSnakeCase.safeName}"`));
                         }
                         if (scheme.passwordEnvVar == null || includeEnvVarArguments) {
-                            arguments_.push(csharp.codeblock(`"${scheme.password.screamingSnakeCase.safeName}"`));
+                            arguments_.push(this.csharp.codeblock(`"${scheme.password.screamingSnakeCase.safeName}"`));
                         }
                         break;
                     }
                     case "bearer":
                         if (scheme.tokenEnvVar == null || includeEnvVarArguments) {
-                            arguments_.push(csharp.codeblock(`"${scheme.token.screamingSnakeCase.safeName}"`));
+                            arguments_.push(this.csharp.codeblock(`"${scheme.token.screamingSnakeCase.safeName}"`));
                         }
                         break;
                     case "oauth": {
                         if (this.context.getOauth() != null) {
-                            arguments_.push(csharp.codeblock('"CLIENT_ID"'));
-                            arguments_.push(csharp.codeblock('"CLIENT_SECRET"'));
+                            arguments_.push(this.csharp.codeblock('"CLIENT_ID"'));
+                            arguments_.push(this.csharp.codeblock('"CLIENT_SECRET"'));
                         } else {
                             // default to bearer
-                            arguments_.push(csharp.codeblock('"TOKEN"'));
+                            arguments_.push(this.csharp.codeblock('"TOKEN"'));
                         }
                         break;
                     }
@@ -408,13 +408,13 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         }
         if (clientOptionsArgument != null) {
             arguments_.push(
-                csharp.codeblock((writer) => {
+                this.csharp.codeblock((writer) => {
                     writer.write(`${CLIENT_OPTIONS_PARAMETER_NAME}: `);
                     writer.writeNode(clientOptionsArgument);
                 })
             );
         }
-        return csharp.instantiateClass({
+        return this.csharp.instantiateClass({
             classReference: asSnippet
                 ? this.context.getRootClientClassReferenceForSnippets()
                 : this.context.getRootClientClassReference(),
@@ -527,8 +527,8 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     }
                 ];
             }
-        } else if (this.oauth != null) {
-            {
+        } else if (scheme.type === "oauth") {
+            if (this.oauth !== null) {
                 return [
                     {
                         name: "clientId",
@@ -551,8 +551,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                         environmentVariable: scheme.configuration.clientSecretEnvVar
                     }
                 ];
+            } else {
+                this.context.logger.warn("Auth schems is set to oauth, but no oauth configuration is provided");
+                return [];
             }
-        } else if (scheme.type === "oauth") {
+        } else if (scheme.type === "inferred") {
+            this.context.logger.warn("Inferred auth scheme is not supported for C# SDK");
             return [];
         } else {
             assertNever(scheme);
@@ -574,26 +578,28 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         };
     }
 
-    private getFromEnvironmentOrThrowMethod(): csharp.Method {
-        return csharp.method({
-            access: csharp.Access.Private,
+    private getFromEnvironmentOrThrowMethod(): ast.Method {
+        return this.csharp.method({
+            access: ast.Access.Private,
             name: GetFromEnvironmentOrThrow,
-            return_: csharp.Types.string(),
+            return_: this.csharp.Type.string(),
             parameters: [
-                csharp.parameter({
+                this.csharp.parameter({
                     name: "env",
-                    type: csharp.Types.string()
+                    type: this.csharp.Type.string()
                 }),
-                csharp.parameter({
+                this.csharp.parameter({
                     name: "message",
-                    type: csharp.Types.string()
+                    type: this.csharp.Type.string()
                 })
             ],
             isAsync: false,
-            body: csharp.codeblock((writer) => {
-                writer.writeLine("return Environment.GetEnvironmentVariable(env) ?? throw new Exception(message);");
+            body: this.csharp.codeblock((writer) => {
+                writer.write("return Environment.GetEnvironmentVariable(env) ?? throw new ");
+                writer.writeNode(this.csharp.System.Exception);
+                writer.writeLine("(message);");
             }),
-            type: csharp.MethodType.STATIC
+            type: ast.MethodType.STATIC
         });
     }
 

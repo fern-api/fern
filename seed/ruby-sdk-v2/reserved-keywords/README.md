@@ -37,18 +37,27 @@ client = Seed::Client.new(
 
 ## Errors
 
-Structured error types are returned from API calls that return non-success status codes. These errors are compatible
-with the Ruby Core API, so you can access the error like so:
+Failed API calls will raise errors that can be rescued from granularly.
 
 ```ruby
 require "seed"
 
-response = client.Package.Test(...)
-rescue => error
-if error.is_a?(Core::APIError)
-    # Do something with the API error ...
-end
-raise error
+client = Seed::Client.new(
+    base_url: "https://example.com"
+)
+
+begin
+    result = client.package.test
+rescue Seed::Errors::TimeoutError
+    puts "API didn't respond before our timeout elapsed"
+rescue Seed::Errors::ServiceUnavailableError
+    puts "API returned status 503, is probably overloaded, try again later"
+rescue Seed::Errors::ServerError
+    puts "API returned some other 5xx status, this is probably a bug"
+rescue Seed::Errors::ResponseError => e
+    puts "API returned an unexpected status other than 5xx: #{e.code} {e.message}"
+rescue Seed::Errors::ApiError => e
+    puts "Some other error occurred when calling the API: {e.message}"
 end
 ```
 
@@ -61,7 +70,7 @@ The SDK defaults to a 60 second timeout. Use the `timeout` option to configure t
 ```ruby
 require "seed"
 
-response = client.Package.Test(
+response = client.package.test(
     ...,
     timeout: 30  # 30 second timeout
 )

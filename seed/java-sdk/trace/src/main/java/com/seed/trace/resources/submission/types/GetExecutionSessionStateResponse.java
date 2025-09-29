@@ -111,7 +111,9 @@ public final class GetExecutionSessionStateResponse {
         @JsonSetter(value = "states", nulls = Nulls.SKIP)
         public Builder states(Map<String, ExecutionSessionState> states) {
             this.states.clear();
-            this.states.putAll(states);
+            if (states != null) {
+                this.states.putAll(states);
+            }
             return this;
         }
 
@@ -141,7 +143,9 @@ public final class GetExecutionSessionStateResponse {
         @JsonSetter(value = "warmingSessionIds", nulls = Nulls.SKIP)
         public Builder warmingSessionIds(List<String> warmingSessionIds) {
             this.warmingSessionIds.clear();
-            this.warmingSessionIds.addAll(warmingSessionIds);
+            if (warmingSessionIds != null) {
+                this.warmingSessionIds.addAll(warmingSessionIds);
+            }
             return this;
         }
 

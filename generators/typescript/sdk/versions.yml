@@ -1,4 +1,234 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.3.2-rc0
+  changelogEntry:
+    - summary: Format GitHub Actions workflow files using prettier.
+      type: fix
+    - summary: Add .prettierignore to ensure dist and temporary files are not formatted.
+      type: fix
+    - summary: Fix non-GitHub output modes.
+      type: fix
+  createdAt: "2025-09-26"
+  irVersion: 60
+
+- version: 3.3.1
+  changelogEntry:
+    - summary: |
+        Fix `bundle: true` mode
+      type: fix
+  createdAt: "2025-09-25"
+  irVersion: 60
+
+- version: 3.3.0
+  changelogEntry:
+    - summary: |
+        Add support for PR mode for self-hosted/local sdk generation
+      type: feat
+  createdAt: "2025-09-25"
+  irVersion: 60
+
+- version: 3.2.1
+  changelogEntry:
+    - summary: |
+        Set `compilerOptions.isolatedModules` and `compilerOptions.isolatedDeclarations` to `true` in _tsconfig.json_, and update the TypeScript code to comply with this setting. 
+        Users that enable `isolatedModules` can now use the SDK without any TypeScript compilation errors.
+        While `isolatedModules` is not turned on by default in TypeScript, more frameworks and tools enable it by default.
+
+        **Warning**: If you have custom code, this may cause compilation errors. Please refer to the TypeScript documentation to learn more about these settings:
+        * [Isolated Declarations](https://www.typescriptlang.org/tsconfig#isolatedDeclarations)
+        * [Isolated Modules](https://www.typescriptlang.org/tsconfig#isolatedModules)
+      type: fix
+  createdAt: "2025-09-25"
+  irVersion: 60
+
+- version: 3.2.0
+  changelogEntry:
+    - summary: |
+        Add `generateEndpointMetadata` configuration to generate endpoint metadata for each endpoints.
+        When you use a callback function to generate headers or auth tokens, the endpoint metadata will be passed to the callback.
+        ```ts
+        const client = new Foo({
+            ...,
+            token: ({ endpointMetadata }) => {
+                // generate token based on endpoint metadata
+            }
+        });
+        ```
+
+        To enable this, set `generateEndpointMetadata` to `true` in the `config` of your generator configuration.
+        ```yml
+        # In generators.yml
+        groups:
+          ts-sdk:
+            generators:
+              - name: fernapi/fern-typescript-sdk
+                config:
+                  generateEndpointMetadata: true
+        ```
+      type: feat
+  createdAt: "2025-09-24"
+  irVersion: 60
+
+- version: 3.1.2
+  changelogEntry:
+    - summary: |
+        Pin `msw` dependency to `2.11.2` because newer version introduces jest/vitest compatibility issues.
+      type: fix
+  createdAt: "2025-09-24"
+  irVersion: 60
+
+- version: 3.1.1
+  changelogEntry:
+    - summary: |
+        Rely on the version of pnpm in _package.json_ instead of hardcoding the version in GitHub workflows.
+      type: fix
+  createdAt: "2025-09-23"
+  irVersion: 60
+
+- version: 3.1.0
+  changelogEntry:
+    - summary: |
+        `consolidateTypeFiles` consolidates all folders of type files into a single file.
+      type: feat
+  createdAt: "2025-09-19"
+  irVersion: 60
+
+- version: 3.0.2
+  changelogEntry:
+    - summary: Update `exportAllRequestsAtRoot` to create an aggregate request file instead of adding imports.
+      type: fix
+  createdAt: "2025-09-19"
+  irVersion: 60
+
+- version: 3.0.1
+  changelogEntry:
+    - summary: Fix incorrect pnpm commands inside of ci.yml
+      type: fix
+    - summary: Delete browser specific tests.
+      type: fix
+    - summary: Make tests more robust across Jest and Vitest.
+      type: fix
+  createdAt: "2025-09-18"
+  irVersion: 60
+
+- version: 3.0.0
+  changelogEntry:
+    - summary: |
+        Change defaults configuration in _generators.yml_ to use pnpm package manager and vitest test framework.
+        To avoid breaking changes, explicitly set the options above with the `Before` values in the `config` of your generator in _generators.yml_.
+
+        | Option | Before | Now |
+        |--------|--------|-----|
+        | `packageManager` | `yarn` | `pnpm` |
+        | `testFramework` | `jest` | `vitest` |
+
+        `testFramework: vitest` is not supported alongside `useBigInt: true`, `streamType: wrapper`, or `packagePath`.
+      type: feat
+  createdAt: "2025-09-18"
+  irVersion: 60
+
+- version: 2.13.0
+  changelogEntry:
+    - summary: |
+        Use Vitest instead of Jest for running tests.
+        Enable Vitest by setting `testFramework` to `vitest` in the `config` of your generator configuration.
+      type: feat
+  createdAt: "2025-09-17"
+  irVersion: 60
+
+- version: 2.12.3
+  changelogEntry:
+    - summary: Updated retry strategy; in particular, don't jitter for `retry-after` header.
+      type: chore
+  createdAt: "2025-09-17"
+  irVersion: 60
+
+- version: 2.12.2
+  changelogEntry:
+    - summary: Generate correct types for pagination with inline types.
+      type: fix
+  createdAt: "2025-09-16"
+  irVersion: 60
+
+- version: 2.12.1
+  changelogEntry:
+    - summary: |
+        Generate property accessors for auth and pagination with `?.` if the property is optional or nullable, and `.` if the property is required and non-nullable.
+      type: fix
+  createdAt: "2025-09-16"
+  irVersion: 60
+
+- version: 2.12.0
+  changelogEntry:
+    - summary: |
+        Add support for custom sections in the README.md via `customSections` config option.
+      type: feat
+  createdAt: "2025-09-16"
+  irVersion: 59
+
+- version: 2.11.2
+  changelogEntry:
+    - summary: |
+        Websocket client generation compiles when there are no query parameters and when the auth
+        scheme has custom authentication headers.
+      type: fix
+
+  createdAt: "2025-09-16"
+  irVersion: 59
+
+- version: 2.11.1
+  changelogEntry:
+    - summary: |
+        The `_getAuthorizationHeader` method now returns `Promise<string | undefined>` when oauth is enabled.
+        This prevents compilation errors in the TypeScript SDK.
+      type: fix
+  createdAt: "2025-09-15"
+  irVersion: 59
+
+- version: 2.11.0
+  changelogEntry:
+    - summary: |
+        Generate `Request` and `Response` types variations for types that have readonly and/or writeonly properties.
+        For example, a type `User` will have a `User.Request` type that omits readonly properties and a `User.Response` type that omits writeonly properties.
+
+        Set `experimentalGenerateReadWriteOnlyTypes` to `true` in the `config` of your generator configuration to enable this feature.
+        ```ts
+        import { User, FooClient } from "foo";
+
+        const client = new FooClient(...);
+        const createUser: User.Request = {
+          name: "Jon",
+          // id: "123", // Error: id is read-only and thus omitted
+        };
+        const createdUser: User.Response = await client.createUser(createUser);
+        // createdUser.id is available here
+        ```
+      type: feat
+  createdAt: "2025-09-15"
+  irVersion: 59
+
+- version: 2.10.4
+  changelogEntry:
+    - summary: Use cached `prettier` to format project instead of yarn/pnpm installing all dependencies during generation.
+      type: feat
+    - summary: Generate lockfile without installing dependencies and using `--prefer-offline` to avoid network requests.
+      type: feat
+  createdAt: "2025-09-12"
+  irVersion: 59
+
+- version: 2.10.3
+  changelogEntry:
+    - summary: Retries now check `Retry-After` and `X-RateLimit-Reset` before defaulting to exponential backoff.
+      type: feat
+  createdAt: "2025-09-09"
+  irVersion: 59
+
+- version: 2.10.2
+  changelogEntry:
+    - summary: Allow `null` values in headers in addition to `undefined` to explicitly unset a header.
+      type: fix
+  createdAt: "2025-09-05"
+  irVersion: 59
+
 - version: 2.10.1
   changelogEntry:
     - summary: Use autogenerated error examples if user does not provide error examples for generating wire tests.

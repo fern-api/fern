@@ -1,8 +1,8 @@
-import { SchemaType } from "../../Schema.js";
+import { Schema, SchemaType } from "../../Schema.js";
 import { createIdentitySchemaCreator } from "../../utils/createIdentitySchemaCreator.js";
 import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType.js";
 
-export const string = createIdentitySchemaCreator<string>(
+export const string: () => Schema<string, string> = createIdentitySchemaCreator<string>(
     SchemaType.STRING,
     (value, { breadcrumbsPrefix = [] } = {}) => {
         if (typeof value === "string") {

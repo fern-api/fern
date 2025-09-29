@@ -7,7 +7,7 @@ import { SeedAcceptClient } from "../../src/Client";
 import * as SeedAccept from "../../src/api/index";
 
 describe("Service", () => {
-    test("endpoint (82444d62)", async () => {
+    test("endpoint (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedAcceptClient({ token: "test", environment: server.baseUrl });
 
@@ -17,7 +17,7 @@ describe("Service", () => {
         expect(response).toEqual(undefined);
     });
 
-    test("endpoint (96beefdb)", async () => {
+    test("endpoint (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedAcceptClient({ token: "test", environment: server.baseUrl });
 
@@ -26,10 +26,6 @@ describe("Service", () => {
 
         await expect(async () => {
             return await client.service.endpoint();
-        }).rejects.toThrow(
-            new SeedAccept.NotFoundError({
-                key: "value",
-            }),
-        );
+        }).rejects.toThrow(SeedAccept.NotFoundError);
     });
 });

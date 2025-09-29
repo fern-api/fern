@@ -446,7 +446,7 @@ public class AsyncRawParamsClient {
               .build();
             RequestBody body;
             try {
-              body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
+              body = RequestBody.create(ObjectMappers.JSON_MAPPER.writeValueAsBytes(request.getBody()), MediaTypes.APPLICATION_JSON);
             }
             catch(JsonProcessingException e) {
               throw new SeedExhaustiveException("Failed to serialize request", e);

@@ -1,14 +1,15 @@
-use crate::{ClientConfig, ApiError, HttpClient, RequestOptions};
+use crate::{ClientConfig, ApiError, HttpClient, QueryBuilder, RequestOptions};
 use reqwest::{Method};
 
-pub struct UserClient {
+pub struct Client {
     pub http_client: HttpClient,
 }
 
-impl UserClient {
+impl Client {
     pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
-        let http_client = HttpClient::new(config)?;
-        Ok(Self { http_client })
+        Ok(Self {
+    http_client: HttpClient::new(config)?
+})
     }
 
     pub async fn get_user(&self, id: &String, options: Option<RequestOptions>) -> Result<String, ApiError> {

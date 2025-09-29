@@ -17,9 +17,7 @@ client.user().createUsername(
     CreateUsernameRequest
         .builder()
         .tags(
-            new ArrayList<String>(
-                Arrays.asList("tags", "tags")
-            )
+            Arrays.asList("tags", "tags")
         )
         .username("username")
         .password("password")
@@ -93,9 +91,7 @@ client.user().createUsernameWithReferencedType(
     CreateUsernameReferencedRequest
         .builder()
         .tags(
-            new ArrayList<String>(
-                Arrays.asList("tags", "tags")
-            )
+            Arrays.asList("tags", "tags")
         )
         .body(
             CreateUsernameBody
@@ -167,34 +163,26 @@ client.user().getUsername(
                 .builder()
                 .name("name")
                 .tags(
-                    new ArrayList<String>(
-                        Arrays.asList("tags", "tags")
-                    )
+                    Arrays.asList("tags", "tags")
                 )
                 .build()
         )
         .userList(
-            new ArrayList<User>(
-                Arrays.asList(
-                    User
-                        .builder()
-                        .name("name")
-                        .tags(
-                            new ArrayList<String>(
-                                Arrays.asList("tags", "tags")
-                            )
-                        )
-                        .build(),
-                    User
-                        .builder()
-                        .name("name")
-                        .tags(
-                            new ArrayList<String>(
-                                Arrays.asList("tags", "tags")
-                            )
-                        )
-                        .build()
-                )
+            Arrays.asList(
+                User
+                    .builder()
+                    .name("name")
+                    .tags(
+                        Arrays.asList("tags", "tags")
+                    )
+                    .build(),
+                User
+                    .builder()
+                    .name("name")
+                    .tags(
+                        Arrays.asList("tags", "tags")
+                    )
+                    .build()
             )
         )
         .keyValue(
@@ -211,33 +199,25 @@ client.user().getUsername(
                         .builder()
                         .name("name")
                         .tags(
-                            new ArrayList<String>(
-                                Arrays.asList("tags", "tags")
-                            )
+                            Arrays.asList("tags", "tags")
                         )
                         .build()
                 )
                 .build()
         )
         .excludeUser(
-            new ArrayList<User>(
-                Arrays.asList(
-                    User
-                        .builder()
-                        .name("name")
-                        .tags(
-                            new ArrayList<String>(
-                                Arrays.asList("tags", "tags")
-                            )
-                        )
-                        .build()
-                )
+            Arrays.asList(
+                User
+                    .builder()
+                    .name("name")
+                    .tags(
+                        Arrays.asList("tags", "tags")
+                    )
+                    .build()
             )
         )
         .filter(
-            new ArrayList<String>(
-                Arrays.asList("filter")
-            )
+            Arrays.asList("filter")
         )
         .longParam(1000000L)
         .bigIntParam(new BigInteger("1000000"))
@@ -248,9 +228,7 @@ client.user().getUsername(
                 .builder()
                 .name("name")
                 .tags(
-                    new ArrayList<String>(
-                        Arrays.asList("tags", "tags")
-                    )
+                    Arrays.asList("tags", "tags")
                 )
                 .build()
         )
@@ -278,7 +256,7 @@ client.user().getUsername(
 <dl>
 <dd>
 
-**id:** `String` 
+**id:** `UUID` 
     
 </dd>
 </dl>
@@ -302,7 +280,7 @@ client.user().getUsername(
 <dl>
 <dd>
 
-**bytes:** `String` 
+**bytes:** `byte[]` 
     
 </dd>
 </dl>
@@ -382,7 +360,7 @@ client.user().getUsername(
 <dl>
 <dd>
 
-**longParam:** `Integer` 
+**longParam:** `Long` 
     
 </dd>
 </dl>

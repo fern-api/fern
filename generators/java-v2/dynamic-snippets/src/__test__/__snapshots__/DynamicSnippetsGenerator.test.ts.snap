@@ -5,7 +5,6 @@ exports[`snippets (default) > examples > 'GET /metadata (allow-multiple)' 1`] = 
 
 import com.acme.acme.AcmeAcmeClient;
 import com.acme.acme.types.GetMetadataRequest;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -19,9 +18,7 @@ client.service().getMetadata(
         .builder()
         .xAPIVersion("0.0.1")
         .tag(
-            new ArrayList<Optional<String>>(
-                Arrays.asList("development", "public")
-            )
+            Arrays.asList(Optional.of("development"), Optional.of("public"))
         )
         .shallow(false)
         .build()
@@ -34,7 +31,6 @@ exports[`snippets (default) > examples > 'GET /metadata (simple)' 1`] = `
 
 import com.acme.acme.AcmeAcmeClient;
 import com.acme.acme.types.GetMetadataRequest;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -48,9 +44,7 @@ client.service().getMetadata(
         .builder()
         .xAPIVersion("0.0.1")
         .tag(
-            new ArrayList<Optional<String>>(
-                Arrays.asList("development")
-            )
+            Arrays.asList(Optional.of("development"))
         )
         .shallow(false)
         .build()
@@ -70,7 +64,6 @@ import com.acme.acme.types.CastMember;
 import com.acme.acme.types.ExtendedMovie;
 import com.acme.acme.types.Migration;
 import com.acme.acme.types.MigrationStatus;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -83,7 +76,7 @@ client.service().createBigEntity(
     BigEntity
         .builder()
         .castMember(
-            CastMember.ofActor(
+            CastMember.of(
                 Actor
                     .builder()
                     .id("john.doe")
@@ -95,9 +88,7 @@ client.service().createBigEntity(
             ExtendedMovie
                 .builder()
                 .cast(
-                    new ArrayList<String>(
-                        Arrays.asList("John Travolta", "Samuel L. Jackson", "Uma Thurman", "Bruce Willis")
-                    )
+                    Arrays.asList("John Travolta", "Samuel L. Jackson", "Uma Thurman", "Bruce Willis")
                 )
                 .id("movie-sda231x")
                 .title("Pulp Fiction")
@@ -183,9 +174,7 @@ client.service().createMovie(
         .tag("development")
         .metadata(
             new HashMap<String, Object>() {{
-                put("actors", new
-                ArrayList<Object>() {Arrays.asList("Christian Bale", "Florence Pugh", "Willem Dafoe")
-                });
+                put("actors", new ArrayList<Object>(Arrays.asList("Christian Bale", "Florence Pugh", "Willem Dafoe")));
                 put("releaseDate", "2023-12-08");
                 put("ratings", new 
                 HashMap<String, Object>() {{put("rottenTomatoes", 97);
@@ -207,10 +196,10 @@ import com.acme.acme.AcmeAcmeClient;
 import com.acme.acme.types.types.ObjectWithOptionalField;
 import java.math.BigInteger;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.UUID;
 
 AcmeAcmeClient client = AcmeAcmeClient
@@ -231,7 +220,7 @@ client.endpoints().object().getAndReturnWithOptionalField(
         .uuid(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
         .base64("SGVsbG8gd29ybGQh".getBytes())
         .list(
-            new ArrayList<String>(
+            Optional.of(
                 Arrays.asList("list", "list")
             )
         )
@@ -285,7 +274,6 @@ exports[`snippets (default) > exhaustive > 'POST /container/list-of-objects (sim
 
 import com.acme.acme.AcmeAcmeClient;
 import com.acme.acme.types.types.ObjectWithRequiredField;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 AcmeAcmeClient client = AcmeAcmeClient
@@ -294,21 +282,19 @@ AcmeAcmeClient client = AcmeAcmeClient
     .build();
 
 client.endpoints().container().getAndReturnListOfObjects(
-    new ArrayList<ObjectWithRequiredField>(
-        Arrays.asList(
-            ObjectWithRequiredField
-                .builder()
-                .string("one")
-                .build(),
-            ObjectWithRequiredField
-                .builder()
-                .string("two")
-                .build(),
-            ObjectWithRequiredField
-                .builder()
-                .string("three")
-                .build()
-        )
+    Arrays.asList(
+        ObjectWithRequiredField
+            .builder()
+            .string("one")
+            .build(),
+        ObjectWithRequiredField
+            .builder()
+            .string("two")
+            .build(),
+        ObjectWithRequiredField
+            .builder()
+            .string("three")
+            .build()
     )
 );
 "
@@ -318,7 +304,6 @@ exports[`snippets (default) > exhaustive > 'POST /container/list-of-primitives (
 "package com.example.usage;
 
 import com.acme.acme.AcmeAcmeClient;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 AcmeAcmeClient client = AcmeAcmeClient
@@ -327,9 +312,7 @@ AcmeAcmeClient client = AcmeAcmeClient
     .build();
 
 client.endpoints().container().getAndReturnListOfPrimitives(
-    new ArrayList<String>(
-        Arrays.asList("one", "two", "three")
-    )
+    Arrays.asList("one", "two", "three")
 );
 "
 `;
@@ -546,8 +529,8 @@ import com.acme.acme.core.Nullable;
 import com.acme.acme.types.CreateUserRequest;
 import com.acme.acme.types.Metadata;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Optional;
 
 AcmeAcmeClient client = AcmeAcmeClient
     .builder()
@@ -562,7 +545,7 @@ client.nullable().createUser(
             Nullable.ofNull()
         )
         .tags(
-            new ArrayList<String>(
+            Optional.of(
                 Arrays.asList("admin")
             )
         )
@@ -602,7 +585,6 @@ exports[`snippets (default) > nullable > 'Query parameters' 1`] = `
 import com.acme.acme.AcmeAcmeClient;
 import com.acme.acme.core.Nullable;
 import com.acme.acme.types.GetUsersRequest;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -615,19 +597,86 @@ client.nullable().getUsers(
     GetUsersRequest
         .builder()
         .usernames(
-            new ArrayList<Optional<String>>(
-                Arrays.asList("john.doe", "jane.doe")
-            )
+            Arrays.asList(Optional.of("john.doe"), Optional.of("jane.doe"))
         )
         .tags(
-            new ArrayList<Optional<String>>(
-                Arrays.asList(
+            Arrays.asList(
+                Optional.of(
                     Nullable.ofNull()
                 )
             )
         )
         .extra(
             Nullable.ofNull()
+        )
+        .build()
+);
+"
+`;
+
+exports[`snippets (default) > read-write-only > 'Body properties' 1`] = `
+"package com.example.usage;
+
+import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.types.User;
+import com.acme.acme.types.UserProfile;
+import com.acme.acme.types.UserProfileVerification;
+
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .url("https://api.example.com")
+    .build();
+
+client.createUser(
+    User
+        .builder()
+        .password("password")
+        .profile(
+            UserProfile
+                .builder()
+                .name("name")
+                .verification(
+                    UserProfileVerification
+                        .builder()
+                        .build()
+                )
+                .ssn("ssn")
+                .build()
+        )
+        .build()
+);
+"
+`;
+
+exports[`snippets (default) > read-write-only > 'Readonly value in request' 1`] = `
+"package com.example.usage;
+
+import com.acme.acme.AcmeAcmeClient;
+import com.acme.acme.types.User;
+import com.acme.acme.types.UserProfile;
+import com.acme.acme.types.UserProfileVerification;
+
+AcmeAcmeClient client = AcmeAcmeClient
+    .builder()
+    .url("https://api.example.com")
+    .build();
+
+client.createUser(
+    User
+        .builder()
+        .id("id")
+        .password("password")
+        .profile(
+            UserProfile
+                .builder()
+                .name("name")
+                .verification(
+                    UserProfileVerification
+                        .builder()
+                        .build()
+                )
+                .ssn("ssn")
+                .build()
         )
         .build()
 );

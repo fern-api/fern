@@ -3628,7 +3628,7 @@
           }
         ]
       },
-      "displayName": "V1ListenPostParametersModel0"
+      "displayName": "OurPublicModelsAll"
     },
     "V1ListenPostParametersModel": {
       "name": "V1ListenPostParametersModel",
@@ -3642,7 +3642,7 @@
               "type": "id",
               "value": "V1ListenPostParametersModel0"
             },
-            "displayName": "V1ListenPostParametersModel0"
+            "displayName": "OurPublicModelsAll"
           },
           {
             "description": "Custom string if you've had a model trained by Deepgram",
@@ -3684,8 +3684,7 @@
             "value": "V1ListenPostParametersRedactSchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "V1ListenPostParametersRedact1"
+      }
     },
     "V1ListenPostParametersRedact": {
       "name": "V1ListenPostParametersRedact",
@@ -3705,8 +3704,7 @@
             "type": {
               "type": "id",
               "value": "V1ListenPostParametersRedact1"
-            },
-            "displayName": "V1ListenPostParametersRedact1"
+            }
           }
         ]
       }
@@ -3842,7 +3840,7 @@
           }
         ]
       },
-      "displayName": "V1ListenPostParametersVersion0"
+      "displayName": "UseModelLatestVersion"
     },
     "V1ListenPostParametersVersion": {
       "name": "V1ListenPostParametersVersion",
@@ -3856,7 +3854,7 @@
               "type": "id",
               "value": "V1ListenPostParametersVersion0"
             },
-            "displayName": "V1ListenPostParametersVersion0"
+            "displayName": "UseModelLatestVersion"
           },
           {
             "description": "Use a previous version of a model",
@@ -9962,7 +9960,7 @@
           }
         ]
       },
-      "displayName": "ManagementApiGetModelResponse2000"
+      "displayName": "FormattedOutput"
     },
     "V1ModelsModelIdGetResponsesContentApplicationJsonSchemaOneOf1Metadata": {
       "name": "V1ModelsModelIdGetResponsesContentApplicationJsonSchemaOneOf1Metadata",
@@ -10132,7 +10130,7 @@
           }
         ]
       },
-      "displayName": "ManagementApiGetModelResponse2001"
+      "displayName": "Name"
     },
     "Management API_getModel_Response_200": {
       "name": "Management API_getModel_Response_200",
@@ -10145,7 +10143,7 @@
               "type": "id",
               "value": "ManagementApiGetModelResponse2000"
             },
-            "displayName": "ManagementApiGetModelResponse2000"
+            "displayName": "FormattedOutput"
           },
           {
             "typeName": "ManagementApiGetModelResponse2001",
@@ -10153,7 +10151,7 @@
               "type": "id",
               "value": "ManagementApiGetModelResponse2001"
             },
-            "displayName": "ManagementApiGetModelResponse2001"
+            "displayName": "Name"
           }
         ]
       }
@@ -11472,7 +11470,7 @@
           }
         ]
       },
-      "displayName": "ListenControlMessagesRequest0"
+      "displayName": "Type"
     },
     "ChannelsListenMessagesControlMessagesRequestOneOf1Type": {
       "description": "Close the websocket connection",
@@ -11505,7 +11503,7 @@
           }
         ]
       },
-      "displayName": "ListenControlMessagesRequest1"
+      "displayName": "Type"
     },
     "ChannelsListenMessagesControlMessagesRequestOneOf2Type": {
       "description": "Used to keep the websocket connection alive",
@@ -11538,7 +11536,7 @@
           }
         ]
       },
-      "displayName": "ListenControlMessagesRequest2"
+      "displayName": "Type"
     },
     "listen_controlMessagesRequest": {
       "name": "listen_controlMessagesRequest",
@@ -11551,7 +11549,7 @@
               "type": "id",
               "value": "ListenControlMessagesRequest0"
             },
-            "displayName": "ListenControlMessagesRequest0"
+            "displayName": "Type"
           },
           {
             "typeName": "ListenControlMessagesRequest1",
@@ -11559,7 +11557,7 @@
               "type": "id",
               "value": "ListenControlMessagesRequest1"
             },
-            "displayName": "ListenControlMessagesRequest1"
+            "displayName": "Type"
           },
           {
             "typeName": "ListenControlMessagesRequest2",
@@ -11567,7 +11565,7 @@
               "type": "id",
               "value": "ListenControlMessagesRequest2"
             },
-            "displayName": "ListenControlMessagesRequest2"
+            "displayName": "Type"
           }
         ]
       }
@@ -14843,7 +14841,7 @@
                   "request_id": "a847f427-4ad5-4d67-9b95-db801e58251c",
                   "sha256": "154e291ecfa8be6ab8343560bcc109008fa7853eb5372533e8efdefc9b504c33",
                   "created": "2024-05-12T18:57:13.426Z",
-                  "duration": 25.933313,
+                  "duration": 25.9,
                   "channels": 1,
                   "models": [
                     "30089e05-99d1-4376-b32e-c263170674af"
@@ -14978,7 +14976,7 @@
                             "topics": [
                               {
                                 "topic": "Spacewalk",
-                                "confidence_score": 0.91581345
+                                "confidence_score": 0.916
                               }
                             ]
                           }
@@ -14997,7 +14995,7 @@
                             "intents": [
                               {
                                 "intent": "Encourage podcasting",
-                                "confidence_score": 0.0038975573
+                                "confidence_score": 0.0039
                               }
                             ]
                           }
@@ -15012,12 +15010,12 @@
                         "start_word": 0,
                         "end_word": 69,
                         "sentiment": "positive",
-                        "sentiment_score": 0.5810546875
+                        "sentiment_score": 0.581
                       }
                     ],
                     "average": {
                       "sentiment": "positive",
-                      "sentiment_score": 0.5810185185185185
+                      "sentiment_score": 0.581
                     }
                   }
                 }
@@ -15030,7 +15028,7 @@
                     "request_id": "a847f427-4ad5-4d67-9b95-db801e58251c",
                     "sha256": "154e291ecfa8be6ab8343560bcc109008fa7853eb5372533e8efdefc9b504c33",
                     "created": "2024-05-12T18:57:13.426Z",
-                    "duration": 25.933313,
+                    "duration": 25.9,
                     "channels": 1,
                     "models": [
                       "30089e05-99d1-4376-b32e-c263170674af"
@@ -15165,7 +15163,7 @@
                               "topics": [
                                 {
                                   "topic": "Spacewalk",
-                                  "confidence_score": 0.91581345
+                                  "confidence_score": 0.916
                                 }
                               ]
                             }
@@ -15184,7 +15182,7 @@
                               "intents": [
                                 {
                                   "intent": "Encourage podcasting",
-                                  "confidence_score": 0.0038975573
+                                  "confidence_score": 0.0039
                                 }
                               ]
                             }
@@ -15199,12 +15197,12 @@
                           "start_word": 0,
                           "end_word": 69,
                           "sentiment": "positive",
-                          "sentiment_score": 0.5810546875
+                          "sentiment_score": 0.581
                         }
                       ],
                       "average": {
                         "sentiment": "positive",
-                        "sentiment_score": 0.5810185185185185
+                        "sentiment_score": 0.581
                       }
                     }
                   }
@@ -16055,7 +16053,7 @@
                             "topics": [
                               {
                                 "topic": "Spacewalk",
-                                "confidence_score": 0.91581345
+                                "confidence_score": 0.916
                               }
                             ]
                           }
@@ -16074,7 +16072,7 @@
                             "intents": [
                               {
                                 "intent": "Encourage podcasting",
-                                "confidence_score": 0.0038975573
+                                "confidence_score": 0.0039
                               }
                             ]
                           }
@@ -16089,12 +16087,12 @@
                         "start_word": 0,
                         "end_word": 69,
                         "sentiment": "positive",
-                        "sentiment_score": 0.5810546875
+                        "sentiment_score": 0.581
                       }
                     ],
                     "average": {
                       "sentiment": "positive",
-                      "sentiment_score": 0.5810185185185185
+                      "sentiment_score": 0.581
                     }
                   }
                 }
@@ -16148,7 +16146,7 @@
                               "topics": [
                                 {
                                   "topic": "Spacewalk",
-                                  "confidence_score": 0.91581345
+                                  "confidence_score": 0.916
                                 }
                               ]
                             }
@@ -16167,7 +16165,7 @@
                               "intents": [
                                 {
                                   "intent": "Encourage podcasting",
-                                  "confidence_score": 0.0038975573
+                                  "confidence_score": 0.0039
                                 }
                               ]
                             }
@@ -16182,12 +16180,12 @@
                           "start_word": 0,
                           "end_word": 69,
                           "sentiment": "positive",
-                          "sentiment_score": 0.5810546875
+                          "sentiment_score": 0.581
                         }
                       ],
                       "average": {
                         "sentiment": "positive",
-                        "sentiment_score": 0.5810185185185185
+                        "sentiment_score": 0.581
                       }
                     }
                   }
@@ -20724,9 +20722,9 @@
                 },
                 "results": [
                   {
-                    "hours": 1619.7242069444444,
-                    "total_hours": 1621.7395791666668,
-                    "agent_hours": 41.33564388888889,
+                    "hours": 1620,
+                    "total_hours": 1620,
+                    "agent_hours": 41.3,
                     "tokens_in": 0,
                     "tokens_out": 0,
                     "tts_characters": 9158866,
@@ -20756,9 +20754,9 @@
                   },
                   "results": [
                     {
-                      "hours": 1619.7242069444444,
-                      "total_hours": 1621.7395791666668,
-                      "agent_hours": 41.33564388888889,
+                      "hours": 1620,
+                      "total_hours": 1620,
+                      "agent_hours": 41.3,
                       "tokens_in": 0,
                       "tokens_out": 0,
                       "tts_characters": 9158866,

@@ -1,7 +1,7 @@
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using global::System.Threading.Tasks;
+using System.Threading.Tasks;
 using SeedTrace.Core;
 
 namespace SeedTrace;
@@ -279,7 +279,7 @@ public partial class PlaylistClient
     /// <example><code>
     /// await client.Playlist.DeletePlaylistAsync(1, "playlist_id");
     /// </code></example>
-    public async global::System.Threading.Tasks.Task DeletePlaylistAsync(
+    public async Task DeletePlaylistAsync(
         int serviceParam,
         string playlistId,
         RequestOptions? options = null,

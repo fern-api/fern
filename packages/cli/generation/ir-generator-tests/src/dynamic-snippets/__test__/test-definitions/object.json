@@ -56,7 +56,9 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "INTEGER"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -84,7 +86,9 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "DOUBLE"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -112,7 +116,9 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -140,7 +146,9 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "BOOLEAN"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -168,7 +176,9 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "LONG"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -196,7 +206,9 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "DATE_TIME"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -224,7 +236,9 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "DATE"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -252,7 +266,9 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "UUID"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -280,7 +296,9 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "BASE_64"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -311,7 +329,9 @@
                             "type": "primitive",
                             "value": "INTEGER"
                         }
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -342,7 +362,9 @@
                             "type": "primitive",
                             "value": "DOUBLE"
                         }
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -377,7 +399,9 @@
                             "type": "primitive",
                             "value": "BOOLEAN"
                         }
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -408,7 +432,9 @@
                             "type": "primitive",
                             "value": "LONG"
                         }
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -435,7 +461,9 @@
                     },
                     "typeReference": {
                         "type": "unknown"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -469,7 +497,9 @@
                                 "value": "INTEGER"
                             }
                         }
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -507,7 +537,9 @@
                                 "value": "INTEGER"
                             }
                         }
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -541,7 +573,9 @@
                                 "value": "UUID"
                             }
                         }
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -572,7 +606,9 @@
                             "type": "string",
                             "value": "eighteen"
                         }
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -600,7 +636,9 @@
                     "typeReference": {
                         "type": "named",
                         "value": "type_:Name"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -628,7 +666,9 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "UINT"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -656,7 +696,9 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "UINT_64"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -684,7 +726,9 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "FLOAT"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -712,7 +756,9 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "BIG_INTEGER"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -743,7 +789,9 @@
                             "type": "primitive",
                             "value": "DATE_TIME"
                         }
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -774,7 +822,9 @@
                             "type": "primitive",
                             "value": "DATE"
                         }
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -834,7 +884,9 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 },
                 {
                     "name": {
@@ -862,7 +914,9 @@
                     "typeReference": {
                         "type": "primitive",
                         "value": "STRING"
-                    }
+                    },
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -872,5 +926,6 @@
     "endpoints": {},
     "pathParameters": [],
     "environments": null,
+    "variables": null,
     "generatorConfig": null
 }

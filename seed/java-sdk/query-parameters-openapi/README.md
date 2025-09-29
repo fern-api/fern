@@ -46,7 +46,6 @@ import com.seed.api.types.NestedUser;
 import com.seed.api.types.SearchRequestNeighborRequired;
 import com.seed.api.types.User;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Optional;
@@ -70,20 +69,20 @@ public class Example {
                         .builder()
                         .name("name")
                         .tags(
-                            new ArrayList<String>(
+                            Optional.of(
                                 Arrays.asList("tags", "tags")
                             )
                         )
                         .build()
                 )
                 .userList(
-                    new ArrayList<Optional<User>>(
-                        Arrays.asList(
+                    Arrays.asList(
+                        Optional.of(
                             User
                                 .builder()
                                 .name("name")
                                 .tags(
-                                    new ArrayList<String>(
+                                    Optional.of(
                                         Arrays.asList("tags", "tags")
                                     )
                                 )
@@ -92,13 +91,13 @@ public class Example {
                     )
                 )
                 .excludeUser(
-                    new ArrayList<Optional<User>>(
-                        Arrays.asList(
+                    Arrays.asList(
+                        Optional.of(
                             User
                                 .builder()
                                 .name("name")
                                 .tags(
-                                    new ArrayList<String>(
+                                    Optional.of(
                                         Arrays.asList("tags", "tags")
                                     )
                                 )
@@ -107,17 +106,15 @@ public class Example {
                     )
                 )
                 .filter(
-                    new ArrayList<Optional<String>>(
-                        Arrays.asList("filter")
-                    )
+                    Arrays.asList(Optional.of("filter"))
                 )
                 .neighborRequired(
-                    SearchRequestNeighborRequired.ofUser(
+                    SearchRequestNeighborRequired.of(
                         User
                             .builder()
                             .name("name")
                             .tags(
-                                new ArrayList<String>(
+                                Optional.of(
                                     Arrays.asList("tags", "tags")
                                 )
                             )
@@ -140,7 +137,7 @@ public class Example {
                                 .builder()
                                 .name("name")
                                 .tags(
-                                    new ArrayList<String>(
+                                    Optional.of(
                                         Arrays.asList("tags", "tags")
                                     )
                                 )
@@ -153,7 +150,7 @@ public class Example {
                         .builder()
                         .name("name")
                         .tags(
-                            new ArrayList<String>(
+                            Optional.of(
                                 Arrays.asList("tags", "tags")
                             )
                         )
@@ -164,7 +161,7 @@ public class Example {
                         .builder()
                         .name("name")
                         .tags(
-                            new ArrayList<String>(
+                            Optional.of(
                                 Arrays.asList("tags", "tags")
                             )
                         )

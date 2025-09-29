@@ -48,6 +48,7 @@
                     }
                 },
                 "tokenEnvVar": null,
+                "key": "bearer",
                 "docs": null
             }
         ],
@@ -404,6 +405,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -942,22 +944,55 @@
                         "results": {
                             "propertyPath": [
                                 {
-                                    "originalName": "cursor",
-                                    "camelCase": {
-                                        "unsafeName": "cursor",
-                                        "safeName": "cursor"
+                                    "name": {
+                                        "originalName": "cursor",
+                                        "camelCase": {
+                                            "unsafeName": "cursor",
+                                            "safeName": "cursor"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "cursor",
+                                            "safeName": "cursor"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "CURSOR",
+                                            "safeName": "CURSOR"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Cursor",
+                                            "safeName": "Cursor"
+                                        }
                                     },
-                                    "snakeCase": {
-                                        "unsafeName": "cursor",
-                                        "safeName": "cursor"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "CURSOR",
-                                        "safeName": "CURSOR"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Cursor",
-                                        "safeName": "Cursor"
+                                    "type": {
+                                        "_type": "named",
+                                        "name": {
+                                            "originalName": "UsernamePage",
+                                            "camelCase": {
+                                                "unsafeName": "usernamePage",
+                                                "safeName": "usernamePage"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "username_page",
+                                                "safeName": "username_page"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "USERNAME_PAGE",
+                                                "safeName": "USERNAME_PAGE"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "UsernamePage",
+                                                "safeName": "UsernamePage"
+                                            }
+                                        },
+                                        "fernFilepath": {
+                                            "allParts": [],
+                                            "packagePath": [],
+                                            "file": null
+                                        },
+                                        "displayName": null,
+                                        "typeId": "type_:UsernamePage",
+                                        "default": null,
+                                        "inline": null
                                     }
                                 }
                             ],
@@ -1015,6 +1050,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 }
@@ -1125,7 +1161,9 @@
                         "typeReference": {
                             "type": "named",
                             "value": "type_:UsernamePage"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -1188,7 +1226,9 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             }
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -1219,7 +1259,9 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             }
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -1415,7 +1457,9 @@
                                     "type": "primitive",
                                     "value": "STRING"
                                 }
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ],
                     "headers": [],
@@ -1433,6 +1477,7 @@
         },
         "pathParameters": [],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,

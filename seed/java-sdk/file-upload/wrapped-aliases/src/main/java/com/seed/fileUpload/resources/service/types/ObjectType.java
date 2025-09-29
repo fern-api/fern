@@ -3,22 +3,80 @@
  */
 package com.seed.fileUpload.resources.service.types;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum ObjectType {
-    FOO("FOO"),
+public final class ObjectType {
+    public static final ObjectType FOO = new ObjectType(Value.FOO, "FOO");
 
-    BAR("BAR");
+    public static final ObjectType BAR = new ObjectType(Value.BAR, "BAR");
 
-    private final String value;
+    private final Value value;
 
-    ObjectType(String value) {
+    private final String string;
+
+    ObjectType(Value value, String string) {
         this.value = value;
+        this.string = string;
     }
 
-    @JsonValue
+    public Value getEnumValue() {
+        return value;
+    }
+
     @java.lang.Override
+    @JsonValue
     public String toString() {
-        return this.value;
+        return this.string;
+    }
+
+    @java.lang.Override
+    public boolean equals(Object other) {
+        return (this == other) || (other instanceof ObjectType && this.string.equals(((ObjectType) other).string));
+    }
+
+    @java.lang.Override
+    public int hashCode() {
+        return this.string.hashCode();
+    }
+
+    public <T> T visit(Visitor<T> visitor) {
+        switch (value) {
+            case FOO:
+                return visitor.visitFoo();
+            case BAR:
+                return visitor.visitBar();
+            case UNKNOWN:
+            default:
+                return visitor.visitUnknown(string);
+        }
+    }
+
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+    public static ObjectType valueOf(String value) {
+        switch (value) {
+            case "FOO":
+                return FOO;
+            case "BAR":
+                return BAR;
+            default:
+                return new ObjectType(Value.UNKNOWN, value);
+        }
+    }
+
+    public enum Value {
+        FOO,
+
+        BAR,
+
+        UNKNOWN
+    }
+
+    public interface Visitor<T> {
+        T visitFoo();
+
+        T visitBar();
+
+        T visitUnknown(String unknownType);
     }
 }

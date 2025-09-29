@@ -75,6 +75,9 @@
     "additionalPropertiesDefaultsTo": false,
     "typeDatesAsStrings": true,
     "preserveSingleSchemaOneOf": false,
-    "inlineAllOfSchemas": false
+    "inlineAllOfSchemas": false,
+    "groupMultiApiEnvironments": false,
+    "wrapReferencesToNullableInOptional": true,
+    "coerceOptionalSchemasToNullable": true
   }
 }

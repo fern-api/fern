@@ -18,8 +18,8 @@ package example
 import (
     client "github.com/multiple-request-bodies/fern/client"
     option "github.com/multiple-request-bodies/fern/option"
-    context "context"
     fern "github.com/multiple-request-bodies/fern"
+    context "context"
 )
 
 func do() {
@@ -28,20 +28,10 @@ func do() {
             "<token>",
         ),
     )
+    request := &fern.UploadDocumentRequest{}
     client.UploadJsonDocument(
         context.TODO(),
-        &fern.UploadDocumentRequest{
-            Author: fern.String(
-                "author",
-            ),
-            Tags: []string{
-                "tags",
-                "tags",
-            },
-            Title: fern.String(
-                "title",
-            ),
-        },
+        request,
     )
 }
 ```
@@ -130,6 +120,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
 - [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
 
+If the `Retry-After` header is present in the response, the SDK will prioritize respecting its value exactly
+over the default exponential backoff.
+
 Use the `option.WithMaxAttempts` option to configure this behavior for the entire client or an individual request:
 
 ```go
@@ -152,6 +145,28 @@ ctx, cancel := context.WithTimeout(ctx, time.Second)
 defer cancel()
 
 response, err := client.UploadJsonDocument(ctx, ...)
+```
+
+### Explicit Null
+
+If you want to send the explicit `null` JSON value through an optional parameter, you can use the setters\
+that come with every object. Calling a setter method for a property will flip a bit in the `explicitFields`
+bitfield for that setter's object; during serialization, any property with a flipped bit will have its
+omittable status stripped, so zero or `nil` values will be sent explicitly rather than omitted altogether:
+
+```go
+type ExampleRequest struct {
+    // An optional string parameter.
+    Name *string `json:"name,omitempty" url:"-"`
+
+    // Private bitmask of fields set to an explicit value and therefore not to be omitted
+    explicitFields *big.Int `json:"-" url:"-"`
+}
+
+request := &ExampleRequest{}
+request.SetName(nil)
+
+response, err := client.UploadJsonDocument(ctx, request, ...)
 ```
 
 ## Contributing

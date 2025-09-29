@@ -25,12 +25,13 @@ cargo add seed_alias
 Instantiate and use the client with the following:
 
 ```rust
-use seed_alias::{ClientConfig, AliasClient};
+use seed_alias::{AliasClient, ClientConfig};
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {};
     let client = AliasClient::new(config).expect("Failed to build client");
+    client.get("typeId").await;
 }
 ```
 

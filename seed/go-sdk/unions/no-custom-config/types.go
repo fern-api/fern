@@ -6,11 +6,19 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	internal "github.com/unions/fern/internal"
+	big "math/big"
 	time "time"
+)
+
+var (
+	barFieldName = big.NewInt(1 << 0)
 )
 
 type Bar struct {
 	Name string `json:"name" url:"name"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -25,6 +33,20 @@ func (b *Bar) GetName() string {
 
 func (b *Bar) GetExtraProperties() map[string]interface{} {
 	return b.extraProperties
+}
+
+func (b *Bar) require(field *big.Int) {
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
+	}
+	b.explicitFields.Or(b.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *Bar) SetName(name string) {
+	b.Name = name
+	b.require(barFieldName)
 }
 
 func (b *Bar) UnmarshalJSON(data []byte) error {
@@ -43,6 +65,17 @@ func (b *Bar) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (b *Bar) MarshalJSON() ([]byte, error) {
+	type embed Bar
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*b),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (b *Bar) String() string {
 	if len(b.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
@@ -55,8 +88,15 @@ func (b *Bar) String() string {
 	return fmt.Sprintf("%#v", b)
 }
 
+var (
+	fooFieldName = big.NewInt(1 << 0)
+)
+
 type Foo struct {
 	Name string `json:"name" url:"name"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -71,6 +111,20 @@ func (f *Foo) GetName() string {
 
 func (f *Foo) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
+}
+
+func (f *Foo) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *Foo) SetName(name string) {
+	f.Name = name
+	f.require(fooFieldName)
 }
 
 func (f *Foo) UnmarshalJSON(data []byte) error {
@@ -89,6 +143,17 @@ func (f *Foo) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+func (f *Foo) MarshalJSON() ([]byte, error) {
+	type embed Foo
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
 func (f *Foo) String() string {
 	if len(f.rawJSON) > 0 {
 		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
@@ -101,9 +166,17 @@ func (f *Foo) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+var (
+	fooExtendedFieldName = big.NewInt(1 << 0)
+	fooExtendedFieldAge  = big.NewInt(1 << 1)
+)
+
 type FooExtended struct {
 	Name string `json:"name" url:"name"`
 	Age  int    `json:"age" url:"age"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
@@ -127,6 +200,27 @@ func (f *FooExtended) GetExtraProperties() map[string]interface{} {
 	return f.extraProperties
 }
 
+func (f *FooExtended) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FooExtended) SetName(name string) {
+	f.Name = name
+	f.require(fooExtendedFieldName)
+}
+
+// SetAge sets the Age field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FooExtended) SetAge(age int) {
+	f.Age = age
+	f.require(fooExtendedFieldAge)
+}
+
 func (f *FooExtended) UnmarshalJSON(data []byte) error {
 	type unmarshaler FooExtended
 	var value unmarshaler
@@ -141,6 +235,17 @@ func (f *FooExtended) UnmarshalJSON(data []byte) error {
 	f.extraProperties = extraProperties
 	f.rawJSON = json.RawMessage(data)
 	return nil
+}
+
+func (f *FooExtended) MarshalJSON() ([]byte, error) {
+	type embed FooExtended
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 func (f *FooExtended) String() string {
@@ -1567,6 +1672,342 @@ func (u *UnionWithPrimitive) validate() error {
 	}
 	if u.String != "" {
 		fields = append(fields, "string")
+	}
+	if len(fields) == 0 {
+		if u.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
+		}
+		return fmt.Errorf("type %T is empty", u)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", u, fields)
+	}
+	if u.Type != "" {
+		field := fields[0]
+		if u.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				u,
+				u.Type,
+				u,
+			)
+		}
+	}
+	return nil
+}
+
+type UnionWithSameNumberTypes struct {
+	Type        string
+	PositiveInt int
+	NegativeInt int
+	AnyNumber   float64
+}
+
+func (u *UnionWithSameNumberTypes) GetType() string {
+	if u == nil {
+		return ""
+	}
+	return u.Type
+}
+
+func (u *UnionWithSameNumberTypes) GetPositiveInt() int {
+	if u == nil {
+		return 0
+	}
+	return u.PositiveInt
+}
+
+func (u *UnionWithSameNumberTypes) GetNegativeInt() int {
+	if u == nil {
+		return 0
+	}
+	return u.NegativeInt
+}
+
+func (u *UnionWithSameNumberTypes) GetAnyNumber() float64 {
+	if u == nil {
+		return 0
+	}
+	return u.AnyNumber
+}
+
+func (u *UnionWithSameNumberTypes) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type string `json:"type"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	u.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", u)
+	}
+	switch unmarshaler.Type {
+	case "positiveInt":
+		var valueUnmarshaler struct {
+			PositiveInt int `json:"value"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		u.PositiveInt = valueUnmarshaler.PositiveInt
+	case "negativeInt":
+		var valueUnmarshaler struct {
+			NegativeInt int `json:"value"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		u.NegativeInt = valueUnmarshaler.NegativeInt
+	case "anyNumber":
+		var valueUnmarshaler struct {
+			AnyNumber float64 `json:"value"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		u.AnyNumber = valueUnmarshaler.AnyNumber
+	}
+	return nil
+}
+
+func (u UnionWithSameNumberTypes) MarshalJSON() ([]byte, error) {
+	if err := u.validate(); err != nil {
+		return nil, err
+	}
+	if u.PositiveInt != 0 {
+		var marshaler = struct {
+			Type        string `json:"type"`
+			PositiveInt int    `json:"value"`
+		}{
+			Type:        "positiveInt",
+			PositiveInt: u.PositiveInt,
+		}
+		return json.Marshal(marshaler)
+	}
+	if u.NegativeInt != 0 {
+		var marshaler = struct {
+			Type        string `json:"type"`
+			NegativeInt int    `json:"value"`
+		}{
+			Type:        "negativeInt",
+			NegativeInt: u.NegativeInt,
+		}
+		return json.Marshal(marshaler)
+	}
+	if u.AnyNumber != 0 {
+		var marshaler = struct {
+			Type      string  `json:"type"`
+			AnyNumber float64 `json:"value"`
+		}{
+			Type:      "anyNumber",
+			AnyNumber: u.AnyNumber,
+		}
+		return json.Marshal(marshaler)
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
+}
+
+type UnionWithSameNumberTypesVisitor interface {
+	VisitPositiveInt(int) error
+	VisitNegativeInt(int) error
+	VisitAnyNumber(float64) error
+}
+
+func (u *UnionWithSameNumberTypes) Accept(visitor UnionWithSameNumberTypesVisitor) error {
+	if u.PositiveInt != 0 {
+		return visitor.VisitPositiveInt(u.PositiveInt)
+	}
+	if u.NegativeInt != 0 {
+		return visitor.VisitNegativeInt(u.NegativeInt)
+	}
+	if u.AnyNumber != 0 {
+		return visitor.VisitAnyNumber(u.AnyNumber)
+	}
+	return fmt.Errorf("type %T does not define a non-empty union type", u)
+}
+
+func (u *UnionWithSameNumberTypes) validate() error {
+	if u == nil {
+		return fmt.Errorf("type %T is nil", u)
+	}
+	var fields []string
+	if u.PositiveInt != 0 {
+		fields = append(fields, "positiveInt")
+	}
+	if u.NegativeInt != 0 {
+		fields = append(fields, "negativeInt")
+	}
+	if u.AnyNumber != 0 {
+		fields = append(fields, "anyNumber")
+	}
+	if len(fields) == 0 {
+		if u.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
+		}
+		return fmt.Errorf("type %T is empty", u)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", u, fields)
+	}
+	if u.Type != "" {
+		field := fields[0]
+		if u.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				u,
+				u.Type,
+				u,
+			)
+		}
+	}
+	return nil
+}
+
+type UnionWithSameStringTypes struct {
+	Type          string
+	CustomFormat  string
+	RegularString string
+	PatternString string
+}
+
+func (u *UnionWithSameStringTypes) GetType() string {
+	if u == nil {
+		return ""
+	}
+	return u.Type
+}
+
+func (u *UnionWithSameStringTypes) GetCustomFormat() string {
+	if u == nil {
+		return ""
+	}
+	return u.CustomFormat
+}
+
+func (u *UnionWithSameStringTypes) GetRegularString() string {
+	if u == nil {
+		return ""
+	}
+	return u.RegularString
+}
+
+func (u *UnionWithSameStringTypes) GetPatternString() string {
+	if u == nil {
+		return ""
+	}
+	return u.PatternString
+}
+
+func (u *UnionWithSameStringTypes) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type string `json:"type"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	u.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", u)
+	}
+	switch unmarshaler.Type {
+	case "customFormat":
+		var valueUnmarshaler struct {
+			CustomFormat string `json:"value"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		u.CustomFormat = valueUnmarshaler.CustomFormat
+	case "regularString":
+		var valueUnmarshaler struct {
+			RegularString string `json:"value"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		u.RegularString = valueUnmarshaler.RegularString
+	case "patternString":
+		var valueUnmarshaler struct {
+			PatternString string `json:"value"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		u.PatternString = valueUnmarshaler.PatternString
+	}
+	return nil
+}
+
+func (u UnionWithSameStringTypes) MarshalJSON() ([]byte, error) {
+	if err := u.validate(); err != nil {
+		return nil, err
+	}
+	if u.CustomFormat != "" {
+		var marshaler = struct {
+			Type         string `json:"type"`
+			CustomFormat string `json:"value"`
+		}{
+			Type:         "customFormat",
+			CustomFormat: u.CustomFormat,
+		}
+		return json.Marshal(marshaler)
+	}
+	if u.RegularString != "" {
+		var marshaler = struct {
+			Type          string `json:"type"`
+			RegularString string `json:"value"`
+		}{
+			Type:          "regularString",
+			RegularString: u.RegularString,
+		}
+		return json.Marshal(marshaler)
+	}
+	if u.PatternString != "" {
+		var marshaler = struct {
+			Type          string `json:"type"`
+			PatternString string `json:"value"`
+		}{
+			Type:          "patternString",
+			PatternString: u.PatternString,
+		}
+		return json.Marshal(marshaler)
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
+}
+
+type UnionWithSameStringTypesVisitor interface {
+	VisitCustomFormat(string) error
+	VisitRegularString(string) error
+	VisitPatternString(string) error
+}
+
+func (u *UnionWithSameStringTypes) Accept(visitor UnionWithSameStringTypesVisitor) error {
+	if u.CustomFormat != "" {
+		return visitor.VisitCustomFormat(u.CustomFormat)
+	}
+	if u.RegularString != "" {
+		return visitor.VisitRegularString(u.RegularString)
+	}
+	if u.PatternString != "" {
+		return visitor.VisitPatternString(u.PatternString)
+	}
+	return fmt.Errorf("type %T does not define a non-empty union type", u)
+}
+
+func (u *UnionWithSameStringTypes) validate() error {
+	if u == nil {
+		return fmt.Errorf("type %T is nil", u)
+	}
+	var fields []string
+	if u.CustomFormat != "" {
+		fields = append(fields, "customFormat")
+	}
+	if u.RegularString != "" {
+		fields = append(fields, "regularString")
+	}
+	if u.PatternString != "" {
+		fields = append(fields, "patternString")
 	}
 	if len(fields) == 0 {
 		if u.Type != "" {

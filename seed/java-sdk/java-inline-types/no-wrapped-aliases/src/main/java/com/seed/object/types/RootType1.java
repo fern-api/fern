@@ -5,6 +5,7 @@ package com.seed.object.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -288,7 +289,9 @@ public final class RootType1 {
         @JsonSetter(value = "fooSet", nulls = Nulls.SKIP)
         public _FinalStage fooSet(Set<FooSetItem> fooSet) {
             this.fooSet.clear();
-            this.fooSet.addAll(fooSet);
+            if (fooSet != null) {
+                this.fooSet.addAll(fooSet);
+            }
             return this;
         }
 
@@ -321,7 +324,9 @@ public final class RootType1 {
         @JsonSetter(value = "fooList", nulls = Nulls.SKIP)
         public _FinalStage fooList(List<FooListItem> fooList) {
             this.fooList.clear();
-            this.fooList.addAll(fooList);
+            if (fooList != null) {
+                this.fooList.addAll(fooList);
+            }
             return this;
         }
 
@@ -354,7 +359,9 @@ public final class RootType1 {
         @JsonSetter(value = "fooMap", nulls = Nulls.SKIP)
         public _FinalStage fooMap(Map<String, FooMapValue> fooMap) {
             this.fooMap.clear();
-            this.fooMap.putAll(fooMap);
+            if (fooMap != null) {
+                this.fooMap.putAll(fooMap);
+            }
             return this;
         }
 
@@ -856,25 +863,98 @@ public final class RootType1 {
                 }
             }
 
-            public enum MyEnum {
-                SUNNY("SUNNY"),
+            public static final class MyEnum {
+                public static final MyEnum SUNNY = new MyEnum(Value.SUNNY, "SUNNY");
 
-                CLOUDY("CLOUDY"),
+                public static final MyEnum RAINING = new MyEnum(Value.RAINING, "RAINING");
 
-                RAINING("RAINING"),
+                public static final MyEnum SNOWING = new MyEnum(Value.SNOWING, "SNOWING");
 
-                SNOWING("SNOWING");
+                public static final MyEnum CLOUDY = new MyEnum(Value.CLOUDY, "CLOUDY");
 
-                private final String value;
+                private final Value value;
 
-                MyEnum(String value) {
+                private final String string;
+
+                MyEnum(Value value, String string) {
                     this.value = value;
+                    this.string = string;
                 }
 
-                @JsonValue
+                public Value getEnumValue() {
+                    return value;
+                }
+
                 @java.lang.Override
+                @JsonValue
                 public String toString() {
-                    return this.value;
+                    return this.string;
+                }
+
+                @java.lang.Override
+                public boolean equals(Object other) {
+                    return (this == other) || (other instanceof MyEnum && this.string.equals(((MyEnum) other).string));
+                }
+
+                @java.lang.Override
+                public int hashCode() {
+                    return this.string.hashCode();
+                }
+
+                public <T> T visit(Visitor<T> visitor) {
+                    switch (value) {
+                        case SUNNY:
+                            return visitor.visitSunny();
+                        case RAINING:
+                            return visitor.visitRaining();
+                        case SNOWING:
+                            return visitor.visitSnowing();
+                        case CLOUDY:
+                            return visitor.visitCloudy();
+                        case UNKNOWN:
+                        default:
+                            return visitor.visitUnknown(string);
+                    }
+                }
+
+                @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+                public static MyEnum valueOf(String value) {
+                    switch (value) {
+                        case "SUNNY":
+                            return SUNNY;
+                        case "RAINING":
+                            return RAINING;
+                        case "SNOWING":
+                            return SNOWING;
+                        case "CLOUDY":
+                            return CLOUDY;
+                        default:
+                            return new MyEnum(Value.UNKNOWN, value);
+                    }
+                }
+
+                public enum Value {
+                    SUNNY,
+
+                    CLOUDY,
+
+                    RAINING,
+
+                    SNOWING,
+
+                    UNKNOWN
+                }
+
+                public interface Visitor<T> {
+                    T visitSunny();
+
+                    T visitCloudy();
+
+                    T visitRaining();
+
+                    T visitSnowing();
+
+                    T visitUnknown(String unknownType);
                 }
             }
         }

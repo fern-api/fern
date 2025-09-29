@@ -32,4 +32,12 @@ public class UserClient {
     public List<User> get(RequestOptions requestOptions) {
         return this.rawClient.get(requestOptions).body();
     }
+
+    public List<User> getAdmins() {
+        return this.rawClient.getAdmins().body();
+    }
+
+    public List<User> getAdmins(RequestOptions requestOptions) {
+        return this.rawClient.getAdmins(requestOptions).body();
+    }
 }

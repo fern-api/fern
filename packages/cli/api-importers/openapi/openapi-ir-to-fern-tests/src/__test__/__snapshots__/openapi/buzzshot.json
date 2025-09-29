@@ -839,10 +839,13 @@
           "base-path": "",
           "endpoints": {
             "listAccounts": {
-              "auth": false,
+              "auth": undefined,
               "docs": "",
               "examples": [
                 {
+                  "query-parameters": {
+                    "page": 1,
+                  },
                   "response": {
                     "body": {
                       "count": 123,
@@ -881,10 +884,17 @@
               },
             },
             "listGames": {
-              "auth": false,
+              "auth": undefined,
               "docs": "",
               "examples": [
                 {
+                  "query-parameters": {
+                    "after": "after",
+                    "before": "before",
+                    "complete": "complete",
+                    "date": "date",
+                    "page": 1,
+                  },
                   "response": {
                     "body": {
                       "count": 123,
@@ -895,12 +905,17 @@
                           "added_at": "2024-01-15T09:30:00Z",
                           "complete": {
                             "completed_at": "2024-01-15T09:30:00Z",
+                            "completion_time": null,
+                            "did_win": null,
+                            "hints": null,
+                            "score": null,
                           },
                           "date": "date",
                           "extra_fields": [
                             {
                               "key": "key",
                               "present": true,
+                              "value": null,
                             },
                           ],
                           "group": "group",
@@ -959,10 +974,15 @@
               },
             },
             "listGroups": {
-              "auth": false,
+              "auth": undefined,
               "docs": "",
               "examples": [
                 {
+                  "query-parameters": {
+                    "complete": "complete",
+                    "is_event": "is_event",
+                    "page": 1,
+                  },
                   "response": {
                     "body": {
                       "count": 123,
@@ -976,12 +996,17 @@
                             {
                               "complete": {
                                 "completed_at": "2024-01-15T09:30:00Z",
+                                "completion_time": null,
+                                "did_win": null,
+                                "hints": null,
+                                "score": null,
                               },
                               "date": "date",
                               "extra_fields": [
                                 {
                                   "key": "key",
                                   "present": true,
+                                  "value": null,
                                 },
                               ],
                               "time": "time",
@@ -1002,6 +1027,7 @@
                                 {
                                   "key": "key",
                                   "present": true,
+                                  "value": null,
                                 },
                               ],
                               "phone": "phone",
@@ -1046,10 +1072,13 @@
               },
             },
             "listLocations": {
-              "auth": false,
+              "auth": undefined,
               "docs": "",
               "examples": [
                 {
+                  "query-parameters": {
+                    "page": 1,
+                  },
                   "response": {
                     "body": {
                       "count": 123,
@@ -1088,10 +1117,13 @@
               },
             },
             "listPhotos": {
-              "auth": false,
+              "auth": undefined,
               "docs": "",
               "examples": [
                 {
+                  "query-parameters": {
+                    "page": 1,
+                  },
                   "response": {
                     "body": {
                       "count": 123,
@@ -1135,10 +1167,13 @@
               },
             },
             "listPlayers": {
-              "auth": false,
+              "auth": undefined,
               "docs": "",
               "examples": [
                 {
+                  "query-parameters": {
+                    "page": 1,
+                  },
                   "response": {
                     "body": {
                       "count": 123,
@@ -1152,6 +1187,7 @@
                             {
                               "key": "key",
                               "present": true,
+                              "value": null,
                             },
                           ],
                           "first_name": "first_name",
@@ -1188,7 +1224,7 @@
               },
             },
             "retrieveAccount": {
-              "auth": false,
+              "auth": undefined,
               "docs": "",
               "examples": [
                 {
@@ -1223,12 +1259,18 @@
               },
             },
             "retrieveGame": {
-              "auth": false,
+              "auth": undefined,
               "docs": "",
               "examples": [
                 {
                   "path-parameters": {
                     "id": "id",
+                  },
+                  "query-parameters": {
+                    "after": "after",
+                    "before": "before",
+                    "complete": "complete",
+                    "date": "date",
                   },
                   "response": {
                     "body": {
@@ -1310,12 +1352,16 @@
               },
             },
             "retrieveGroup": {
-              "auth": false,
+              "auth": undefined,
               "docs": "",
               "examples": [
                 {
                   "path-parameters": {
                     "id": "id",
+                  },
+                  "query-parameters": {
+                    "complete": "complete",
+                    "is_event": "is_event",
                   },
                   "response": {
                     "body": {
@@ -1326,12 +1372,17 @@
                           "added_at": "2024-01-15T09:30:00Z",
                           "complete": {
                             "completed_at": "2024-01-15T09:30:00Z",
+                            "completion_time": null,
+                            "did_win": null,
+                            "hints": null,
+                            "score": null,
                           },
                           "date": "date",
                           "extra_fields": [
                             {
                               "key": "key",
                               "present": true,
+                              "value": null,
                             },
                           ],
                           "id": 1,
@@ -1362,6 +1413,7 @@
                             {
                               "key": "key",
                               "present": true,
+                              "value": null,
                             },
                           ],
                           "first_name": "first_name",
@@ -1411,7 +1463,7 @@
               },
             },
             "retrieveLocation": {
-              "auth": false,
+              "auth": undefined,
               "docs": "",
               "examples": [
                 {
@@ -1446,7 +1498,7 @@
               },
             },
             "retrievePhoto": {
-              "auth": false,
+              "auth": undefined,
               "docs": "",
               "examples": [
                 {
@@ -1491,7 +1543,7 @@
               },
             },
             "retrievePlayer": {
-              "auth": false,
+              "auth": undefined,
               "docs": "",
               "examples": [
                 {
@@ -1553,7 +1605,6 @@
     listAccounts:
       path: /api/v2/accounts/
       method: GET
-      auth: false
       docs: ''
       source:
         openapi: ../openapi.yml
@@ -1568,7 +1619,9 @@
         type: ListAccountsResponse
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            page: 1
+          response:
             body:
               count: 123
               next: http://api.example.org/accounts/?page=4
@@ -1580,7 +1633,6 @@
     retrieveAccount:
       path: /api/v2/accounts/{id}/
       method: GET
-      auth: false
       docs: ''
       source:
         openapi: ../openapi.yml
@@ -1603,7 +1655,6 @@
     listGames:
       path: /api/v2/games/
       method: GET
-      auth: false
       docs: ''
       source:
         openapi: ../openapi.yml
@@ -1630,7 +1681,13 @@
         type: ListGamesResponse
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            page: 1
+            complete: complete
+            date: date
+            before: before
+            after: after
+          response:
             body:
               count: 123
               next: http://api.example.org/accounts/?page=4
@@ -1649,13 +1706,17 @@
                     - photo: photo
                   extra_fields:
                     - key: key
+                      value: null
                       present: true
                   complete:
                     completed_at: '2024-01-15T09:30:00Z'
+                    did_win: null
+                    hints: null
+                    score: null
+                    completion_time: null
     retrieveGame:
       path: /api/v2/games/{id}/
       method: GET
-      auth: false
       docs: ''
       source:
         openapi: ../openapi.yml
@@ -1685,6 +1746,11 @@
       examples:
         - path-parameters:
             id: id
+          query-parameters:
+            complete: complete
+            date: date
+            before: before
+            after: after
           response:
             body:
               id: 1
@@ -1716,7 +1782,6 @@
     listGroups:
       path: /api/v2/groups/
       method: GET
-      auth: false
       docs: ''
       source:
         openapi: ../openapi.yml
@@ -1737,7 +1802,11 @@
         type: ListGroupsResponse
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            page: 1
+            is_event: is_event
+            complete: complete
+          response:
             body:
               count: 123
               next: http://api.example.org/accounts/?page=4
@@ -1756,21 +1825,26 @@
                       time: time
                       extra_fields:
                         - key: key
+                          value: null
                           present: true
                       complete:
                         completed_at: '2024-01-15T09:30:00Z'
+                        did_win: null
+                        hints: null
+                        score: null
+                        completion_time: null
                   players:
                     - email: email
                       phone: phone
                       extra_fields:
                         - key: key
+                          value: null
                           present: true
                   photos:
                     - photo: photo
     retrieveGroup:
       path: /api/v2/groups/{id}/
       method: GET
-      auth: false
       docs: ''
       source:
         openapi: ../openapi.yml
@@ -1794,6 +1868,9 @@
       examples:
         - path-parameters:
             id: id
+          query-parameters:
+            is_event: is_event
+            complete: complete
           response:
             body:
               id: 1
@@ -1815,9 +1892,14 @@
                   room: room
                   extra_fields:
                     - key: key
+                      value: null
                       present: true
                   complete:
                     completed_at: '2024-01-15T09:30:00Z'
+                    did_win: null
+                    hints: null
+                    score: null
+                    completion_time: null
               players:
                 - added_at: '2024-01-15T09:30:00Z'
                   updated_at: '2024-01-15T09:30:00Z'
@@ -1828,6 +1910,7 @@
                   phone: phone
                   extra_fields:
                     - key: key
+                      value: null
                       present: true
                   signature: signature
               photos:
@@ -1839,7 +1922,6 @@
     listPlayers:
       path: /api/v2/players/
       method: GET
-      auth: false
       docs: ''
       source:
         openapi: ../openapi.yml
@@ -1854,7 +1936,9 @@
         type: ListPlayersResponse
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            page: 1
+          response:
             body:
               count: 123
               next: http://api.example.org/accounts/?page=4
@@ -1869,12 +1953,12 @@
                   phone: phone
                   extra_fields:
                     - key: key
+                      value: null
                       present: true
                   marketing_email_allowed: true
     retrievePlayer:
       path: /api/v2/players/{id}/
       method: GET
-      auth: false
       docs: ''
       source:
         openapi: ../openapi.yml
@@ -1908,7 +1992,6 @@
     listLocations:
       path: /api/v2/rooms/
       method: GET
-      auth: false
       docs: ''
       source:
         openapi: ../openapi.yml
@@ -1923,7 +2006,9 @@
         type: ListLocationsResponse
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            page: 1
+          response:
             body:
               count: 123
               next: http://api.example.org/accounts/?page=4
@@ -1935,7 +2020,6 @@
     retrieveLocation:
       path: /api/v2/rooms/{id}/
       method: GET
-      auth: false
       docs: ''
       source:
         openapi: ../openapi.yml
@@ -1958,7 +2042,6 @@
     listPhotos:
       path: /api/v2/photos/
       method: GET
-      auth: false
       docs: ''
       source:
         openapi: ../openapi.yml
@@ -1973,7 +2056,9 @@
         type: ListPhotosResponse
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            page: 1
+          response:
             body:
               count: 123
               next: http://api.example.org/accounts/?page=4
@@ -1987,7 +2072,6 @@
     retrievePhoto:
       path: /api/v2/photos/{photo_id}/
       method: GET
-      auth: false
       docs: ''
       source:
         openapi: ../openapi.yml

@@ -14,7 +14,9 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import {
     extractNamedTypesFromTypeReference,
     isCollectionType,
+    isDateTimeOnlyType,
     isDateTimeType,
+    isDateType,
     isUnknownType,
     isUuidType,
     typeSupportsHashAndEq
@@ -36,7 +38,7 @@ export class UndiscriminatedUnionGenerator {
     }
 
     public generate(): RustFile {
-        const filename = `${this.typeDeclaration.name.name.snakeCase.unsafeName}.rs`;
+        const filename = this.context.getUniqueFilenameForType(this.typeDeclaration);
 
         const writer = new rust.Writer();
 
@@ -58,12 +60,24 @@ export class UndiscriminatedUnionGenerator {
         // Add imports for variant types FIRST
         const variantTypes = this.getVariantTypesUsedInUnion();
         variantTypes.forEach((typeName) => {
-            const moduleNameEscaped = this.context.escapeRustKeyword(typeName.snakeCase.unsafeName);
+            const modulePath = this.context.getModulePathForType(typeName.snakeCase.unsafeName);
+            const moduleNameEscaped = this.context.escapeRustKeyword(modulePath);
             writer.writeLine(`use crate::${moduleNameEscaped}::${typeName.pascalCase.unsafeName};`);
         });
 
-        // Add chrono if we have datetime fields
-        if (this.hasDateTimeFields()) {
+        // Add chrono imports based on specific types needed
+        const hasDateOnly = this.hasDateFields();
+        const hasDateTimeOnly = this.hasDateTimeOnlyFields();
+
+        // TODO: @iamnamananand996 - use AST mechanism for all imports
+        if (hasDateOnly && hasDateTimeOnly) {
+            // Both date and datetime types present
+            writer.writeLine("use chrono::{DateTime, NaiveDate, Utc};");
+        } else if (hasDateOnly) {
+            // Only date type present, import NaiveDate only
+            writer.writeLine("use chrono::NaiveDate;");
+        } else if (hasDateTimeOnly) {
+            // Only datetime type present, import DateTime and Utc only
             writer.writeLine("use chrono::{DateTime, Utc};");
         }
 
@@ -77,10 +91,10 @@ export class UndiscriminatedUnionGenerator {
             writer.writeLine("use uuid::Uuid;");
         }
 
-        // Add serde_json if we have unknown/Value fields
-        if (this.hasJsonValueFields()) {
-            writer.writeLine("use serde_json::Value;");
-        }
+        // TODO: @iamnamananand996 build to use serde_json::Value ---> Value directly
+        // if (hasJsonValueFields(properties)) {
+        //     writer.writeLine("use serde_json::Value;");
+        // }
 
         // Add serde imports LAST
         writer.writeLine("use serde::{Deserialize, Serialize};");
@@ -274,6 +288,14 @@ export class UndiscriminatedUnionGenerator {
         return this.hasFieldsOfType(isDateTimeType);
     }
 
+    private hasDateFields(): boolean {
+        return this.hasFieldsOfType(isDateType);
+    }
+
+    private hasDateTimeOnlyFields(): boolean {
+        return this.hasFieldsOfType(isDateTimeOnlyType);
+    }
+
     private hasUuidFields(): boolean {
         return this.hasFieldsOfType(isUuidType);
     }
@@ -304,7 +326,9 @@ export class UndiscriminatedUnionGenerator {
             extractNamedTypesFromTypeReference(member.type, variantTypeNames, visited);
         });
 
-        return variantTypeNames;
+        // Filter out the current type itself to prevent self-imports
+        const currentTypeName = this.typeDeclaration.name.name.pascalCase.unsafeName;
+        return variantTypeNames.filter((typeName) => typeName.pascalCase.unsafeName !== currentTypeName);
     }
 
     private canDeriveHashAndEq(): boolean {

@@ -57,7 +57,7 @@ client.admin().updateTestSubmissionStatus(
 <dl>
 <dd>
 
-**submissionId:** `String` 
+**submissionId:** `UUID` 
     
 </dd>
 </dl>
@@ -114,7 +114,7 @@ client.admin().sendTestSubmissionUpdate(
 <dl>
 <dd>
 
-**submissionId:** `String` 
+**submissionId:** `UUID` 
     
 </dd>
 </dl>
@@ -165,7 +165,7 @@ client.admin().updateWorkspaceSubmissionStatus(
 <dl>
 <dd>
 
-**submissionId:** `String` 
+**submissionId:** `UUID` 
     
 </dd>
 </dl>
@@ -222,7 +222,7 @@ client.admin().sendWorkspaceSubmissionUpdate(
 <dl>
 <dd>
 
-**submissionId:** `String` 
+**submissionId:** `UUID` 
     
 </dd>
 </dl>
@@ -281,111 +281,105 @@ client.admin().storeTracedTestCase(
                 .build()
         )
         .traceResponses(
-            new ArrayList<TraceResponse>(
-                Arrays.asList(
-                    TraceResponse
-                        .builder()
-                        .submissionId(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
-                        .lineNumber(1)
-                        .stack(
-                            StackInformation
-                                .builder()
-                                .numStackFrames(1)
-                                .topStackFrame(
-                                    StackFrame
-                                        .builder()
-                                        .methodName("methodName")
-                                        .lineNumber(1)
-                                        .scopes(
-                                            new ArrayList<Scope>(
-                                                Arrays.asList(
-                                                    Scope
-                                                        .builder()
-                                                        .variables(
-                                                            new HashMap<String, DebugVariableValue>() {{
-                                                                put("variables", DebugVariableValue.integerValue());
-                                                            }}
-                                                        )
-                                                        .build(),
-                                                    Scope
-                                                        .builder()
-                                                        .variables(
-                                                            new HashMap<String, DebugVariableValue>() {{
-                                                                put("variables", DebugVariableValue.integerValue());
-                                                            }}
-                                                        )
-                                                        .build()
+            Arrays.asList(
+                TraceResponse
+                    .builder()
+                    .submissionId(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
+                    .lineNumber(1)
+                    .stack(
+                        StackInformation
+                            .builder()
+                            .numStackFrames(1)
+                            .topStackFrame(
+                                StackFrame
+                                    .builder()
+                                    .methodName("methodName")
+                                    .lineNumber(1)
+                                    .scopes(
+                                        Arrays.asList(
+                                            Scope
+                                                .builder()
+                                                .variables(
+                                                    new HashMap<String, DebugVariableValue>() {{
+                                                        put("variables", DebugVariableValue.integerValue());
+                                                    }}
                                                 )
-                                            )
-                                        )
-                                        .build()
-                                )
-                                .build()
-                        )
-                        .returnValue(
-                            DebugVariableValue.integerValue()
-                        )
-                        .expressionLocation(
-                            ExpressionLocation
-                                .builder()
-                                .start(1)
-                                .offset(1)
-                                .build()
-                        )
-                        .stdout("stdout")
-                        .build(),
-                    TraceResponse
-                        .builder()
-                        .submissionId(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
-                        .lineNumber(1)
-                        .stack(
-                            StackInformation
-                                .builder()
-                                .numStackFrames(1)
-                                .topStackFrame(
-                                    StackFrame
-                                        .builder()
-                                        .methodName("methodName")
-                                        .lineNumber(1)
-                                        .scopes(
-                                            new ArrayList<Scope>(
-                                                Arrays.asList(
-                                                    Scope
-                                                        .builder()
-                                                        .variables(
-                                                            new HashMap<String, DebugVariableValue>() {{
-                                                                put("variables", DebugVariableValue.integerValue());
-                                                            }}
-                                                        )
-                                                        .build(),
-                                                    Scope
-                                                        .builder()
-                                                        .variables(
-                                                            new HashMap<String, DebugVariableValue>() {{
-                                                                put("variables", DebugVariableValue.integerValue());
-                                                            }}
-                                                        )
-                                                        .build()
+                                                .build(),
+                                            Scope
+                                                .builder()
+                                                .variables(
+                                                    new HashMap<String, DebugVariableValue>() {{
+                                                        put("variables", DebugVariableValue.integerValue());
+                                                    }}
                                                 )
-                                            )
+                                                .build()
                                         )
-                                        .build()
-                                )
-                                .build()
-                        )
-                        .returnValue(
-                            DebugVariableValue.integerValue()
-                        )
-                        .expressionLocation(
-                            ExpressionLocation
-                                .builder()
-                                .start(1)
-                                .offset(1)
-                                .build()
-                        )
-                        .stdout("stdout")
-                        .build()
-                )
+                                    )
+                                    .build()
+                            )
+                            .build()
+                    )
+                    .returnValue(
+                        DebugVariableValue.integerValue()
+                    )
+                    .expressionLocation(
+                        ExpressionLocation
+                            .builder()
+                            .start(1)
+                            .offset(1)
+                            .build()
+                    )
+                    .stdout("stdout")
+                    .build(),
+                TraceResponse
+                    .builder()
+                    .submissionId(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
+                    .lineNumber(1)
+                    .stack(
+                        StackInformation
+                            .builder()
+                            .numStackFrames(1)
+                            .topStackFrame(
+                                StackFrame
+                                    .builder()
+                                    .methodName("methodName")
+                                    .lineNumber(1)
+                                    .scopes(
+                                        Arrays.asList(
+                                            Scope
+                                                .builder()
+                                                .variables(
+                                                    new HashMap<String, DebugVariableValue>() {{
+                                                        put("variables", DebugVariableValue.integerValue());
+                                                    }}
+                                                )
+                                                .build(),
+                                            Scope
+                                                .builder()
+                                                .variables(
+                                                    new HashMap<String, DebugVariableValue>() {{
+                                                        put("variables", DebugVariableValue.integerValue());
+                                                    }}
+                                                )
+                                                .build()
+                                        )
+                                    )
+                                    .build()
+                            )
+                            .build()
+                    )
+                    .returnValue(
+                        DebugVariableValue.integerValue()
+                    )
+                    .expressionLocation(
+                        ExpressionLocation
+                            .builder()
+                            .start(1)
+                            .offset(1)
+                            .build()
+                    )
+                    .stdout("stdout")
+                    .build()
             )
         )
         .build()
@@ -404,7 +398,7 @@ client.admin().storeTracedTestCase(
 <dl>
 <dd>
 
-**submissionId:** `String` 
+**submissionId:** `UUID` 
     
 </dd>
 </dl>
@@ -456,125 +450,119 @@ client.admin().storeTracedTestCase(
 client.admin().storeTracedTestCaseV2(
     UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
     "testCaseId",
-    new ArrayList<TraceResponseV2>(
-        Arrays.asList(
-            TraceResponseV2
-                .builder()
-                .submissionId(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
-                .lineNumber(1)
-                .file(
-                    TracedFile
-                        .builder()
-                        .filename("filename")
-                        .directory("directory")
-                        .build()
-                )
-                .stack(
-                    StackInformation
-                        .builder()
-                        .numStackFrames(1)
-                        .topStackFrame(
-                            StackFrame
-                                .builder()
-                                .methodName("methodName")
-                                .lineNumber(1)
-                                .scopes(
-                                    new ArrayList<Scope>(
-                                        Arrays.asList(
-                                            Scope
-                                                .builder()
-                                                .variables(
-                                                    new HashMap<String, DebugVariableValue>() {{
-                                                        put("variables", DebugVariableValue.integerValue());
-                                                    }}
-                                                )
-                                                .build(),
-                                            Scope
-                                                .builder()
-                                                .variables(
-                                                    new HashMap<String, DebugVariableValue>() {{
-                                                        put("variables", DebugVariableValue.integerValue());
-                                                    }}
-                                                )
-                                                .build()
+    Arrays.asList(
+        TraceResponseV2
+            .builder()
+            .submissionId(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
+            .lineNumber(1)
+            .file(
+                TracedFile
+                    .builder()
+                    .filename("filename")
+                    .directory("directory")
+                    .build()
+            )
+            .stack(
+                StackInformation
+                    .builder()
+                    .numStackFrames(1)
+                    .topStackFrame(
+                        StackFrame
+                            .builder()
+                            .methodName("methodName")
+                            .lineNumber(1)
+                            .scopes(
+                                Arrays.asList(
+                                    Scope
+                                        .builder()
+                                        .variables(
+                                            new HashMap<String, DebugVariableValue>() {{
+                                                put("variables", DebugVariableValue.integerValue());
+                                            }}
                                         )
-                                    )
-                                )
-                                .build()
-                        )
-                        .build()
-                )
-                .returnValue(
-                    DebugVariableValue.integerValue()
-                )
-                .expressionLocation(
-                    ExpressionLocation
-                        .builder()
-                        .start(1)
-                        .offset(1)
-                        .build()
-                )
-                .stdout("stdout")
-                .build(),
-            TraceResponseV2
-                .builder()
-                .submissionId(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
-                .lineNumber(1)
-                .file(
-                    TracedFile
-                        .builder()
-                        .filename("filename")
-                        .directory("directory")
-                        .build()
-                )
-                .stack(
-                    StackInformation
-                        .builder()
-                        .numStackFrames(1)
-                        .topStackFrame(
-                            StackFrame
-                                .builder()
-                                .methodName("methodName")
-                                .lineNumber(1)
-                                .scopes(
-                                    new ArrayList<Scope>(
-                                        Arrays.asList(
-                                            Scope
-                                                .builder()
-                                                .variables(
-                                                    new HashMap<String, DebugVariableValue>() {{
-                                                        put("variables", DebugVariableValue.integerValue());
-                                                    }}
-                                                )
-                                                .build(),
-                                            Scope
-                                                .builder()
-                                                .variables(
-                                                    new HashMap<String, DebugVariableValue>() {{
-                                                        put("variables", DebugVariableValue.integerValue());
-                                                    }}
-                                                )
-                                                .build()
+                                        .build(),
+                                    Scope
+                                        .builder()
+                                        .variables(
+                                            new HashMap<String, DebugVariableValue>() {{
+                                                put("variables", DebugVariableValue.integerValue());
+                                            }}
                                         )
-                                    )
+                                        .build()
                                 )
-                                .build()
-                        )
-                        .build()
-                )
-                .returnValue(
-                    DebugVariableValue.integerValue()
-                )
-                .expressionLocation(
-                    ExpressionLocation
-                        .builder()
-                        .start(1)
-                        .offset(1)
-                        .build()
-                )
-                .stdout("stdout")
-                .build()
-        )
+                            )
+                            .build()
+                    )
+                    .build()
+            )
+            .returnValue(
+                DebugVariableValue.integerValue()
+            )
+            .expressionLocation(
+                ExpressionLocation
+                    .builder()
+                    .start(1)
+                    .offset(1)
+                    .build()
+            )
+            .stdout("stdout")
+            .build(),
+        TraceResponseV2
+            .builder()
+            .submissionId(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
+            .lineNumber(1)
+            .file(
+                TracedFile
+                    .builder()
+                    .filename("filename")
+                    .directory("directory")
+                    .build()
+            )
+            .stack(
+                StackInformation
+                    .builder()
+                    .numStackFrames(1)
+                    .topStackFrame(
+                        StackFrame
+                            .builder()
+                            .methodName("methodName")
+                            .lineNumber(1)
+                            .scopes(
+                                Arrays.asList(
+                                    Scope
+                                        .builder()
+                                        .variables(
+                                            new HashMap<String, DebugVariableValue>() {{
+                                                put("variables", DebugVariableValue.integerValue());
+                                            }}
+                                        )
+                                        .build(),
+                                    Scope
+                                        .builder()
+                                        .variables(
+                                            new HashMap<String, DebugVariableValue>() {{
+                                                put("variables", DebugVariableValue.integerValue());
+                                            }}
+                                        )
+                                        .build()
+                                )
+                            )
+                            .build()
+                    )
+                    .build()
+            )
+            .returnValue(
+                DebugVariableValue.integerValue()
+            )
+            .expressionLocation(
+                ExpressionLocation
+                    .builder()
+                    .start(1)
+                    .offset(1)
+                    .build()
+            )
+            .stdout("stdout")
+            .build()
     )
 );
 ```
@@ -591,7 +579,7 @@ client.admin().storeTracedTestCaseV2(
 <dl>
 <dd>
 
-**submissionId:** `String` 
+**submissionId:** `UUID` 
     
 </dd>
 </dl>
@@ -661,111 +649,105 @@ client.admin().storeTracedWorkspace(
                 .build()
         )
         .traceResponses(
-            new ArrayList<TraceResponse>(
-                Arrays.asList(
-                    TraceResponse
-                        .builder()
-                        .submissionId(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
-                        .lineNumber(1)
-                        .stack(
-                            StackInformation
-                                .builder()
-                                .numStackFrames(1)
-                                .topStackFrame(
-                                    StackFrame
-                                        .builder()
-                                        .methodName("methodName")
-                                        .lineNumber(1)
-                                        .scopes(
-                                            new ArrayList<Scope>(
-                                                Arrays.asList(
-                                                    Scope
-                                                        .builder()
-                                                        .variables(
-                                                            new HashMap<String, DebugVariableValue>() {{
-                                                                put("variables", DebugVariableValue.integerValue());
-                                                            }}
-                                                        )
-                                                        .build(),
-                                                    Scope
-                                                        .builder()
-                                                        .variables(
-                                                            new HashMap<String, DebugVariableValue>() {{
-                                                                put("variables", DebugVariableValue.integerValue());
-                                                            }}
-                                                        )
-                                                        .build()
+            Arrays.asList(
+                TraceResponse
+                    .builder()
+                    .submissionId(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
+                    .lineNumber(1)
+                    .stack(
+                        StackInformation
+                            .builder()
+                            .numStackFrames(1)
+                            .topStackFrame(
+                                StackFrame
+                                    .builder()
+                                    .methodName("methodName")
+                                    .lineNumber(1)
+                                    .scopes(
+                                        Arrays.asList(
+                                            Scope
+                                                .builder()
+                                                .variables(
+                                                    new HashMap<String, DebugVariableValue>() {{
+                                                        put("variables", DebugVariableValue.integerValue());
+                                                    }}
                                                 )
-                                            )
-                                        )
-                                        .build()
-                                )
-                                .build()
-                        )
-                        .returnValue(
-                            DebugVariableValue.integerValue()
-                        )
-                        .expressionLocation(
-                            ExpressionLocation
-                                .builder()
-                                .start(1)
-                                .offset(1)
-                                .build()
-                        )
-                        .stdout("stdout")
-                        .build(),
-                    TraceResponse
-                        .builder()
-                        .submissionId(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
-                        .lineNumber(1)
-                        .stack(
-                            StackInformation
-                                .builder()
-                                .numStackFrames(1)
-                                .topStackFrame(
-                                    StackFrame
-                                        .builder()
-                                        .methodName("methodName")
-                                        .lineNumber(1)
-                                        .scopes(
-                                            new ArrayList<Scope>(
-                                                Arrays.asList(
-                                                    Scope
-                                                        .builder()
-                                                        .variables(
-                                                            new HashMap<String, DebugVariableValue>() {{
-                                                                put("variables", DebugVariableValue.integerValue());
-                                                            }}
-                                                        )
-                                                        .build(),
-                                                    Scope
-                                                        .builder()
-                                                        .variables(
-                                                            new HashMap<String, DebugVariableValue>() {{
-                                                                put("variables", DebugVariableValue.integerValue());
-                                                            }}
-                                                        )
-                                                        .build()
+                                                .build(),
+                                            Scope
+                                                .builder()
+                                                .variables(
+                                                    new HashMap<String, DebugVariableValue>() {{
+                                                        put("variables", DebugVariableValue.integerValue());
+                                                    }}
                                                 )
-                                            )
+                                                .build()
                                         )
-                                        .build()
-                                )
-                                .build()
-                        )
-                        .returnValue(
-                            DebugVariableValue.integerValue()
-                        )
-                        .expressionLocation(
-                            ExpressionLocation
-                                .builder()
-                                .start(1)
-                                .offset(1)
-                                .build()
-                        )
-                        .stdout("stdout")
-                        .build()
-                )
+                                    )
+                                    .build()
+                            )
+                            .build()
+                    )
+                    .returnValue(
+                        DebugVariableValue.integerValue()
+                    )
+                    .expressionLocation(
+                        ExpressionLocation
+                            .builder()
+                            .start(1)
+                            .offset(1)
+                            .build()
+                    )
+                    .stdout("stdout")
+                    .build(),
+                TraceResponse
+                    .builder()
+                    .submissionId(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
+                    .lineNumber(1)
+                    .stack(
+                        StackInformation
+                            .builder()
+                            .numStackFrames(1)
+                            .topStackFrame(
+                                StackFrame
+                                    .builder()
+                                    .methodName("methodName")
+                                    .lineNumber(1)
+                                    .scopes(
+                                        Arrays.asList(
+                                            Scope
+                                                .builder()
+                                                .variables(
+                                                    new HashMap<String, DebugVariableValue>() {{
+                                                        put("variables", DebugVariableValue.integerValue());
+                                                    }}
+                                                )
+                                                .build(),
+                                            Scope
+                                                .builder()
+                                                .variables(
+                                                    new HashMap<String, DebugVariableValue>() {{
+                                                        put("variables", DebugVariableValue.integerValue());
+                                                    }}
+                                                )
+                                                .build()
+                                        )
+                                    )
+                                    .build()
+                            )
+                            .build()
+                    )
+                    .returnValue(
+                        DebugVariableValue.integerValue()
+                    )
+                    .expressionLocation(
+                        ExpressionLocation
+                            .builder()
+                            .start(1)
+                            .offset(1)
+                            .build()
+                    )
+                    .stdout("stdout")
+                    .build()
             )
         )
         .build()
@@ -784,7 +766,7 @@ client.admin().storeTracedWorkspace(
 <dl>
 <dd>
 
-**submissionId:** `String` 
+**submissionId:** `UUID` 
     
 </dd>
 </dl>
@@ -827,125 +809,119 @@ client.admin().storeTracedWorkspace(
 ```java
 client.admin().storeTracedWorkspaceV2(
     UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
-    new ArrayList<TraceResponseV2>(
-        Arrays.asList(
-            TraceResponseV2
-                .builder()
-                .submissionId(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
-                .lineNumber(1)
-                .file(
-                    TracedFile
-                        .builder()
-                        .filename("filename")
-                        .directory("directory")
-                        .build()
-                )
-                .stack(
-                    StackInformation
-                        .builder()
-                        .numStackFrames(1)
-                        .topStackFrame(
-                            StackFrame
-                                .builder()
-                                .methodName("methodName")
-                                .lineNumber(1)
-                                .scopes(
-                                    new ArrayList<Scope>(
-                                        Arrays.asList(
-                                            Scope
-                                                .builder()
-                                                .variables(
-                                                    new HashMap<String, DebugVariableValue>() {{
-                                                        put("variables", DebugVariableValue.integerValue());
-                                                    }}
-                                                )
-                                                .build(),
-                                            Scope
-                                                .builder()
-                                                .variables(
-                                                    new HashMap<String, DebugVariableValue>() {{
-                                                        put("variables", DebugVariableValue.integerValue());
-                                                    }}
-                                                )
-                                                .build()
+    Arrays.asList(
+        TraceResponseV2
+            .builder()
+            .submissionId(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
+            .lineNumber(1)
+            .file(
+                TracedFile
+                    .builder()
+                    .filename("filename")
+                    .directory("directory")
+                    .build()
+            )
+            .stack(
+                StackInformation
+                    .builder()
+                    .numStackFrames(1)
+                    .topStackFrame(
+                        StackFrame
+                            .builder()
+                            .methodName("methodName")
+                            .lineNumber(1)
+                            .scopes(
+                                Arrays.asList(
+                                    Scope
+                                        .builder()
+                                        .variables(
+                                            new HashMap<String, DebugVariableValue>() {{
+                                                put("variables", DebugVariableValue.integerValue());
+                                            }}
                                         )
-                                    )
-                                )
-                                .build()
-                        )
-                        .build()
-                )
-                .returnValue(
-                    DebugVariableValue.integerValue()
-                )
-                .expressionLocation(
-                    ExpressionLocation
-                        .builder()
-                        .start(1)
-                        .offset(1)
-                        .build()
-                )
-                .stdout("stdout")
-                .build(),
-            TraceResponseV2
-                .builder()
-                .submissionId(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
-                .lineNumber(1)
-                .file(
-                    TracedFile
-                        .builder()
-                        .filename("filename")
-                        .directory("directory")
-                        .build()
-                )
-                .stack(
-                    StackInformation
-                        .builder()
-                        .numStackFrames(1)
-                        .topStackFrame(
-                            StackFrame
-                                .builder()
-                                .methodName("methodName")
-                                .lineNumber(1)
-                                .scopes(
-                                    new ArrayList<Scope>(
-                                        Arrays.asList(
-                                            Scope
-                                                .builder()
-                                                .variables(
-                                                    new HashMap<String, DebugVariableValue>() {{
-                                                        put("variables", DebugVariableValue.integerValue());
-                                                    }}
-                                                )
-                                                .build(),
-                                            Scope
-                                                .builder()
-                                                .variables(
-                                                    new HashMap<String, DebugVariableValue>() {{
-                                                        put("variables", DebugVariableValue.integerValue());
-                                                    }}
-                                                )
-                                                .build()
+                                        .build(),
+                                    Scope
+                                        .builder()
+                                        .variables(
+                                            new HashMap<String, DebugVariableValue>() {{
+                                                put("variables", DebugVariableValue.integerValue());
+                                            }}
                                         )
-                                    )
+                                        .build()
                                 )
-                                .build()
-                        )
-                        .build()
-                )
-                .returnValue(
-                    DebugVariableValue.integerValue()
-                )
-                .expressionLocation(
-                    ExpressionLocation
-                        .builder()
-                        .start(1)
-                        .offset(1)
-                        .build()
-                )
-                .stdout("stdout")
-                .build()
-        )
+                            )
+                            .build()
+                    )
+                    .build()
+            )
+            .returnValue(
+                DebugVariableValue.integerValue()
+            )
+            .expressionLocation(
+                ExpressionLocation
+                    .builder()
+                    .start(1)
+                    .offset(1)
+                    .build()
+            )
+            .stdout("stdout")
+            .build(),
+        TraceResponseV2
+            .builder()
+            .submissionId(UUID.fromString("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"))
+            .lineNumber(1)
+            .file(
+                TracedFile
+                    .builder()
+                    .filename("filename")
+                    .directory("directory")
+                    .build()
+            )
+            .stack(
+                StackInformation
+                    .builder()
+                    .numStackFrames(1)
+                    .topStackFrame(
+                        StackFrame
+                            .builder()
+                            .methodName("methodName")
+                            .lineNumber(1)
+                            .scopes(
+                                Arrays.asList(
+                                    Scope
+                                        .builder()
+                                        .variables(
+                                            new HashMap<String, DebugVariableValue>() {{
+                                                put("variables", DebugVariableValue.integerValue());
+                                            }}
+                                        )
+                                        .build(),
+                                    Scope
+                                        .builder()
+                                        .variables(
+                                            new HashMap<String, DebugVariableValue>() {{
+                                                put("variables", DebugVariableValue.integerValue());
+                                            }}
+                                        )
+                                        .build()
+                                )
+                            )
+                            .build()
+                    )
+                    .build()
+            )
+            .returnValue(
+                DebugVariableValue.integerValue()
+            )
+            .expressionLocation(
+                ExpressionLocation
+                    .builder()
+                    .start(1)
+                    .offset(1)
+                    .build()
+            )
+            .stdout("stdout")
+            .build()
     )
 );
 ```
@@ -962,7 +938,7 @@ client.admin().storeTracedWorkspaceV2(
 <dl>
 <dd>
 
-**submissionId:** `String` 
+**submissionId:** `UUID` 
     
 </dd>
 </dl>
@@ -1022,9 +998,7 @@ client.homepage().getHomepageProblems();
 
 ```java
 client.homepage().setHomepageProblems(
-    new ArrayList<String>(
-        Arrays.asList("string", "string")
-    )
+    Arrays.asList("string", "string")
 );
 ```
 </dd>
@@ -1136,9 +1110,7 @@ client.playlist().createPlaylist(
                 .builder()
                 .name("name")
                 .problems(
-                    new ArrayList<String>(
-                        Arrays.asList("problems", "problems")
-                    )
+                    Arrays.asList("problems", "problems")
                 )
                 .build()
         )
@@ -1229,14 +1201,10 @@ client.playlist().getPlaylists(
         .otherField("otherField")
         .multiLineDocs("multiLineDocs")
         .optionalMultipleField(
-            new ArrayList<Optional<String>>(
-                Arrays.asList("optionalMultipleField")
-            )
+            Arrays.asList(Optional.of("optionalMultipleField"))
         )
         .multipleField(
-            new ArrayList<String>(
-                Arrays.asList("multipleField")
-            )
+            Arrays.asList("multipleField")
         )
         .limit(1)
         .build()
@@ -1407,9 +1375,7 @@ client.playlist().updatePlaylist(
             .builder()
             .name("name")
             .problems(
-                new ArrayList<String>(
-                    Arrays.asList("problems", "problems")
-                )
+                Arrays.asList("problems", "problems")
             )
             .build()
     )
@@ -1554,11 +1520,9 @@ client.problem().createProblem(
             ProblemDescription
                 .builder()
                 .boards(
-                    new ArrayList<ProblemDescriptionBoard>(
-                        Arrays.asList(
-                            ProblemDescriptionBoard.html(),
-                            ProblemDescriptionBoard.html()
-                        )
+                    Arrays.asList(
+                        ProblemDescriptionBoard.html(),
+                        ProblemDescriptionBoard.html()
                     )
                 )
                 .build()
@@ -1575,91 +1539,81 @@ client.problem().createProblem(
                             .build()
                     )
                     .readOnlyFiles(
-                        new ArrayList<FileInfo>(
-                            Arrays.asList(
-                                FileInfo
-                                    .builder()
-                                    .filename("filename")
-                                    .contents("contents")
-                                    .build(),
-                                FileInfo
-                                    .builder()
-                                    .filename("filename")
-                                    .contents("contents")
-                                    .build()
-                            )
+                        Arrays.asList(
+                            FileInfo
+                                .builder()
+                                .filename("filename")
+                                .contents("contents")
+                                .build(),
+                            FileInfo
+                                .builder()
+                                .filename("filename")
+                                .contents("contents")
+                                .build()
                         )
                     )
                     .build());
             }}
         )
         .inputParams(
-            new ArrayList<VariableTypeAndName>(
-                Arrays.asList(
-                    VariableTypeAndName
-                        .builder()
-                        .variableType(
-                            VariableType.integerType()
-                        )
-                        .name("name")
-                        .build(),
-                    VariableTypeAndName
-                        .builder()
-                        .variableType(
-                            VariableType.integerType()
-                        )
-                        .name("name")
-                        .build()
-                )
+            Arrays.asList(
+                VariableTypeAndName
+                    .builder()
+                    .variableType(
+                        VariableType.integerType()
+                    )
+                    .name("name")
+                    .build(),
+                VariableTypeAndName
+                    .builder()
+                    .variableType(
+                        VariableType.integerType()
+                    )
+                    .name("name")
+                    .build()
             )
         )
         .outputType(
             VariableType.integerType()
         )
         .testcases(
-            new ArrayList<TestCaseWithExpectedResult>(
-                Arrays.asList(
-                    TestCaseWithExpectedResult
-                        .builder()
-                        .testCase(
-                            TestCase
-                                .builder()
-                                .id("id")
-                                .params(
-                                    new ArrayList<VariableValue>(
-                                        Arrays.asList(
-                                            VariableValue.integerValue(),
-                                            VariableValue.integerValue()
-                                        )
-                                    )
+            Arrays.asList(
+                TestCaseWithExpectedResult
+                    .builder()
+                    .testCase(
+                        TestCase
+                            .builder()
+                            .id("id")
+                            .params(
+                                Arrays.asList(
+                                    VariableValue.integerValue(),
+                                    VariableValue.integerValue()
                                 )
-                                .build()
-                        )
-                        .expectedResult(
-                            VariableValue.integerValue()
-                        )
-                        .build(),
-                    TestCaseWithExpectedResult
-                        .builder()
-                        .testCase(
-                            TestCase
-                                .builder()
-                                .id("id")
-                                .params(
-                                    new ArrayList<VariableValue>(
-                                        Arrays.asList(
-                                            VariableValue.integerValue(),
-                                            VariableValue.integerValue()
-                                        )
-                                    )
+                            )
+                            .build()
+                    )
+                    .expectedResult(
+                        VariableValue.integerValue()
+                    )
+                    .build(),
+                TestCaseWithExpectedResult
+                    .builder()
+                    .testCase(
+                        TestCase
+                            .builder()
+                            .id("id")
+                            .params(
+                                Arrays.asList(
+                                    VariableValue.integerValue(),
+                                    VariableValue.integerValue()
                                 )
-                                .build()
-                        )
-                        .expectedResult(
-                            VariableValue.integerValue()
-                        )
-                        .build()
-                )
+                            )
+                            .build()
+                    )
+                    .expectedResult(
+                        VariableValue.integerValue()
+                    )
+                    .build()
             )
         )
         .methodName("methodName")
@@ -1727,11 +1681,9 @@ client.problem().updateProblem(
             ProblemDescription
                 .builder()
                 .boards(
-                    new ArrayList<ProblemDescriptionBoard>(
-                        Arrays.asList(
-                            ProblemDescriptionBoard.html(),
-                            ProblemDescriptionBoard.html()
-                        )
+                    Arrays.asList(
+                        ProblemDescriptionBoard.html(),
+                        ProblemDescriptionBoard.html()
                     )
                 )
                 .build()
@@ -1748,91 +1700,81 @@ client.problem().updateProblem(
                             .build()
                     )
                     .readOnlyFiles(
-                        new ArrayList<FileInfo>(
-                            Arrays.asList(
-                                FileInfo
-                                    .builder()
-                                    .filename("filename")
-                                    .contents("contents")
-                                    .build(),
-                                FileInfo
-                                    .builder()
-                                    .filename("filename")
-                                    .contents("contents")
-                                    .build()
-                            )
+                        Arrays.asList(
+                            FileInfo
+                                .builder()
+                                .filename("filename")
+                                .contents("contents")
+                                .build(),
+                            FileInfo
+                                .builder()
+                                .filename("filename")
+                                .contents("contents")
+                                .build()
                         )
                     )
                     .build());
             }}
         )
         .inputParams(
-            new ArrayList<VariableTypeAndName>(
-                Arrays.asList(
-                    VariableTypeAndName
-                        .builder()
-                        .variableType(
-                            VariableType.integerType()
-                        )
-                        .name("name")
-                        .build(),
-                    VariableTypeAndName
-                        .builder()
-                        .variableType(
-                            VariableType.integerType()
-                        )
-                        .name("name")
-                        .build()
-                )
+            Arrays.asList(
+                VariableTypeAndName
+                    .builder()
+                    .variableType(
+                        VariableType.integerType()
+                    )
+                    .name("name")
+                    .build(),
+                VariableTypeAndName
+                    .builder()
+                    .variableType(
+                        VariableType.integerType()
+                    )
+                    .name("name")
+                    .build()
             )
         )
         .outputType(
             VariableType.integerType()
         )
         .testcases(
-            new ArrayList<TestCaseWithExpectedResult>(
-                Arrays.asList(
-                    TestCaseWithExpectedResult
-                        .builder()
-                        .testCase(
-                            TestCase
-                                .builder()
-                                .id("id")
-                                .params(
-                                    new ArrayList<VariableValue>(
-                                        Arrays.asList(
-                                            VariableValue.integerValue(),
-                                            VariableValue.integerValue()
-                                        )
-                                    )
+            Arrays.asList(
+                TestCaseWithExpectedResult
+                    .builder()
+                    .testCase(
+                        TestCase
+                            .builder()
+                            .id("id")
+                            .params(
+                                Arrays.asList(
+                                    VariableValue.integerValue(),
+                                    VariableValue.integerValue()
                                 )
-                                .build()
-                        )
-                        .expectedResult(
-                            VariableValue.integerValue()
-                        )
-                        .build(),
-                    TestCaseWithExpectedResult
-                        .builder()
-                        .testCase(
-                            TestCase
-                                .builder()
-                                .id("id")
-                                .params(
-                                    new ArrayList<VariableValue>(
-                                        Arrays.asList(
-                                            VariableValue.integerValue(),
-                                            VariableValue.integerValue()
-                                        )
-                                    )
+                            )
+                            .build()
+                    )
+                    .expectedResult(
+                        VariableValue.integerValue()
+                    )
+                    .build(),
+                TestCaseWithExpectedResult
+                    .builder()
+                    .testCase(
+                        TestCase
+                            .builder()
+                            .id("id")
+                            .params(
+                                Arrays.asList(
+                                    VariableValue.integerValue(),
+                                    VariableValue.integerValue()
                                 )
-                                .build()
-                        )
-                        .expectedResult(
-                            VariableValue.integerValue()
-                        )
-                        .build()
-                )
+                            )
+                            .build()
+                    )
+                    .expectedResult(
+                        VariableValue.integerValue()
+                    )
+                    .build()
             )
         )
         .methodName("methodName")
@@ -1957,23 +1899,21 @@ client.problem().getDefaultStarterFiles(
     GetDefaultStarterFilesRequest
         .builder()
         .inputParams(
-            new ArrayList<VariableTypeAndName>(
-                Arrays.asList(
-                    VariableTypeAndName
-                        .builder()
-                        .variableType(
-                            VariableType.integerType()
-                        )
-                        .name("name")
-                        .build(),
-                    VariableTypeAndName
-                        .builder()
-                        .variableType(
-                            VariableType.integerType()
-                        )
-                        .name("name")
-                        .build()
-                )
+            Arrays.asList(
+                VariableTypeAndName
+                    .builder()
+                    .variableType(
+                        VariableType.integerType()
+                    )
+                    .name("name")
+                    .build(),
+                VariableTypeAndName
+                    .builder()
+                    .variableType(
+                        VariableType.integerType()
+                    )
+                    .name("name")
+                    .build()
             )
         )
         .outputType(

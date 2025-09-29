@@ -5,6 +5,7 @@ import { ts } from "ts-morph";
 import { GeneratedEndpointRequest } from "../../endpoint-request/GeneratedEndpointRequest";
 import { GeneratedSdkClientClassImpl } from "../../GeneratedSdkClientClassImpl";
 import { buildUrl } from "../utils/buildUrl";
+import { generateEndpointMetadata } from "../utils/generateEndpointMetadata";
 import {
     getAbortSignalExpression,
     getMaxRetriesExpression,
@@ -25,6 +26,7 @@ export declare namespace GeneratedDefaultEndpointImplementation {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         omitUndefined: boolean;
+        generateEndpointMetadata: boolean;
     }
 }
 
@@ -33,13 +35,14 @@ const EXAMPLE_PREFIX = "    ";
 export class GeneratedDefaultEndpointImplementation implements GeneratedEndpointImplementation {
     public readonly endpoint: HttpEndpoint;
     public readonly response: GeneratedEndpointResponse;
-    private generatedSdkClientClass: GeneratedSdkClientClassImpl;
-    private includeCredentialsOnCrossOriginRequests: boolean;
-    private defaultTimeoutInSeconds: number | "infinity" | undefined;
-    private request: GeneratedEndpointRequest;
-    private includeSerdeLayer: boolean;
-    private retainOriginalCasing: boolean;
-    private omitUndefined: boolean;
+    private readonly generatedSdkClientClass: GeneratedSdkClientClassImpl;
+    private readonly includeCredentialsOnCrossOriginRequests: boolean;
+    private readonly defaultTimeoutInSeconds: number | "infinity" | undefined;
+    private readonly request: GeneratedEndpointRequest;
+    private readonly includeSerdeLayer: boolean;
+    private readonly retainOriginalCasing: boolean;
+    private readonly omitUndefined: boolean;
+    private readonly generateEndpointMetadata: boolean;
 
     constructor({
         endpoint,
@@ -50,7 +53,8 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         request,
         includeSerdeLayer,
         retainOriginalCasing,
-        omitUndefined
+        omitUndefined,
+        generateEndpointMetadata
     }: GeneratedDefaultEndpointImplementation.Init) {
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
@@ -61,6 +65,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
         this.omitUndefined = omitUndefined;
+        this.generateEndpointMetadata = generateEndpointMetadata;
     }
 
     public isPaginated(context: SdkContext): boolean {
@@ -161,12 +166,12 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         const imports = this.request.getExampleEndpointImports({
             context: args.context,
             example: args.example,
-            opts: args.opts
+            opts: { ...args.opts, isForRequest: true }
         });
         const exampleParameters = this.request.getExampleEndpointParameters({
             context: args.context,
             example: args.example,
-            opts: args.opts
+            opts: { ...args.opts, isForRequest: true }
         });
         if (exampleParameters == null) {
             return undefined;
@@ -298,6 +303,12 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
     public getStatements(context: SdkContext): ts.Statement[] {
         const listFnName = "list";
         const body = [
+            ...(this.generateEndpointMetadata
+                ? generateEndpointMetadata({
+                      httpEndpoint: this.endpoint,
+                      context
+                  })
+                : []),
             ...this.request.getBuildRequestStatements(context),
             ...this.invokeFetcherAndReturnResponse(context)
         ];
@@ -469,7 +480,10 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                 )
             }),
 
-            withCredentials: this.includeCredentialsOnCrossOriginRequests
+            withCredentials: this.includeCredentialsOnCrossOriginRequests,
+            endpointMetadata: this.generateEndpointMetadata
+                ? this.generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier()
+                : undefined
         };
 
         if (this.endpoint.response?.body?.type === "text") {

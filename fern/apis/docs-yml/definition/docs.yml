@@ -13,6 +13,8 @@ types:
       - go
       - ruby
       - csharp
+      - php
+      - swift
       - nodets
       - nodejs
       - dotnet
@@ -135,6 +137,7 @@ types:
         docs: The navigation config is skipped when multiple versions are present.
       "navbar-links": optional<list<NavbarLink>>
       "footer-links": optional<FooterLinksConfig>
+      "page-actions": optional<PageActionsConfig>
       experimental: optional<ExperimentalConfig>
       "default-language": optional<ProgrammingLanguage>
 
@@ -165,6 +168,13 @@ types:
       js: optional<JsConfig>
 
   TabId: string
+
+  PageActionsConfig:
+    properties:
+      chatgpt: optional<boolean>
+      claude: optional<boolean>
+      vscode: optional<boolean>
+      cursor: optional<boolean>
 
   AIChatConfig:
     properties:
@@ -266,6 +276,21 @@ types:
         type: optional<VersionAvailability>
         docs: |
           If `availability` is set to `deprecated`, Fern will display a warning banner on the docs site.
+
+  Availability:
+    enum:
+      - name: Stable
+        value: stable
+      - name: GenerallyAvailable
+        value: generally-available
+      - name: InDevelopment
+        value: in-development
+      - name: PreRelease
+        value: pre-release
+      - name: Deprecated
+        value: deprecated
+      - name: Beta
+        value: beta
 
   VersionAvailability:
     enum:
@@ -424,6 +449,18 @@ types:
         docs: |
           If `disable-header` is set to true, the header will not be rendered. Instead, the logo will be rendered as part of the sidebar,
           and a 1px border will separate the sidebar from the content.
+
+      hide-nav-links:
+        type: optional<boolean>
+        availability: in-development
+        docs: |
+          If `hide-nav-links` is set to true, the navbar links will not be rendered. This can be overridden for a specific page using the frontmatter.
+
+      hide-feedback:
+        type: optional<boolean>
+        availability: in-development
+        docs: |
+          If `hide-feedback` is set to true, the feedback button will not be rendered. This can be overridden for a specific page using the frontmatter.
 
   SearchbarPlacement:
     enum:
@@ -584,6 +621,7 @@ types:
       icon: optional<string>
       hidden: optional<boolean>
       noindex: optional<boolean>
+      availability: optional<Availability>
 
   ChangelogConfiguration:
     extends: [WithPermissions, WithFeatureFlags]
@@ -609,6 +647,7 @@ types:
       icon: optional<string>
       hidden: optional<boolean>
       skip-slug: optional<boolean>
+      availability: optional<Availability>
 
   ApiReferenceConfiguration:
     extends: [WithPermissions, WithFeatureFlags]
@@ -636,6 +675,7 @@ types:
       icon: optional<string>
       slug: optional<string>
       hidden: optional<boolean>
+      availability: optional<Availability>
       skip-slug: optional<boolean>
       alphabetized:
         type: optional<boolean>
@@ -755,6 +795,8 @@ types:
       java: optional<SnippetLanguageConfiguration>
       ruby: optional<SnippetLanguageConfiguration>
       csharp: optional<SnippetLanguageConfiguration>
+      php: optional<SnippetLanguageConfiguration>
+      swift: optional<SnippetLanguageConfiguration>
 
   ColorsConfiguration:
     properties:
@@ -1039,6 +1081,13 @@ types:
         availability: pre-release
         docs: |
           OpenAPI parser in alpha.
+      dynamic-snippets:
+        type: optional<boolean>
+        availability: pre-release
+        docs: |
+          If `dynamic-snippets` is set to true, snippets will be created using a dynamic method.
+
+          This allows users to generate snippets for all SDK languages.
 
   PlaygroundSettings:
     properties:

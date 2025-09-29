@@ -132,6 +132,16 @@
         }
       ]
     },
+    "page-actions": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/docs.PageActionsConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "experimental": {
       "oneOf": [
         {
@@ -928,6 +938,17 @@
       ],
       "additionalProperties": false
     },
+    "docs.Availability": {
+      "type": "string",
+      "enum": [
+        "stable",
+        "generally-available",
+        "in-development",
+        "pre-release",
+        "deprecated",
+        "beta"
+      ]
+    },
     "docs.PageConfiguration": {
       "type": "object",
       "properties": {
@@ -1001,6 +1022,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "availability": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Availability"
             },
             {
               "type": "null"
@@ -1115,6 +1146,16 @@
               "type": "null"
             }
           ]
+        },
+        "availability": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Availability"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -1206,6 +1247,26 @@
           ]
         },
         "csharp": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.SnippetLanguageConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "php": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.SnippetLanguageConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "swift": {
           "oneOf": [
             {
               "$ref": "#/definitions/docs.SnippetLanguageConfiguration"
@@ -1824,6 +1885,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "availability": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Availability"
             },
             {
               "type": "null"
@@ -2547,6 +2618,52 @@
       },
       "additionalProperties": false
     },
+    "docs.PageActionsConfig": {
+      "type": "object",
+      "properties": {
+        "chatgpt": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "claude": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vscode": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cursor": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "docs.ExperimentalConfig": {
       "type": "object",
       "properties": {
@@ -2592,6 +2709,16 @@
               "type": "null"
             }
           ]
+        },
+        "dynamic-snippets": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -2606,6 +2733,8 @@
         "go",
         "ruby",
         "csharp",
+        "php",
+        "swift",
         "nodets",
         "nodejs",
         "dotnet",
@@ -3355,6 +3484,26 @@
           ]
         },
         "disable-header": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hide-nav-links": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hide-feedback": {
           "oneOf": [
             {
               "type": "boolean"

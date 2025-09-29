@@ -15,13 +15,7 @@
 ```go
 client.Headers.Send(
         context.TODO(),
-        &fern.SendEnumAsHeaderRequest{
-            Operand: fern.OperandGreaterThan,
-            MaybeOperand: fern.OperandGreaterThan.Ptr(),
-            OperandOrColor: &fern.ColorOrOperand{
-                Color: fern.ColorRed,
-            },
-        },
+        request,
     )
 }
 ```
@@ -90,12 +84,7 @@ client.Headers.Send(
 ```go
 client.InlinedRequest.Send(
         context.TODO(),
-        &fern.SendEnumInlinedRequest{
-            Operand: fern.OperandGreaterThan,
-            OperandOrColor: &fern.ColorOrOperand{
-                Color: fern.ColorRed,
-            },
-        },
+        request,
     )
 }
 ```
@@ -164,7 +153,7 @@ client.InlinedRequest.Send(
 ```go
 client.PathParam.Send(
         context.TODO(),
-        fern.OperandGreaterThan,
+        fern.OperandGreaterThan.Ptr(),
         &fern.ColorOrOperand{
             Color: fern.ColorRed,
         },
@@ -220,12 +209,7 @@ client.PathParam.Send(
 ```go
 client.QueryParam.Send(
         context.TODO(),
-        &fern.SendEnumAsQueryParamRequest{
-            Operand: fern.OperandGreaterThan,
-            OperandOrColor: &fern.ColorOrOperand{
-                Color: fern.ColorRed,
-            },
-        },
+        request,
     )
 }
 ```
@@ -293,24 +277,7 @@ client.QueryParam.Send(
 ```go
 client.QueryParam.SendList(
         context.TODO(),
-        &fern.SendEnumListAsQueryParamRequest{
-            Operand: []fern.Operand{
-                fern.OperandGreaterThan,
-            },
-            MaybeOperand: []*fern.Operand{
-                fern.OperandGreaterThan.Ptr(),
-            },
-            OperandOrColor: []*fern.ColorOrOperand{
-                &fern.ColorOrOperand{
-                    Color: fern.ColorRed,
-                },
-            },
-            MaybeOperandOrColor: []*fern.ColorOrOperand{
-                &fern.ColorOrOperand{
-                    Color: fern.ColorRed,
-                },
-            },
-        },
+        request,
     )
 }
 ```

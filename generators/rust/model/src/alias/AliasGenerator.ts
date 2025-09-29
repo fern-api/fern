@@ -4,7 +4,7 @@ import { Attribute, PUBLIC, rust } from "@fern-api/rust-codegen";
 import { AliasTypeDeclaration, TypeDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 import { generateRustTypeForTypeReference } from "../converters";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
-import { isChronoType, isCollectionType, isUnknownType, isUuidType } from "../utils/primitiveTypeUtils";
+import { isChronoType, isCollectionType, isUuidType, typeSupportsHashAndEq } from "../utils/primitiveTypeUtils";
 
 export class AliasGenerator {
     private readonly typeDeclaration: TypeDeclaration;
@@ -32,7 +32,7 @@ export class AliasGenerator {
     }
 
     private getFilename(): string {
-        return this.typeDeclaration.name.name.snakeCase.unsafeName + ".rs";
+        return this.context.getUniqueFilenameForType(this.typeDeclaration);
     }
 
     private getFileDirectory(): RelativeFilePath {
@@ -65,7 +65,8 @@ export class AliasGenerator {
         // Add imports for custom named types FIRST
         const customTypes = this.getCustomTypesUsedInAlias();
         customTypes.forEach((typeName) => {
-            const moduleNameEscaped = this.context.escapeRustKeyword(typeName.snakeCase.unsafeName);
+            const modulePath = this.context.getModulePathForType(typeName.snakeCase.unsafeName);
+            const moduleNameEscaped = this.context.escapeRustKeyword(modulePath);
             writer.writeLine(`use crate::${moduleNameEscaped}::${typeName.pascalCase.unsafeName};`);
         });
 
@@ -84,10 +85,10 @@ export class AliasGenerator {
             writer.writeLine("use std::collections::HashMap;");
         }
 
-        // Add serde_json if aliasing unknown type
-        if (isUnknownType(innerType)) {
-            writer.writeLine("use serde_json::Value;");
-        }
+        // TODO: @iamnamananand996 build to use serde_json::Value ---> Value directly
+        // if (hasJsonValueFields(properties)) {
+        //     writer.writeLine("use serde_json::Value;");
+        // }
     }
 
     private generateNewtypeForTypeDeclaration(): rust.NewtypeStruct {
@@ -105,12 +106,23 @@ export class AliasGenerator {
 
         // Always add basic derives
         const derives = ["Debug", "Clone", "Serialize", "Deserialize", "PartialEq"];
+
+        // Only add Eq and Hash if the aliased type supports them
+        if (this.canDeriveHashAndEq()) {
+            derives.push("Eq", "Hash");
+        }
+
         attributes.push(Attribute.derive(derives));
 
         // DateTime aliases will use default RFC 3339 string serialization
         // No special serde handling needed for datetime aliases
 
         return attributes;
+    }
+
+    private canDeriveHashAndEq(): boolean {
+        // Check if the aliased type can support Hash and Eq derives
+        return typeSupportsHashAndEq(this.aliasTypeDeclaration.aliasOf, this.context);
     }
 
     private getCustomTypesUsedInAlias(): {

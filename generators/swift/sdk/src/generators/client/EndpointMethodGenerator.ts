@@ -68,7 +68,7 @@ export class EndpointMethodGenerator {
 
         endpoint.headers.forEach((header) => {
             const swiftType = this.sdkGeneratorContext.getSwiftTypeForTypeReference(header.valueType);
-            if (swiftType.unwrappedType !== "string") {
+            if (swiftType.nonOptionalType !== "string") {
                 return;
             }
             params.push(
@@ -130,16 +130,22 @@ export class EndpointMethodGenerator {
                         docsContent: endpoint.requestBody.docs
                     })
                 );
-            } else {
-                // TODO(kafkas): Handle other request body types
+            } else if (endpoint.requestBody.type === "fileUpload") {
+                const fullyQualifiedRequestTypeSymbolName =
+                    this.sdkGeneratorContext.project.symbolRegistry.getFullyQualifiedRequestTypeSymbolOrThrow(
+                        endpoint.id,
+                        endpoint.requestBody.name.pascalCase.unsafeName
+                    );
                 params.push(
                     swift.functionParameter({
                         argumentLabel: "request",
                         unsafeName: "request",
-                        type: swift.Type.existentialAny(swift.Protocol.Codable),
+                        type: swift.Type.custom(fullyQualifiedRequestTypeSymbolName),
                         docsContent: endpoint.requestBody.docs
                     })
                 );
+            } else {
+                assertNever(endpoint.requestBody);
             }
         }
 
@@ -175,6 +181,27 @@ export class EndpointMethodGenerator {
     private getMethodBodyForEndpoint(endpoint: HttpEndpoint): swift.CodeBlock {
         // TODO(kafkas): Handle name collisions
 
+        const statements: swift.Statement[] = [
+            swift.Statement.return(
+                swift.Expression.try(
+                    swift.Expression.await(
+                        swift.Expression.methodCall({
+                            target: swift.Expression.reference(
+                                this.clientGeneratorContext.httpClient.property.unsafeName
+                            ),
+                            methodName: "performRequest",
+                            arguments_: this.getPerformRequestArgumentsForEndpoint(endpoint),
+                            multiline: true
+                        })
+                    )
+                )
+            )
+        ];
+
+        return swift.CodeBlock.withStatements(statements);
+    }
+
+    private getPerformRequestArgumentsForEndpoint(endpoint: HttpEndpoint) {
         const arguments_ = [
             swift.functionArgument({
                 label: "method",
@@ -194,11 +221,18 @@ export class EndpointMethodGenerator {
                     value: swift.Expression.enumCaseShorthand("applicationOctetStream")
                 })
             );
+        } else if (endpoint.requestBody?.type === "fileUpload") {
+            arguments_.push(
+                swift.functionArgument({
+                    label: "contentType",
+                    value: swift.Expression.enumCaseShorthand("multipartFormData")
+                })
+            );
         }
 
         const validHeaders = endpoint.headers.filter(
             (header) =>
-                this.sdkGeneratorContext.getSwiftTypeForTypeReference(header.valueType).unwrappedType === "string"
+                this.sdkGeneratorContext.getSwiftTypeForTypeReference(header.valueType).nonOptionalType === "string"
         );
 
         if (validHeaders.length > 0) {
@@ -232,14 +266,23 @@ export class EndpointMethodGenerator {
                                 return [
                                     key,
                                     swift.Expression.methodCallWithTrailingClosure({
-                                        target: swift.Expression.reference(queryParam.name.name.camelCase.unsafeName),
+                                        target:
+                                            swiftType.nonOptionalType === "nullable"
+                                                ? swift.Expression.memberAccess({
+                                                      target: swift.Expression.reference(
+                                                          queryParam.name.name.camelCase.unsafeName
+                                                      ),
+                                                      optionalChain: true,
+                                                      memberName: "wrappedValue"
+                                                  })
+                                                : swift.Expression.reference(queryParam.name.name.camelCase.unsafeName),
                                         methodName: "map",
                                         closureBody: swift.Expression.contextualMethodCall({
                                             methodName: getQueryParamCaseName(swiftType),
                                             arguments_: [
                                                 swift.functionArgument({
                                                     value:
-                                                        swiftType.unwrappedType === "custom"
+                                                        swiftType.nonOptionalType === "custom"
                                                             ? swift.Expression.memberAccess({
                                                                   target: swift.Expression.reference("$0"),
                                                                   memberName: "rawValue"
@@ -253,24 +296,42 @@ export class EndpointMethodGenerator {
                             } else {
                                 return [
                                     key,
-                                    swift.Expression.contextualMethodCall({
-                                        methodName: getQueryParamCaseName(swiftType),
-                                        arguments_: [
-                                            swift.functionArgument({
-                                                value:
-                                                    swiftType.unwrappedType === "custom"
-                                                        ? swift.Expression.memberAccess({
-                                                              target: swift.Expression.reference(
-                                                                  queryParam.name.name.camelCase.unsafeName
-                                                              ),
-                                                              memberName: "rawValue"
-                                                          })
-                                                        : swift.Expression.reference(
-                                                              queryParam.name.name.camelCase.unsafeName
-                                                          )
-                                            })
-                                        ]
-                                    })
+                                    swiftType.nonOptionalType === "nullable"
+                                        ? swift.Expression.methodCallWithTrailingClosure({
+                                              target: swift.Expression.memberAccess({
+                                                  target: swift.Expression.reference(
+                                                      queryParam.name.name.camelCase.unsafeName
+                                                  ),
+                                                  memberName: "wrappedValue"
+                                              }),
+                                              methodName: "map",
+                                              closureBody: swift.Expression.contextualMethodCall({
+                                                  methodName: getQueryParamCaseName(swiftType),
+                                                  arguments_: [
+                                                      swift.functionArgument({
+                                                          value: swift.Expression.reference("$0")
+                                                      })
+                                                  ]
+                                              })
+                                          })
+                                        : swift.Expression.contextualMethodCall({
+                                              methodName: getQueryParamCaseName(swiftType),
+                                              arguments_: [
+                                                  swift.functionArgument({
+                                                      value:
+                                                          swiftType.nonOptionalType === "custom"
+                                                              ? swift.Expression.memberAccess({
+                                                                    target: swift.Expression.reference(
+                                                                        queryParam.name.name.camelCase.unsafeName
+                                                                    ),
+                                                                    memberName: "rawValue"
+                                                                })
+                                                              : swift.Expression.reference(
+                                                                    queryParam.name.name.camelCase.unsafeName
+                                                                )
+                                                  })
+                                              ]
+                                          })
                                 ];
                             }
                         }),
@@ -281,12 +342,24 @@ export class EndpointMethodGenerator {
         }
 
         if (endpoint.requestBody) {
-            arguments_.push(
-                swift.functionArgument({
-                    label: "body",
-                    value: swift.Expression.reference("request")
-                })
-            );
+            if (endpoint.requestBody.type === "fileUpload") {
+                arguments_.push(
+                    swift.functionArgument({
+                        label: "body",
+                        value: swift.Expression.methodCall({
+                            target: swift.Expression.reference("request"),
+                            methodName: "asMultipartFormData"
+                        })
+                    })
+                );
+            } else {
+                arguments_.push(
+                    swift.functionArgument({
+                        label: "body",
+                        value: swift.Expression.reference("request")
+                    })
+                );
+            }
         }
 
         arguments_.push(
@@ -310,22 +383,7 @@ export class EndpointMethodGenerator {
             );
         }
 
-        return swift.CodeBlock.withStatements([
-            swift.Statement.return(
-                swift.Expression.try(
-                    swift.Expression.await(
-                        swift.Expression.methodCall({
-                            target: swift.Expression.reference(
-                                this.clientGeneratorContext.httpClient.property.unsafeName
-                            ),
-                            methodName: "performRequest",
-                            arguments_,
-                            multiline: true
-                        })
-                    )
-                )
-            )
-        ]);
+        return arguments_;
     }
 
     private getEnumCaseNameForHttpMethod(method: HttpMethod): string {

@@ -102,7 +102,9 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": "rootVariable"
                     }
                 ],
                 "body": null
@@ -115,5 +117,33 @@
     },
     "pathParameters": [],
     "environments": null,
+    "variables": [
+        {
+            "id": "rootVariable",
+            "name": {
+                "originalName": "rootVariable",
+                "camelCase": {
+                    "unsafeName": "rootVariable",
+                    "safeName": "rootVariable"
+                },
+                "snakeCase": {
+                    "unsafeName": "root_variable",
+                    "safeName": "root_variable"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ROOT_VARIABLE",
+                    "safeName": "ROOT_VARIABLE"
+                },
+                "pascalCase": {
+                    "unsafeName": "RootVariable",
+                    "safeName": "RootVariable"
+                }
+            },
+            "typeReference": {
+                "type": "primitive",
+                "value": "STRING"
+            }
+        }
+    ],
     "generatorConfig": null
 }

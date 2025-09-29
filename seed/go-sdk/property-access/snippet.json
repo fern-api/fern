@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifier_override": "endpoint_.createUser"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/property-access/fern\"\n\tfernclient \"github.com/property-access/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.CreateUser(\n\tcontext.TODO(),\n\t\u0026fern.User{\n\t\tId:       \"id\",\n\t\tEmail:    \"email\",\n\t\tPassword: \"password\",\n\t\tProfile: \u0026fern.UserProfile{\n\t\t\tName: \"name\",\n\t\t\tVerification: \u0026fern.UserProfileVerification{\n\t\t\t\tVerified: \"verified\",\n\t\t\t},\n\t\t\tSsn: \"ssn\",\n\t\t},\n\t},\n)\n"
+            }
+        }
+    ]
+}

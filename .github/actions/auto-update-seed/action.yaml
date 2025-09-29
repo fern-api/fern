@@ -1,0 +1,83 @@
+name: Auto Update Seed
+description: Run seed and then automatically create and merge PR with changes
+
+# Note: mostly matching inputs to cached-seed since this is a passthrough file
+# However, we don't need to validate git diff since we are always updating the seed
+inputs:
+  generator-name:
+    description: Generator to use (e.g., go-sdk, ruby-sdk)
+    required: true
+  generator-path:
+    description: The path to the source code of the generator (e.g., generators/go, generators/ruby)
+    required: true
+  skip-scripts:
+    description: Whether to skip running scripts during seed generation
+    required: false
+    default: "false"
+  fixtures-to-run:
+    description: Specific fixtures to run. If not supplied, will run all fixtures. Note - for multiple fixtures at once, separate by space, not comma.
+    required: false
+    default: ""
+  allow-unexpected-failures:
+    description: Whether to allow unexpected failures during seed generation
+    required: false
+    default: "false"
+  index:
+    description: The matrix strategy index of the job (to differentiate when parallelizing jobs)
+    required: false
+    default: "0"
+  cache-disabled:
+    description: "Whether to skip caching and always regenerate"
+    required: false
+    default: "true"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Run seed
+      uses: ./.github/actions/cached-seed
+      with:
+        generator-name: ${{ inputs.generator-name }}
+        generator-path: ${{ inputs.generator-path }}
+        fixtures-to-run: ${{ inputs.fixtures-to-run }}
+        validate-git-diff: false
+        allow-unexpected-failures: ${{ inputs.allow-unexpected-failures }}
+        skip-scripts: ${{ inputs.skip-scripts }}
+        cache-disabled: ${{ inputs.cache-disabled }}
+
+    # Add changes first to simplify git diff checks, no changes will NOT error here
+    - name: Check for changes
+      id: check-changes
+      shell: bash
+      run: |
+        git add seed/${{ inputs.generator-name }}/*
+        if git --no-pager diff --staged --exit-code; then
+          echo "No changes detected for seed."
+          echo "seed-changes-generated=false" >> $GITHUB_OUTPUT
+        else
+          echo "Changes detected for seed."
+          echo "seed-changes-generated=true" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Log if no changes
+      if: steps.check-changes.outputs.seed-changes-generated == 'false'
+      shell: bash
+      run: |
+        echo "No changes detected for seed. Skipping artifact upload."
+
+    # Make patch file for seed changes
+    - name: Make Patch for Seed Artifacts
+      if: steps.check-changes.outputs.seed-changes-generated == 'true'
+      shell: bash
+      run: |
+        git diff --staged > seed-${{ inputs.generator-name }}-${{ inputs.index }}.patch
+
+    # Upload patch files as artifacts to be applied and committed by caller when all of seed is up to date
+    - name: Upload Seed Artifacts
+      if: steps.check-changes.outputs.seed-changes-generated == 'true'
+      uses: actions/upload-artifact@v4
+      with:
+        name: seed-${{ inputs.generator-name }}-${{ inputs.index }}.patch
+        path: seed-${{ inputs.generator-name }}-${{ inputs.index }}.patch
+        if-no-files-found: error
+        retention-days: 7

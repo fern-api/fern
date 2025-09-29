@@ -1,7 +1,5 @@
-import { csharp } from "@fern-api/csharp-codegen";
-
+import { ast } from "@fern-api/csharp-codegen";
 import { HttpEndpoint, SdkRequest, TypeReference } from "@fern-fern/ir-sdk/api";
-
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { RawClient } from "../http/RawClient";
 import {
@@ -24,7 +22,7 @@ export class ReferencedEndpointRequest extends EndpointRequest {
         this.requestBodyShape = requestBodyShape;
     }
 
-    public getParameterType(): csharp.Type {
+    public getParameterType(): ast.Type {
         return this.context.csharpTypeMapper.convert({ reference: this.requestBodyShape });
     }
 

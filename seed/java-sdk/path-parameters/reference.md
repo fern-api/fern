@@ -62,6 +62,7 @@ client.organizations().getOrganization("tenant_id", "organization_id");
 
 ```java
 client.organizations().getOrganizationUser(
+    "tenant_id",
     "organization_id",
     "user_id",
     GetOrganizationUserRequest
@@ -124,6 +125,7 @@ client.organizations().getOrganizationUser(
 
 ```java
 client.organizations().searchOrganizations(
+    "tenant_id",
     "organization_id",
     SearchOrganizationsRequest
         .builder()
@@ -187,6 +189,7 @@ client.organizations().searchOrganizations(
 
 ```java
 client.user().getUser(
+    "tenant_id",
     "user_id",
     GetUsersRequest
         .builder()
@@ -245,9 +248,7 @@ client.user().createUser(
         .builder()
         .name("name")
         .tags(
-            new ArrayList<String>(
-                Arrays.asList("tags", "tags")
-            )
+            Arrays.asList("tags", "tags")
         )
         .build()
 );
@@ -299,6 +300,7 @@ client.user().createUser(
 
 ```java
 client.user().updateUser(
+    "tenant_id",
     "user_id",
     UpdateUserRequest
         .builder()
@@ -307,9 +309,7 @@ client.user().updateUser(
                 .builder()
                 .name("name")
                 .tags(
-                    new ArrayList<String>(
-                        Arrays.asList("tags", "tags")
-                    )
+                    Arrays.asList("tags", "tags")
                 )
                 .build()
         )
@@ -371,6 +371,7 @@ client.user().updateUser(
 
 ```java
 client.user().searchUsers(
+    "tenant_id",
     "user_id",
     SearchUsersRequest
         .builder()

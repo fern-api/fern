@@ -23,6 +23,7 @@ types:
       - commons.WithNamespace
     properties:
       authed: boolean
+      security: finalIr.EndpointSecurity
       internal: optional<boolean>
       idempotent: optional<boolean>
       method: finalIr.HttpMethod
@@ -61,6 +62,7 @@ types:
           Populated by `x-fern-examples` on a path object.
           Also migrated from `x-readme.code-samples` if present.
       pagination: optional<finalIr.Pagination>
+      retries: optional<finalIr.RetriesConfiguration>
 
   WebhookWithExample:
     extends:

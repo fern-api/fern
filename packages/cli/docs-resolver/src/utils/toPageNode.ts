@@ -41,6 +41,7 @@ export function toPageNode({
         authed: undefined,
         viewers: page.viewers,
         orphaned: page.orphaned,
-        featureFlags: page.featureFlags
+        featureFlags: page.featureFlags,
+        availability: page.availability
     };
 }

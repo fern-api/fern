@@ -81,7 +81,9 @@ public final class Files {
         @JsonSetter(value = "files", nulls = Nulls.SKIP)
         public Builder files(List<FileInfoV2> files) {
             this.files.clear();
-            this.files.addAll(files);
+            if (files != null) {
+                this.files.addAll(files);
+            }
             return this;
         }
 

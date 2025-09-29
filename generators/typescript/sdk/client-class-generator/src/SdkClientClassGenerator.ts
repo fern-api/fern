@@ -31,7 +31,7 @@ export declare namespace SdkClientClassGenerator {
         exportsManager: ExportsManager;
         omitFernHeaders: boolean;
         useDefaultRequestParameterValues: boolean;
-        exportAllRequestsAtRoot: boolean;
+        generateEndpointMetadata: boolean;
     }
 
     export namespace generateService {
@@ -45,30 +45,31 @@ export declare namespace SdkClientClassGenerator {
 }
 
 export class SdkClientClassGenerator {
-    private intermediateRepresentation: IntermediateRepresentation;
-    private errorResolver: ErrorResolver;
-    private packageResolver: PackageResolver;
-    private neverThrowErrors: boolean;
-    private includeCredentialsOnCrossOriginRequests: boolean;
-    private allowCustomFetcher: boolean;
-    private shouldGenerateWebsocketClients: boolean;
-    private requireDefaultEnvironment: boolean;
-    private defaultTimeoutInSeconds: number | "infinity" | undefined;
-    private npmPackage: NpmPackage | undefined;
-    private includeContentHeadersOnFileDownloadResponse: boolean;
-    private includeSerdeLayer: boolean;
-    private retainOriginalCasing: boolean;
-    private inlineFileProperties: boolean;
-    private omitUndefined: boolean;
-    private allowExtraFields: boolean;
-    private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
-    private streamType: "wrapper" | "web";
+    private readonly intermediateRepresentation: IntermediateRepresentation;
+    private readonly errorResolver: ErrorResolver;
+    private readonly packageResolver: PackageResolver;
+    private readonly neverThrowErrors: boolean;
+    private readonly includeCredentialsOnCrossOriginRequests: boolean;
+    private readonly allowCustomFetcher: boolean;
+    private readonly shouldGenerateWebsocketClients: boolean;
+    private readonly requireDefaultEnvironment: boolean;
+    private readonly defaultTimeoutInSeconds: number | "infinity" | undefined;
+    private readonly npmPackage: NpmPackage | undefined;
+    private readonly includeContentHeadersOnFileDownloadResponse: boolean;
+    private readonly includeSerdeLayer: boolean;
+    private readonly retainOriginalCasing: boolean;
+    private readonly inlineFileProperties: boolean;
+    private readonly omitUndefined: boolean;
+    private readonly allowExtraFields: boolean;
+    private readonly oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
+    private readonly streamType: "wrapper" | "web";
     private readonly formDataSupport: "Node16" | "Node18";
     private readonly fileResponseType: "stream" | "binary-response";
-    private exportsManager: ExportsManager;
-    private omitFernHeaders: boolean;
-    private useDefaultRequestParameterValues: boolean;
-    private exportAllRequestsAtRoot: boolean;
+    private readonly exportsManager: ExportsManager;
+    private readonly omitFernHeaders: boolean;
+    private readonly useDefaultRequestParameterValues: boolean;
+    private readonly generateEndpointMetadata: boolean;
+
     constructor({
         intermediateRepresentation,
         errorResolver,
@@ -93,7 +94,7 @@ export class SdkClientClassGenerator {
         formDataSupport,
         omitFernHeaders,
         useDefaultRequestParameterValues,
-        exportAllRequestsAtRoot
+        generateEndpointMetadata
     }: SdkClientClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
@@ -118,7 +119,7 @@ export class SdkClientClassGenerator {
         this.formDataSupport = formDataSupport;
         this.omitFernHeaders = omitFernHeaders;
         this.useDefaultRequestParameterValues = useDefaultRequestParameterValues;
-        this.exportAllRequestsAtRoot = exportAllRequestsAtRoot;
+        this.generateEndpointMetadata = generateEndpointMetadata;
     }
 
     public generateService({
@@ -155,7 +156,7 @@ export class SdkClientClassGenerator {
             formDataSupport: this.formDataSupport,
             omitFernHeaders: this.omitFernHeaders,
             useDefaultRequestParameterValues: this.useDefaultRequestParameterValues,
-            exportAllRequestsAtRoot: this.exportAllRequestsAtRoot
+            generateEndpointMetadata: this.generateEndpointMetadata
         });
     }
 }

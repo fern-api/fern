@@ -340,6 +340,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -996,6 +997,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 }
@@ -1110,7 +1112,9 @@
                                 "type": "string",
                                 "value": "failure"
                             }
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": true
@@ -1208,7 +1212,9 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": true
@@ -1387,7 +1393,9 @@
                                         "type": "string",
                                         "value": "CreateUserRequest"
                                     }
-                                }
+                                },
+                                "propertyAccess": null,
+                                "variable": null
                             },
                             {
                                 "name": {
@@ -1418,7 +1426,9 @@
                                         "type": "string",
                                         "value": "v1"
                                     }
-                                }
+                                },
+                                "propertyAccess": null,
+                                "variable": null
                             },
                             {
                                 "name": {
@@ -1446,7 +1456,9 @@
                                 "typeReference": {
                                     "type": "primitive",
                                     "value": "STRING"
-                                }
+                                },
+                                "propertyAccess": null,
+                                "variable": null
                             }
                         ]
                     },
@@ -1463,6 +1475,7 @@
         },
         "pathParameters": [],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,

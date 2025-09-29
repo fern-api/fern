@@ -63,6 +63,7 @@
                 },
                 "prefix": null,
                 "headerEnvVar": "FERN_API_KEY",
+                "key": "APIKey",
                 "docs": null
             }
         ],
@@ -242,6 +243,11 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "security": [
+                        {
+                            "APIKey": []
+                        }
+                    ],
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -327,6 +333,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": "GET request with custom api key"
                 },
@@ -353,6 +360,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -582,6 +590,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": "GET request with custom api key"
                 }
@@ -659,7 +668,9 @@
                 "typeReference": {
                     "type": "primitive",
                     "value": "STRING"
-                }
+                },
+                "propertyAccess": null,
+                "variable": null
             },
             {
                 "name": {
@@ -690,7 +701,9 @@
                         "type": "string",
                         "value": "01-01-2000"
                     }
-                }
+                },
+                "propertyAccess": null,
+                "variable": null
             }
         ],
         "endpoints": {
@@ -723,7 +736,9 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 },
                 "declaration": {
@@ -833,7 +848,9 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 },
                 "declaration": {
@@ -999,7 +1016,9 @@
                             "typeReference": {
                                 "type": "primitive",
                                 "value": "STRING"
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ],
                     "body": null,
@@ -1016,6 +1035,7 @@
         },
         "pathParameters": [],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,

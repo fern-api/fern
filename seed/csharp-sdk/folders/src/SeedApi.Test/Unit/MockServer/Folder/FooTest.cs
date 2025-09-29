@@ -6,7 +6,7 @@ namespace SeedApi.Test.Unit.MockServer.Folder;
 [TestFixture]
 public class FooTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         Server

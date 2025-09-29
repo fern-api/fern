@@ -17,27 +17,61 @@ package example
 
 import (
     client "github.com/query-parameters/fern/client"
-    context "context"
     fern "github.com/query-parameters/fern"
     uuid "github.com/google/uuid"
+    context "context"
 )
 
 func do() {
     client := client.NewClient()
-    client.User.GetUsername(
-        context.TODO(),
-        &fern.GetUsersRequest{
-            Limit: 1,
-            Id: uuid.MustParse(
-                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            ),
-            Date: fern.MustParseDateTime(
-                "2023-01-15",
-            ),
-            Deadline: fern.MustParseDateTime(
+    request := &fern.GetUsersRequest{
+        Limit: 1,
+        Id: uuid.MustParse(
+            "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        ),
+        Date: fern.MustParseDateTime(
+            "2023-01-15",
+        ),
+        Deadline: fern.MustParseDateTime(
+            "2024-01-15T09:30:00Z",
+        ),
+        Bytes: []byte("SGVsbG8gd29ybGQh"),
+        User: &fern.User{
+            Name: "name",
+            Tags: []string{
+                "tags",
+                "tags",
+            },
+        },
+        UserList: []*fern.User{
+            &fern.User{
+                Name: "name",
+                Tags: []string{
+                    "tags",
+                    "tags",
+                },
+            },
+            &fern.User{
+                Name: "name",
+                Tags: []string{
+                    "tags",
+                    "tags",
+                },
+            },
+        },
+        OptionalDeadline: fern.Time(
+            fern.MustParseDateTime(
                 "2024-01-15T09:30:00Z",
             ),
-            Bytes: []byte("SGVsbG8gd29ybGQh"),
+        ),
+        KeyValue: map[string]string{
+            "keyValue": "keyValue",
+        },
+        OptionalString: fern.String(
+            "optionalString",
+        ),
+        NestedUser: &fern.NestedUser{
+            Name: "name",
             User: &fern.User{
                 Name: "name",
                 Tags: []string{
@@ -45,63 +79,30 @@ func do() {
                     "tags",
                 },
             },
-            UserList: []*fern.User{
-                &fern.User{
-                    Name: "name",
-                    Tags: []string{
-                        "tags",
-                        "tags",
-                    },
-                },
-                &fern.User{
-                    Name: "name",
-                    Tags: []string{
-                        "tags",
-                        "tags",
-                    },
-                },
+        },
+        OptionalUser: &fern.User{
+            Name: "name",
+            Tags: []string{
+                "tags",
+                "tags",
             },
-            OptionalDeadline: fern.Time(
-                fern.MustParseDateTime(
-                    "2024-01-15T09:30:00Z",
-                ),
-            ),
-            KeyValue: map[string]string{
-                "keyValue": "keyValue",
-            },
-            OptionalString: fern.String(
-                "optionalString",
-            ),
-            NestedUser: &fern.NestedUser{
-                Name: "name",
-                User: &fern.User{
-                    Name: "name",
-                    Tags: []string{
-                        "tags",
-                        "tags",
-                    },
-                },
-            },
-            OptionalUser: &fern.User{
+        },
+        ExcludeUser: []*fern.User{
+            &fern.User{
                 Name: "name",
                 Tags: []string{
                     "tags",
                     "tags",
                 },
             },
-            ExcludeUser: []*fern.User{
-                &fern.User{
-                    Name: "name",
-                    Tags: []string{
-                        "tags",
-                        "tags",
-                    },
-                },
-            },
-            Filter: []string{
-                "filter",
-            },
         },
+        Filter: []string{
+            "filter",
+        },
+    }
+    client.User.GetUsername(
+        context.TODO(),
+        request,
     )
 }
 ```
@@ -190,6 +191,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
 - [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
 
+If the `Retry-After` header is present in the response, the SDK will prioritize respecting its value exactly
+over the default exponential backoff.
+
 Use the `option.WithMaxAttempts` option to configure this behavior for the entire client or an individual request:
 
 ```go
@@ -212,6 +216,28 @@ ctx, cancel := context.WithTimeout(ctx, time.Second)
 defer cancel()
 
 response, err := client.User.GetUsername(ctx, ...)
+```
+
+### Explicit Null
+
+If you want to send the explicit `null` JSON value through an optional parameter, you can use the setters\
+that come with every object. Calling a setter method for a property will flip a bit in the `explicitFields`
+bitfield for that setter's object; during serialization, any property with a flipped bit will have its
+omittable status stripped, so zero or `nil` values will be sent explicitly rather than omitted altogether:
+
+```go
+type ExampleRequest struct {
+    // An optional string parameter.
+    Name *string `json:"name,omitempty" url:"-"`
+
+    // Private bitmask of fields set to an explicit value and therefore not to be omitted
+    explicitFields *big.Int `json:"-" url:"-"`
+}
+
+request := &ExampleRequest{}
+request.SetName(nil)
+
+response, err := client.User.GetUsername(ctx, request, ...)
 ```
 
 ## Contributing

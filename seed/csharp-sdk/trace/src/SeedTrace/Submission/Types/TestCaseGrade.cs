@@ -224,7 +224,8 @@ public record TestCaseGrade
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator Hidden(SeedTrace.TestCaseHiddenGrade value) => new(value);
+        public static implicit operator TestCaseGrade.Hidden(SeedTrace.TestCaseHiddenGrade value) =>
+            new(value);
     }
 
     /// <summary>
@@ -242,7 +243,8 @@ public record TestCaseGrade
 
         public override string ToString() => Value.ToString();
 
-        public static implicit operator NonHidden(SeedTrace.TestCaseNonHiddenGrade value) =>
-            new(value);
+        public static implicit operator TestCaseGrade.NonHidden(
+            SeedTrace.TestCaseNonHiddenGrade value
+        ) => new(value);
     }
 }

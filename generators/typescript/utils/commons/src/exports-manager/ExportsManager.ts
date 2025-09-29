@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import path from "path";
-import { Directory, SourceFile } from "ts-morph";
+import { Directory, ExportSpecifierStructure, SourceFile, StructureKind } from "ts-morph";
 
 import { getRelativePathAsModuleSpecifierTo, ModuleSpecifier } from "../referencing";
 
@@ -27,16 +27,27 @@ export interface ExportedFilePathPart {
 export interface ExportDeclaration {
     exportAll?: boolean;
     namespaceExport?: string;
-    namedExports?: string[];
+    namedExports?: NamedExport[];
     defaultExport?: {
         recommendedImportName: string;
     };
 }
 
+export type NamedExport = string | { type?: "type" | undefined; name: string };
+
+namespace NamedExport {
+    export function getName(namedExport: NamedExport): string {
+        return typeof namedExport === "string" ? namedExport : namedExport.name;
+    }
+    export function isTypeExport(namedExport: NamedExport): boolean {
+        return typeof namedExport !== "string" && namedExport.type === "type";
+    }
+}
+
 interface CombinedExportDeclarations {
     exportAll: boolean;
     namespaceExports: Set<string>;
-    namedExports: Set<string>;
+    namedExports: Map<string, NamedExport>;
 }
 
 type PathToDirectory = string;
@@ -181,7 +192,7 @@ export class ExportsManager {
         const exportsForModuleSpecifier = (exportsForDirectory[moduleSpecifierToExport] ??= {
             exportAll: false,
             namespaceExports: new Set(),
-            namedExports: new Set()
+            namedExports: new Map<string, NamedExport>()
         });
 
         if (exportDeclaration == null) {
@@ -202,9 +213,14 @@ export class ExportsManager {
         if (exportDeclaration.namedExports != null) {
             for (const namedExport of exportDeclaration.namedExports) {
                 if (addExportTypeModifier) {
-                    exportsForModuleSpecifier.namedExports.add("type " + namedExport);
+                    exportsForModuleSpecifier.namedExports.set(NamedExport.getName(namedExport), {
+                        name: NamedExport.getName(namedExport),
+                        type: "type"
+                    });
+                } else if (NamedExport.isTypeExport(namedExport)) {
+                    exportsForModuleSpecifier.namedExports.set(NamedExport.getName(namedExport), namedExport);
                 } else {
-                    exportsForModuleSpecifier.namedExports.add(namedExport);
+                    exportsForModuleSpecifier.namedExports.set(NamedExport.getName(namedExport), namedExport);
                 }
             }
         }
@@ -232,7 +248,15 @@ export class ExportsManager {
                 } else if (combinedExportDeclarations.namedExports.size > 0) {
                     exportsFile.addExportDeclaration({
                         moduleSpecifier,
-                        namedExports: [...combinedExportDeclarations.namedExports]
+                        namedExports: [
+                            ...combinedExportDeclarations.namedExports
+                                .values()
+                                .map<ExportSpecifierStructure>((namedExport) => ({
+                                    kind: StructureKind.ExportSpecifier,
+                                    name: NamedExport.getName(namedExport),
+                                    leadingTrivia: NamedExport.isTypeExport(namedExport) ? "type " : undefined
+                                }))
+                        ]
                     });
                 }
             }

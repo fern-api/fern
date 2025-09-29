@@ -1,7 +1,7 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
 import { APIS_DIRECTORY, FERN_DIRECTORY, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { TaskContext } from "@fern-api/task-context";
+import { TaskContext, TaskResult } from "@fern-api/task-context";
 import path from "path";
 import { FixtureConfigurations, OutputMode } from "../../../config/api";
 import { GeneratorWorkspace } from "../../../loadGeneratorWorkspaces";
@@ -19,7 +19,7 @@ export declare namespace TestRunner {
         lock: Semaphore;
         taskContextFactory: TaskContextFactory;
         skipScripts: boolean;
-        scriptRunner: ScriptRunner;
+        scriptRunner: ScriptRunner | undefined;
         keepDocker: boolean;
         inspect: boolean;
     }
@@ -84,6 +84,21 @@ export declare namespace TestRunner {
     }
 }
 
+const extractLicenseInfo = (license: unknown, absolutePathToApiDefinition: AbsoluteFilePath) => {
+    if (license != null && typeof license === "object" && "custom" in license) {
+        const licenseObj = license as { custom: string };
+        const licensePath = licenseObj.custom;
+
+        // Make the license path absolute
+        return {
+            custom: path.isAbsolute(licensePath)
+                ? licensePath
+                : path.join(absolutePathToApiDefinition.toString(), licensePath)
+        };
+    }
+    return undefined;
+};
+
 export abstract class TestRunner {
     private buildInvocation: Promise<void> | undefined;
     protected readonly generator: GeneratorWorkspace;
@@ -91,7 +106,7 @@ export abstract class TestRunner {
     protected readonly taskContextFactory: TaskContextFactory;
     private readonly skipScripts: boolean;
     private readonly keepDocker: boolean;
-    private scriptRunner: ScriptRunner;
+    private scriptRunner: ScriptRunner | undefined;
 
     constructor({ generator, lock, taskContextFactory, skipScripts, keepDocker, scriptRunner }: TestRunner.Args) {
         this.generator = generator;
@@ -151,21 +166,7 @@ export abstract class TestRunner {
             const irVersion = this.generator.workspaceConfig.irVersion;
             const publishMetadata = configuration?.publishMetadata ?? undefined;
             const readme = configuration?.readmeConfig ?? undefined;
-            let license = configuration?.license ?? undefined;
-
-            // Convert relative license path to absolute for seed tests
-            if (license != null && typeof license === "object" && "custom" in license) {
-                const licenseObj = license as { custom: string };
-                const licensePath = licenseObj.custom;
-
-                // Make the license path absolute
-                const absoluteLicensePath = path.isAbsolute(licensePath)
-                    ? licensePath
-                    : path.join(absolutePathToApiDefinition.toString(), licensePath);
-
-                // Update license with absolute path
-                license = { custom: absoluteLicensePath };
-            }
+            const license = extractLicenseInfo(configuration?.license, absolutePathToApiDefinition);
 
             const fernWorkspace = await (
                 await convertGeneratorWorkspaceToFernWorkspace({
@@ -218,6 +219,17 @@ export abstract class TestRunner {
 
                 generationStopwatch.stop();
                 metrics.generationTime = generationStopwatch.duration();
+
+                if (taskContext.getResult() === TaskResult.Failure) {
+                    taskContext.logger.error("Generation failed");
+                    return {
+                        type: "failure",
+                        cause: "generation",
+                        id: fixture,
+                        outputFolder,
+                        metrics
+                    };
+                }
             } catch (error) {
                 taskContext.logger.error(`Generation failed: ${(error as Error)?.message ?? "Unknown error"}`);
                 taskContext.logger.error(`${(error as Error)?.stack}`);
@@ -242,7 +254,7 @@ export abstract class TestRunner {
             const scriptStopwatch = new Stopwatch();
             scriptStopwatch.start();
 
-            const scriptResponse = await this.scriptRunner.run({
+            const scriptResponse = await this.scriptRunner?.run({
                 taskContext,
                 outputDir,
                 id
@@ -251,7 +263,7 @@ export abstract class TestRunner {
             scriptStopwatch.stop();
             metrics.compileTime = scriptStopwatch.duration();
 
-            if (scriptResponse.type === "failure") {
+            if (scriptResponse?.type === "failure") {
                 return {
                     type: "failure",
                     cause: "compile",

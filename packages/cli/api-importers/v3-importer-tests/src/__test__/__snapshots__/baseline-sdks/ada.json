@@ -24,6 +24,7 @@
     "requirement": "ALL",
     "schemes": [
       {
+        "key": "BearerAuthScheme",
         "token": {
           "originalName": "token",
           "camelCase": {
@@ -5415,6 +5416,11 @@
           },
           "displayName": "Get an end user by ID",
           "auth": true,
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -5691,6 +5697,11 @@
           },
           "displayName": "Update an end user by ID",
           "auth": true,
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
           "idempotent": false,
           "method": "PATCH",
           "path": {
@@ -6210,6 +6221,11 @@
           },
           "displayName": "Get multiple end users by ID",
           "auth": true,
+          "security": [
+            {
+              "BearerAuth": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -6912,7 +6928,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -6943,7 +6960,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -6974,7 +6992,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -7005,7 +7024,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -7036,7 +7056,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -7067,7 +7088,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -7098,7 +7120,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -7129,7 +7152,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -7160,7 +7184,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -7191,7 +7216,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -7222,7 +7248,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -7253,7 +7280,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ],
         "additionalProperties": false,
@@ -7538,7 +7566,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -7600,7 +7629,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           },
           {
             "name": {
@@ -7631,7 +7661,8 @@
                 "type": "primitive"
               },
               "type": "optional"
-            }
+            },
+            "propertyAccess": "READ_ONLY"
           }
         ],
         "additionalProperties": false,
@@ -8507,6 +8538,7 @@
     "endpoints": {
       "endpoint_endUsers.getEndUserById": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -8636,6 +8668,7 @@
       },
       "endpoint_endUsers.updateEndUserById": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {
@@ -8868,6 +8901,7 @@
       },
       "endpoint_endUsers.getEndUsers": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {

@@ -526,6 +526,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -1203,6 +1204,7 @@
                     "audiences": [
                         "external"
                     ],
+                    "retries": null,
                     "availability": null,
                     "docs": "Add a movie to the database"
                 }
@@ -1560,7 +1562,9 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -1588,7 +1592,9 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "DOUBLE"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -1686,7 +1692,9 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "STRING"
-                        }
+                        },
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -1814,6 +1822,7 @@
                 ]
             }
         },
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": [

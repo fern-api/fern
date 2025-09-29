@@ -2,9 +2,58 @@
 
 package enum
 
+import (
+	big "math/big"
+)
+
+var (
+	sendEnumInlinedRequestFieldOperand             = big.NewInt(1 << 0)
+	sendEnumInlinedRequestFieldMaybeOperand        = big.NewInt(1 << 1)
+	sendEnumInlinedRequestFieldOperandOrColor      = big.NewInt(1 << 2)
+	sendEnumInlinedRequestFieldMaybeOperandOrColor = big.NewInt(1 << 3)
+)
+
 type SendEnumInlinedRequest struct {
 	Operand             Operand         `json:"operand" url:"-"`
 	MaybeOperand        *Operand        `json:"maybeOperand,omitempty" url:"-"`
 	OperandOrColor      *ColorOrOperand `json:"operandOrColor,omitempty" url:"-"`
 	MaybeOperandOrColor *ColorOrOperand `json:"maybeOperandOrColor,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (s *SendEnumInlinedRequest) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetOperand sets the Operand field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SendEnumInlinedRequest) SetOperand(operand Operand) {
+	s.Operand = operand
+	s.require(sendEnumInlinedRequestFieldOperand)
+}
+
+// SetMaybeOperand sets the MaybeOperand field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SendEnumInlinedRequest) SetMaybeOperand(maybeOperand *Operand) {
+	s.MaybeOperand = maybeOperand
+	s.require(sendEnumInlinedRequestFieldMaybeOperand)
+}
+
+// SetOperandOrColor sets the OperandOrColor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SendEnumInlinedRequest) SetOperandOrColor(operandOrColor *ColorOrOperand) {
+	s.OperandOrColor = operandOrColor
+	s.require(sendEnumInlinedRequestFieldOperandOrColor)
+}
+
+// SetMaybeOperandOrColor sets the MaybeOperandOrColor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SendEnumInlinedRequest) SetMaybeOperandOrColor(maybeOperandOrColor *ColorOrOperand) {
+	s.MaybeOperandOrColor = maybeOperandOrColor
+	s.require(sendEnumInlinedRequestFieldMaybeOperandOrColor)
 }

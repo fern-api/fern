@@ -6,7 +6,7 @@ namespace SeedMultiUrlEnvironment.Test.Unit.MockServer;
 [TestFixture]
 public class BootInstanceTest : BaseMockServerTest
 {
-    [Test]
+    [NUnit.Framework.Test]
     public void MockServerTest()
     {
         const string requestJson = """

@@ -10,6 +10,7 @@ export interface Endpoint
         FernOpenapiIr.WithSource,
         FernOpenapiIr.WithNamespace {
     authed: boolean;
+    security: FernOpenapiIr.EndpointSecurity;
     internal: boolean | undefined;
     idempotent: boolean | undefined;
     method: FernOpenapiIr.HttpMethod;
@@ -40,4 +41,5 @@ export interface Endpoint
     servers: FernOpenapiIr.HttpEndpointServer[];
     examples: FernOpenapiIr.EndpointExample[];
     pagination: FernOpenapiIr.Pagination | undefined;
+    retries: FernOpenapiIr.RetriesConfiguration | undefined;
 }

@@ -13,9 +13,7 @@ class Base(UncheckedBaseModel):
     id: str
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -23,15 +21,11 @@ class Base(UncheckedBaseModel):
 
 
 class Shape_Circle(Base):
-    shape_type: typing.Literal["circle"] = pydantic.Field(
-        alias="shapeType", default="circle"
-    )
+    shape_type: typing.Literal["circle"] = pydantic.Field(alias="shapeType", default="circle")
     radius_measurement: float = pydantic.Field(alias="radiusMeasurement")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -39,21 +33,15 @@ class Shape_Circle(Base):
 
 
 class Shape_Square(Base):
-    shape_type: typing.Literal["square"] = pydantic.Field(
-        alias="shapeType", default="square"
-    )
+    shape_type: typing.Literal["square"] = pydantic.Field(alias="shapeType", default="square")
     length_measurement: float = pydantic.Field(alias="lengthMeasurement")
 
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
             extra = pydantic.Extra.allow
 
 
-Shape = typing_extensions.Annotated[
-    typing.Union[Shape_Circle, Shape_Square], UnionMetadata(discriminant="shapeType")
-]
+Shape = typing_extensions.Annotated[typing.Union[Shape_Circle, Shape_Square], UnionMetadata(discriminant="shapeType")]

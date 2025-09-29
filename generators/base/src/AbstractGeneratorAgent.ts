@@ -7,6 +7,7 @@ import path from "path";
 
 import { GeneratorAgentClient } from "./GeneratorAgentClient";
 import { ReferenceConfigBuilder } from "./reference";
+import { RawGithubConfig, resolveGitHubConfig } from "./utils";
 
 const FEATURES_CONFIG_PATHS = [
     "/assets/features.yml",
@@ -79,8 +80,9 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
      * Runs the GitHub action using the given generator context.
      */
     public async pushToGitHub({ context }: { context: GeneratorContext }): Promise<string> {
-        const githubConfig = this.getGitHubConfig({ context });
-        return this.cli.pushToGitHub({ githubConfig });
+        const rawGithubConfig = this.getGitHubConfig({ context });
+        const githubConfig = resolveGitHubConfig({ rawGithubConfig, logger: this.logger });
+        return this.cli.pushToGitHub({ githubConfig, withPullRequest: githubConfig.mode === "pull-request" });
     }
 
     /**
@@ -108,7 +110,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
      */
     protected abstract getGitHubConfig(
         args: AbstractGeneratorAgent.GitHubConfigArgs<GeneratorContext>
-    ): FernGeneratorCli.GitHubConfig;
+    ): RawGithubConfig;
 
     private async readFeatureConfig(): Promise<FernGeneratorCli.FeatureConfig> {
         this.logger.debug("Reading feature configuration ...");

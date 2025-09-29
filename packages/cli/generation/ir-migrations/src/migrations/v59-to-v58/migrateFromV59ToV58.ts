@@ -2,11 +2,7 @@ import { GeneratorName } from "@fern-api/configuration-loader";
 
 import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";
-import {
-    GeneratorWasNeverUpdatedToConsumeNewIR,
-    GeneratorWasNotCreatedYet,
-    IrMigration
-} from "../../types/IrMigration";
+import { GeneratorWasNeverUpdatedToConsumeNewIR, IrMigration } from "../../types/IrMigration";
 
 export const V59_TO_V58_MIGRATION: IrMigration<
     IrVersions.V59.ir.IntermediateRepresentation,
@@ -35,15 +31,15 @@ export const V59_TO_V58_MIGRATION: IrMigration<
         [GeneratorName.GO_MODEL]: "0.23.7",
         [GeneratorName.GO_SDK]: "1.7.0",
         [GeneratorName.RUBY_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.RUBY_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.CSHARP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.CSHARP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.SWIFT_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.SWIFT_SDK]: "0.6.0",
+        [GeneratorName.RUBY_SDK]: "1.0.0-rc26",
+        [GeneratorName.CSHARP_MODEL]: "0.0.3",
+        [GeneratorName.CSHARP_SDK]: "2.2.0",
+        [GeneratorName.SWIFT_MODEL]: "0.0.1",
+        [GeneratorName.SWIFT_SDK]: "0.16.0",
         [GeneratorName.PHP_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.PHP_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.RUST_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.RUST_SDK]: GeneratorWasNotCreatedYet
+        [GeneratorName.PHP_SDK]: "1.17.0",
+        [GeneratorName.RUST_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.RUST_SDK]: "0.1.1"
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V58.IntermediateRepresentation.jsonOrThrow(ir, {
@@ -99,10 +95,14 @@ function convertDynamicAuth(auth: IrVersions.V59.dynamic.Auth | undefined): IrVe
     if (auth == null) {
         return auth as IrVersions.V58.dynamic.Auth | undefined;
     }
-    if (auth.type === "inferred") {
-        return undefined;
-    }
-    return auth as IrVersions.V58.dynamic.Auth;
+    return auth._visit<IrVersions.V58.dynamic.Auth | undefined>({
+        basic: (value) => IrVersions.V58.dynamic.Auth.basic(value),
+        bearer: (value) => IrVersions.V58.dynamic.Auth.bearer(value),
+        header: (value) => IrVersions.V58.dynamic.Auth.header(value),
+        oauth: (value) => IrVersions.V58.dynamic.Auth.oauth(value),
+        inferred: () => undefined,
+        _other: () => undefined
+    });
 }
 
 function convertDynamicExamples(

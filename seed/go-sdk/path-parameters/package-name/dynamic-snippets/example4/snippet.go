@@ -3,8 +3,8 @@ package example
 import (
     client "github.com/fern-api/path-parameters-go/client"
     option "github.com/fern-api/path-parameters-go/option"
+    pathparametersgo "github.com/fern-api/path-parameters-go"
     context "context"
-    path "github.com/fern-api/path-parameters-go"
 )
 
 func do() {
@@ -13,15 +13,16 @@ func do() {
             "https://api.fern.com",
         ),
     )
+    request := &pathparametersgo.User{
+        Name: "name",
+        Tags: []string{
+            "tags",
+            "tags",
+        },
+    }
     client.User.CreateUser(
         context.TODO(),
         "tenant_id",
-        &path.User{
-            Name: "name",
-            Tags: []string{
-                "tags",
-                "tags",
-            },
-        },
+        request,
     )
 }

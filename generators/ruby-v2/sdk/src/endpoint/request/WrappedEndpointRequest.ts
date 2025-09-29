@@ -21,7 +21,6 @@ export declare namespace WrappedEndpointRequest {
     }
 }
 
-const QUERY_PARAMETER_BAG_NAME = "_query";
 const BODY_BAG_NAME = "_body";
 const QUERY_PARAM_NAMES_VN = "_query_param_names";
 const PATH_PARAM_NAMES_VN = "_path_param_names";
@@ -40,18 +39,23 @@ export class WrappedEndpointRequest extends EndpointRequest {
         return ruby.Type.void();
     }
 
-    public getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined {
+    public getQueryParameterCodeBlock(queryParameterBagName: string): QueryParameterCodeBlock | undefined {
         if (this.endpoint.queryParameters.length === 0) {
             return undefined;
         }
 
         return {
             code: ruby.codeblock((writer) => {
-                writer.writeLine(`${QUERY_PARAM_NAMES_VN} = ${toExplicitArray(this.getQueryParameterNames())}`);
-                writer.writeLine(`${QUERY_PARAMETER_BAG_NAME} = params.slice(*${QUERY_PARAM_NAMES_VN})`);
+                writer.writeLine(`${QUERY_PARAM_NAMES_VN} = [`);
+                writer.indent();
+                writer.writeLine(`${toExplicitArray(this.getQueryParameterNames())},`);
+                writer.writeLine(`${toRubySymbolArray(this.getQueryParameterNames())}`);
+                writer.dedent();
+                writer.writeLine(`].flatten`);
+                writer.writeLine(`${queryParameterBagName} = params.slice(*${QUERY_PARAM_NAMES_VN})`);
                 writer.writeLine(`params = params.except(*${QUERY_PARAM_NAMES_VN})`);
             }),
-            queryParameterBagReference: QUERY_PARAMETER_BAG_NAME
+            queryParameterBagReference: queryParameterBagName
         };
     }
 
@@ -103,4 +107,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
 function toExplicitArray(s: string[]): string {
     return `["${s.join('", "')}"]`;
+}
+
+function toRubySymbolArray(s: string[]): string {
+    if (s.some((s) => s.includes(" "))) {
+        throw new Error("Symbol array cannot contain spaces");
+    }
+    return `%i[${s.join(" ")}]`;
 }

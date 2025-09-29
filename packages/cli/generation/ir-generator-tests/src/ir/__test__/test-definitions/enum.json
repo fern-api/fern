@@ -2011,6 +2011,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -2597,6 +2598,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 }
@@ -2688,6 +2690,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -3679,6 +3682,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 }
@@ -3770,6 +3774,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -4504,6 +4509,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 }
@@ -4595,6 +4601,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -5422,6 +5429,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 },
@@ -5448,6 +5456,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -6040,6 +6049,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 }
@@ -7475,7 +7485,9 @@
                             "typeReference": {
                                 "type": "named",
                                 "value": "type_:Operand"
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -7506,7 +7518,9 @@
                                     "type": "named",
                                     "value": "type_:Operand"
                                 }
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -7534,7 +7548,9 @@
                             "typeReference": {
                                 "type": "named",
                                 "value": "type_:ColorOrOperand"
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -7565,7 +7581,9 @@
                                     "type": "named",
                                     "value": "type_:ColorOrOperand"
                                 }
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ],
                     "body": null,
@@ -7747,7 +7765,9 @@
                                 "typeReference": {
                                     "type": "named",
                                     "value": "type_:Operand"
-                                }
+                                },
+                                "propertyAccess": null,
+                                "variable": null
                             },
                             {
                                 "name": {
@@ -7778,7 +7798,9 @@
                                         "type": "named",
                                         "value": "type_:Operand"
                                     }
-                                }
+                                },
+                                "propertyAccess": null,
+                                "variable": null
                             },
                             {
                                 "name": {
@@ -7806,7 +7828,9 @@
                                 "typeReference": {
                                     "type": "named",
                                     "value": "type_:ColorOrOperand"
-                                }
+                                },
+                                "propertyAccess": null,
+                                "variable": null
                             },
                             {
                                 "name": {
@@ -7837,7 +7861,9 @@
                                         "type": "named",
                                         "value": "type_:ColorOrOperand"
                                     }
-                                }
+                                },
+                                "propertyAccess": null,
+                                "variable": null
                             }
                         ]
                     },
@@ -7950,7 +7976,9 @@
                             "typeReference": {
                                 "type": "named",
                                 "value": "type_:Operand"
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -7978,7 +8006,9 @@
                             "typeReference": {
                                 "type": "named",
                                 "value": "type_:ColorOrOperand"
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ],
                     "body": null
@@ -8152,7 +8182,9 @@
                             "typeReference": {
                                 "type": "named",
                                 "value": "type_:Operand"
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -8183,7 +8215,9 @@
                                     "type": "named",
                                     "value": "type_:Operand"
                                 }
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -8211,7 +8245,9 @@
                             "typeReference": {
                                 "type": "named",
                                 "value": "type_:ColorOrOperand"
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -8242,7 +8278,9 @@
                                     "type": "named",
                                     "value": "type_:ColorOrOperand"
                                 }
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ],
                     "headers": [],
@@ -8424,7 +8462,9 @@
                                     "type": "named",
                                     "value": "type_:Operand"
                                 }
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -8458,7 +8498,9 @@
                                         "value": "type_:Operand"
                                     }
                                 }
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -8489,7 +8531,9 @@
                                     "type": "named",
                                     "value": "type_:ColorOrOperand"
                                 }
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -8523,7 +8567,9 @@
                                         "value": "type_:ColorOrOperand"
                                     }
                                 }
-                            }
+                            },
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ],
                     "headers": [],
@@ -8541,6 +8587,7 @@
         },
         "pathParameters": [],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,

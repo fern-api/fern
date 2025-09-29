@@ -96,7 +96,7 @@
           "base-path": "",
           "endpoints": {
             "root_ping_get": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Root",
               "docs": "Root endpoint that returns a "Hello World" message.",
               "examples": [
@@ -121,7 +121,11 @@
               },
             },
             "whoami_whoami_get": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Whoami",
               "docs": undefined,
               "errors": [
@@ -2678,7 +2682,6 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
     root_ping_get:
       path: /ping
       method: GET
-      auth: false
       docs: Root endpoint that returns a "Hello World" message.
       source:
         openapi: ../openapi.yml
@@ -2694,7 +2697,8 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
     whoami_whoami_get:
       path: /whoami
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.yml
       display-name: Whoami
@@ -4249,7 +4253,16 @@ types:
           "base-path": "",
           "endpoints": {
             "createChat": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "collection:create_chat",
+                  ],
+                },
+              ],
               "display-name": "Create Chat",
               "docs": undefined,
               "errors": [
@@ -4319,7 +4332,16 @@ types:
               },
             },
             "getChat": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "chat:view",
+                  ],
+                },
+              ],
               "display-name": "Get Chat",
               "docs": undefined,
               "errors": [
@@ -4363,7 +4385,16 @@ types:
               },
             },
             "getChatConfig": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "chat:view",
+                  ],
+                },
+              ],
               "display-name": "Get Chat Config",
               "docs": undefined,
               "errors": [
@@ -4417,7 +4448,17 @@ types:
               },
             },
             "getMember": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "chat:view",
+                    "chat:view_members",
+                  ],
+                },
+              ],
               "display-name": "IAM - Lookup Chat Member",
               "docs": "Retrieve a specific member that has been granted direct access to the chat.",
               "errors": [
@@ -4461,7 +4502,11 @@ types:
               },
             },
             "getRecentChatsForUser": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Get Recent Chats For User",
               "docs": undefined,
               "errors": [
@@ -4469,6 +4514,9 @@ types:
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "project_id": "project_id",
+                  },
                   "response": {
                     "body": [
                       {
@@ -4513,7 +4561,17 @@ types:
               },
             },
             "iamListMembers": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "chat:view",
+                    "chat:view_members",
+                  ],
+                },
+              ],
               "display-name": "IAM - List Chat Members",
               "docs": "Lists all members that have been granted direct access to the chat.",
               "errors": [
@@ -4525,6 +4583,9 @@ types:
                 {
                   "path-parameters": {
                     "chat_id": "chat_id",
+                  },
+                  "query-parameters": {
+                    "type": "user",
                   },
                   "response": {
                     "body": {
@@ -4570,7 +4631,16 @@ types:
               },
             },
             "iamTestPermissions": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "chat:view",
+                  ],
+                },
+              ],
               "display-name": "IAM - Test Chat Permissions",
               "docs": "Test the permissions that the caller (or another subject) holds on the chat.",
               "errors": [
@@ -4633,7 +4703,16 @@ types:
               },
             },
             "iamUpdateMemberRoles": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "chat:view",
+                  ],
+                },
+              ],
               "display-name": "IAM - Update Chat Member",
               "docs": "Update the roles that a member holds on the chat.",
               "errors": [
@@ -4706,7 +4785,16 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
             },
             "queryChat": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "chat:query",
+                  ],
+                },
+              ],
               "display-name": "Query Chat",
               "docs": undefined,
               "errors": [
@@ -4755,7 +4843,16 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
             },
             "setChatConfig": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "chat:edit",
+                  ],
+                },
+              ],
               "display-name": "Set Chat Config",
               "docs": undefined,
               "errors": [
@@ -4852,7 +4949,16 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
             },
             "updateChat": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "chat:edit",
+                  ],
+                },
+              ],
               "display-name": "Update Chat",
               "docs": undefined,
               "errors": [
@@ -5035,7 +5141,8 @@ service:
     getRecentChatsForUser:
       path: /chat/recent
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.yml
       display-name: Get Recent Chats For User
@@ -5053,7 +5160,9 @@ service:
       errors:
         - root.UnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            project_id: project_id
+          response:
             body:
               - title: title
                 description: description
@@ -5067,7 +5176,10 @@ service:
     getChat:
       path: /chat/{chat_id}
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - chat:view
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -5098,7 +5210,10 @@ service:
     updateChat:
       path: /chat/{chat_id}
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - chat:edit
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -5137,7 +5252,10 @@ service:
     getChatConfig:
       path: /chat/{chat_id}/config
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - chat:view
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -5170,7 +5288,10 @@ service:
     setChatConfig:
       path: /chat/{chat_id}/config
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - chat:edit
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -5236,7 +5357,10 @@ service:
     createChat:
       path: /chat
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - collection:create_chat
       source:
         openapi: ../openapi.yml
       display-name: Create Chat
@@ -5280,7 +5404,10 @@ service:
     queryChat:
       path: /chat/{chat_id}/query
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - chat:query
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -5311,7 +5438,11 @@ service:
     iamListMembers:
       path: /chat/{chat_id}/iam/members
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - chat:view
+            - chat:view_members
       docs: Lists all members that have been granted direct access to the chat.
       source:
         openapi: ../openapi.yml
@@ -5333,6 +5464,8 @@ service:
       examples:
         - path-parameters:
             chat_id: chat_id
+          query-parameters:
+            type: user
           response:
             body:
               pagination:
@@ -5349,7 +5482,11 @@ service:
     getMember:
       path: /chat/{chat_id}/iam/members/{member}
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - chat:view
+            - chat:view_members
       docs: >-
         Retrieve a specific member that has been granted direct access to the
         chat.
@@ -5382,7 +5519,10 @@ service:
     iamUpdateMemberRoles:
       path: /chat/{chat_id}/iam/members/{member}
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - chat:view
       docs: Update the roles that a member holds on the chat.
       source:
         openapi: ../openapi.yml
@@ -5440,7 +5580,10 @@ service:
     iamTestPermissions:
       path: /chat/{chat_id}/iam/test
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - chat:view
       docs: >-
         Test the permissions that the caller (or another subject) holds on the
         chat.
@@ -5563,7 +5706,17 @@ types:
           "base-path": "",
           "endpoints": {
             "collectionAdd": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "collection:edit",
+                    "document_embedding_instance:query",
+                  ],
+                },
+              ],
               "display-name": "Collection Add",
               "docs": "Add an embedding instance to the collection",
               "errors": [
@@ -5629,7 +5782,17 @@ types:
               },
             },
             "collectionEdit": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "collection:edit",
+                    "document_embedding_instance:query",
+                  ],
+                },
+              ],
               "display-name": "Collection Edit",
               "docs": "Edit collection details",
               "errors": [
@@ -5699,7 +5862,16 @@ types:
               },
             },
             "collectionRemove": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "collection:edit",
+                  ],
+                },
+              ],
               "display-name": "Collection Remove",
               "docs": "Remove an embedding instance from the collection",
               "errors": [
@@ -5765,7 +5937,16 @@ types:
               },
             },
             "collectionStats": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "collection:view",
+                  ],
+                },
+              ],
               "display-name": "Collection Stats",
               "docs": undefined,
               "errors": [
@@ -5811,7 +5992,17 @@ types:
               },
             },
             "createCollection": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_collection",
+                    "document_embedding_instance:query",
+                  ],
+                },
+              ],
               "display-name": "Create Collection",
               "docs": undefined,
               "errors": [
@@ -5882,7 +6073,16 @@ types:
               },
             },
             "getCollection": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "collection:view",
+                  ],
+                },
+              ],
               "display-name": "Get Collection",
               "docs": undefined,
               "errors": [
@@ -5937,7 +6137,17 @@ types:
               },
             },
             "getMember": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "collection:view",
+                    "collection:view_members",
+                  ],
+                },
+              ],
               "display-name": "IAM - Lookup Collection Member",
               "docs": "Retrieve a specific member that has been granted direct access to the collection.",
               "errors": [
@@ -5985,7 +6195,17 @@ types:
               },
             },
             "iamListMembers": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "collection:view",
+                    "collection:view_members",
+                  ],
+                },
+              ],
               "display-name": "IAM - List Collection Members",
               "docs": "Lists all members that have been granted direct access to the collection.",
               "errors": [
@@ -5999,6 +6219,9 @@ types:
                     "collection_id": "collection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "type": "user",
                   },
                   "response": {
                     "body": {
@@ -6046,7 +6269,16 @@ types:
               },
             },
             "iamTestPermissions": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "collection:view",
+                  ],
+                },
+              ],
               "display-name": "IAM - Test Collection Permissions",
               "docs": "Test the permissions that the caller (or another subject) holds on the collection.",
               "errors": [
@@ -6113,7 +6345,16 @@ types:
               },
             },
             "iamUpdateMemberRoles": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "collection:view",
+                  ],
+                },
+              ],
               "display-name": "IAM - Update Collection Member",
               "docs": "Update the roles that a member holds on the collection.",
               "errors": [
@@ -6190,7 +6431,16 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
             },
             "listChats": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "collection:list_chats",
+                  ],
+                },
+              ],
               "display-name": "List Chats",
               "docs": undefined,
               "errors": [
@@ -6204,6 +6454,11 @@ This may be combined with `remove_all` to replace the member's entire role list.
                     "collection_id": "collection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "page_limit": 1,
+                    "show": "all",
                   },
                   "response": {
                     "body": {
@@ -6266,7 +6521,16 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
             },
             "listCollections": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:view",
+                  ],
+                },
+              ],
               "display-name": "List Collections",
               "docs": undefined,
               "errors": [
@@ -6279,6 +6543,11 @@ This may be combined with `remove_all` to replace the member's entire role list.
                   "path-parameters": {
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "page_limit": 1,
+                    "title": "title",
                   },
                   "response": {
                     "body": {
@@ -6344,7 +6613,16 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
             },
             "queryCollection": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "collection:query",
+                  ],
+                },
+              ],
               "display-name": "Query Collection",
               "docs": undefined,
               "errors": [
@@ -6399,7 +6677,16 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
             },
             "updateSummary": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "collection:edit",
+                  ],
+                },
+              ],
               "display-name": "Update Summary",
               "docs": "Generate and update the summary for a collection",
               "errors": [
@@ -6513,7 +6800,10 @@ service:
     listCollections:
       path: /org/{org_id}/project/{project_id}/collection
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:view
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -6543,6 +6833,10 @@ service:
         - path-parameters:
             org_id: org_id
             project_id: project_id
+          query-parameters:
+            title: title
+            cursor: cursor
+            page_limit: 1
           response:
             body:
               pagination:
@@ -6563,7 +6857,11 @@ service:
     createCollection:
       path: /org/{org_id}/project/{project_id}/collection
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_collection
+            - document_embedding_instance:query
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -6609,7 +6907,10 @@ service:
     getCollection:
       path: /org/{org_id}/project/{project_id}/collection/{collection_id}
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - collection:view
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -6647,7 +6948,11 @@ service:
     collectionEdit:
       path: /org/{org_id}/project/{project_id}/collection/{collection_id}
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - collection:edit
+            - document_embedding_instance:query
       docs: Edit collection details
       source:
         openapi: ../openapi.yml
@@ -6694,7 +6999,10 @@ service:
     collectionStats:
       path: /org/{org_id}/project/{project_id}/collection/{collection_id}/stats
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - collection:view
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -6724,7 +7032,10 @@ service:
     listChats:
       path: /org/{org_id}/project/{project_id}/collection/{collection_id}/chat
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - collection:list_chats
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -6756,6 +7067,10 @@ service:
             org_id: org_id
             project_id: project_id
             collection_id: collection_id
+          query-parameters:
+            show: all
+            cursor: cursor
+            page_limit: 1
           response:
             body:
               pagination:
@@ -6775,7 +7090,10 @@ service:
     queryCollection:
       path: /org/{org_id}/project/{project_id}/collection/{collection_id}/query
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - collection:query
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -6811,7 +7129,10 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/collection/{collection_id}/update_summary
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - collection:edit
       docs: Generate and update the summary for a collection
       source:
         openapi: ../openapi.yml
@@ -6841,7 +7162,11 @@ service:
     collectionAdd:
       path: /org/{org_id}/project/{project_id}/collection/{collection_id}/add
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - collection:edit
+            - document_embedding_instance:query
       docs: Add an embedding instance to the collection
       source:
         openapi: ../openapi.yml
@@ -6887,7 +7212,10 @@ service:
     collectionRemove:
       path: /org/{org_id}/project/{project_id}/collection/{collection_id}/remove
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - collection:edit
       docs: Remove an embedding instance from the collection
       source:
         openapi: ../openapi.yml
@@ -6934,7 +7262,11 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/collection/{collection_id}/iam/members
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - collection:view
+            - collection:view_members
       docs: >-
         Lists all members that have been granted direct access to the
         collection.
@@ -6962,6 +7294,8 @@ service:
             org_id: org_id
             project_id: project_id
             collection_id: collection_id
+          query-parameters:
+            type: user
           response:
             body:
               pagination:
@@ -6979,7 +7313,11 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/collection/{collection_id}/iam/members/{member}
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - collection:view
+            - collection:view_members
       docs: >-
         Retrieve a specific member that has been granted direct access to the
         collection.
@@ -7017,7 +7355,10 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/collection/{collection_id}/iam/members/{member}
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - collection:view
       docs: Update the roles that a member holds on the collection.
       source:
         openapi: ../openapi.yml
@@ -7079,7 +7420,10 @@ service:
     iamTestPermissions:
       path: /org/{org_id}/project/{project_id}/collection/{collection_id}/iam/test
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - collection:view
       docs: >-
         Test the permissions that the caller (or another subject) holds on the
         collection.
@@ -7180,7 +7524,16 @@ types:
           "base-path": "",
           "endpoints": {
             "generate": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_compose",
+                  ],
+                },
+              ],
               "display-name": "Generate",
               "docs": undefined,
               "errors": [
@@ -7248,7 +7601,16 @@ types:
               },
             },
             "initialise": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_compose",
+                  ],
+                },
+              ],
               "display-name": "Initialise",
               "docs": undefined,
               "errors": [
@@ -7295,7 +7657,16 @@ types:
               },
             },
             "sectionTalkingPoints": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_compose",
+                  ],
+                },
+              ],
               "display-name": "Section Talking Points",
               "docs": undefined,
               "errors": [
@@ -7364,7 +7735,16 @@ types:
               },
             },
             "topic": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_compose",
+                  ],
+                },
+              ],
               "display-name": "Topic",
               "docs": undefined,
               "errors": [
@@ -7421,7 +7801,16 @@ types:
               },
             },
             "updateSection": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_compose",
+                  ],
+                },
+              ],
               "display-name": "Update Section",
               "docs": undefined,
               "errors": [
@@ -7508,7 +7897,10 @@ service:
     initialise:
       path: /org/{org_id}/project/{project_id}/compose
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_compose
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -7539,7 +7931,10 @@ service:
     generate:
       path: /org/{org_id}/project/{project_id}/compose/generate
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_compose
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -7580,7 +7975,10 @@ service:
     updateSection:
       path: /org/{org_id}/project/{project_id}/compose/update_section
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_compose
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -7626,7 +8024,10 @@ service:
     sectionTalkingPoints:
       path: /org/{org_id}/project/{project_id}/compose/section_talking_points
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_compose
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -7670,7 +8071,10 @@ service:
     topic:
       path: /org/{org_id}/project/{project_id}/compose/topic
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_compose
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -7718,7 +8122,16 @@ service:
           "base-path": "",
           "endpoints": {
             "authorize": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Authorize",
               "docs": undefined,
               "errors": [
@@ -7729,8 +8142,12 @@ service:
               "examples": [
                 {
                   "path-parameters": {
+                    "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "redirect_to": "redirect_to",
                   },
                 },
               ],
@@ -7753,7 +8170,11 @@ service:
               },
             },
             "callback": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Callback",
               "docs": undefined,
               "errors": [
@@ -7761,6 +8182,10 @@ service:
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "code": "code",
+                    "state": "state",
+                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -7788,7 +8213,16 @@ service:
               },
             },
             "checkStatus": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Check Status",
               "docs": undefined,
               "errors": [
@@ -7855,7 +8289,16 @@ service:
               },
             },
             "delete": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Delete",
               "docs": undefined,
               "errors": [
@@ -7895,7 +8338,11 @@ service:
               },
             },
             "fetch": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Fetch",
               "docs": undefined,
               "errors": [
@@ -7962,7 +8409,16 @@ service:
               },
             },
             "getConfiguration": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Get Configuration",
               "docs": undefined,
               "errors": [
@@ -8004,7 +8460,11 @@ service:
               },
             },
             "listFiles": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "List Files",
               "docs": undefined,
               "errors": [
@@ -8016,6 +8476,9 @@ service:
                     "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "parent_id": "parent_id",
                   },
                   "response": {
                     "body": [
@@ -8063,7 +8526,16 @@ service:
               },
             },
             "listRuns": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "List Runs",
               "docs": undefined,
               "errors": [
@@ -8077,6 +8549,10 @@ service:
                     "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "page_limit": 1,
                   },
                   "response": {
                     "body": {
@@ -8132,7 +8608,16 @@ service:
               },
             },
             "setConfiguration": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Set Configuration",
               "docs": undefined,
               "errors": [
@@ -8197,7 +8682,8 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/box/{connection_id}/list-files
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -8223,6 +8709,8 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          query-parameters:
+            parent_id: parent_id
           response:
             body:
               - id: id
@@ -8238,7 +8726,8 @@ service:
     fetch:
       path: /org/{org_id}/project/{project_id}/datasource/box/{connection_id}/fetch
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -8287,7 +8776,10 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/box/{connection_id}/authorize
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -8308,10 +8800,16 @@ service:
         - path-parameters:
             org_id: org_id
             project_id: project_id
+            connection_id: connection_id
+          query-parameters:
+            redirect_to: redirect_to
     delete:
       path: /org/{org_id}/project/{project_id}/datasource/box/{connection_id}
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -8338,7 +8836,10 @@ service:
     listRuns:
       path: /org/{org_id}/project/{project_id}/datasource/box/{connection_id}/runs
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -8367,6 +8868,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          query-parameters:
+            cursor: cursor
+            page_limit: 1
           response:
             body:
               pagination:
@@ -8386,7 +8890,10 @@ service:
     checkStatus:
       path: /org/{org_id}/project/{project_id}/datasource/box/{connection_id}/run
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -8435,7 +8942,10 @@ service:
     getConfiguration:
       path: /org/{org_id}/project/{project_id}/datasource/box/{connection_id}/config
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -8464,7 +8974,10 @@ service:
     setConfiguration:
       path: /org/{org_id}/project/{project_id}/datasource/box/{connection_id}/config
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -8498,7 +9011,8 @@ service:
     callback:
       path: /datasource/box/callback
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.yml
       display-name: Callback
@@ -8514,7 +9028,10 @@ service:
       errors:
         - root.UnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            code: code
+            state: state
+          response:
             body:
               key: value
   source:
@@ -8532,7 +9049,16 @@ service:
           "base-path": "",
           "endpoints": {
             "authorize": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Authorize",
               "docs": undefined,
               "errors": [
@@ -8543,8 +9069,12 @@ service:
               "examples": [
                 {
                   "path-parameters": {
+                    "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "redirect_to": "redirect_to",
                   },
                 },
               ],
@@ -8567,7 +9097,11 @@ service:
               },
             },
             "callback": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Callback",
               "docs": undefined,
               "errors": [
@@ -8575,6 +9109,10 @@ service:
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "code": "code",
+                    "state": "state",
+                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -8602,7 +9140,16 @@ service:
               },
             },
             "checkStatus": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Check Status",
               "docs": undefined,
               "errors": [
@@ -8669,7 +9216,16 @@ service:
               },
             },
             "delete": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Delete",
               "docs": undefined,
               "errors": [
@@ -8709,7 +9265,11 @@ service:
               },
             },
             "fetch": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Fetch",
               "docs": undefined,
               "errors": [
@@ -8776,7 +9336,16 @@ service:
               },
             },
             "getConfiguration": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Get Configuration",
               "docs": undefined,
               "errors": [
@@ -8818,7 +9387,11 @@ service:
               },
             },
             "listFiles": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "List Files",
               "docs": undefined,
               "errors": [
@@ -8830,6 +9403,9 @@ service:
                     "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "parent_id": "parent_id",
                   },
                   "response": {
                     "body": [
@@ -8877,7 +9453,16 @@ service:
               },
             },
             "listRuns": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "List Runs",
               "docs": undefined,
               "errors": [
@@ -8891,6 +9476,10 @@ service:
                     "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "page_limit": 1,
                   },
                   "response": {
                     "body": {
@@ -8946,7 +9535,16 @@ service:
               },
             },
             "setConfiguration": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Set Configuration",
               "docs": undefined,
               "errors": [
@@ -9011,7 +9609,8 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/list-files
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -9037,6 +9636,8 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          query-parameters:
+            parent_id: parent_id
           response:
             body:
               - id: id
@@ -9053,7 +9654,8 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/fetch
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -9102,7 +9704,10 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/authorize
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -9123,10 +9728,16 @@ service:
         - path-parameters:
             org_id: org_id
             project_id: project_id
+            connection_id: connection_id
+          query-parameters:
+            redirect_to: redirect_to
     delete:
       path: /org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -9154,7 +9765,10 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/runs
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -9183,6 +9797,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          query-parameters:
+            cursor: cursor
+            page_limit: 1
           response:
             body:
               pagination:
@@ -9203,7 +9820,10 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/run
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -9253,7 +9873,10 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/config
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -9283,7 +9906,10 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/confluence/{connection_id}/config
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -9317,7 +9943,8 @@ service:
     callback:
       path: /datasource/confluence/callback
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.yml
       display-name: Callback
@@ -9333,7 +9960,10 @@ service:
       errors:
         - root.UnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            code: code
+            state: state
+          response:
             body:
               key: value
   source:
@@ -9351,7 +9981,16 @@ service:
           "base-path": "",
           "endpoints": {
             "authorize": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Authorize",
               "docs": undefined,
               "errors": [
@@ -9362,8 +10001,12 @@ service:
               "examples": [
                 {
                   "path-parameters": {
+                    "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "redirect_to": "redirect_to",
                   },
                 },
               ],
@@ -9386,7 +10029,11 @@ service:
               },
             },
             "callback": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Callback",
               "docs": undefined,
               "errors": [
@@ -9394,6 +10041,10 @@ service:
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "code": "code",
+                    "state": "state",
+                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -9421,7 +10072,16 @@ service:
               },
             },
             "checkStatus": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Check Status",
               "docs": undefined,
               "errors": [
@@ -9488,7 +10148,16 @@ service:
               },
             },
             "delete": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Delete",
               "docs": undefined,
               "errors": [
@@ -9528,7 +10197,11 @@ service:
               },
             },
             "fetch": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Fetch",
               "docs": undefined,
               "errors": [
@@ -9595,7 +10268,16 @@ service:
               },
             },
             "getConfiguration": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Get Configuration",
               "docs": undefined,
               "errors": [
@@ -9637,7 +10319,11 @@ service:
               },
             },
             "listFiles": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "List Files",
               "docs": undefined,
               "errors": [
@@ -9649,6 +10335,9 @@ service:
                     "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "parent_id": "parent_id",
                   },
                   "response": {
                     "body": [
@@ -9696,7 +10385,16 @@ service:
               },
             },
             "listRuns": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "List Runs",
               "docs": undefined,
               "errors": [
@@ -9710,6 +10408,10 @@ service:
                     "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "page_limit": 1,
                   },
                   "response": {
                     "body": {
@@ -9765,7 +10467,16 @@ service:
               },
             },
             "setConfiguration": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Set Configuration",
               "docs": undefined,
               "errors": [
@@ -9830,7 +10541,8 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/list-files
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -9856,6 +10568,8 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          query-parameters:
+            parent_id: parent_id
           response:
             body:
               - id: id
@@ -9872,7 +10586,8 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/fetch
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -9921,7 +10636,10 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/authorize
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -9942,10 +10660,16 @@ service:
         - path-parameters:
             org_id: org_id
             project_id: project_id
+            connection_id: connection_id
+          query-parameters:
+            redirect_to: redirect_to
     delete:
       path: /org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -9973,7 +10697,10 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/runs
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -10002,6 +10729,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          query-parameters:
+            cursor: cursor
+            page_limit: 1
           response:
             body:
               pagination:
@@ -10022,7 +10752,10 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/run
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -10072,7 +10805,10 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/config
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -10102,7 +10838,10 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/dropbox/{connection_id}/config
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -10136,7 +10875,8 @@ service:
     callback:
       path: /datasource/dropbox/callback
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.yml
       display-name: Callback
@@ -10152,7 +10892,10 @@ service:
       errors:
         - root.UnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            code: code
+            state: state
+          response:
             body:
               key: value
   source:
@@ -10170,7 +10913,16 @@ service:
           "base-path": "",
           "endpoints": {
             "authorize": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Authorize",
               "docs": undefined,
               "errors": [
@@ -10181,8 +10933,12 @@ service:
               "examples": [
                 {
                   "path-parameters": {
+                    "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "redirect_to": "redirect_to",
                   },
                 },
               ],
@@ -10205,7 +10961,11 @@ service:
               },
             },
             "callback": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Callback",
               "docs": undefined,
               "errors": [
@@ -10213,6 +10973,10 @@ service:
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "code": "code",
+                    "state": "state",
+                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -10240,7 +11004,16 @@ service:
               },
             },
             "checkStatus": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Check Status",
               "docs": undefined,
               "errors": [
@@ -10307,7 +11080,16 @@ service:
               },
             },
             "delete": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Delete",
               "docs": undefined,
               "errors": [
@@ -10347,7 +11129,11 @@ service:
               },
             },
             "fetch": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Fetch",
               "docs": undefined,
               "errors": [
@@ -10414,7 +11200,16 @@ service:
               },
             },
             "getConfiguration": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Get Configuration",
               "docs": undefined,
               "errors": [
@@ -10456,7 +11251,11 @@ service:
               },
             },
             "listFiles": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "List Files",
               "docs": undefined,
               "errors": [
@@ -10468,6 +11267,9 @@ service:
                     "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "parent_id": "parent_id",
                   },
                   "response": {
                     "body": [
@@ -10515,7 +11317,16 @@ service:
               },
             },
             "listRuns": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "List Runs",
               "docs": undefined,
               "errors": [
@@ -10529,6 +11340,10 @@ service:
                     "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "page_limit": 1,
                   },
                   "response": {
                     "body": {
@@ -10584,7 +11399,16 @@ service:
               },
             },
             "setConfiguration": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Set Configuration",
               "docs": undefined,
               "errors": [
@@ -10649,7 +11473,8 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/list-files
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -10675,6 +11500,8 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          query-parameters:
+            parent_id: parent_id
           response:
             body:
               - id: id
@@ -10691,7 +11518,8 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/fetch
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -10740,7 +11568,10 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/authorize
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -10761,10 +11592,16 @@ service:
         - path-parameters:
             org_id: org_id
             project_id: project_id
+            connection_id: connection_id
+          query-parameters:
+            redirect_to: redirect_to
     delete:
       path: /org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -10792,7 +11629,10 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/runs
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -10821,6 +11661,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          query-parameters:
+            cursor: cursor
+            page_limit: 1
           response:
             body:
               pagination:
@@ -10840,7 +11683,10 @@ service:
     checkStatus:
       path: /org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/run
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -10890,7 +11736,10 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/config
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -10920,7 +11769,10 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/gdrive/{connection_id}/config
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -10954,7 +11806,8 @@ service:
     callback:
       path: /datasource/gdrive/callback
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.yml
       display-name: Callback
@@ -10970,7 +11823,10 @@ service:
       errors:
         - root.UnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            code: code
+            state: state
+          response:
             body:
               key: value
   source:
@@ -10988,7 +11844,16 @@ service:
           "base-path": "",
           "endpoints": {
             "authorize": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Authorize",
               "docs": undefined,
               "errors": [
@@ -10999,8 +11864,12 @@ service:
               "examples": [
                 {
                   "path-parameters": {
+                    "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "redirect_to": "redirect_to",
                   },
                 },
               ],
@@ -11023,7 +11892,11 @@ service:
               },
             },
             "callback": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Callback",
               "docs": undefined,
               "errors": [
@@ -11031,6 +11904,10 @@ service:
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "code": "code",
+                    "state": "state",
+                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -11058,7 +11935,16 @@ service:
               },
             },
             "checkStatus": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Check Status",
               "docs": undefined,
               "errors": [
@@ -11125,7 +12011,16 @@ service:
               },
             },
             "delete": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Delete",
               "docs": undefined,
               "errors": [
@@ -11165,7 +12060,11 @@ service:
               },
             },
             "fetch": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Fetch",
               "docs": undefined,
               "errors": [
@@ -11232,7 +12131,16 @@ service:
               },
             },
             "getConfiguration": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Get Configuration",
               "docs": undefined,
               "errors": [
@@ -11274,7 +12182,11 @@ service:
               },
             },
             "listFiles": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "List Files",
               "docs": undefined,
               "errors": [
@@ -11286,6 +12198,9 @@ service:
                     "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "parent_id": "parent_id",
                   },
                   "response": {
                     "body": [
@@ -11333,7 +12248,16 @@ service:
               },
             },
             "listRuns": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "List Runs",
               "docs": undefined,
               "errors": [
@@ -11347,6 +12271,10 @@ service:
                     "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "page_limit": 1,
                   },
                   "response": {
                     "body": {
@@ -11402,7 +12330,16 @@ service:
               },
             },
             "setConfiguration": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Set Configuration",
               "docs": undefined,
               "errors": [
@@ -11467,7 +12404,8 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/list-files
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -11493,6 +12431,8 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          query-parameters:
+            parent_id: parent_id
           response:
             body:
               - id: id
@@ -11509,7 +12449,8 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/fetch
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -11558,7 +12499,10 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/authorize
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -11579,10 +12523,16 @@ service:
         - path-parameters:
             org_id: org_id
             project_id: project_id
+            connection_id: connection_id
+          query-parameters:
+            redirect_to: redirect_to
     delete:
       path: /org/{org_id}/project/{project_id}/datasource/notion/{connection_id}
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -11610,7 +12560,10 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/runs
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -11639,6 +12592,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          query-parameters:
+            cursor: cursor
+            page_limit: 1
           response:
             body:
               pagination:
@@ -11658,7 +12614,10 @@ service:
     checkStatus:
       path: /org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/run
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -11708,7 +12667,10 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/config
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -11738,7 +12700,10 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/notion/{connection_id}/config
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -11772,7 +12737,8 @@ service:
     callback:
       path: /datasource/notion/callback
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.yml
       display-name: Callback
@@ -11788,7 +12754,10 @@ service:
       errors:
         - root.UnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            code: code
+            state: state
+          response:
             body:
               key: value
   source:
@@ -11806,7 +12775,16 @@ service:
           "base-path": "",
           "endpoints": {
             "authorize": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Authorize",
               "docs": undefined,
               "errors": [
@@ -11817,8 +12795,12 @@ service:
               "examples": [
                 {
                   "path-parameters": {
+                    "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "redirect_to": "redirect_to",
                   },
                 },
               ],
@@ -11841,7 +12823,11 @@ service:
               },
             },
             "callback": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Callback",
               "docs": undefined,
               "errors": [
@@ -11849,6 +12835,10 @@ service:
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "code": "code",
+                    "state": "state",
+                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -11876,7 +12866,16 @@ service:
               },
             },
             "checkStatus": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Check Status",
               "docs": undefined,
               "errors": [
@@ -11943,7 +12942,16 @@ service:
               },
             },
             "delete": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Delete",
               "docs": undefined,
               "errors": [
@@ -11983,7 +12991,11 @@ service:
               },
             },
             "fetch": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Fetch",
               "docs": undefined,
               "errors": [
@@ -12050,7 +13062,16 @@ service:
               },
             },
             "getConfiguration": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Get Configuration",
               "docs": undefined,
               "errors": [
@@ -12092,7 +13113,11 @@ service:
               },
             },
             "listFiles": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "List Files",
               "docs": undefined,
               "errors": [
@@ -12104,6 +13129,9 @@ service:
                     "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "parent_id": "parent_id",
                   },
                   "response": {
                     "body": [
@@ -12151,7 +13179,16 @@ service:
               },
             },
             "listRuns": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "List Runs",
               "docs": undefined,
               "errors": [
@@ -12165,6 +13202,10 @@ service:
                     "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "page_limit": 1,
                   },
                   "response": {
                     "body": {
@@ -12220,7 +13261,16 @@ service:
               },
             },
             "setConfiguration": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Set Configuration",
               "docs": undefined,
               "errors": [
@@ -12285,7 +13335,8 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/list-files
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -12311,6 +13362,8 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          query-parameters:
+            parent_id: parent_id
           response:
             body:
               - id: id
@@ -12327,7 +13380,8 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/fetch
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -12376,7 +13430,10 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/authorize
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -12397,10 +13454,16 @@ service:
         - path-parameters:
             org_id: org_id
             project_id: project_id
+            connection_id: connection_id
+          query-parameters:
+            redirect_to: redirect_to
     delete:
       path: /org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -12428,7 +13491,10 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/runs
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -12457,6 +13523,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          query-parameters:
+            cursor: cursor
+            page_limit: 1
           response:
             body:
               pagination:
@@ -12477,7 +13546,10 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/run
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -12527,7 +13599,10 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/config
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -12557,7 +13632,10 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/onedrive/{connection_id}/config
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -12591,7 +13669,8 @@ service:
     callback:
       path: /datasource/onedrive/callback
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.yml
       display-name: Callback
@@ -12607,7 +13686,10 @@ service:
       errors:
         - root.UnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            code: code
+            state: state
+          response:
             body:
               key: value
   source:
@@ -12625,7 +13707,16 @@ service:
           "base-path": "",
           "endpoints": {
             "authorize": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Authorize",
               "docs": undefined,
               "errors": [
@@ -12636,8 +13727,12 @@ service:
               "examples": [
                 {
                   "path-parameters": {
+                    "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "redirect_to": "redirect_to",
                   },
                 },
               ],
@@ -12660,7 +13755,11 @@ service:
               },
             },
             "callback": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Callback",
               "docs": undefined,
               "errors": [
@@ -12668,6 +13767,10 @@ service:
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "code": "code",
+                    "state": "state",
+                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -12695,7 +13798,16 @@ service:
               },
             },
             "checkStatus": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Check Status",
               "docs": undefined,
               "errors": [
@@ -12762,7 +13874,16 @@ service:
               },
             },
             "delete": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Delete",
               "docs": undefined,
               "errors": [
@@ -12802,7 +13923,11 @@ service:
               },
             },
             "fetch": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Fetch",
               "docs": undefined,
               "errors": [
@@ -12869,7 +13994,16 @@ service:
               },
             },
             "getConfiguration": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Get Configuration",
               "docs": undefined,
               "errors": [
@@ -12911,7 +14045,11 @@ service:
               },
             },
             "listFiles": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "List Files",
               "docs": undefined,
               "errors": [
@@ -12923,6 +14061,9 @@ service:
                     "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "parent_id": "parent_id",
                   },
                   "response": {
                     "body": [
@@ -12970,7 +14111,16 @@ service:
               },
             },
             "listRuns": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "List Runs",
               "docs": undefined,
               "errors": [
@@ -12984,6 +14134,10 @@ service:
                     "connection_id": "connection_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "page_limit": 1,
                   },
                   "response": {
                     "body": {
@@ -13039,7 +14193,16 @@ service:
               },
             },
             "setConfiguration": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_datasource_connection",
+                  ],
+                },
+              ],
               "display-name": "Set Configuration",
               "docs": undefined,
               "errors": [
@@ -13104,7 +14267,8 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/list-files
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -13130,6 +14294,8 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          query-parameters:
+            parent_id: parent_id
           response:
             body:
               - id: id
@@ -13146,7 +14312,8 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/fetch
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -13195,7 +14362,10 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/authorize
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -13216,10 +14386,16 @@ service:
         - path-parameters:
             org_id: org_id
             project_id: project_id
+            connection_id: connection_id
+          query-parameters:
+            redirect_to: redirect_to
     delete:
       path: /org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -13247,7 +14423,10 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/runs
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -13276,6 +14455,9 @@ service:
             org_id: org_id
             project_id: project_id
             connection_id: connection_id
+          query-parameters:
+            cursor: cursor
+            page_limit: 1
           response:
             body:
               pagination:
@@ -13296,7 +14478,10 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/run
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -13346,7 +14531,10 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/config
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -13376,7 +14564,10 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/datasource/sharepoint/{connection_id}/config
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_datasource_connection
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -13410,7 +14601,8 @@ service:
     callback:
       path: /datasource/sharepoint/callback
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.yml
       display-name: Callback
@@ -13426,7 +14618,10 @@ service:
       errors:
         - root.UnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            code: code
+            state: state
+          response:
             body:
               key: value
   source:
@@ -13444,7 +14639,16 @@ service:
           "base-path": "",
           "endpoints": {
             "documentCreate": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_document",
+                  ],
+                },
+              ],
               "display-name": "Document Create",
               "docs": undefined,
               "errors": [
@@ -13508,7 +14712,16 @@ service:
               },
             },
             "documentDelete": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "document:edit",
+                  ],
+                },
+              ],
               "display-name": "Document Delete",
               "docs": undefined,
               "errors": [
@@ -13548,7 +14761,7 @@ service:
               },
             },
             "documentEmbeddingGet": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Document Embedding Get",
               "docs": "Fetch an individual embedding record by its ID. Useful for examining the source submitted to an LLM",
               "errors": [
@@ -13589,7 +14802,16 @@ service:
               },
             },
             "documentEmbeddingQuery": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "document:view",
+                  ],
+                },
+              ],
               "display-name": "Document Embedding Query",
               "docs": undefined,
               "errors": [
@@ -13603,6 +14825,10 @@ service:
                     "document_id": "document_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "page_limit": 1,
                   },
                   "response": {
                     "body": {
@@ -13657,7 +14883,16 @@ service:
               },
             },
             "documentFetch": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "document:view",
+                  ],
+                },
+              ],
               "display-name": "Document Fetch",
               "docs": undefined,
               "errors": [
@@ -13718,7 +14953,16 @@ service:
               },
             },
             "documentList": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:list_documents",
+                  ],
+                },
+              ],
               "display-name": "Document List",
               "docs": undefined,
               "errors": [
@@ -13731,6 +14975,15 @@ service:
                   "path-parameters": {
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "collection_id": "collection_id",
+                    "connection_id": "connection_id",
+                    "cursor": "cursor",
+                    "page_limit": 1,
+                    "source": "upload",
+                    "strategy": "strategy",
+                    "title": "title",
                   },
                   "response": {
                     "body": {
@@ -13822,7 +15075,16 @@ service:
               },
             },
             "documentQuery": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "document:query",
+                  ],
+                },
+              ],
               "display-name": "Document Query",
               "docs": undefined,
               "errors": [
@@ -13875,7 +15137,16 @@ service:
               },
             },
             "documentUpdate": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "document:edit",
+                  ],
+                },
+              ],
               "display-name": "Document Update",
               "docs": undefined,
               "errors": [
@@ -13954,7 +15225,16 @@ service:
               },
             },
             "documentUpload": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_document",
+                  ],
+                },
+              ],
               "availability": "deprecated",
               "display-name": "Document Upload",
               "docs": undefined,
@@ -14029,7 +15309,17 @@ service:
               },
             },
             "getMember": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "document:view",
+                    "document:view_members",
+                  ],
+                },
+              ],
               "display-name": "IAM - Lookup Document Member",
               "docs": "Retrieve a specific member that has been granted direct access to the document.",
               "errors": [
@@ -14077,7 +15367,17 @@ service:
               },
             },
             "iamListMembers": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "document:view",
+                    "document:view_members",
+                  ],
+                },
+              ],
               "display-name": "IAM - List Document Members",
               "docs": "Lists all members that have been granted direct access to the document.",
               "errors": [
@@ -14091,6 +15391,9 @@ service:
                     "document_id": "document_id",
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "type": "user",
                   },
                   "response": {
                     "body": {
@@ -14138,7 +15441,16 @@ service:
               },
             },
             "iamTestPermissions": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "document:view",
+                  ],
+                },
+              ],
               "display-name": "IAM - Test Document Permissions",
               "docs": "Test the permissions that the caller (or another subject) holds on the document.",
               "errors": [
@@ -14205,7 +15517,16 @@ service:
               },
             },
             "iamUpdateMemberRoles": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "document:view",
+                  ],
+                },
+              ],
               "display-name": "IAM - Update Document Member",
               "docs": "Update the roles that a member holds on the document.",
               "errors": [
@@ -14282,7 +15603,16 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
             },
             "taskStatus": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_document",
+                  ],
+                },
+              ],
               "display-name": "Task Status",
               "docs": undefined,
               "errors": [
@@ -14468,7 +15798,10 @@ service:
     documentList:
       path: /org/{org_id}/project/{project_id}/document
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:list_documents
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -14509,6 +15842,14 @@ service:
         - path-parameters:
             org_id: org_id
             project_id: project_id
+          query-parameters:
+            connection_id: connection_id
+            title: title
+            cursor: cursor
+            collection_id: collection_id
+            page_limit: 1
+            source: upload
+            strategy: strategy
           response:
             body:
               pagination:
@@ -14534,7 +15875,10 @@ service:
     documentCreate:
       path: /org/{org_id}/project/{project_id}/document
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_document
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -14574,7 +15918,10 @@ service:
     documentUpload:
       path: /org/{org_id}/project/{project_id}/document/upload
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_document
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -14624,7 +15971,10 @@ service:
     taskStatus:
       path: /org/{org_id}/project/{project_id}/document/create/status/{group_id}
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_document
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -14657,7 +16007,10 @@ service:
     documentQuery:
       path: /org/{org_id}/project/{project_id}/document/{document_id}/query
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - document:query
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -14692,7 +16045,10 @@ service:
     documentFetch:
       path: /org/{org_id}/project/{project_id}/document/{document_id}
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - document:view
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -14735,7 +16091,10 @@ service:
     documentUpdate:
       path: /org/{org_id}/project/{project_id}/document/{document_id}
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - document:edit
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -14788,7 +16147,10 @@ service:
     documentDelete:
       path: /org/{org_id}/project/{project_id}/document/{document_id}
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - document:edit
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -14815,7 +16177,10 @@ service:
     documentEmbeddingQuery:
       path: /org/{org_id}/project/{project_id}/document/{document_id}/embeddings
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - document:view
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -14847,6 +16212,9 @@ service:
             org_id: org_id
             project_id: project_id
             document_id: document_id
+          query-parameters:
+            cursor: cursor
+            page_limit: 1
           response:
             body:
               pagination:
@@ -14860,7 +16228,6 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/document/{document_id}/embedding/{embedding_id}
       method: GET
-      auth: false
       docs: >-
         Fetch an individual embedding record by its ID. Useful for examining the
         source submitted to an LLM
@@ -14891,7 +16258,11 @@ service:
     iamListMembers:
       path: /org/{org_id}/project/{project_id}/document/{document_id}/iam/members
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - document:view
+            - document:view_members
       docs: Lists all members that have been granted direct access to the document.
       source:
         openapi: ../openapi.yml
@@ -14917,6 +16288,8 @@ service:
             org_id: org_id
             project_id: project_id
             document_id: document_id
+          query-parameters:
+            type: user
           response:
             body:
               pagination:
@@ -14934,7 +16307,11 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/document/{document_id}/iam/members/{member}
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - document:view
+            - document:view_members
       docs: >-
         Retrieve a specific member that has been granted direct access to the
         document.
@@ -14972,7 +16349,10 @@ service:
       path: >-
         /org/{org_id}/project/{project_id}/document/{document_id}/iam/members/{member}
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - document:view
       docs: Update the roles that a member holds on the document.
       source:
         openapi: ../openapi.yml
@@ -15034,7 +16414,10 @@ service:
     iamTestPermissions:
       path: /org/{org_id}/project/{project_id}/document/{document_id}/iam/test
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - document:view
       docs: >-
         Test the permissions that the caller (or another subject) holds on the
         document.
@@ -15092,7 +16475,16 @@ service:
           "base-path": "",
           "endpoints": {
             "registerOauthClient": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:edit",
+                  ],
+                },
+              ],
               "display-name": "Register Oauth Client",
               "docs": undefined,
               "errors": [
@@ -15161,7 +16553,7 @@ service:
               },
             },
             "webhookHydraTokenHook": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Webhook Hydra Token Hook",
               "docs": undefined,
               "errors": [
@@ -15213,7 +16605,7 @@ service:
               },
             },
             "webhookKratosSignupCheck": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Webhook Kratos Signup Check",
               "docs": undefined,
               "errors": [
@@ -15264,7 +16656,7 @@ service:
               },
             },
             "webhookKratosSignupCommit": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Webhook Kratos Signup Commit",
               "docs": undefined,
               "errors": [
@@ -15329,7 +16721,6 @@ service:
     webhookHydraTokenHook:
       path: /internal/webhook/hydra/token_hook
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: Webhook Hydra Token Hook
@@ -15359,7 +16750,10 @@ service:
     registerOauthClient:
       path: /internal/project/{project_id}/register_oauth_client
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:edit
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -15402,7 +16796,6 @@ service:
     webhookKratosSignupCheck:
       path: /internal/webhook/kratos/signup_check
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: Webhook Kratos Signup Check
@@ -15432,7 +16825,6 @@ service:
     webhookKratosSignupCommit:
       path: /internal/webhook/kratos/signup_commit
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: Webhook Kratos Signup Commit
@@ -15478,7 +16870,16 @@ service:
                 "free",
                 "paid",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:view",
+                  ],
+                },
+              ],
               "availability": "generally-available",
               "display-name": "List available LLM's",
               "docs": "All supported LLM providers and models. Not all models have the same functionality.",
@@ -15599,7 +17000,7 @@ service:
               },
             },
             "listAvailableGuardrails": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List Available Guardrails",
               "docs": undefined,
               "errors": [
@@ -15654,7 +17055,10 @@ service:
     getAllModels:
       path: /org/{org_id}/project/{project_id}/model
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:view
       docs: >-
         All supported LLM providers and models. Not all models have the same
         functionality.
@@ -15771,7 +17175,6 @@ service:
     listAvailableGuardrails:
       path: /org/{org_id}/project/{project_id}/guardrail
       method: GET
-      auth: false
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -15809,7 +17212,11 @@ service:
           "base-path": "",
           "endpoints": {
             "orgCreate": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Org Create",
               "docs": undefined,
               "errors": [
@@ -15865,7 +17272,16 @@ service:
               },
             },
             "orgDomainDelete": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "organization:edit",
+                  ],
+                },
+              ],
               "display-name": "Org Domain Delete",
               "docs": undefined,
               "errors": [
@@ -15905,7 +17321,16 @@ service:
               },
             },
             "orgDomainsList": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "organization:edit",
+                  ],
+                },
+              ],
               "display-name": "Org Domains List",
               "docs": undefined,
               "errors": [
@@ -15952,7 +17377,16 @@ service:
               },
             },
             "orgDomainsPost": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "organization:edit",
+                  ],
+                },
+              ],
               "display-name": "Org Domains Post",
               "docs": undefined,
               "errors": [
@@ -16005,7 +17439,16 @@ service:
               },
             },
             "orgGet": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "organization:view",
+                  ],
+                },
+              ],
               "display-name": "Org Get",
               "docs": undefined,
               "errors": [
@@ -16044,7 +17487,16 @@ service:
               },
             },
             "orgInvitesCreate": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "organization:add_member",
+                  ],
+                },
+              ],
               "display-name": "Org Invites Create",
               "docs": undefined,
               "errors": [
@@ -16110,7 +17562,16 @@ service:
               },
             },
             "orgInvitesDelete": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "organization:remove_member",
+                  ],
+                },
+              ],
               "display-name": "Org Invites Delete",
               "docs": undefined,
               "errors": [
@@ -16138,7 +17599,16 @@ service:
               },
             },
             "orgInvitesList": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "organization:view_members",
+                  ],
+                },
+              ],
               "display-name": "Org Invites List",
               "docs": undefined,
               "errors": [
@@ -16150,6 +17620,11 @@ service:
                 {
                   "path-parameters": {
                     "org_id": "org_id",
+                  },
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "page_limit": 1,
+                    "show": "all",
                   },
                   "response": {
                     "body": {
@@ -16206,7 +17681,16 @@ service:
               },
             },
             "orgJoin": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "organization:join",
+                  ],
+                },
+              ],
               "display-name": "Org Join",
               "docs": undefined,
               "errors": [
@@ -16248,7 +17732,11 @@ service:
               },
             },
             "orgList": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Org List",
               "docs": undefined,
               "errors": [
@@ -16256,6 +17744,11 @@ service:
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "membership": "active",
+                    "page_limit": 1,
+                  },
                   "response": {
                     "body": {
                       "key": "value",
@@ -16295,7 +17788,16 @@ service:
               },
             },
             "orgUpdate": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "organization:edit",
+                  ],
+                },
+              ],
               "display-name": "Org Update",
               "docs": undefined,
               "errors": [
@@ -16355,7 +17857,16 @@ service:
               },
             },
             "orgUpdateAvatar": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "organization:edit",
+                  ],
+                },
+              ],
               "display-name": "Org Update Avatar",
               "docs": undefined,
               "errors": [
@@ -16407,7 +17918,17 @@ service:
               },
             },
             "organization_get_member": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "organization:view",
+                    "organization:view_members",
+                  ],
+                },
+              ],
               "display-name": "IAM - Lookup Organization Member",
               "docs": "Retrieve a specific member that has been granted direct access to the organization.",
               "errors": [
@@ -16451,7 +17972,17 @@ service:
               },
             },
             "organization_iam_list_members": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "organization:view",
+                    "organization:view_members",
+                  ],
+                },
+              ],
               "display-name": "IAM - List Organization Members",
               "docs": "Lists all members that have been granted direct access to the organization.",
               "errors": [
@@ -16463,6 +17994,9 @@ service:
                 {
                   "path-parameters": {
                     "org_id": "org_id",
+                  },
+                  "query-parameters": {
+                    "type": "user",
                   },
                   "response": {
                     "body": {
@@ -16508,7 +18042,16 @@ service:
               },
             },
             "organization_iam_test_permissions": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "organization:view",
+                  ],
+                },
+              ],
               "display-name": "IAM - Test Organization Permissions",
               "docs": "Test the permissions that the caller (or another subject) holds on the organization.",
               "errors": [
@@ -16571,7 +18114,16 @@ service:
               },
             },
             "organization_iam_update_member_roles": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "organization:view",
+                  ],
+                },
+              ],
               "display-name": "IAM - Update Organization Member",
               "docs": "Update the roles that a member holds on the organization.",
               "errors": [
@@ -16750,7 +18302,11 @@ service:
     organization_iam_list_members:
       path: /org/{org_id}/iam/members
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - organization:view
+            - organization:view_members
       docs: >-
         Lists all members that have been granted direct access to the
         organization.
@@ -16774,6 +18330,8 @@ service:
       examples:
         - path-parameters:
             org_id: org_id
+          query-parameters:
+            type: user
           response:
             body:
               pagination:
@@ -16790,7 +18348,11 @@ service:
     organization_get_member:
       path: /org/{org_id}/iam/members/{member}
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - organization:view
+            - organization:view_members
       docs: >-
         Retrieve a specific member that has been granted direct access to the
         organization.
@@ -16823,7 +18385,10 @@ service:
     organization_iam_update_member_roles:
       path: /org/{org_id}/iam/members/{member}
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - organization:view
       docs: Update the roles that a member holds on the organization.
       source:
         openapi: ../openapi.yml
@@ -16881,7 +18446,10 @@ service:
     organization_iam_test_permissions:
       path: /org/{org_id}/iam/test
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - organization:view
       docs: >-
         Test the permissions that the caller (or another subject) holds on the
         organization.
@@ -16923,7 +18491,8 @@ service:
     orgList:
       path: /org
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.yml
       display-name: Org List
@@ -16945,13 +18514,18 @@ service:
       errors:
         - root.UnprocessableEntityError
       examples:
-        - response:
+        - query-parameters:
+            membership: active
+            cursor: cursor
+            page_limit: 1
+          response:
             body:
               key: value
     orgCreate:
       path: /org
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.yml
       display-name: Org Create
@@ -16984,7 +18558,10 @@ service:
     orgGet:
       path: /org/{org_id}
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - organization:view
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -17010,7 +18587,10 @@ service:
     orgUpdate:
       path: /org/{org_id}
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - organization:edit
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -17046,7 +18626,10 @@ service:
     orgJoin:
       path: /org/{org_id}/join
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - organization:join
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -17074,7 +18657,10 @@ service:
     orgInvitesList:
       path: /org/{org_id}/invite
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - organization:view_members
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -17102,6 +18688,10 @@ service:
       examples:
         - path-parameters:
             org_id: org_id
+          query-parameters:
+            show: all
+            cursor: cursor
+            page_limit: 1
           response:
             body:
               pagination:
@@ -17116,7 +18706,10 @@ service:
     orgInvitesCreate:
       path: /org/{org_id}/invite
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - organization:add_member
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -17155,7 +18748,10 @@ service:
     orgInvitesDelete:
       path: /org/{org_id}/invite/{org_invite_id}
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - organization:remove_member
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -17173,7 +18769,10 @@ service:
     orgDomainsList:
       path: /org/{org_id}/domains
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - organization:edit
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -17203,7 +18802,10 @@ service:
     orgDomainsPost:
       path: /org/{org_id}/domains
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - organization:edit
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -17236,7 +18838,10 @@ service:
     orgDomainDelete:
       path: /org/{org_id}/domains/{domain_id}
       method: DELETE
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - organization:edit
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -17263,7 +18868,10 @@ service:
     orgUpdateAvatar:
       path: /org/{org_id}/avatar
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - organization:edit
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -17308,7 +18916,16 @@ service:
           "base-path": "",
           "endpoints": {
             "createProject": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "organization:create_project",
+                  ],
+                },
+              ],
               "display-name": "Create Project",
               "docs": undefined,
               "errors": [
@@ -17363,7 +18980,17 @@ service:
               },
             },
             "getMember": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:view",
+                    "project:view_members",
+                  ],
+                },
+              ],
               "display-name": "IAM - Lookup Project Member",
               "docs": "Retrieve a specific member that has been granted direct access to the project.",
               "errors": [
@@ -17409,7 +19036,16 @@ service:
               },
             },
             "getProject": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:view",
+                  ],
+                },
+              ],
               "display-name": "Get Project",
               "docs": undefined,
               "errors": [
@@ -17469,7 +19105,7 @@ service:
               },
             },
             "getProjectConfig": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Get Project Config",
               "docs": undefined,
               "errors": [
@@ -17523,7 +19159,17 @@ service:
               },
             },
             "iamListMembers": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:view",
+                    "project:view_members",
+                  ],
+                },
+              ],
               "display-name": "IAM - List Project Members",
               "docs": "Lists all members that have been granted direct access to the project.",
               "errors": [
@@ -17536,6 +19182,9 @@ service:
                   "path-parameters": {
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "type": "user",
                   },
                   "response": {
                     "body": {
@@ -17582,7 +19231,16 @@ service:
               },
             },
             "iamTestPermissions": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:view",
+                  ],
+                },
+              ],
               "display-name": "IAM - Test Project Permissions",
               "docs": "Test the permissions that the caller (or another subject) holds on the project.",
               "errors": [
@@ -17647,7 +19305,16 @@ service:
               },
             },
             "iamUpdateMemberRoles": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:view",
+                  ],
+                },
+              ],
               "display-name": "IAM - Update Project Member",
               "docs": "Update the roles that a member holds on the project.",
               "errors": [
@@ -17722,7 +19389,16 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
             },
             "listProject": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "organization:view",
+                  ],
+                },
+              ],
               "display-name": "List Project",
               "docs": undefined,
               "errors": [
@@ -17734,6 +19410,10 @@ This may be combined with `remove_all` to replace the member's entire role list.
                 {
                   "path-parameters": {
                     "org_id": "org_id",
+                  },
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "page_limit": 1,
                   },
                   "response": {
                     "body": {
@@ -17781,7 +19461,16 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
             },
             "projectUpdateAvatar": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:edit",
+                  ],
+                },
+              ],
               "display-name": "Project Update Avatar",
               "docs": undefined,
               "errors": [
@@ -17836,7 +19525,16 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
             },
             "setProjectConfig": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:edit",
+                  ],
+                },
+              ],
               "display-name": "Set Project Config",
               "docs": undefined,
               "errors": [
@@ -17934,7 +19632,16 @@ This may be combined with `remove_all` to replace the member's entire role list.
               },
             },
             "updateProject": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:edit",
+                  ],
+                },
+              ],
               "display-name": "Update Project",
               "docs": undefined,
               "errors": [
@@ -18141,7 +19848,10 @@ service:
     listProject:
       path: /org/{org_id}/project
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - organization:view
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -18165,6 +19875,9 @@ service:
       examples:
         - path-parameters:
             org_id: org_id
+          query-parameters:
+            cursor: cursor
+            page_limit: 1
           response:
             body:
               pagination:
@@ -18180,7 +19893,10 @@ service:
     createProject:
       path: /org/{org_id}/project
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - organization:create_project
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -18215,7 +19931,10 @@ service:
     getProject:
       path: /org/{org_id}/project/{project_id}
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:view
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -18257,7 +19976,10 @@ service:
     updateProject:
       path: /org/{org_id}/project/{project_id}
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:edit
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -18294,7 +20016,6 @@ service:
     getProjectConfig:
       path: /org/{org_id}/project/{project_id}/config
       method: GET
-      auth: false
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -18327,7 +20048,10 @@ service:
     setProjectConfig:
       path: /org/{org_id}/project/{project_id}/config
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:edit
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -18391,7 +20115,10 @@ service:
     projectUpdateAvatar:
       path: /org/{org_id}/project/{project_id}/avatar
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:edit
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -18428,7 +20155,11 @@ service:
     iamListMembers:
       path: /org/{org_id}/project/{project_id}/iam/members
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:view
+            - project:view_members
       docs: Lists all members that have been granted direct access to the project.
       source:
         openapi: ../openapi.yml
@@ -18452,6 +20183,8 @@ service:
         - path-parameters:
             org_id: org_id
             project_id: project_id
+          query-parameters:
+            type: user
           response:
             body:
               pagination:
@@ -18468,7 +20201,11 @@ service:
     getMember:
       path: /org/{org_id}/project/{project_id}/iam/members/{member}
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:view
+            - project:view_members
       docs: >-
         Retrieve a specific member that has been granted direct access to the
         project.
@@ -18503,7 +20240,10 @@ service:
     iamUpdateMemberRoles:
       path: /org/{org_id}/project/{project_id}/iam/members/{member}
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:view
       docs: Update the roles that a member holds on the project.
       source:
         openapi: ../openapi.yml
@@ -18563,7 +20303,10 @@ service:
     iamTestPermissions:
       path: /org/{org_id}/project/{project_id}/iam/test
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:view
       docs: >-
         Test the permissions that the caller (or another subject) holds on the
         project.
@@ -18714,7 +20457,7 @@ types:
           "base-path": "",
           "endpoints": {
             "checkStatus": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Check Status",
               "docs": undefined,
               "errors": [
@@ -18770,7 +20513,11 @@ types:
               },
             },
             "enable": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Enable Web Scrape",
               "docs": undefined,
               "errors": [
@@ -18806,7 +20553,11 @@ types:
               },
             },
             "fetch": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "Initialise Web Scrape",
               "docs": undefined,
               "errors": [
@@ -18890,7 +20641,11 @@ types:
               },
             },
             "listRuns": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "List Runs",
               "docs": undefined,
               "errors": [
@@ -18901,6 +20656,10 @@ types:
                   "path-parameters": {
                     "org_id": "org_id",
                     "project_id": "project_id",
+                  },
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "page_limit": 1,
                   },
                   "response": {
                     "body": {
@@ -18969,7 +20728,8 @@ service:
     enable:
       path: /org/{org_id}/project/{project_id}/scrape
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -18992,7 +20752,8 @@ service:
     fetch:
       path: /org/{org_id}/project/{project_id}/scrape/start
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -19045,7 +20806,6 @@ service:
     checkStatus:
       path: /org/{org_id}/project/{project_id}/scrape/run/{sync_run_id}
       method: GET
-      auth: false
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -19085,7 +20845,8 @@ service:
     listRuns:
       path: /org/{org_id}/project/{project_id}/scrape/runs
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -19109,6 +20870,9 @@ service:
         - path-parameters:
             org_id: org_id
             project_id: project_id
+          query-parameters:
+            cursor: cursor
+            page_limit: 1
           response:
             body:
               pagination:
@@ -19144,7 +20908,19 @@ service:
                 "free",
                 "paid",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_task",
+                  ],
+                },
+              ],
               "availability": "generally-available",
               "display-name": "Create a Task Forwarder",
               "docs": "A Task Forwarder will receive the output of a Task and forward it to the specified destination. This can be used to send data to external systems, or to trigger other actions based on the output of a Task.",
@@ -19241,7 +21017,16 @@ service:
                 "free",
                 "paid",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_task",
+                  ],
+                },
+              ],
               "availability": "generally-available",
               "display-name": "List all Task Forwarders",
               "docs": undefined,
@@ -19255,6 +21040,10 @@ service:
                   "path-parameters": {
                     "org_id": "123e4567-e89b-12d3-a456-426614174000",
                     "project_id": "123e4567-e89b-12d3-a456-426614174001",
+                  },
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "page_limit": 1,
                   },
                   "response": {
                     "body": {
@@ -19336,7 +21125,16 @@ service:
                 "free",
                 "paid",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_task",
+                  ],
+                },
+              ],
               "availability": "generally-available",
               "display-name": "Fetch a Task Forwarder",
               "docs": undefined,
@@ -19401,7 +21199,19 @@ service:
                 "free",
                 "paid",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_task",
+                  ],
+                },
+              ],
               "availability": "generally-available",
               "display-name": "Update a Task Forwarder",
               "docs": undefined,
@@ -19504,7 +21314,10 @@ service:
     getAllTaskForwarders:
       path: /org/{org_id}/project/{project_id}/task_forwarder
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_task
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -19546,6 +21359,9 @@ service:
         - path-parameters:
             org_id: 123e4567-e89b-12d3-a456-426614174000
             project_id: 123e4567-e89b-12d3-a456-426614174001
+          query-parameters:
+            page_limit: 1
+            cursor: cursor
           response:
             body:
               pagination:
@@ -19571,7 +21387,11 @@ service:
     createTaskForwarder:
       path: /org/{org_id}/project/{project_id}/task_forwarder
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_task
       docs: >-
         A Task Forwarder will receive the output of a Task and forward it to the
         specified destination. This can be used to send data to external
@@ -19651,7 +21471,10 @@ service:
     getTaskForwarder:
       path: /org/{org_id}/project/{project_id}/task_forwarder/{task_forwarder_id}
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_task
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -19699,7 +21522,11 @@ service:
     updateTaskForwarder:
       path: /org/{org_id}/project/{project_id}/task_forwarder/{task_forwarder_id}
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_task
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -19787,7 +21614,19 @@ service:
                 "free",
                 "paid",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_task",
+                  ],
+                },
+              ],
               "availability": "generally-available",
               "display-name": "Create a Task",
               "docs": "Tasks are the core of the platform and define the prompts and models used to generate responses.",
@@ -19940,7 +21779,19 @@ service:
                 "free",
                 "paid",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "task:edit",
+                  ],
+                },
+              ],
               "availability": "generally-available",
               "display-name": "Update a Task",
               "docs": undefined,
@@ -20087,7 +21938,19 @@ service:
                 "free",
                 "paid",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "project:create_task",
+                  ],
+                },
+              ],
               "availability": "generally-available",
               "display-name": "List all Tasks",
               "docs": undefined,
@@ -20101,6 +21964,11 @@ service:
                   "path-parameters": {
                     "org_id": "123e4567-e89b-12d3-a456-426614174000",
                     "project_id": "123e4567-e89b-12d3-a456-426614174001",
+                  },
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "name": "name",
+                    "page_limit": 1,
                   },
                   "response": {
                     "body": {
@@ -20198,7 +22066,16 @@ service:
                 "free",
                 "paid",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "task:view",
+                  ],
+                },
+              ],
               "availability": "generally-available",
               "display-name": "Fetch a Task",
               "docs": undefined,
@@ -20281,7 +22158,19 @@ service:
                 "free",
                 "paid",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "task:edit",
+                  ],
+                },
+              ],
               "availability": "generally-available",
               "display-name": "Fetch Task Run",
               "docs": "Fetch an individual Task Run.",
@@ -20357,7 +22246,19 @@ service:
                 "free",
                 "paid",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "task:edit",
+                  ],
+                },
+              ],
               "availability": "generally-available",
               "display-name": "Fetch Task Runs",
               "docs": "Individual Task Runs provide an audit trail for all Task executions.",
@@ -20372,6 +22273,11 @@ service:
                     "org_id": "123e4567-e89b-12d3-a456-426614174000",
                     "project_id": "123e4567-e89b-12d3-a456-426614174001",
                     "task_id": "01909843-3596-da54-4756-28af46917e74",
+                  },
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "page_limit": 1,
+                    "task_revision_id": "task_revision_id",
                   },
                   "response": {
                     "body": {
@@ -20473,7 +22379,16 @@ service:
                 "free",
                 "paid",
               ],
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "task:run_task",
+                  ],
+                },
+              ],
               "availability": "generally-available",
               "display-name": "Run a Task",
               "docs": "Run a specified Task against provided text and/or image input. The response is controlled by the `output_format` of the Task. Note that a Task must be `enabled` to be run.",
@@ -20564,7 +22479,17 @@ service:
               },
             },
             "task_get_member": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "task:view",
+                    "task:view_members",
+                  ],
+                },
+              ],
               "display-name": "IAM - Lookup Task Member",
               "docs": "Retrieve a specific member that has been granted direct access to the task.",
               "errors": [
@@ -20612,7 +22537,17 @@ service:
               },
             },
             "task_iam_list_members": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "task:view",
+                    "task:view_members",
+                  ],
+                },
+              ],
               "display-name": "IAM - List Task Members",
               "docs": "Lists all members that have been granted direct access to the task.",
               "errors": [
@@ -20626,6 +22561,9 @@ service:
                     "org_id": "org_id",
                     "project_id": "project_id",
                     "task_id": "task_id",
+                  },
+                  "query-parameters": {
+                    "type": "user",
                   },
                   "response": {
                     "body": {
@@ -20673,7 +22611,16 @@ service:
               },
             },
             "task_iam_test_permissions": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "task:view",
+                  ],
+                },
+              ],
               "display-name": "IAM - Test Task Permissions",
               "docs": "Test the permissions that the caller (or another subject) holds on the task.",
               "errors": [
@@ -20740,7 +22687,16 @@ service:
               },
             },
             "task_iam_update_member_roles": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+                {
+                  "HTTPBearer": [
+                    "task:view",
+                  ],
+                },
+              ],
               "display-name": "IAM - Update Task Member",
               "docs": "Update the roles that a member holds on the task.",
               "errors": [
@@ -21027,7 +22983,11 @@ service:
     getAllTasks:
       path: /org/{org_id}/project/{project_id}/task
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_task
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -21072,6 +23032,10 @@ service:
         - path-parameters:
             org_id: 123e4567-e89b-12d3-a456-426614174000
             project_id: 123e4567-e89b-12d3-a456-426614174001
+          query-parameters:
+            name: name
+            page_limit: 1
+            cursor: cursor
           response:
             body:
               pagination:
@@ -21121,7 +23085,11 @@ service:
     createTask:
       path: /org/{org_id}/project/{project_id}/task
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer: []
+        - HTTPBearer:
+            - project:create_task
       docs: >-
         Tasks are the core of the platform and define the prompts and models
         used to generate responses.
@@ -21280,7 +23248,10 @@ service:
     getTask:
       path: /org/{org_id}/project/{project_id}/task/{task_id}
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - task:view
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -21356,7 +23327,11 @@ service:
     editTask:
       path: /org/{org_id}/project/{project_id}/task/{task_id}
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer: []
+        - HTTPBearer:
+            - task:edit
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -21491,7 +23466,11 @@ service:
     getTaskRuns:
       path: /org/{org_id}/project/{project_id}/task/{task_id}/run
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer: []
+        - HTTPBearer:
+            - task:edit
       docs: Individual Task Runs provide an audit trail for all Task executions.
       source:
         openapi: ../openapi.yml
@@ -21543,6 +23522,10 @@ service:
             org_id: 123e4567-e89b-12d3-a456-426614174000
             project_id: 123e4567-e89b-12d3-a456-426614174001
             task_id: 01909843-3596-da54-4756-28af46917e74
+          query-parameters:
+            page_limit: 1
+            cursor: cursor
+            task_revision_id: task_revision_id
           response:
             body:
               pagination:
@@ -21577,7 +23560,10 @@ service:
     runTask:
       path: /org/{org_id}/project/{project_id}/task/{task_id}/run
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - task:run_task
       docs: >-
         Run a specified Task against provided text and/or image input. The
         response is controlled by the `output_format` of the Task. Note that a
@@ -21658,7 +23644,11 @@ service:
     task_iam_list_members:
       path: /org/{org_id}/project/{project_id}/task/{task_id}/iam/members
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - task:view
+            - task:view_members
       docs: Lists all members that have been granted direct access to the task.
       source:
         openapi: ../openapi.yml
@@ -21684,6 +23674,8 @@ service:
             org_id: org_id
             project_id: project_id
             task_id: task_id
+          query-parameters:
+            type: user
           response:
             body:
               pagination:
@@ -21700,7 +23692,11 @@ service:
     task_get_member:
       path: /org/{org_id}/project/{project_id}/task/{task_id}/iam/members/{member}
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - task:view
+            - task:view_members
       docs: >-
         Retrieve a specific member that has been granted direct access to the
         task.
@@ -21737,7 +23733,10 @@ service:
     task_iam_update_member_roles:
       path: /org/{org_id}/project/{project_id}/task/{task_id}/iam/members/{member}
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - task:view
       docs: Update the roles that a member holds on the task.
       source:
         openapi: ../openapi.yml
@@ -21799,7 +23798,10 @@ service:
     task_iam_test_permissions:
       path: /org/{org_id}/project/{project_id}/task/{task_id}/iam/test
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer:
+            - task:view
       docs: >-
         Test the permissions that the caller (or another subject) holds on the
         task.
@@ -21845,7 +23847,11 @@ service:
     getTaskRun:
       path: /org/{org_id}/project/{project_id}/task/{task_id}/run/{task_run_id}
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
+        - HTTPBearer: []
+        - HTTPBearer:
+            - task:edit
       docs: Fetch an individual Task Run.
       source:
         openapi: ../openapi.yml
@@ -22041,7 +24047,11 @@ types:
           "base-path": "",
           "endpoints": {
             "userGet": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "User Get",
               "docs": "Retrieve the profile of the current user.",
               "errors": [
@@ -22073,7 +24083,11 @@ types:
               },
             },
             "userPost": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "User Post",
               "docs": "Update the profile of the current user.",
               "errors": [
@@ -22123,7 +24137,11 @@ types:
               },
             },
             "userUpdateAvatar": {
-              "auth": true,
+              "auth": [
+                {
+                  "HTTPBearer": [],
+                },
+              ],
               "display-name": "User Update Avatar",
               "docs": undefined,
               "errors": [
@@ -22182,7 +24200,8 @@ service:
     userGet:
       path: /user
       method: GET
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Retrieve the profile of the current user.
       source:
         openapi: ../openapi.yml
@@ -22204,7 +24223,8 @@ service:
     userPost:
       path: /user
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       docs: Update the profile of the current user.
       source:
         openapi: ../openapi.yml
@@ -22236,7 +24256,8 @@ service:
     userUpdateAvatar:
       path: /user/avatar
       method: POST
-      auth: true
+      auth:
+        - HTTPBearer: []
       source:
         openapi: ../openapi.yml
       display-name: User Update Avatar

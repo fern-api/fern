@@ -138,7 +138,7 @@ client.inlined().send(
 <dl>
 <dd>
 
-**temperature:** `Optional<Float>` 
+**temperature:** `Optional<Double>` 
     
 </dd>
 </dl>
@@ -366,15 +366,13 @@ client.reference().send(
             ContainerObject
                 .builder()
                 .nestedObjects(
-                    new ArrayList<NestedObjectWithLiterals>(
-                        Arrays.asList(
-                            NestedObjectWithLiterals
-                                .builder()
-                                .literal1("literal1")
-                                .literal2("literal2")
-                                .strProp("strProp")
-                                .build()
-                        )
+                    Arrays.asList(
+                        NestedObjectWithLiterals
+                            .builder()
+                            .literal1("literal1")
+                            .literal2("literal2")
+                            .strProp("strProp")
+                            .build()
                     )
                 )
                 .build()

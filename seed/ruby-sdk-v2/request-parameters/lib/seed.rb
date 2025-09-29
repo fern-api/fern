@@ -4,7 +4,6 @@ require "json"
 require "net/http"
 require "securerandom"
 
-# Internal Types
 require_relative "seed/internal/json/serializable"
 require_relative "seed/internal/types/type"
 require_relative "seed/internal/types/utils"
@@ -25,17 +24,27 @@ require_relative "seed/internal/types/boolean"
 require_relative "seed/internal/types/enum"
 require_relative "seed/internal/types/hash"
 require_relative "seed/internal/types/unknown"
-
-# API Types
+require_relative "seed/errors/api_error"
+require_relative "seed/errors/response_error"
+require_relative "seed/errors/client_error"
+require_relative "seed/errors/redirect_error"
+require_relative "seed/errors/server_error"
+require_relative "seed/errors/timeout_error"
+require_relative "seed/internal/iterators/item_iterator"
+require_relative "seed/internal/iterators/cursor_item_iterator"
+require_relative "seed/internal/iterators/offset_item_iterator"
+require_relative "seed/internal/iterators/cursor_page_iterator"
+require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/user/types/user"
 require_relative "seed/user/types/nested_user"
 require_relative "seed/user/types/create_username_body"
-
-# Client Types
 require_relative "seed/client"
 require_relative "seed/user/client"
 require_relative "seed/user/types/create_username_request"
 require_relative "seed/user/types/create_username_referenced_request"
 require_relative "seed/user/types/get_users_request"
+<<<<<<< HEAD
 require_relative "../README.md"
 require_relative "../reference.md"
+=======
+>>>>>>> main

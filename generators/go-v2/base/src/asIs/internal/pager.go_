@@ -3,7 +3,7 @@ package internal
 import (
 	"context"
 
-	"github.com/fern-api/fern-go/internal/generator/sdk/core"
+	"{{ .RootImportPath }}/core"
 )
 
 // PagerMode represents the different types of pagination modes.

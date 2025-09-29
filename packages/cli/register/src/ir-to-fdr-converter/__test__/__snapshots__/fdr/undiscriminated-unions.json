@@ -415,6 +415,56 @@
           }
         ]
       }
+    },
+    "type_union:UnionWithIdenticalStrings": {
+      "description": "Multiple string types that all resolve to String in Java.\nThis tests the fix for duplicate method signatures.",
+      "name": "UnionWithIdenticalStrings",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "type_union:UnionWithIdenticalPrimitives": {
+      "description": "Mix of primitives where some resolve to the same Java type.",
+      "name": "UnionWithIdenticalPrimitives",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "integer"
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "double"
+              }
+            }
+          },
+          {
+            "type": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
     }
   },
   "subpackages": {
@@ -833,7 +883,9 @@
         "type_union:OptionalMetadata",
         "type_union:Metadata",
         "type_union:Key",
-        "type_union:KeyType"
+        "type_union:KeyType",
+        "type_union:UnionWithIdenticalStrings",
+        "type_union:UnionWithIdenticalPrimitives"
       ],
       "subpackages": []
     }
