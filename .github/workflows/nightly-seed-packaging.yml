@@ -20,6 +20,7 @@ jobs:
   package-seed-tests:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       matrix:
         sdk-name:
           [
