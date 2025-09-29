@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     
     # CHRISM - working, add back later
-    if: false
+    # if: false
     strategy:
       matrix:
         sdk-name:
@@ -110,7 +110,7 @@ jobs:
           name: ${{ matrix.sdk-name }}-seed-test-log.txt
           path: ${{ matrix.sdk-name }}-seed-test-log.txt
           if-no-files-found: error
-          retention-days: 1
+          retention-days: 10 # CHRISM - temp
 
       - name: Echo info for this run    
         run: |
