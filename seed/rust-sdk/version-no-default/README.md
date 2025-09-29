@@ -29,9 +29,14 @@ use seed_version::{ClientConfig, VersionClient};
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        ..Default::default()
+    };
     let client = VersionClient::new(config).expect("Failed to build client");
-    client.user_get_user("userId").await;
+    client
+        .user
+        .get_user(&UserId("userId".to_string()), None)
+        .await;
 }
 ```
 

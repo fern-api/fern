@@ -1,18 +1,23 @@
-use seed_pagination::{ClientConfig, ListUsersCursorPaginationRequest, PaginationClient};
+use seed_pagination::{ClientConfig, ListWithCursorPaginationQueryRequest, PaginationClient};
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         base_url: "https://api.fern.com".to_string(),
-        api_key: Some("<token>".to_string()),
+        token: Some("<token>".to_string()),
+        ..Default::default()
     };
     let client = PaginationClient::new(config).expect("Failed to build client");
     client
-        .users_list_with_cursor_pagination(ListUsersCursorPaginationRequest {
-            page: Some(1),
-            per_page: Some(1),
-            order: Some("asc"),
-            starting_after: Some("starting_after"),
-        })
+        .users
+        .list_with_cursor_pagination(
+            &ListWithCursorPaginationQueryRequest {
+                page: Some(1),
+                per_page: Some(1),
+                order: Some(Order::Asc),
+                starting_after: Some("starting_after".to_string()),
+            },
+            None,
+        )
         .await;
 }

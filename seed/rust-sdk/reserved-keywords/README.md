@@ -25,13 +25,23 @@ cargo add seed_nursery_api
 Instantiate and use the client with the following:
 
 ```rust
-use seed_nursery_api::{ClientConfig, NurseryApiClient, TestRequest};
+use seed_nursery_api::{ClientConfig, NurseryApiClient, TestQueryRequest};
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        ..Default::default()
+    };
     let client = NurseryApiClient::new(config).expect("Failed to build client");
-    client.package_test(TestRequest { for_: "for" }).await;
+    client
+        .package
+        .test(
+            &TestQueryRequest {
+                r#for: "for".to_string(),
+            },
+            None,
+        )
+        .await;
 }
 ```
 

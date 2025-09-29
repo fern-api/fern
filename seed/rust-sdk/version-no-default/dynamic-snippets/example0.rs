@@ -4,7 +4,11 @@ use seed_version::{ClientConfig, VersionClient};
 async fn main() {
     let config = ClientConfig {
         base_url: "https://api.fern.com".to_string(),
+        ..Default::default()
     };
     let client = VersionClient::new(config).expect("Failed to build client");
-    client.user_get_user("userId").await;
+    client
+        .user
+        .get_user(&UserId("userId".to_string()), None)
+        .await;
 }

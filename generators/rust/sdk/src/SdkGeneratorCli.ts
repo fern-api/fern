@@ -12,6 +12,7 @@ import { ErrorGenerator } from "./error/ErrorGenerator";
 import { ClientConfigGenerator } from "./generators/ClientConfigGenerator";
 import { RootClientGenerator } from "./generators/RootClientGenerator";
 import { SubClientGenerator } from "./generators/SubClientGenerator";
+import { ReferenceConfigAssembler } from "./reference";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest, convertIr } from "./utils";
@@ -64,6 +65,10 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         context.logger.info("=== CALLING generateReadme ===");
         // Generate README if configured
         await this.generateReadme(context);
+
+        context.logger.info("=== CALLING generateReference ===");
+        // Generate reference.md if configured
+        await this.generateReference(context);
 
         context.logger.info("=== CALLING persist ===");
         await context.project.persist();
@@ -149,7 +154,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         }
 
         // Add re-exports
-        useStatements.push(new UseStatement({ path: "resources", items: [clientName], isPublic: true }));
+        useStatements.push(new UseStatement({ path: "resources", items: ["*"], isPublic: true }));
         if (hasTypes) {
             useStatements.push(new UseStatement({ path: "types", items: ["*"], isPublic: true }));
         }
@@ -259,7 +264,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         }
 
         if (hasTypes) {
-            useStatements.push(new UseStatement({ path: "api::types", items: ["*"], isPublic: true }));
+            useStatements.push(new UseStatement({ path: "api", items: ["*"], isPublic: true }));
         }
 
         // Add re-exports
@@ -423,6 +428,31 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             }
         }
         return endpointSnippets;
+    }
+
+    // ===========================
+    // REFERENCE GENERATION
+    // ===========================
+    private async generateReference(context: SdkGeneratorContext): Promise<void> {
+        try {
+            context.logger.info("Starting reference.md generation...");
+
+            const builder = new ReferenceConfigAssembler(context).buildReferenceConfigBuilder();
+            const content = await context.generatorAgent.generateReference(builder);
+
+            context.logger.debug(`Generated reference.md content length: ${content.length}`);
+
+            const referenceFile = new RustFile({
+                filename: "reference.md",
+                directory: RelativeFilePath.of(""),
+                fileContents: content
+            });
+
+            context.project.addSourceFiles(referenceFile);
+            context.logger.info("Successfully added reference.md to project");
+        } catch (error) {
+            throw new Error(`Failed to generate reference.md: ${extractErrorMessage(error)}`);
+        }
     }
 
     // ===========================

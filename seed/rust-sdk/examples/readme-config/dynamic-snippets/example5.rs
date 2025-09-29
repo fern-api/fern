@@ -1,18 +1,16 @@
-use seed_examples::{ClientConfig, ExamplesClient, GetFileRequest};
+use seed_examples::{ClientConfig, ExamplesClient};
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         base_url: "https://api.fern.com".to_string(),
-        api_key: Some("<token>".to_string()),
+        token: Some("<token>".to_string()),
+        ..Default::default()
     };
     let client = ExamplesClient::new(config).expect("Failed to build client");
     client
-        .file_service_get_file(
-            "file.txt",
-            GetFileRequest {
-                x_file_api_version: "0.0.2",
-            },
-        )
+        .file
+        .service
+        .get_file(&"file.txt".to_string(), None)
         .await;
 }

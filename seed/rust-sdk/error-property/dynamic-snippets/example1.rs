@@ -4,7 +4,8 @@ use seed_error_property::{ClientConfig, ErrorPropertyClient};
 async fn main() {
     let config = ClientConfig {
         base_url: "https://api.fern.com".to_string(),
+        ..Default::default()
     };
     let client = ErrorPropertyClient::new(config).expect("Failed to build client");
-    client.property_based_error_throw_error().await;
+    client.property_based_error.throw_error(None).await;
 }

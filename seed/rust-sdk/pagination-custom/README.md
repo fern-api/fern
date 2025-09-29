@@ -25,18 +25,23 @@ cargo add seed_pagination
 Instantiate and use the client with the following:
 
 ```rust
-use seed_pagination::{ClientConfig, ListUsernamesRequestCustom, PaginationClient};
+use seed_pagination::{ClientConfig, ListUsernamesCustomQueryRequest, PaginationClient};
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
-        api_key: Some("<token>".to_string()),
+        token: Some("<token>".to_string()),
+        ..Default::default()
     };
     let client = PaginationClient::new(config).expect("Failed to build client");
     client
-        .users_list_usernames_custom(ListUsernamesRequestCustom {
-            starting_after: Some("starting_after"),
-        })
+        .users
+        .list_usernames_custom(
+            &ListUsernamesCustomQueryRequest {
+                starting_after: Some("starting_after".to_string()),
+            },
+            None,
+        )
         .await;
 }
 ```

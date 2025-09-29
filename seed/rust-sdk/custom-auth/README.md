@@ -26,15 +26,18 @@ Instantiate and use the client with the following:
 
 ```rust
 use seed_custom_auth::{ClientConfig, CustomAuthClient};
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         api_key: Some("<value>".to_string()),
+        ..Default::default()
     };
     let client = CustomAuthClient::new(config).expect("Failed to build client");
     client
-        .custom_auth_post_with_custom_auth(serde_json::json!({"key":"value"}))
+        .custom_auth
+        .post_with_custom_auth(&serde_json::json!({"key":"value"}), None)
         .await;
 }
 ```

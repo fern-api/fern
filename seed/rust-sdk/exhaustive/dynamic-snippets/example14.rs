@@ -4,8 +4,13 @@ use seed_exhaustive::{ClientConfig, ExhaustiveClient};
 async fn main() {
     let config = ClientConfig {
         base_url: "https://api.fern.com".to_string(),
-        api_key: Some("<token>".to_string()),
+        token: Some("<token>".to_string()),
+        ..Default::default()
     };
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
-    client.endpoints_http_methods_test_delete("id").await;
+    client
+        .endpoints
+        .http_methods
+        .test_delete(&"id".to_string(), None)
+        .await;
 }

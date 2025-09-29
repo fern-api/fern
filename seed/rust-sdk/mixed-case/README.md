@@ -29,9 +29,14 @@ use seed_mixed_case::{ClientConfig, MixedCaseClient};
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        ..Default::default()
+    };
     let client = MixedCaseClient::new(config).expect("Failed to build client");
-    client.service_get_resource("rsc-xyz").await;
+    client
+        .service
+        .get_resource(&"rsc-xyz".to_string(), None)
+        .await;
 }
 ```
 

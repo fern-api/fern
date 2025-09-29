@@ -1,13 +1,15 @@
-use seed_pagination::{ClientConfig, ListWithGlobalConfigRequest, PaginationClient};
+use seed_pagination::{ClientConfig, ListWithGlobalConfigQueryRequest, PaginationClient};
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         base_url: "https://api.fern.com".to_string(),
-        api_key: Some("<token>".to_string()),
+        token: Some("<token>".to_string()),
+        ..Default::default()
     };
     let client = PaginationClient::new(config).expect("Failed to build client");
     client
-        .users_list_with_global_config(ListWithGlobalConfigRequest { offset: Some(1) })
+        .users
+        .list_with_global_config(&ListWithGlobalConfigQueryRequest { offset: Some(1) }, None)
         .await;
 }

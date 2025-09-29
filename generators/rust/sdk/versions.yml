@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.5.0
+  createdAt: "2025-09-29"
+  changelogEntry:
+    - type: feat
+      summary: add reference.md support and some fixes for dynamic-snippets
+  irVersion: 59
+
 - version: 0.4.0
   createdAt: "2025-09-29"
   changelogEntry:

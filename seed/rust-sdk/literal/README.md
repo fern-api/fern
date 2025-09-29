@@ -26,17 +26,24 @@ Instantiate and use the client with the following:
 
 ```rust
 use seed_literal::{ClientConfig, LiteralClient, SendLiteralsInHeadersRequest};
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        ..Default::default()
+    };
     let client = LiteralClient::new(config).expect("Failed to build client");
     client
-        .headers_send(SendLiteralsInHeadersRequest {
-            endpoint_version: "02-12-2024",
-            async_: true,
-            query: "What is the weather today",
-        })
+        .headers
+        .send(
+            &SendLiteralsInHeadersRequest {
+                endpoint_version: "02-12-2024".to_string(),
+                r#async: true,
+                query: "What is the weather today".to_string(),
+            },
+            None,
+        )
         .await;
 }
 ```
