@@ -43,17 +43,20 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
     public constructor({
         logger,
         config,
-        selfHosted = false
+        selfHosted = false,
+        skipInstall = false
     }: {
         logger: Logger;
         config: FernGeneratorExec.GeneratorConfig;
         selfHosted?: boolean;
+        skipInstall?: boolean;
     }) {
         this.logger = logger;
         this.config = config;
         this.cli = new GeneratorAgentClient({
             logger,
-            selfHosted
+            selfHosted,
+            skipInstall
         });
     }
 
