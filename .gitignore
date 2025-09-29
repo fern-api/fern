@@ -77,7 +77,6 @@ seed/python-sdk/**/output.prof
 
 # Claude
 .claude
-CLAUDE.md
 
 # Preview
 **/.preview/
