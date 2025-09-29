@@ -1,6 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add a field to `PageActionsConfig` to allow users to enable Page Actions for API Reference.
+
+        ```docs.yml 
+        page-actions:
+          api-reference: true
+        ```
+      type: feat
+  irVersion: 60
+  createdAt: "2025-09-28"
+  version: 0.83.0
+
+- changelogEntry:
+    - summary: |
         Introduce `page-actions` configuration in the `docs.yml` so that users can choose which 
         actions are visible. 
 

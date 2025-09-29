@@ -189,7 +189,8 @@ export async function parseDocsConfiguration({
             openAi: rawDocsConfiguration.pageActions?.chatgpt ?? false,
             claude: rawDocsConfiguration.pageActions?.claude ?? false,
             vscode: rawDocsConfiguration.pageActions?.vscode ?? false,
-            cursor: rawDocsConfiguration.pageActions?.cursor ?? false
+            cursor: rawDocsConfiguration.pageActions?.cursor ?? false,
+            apiReference: rawDocsConfiguration.pageActions?.apiReference ?? false
         }
     };
 }

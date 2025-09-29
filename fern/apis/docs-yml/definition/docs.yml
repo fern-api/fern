@@ -175,6 +175,7 @@ types:
       claude: optional<boolean>
       vscode: optional<boolean>
       cursor: optional<boolean>
+      "api-reference": optional<boolean>
 
   AIChatConfig:
     properties:

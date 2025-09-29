@@ -2660,6 +2660,16 @@
               "type": "null"
             }
           ]
+        },
+        "api-reference": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false

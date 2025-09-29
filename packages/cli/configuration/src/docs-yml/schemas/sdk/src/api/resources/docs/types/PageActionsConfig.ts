@@ -7,4 +7,5 @@ export interface PageActionsConfig {
     claude?: boolean;
     vscode?: boolean;
     cursor?: boolean;
+    apiReference?: boolean;
 }

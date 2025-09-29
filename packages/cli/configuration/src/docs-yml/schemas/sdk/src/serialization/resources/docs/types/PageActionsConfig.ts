@@ -14,6 +14,7 @@ export const PageActionsConfig: core.serialization.ObjectSchema<
     claude: core.serialization.boolean().optional(),
     vscode: core.serialization.boolean().optional(),
     cursor: core.serialization.boolean().optional(),
+    apiReference: core.serialization.property("api-reference", core.serialization.boolean().optional()),
 });
 
 export declare namespace PageActionsConfig {
@@ -22,5 +23,6 @@ export declare namespace PageActionsConfig {
         claude?: boolean | null;
         vscode?: boolean | null;
         cursor?: boolean | null;
+        "api-reference"?: boolean | null;
     }
 }
