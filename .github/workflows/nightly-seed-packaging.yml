@@ -167,6 +167,7 @@ jobs:
           with:
               path: ./artifacts
               name: ${{ matrix.sdk-name }}-seed-test-log.txt
+              run-id: 18111300631 #CHRISM - temporary for testing, artifact ID = 4132496421
               github-token: ${{ secrets.FERN_GITHUB_PAT }}
               repository: ${{ github.repository }}
               merge-multiple: true
@@ -183,27 +184,19 @@ jobs:
             split-tests-cutoff-time-in-seconds: 9600 # Roughly 10 minutes (across 16 batches, but will depend on concurrency runners)
             seed-test-log-file-path: artifacts/${{ matrix.sdk-name }}-seed-test-log.txt
 
-        - name: Output Packages
-          id: output-packages
+        - name: Create Seed Packages File
+          id: create-seed-packages-file
           run: |
-              BASH_VAR=$(echo '${{ steps.package-tests.outputs.test-matrix }}' | jq -c)
-              echo "${{ matrix.sdk-name }}-packages=$BASH_VAR" >> $GITHUB_OUTPUT
+              BASH_VAR='${{ steps.package-tests.outputs.json-file-contents }}'
+              echo "$BASH_VAR" > "${{ matrix.sdk-name }}-seed-packages.json"
 
-              # Echo the data to command line for visibility
-              echo "Packaged data for ${{ matrix.sdk-name }}-test-matrix:"
-              echo "$BASH_VAR" | jq .
-              echo "Split tests for ${{ matrix.sdk-name }}: ${{ steps.package-tests.outputs.split-tests }}"
-
-              if [[ "${{ steps.package-tests.outputs.split-tests }}" == "true" ]]; then
-                echo "Splitting tests across parallel runners"
-                echo "${{ matrix.sdk-name }}-test-matrix=$BASH_VAR" >> $GITHUB_OUTPUT
-              else
-                echo "Override packaging to run all tests in one runner"
-                BASH_VAR='[{"fixtures":["all"]}]'
-                echo "${{ matrix.sdk-name }}-test-matrix=$BASH_VAR" >> $GITHUB_OUTPUT
-              fi
-
-            #  CHRISM - add back split tests
+        - name: Upload Seed Packages File as Artifact
+          uses: actions/upload-artifact@v4
+          with:
+            name: ${{ matrix.sdk-name }}-seed-packages.json
+            path: ${{ matrix.sdk-name }}-seed-packages.json
+            if-no-files-found: error
+            retention-days: 1
             
 
     #   - name: Get output log data seed test and time data
