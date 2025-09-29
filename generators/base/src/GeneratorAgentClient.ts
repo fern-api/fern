@@ -79,7 +79,13 @@ export class GeneratorAgentClient {
     }
 
     private async install(options: createLoggingExecutable.Options = {}): Promise<LoggingExecutable> {
-        // Only attempt npm install once per instance
+        const cli = createLoggingExecutable("generator-cli", {
+            cwd: process.cwd(),
+            logger: this.logger,
+            ...options
+        });
+
+        // Only attempt npm install and version check once per instance
         if (!this.installAttempted) {
             const npm = createLoggingExecutable("npm", {
                 cwd: process.cwd(),
@@ -95,26 +101,12 @@ export class GeneratorAgentClient {
                 );
                 // Continue execution as the package might already be installed
             }
-            this.installAttempted = true;
 
-            const cli = createLoggingExecutable("generator-cli", {
-                cwd: process.cwd(),
-                logger: this.logger,
-                ...options
-            });
             const version = await cli(["--version"]);
             this.logger.debug(`Successfully installed ${GENERATOR_AGENT_NPM_PACKAGE} version ${version.stdout}`);
-
-            return cli;
+            this.installAttempted = true;
         }
 
-        const cli = createLoggingExecutable("generator-cli", {
-            cwd: process.cwd(),
-            logger: this.logger,
-            ...options
-        });
-        const version = await cli(["--version"]);
-        this.logger.debug(`Using previously installed ${GENERATOR_AGENT_NPM_PACKAGE} version ${version.stdout}`);
         return cli;
     }
 }
