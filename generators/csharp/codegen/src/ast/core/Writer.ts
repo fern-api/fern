@@ -116,12 +116,8 @@ export class Writer extends AbstractWriter {
         return this.customConfig;
     }
 
-    public shouldUseFullyQualifiedNamespaces(): boolean {
+    public get useFullyQualifiedNamespaces(): boolean {
         return this.customConfig["experimental-fully-qualified-namespaces"] ?? false;
-    }
-
-    public shouldUseDotnetFormat(): boolean {
-        return this.customConfig["experimental-dotnet-format"] ?? false;
     }
 
     public getSimplifyObjectDictionaries(): boolean {

@@ -51,6 +51,32 @@ export const AsIsFiles = {
     QueryStringConverter: "QueryStringConverter.Template.cs",
     RawClient: "RawClient.Template.cs",
     StreamRequest: "StreamRequest.Template.cs",
+    WebSocketAsync: {
+        Events: {
+            Closed: "Async/Events/Closed.Template.cs",
+            Connected: "Async/Events/Connected.Template.cs",
+            Event: "Async/Events/Event.Template.cs"
+        },
+        Exceptions: {
+            WebsocketException: "Async/Exceptions/WebsocketException.Template.cs"
+        },
+        Models: {
+            Options: "Async/Models/Options.Template.cs",
+            DisconnectionInfo: "Async/Models/DisconnectionInfo.Template.cs",
+            DisconnectionType: "Async/Models/DisconnectionType.Template.cs",
+            ReconnectionInfo: "Async/Models/ReconnectionInfo.Template.cs",
+            ReconnectionType: "Async/Models/ReconnectionType.Template.cs"
+        },
+        Threading: {
+            AsyncLock: "Async/Threading/AsyncLock.Template.cs"
+        },
+        AsyncApi: "Async/AsyncApi.Template.cs",
+        ConnectionStatus: "Async/ConnectionStatus.Template.cs",
+        Query: "Async/Query.Template.cs",
+        RequestMessage: "Async/RequestMessage.Template.cs",
+        WebSocketConnection: "Async/WebSocketConnection.Template.cs",
+        WebSocketConnectionSending: "Async/WebSocketConnection.Sending.Template.cs"
+    },
     Json: {
         AdditionalProperties: "AdditionalProperties.Template.cs",
         CollectionItemSerializer: "CollectionItemSerializer.Template.cs",
