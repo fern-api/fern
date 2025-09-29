@@ -97,130 +97,44 @@ When users run `fern generate --group <group-name>` in production:
    - **GitHub**: release/pull-request/push modes  
    - **Local filesystem**: saves to specified directory
 
-### Seed Testing Workflow (Development)
+### Seed Testing (Development)
 
-Seed is the internal testing system used to validate generator changes against test fixtures. Critical for bug fixes and feature development.
+Seed validates generator changes against test fixtures. Essential for bug fixes and feature development.
 
-**Structure**:
-- **Test definitions**: `/test-definitions/` - API spec inputs for testing
-- **Seed package**: `/packages/seed/` - CLI tool for running tests  
-- **Test snapshots**: `/seed/` - Expected generator outputs (organized as `/seed/<generator>/<fixture>/`)
-- **Generator configs**: `/seed/<generator>/seed.yml` - Defines how each generator runs tests
+**Structure**: `/test-definitions/` (inputs) → `/packages/seed/` (CLI) → `/seed/<generator>/<fixture>/` (outputs)
 
-**Setup Commands** (run before any seed testing):
+**Setup**: `pnpm install && pnpm compile && pnpm seed:build`
+
+**Commands**:
 ```bash
-pnpm install && pnpm compile && pnpm seed:build
+# Test predefined fixture
+pnpm seed test --generator python-sdk --fixture file-download --skip-scripts
+
+# Test custom project
+pnpm seed run --generator go-sdk --path /path/to/project --skip-scripts
 ```
 
-**Common Seed Commands**:
-```bash
-# Test against predefined fixtures (overwrites files in /seed/)
-pnpm seed test --generator python-sdk --fixture file-download --skip-scripts --log-level debug
+**Development Cycle**:
+1. Run seed test to reproduce issue
+2. Modify generator code
+3. Re-run seed test (use `git diff` to see output changes)
+4. Repeat until fixed
 
-# Test against custom fern project  
-pnpm seed run --generator go-sdk --path /path/to/fern/project --log-level debug --skip-scripts
-
-# For multi-API projects
-pnpm seed run --generator ts-sdk --path /path/to/fern/apis/v1 --log-level debug --skip-scripts
-```
-
-**Bug Fix Development Cycle**:
-1. **Identify/Create Test**: Find existing fixture or create new one in `/test-definitions/`
-2. **Build Environment**: Run `pnpm install && pnpm compile && pnpm seed:build`  
-3. **Reproduce Bug**: Run seed test to confirm current behavior
-4. **Make Generator Changes**: Modify generator code
-5. **Test Fix**: Re-run seed command (always use `--skip-scripts` initially for speed)
-6. **Validate Changes**: Use `git diff` to examine generated output differences
-7. **Repeat**: Until output matches expected behavior
-
-**Output Locations**:
-- **Seed test**: Overwrites files in `/seed/<generator>/<fixture>/` - use `git diff` to see changes
-- **Seed run**: Writes to temp directory, seed outputs the path:
-  ```
-  [go-sdk:custom:]: Wrote files to /private/var/folders/.../tmp-27682-uzCwvbQ3f32l
-  ```
-
-**Debug Information**:
-- Console logs go to stdout (logging system is inconsistent)
-- Generator logs written to temp files:
-  ```
-  [go-sdk:custom:]: Generator logs here: /private/var/folders/.../tmp-27682-32P2XRqpMioO
-  ```
-- IR and config files also written to temp directories during execution
-
-**Test Configuration**:
-- Each generator's `/seed/<generator>/seed.yml` defines multiple configurations per fixture
-- Multiple configs create subfolders: `/seed/<generator>/<fixture>/<output-folder>/`
-- Fixtures prefixed with language names (e.g., `java-specific-test`) only run on matching generators
-- Unprefixed fixtures run on all generators by default
+**Output**: Seed test overwrites `/seed/<generator>/<fixture>/`, seed run writes to temp directory
 
 ### Feature Addition Workflow (Generated Code)
 
-Feature additions that require changes to generated code follow a multi-stage workflow across API definitions, IR, and generators.
+Multi-stage process: API Schema → IR Updates → Generator Updates → Release
 
-**Example Use Case**: Adding new parameters to generators.yml schema (like `customSections` in [PR #9371](https://github.com/fern-api/fern/pull/9371))
+**Stages**:
+1. **API Schema**: Update `/fern/apis/<definition>/` → Run generator command (check `generators.yml` in each API folder)
+2. **IR Updates**: Modify `/packages/ir-sdk/fern/apis/ir-types-latest/definition/` → `pnpm ir:generate`
+3. **Versioning**: Update `CHANGELOG.md`, `VERSION`, and `/packages/cli/cli/versions.yml`
+4. **Compile**: `pnpm compile` and fix breaking changes (common: `switch` statements need new cases)
+5. **Generator Updates**: One PR for CLI/IR updates (merge first), then separate PR(s) for generator changes
+6. **IR Migrations**: Update `/packages/cli/generation/ir-migrations/` for backward compatibility
 
-#### Stage 1: API Schema Changes
-
-1. **Modify API Definition**: Update relevant API definition in `/fern/apis/`
-   - Example: `/fern/apis/generators-yml/definition/` for generators.yml changes
-   - Other definitions: `docs-yml`, `fern-definition`, `public-api`
-
-2. **Generate TypeScript Schemas**: Run definition-specific update command
-   ```bash
-   # For generators-yml changes
-   pnpm update:generators
-   # Commands vary by definition - check generators.yml in each API folder
-   ```
-   - Updates corresponding schema files (e.g., `/packages/cli/configuration/src/generators-yml/schemas`)
-   - Uses generator configuration in each API's `generators.yml`
-
-#### Stage 2: IR Definition Updates
-
-3. **Update IR Definition**: Modify IR types in `/packages/ir-sdk/fern/apis/ir-types-latest/definition/`
-
-4. **Generate IR SDK**: 
-   ```bash
-   pnpm ir:generate
-   ```
-   - Updates IR SDK files in `/packages/ir-sdk/src/`
-
-5. **Version Management**: Update version files for publication
-   - **Changelog**: `/packages/ir-sdk/fern/apis/ir-types-latest/changelog/CHANGELOG.md`
-   - **Version**: `/packages/ir-sdk/fern/apis/ir-types-latest/VERSION` (semantic versioning)
-     - Major: Breaking changes
-     - Minor: Non-breaking feature additions  
-     - Patch: Non-breaking fixes
-   - **CLI Version**: `/packages/cli/cli/versions.yml` for new CLI release
-
-6. **Compile and Fix**: Run `pnpm compile` and resolve any breaking changes
-   - Common pattern: `switch` statements with `assert never` may need new cases
-   - Sometimes temporary "throw error does not support" for unimplemented features
-
-#### Stage 3: IR Publication (Automatic)
-
-7. **IR SDK Publishing**: On PR merge to main, CI/CD automatically publishes new IR SDK versions when VERSION and CHANGELOG files are updated
-
-#### Stage 4: Generator Updates (Multi-PR Process)
-
-8. **Generator Dependency Updates**: Update each generator to use new IR SDK version
-   - **Legacy generators** (Java, Python, Go): Written in target language
-   - **Modern generators** (C#, newer ones): Written in TypeScript  
-   - **Migration approach**: New v2 generators (java-v2, python-v2) alongside legacy
-   - **IR version specification**: Each generator has files specifying required IR SDK version
-
-9. **Migration Logic**: Update IR migrations in `/packages/cli/generation/ir-migrations/`
-   - Handles backward compatibility when generators expect older IR versions
-   - Converts newer IR to format expected by older generators
-
-10. **CLI Version Publishing**: Update CLI version in `versions.yml` triggers new CLI release on merge
-
-**Key Characteristics**:
-- **Cross-repo dependency chain**: API Schema → IR Definition → Published IR SDK → Generator Updates → Final CLI Release
-- **Generators use published versions**: Not workspace versions, ensuring stable dependencies
-- **Multiple PRs required**: Initial IR changes, then separate PRs for each generator family
-- **Automatic publishing**: `versions.yml` files throughout codebase trigger releases on merge to main
-- **Backward compatibility**: Migration system ensures older generators continue working
+**Key Points**: Multiple PRs required, automatic publishing via `versions.yml`, generators use published (not workspace) IR versions
 
 ### Other Core Workflows
 
@@ -246,97 +160,31 @@ Feature additions that require changes to generated code follow a multi-stage wo
 
 ## Generated Code Management
 
-### Identifying Generated Files
-Generated files typically contain headers like:
-- `@generated` or `@auto-generated`
-- `This file was auto-generated`
-- `DO NOT EDIT` warnings
+**Identifying**: Generated by Fern (not third-party tools). Common locations: `/sdk/src/serialization/`, `/sdk/src/api/`, `/seed/` test fixtures.
 
-Common patterns:
-- `/sdk/src/serialization/` - Serialization code
-- `/sdk/src/api/` - API client code  
-- Test fixtures in `/seed/` directories
+**Regenerating**: `pnpm fern generate [--group <name>]` or `pnpm fern:local generate` for local testing
 
-### Regenerating Code
-When API definitions change, regenerated code using:
-```bash
-# For specific generator
-pnpm fern generate --group <generator-name>
+**Validation**: Run `pnpm compile` to check for issues. Test individual fixtures during development. Run full validation (`pnpm check:fix`, `pnpm test`, `pnpm test:ete`) only when changes are complete.
 
-# For all generators
-pnpm fern generate
+## Seed Testing & Fixtures
 
-# Local testing
-pnpm fern:local generate --group <generator-name>
-```
+### Adding/Updating Fixtures
 
-### After Code Generation
-Always run these validation steps:
-```bash
-pnpm compile                  # Ensure generated code compiles
-pnpm lint:eslint:fix         # Fix any linting issues
-pnpm test                    # Run unit tests
-pnpm test:ete                # Run end-to-end tests
-```
+**New fixtures**: Create `/seed/<generator>/<fixture>/` directory → Add `seed.yml` config → Run `pnpm seed:build` → Run `pnpm test:update` and `pnpm test:ete:update` → Validate → Commit
 
-## Seed Testing Workflows
+**Update fixtures**: `pnpm seed:build --filter <fixture-name>` or `pnpm test:update` for snapshots
 
-### Understanding Seed Structure
-- Each `/seed/<language>-<type>/` directory is a test fixture
-- `seed.yml` files define test configurations
-- Generated outputs are validated against expected results
+## Troubleshooting
 
-### Adding New Test Fixtures
-1. Create new directory in appropriate `/seed/` subfolder
-2. Add `seed.yml` configuration
-3. Run `pnpm seed:build` to generate initial outputs
-4. Validate outputs manually
-5. Commit both configuration and expected outputs
+### Quick Fixes by Issue Type
+- **Generator failures**: Check `docker ps` → Rebuild image → Check container logs
+- **IR compilation**: `pnpm fern check` → Check circular refs → Review migrations
+- **Test failures**: Unit (check generated code) | E2E (`pnpm fern:build`) | Seed (`pnpm seed:build`) | Lint (`pnpm format:fix`)
+- **Performance**: Use Turbo filters | `pnpm clean` then rebuild | Check Docker limits
 
-### Updating Existing Fixtures
-```bash
-# Build specific fixture
-pnpm seed:build --filter <fixture-name>
-
-# Rebuild all fixtures (slow)
-pnpm seed:build
-
-# Update snapshots if expected
-pnpm test:update
-```
-
-## Troubleshooting Common Issues
-
-### Generator Container Issues
-If generator fails to run:
-1. Check Docker is running: `docker ps`
-2. Rebuild generator image: `docker build generators/<language>/`
-3. Check generator logs in container output
-
-### IR Compilation Failures  
-If IR generation fails:
-1. Validate API definition syntax: `pnpm fern check`
-2. Check for circular references in definitions
-3. Verify all imports resolve correctly
-4. Review IR migrations if upgrading versions
-
-### Test Failures After Changes
-1. **Unit tests fail**: Check if generated code changed
-2. **E2E tests fail**: Rebuild CLI with `pnpm fern:build`
-3. **Seed tests fail**: Regenerate fixtures with `pnpm seed:build`
-4. **Linting fails**: Run `pnpm format:fix` and `pnpm lint:eslint:fix`
-
-### Performance Issues
-- Use Turbo filters to build/test only affected packages
-- Clear build cache: `pnpm clean` then rebuild
-- Check Docker resource limits for generator containers
-
-### Common File Locations for Debugging
-- **Build outputs**: `dist/`, `build/`, `.turbo/`
-- **Generator configs**: `generators.yml`, custom config files
-- **IR output**: Usually in temp directories during generation
-- **Docker logs**: Container stdout/stderr during generation
-- **Test outputs**: `seed/*/generated/` directories
+### Debug Locations
+- **Build outputs**: `dist/`, `.turbo/` directories
+- **Test outputs**: `/seed/<generator>/<fixture>/` directories
 
 # Individual Preferences
 @~/.claude/my-fern-instructions.md
