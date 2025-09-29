@@ -315,12 +315,35 @@ export class CsharpGeneratorContext<
         );
     }
 
-    public shouldUseFullyQualifiedNamespaces(): boolean {
+    public get useFullyQualifiedNamespaces(): boolean {
         return this.customConfig["experimental-fully-qualified-namespaces"] ?? false;
     }
 
-    public shouldUseDotnetFormat(): boolean {
+    public get useDotnetFormat(): boolean {
         return this.customConfig["experimental-dotnet-format"] ?? false;
+    }
+
+    public get enableWebsockets(): boolean {
+        return this.customConfig["experimental-enable-websockets"] ?? false;
+    }
+
+    public get enableReadonlyConstants(): boolean {
+        return this.customConfig["experimental-readonly-constants"] ?? false;
+    }
+
+    public get hasWebSocketEndpoints(): boolean {
+        return this.enableWebsockets && Object.entries(this.ir.websocketChannels ?? {}).length > 0;
+    }
+
+    public get temporaryWebsocketEnvironments(): Record<
+        string,
+        { defaultEnvironment?: string; environments: Record<string, string> }
+    > {
+        return this.customConfig["temporary-websocket-environments"] ?? {};
+    }
+
+    public getWebsocketChannel(name?: string) {
+        return name ? this.ir.websocketChannels?.[name] : undefined;
     }
 
     public generateNewAdditionalProperties(): boolean {
@@ -893,6 +916,10 @@ export class CsharpGeneratorContext<
     }
 
     public getPublicCoreAsIsFiles(): string[] {
+        return [];
+    }
+
+    public getAsyncCoreAsIsFiles(): string[] {
         return [];
     }
 

@@ -31,6 +31,7 @@ import { RootClientGenerator } from "./root-client/RootClientGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
+import { WebSocketClientGenerator } from "./websocket/WebsocketClientGenerator";
 import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator";
 
 export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
@@ -137,20 +138,30 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         Object.entries(context.ir.subpackages).forEach(([_, subpackage]) => {
             const service = subpackage.service != null ? context.getHttpServiceOrThrow(subpackage.service) : undefined;
             // skip subpackages that have no endpoints (recursively)
-            if (!context.subPackageHasEndpoints(subpackage)) {
-                return;
+            if (context.subPackageHasEndpoints(subpackage)) {
+                const subClient = new SubPackageClientGenerator({
+                    context,
+                    subpackage,
+                    serviceId: subpackage.service,
+                    service
+                });
+                context.project.addSourceFiles(subClient.generate());
+
+                if (subpackage.service != null && service != null) {
+                    this.generateRequests(context, service, subpackage.service);
+                }
             }
 
-            const subClient = new SubPackageClientGenerator({
-                context,
-                subpackage,
-                serviceId: subpackage.service,
-                service
-            });
-            context.project.addSourceFiles(subClient.generate());
-
-            if (subpackage.service != null && service != null) {
-                this.generateRequests(context, service, subpackage.service);
+            if (context.subPackageHasWebsocketEndpoints(subpackage)) {
+                const websocketChannel = context.getWebsocketChannel(subpackage.websocket);
+                if (websocketChannel) {
+                    const websocketApi = new WebSocketClientGenerator({
+                        context,
+                        subpackage,
+                        websocketChannel
+                    });
+                    context.project.addSourceFiles(websocketApi.generate());
+                }
             }
         });
 
