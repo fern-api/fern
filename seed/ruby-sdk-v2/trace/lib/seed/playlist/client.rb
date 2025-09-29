@@ -14,8 +14,8 @@ module Seed
       def create_playlist(request_options: {}, **params)
         _path_param_names = ["serviceParam"]
 
-        params =
-          _query_param_names = %w[datetime optionalDatetime]
+        params = Seed::Internal::Types::Utils::Utils.symbolize_keys(params)
+        _query_param_names = %w[datetime optionalDatetime]
         _query = params.slice(*_query_param_names)
         params = params.except(*_query_param_names)
 
@@ -44,8 +44,8 @@ module Seed
       #
       # @return [Array[Seed::Playlist::Types::Playlist]]
       def get_playlists(request_options: {}, **params)
-        params =
-          _query_param_names = %w[limit otherField multiLineDocs optionalMultipleField multipleField]
+        params = Seed::Internal::Types::Utils::Utils.symbolize_keys(params)
+        _query_param_names = %w[limit otherField multiLineDocs optionalMultipleField multipleField]
         _query = params.slice(*_query_param_names)
         params = params.except(*_query_param_names)
 

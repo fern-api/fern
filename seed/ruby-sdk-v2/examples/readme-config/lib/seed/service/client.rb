@@ -53,8 +53,8 @@ module Seed
 
       # @return [Seed::Types::Types::Metadata]
       def get_metadata(request_options: {}, **params)
-        params =
-          _query_param_names = %w[shallow tag]
+        params = Seed::Internal::Types::Utils::Utils.symbolize_keys(params)
+        _query_param_names = %w[shallow tag]
         _query = params.slice(*_query_param_names)
         params.except(*_query_param_names)
 

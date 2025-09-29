@@ -10,8 +10,8 @@ module Seed
 
       # @return [Seed::Foo::Types::ImportingType]
       def find(request_options: {}, **params)
-        params =
-          _query_param_names = ["optionalString"]
+        params = Seed::Internal::Types::Utils::Utils.symbolize_keys(params)
+        _query_param_names = ["optionalString"]
         _query = params.slice(*_query_param_names)
         params = params.except(*_query_param_names)
 

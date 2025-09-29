@@ -14,8 +14,8 @@ module Seed
           #
           # @return [Seed::User::Events::Metadata::Types::Metadata]
           def get_metadata(request_options: {}, **params)
-            params =
-              _query_param_names = ["id"]
+            params = Seed::Internal::Types::Utils::Utils.symbolize_keys(params)
+            _query_param_names = ["id"]
             _query = params.slice(*_query_param_names)
             params.except(*_query_param_names)
 

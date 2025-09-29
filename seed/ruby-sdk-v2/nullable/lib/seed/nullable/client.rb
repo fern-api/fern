@@ -10,8 +10,8 @@ module Seed
 
       # @return [Array[Seed::Nullable::Types::User]]
       def get_users(request_options: {}, **params)
-        params =
-          _query_param_names = %w[usernames avatar activated tags extra]
+        params = Seed::Internal::Types::Utils::Utils.symbolize_keys(params)
+        _query_param_names = %w[usernames avatar activated tags extra]
         _query = params.slice(*_query_param_names)
         params.except(*_query_param_names)
 

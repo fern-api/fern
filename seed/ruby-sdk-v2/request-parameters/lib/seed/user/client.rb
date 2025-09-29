@@ -10,8 +10,8 @@ module Seed
 
       # @return [untyped]
       def create_username(request_options: {}, **params)
-        params =
-          _query_param_names = ["tags"]
+        params = Seed::Internal::Types::Utils::Utils.symbolize_keys(params)
+        _query_param_names = ["tags"]
         _query = params.slice(*_query_param_names)
         params = params.except(*_query_param_names)
 
@@ -36,8 +36,8 @@ module Seed
 
       # @return [untyped]
       def create_username_with_referenced_type(request_options: {}, **params)
-        params =
-          _query_param_names = ["tags"]
+        params = Seed::Internal::Types::Utils::Utils.symbolize_keys(params)
+        _query_param_names = ["tags"]
         _query = params.slice(*_query_param_names)
         params = params.except(*_query_param_names)
 
@@ -62,9 +62,9 @@ module Seed
 
       # @return [Seed::User::Types::User]
       def get_username(request_options: {}, **params)
-        params =
-          _query_param_names = %w[limit id date deadline bytes user userList optionalDeadline
-                                  keyValue optionalString nestedUser optionalUser excludeUser filter longParam bigIntParam]
+        params = Seed::Internal::Types::Utils::Utils.symbolize_keys(params)
+        _query_param_names = %w[limit id date deadline bytes user userList optionalDeadline
+                                keyValue optionalString nestedUser optionalUser excludeUser filter longParam bigIntParam]
         _query = params.slice(*_query_param_names)
         params.except(*_query_param_names)
 

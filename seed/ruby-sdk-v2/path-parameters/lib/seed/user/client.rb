@@ -77,8 +77,8 @@ module Seed
 
       # @return [Array[Seed::User::Types::User]]
       def search_users(request_options: {}, **params)
-        params =
-          _query_param_names = ["limit"]
+        params = Seed::Internal::Types::Utils::Utils.symbolize_keys(params)
+        _query_param_names = ["limit"]
         _query = params.slice(*_query_param_names)
         params = params.except(*_query_param_names)
 

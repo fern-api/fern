@@ -10,8 +10,8 @@ module Seed
 
       # @return [untyped]
       def send_(request_options: {}, **params)
-        params =
-          _query_param_names = %w[operand maybeOperand operandOrColor maybeOperandOrColor]
+        params = Seed::Internal::Types::Utils::Utils.symbolize_keys(params)
+        _query_param_names = %w[operand maybeOperand operandOrColor maybeOperandOrColor]
         _query = params.slice(*_query_param_names)
         params.except(*_query_param_names)
 
@@ -35,8 +35,8 @@ module Seed
 
       # @return [untyped]
       def send_list(request_options: {}, **params)
-        params =
-          _query_param_names = %w[operand maybeOperand operandOrColor maybeOperandOrColor]
+        params = Seed::Internal::Types::Utils::Utils.symbolize_keys(params)
+        _query_param_names = %w[operand maybeOperand operandOrColor maybeOperandOrColor]
         _query = params.slice(*_query_param_names)
         params.except(*_query_param_names)
 
