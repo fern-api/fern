@@ -43,8 +43,3 @@ require_relative "seed/service/types/resource"
 require_relative "seed/client"
 require_relative "seed/service/client"
 require_relative "seed/service/types/list_resources_request"
-<<<<<<< HEAD
-require_relative "../README.md"
-require_relative "../reference.md"
-=======
->>>>>>> main

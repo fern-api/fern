@@ -41,8 +41,3 @@ require_relative "seed/client"
 require_relative "seed/auth/client"
 require_relative "seed/auth/types/get_token_request"
 require_relative "seed/user/client"
-<<<<<<< HEAD
-require_relative "../README.md"
-require_relative "../reference.md"
-=======
->>>>>>> main

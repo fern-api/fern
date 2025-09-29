@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.headers.send({});
+client.headers.send_({});
 ```
 </dd>
 </dl>
@@ -78,7 +78,7 @@ client.headers.send({});
 <dd>
 
 ```ruby
-client.inlined_request.send({});
+client.inlined_request.send_({});
 ```
 </dd>
 </dl>
@@ -143,7 +143,7 @@ client.inlined_request.send({});
 <dd>
 
 ```ruby
-client.path_param.send();
+client.path_param.send_();
 ```
 </dd>
 </dl>
@@ -192,7 +192,7 @@ client.path_param.send();
 <dd>
 
 ```ruby
-client.query_param.send({});
+client.query_param.send_({});
 ```
 </dd>
 </dl>

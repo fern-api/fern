@@ -37,8 +37,3 @@ require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/client"
 require_relative "seed/service/client"
-<<<<<<< HEAD
-require_relative "../README.md"
-require_relative "../reference.md"
-=======
->>>>>>> main

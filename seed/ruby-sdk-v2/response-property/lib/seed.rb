@@ -42,8 +42,3 @@ require_relative "seed/service/types/movie"
 require_relative "seed/service/types/response"
 require_relative "seed/client"
 require_relative "seed/service/client"
-<<<<<<< HEAD
-require_relative "../README.md"
-require_relative "../reference.md"
-=======
->>>>>>> main

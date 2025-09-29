@@ -42,9 +42,3 @@ require_relative "seed/realtime/types/receive_snake_case"
 require_relative "seed/realtime/types/send_event_2"
 require_relative "seed/realtime/types/receive_event_2"
 require_relative "seed/realtime/types/receive_event_3"
-<<<<<<< HEAD
-
-# Client Types
-require_relative "../reference.md"
-=======
->>>>>>> main

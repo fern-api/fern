@@ -76,8 +76,3 @@ require_relative "seed/no_auth/client"
 require_relative "seed/no_req_body/client"
 require_relative "seed/req_with_headers/client"
 require_relative "seed/req_with_headers/types/req_with_headers"
-<<<<<<< HEAD
-require_relative "../README.md"
-require_relative "../reference.md"
-=======
->>>>>>> main

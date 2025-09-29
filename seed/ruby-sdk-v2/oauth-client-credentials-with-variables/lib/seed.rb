@@ -46,8 +46,3 @@ require_relative "seed/nested/client"
 require_relative "seed/nested/api/client"
 require_relative "seed/service/client"
 require_relative "seed/simple/client"
-<<<<<<< HEAD
-require_relative "../README.md"
-require_relative "../reference.md"
-=======
->>>>>>> main

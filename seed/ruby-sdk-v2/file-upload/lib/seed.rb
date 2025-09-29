@@ -49,8 +49,3 @@ require_relative "seed/service/types/with_form_encoding_request"
 require_relative "seed/service/types/my_other_request"
 require_relative "seed/service/types/optional_args_request"
 require_relative "seed/service/types/inline_type_request"
-<<<<<<< HEAD
-require_relative "../README.md"
-require_relative "../reference.md"
-=======
->>>>>>> main

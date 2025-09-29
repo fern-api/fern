@@ -43,8 +43,3 @@ require_relative "seed/user/client"
 require_relative "seed/user/types/create_username_request"
 require_relative "seed/user/types/create_username_referenced_request"
 require_relative "seed/user/types/get_users_request"
-<<<<<<< HEAD
-require_relative "../README.md"
-require_relative "../reference.md"
-=======
->>>>>>> main

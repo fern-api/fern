@@ -41,9 +41,3 @@ require_relative "seed/types/tree"
 require_relative "seed/file/types/file_info"
 require_relative "seed/file/types/file"
 require_relative "seed/file/directory/types/directory"
-<<<<<<< HEAD
-
-# Client Types
-require_relative "../reference.md"
-=======
->>>>>>> main

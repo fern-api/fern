@@ -252,8 +252,3 @@ require_relative "seed/v_2/problem/client"
 require_relative "seed/v_2/v_3/client"
 require_relative "seed/v_2/v_3/problem/client"
 require_relative "seed/environment"
-<<<<<<< HEAD
-require_relative "../README.md"
-require_relative "../reference.md"
-=======
->>>>>>> main

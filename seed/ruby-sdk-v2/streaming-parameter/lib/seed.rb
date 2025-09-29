@@ -40,8 +40,3 @@ require_relative "seed/dummy/types/stream_response"
 require_relative "seed/client"
 require_relative "seed/dummy/client"
 require_relative "seed/dummy/types/generate_request"
-<<<<<<< HEAD
-require_relative "../README.md"
-require_relative "../reference.md"
-=======
->>>>>>> main

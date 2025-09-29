@@ -56,8 +56,3 @@ require_relative "seed/service/types/list_connections_request"
 require_relative "seed/service/types/get_connection_request"
 require_relative "seed/service/types/list_clients_request"
 require_relative "seed/service/types/get_client_request"
-<<<<<<< HEAD
-require_relative "../README.md"
-require_relative "../reference.md"
-=======
->>>>>>> main

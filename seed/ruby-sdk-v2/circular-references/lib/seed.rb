@@ -44,9 +44,3 @@ require_relative "seed/ast/types/primitive_value"
 require_relative "seed/ast/types/object_value"
 require_relative "seed/ast/types/container_value"
 require_relative "seed/ast/types/field_value"
-<<<<<<< HEAD
-
-# Client Types
-require_relative "../reference.md"
-=======
->>>>>>> main

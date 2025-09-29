@@ -39,10 +39,3 @@ require_relative "seed/types/docs"
 require_relative "seed/types/example_type"
 require_relative "seed/types/json"
 require_relative "seed/types/nested_type"
-<<<<<<< HEAD
-
-# Client Types
-require_relative "../README.md"
-require_relative "../reference.md"
-=======
->>>>>>> main

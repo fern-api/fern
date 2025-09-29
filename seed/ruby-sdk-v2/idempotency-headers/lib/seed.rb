@@ -39,8 +39,3 @@ require_relative "seed/payment/types/currency"
 require_relative "seed/client"
 require_relative "seed/payment/client"
 require_relative "seed/payment/types/create_payment_request"
-<<<<<<< HEAD
-require_relative "../README.md"
-require_relative "../reference.md"
-=======
->>>>>>> main

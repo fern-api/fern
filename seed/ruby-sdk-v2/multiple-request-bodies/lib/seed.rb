@@ -38,8 +38,3 @@ require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/types/document_metadata"
 require_relative "seed/types/document_upload_result"
 require_relative "seed/environment"
-<<<<<<< HEAD
-require_relative "../README.md"
-require_relative "../reference.md"
-=======
->>>>>>> main

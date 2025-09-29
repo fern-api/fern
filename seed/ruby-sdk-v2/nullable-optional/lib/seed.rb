@@ -60,8 +60,3 @@ require_relative "seed/nullable_optional/types/update_complex_profile_request"
 require_relative "seed/nullable_optional/types/filter_by_role_request"
 require_relative "seed/nullable_optional/types/update_tags_request"
 require_relative "seed/nullable_optional/types/search_request"
-<<<<<<< HEAD
-require_relative "../README.md"
-require_relative "../reference.md"
-=======
->>>>>>> main

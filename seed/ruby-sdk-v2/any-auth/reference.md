@@ -103,3 +103,28 @@ client.user.get();
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.User.GetAdmins() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.user.get_admins();
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>

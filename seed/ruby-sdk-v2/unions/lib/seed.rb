@@ -92,8 +92,3 @@ require_relative "seed/union/types/shape"
 require_relative "seed/client"
 require_relative "seed/bigunion/client"
 require_relative "seed/union/client"
-<<<<<<< HEAD
-require_relative "../README.md"
-require_relative "../reference.md"
-=======
->>>>>>> main

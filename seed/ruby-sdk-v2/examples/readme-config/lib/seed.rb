@@ -76,8 +76,3 @@ require_relative "seed/health/service/client"
 require_relative "seed/service/client"
 require_relative "seed/service/types/get_metadata_request"
 require_relative "seed/environment"
-<<<<<<< HEAD:seed/ruby-sdk-v2/examples/lib/seed.rb
-require_relative "../README.md"
-require_relative "../reference.md"
-=======
->>>>>>> main:seed/ruby-sdk-v2/examples/readme-config/lib/seed.rb

@@ -14,11 +14,11 @@
 
 ```ruby
 client.auth.get_token_with_client_credentials({
-  clientId:'client_id',
-  clientSecret:'client_secret',
+  clientId:'my_oauth_app_123',
+  clientSecret:'sk_live_abcdef123456789',
   audience:'https://api.example.com',
   grantType:'client_credentials',
-  scope:'scope'
+  scope:'read:users'
 });
 ```
 </dd>
@@ -92,12 +92,12 @@ client.auth.get_token_with_client_credentials({
 
 ```ruby
 client.auth.refresh_token({
-  clientId:'client_id',
-  clientSecret:'client_secret',
+  clientId:'my_oauth_app_123',
+  clientSecret:'sk_live_abcdef123456789',
   refreshToken:'refresh_token',
   audience:'https://api.example.com',
   grantType:'refresh_token',
-  scope:'scope'
+  scope:'read:users'
 });
 ```
 </dd>

@@ -49,8 +49,3 @@ require_relative "seed/folder_d/service/client"
 require_relative "seed/foo/client"
 require_relative "seed/foo/types/find_request"
 require_relative "seed/environment"
-<<<<<<< HEAD
-require_relative "../README.md"
-require_relative "../reference.md"
-=======
->>>>>>> main

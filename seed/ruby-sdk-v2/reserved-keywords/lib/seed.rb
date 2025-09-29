@@ -40,8 +40,3 @@ require_relative "seed/package/types/record"
 require_relative "seed/client"
 require_relative "seed/package/client"
 require_relative "seed/package/types/test_request"
-<<<<<<< HEAD
-require_relative "../README.md"
-require_relative "../reference.md"
-=======
->>>>>>> main

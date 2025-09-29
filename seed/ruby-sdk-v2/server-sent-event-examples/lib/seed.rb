@@ -39,8 +39,3 @@ require_relative "seed/completions/types/streamed_completion"
 require_relative "seed/client"
 require_relative "seed/completions/client"
 require_relative "seed/completions/types/stream_completion_request"
-<<<<<<< HEAD
-require_relative "../README.md"
-require_relative "../reference.md"
-=======
->>>>>>> main

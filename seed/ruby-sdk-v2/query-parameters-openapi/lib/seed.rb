@@ -38,10 +38,3 @@ require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/types/search_response"
 require_relative "seed/types/user"
 require_relative "seed/types/nested_user"
-<<<<<<< HEAD
-
-# Client Types
-require_relative "../README.md"
-require_relative "../reference.md"
-=======
->>>>>>> main

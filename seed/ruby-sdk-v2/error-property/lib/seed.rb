@@ -38,8 +38,3 @@ require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/types/property_based_error_test_body"
 require_relative "seed/client"
 require_relative "seed/property_based_error/client"
-<<<<<<< HEAD
-require_relative "../README.md"
-require_relative "../reference.md"
-=======
->>>>>>> main

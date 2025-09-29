@@ -24,13 +24,6 @@ require_relative "seed/internal/types/boolean"
 require_relative "seed/internal/types/enum"
 require_relative "seed/internal/types/hash"
 require_relative "seed/internal/types/unknown"
-<<<<<<< HEAD
-
-# API Types
-
-# Client Types
-require_relative "../reference.md"
-=======
 require_relative "seed/errors/api_error"
 require_relative "seed/errors/response_error"
 require_relative "seed/errors/client_error"
@@ -42,4 +35,3 @@ require_relative "seed/internal/iterators/cursor_item_iterator"
 require_relative "seed/internal/iterators/offset_item_iterator"
 require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
->>>>>>> main

@@ -38,8 +38,3 @@ require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/errors/types/unauthorized_request_error_body"
 require_relative "seed/client"
 require_relative "seed/basic_auth/client"
-<<<<<<< HEAD
-require_relative "../README.md"
-require_relative "../reference.md"
-=======
->>>>>>> main

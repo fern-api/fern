@@ -37,9 +37,3 @@ require_relative "seed/internal/iterators/cursor_page_iterator"
 require_relative "seed/internal/iterators/offset_page_iterator"
 require_relative "seed/types/name"
 require_relative "seed/types/type"
-<<<<<<< HEAD
-
-# Client Types
-require_relative "../reference.md"
-=======
->>>>>>> main

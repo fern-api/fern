@@ -50,8 +50,3 @@ require_relative "seed/path_param/client"
 require_relative "seed/query_param/client"
 require_relative "seed/query_param/types/send_enum_as_query_param_request"
 require_relative "seed/query_param/types/send_enum_list_as_query_param_request"
-<<<<<<< HEAD
-require_relative "../README.md"
-require_relative "../reference.md"
-=======
->>>>>>> main

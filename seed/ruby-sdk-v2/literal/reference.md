@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.headers.send({
+client.headers.send_({
   endpointVersion:'02-12-2024',
   async:true,
   query:'What is the weather today'
@@ -74,7 +74,7 @@ client.headers.send({
 <dd>
 
 ```ruby
-client.inlined.send({
+client.inlined.send_({
   temperature:10.1,
   prompt:'You are a helpful assistant',
   context:"You're super wise",
@@ -184,7 +184,7 @@ client.inlined.send({
 <dd>
 
 ```ruby
-client.path.send();
+client.path.send_();
 ```
 </dd>
 </dl>
@@ -225,7 +225,7 @@ client.path.send();
 <dd>
 
 ```ruby
-client.query.send({
+client.query.send_({
   prompt:'You are a helpful assistant',
   optionalPrompt:'You are a helpful assistant',
   aliasPrompt:'You are a helpful assistant',
@@ -340,7 +340,7 @@ client.query.send({
 <dd>
 
 ```ruby
-client.reference.send({
+client.reference.send_({
   prompt:'You are a helpful assistant',
   stream:false,
   context:"You're super wise",

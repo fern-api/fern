@@ -106,8 +106,3 @@ require_relative "seed/users/types/list_users_extended_request"
 require_relative "seed/users/types/list_users_extended_request_for_optional_data"
 require_relative "seed/users/types/list_usernames_request"
 require_relative "seed/users/types/list_with_global_config_request"
-<<<<<<< HEAD
-require_relative "../README.md"
-require_relative "../reference.md"
-=======
->>>>>>> main
