@@ -83,8 +83,8 @@ module Seed
       #
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def list_users(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils::Utils.symbolize_keys(params)
-        _query_param_names = %w[limit offset includeDeleted sortBy]
+        params = Seed::Internal::Types::Utils.symbolize_keys(params)
+        _query_param_names = %i[limit offset includeDeleted sortBy]
         _query = params.slice(*_query_param_names)
         params.except(*_query_param_names)
 
@@ -110,8 +110,8 @@ module Seed
       #
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def search_users(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils::Utils.symbolize_keys(params)
-        _query_param_names = %w[query department role isActive]
+        params = Seed::Internal::Types::Utils.symbolize_keys(params)
+        _query_param_names = %i[query department role isActive]
         _query = params.slice(*_query_param_names)
         params.except(*_query_param_names)
 
@@ -234,8 +234,8 @@ module Seed
       #
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def filter_by_role(request_options: {}, **params)
-        params = Seed::Internal::Types::Utils::Utils.symbolize_keys(params)
-        _query_param_names = %w[role status secondaryRole]
+        params = Seed::Internal::Types::Utils.symbolize_keys(params)
+        _query_param_names = %i[role status secondaryRole]
         _query = params.slice(*_query_param_names)
         params.except(*_query_param_names)
 
