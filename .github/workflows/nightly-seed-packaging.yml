@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     
     # CHRISM - working, add back later
-    # if: false
+    if: false
     strategy:
       matrix:
         sdk-name:
@@ -128,17 +128,22 @@ jobs:
             [ pydantic ]
     # needs: [package-seed-tests]
     steps:
-        - name: Checkout repo
-          uses: actions/checkout@v4
-          with:
-            token: ${{ secrets.FERN_GITHUB_PAT }}
+        # - name: Checkout repo
+        #   uses: actions/checkout@v4
+        #   with:
+        #     token: ${{ secrets.FERN_GITHUB_PAT }}
+
+        - name: Make artifacts directory
+          shell: bash
+          run: |
+            mkdir -p artifacts
 
         - name: Download package file artifact
           uses: actions/download-artifact@v5
           with:
               path: ./artifacts
             #   name: ${{ matrix.sdk-name }}-seed-test-log.txt.zip
-              run-id: 18047218143 #CHRISM - temporary for testing
+              run-id: 18098307806 #CHRISM - temporary for testing
               github-token: ${{ secrets.FERN_GITHUB_PAT }}
               repository: ${{ github.repository }}
               merge-multiple: true
