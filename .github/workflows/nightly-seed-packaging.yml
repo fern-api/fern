@@ -217,9 +217,15 @@ jobs:
           # run-id: 18111300631 #CHRISM - temporary for testing, artifact ID = 4132496421
           merge-multiple: true
 
+      - name: Check and Make Directory
+        run: |
+          if [ ! -d ".github/workflow-resource-files/seed-packages" ]; then
+            mkdir -p .github/workflow-resource-files/seed-packages
+          fi
+
       - name: Overwrite Repo Package Files
         run: |
-          cp artifacts/*-seed-packages.json .github/workflow-resource-files/seed-packages/
+          cp -f artifacts/*-seed-packages.json .github/workflow-resource-files/seed-packages/      
 
       # Create PR, approve and set to merge per generator
       - name: Create Pull Request
