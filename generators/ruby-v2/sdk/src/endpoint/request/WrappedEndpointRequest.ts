@@ -50,14 +50,14 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 ruby.invokeMethod({
                     on: ruby.classReference({
                         name: "Utils",
-                        modules: [this.context.getRootModuleName(), "Internal", "Types", "Utils"]
+                        modules: [this.context.getRootModuleName(), "Internal", "Types"]
                     }),
                     method: "symbolize_keys",
                     arguments_: [ruby.codeblock("params")]
                 }).write(writer);
                 writer.newLine();
                 writer.write(`${QUERY_PARAM_NAMES_VN} = `);
-                writer.writeLine(`${toExplicitArray(this.getQueryParameterNames())}`);
+                writer.writeLine(`${toRubySymbolArray(this.getQueryParameterNames())}`);
                 writer.writeLine(`${queryParameterBagName} = params.slice(*${QUERY_PARAM_NAMES_VN})`);
                 writer.writeLine(`params = params.except(*${QUERY_PARAM_NAMES_VN})`);
             }),
@@ -79,7 +79,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     writer.writeLine(`${PATH_PARAM_NAMES_VN} = ${toExplicitArray(this.getPathParameterNames())}`);
                 }),
                 requestBodyReference: ruby.codeblock((writer) => {
-                    writer.write(`params.except(*${PATH_PARAM_NAMES_VN})`);
+                    writer.write(`params = params.except(*${PATH_PARAM_NAMES_VN})`);
                 })
             };
         }
@@ -113,4 +113,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
 function toExplicitArray(s: string[]): string {
     return `["${s.join('", "')}"]`;
+}
+
+function toRubySymbolArray(s: string[]): string {
+    if (s.some((s) => s.includes(" "))) {
+        throw new Error("Symbol array cannot contain spaces");
+    }
+    return `%i[${s.join(" ")}]`;
 }
