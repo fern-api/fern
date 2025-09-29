@@ -38,6 +38,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
     public useBytesForBinaryResponse: boolean | undefined;
     public respectForwardCompatibleEnums: boolean | undefined;
     public inlineAllOfSchemas: boolean | undefined;
+    public resolveNamedAliases: generatorsYml.ResolveNamedAliases | undefined;
     private converter: FernDefinitionConverter;
 
     constructor(args: BaseOpenAPIWorkspace.Args) {
@@ -53,6 +54,7 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
         this.useBytesForBinaryResponse = args.useBytesForBinaryResponse;
         this.respectForwardCompatibleEnums = args.respectForwardCompatibleEnums;
         this.inlineAllOfSchemas = args.inlineAllOfSchemas;
+        this.resolveNamedAliases = args.resolveNamedAliases;
         this.converter = new FernDefinitionConverter(args);
     }
 
@@ -115,6 +117,7 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
     public respectReadonlySchemas: boolean | undefined;
     public useBytesForBinaryResponse: boolean | undefined;
     public respectForwardCompatibleEnums: boolean | undefined;
+    public resolveNamedAliases: generatorsYml.ResolveNamedAliases | undefined;
     private converter: FernDefinitionConverter;
 
     constructor(args: BaseOpenAPIWorkspace.Args) {
@@ -125,6 +128,7 @@ export abstract class BaseOpenAPIWorkspaceSync extends AbstractAPIWorkspaceSync<
         this.respectReadonlySchemas = args.respectReadonlySchemas;
         this.useBytesForBinaryResponse = args.useBytesForBinaryResponse;
         this.respectForwardCompatibleEnums = args.respectForwardCompatibleEnums;
+        this.resolveNamedAliases = args.resolveNamedAliases;
         this.converter = new FernDefinitionConverter(args);
     }
 

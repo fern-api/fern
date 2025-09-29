@@ -47,6 +47,53 @@ import { isReferenceObject } from "./utils/isReferenceObject";
 export const SCHEMA_REFERENCE_PREFIX = "#/components/schemas/";
 export const SCHEMA_INLINE_REFERENCE_PREFIX = "#/components/responses/";
 
+function isInlinable(
+    schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject,
+    context: SchemaParserContext
+): boolean {
+    const resolvedSchema = isReferenceObject(schema) ? context.resolveSchemaReference(schema) : schema;
+
+    // Attempt to inline what are effectively primitives, or boxed primitive types
+    switch (resolvedSchema.type) {
+        case "boolean":
+        case "number":
+        case "string":
+        case "integer":
+            return true;
+        case "array":
+            return isInlinable(resolvedSchema.items, context);
+        case "object":
+            return false;
+        case undefined:
+            return false;
+        default:
+            // TODO(thomas): Handle null literal and type array that is not a SchemaObject and return to the promised land of assertNever
+            // return assertNever(resolvedSchema);
+            context.logger.warn("Unhandled schema type. Will not inline this schema", JSON.stringify(resolvedSchema));
+            return false;
+    }
+}
+
+function shouldResolveNamedAlias(
+    schemaId: string,
+    schema: OpenAPIV3.ReferenceObject,
+    context: SchemaParserContext
+): boolean {
+    if (context.options.resolveNamedAliases) {
+        // If resolveNamedAliases is an object or true, we should check further
+        if (
+            typeof context.options.resolveNamedAliases === "object" &&
+            context.options.resolveNamedAliases.except?.includes(schemaId)
+        ) {
+            // If the schema is in the except list, we should not resolve it
+            return false;
+        }
+
+        return isInlinable(schema, context);
+    }
+    return false;
+}
+
 export function convertSchema(
     schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject,
     wrapAsOptional: boolean,
@@ -64,6 +111,23 @@ export function convertSchema(
     if (isReferenceObject(schema)) {
         const schemaId = getSchemaIdFromReference(schema);
         if (schemaId != null) {
+            if (shouldResolveNamedAlias(schemaId, schema, context)) {
+                // If the schema is a named alias we are configured to inline, we should do that and return immediately
+                return convertSchemaObject(
+                    context.resolveSchemaReference(schema),
+                    wrapAsOptional,
+                    wrapAsNullable,
+                    context,
+                    getBreadcrumbsFromReference(schema.$ref),
+                    encoding,
+                    source,
+                    namespace,
+                    propertiesToExclude,
+                    referencedAsRequest,
+                    fallback
+                );
+            }
+
             if (!referencedAsRequest) {
                 context.markSchemaAsReferencedByNonRequest(schemaId);
             } else {
