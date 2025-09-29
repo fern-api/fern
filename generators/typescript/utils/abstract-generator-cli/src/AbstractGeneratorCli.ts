@@ -120,6 +120,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         typescriptProject.installDependencies(logger),
                         typescriptProject.format(logger)
                     ]);
+                    await typescriptProject.build(logger);
                     await publishPackage({
                         logger,
                         npmPackage,
@@ -128,7 +129,6 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         typescriptProject,
                         shouldTolerateRepublish: this.shouldTolerateRepublish(customConfig)
                     });
-                    await typescriptProject.build(logger);
                     await typescriptProject.npmPackTo({
                         logger,
                         destinationPath,
