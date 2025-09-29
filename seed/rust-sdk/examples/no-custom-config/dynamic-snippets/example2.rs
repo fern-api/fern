@@ -4,8 +4,9 @@ use seed_examples::{ClientConfig, ExamplesClient};
 async fn main() {
     let config = ClientConfig {
         base_url: "https://api.fern.com".to_string(),
-        api_key: Some("<token>".to_string()),
+        token: Some("<token>".to_string()),
+        ..Default::default()
     };
     let client = ExamplesClient::new(config).expect("Failed to build client");
-    client.echo("primitive").await;
+    client.echo(&"primitive".to_string(), None).await;
 }

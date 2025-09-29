@@ -25,13 +25,34 @@ cargo add seed_property_access
 Instantiate and use the client with the following:
 
 ```rust
-use seed_property_access::{ClientConfig, PropertyAccessClient};
+use seed_property_access::{
+    ClientConfig, PropertyAccessClient, User, UserProfile, UserProfileVerification,
+};
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        ..Default::default()
+    };
     let client = PropertyAccessClient::new(config).expect("Failed to build client");
-    client.create_user(serde_json::json!({"id":"id","email":"email","password":"password","profile":{"name":"name","verification":{"verified":"verified"},"ssn":"ssn"}})).await;
+    client
+        .create_user(
+            &User {
+                id: "id".to_string(),
+                email: "email".to_string(),
+                password: "password".to_string(),
+                profile: UserProfile {
+                    name: "name".to_string(),
+                    verification: UserProfileVerification {
+                        verified: "verified".to_string(),
+                    },
+                    ssn: "ssn".to_string(),
+                },
+            },
+            None,
+        )
+        .await;
 }
 ```
 

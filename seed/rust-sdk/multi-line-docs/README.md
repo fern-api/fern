@@ -26,16 +26,23 @@ Instantiate and use the client with the following:
 
 ```rust
 use seed_multi_line_docs::{ClientConfig, CreateUserRequest, MultiLineDocsClient};
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        ..Default::default()
+    };
     let client = MultiLineDocsClient::new(config).expect("Failed to build client");
     client
-        .user_create_user(CreateUserRequest {
-            name: "name",
-            age: Some(1),
-        })
+        .user
+        .create_user(
+            &CreateUserRequest {
+                name: "name".to_string(),
+                age: Some(1),
+            },
+            None,
+        )
         .await;
 }
 ```

@@ -1,19 +1,22 @@
-use seed_client_side_params::{ClientConfig, ClientSideParamsClient, GetUserRequest};
+use seed_client_side_params::{ClientConfig, ClientSideParamsClient, GetUserByIdQueryRequest};
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         base_url: "https://api.fern.com".to_string(),
-        api_key: Some("<token>".to_string()),
+        token: Some("<token>".to_string()),
+        ..Default::default()
     };
     let client = ClientSideParamsClient::new(config).expect("Failed to build client");
     client
-        .service_get_user_by_id(
-            "userId",
-            GetUserRequest {
-                fields: Some("fields"),
+        .service
+        .get_user_by_id(
+            &"userId".to_string(),
+            &GetUserByIdQueryRequest {
+                fields: Some("fields".to_string()),
                 include_fields: Some(true),
             },
+            None,
         )
         .await;
 }

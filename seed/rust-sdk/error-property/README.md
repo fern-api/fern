@@ -29,9 +29,11 @@ use seed_error_property::{ClientConfig, ErrorPropertyClient};
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        ..Default::default()
+    };
     let client = ErrorPropertyClient::new(config).expect("Failed to build client");
-    client.property_based_error_throw_error().await;
+    client.property_based_error.throw_error(None).await;
 }
 ```
 

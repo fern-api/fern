@@ -36,10 +36,12 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/rust-codegen": "workspace:*",
-    "@fern-fern/ir-sdk": "^59.7.0"
+    "@fern-fern/ir-sdk": "^59.7.0",
+    "lodash-es": "^4.17.21"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
+    "@types/lodash-es": "^4.17.12",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "typescript": "5.8.3",

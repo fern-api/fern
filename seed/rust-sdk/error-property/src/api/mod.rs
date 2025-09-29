@@ -1,5 +1,5 @@
 pub mod resources;
 pub mod types;
 
-pub use resources::ErrorPropertyClient;
+pub use resources::*;
 pub use types::*;

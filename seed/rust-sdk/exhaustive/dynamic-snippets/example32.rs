@@ -4,10 +4,13 @@ use seed_exhaustive::{ClientConfig, ExhaustiveClient};
 async fn main() {
     let config = ClientConfig {
         base_url: "https://api.fern.com".to_string(),
-        api_key: Some("<token>".to_string()),
+        token: Some("<token>".to_string()),
+        ..Default::default()
     };
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_primitive_get_and_return_double(todo!("Unhandled primitive: DOUBLE"))
+        .endpoints
+        .primitive
+        .get_and_return_double(&1.1, None)
         .await;
 }

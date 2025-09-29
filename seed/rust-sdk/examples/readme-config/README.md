@@ -43,15 +43,48 @@ Generator Invocation Custom Content for seed_examples:0.1.0
 Instantiate and use the client with the following:
 
 ```rust
-use seed_examples::{ClientConfig, ExamplesClient};
+use chrono::NaiveDate;
+use seed_examples::{ClientConfig, ExamplesClient, Movie, MovieId, Tag};
+use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
-        api_key: Some("<token>".to_string()),
+        token: Some("<token>".to_string()),
+        ..Default::default()
     };
     let client = ExamplesClient::new(config).expect("Failed to build client");
-    client.service_create_movie(serde_json::json!({"id":"movie-c06a4ad7","prequel":"movie-cv9b914f","title":"The Boy and the Heron","from":"Hayao Miyazaki","rating":8,"type":"movie","tag":"tag-wf9as23d","metadata":{"actors":["Christian Bale","Florence Pugh","Willem Dafoe"],"releaseDate":"2023-12-08","ratings":{"rottenTomatoes":97,"imdb":7.6}},"revenue":1000000})).await;
+    client
+        .service
+        .create_movie(
+            &Movie {
+                id: MovieId("movie-c06a4ad7".to_string()),
+                prequel: Some(MovieId("movie-cv9b914f".to_string())),
+                title: "The Boy and the Heron".to_string(),
+                from: "Hayao Miyazaki".to_string(),
+                rating: 8,
+                r#type: "movie".to_string(),
+                tag: Tag("tag-wf9as23d".to_string()),
+                metadata: HashMap::from([
+                    (
+                        "actors".to_string(),
+                        vec![
+                            "Christian Bale".to_string(),
+                            "Florence Pugh".to_string(),
+                            "Willem Dafoe".to_string(),
+                        ],
+                    ),
+                    ("releaseDate".to_string(), "2023-12-08".to_string()),
+                    (
+                        "ratings".to_string(),
+                        serde_json::json!({"rottenTomatoes":97,"imdb":7.6}),
+                    ),
+                ]),
+                revenue: 1000000,
+            },
+            None,
+        )
+        .await;
 }
 ```
 

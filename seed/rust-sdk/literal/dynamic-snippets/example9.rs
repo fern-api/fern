@@ -1,10 +1,42 @@
-use seed_literal::{ClientConfig, LiteralClient};
+use seed_literal::{
+    ClientConfig, ContainerObject, LiteralClient, NestedObjectWithLiterals, SendRequest,
+    SomeLiteral,
+};
+use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         base_url: "https://api.fern.com".to_string(),
+        ..Default::default()
     };
     let client = LiteralClient::new(config).expect("Failed to build client");
-    client.reference_send(serde_json::json!({"prompt":"You are a helpful assistant","query":"query","stream":false,"ending":"$ending","context":"You're super wise","maybeContext":"You're super wise","containerObject":{"nestedObjects":[{"literal1":"literal1","literal2":"literal2","strProp":"strProp"},{"literal1":"literal1","literal2":"literal2","strProp":"strProp"}]}})).await;
+    client
+        .reference
+        .send(
+            &SendRequest {
+                prompt: "You are a helpful assistant".to_string(),
+                query: "query".to_string(),
+                stream: false,
+                ending: "$ending".to_string(),
+                context: SomeLiteral("You're super wise".to_string()),
+                maybe_context: Some(SomeLiteral("You're super wise".to_string())),
+                container_object: ContainerObject {
+                    nested_objects: vec![
+                        NestedObjectWithLiterals {
+                            literal_1: "literal1".to_string(),
+                            literal_2: "literal2".to_string(),
+                            str_prop: "strProp".to_string(),
+                        },
+                        NestedObjectWithLiterals {
+                            literal_1: "literal1".to_string(),
+                            literal_2: "literal2".to_string(),
+                            str_prop: "strProp".to_string(),
+                        },
+                    ],
+                },
+            },
+            None,
+        )
+        .await;
 }

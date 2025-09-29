@@ -6,8 +6,9 @@ use seed_oauth_client_credentials_with_variables::{
 async fn main() {
     let config = ClientConfig {
         base_url: "https://api.fern.com".to_string(),
+        ..Default::default()
     };
     let client =
         OauthClientCredentialsWithVariablesClient::new(config).expect("Failed to build client");
-    client.service_post().await;
+    client.service.post(None).await;
 }

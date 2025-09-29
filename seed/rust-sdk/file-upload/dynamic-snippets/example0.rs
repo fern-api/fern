@@ -4,7 +4,8 @@ use seed_file_upload::{ClientConfig, FileUploadClient};
 async fn main() {
     let config = ClientConfig {
         base_url: "https://api.fern.com".to_string(),
+        ..Default::default()
     };
     let client = FileUploadClient::new(config).expect("Failed to build client");
-    client.service_simple().await;
+    client.service.simple(None).await;
 }

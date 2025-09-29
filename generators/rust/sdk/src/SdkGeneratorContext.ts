@@ -33,10 +33,6 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
         });
     }
 
-    public getClientName(): string {
-        return this.getClientClassName(this.ir.apiName.pascalCase.safeName);
-    }
-
     public getApiClientBuilderClientName(): string {
         // For api_client_builder.rs template, we need to reference the actual client that exists
         const subpackages = this.ir.rootPackage.subpackages
