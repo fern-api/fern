@@ -94,6 +94,8 @@ jobs:
 
   build-test-packages:
     runs-on: ubuntu-latest
+    if: always()
+
     needs: [package-seed-tests]
     # outputs:
     #   ruby-model: ${{ steps.set-test-matrix.outputs.ruby-model-test-matrix }}
@@ -120,6 +122,7 @@ jobs:
     #   rust-model: ${{ steps.set-test-matrix.outputs.rust-model-test-matrix }}
     #   rust-sdk: ${{ steps.set-test-matrix.outputs.rust-sdk-test-matrix }}
     strategy:
+      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       matrix:
         sdk-name:
           [
