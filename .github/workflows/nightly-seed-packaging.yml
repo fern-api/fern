@@ -181,8 +181,9 @@ jobs:
           with:
             seed-generator-alias: ${{ matrix.sdk-name }}
             max-runner-count: 10 #CHRISM - move to setting for everyone to use
+            split-tests-cutoff-time-in-seconds: 540 # 9 minutes - note, will depend on concurrency runners
             seed-test-log-file-path: artifacts/${{ matrix.sdk-name }}-seed-test-log.txt
-       
+
         - name: Output Packages
           id: output-packages
           run: |
@@ -192,7 +193,16 @@ jobs:
               # Echo the data to command line for visibility
               echo "Packaged data for ${{ matrix.sdk-name }}-test-matrix:"
               echo "$BASH_VAR" | jq .
+              echo "Split tests for ${{ matrix.sdk-name }}: ${{ steps.package-tests.outputs.split-tests }}"
 
+              if [[ "${{ steps.package-tests.outputs.split-tests }}" == "true" ]]; then
+                echo "Splitting tests across parallel runners"
+                echo "${{ matrix.sdk-name }}-test-matrix=$BASH_VAR" >> $GITHUB_OUTPUT
+              else
+                echo "Override packaging to run all tests in one runner"
+                BASH_VAR='[{"fixtures":["all"]}]'
+                echo "${{ matrix.sdk-name }}-test-matrix=$BASH_VAR" >> $GITHUB_OUTPUT
+              fi
 
             #  CHRISM - add back split tests
             
