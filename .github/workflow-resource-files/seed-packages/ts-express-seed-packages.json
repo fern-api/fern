@@ -1,0 +1,159 @@
+{
+  "total-test-time": 4913,
+  "split-cutoff-time": 9600,
+  "split-tests": false,
+  "packages": [
+    {
+      "fixtures": [
+        "trace:no-custom-config",
+        "simple-api",
+        "inferred-auth-explicit",
+        "object",
+        "pagination-custom",
+        "oauth-client-credentials-nested-root",
+        "cross-package-type-names",
+        "custom-auth",
+        "imdb:validation-status-code"
+      ],
+      "packageTotalTime": 498
+    },
+    {
+      "fixtures": [
+        "trace:no-zurg-trace",
+        "client-side-params",
+        "pagination",
+        "query-parameters",
+        "single-url-environment-no-default",
+        "exhaustive:no-optional-properties",
+        "exhaustive:allow-extra-fields",
+        "basic-auth",
+        "basic-auth-environment-variables",
+        "server-sent-event-examples"
+      ],
+      "packageTotalTime": 493
+    },
+    {
+      "fixtures": [
+        "exhaustive:no-custom-config",
+        "api-wide-base-path",
+        "response-property",
+        "path-parameters",
+        "optional",
+        "oauth-client-credentials-custom",
+        "bytes-upload",
+        "validation",
+        "imdb:skip-request-validation",
+        "server-sent-events"
+      ],
+      "packageTotalTime": 485
+    },
+    {
+      "fixtures": [
+        "exhaustive:retain-original-casing",
+        "accept-header",
+        "circular-references-advanced",
+        "multi-url-environment",
+        "inferred-auth-implicit-no-expiry",
+        "enum",
+        "any-auth",
+        "exhaustive:union-utils",
+        "imdb:no-custom-config",
+        "multiple-request-bodies",
+        "streaming"
+      ],
+      "packageTotalTime": 491
+    },
+    {
+      "fixtures": [
+        "nullable-optional",
+        "bearer-token-environment-variable",
+        "errors",
+        "inferred-auth-implicit",
+        "reserved-keywords",
+        "mixed-file-directory",
+        "bytes-download",
+        "oauth-client-credentials",
+        "http-head",
+        "imdb:skip-response-validation"
+      ],
+      "packageTotalTime": 494
+    },
+    {
+      "fixtures": [
+        "content-type",
+        "auth-environment-variables",
+        "property-access",
+        "request-parameters",
+        "empty-clients",
+        "license",
+        "oauth-client-credentials-environment-variables",
+        "audiences",
+        "folders",
+        "plain-text",
+        "streaming-parameter"
+      ],
+      "packageTotalTime": 491
+    },
+    {
+      "fixtures": [
+        "extends",
+        "alias",
+        "mixed-case:no-custom-config",
+        "websocket-inferred-auth",
+        "no-environment",
+        "literals-unions",
+        "objects-with-imports",
+        "examples",
+        "websocket",
+        "public-object",
+        "nullable"
+      ],
+      "packageTotalTime": 482
+    },
+    {
+      "fixtures": [
+        "alias-extends",
+        "version-no-default",
+        "mixed-case:retain-original-casing",
+        "ts-inline-types",
+        "multi-line-docs",
+        "oauth-client-credentials-with-variables",
+        "literal",
+        "file-download",
+        "websocket-bearer-auth",
+        "imdb:output-compiled"
+      ],
+      "packageTotalTime": 488
+    },
+    {
+      "fixtures": [
+        "query-parameters-openapi",
+        "unions",
+        "single-url-environment-default",
+        "extra-properties",
+        "multi-url-environment-no-default",
+        "package-yml",
+        "oauth-client-credentials-default",
+        "unknown",
+        "idempotency-headers",
+        "exhaustive:test-package-path"
+      ],
+      "packageTotalTime": 496
+    },
+    {
+      "fixtures": [
+        "query-parameters-openapi-as-objects",
+        "version",
+        "simple-fhir",
+        "error-property",
+        "circular-references",
+        "undiscriminated-unions",
+        "ts-express-casing:no-custom-config",
+        "file-upload",
+        "ts-express-casing:no-serde-layer",
+        "variables"
+      ],
+      "packageTotalTime": 495
+    }
+  ]
+}
