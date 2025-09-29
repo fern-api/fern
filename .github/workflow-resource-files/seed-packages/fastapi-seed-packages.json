@@ -1,0 +1,161 @@
+{
+  "total-test-time": 3417,
+  "split-cutoff-time": 9600,
+  "split-tests": false,
+  "packages": [
+    {
+      "fixtures": [
+        "accept-header",
+        "exhaustive:pydantic-v2",
+        "oauth-client-credentials-default",
+        "mixed-case",
+        "simple-fhir:no-inheritance-for-extended-models",
+        "optional",
+        "multi-url-environment",
+        "single-url-environment-no-default",
+        "simple-api",
+        "server-sent-events"
+      ],
+      "packageTotalTime": 336
+    },
+    {
+      "fixtures": [
+        "alias",
+        "exhaustive:ignore-extra-fields",
+        "path-parameters",
+        "websocket",
+        "undiscriminated-unions",
+        "pagination-custom",
+        "oauth-client-credentials-nested-root",
+        "imdb:v1_on_v2",
+        "inferred-auth-implicit-no-expiry",
+        "file-download:no-inheritance-for-extended-models"
+      ],
+      "packageTotalTime": 336
+    },
+    {
+      "fixtures": [
+        "content-type",
+        "oauth-client-credentials-custom",
+        "oauth-client-credentials",
+        "bearer-token-environment-variable",
+        "oauth-client-credentials-environment-variables",
+        "public-object",
+        "plain-text",
+        "inferred-auth-implicit",
+        "mixed-file-directory",
+        "audiences",
+        "cross-package-type-names"
+      ],
+      "packageTotalTime": 352
+    },
+    {
+      "fixtures": [
+        "version",
+        "circular-references-advanced:no-custom-config",
+        "circular-references-advanced:no-inheritance-for-extended-models",
+        "bytes-download",
+        "validation",
+        "single-url-environment-default",
+        "extra-properties",
+        "request-parameters",
+        "file-upload",
+        "imdb:includes-extra-fields"
+      ],
+      "packageTotalTime": 336
+    },
+    {
+      "fixtures": [
+        "alias-extends:no-custom-config",
+        "unions:no-custom-config",
+        "simple-fhir:no-custom-config",
+        "circular-references:no-inheritance-for-extended-models",
+        "variables",
+        "errors",
+        "imdb:async-handlers",
+        "reserved-keywords",
+        "imdb:no-custom-config",
+        "server-sent-event-examples"
+      ],
+      "packageTotalTime": 336
+    },
+    {
+      "fixtures": [
+        "alias-extends:no-inheritance-for-extended-models",
+        "unions:no-inheritance-for-extended-models",
+        "query-parameters-openapi",
+        "bytes-upload",
+        "circular-references:no-custom-config",
+        "multi-line-docs",
+        "license",
+        "any-auth",
+        "multiple-request-bodies",
+        "streaming-parameter"
+      ],
+      "packageTotalTime": 336
+    },
+    {
+      "fixtures": [
+        "api-wide-base-path",
+        "empty-clients",
+        "basic-auth",
+        "auth-environment-variables",
+        "nullable",
+        "object",
+        "pagination:no-inheritance-for-extended-models",
+        "websocket-inferred-auth",
+        "response-property",
+        "trace"
+      ],
+      "packageTotalTime": 336
+    },
+    {
+      "fixtures": [
+        "version-no-default",
+        "exhaustive:include-validators",
+        "custom-auth",
+        "basic-auth-environment-variables",
+        "nullable-optional",
+        "package-yml",
+        "multi-url-environment-no-default",
+        "pagination:no-custom-config",
+        "enum",
+        "http-head",
+        "folders"
+      ],
+      "packageTotalTime": 351
+    },
+    {
+      "fixtures": [
+        "extends",
+        "exhaustive:skip-formatting",
+        "unknown",
+        "error-property",
+        "literals-unions",
+        "property-access",
+        "objects-with-imports",
+        "query-parameters",
+        "streaming",
+        "idempotency-headers",
+        "literal"
+      ],
+      "packageTotalTime": 351
+    },
+    {
+      "fixtures": [
+        "file-download:no-custom-config",
+        "exhaustive:frozen_utils",
+        "query-parameters-openapi-as-objects",
+        "exhaustive:pydantic-v1",
+        "no-environment",
+        "websocket-bearer-auth",
+        "client-side-params",
+        "inferred-auth-explicit",
+        "oauth-client-credentials-with-variables",
+        "examples",
+        "exhaustive:no-custom-config"
+      ],
+      "packageTotalTime": 347
+    }
+  ]
+}
