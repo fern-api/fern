@@ -12,7 +12,9 @@
         "sourceMap": true,
         "outDir": "types",
         "rootDir": "src",
-        "baseUrl": "src"
+        "baseUrl": "src",
+        "isolatedModules": true,
+        "isolatedDeclarations": true
     },
     "include": ["src"],
     "exclude": []

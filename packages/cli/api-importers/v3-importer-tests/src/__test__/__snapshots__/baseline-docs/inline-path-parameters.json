@@ -485,22 +485,22 @@
           "pathParameters": [
             {
               "name": {
-                "originalName": "id",
+                "originalName": "organization_id",
                 "camelCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
+                  "unsafeName": "organizationID",
+                  "safeName": "organizationID"
                 },
                 "snakeCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
+                  "unsafeName": "organization_id",
+                  "safeName": "organization_id"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
+                  "unsafeName": "ORGANIZATION_ID",
+                  "safeName": "ORGANIZATION_ID"
                 },
                 "pascalCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
+                  "unsafeName": "OrganizationID",
+                  "safeName": "OrganizationID"
                 }
               },
               "valueType": {
@@ -520,22 +520,22 @@
             },
             {
               "name": {
-                "originalName": "organization_id",
+                "originalName": "id",
                 "camelCase": {
-                  "unsafeName": "organizationID",
-                  "safeName": "organizationID"
+                  "unsafeName": "id",
+                  "safeName": "id"
                 },
                 "snakeCase": {
-                  "unsafeName": "organization_id",
-                  "safeName": "organization_id"
+                  "unsafeName": "id",
+                  "safeName": "id"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "ORGANIZATION_ID",
-                  "safeName": "ORGANIZATION_ID"
+                  "unsafeName": "ID",
+                  "safeName": "ID"
                 },
                 "pascalCase": {
-                  "unsafeName": "OrganizationID",
-                  "safeName": "OrganizationID"
+                  "unsafeName": "ID",
+                  "safeName": "ID"
                 }
               },
               "valueType": {
@@ -557,22 +557,22 @@
           "allPathParameters": [
             {
               "name": {
-                "originalName": "id",
+                "originalName": "organization_id",
                 "camelCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
+                  "unsafeName": "organizationID",
+                  "safeName": "organizationID"
                 },
                 "snakeCase": {
-                  "unsafeName": "id",
-                  "safeName": "id"
+                  "unsafeName": "organization_id",
+                  "safeName": "organization_id"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
+                  "unsafeName": "ORGANIZATION_ID",
+                  "safeName": "ORGANIZATION_ID"
                 },
                 "pascalCase": {
-                  "unsafeName": "ID",
-                  "safeName": "ID"
+                  "unsafeName": "OrganizationID",
+                  "safeName": "OrganizationID"
                 }
               },
               "valueType": {
@@ -592,22 +592,22 @@
             },
             {
               "name": {
-                "originalName": "organization_id",
+                "originalName": "id",
                 "camelCase": {
-                  "unsafeName": "organizationID",
-                  "safeName": "organizationID"
+                  "unsafeName": "id",
+                  "safeName": "id"
                 },
                 "snakeCase": {
-                  "unsafeName": "organization_id",
-                  "safeName": "organization_id"
+                  "unsafeName": "id",
+                  "safeName": "id"
                 },
                 "screamingSnakeCase": {
-                  "unsafeName": "ORGANIZATION_ID",
-                  "safeName": "ORGANIZATION_ID"
+                  "unsafeName": "ID",
+                  "safeName": "ID"
                 },
                 "pascalCase": {
-                  "unsafeName": "OrganizationID",
-                  "safeName": "OrganizationID"
+                  "unsafeName": "ID",
+                  "safeName": "ID"
                 }
               },
               "valueType": {
@@ -1924,34 +1924,6 @@
             {
               "name": {
                 "name": {
-                  "originalName": "id",
-                  "camelCase": {
-                    "unsafeName": "id",
-                    "safeName": "id"
-                  },
-                  "snakeCase": {
-                    "unsafeName": "id",
-                    "safeName": "id"
-                  },
-                  "screamingSnakeCase": {
-                    "unsafeName": "ID",
-                    "safeName": "ID"
-                  },
-                  "pascalCase": {
-                    "unsafeName": "ID",
-                    "safeName": "ID"
-                  }
-                },
-                "wireValue": "id"
-              },
-              "typeReference": {
-                "value": "STRING",
-                "type": "primitive"
-              }
-            },
-            {
-              "name": {
-                "name": {
                   "originalName": "organization_id",
                   "camelCase": {
                     "unsafeName": "organizationID",
@@ -1971,6 +1943,34 @@
                   }
                 },
                 "wireValue": "organization_id"
+              },
+              "typeReference": {
+                "value": "STRING",
+                "type": "primitive"
+              }
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "id",
+                  "camelCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "id",
+                    "safeName": "id"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "ID",
+                    "safeName": "ID"
+                  }
+                },
+                "wireValue": "id"
               },
               "typeReference": {
                 "value": "STRING",

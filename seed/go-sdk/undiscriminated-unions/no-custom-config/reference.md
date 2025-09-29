@@ -15,9 +15,7 @@
 ```go
 client.Union.Get(
         context.TODO(),
-        &undiscriminatedgo.MyUnion{
-            String: "string",
-        },
+        request,
     )
 }
 ```
@@ -89,13 +87,7 @@ client.Union.GetMetadata(
 ```go
 client.Union.UpdateMetadata(
         context.TODO(),
-        &undiscriminatedgo.MetadataUnion{
-            OptionalMetadata: map[string]any{
-                "string": map[string]any{
-                    "key": "value",
-                },
-            },
-        },
+        request,
     )
 }
 ```
@@ -139,15 +131,7 @@ client.Union.UpdateMetadata(
 ```go
 client.Union.Call(
         context.TODO(),
-        &undiscriminatedgo.Request{
-            Union: &undiscriminatedgo.MetadataUnion{
-                OptionalMetadata: map[string]any{
-                    "union": map[string]any{
-                        "key": "value",
-                    },
-                },
-            },
-        },
+        request,
     )
 }
 ```
@@ -191,9 +175,7 @@ client.Union.Call(
 ```go
 client.Union.DuplicateTypesUnion(
         context.TODO(),
-        &undiscriminatedgo.UnionWithDuplicateTypes{
-            String: "string",
-        },
+        request,
     )
 }
 ```
@@ -237,9 +219,7 @@ client.Union.DuplicateTypesUnion(
 ```go
 client.Union.NestedUnions(
         context.TODO(),
-        &undiscriminatedgo.NestedUnionRoot{
-            String: "string",
-        },
+        request,
     )
 }
 ```

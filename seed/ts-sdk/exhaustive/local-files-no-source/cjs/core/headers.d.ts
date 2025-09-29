@@ -1,3 +1,2 @@
-import * as core from "./index.js";
-export declare function mergeHeaders(...headersArray: (Record<string, string | core.Supplier<string | null | undefined> | null | undefined> | null | undefined)[]): Record<string, string | core.Supplier<string | null | undefined>>;
-export declare function mergeOnlyDefinedHeaders(...headersArray: (Record<string, string | core.Supplier<string | null | undefined> | null | undefined> | null | undefined)[]): Record<string, string | core.Supplier<string | null | undefined>>;
+export declare function mergeHeaders<THeaderValue>(...headersArray: (Record<string, THeaderValue> | null | undefined)[]): Record<string, string | THeaderValue>;
+export declare function mergeOnlyDefinedHeaders<THeaderValue>(...headersArray: (Record<string, THeaderValue> | null | undefined)[]): Record<string, THeaderValue>;

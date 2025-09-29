@@ -18,8 +18,8 @@ package example
 import (
     client "github.com/client-side-params/fern/client"
     option "github.com/client-side-params/fern/option"
-    context "context"
     fern "github.com/client-side-params/fern"
+    context "context"
 )
 
 func do() {
@@ -28,20 +28,21 @@ func do() {
             "<token>",
         ),
     )
-    client.Service.SearchResources(
-        context.TODO(),
-        &fern.SearchResourcesRequest{
-            Limit: 1,
-            Offset: 1,
-            Query: fern.String(
-                "query",
-            ),
-            Filters: map[string]any{
-                "filters": map[string]any{
-                    "key": "value",
-                },
+    request := &fern.SearchResourcesRequest{
+        Limit: 1,
+        Offset: 1,
+        Query: fern.String(
+            "query",
+        ),
+        Filters: map[string]any{
+            "filters": map[string]any{
+                "key": "value",
             },
         },
+    }
+    client.Service.SearchResources(
+        context.TODO(),
+        request,
     )
 }
 ```

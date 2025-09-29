@@ -15,14 +15,7 @@
 ```go
 client.Service.Patch(
         context.TODO(),
-        &fern.PatchProxyRequest{
-            Application: fern.String(
-                "application",
-            ),
-            RequireAuth: fern.Bool(
-                true,
-            ),
-        },
+        request,
     )
 }
 ```
@@ -92,43 +85,7 @@ This endpoint demonstrates the distinction between:
 client.Service.PatchComplex(
         context.TODO(),
         "id",
-        &fern.PatchComplexRequest{
-            Name: fern.String(
-                "name",
-            ),
-            Age: fern.Int(
-                1,
-            ),
-            Active: fern.Bool(
-                true,
-            ),
-            Metadata: map[string]any{
-                "metadata": map[string]any{
-                    "key": "value",
-                },
-            },
-            Tags: []string{
-                "tags",
-                "tags",
-            },
-            Email: fern.String(
-                "email",
-            ),
-            Nickname: fern.String(
-                "nickname",
-            ),
-            Bio: fern.String(
-                "bio",
-            ),
-            ProfileImageUrl: fern.String(
-                "profileImageUrl",
-            ),
-            Settings: map[string]any{
-                "settings": map[string]any{
-                    "key": "value",
-                },
-            },
-        },
+        request,
     )
 }
 ```
@@ -268,17 +225,7 @@ This should trigger the NPE issue when optional fields aren't initialized.
 client.Service.NamedPatchWithMixed(
         context.TODO(),
         "id",
-        &fern.NamedMixedPatchRequest{
-            AppId: fern.String(
-                "appId",
-            ),
-            Instructions: fern.String(
-                "instructions",
-            ),
-            Active: fern.Bool(
-                true,
-            ),
-        },
+        request,
     )
 }
 ```
@@ -363,21 +310,7 @@ This endpoint should:
 ```go
 client.Service.OptionalMergePatchTest(
         context.TODO(),
-        &fern.OptionalMergePatchRequest{
-            RequiredField: "requiredField",
-            OptionalString: fern.String(
-                "optionalString",
-            ),
-            OptionalInteger: fern.Int(
-                1,
-            ),
-            OptionalBoolean: fern.Bool(
-                true,
-            ),
-            NullableString: fern.String(
-                "nullableString",
-            ),
-        },
+        request,
     )
 }
 ```
@@ -468,14 +401,7 @@ Regular PATCH endpoint without merge-patch semantics
 client.Service.RegularPatch(
         context.TODO(),
         "id",
-        &fern.RegularPatchRequest{
-            Field1: fern.String(
-                "field1",
-            ),
-            Field2: fern.Int(
-                1,
-            ),
-        },
+        request,
     )
 }
 ```

@@ -47,7 +47,6 @@ runs:
 
     # Add changes first to simplify git diff checks, no changes will NOT error here
     - name: Check for changes
-      if: inputs.create-artifacts == 'true'
       id: check-changes
       shell: bash
       run: |
@@ -60,16 +59,22 @@ runs:
           echo "seed-changes-generated=true" >> $GITHUB_OUTPUT
         fi
 
+    - name: Log if no changes
+      if: steps.check-changes.outputs.seed-changes-generated == 'false'
+      shell: bash
+      run: |
+        echo "No changes detected for seed. Skipping artifact upload."
+
     # Make patch file for seed changes
     - name: Make Patch for Seed Artifacts
-      if: steps.check-changes.outputs.seed-changes-generated == 'true' && inputs.create-artifacts == 'true'
+      if: steps.check-changes.outputs.seed-changes-generated == 'true'
       shell: bash
       run: |
         git diff --staged > seed-${{ inputs.generator-name }}-${{ inputs.index }}.patch
 
     # Upload patch files as artifacts to be applied and committed by caller when all of seed is up to date
     - name: Upload Seed Artifacts
-      if: steps.check-changes.outputs.seed-changes-generated == 'true' && inputs.create-artifacts == 'true'
+      if: steps.check-changes.outputs.seed-changes-generated == 'true'
       uses: actions/upload-artifact@v4
       with:
         name: seed-${{ inputs.generator-name }}-${{ inputs.index }}.patch

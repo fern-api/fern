@@ -1,0 +1,534 @@
+{
+  "types": {
+    "EmailObject": {
+      "name": "EmailObject",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "email",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "EmptyOneOfAnonymous": {
+      "name": "EmptyOneOfAnonymous",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": []
+      }
+    },
+    "EmptyOneOf": {
+      "name": "EmptyOneOf",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "anonymous",
+            "valueType": {
+              "type": "id",
+              "value": "EmptyOneOfAnonymous"
+            }
+          }
+        ]
+      }
+    },
+    "EmptyOneOfWrapper": {
+      "name": "EmptyOneOf",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "nullable",
+          "itemType": {
+            "type": "id",
+            "value": "EmptyOneOf"
+          }
+        }
+      }
+    },
+    "GoogleProtobufAny": {
+      "description": "Contains an arbitrary serialized message along with a @type that describes the type of the serialized message.",
+      "name": "GoogleProtobufAny",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The type of the serialized message.",
+            "key": "@type",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "extraProperties": {
+          "type": "unknown"
+        }
+      }
+    },
+    "ObjectOneOf0": {
+      "name": "ObjectOneOf0",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "email",
+            "valueType": {
+              "type": "id",
+              "value": "EmailObject"
+            }
+          }
+        ]
+      },
+      "displayName": "Email"
+    },
+    "ObjectOneOf1": {
+      "name": "ObjectOneOf1",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "phone_number",
+            "valueType": {
+              "type": "id",
+              "value": "PhoneNumberObject"
+            }
+          }
+        ]
+      },
+      "displayName": "PhoneNumber"
+    },
+    "ObjectOneOf": {
+      "name": "ObjectOneOf",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "ObjectOneOf0",
+            "type": {
+              "type": "id",
+              "value": "ObjectOneOf0"
+            },
+            "displayName": "Email"
+          },
+          {
+            "typeName": "ObjectOneOf1",
+            "type": {
+              "type": "id",
+              "value": "ObjectOneOf1"
+            },
+            "displayName": "PhoneNumber"
+          }
+        ]
+      }
+    },
+    "ObjectOneOfWrapper": {
+      "name": "ObjectOneOf",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "nullable",
+          "itemType": {
+            "type": "id",
+            "value": "ObjectOneOf"
+          }
+        }
+      }
+    },
+    "OneOfMessagePaymentMethod0": {
+      "name": "OneOfMessagePaymentMethod0",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "credit_card",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "displayName": "CreditCard"
+    },
+    "OneOfMessagePaymentMethod1": {
+      "name": "OneOfMessagePaymentMethod1",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "bank_transfer",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "displayName": "BankTransfer"
+    },
+    "OneOfMessagePaymentMethod2": {
+      "name": "OneOfMessagePaymentMethod2",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "digital_wallet",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "displayName": "DigitalWallet"
+    },
+    "OneOfMessagePaymentMethod": {
+      "name": "OneOfMessagePaymentMethod",
+      "shape": {
+        "type": "undiscriminatedUnion",
+        "variants": [
+          {
+            "typeName": "OneOfMessagePaymentMethod0",
+            "type": {
+              "type": "id",
+              "value": "OneOfMessagePaymentMethod0"
+            },
+            "displayName": "CreditCard"
+          },
+          {
+            "typeName": "OneOfMessagePaymentMethod1",
+            "type": {
+              "type": "id",
+              "value": "OneOfMessagePaymentMethod1"
+            },
+            "displayName": "BankTransfer"
+          },
+          {
+            "typeName": "OneOfMessagePaymentMethod2",
+            "type": {
+              "type": "id",
+              "value": "OneOfMessagePaymentMethod2"
+            },
+            "displayName": "DigitalWallet"
+          }
+        ]
+      }
+    },
+    "OneOfMessage": {
+      "description": "Message demonstrating oneof field usage",
+      "name": "OneOfMessage",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "Identifier for the message",
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "key": "authentication_config",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "EmptyOneOf"
+              }
+            }
+          },
+          {
+            "key": "contact_method",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "id",
+                "value": "ObjectOneOf"
+              }
+            }
+          },
+          {
+            "key": "payment_method",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "nullable",
+                "itemType": {
+                  "type": "id",
+                  "value": "OneOfMessagePaymentMethod"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "PhoneNumberObject": {
+      "name": "PhoneNumberObject",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "phone_number",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "Status": {
+      "description": "The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).",
+      "name": "Status",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "description": "The status code, which should be an enum value of [google.rpc.Code][google.rpc.Code].",
+            "key": "code",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          {
+            "description": "A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the [google.rpc.Status.details][google.rpc.Status.details] field, or localized by the client.",
+            "key": "message",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          {
+            "description": "A list of messages that carry the error details.  There is a common set of message types for APIs to use.",
+            "key": "details",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "GoogleProtobufAny"
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "subpackages": {
+    "subpackage_oneOfService": {
+      "subpackageId": "subpackage_oneOfService",
+      "name": "oneOfService",
+      "endpoints": [
+        {
+          "auth": false,
+          "method": "POST",
+          "id": "createpayment",
+          "originalEndpointId": "endpoint_oneOfService.createpayment",
+          "name": "Createpayment",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/v1/payments"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "type": {
+              "type": "json",
+              "contentType": "application/json",
+              "shape": {
+                "type": "reference",
+                "value": {
+                  "type": "id",
+                  "value": "OneOfMessage"
+                }
+              }
+            }
+          },
+          "requestsV2": {
+            "requests": [
+              {
+                "type": {
+                  "type": "json",
+                  "contentType": "application/json",
+                  "shape": {
+                    "type": "reference",
+                    "value": {
+                      "type": "id",
+                      "value": "OneOfMessage"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "OneOfMessage"
+              }
+            },
+            "statusCode": 200,
+            "description": "OK"
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "OneOfMessage"
+                  }
+                },
+                "statusCode": 200,
+                "description": "OK"
+              }
+            ]
+          },
+          "errorsV2": [],
+          "examples": [
+            {
+              "description": "",
+              "path": "/v1/payments",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "requestBody": {},
+              "requestBodyV3": {
+                "type": "json",
+                "value": {}
+              },
+              "responseStatusCode": 200,
+              "responseBody": {
+                "id": "string",
+                "authentication_config": {
+                  "anonymous": {}
+                },
+                "contact_method": {
+                  "email": {
+                    "email": "string"
+                  }
+                },
+                "payment_method": {
+                  "credit_card": "string"
+                }
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "id": "string",
+                  "authentication_config": {
+                    "anonymous": {}
+                  },
+                  "contact_method": {
+                    "email": {
+                      "email": "string"
+                    }
+                  },
+                  "payment_method": {
+                    "credit_card": "string"
+                  }
+                }
+              }
+            }
+          ],
+          "protocol": {
+            "type": "rest"
+          }
+        }
+      ],
+      "webhooks": [],
+      "websockets": [],
+      "types": [],
+      "subpackages": []
+    }
+  },
+  "rootPackage": {
+    "endpoints": [],
+    "webhooks": [],
+    "websockets": [],
+    "types": [
+      "EmailObject",
+      "EmptyOneOfWrapper",
+      "GoogleProtobufAny",
+      "ObjectOneOfWrapper",
+      "OneOfMessage",
+      "PhoneNumberObject",
+      "Status"
+    ],
+    "subpackages": [
+      "subpackage_oneOfService"
+    ]
+  },
+  "snippetsConfiguration": {},
+  "globalHeaders": []
+}

@@ -547,7 +547,7 @@
             "statusCode": 200,
             "body": {
               "value": {
-                "docs": "Success!",
+                "docs": "",
                 "payload": {
                   "fernFilepath": {
                     "allParts": [],
@@ -612,38 +612,38 @@
                 "statusCode": 200,
                 "body": {
                   "value": {
-                    "responseBodyType": {
+                    "docs": "",
+                    "payload": {
                       "fernFilepath": {
                         "allParts": [],
                         "packagePath": []
                       },
                       "name": {
-                        "originalName": "User",
+                        "originalName": "StreamUser",
                         "camelCase": {
-                          "unsafeName": "user",
-                          "safeName": "user"
+                          "unsafeName": "streamUser",
+                          "safeName": "streamUser"
                         },
                         "snakeCase": {
-                          "unsafeName": "user",
-                          "safeName": "user"
+                          "unsafeName": "stream_user",
+                          "safeName": "stream_user"
                         },
                         "screamingSnakeCase": {
-                          "unsafeName": "USER",
-                          "safeName": "USER"
+                          "unsafeName": "STREAM_USER",
+                          "safeName": "STREAM_USER"
                         },
                         "pascalCase": {
-                          "unsafeName": "User",
-                          "safeName": "User"
+                          "unsafeName": "StreamUser",
+                          "safeName": "StreamUser"
                         }
                       },
-                      "typeId": "User",
+                      "typeId": "StreamUser",
                       "inline": false,
                       "type": "named"
                     },
-                    "docs": "Success!",
-                    "type": "response"
+                    "type": "json"
                   },
-                  "type": "json"
+                  "type": "streaming"
                 }
               }
             ]
@@ -968,7 +968,7 @@
                   "inline": false,
                   "type": "named"
                 },
-                "docs": "Success!",
+                "docs": "",
                 "type": "response"
               },
               "type": "json"
@@ -1033,7 +1033,7 @@
                       "inline": false,
                       "type": "named"
                     },
-                    "docs": "Success!",
+                    "docs": "",
                     "type": "response"
                   },
                   "type": "json"

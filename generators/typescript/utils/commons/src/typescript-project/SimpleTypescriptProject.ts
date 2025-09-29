@@ -33,6 +33,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
         await this.generateGitIgnore();
         await this.generateNpmIgnore();
         await this.generatePrettierRc();
+        await this.generatePrettierIgnore();
         await this.generateTsConfig();
         await this.generatePackageJson();
         if (this.outputJsr) {
@@ -87,6 +88,21 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 tabWidth: 4,
                 printWidth: 120
             })
+        );
+    }
+
+    private async generatePrettierIgnore(): Promise<void> {
+        await this.writeFileToVolume(
+            RelativeFilePath.of(TypescriptProject.PRETTIER_IGNORE_FILENAME),
+            `dist
+*.tsbuildinfo
+_tmp_*
+*.tmp
+.tmp/
+*.log
+.DS_Store
+Thumbs.db
+            `
         );
     }
 

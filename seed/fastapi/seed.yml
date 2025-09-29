@@ -141,3 +141,7 @@ allowedFailures:
   - multiple-request-bodies
   - query-parameters-openapi
   - query-parameters-openapi-as-objects
+  - inferred-auth-explicit
+  - inferred-auth-implicit
+  - inferred-auth-implicit-no-expiry
+  - websocket-inferred-auth

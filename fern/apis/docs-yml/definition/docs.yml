@@ -137,6 +137,7 @@ types:
         docs: The navigation config is skipped when multiple versions are present.
       "navbar-links": optional<list<NavbarLink>>
       "footer-links": optional<FooterLinksConfig>
+      "page-actions": optional<PageActionsConfig>
       experimental: optional<ExperimentalConfig>
       "default-language": optional<ProgrammingLanguage>
 
@@ -167,6 +168,13 @@ types:
       js: optional<JsConfig>
 
   TabId: string
+
+  PageActionsConfig:
+    properties:
+      chatgpt: optional<boolean>
+      claude: optional<boolean>
+      vscode: optional<boolean>
+      cursor: optional<boolean>
 
   AIChatConfig:
     properties:

@@ -739,14 +739,30 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 ClassName oauthTokenSupplierClassName =
                         generatedOAuthTokenSupplier.get().getClassName();
                 if (configureAuthMethod != null) {
+                    configureAuthMethod.beginControlFlow("if (this.clientId != null && this.clientSecret != null)");
+
+                    configureAuthMethod.addStatement(
+                            "$T.Builder authClientOptionsBuilder = $T.builder().environment(this.$L)",
+                            generatedClientOptions.getClassName(),
+                            generatedClientOptions.getClassName(),
+                            ENVIRONMENT_FIELD_NAME);
+
+                    generatorContext.getIr().getVariables().forEach(variableDeclaration -> {
+                        String variableName =
+                                variableDeclaration.getName().getCamelCase().getSafeName();
+                        MethodSpec variableMethod =
+                                generatedClientOptions.variableGetters().get(variableDeclaration.getId());
+                        configureAuthMethod
+                                .beginControlFlow("if (this.$L != null)", variableName)
+                                .addStatement("authClientOptionsBuilder.$N(this.$L)", variableMethod, variableName)
+                                .endControlFlow();
+                    });
+
                     configureAuthMethod
-                            .beginControlFlow("if (this.clientId != null && this.clientSecret != null)")
                             .addStatement(
-                                    "$T authClient = new $T($T.builder().environment(this.$L).build())",
+                                    "$T authClient = new $T(authClientOptionsBuilder.build())",
                                     authClientClassName,
-                                    authClientClassName,
-                                    generatedClientOptions.getClassName(),
-                                    ENVIRONMENT_FIELD_NAME)
+                                    authClientClassName)
                             .addStatement(
                                     "$T oAuthTokenSupplier = new $T(this.clientId, this.clientSecret, authClient)",
                                     oauthTokenSupplierClassName,

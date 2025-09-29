@@ -3,8 +3,8 @@ package example
 import (
     client "github.com/server-sent-events/fern/client"
     option "github.com/server-sent-events/fern/option"
-    context "context"
     fern "github.com/server-sent-events/fern"
+    context "context"
 )
 
 func do() {
@@ -13,10 +13,11 @@ func do() {
             "https://api.fern.com",
         ),
     )
+    request := &fern.StreamCompletionRequest{
+        Query: "query",
+    }
     client.Completions.Stream(
         context.TODO(),
-        &fern.StreamCompletionRequest{
-            Query: "query",
-        },
+        request,
     )
 }

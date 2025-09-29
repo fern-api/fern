@@ -159,15 +159,17 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="pydantic_utilities"),
             ),
-            exports={
-                "parse_obj_as",
-                "UniversalBaseModel",
-                "IS_PYDANTIC_V2",
-                "universal_root_validator",
-                "universal_field_validator",
-                "update_forward_refs",
-                "UniversalRootModel",
-            }
+            exports=(
+                {
+                    "parse_obj_as",
+                    "UniversalBaseModel",
+                    "universal_root_validator",
+                    "universal_field_validator",
+                    "update_forward_refs",
+                    "UniversalRootModel",
+                }
+                | (set() if is_v1_on_v2 else {"IS_PYDANTIC_V2"})
+            )
             if not self._exclude_types_from_init_exports
             else set(),
         )

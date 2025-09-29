@@ -3,8 +3,8 @@ package example
 import (
     client "github.com/nullable-optional/fern/client"
     option "github.com/nullable-optional/fern/option"
-    context "context"
     fern "github.com/nullable-optional/fern"
+    context "context"
 )
 
 func do() {
@@ -13,12 +13,13 @@ func do() {
             "https://api.fern.com",
         ),
     )
+    request := &fern.FilterByRoleRequest{
+        Role: fern.UserRoleAdmin.Ptr(),
+        Status: fern.UserStatusActive.Ptr(),
+        SecondaryRole: fern.UserRoleAdmin.Ptr(),
+    }
     client.NullableOptional.FilterByRole(
         context.TODO(),
-        &fern.FilterByRoleRequest{
-            Role: fern.UserRoleAdmin.Ptr(),
-            Status: fern.UserStatusActive.Ptr(),
-            SecondaryRole: fern.UserRoleAdmin.Ptr(),
-        },
+        request,
     )
 }

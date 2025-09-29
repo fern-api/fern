@@ -14,7 +14,7 @@
 ```go
 client.UploadJsonDocument(
         context.TODO(),
-        &fern.UploadDocumentRequest{},
+        request,
     )
 }
 ```
