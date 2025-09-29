@@ -22,57 +22,31 @@ jobs:
     strategy:
       matrix:
         sdk-name:
-            [ ruby-sdk,pydantic ]
-# - CHRISM temporary
-        #   [
-        #     ruby-model,
-        #     ruby-sdk,
-        #     ruby-sdk-v2,
-        #     pydantic,
-        #     python-sdk,
-        #     fastapi,
-        #     openapi,
-        #     postman,
-        #     java-sdk,
-        #     java-model,
-        #     java-spring,
-        #     ts-sdk,
-        #     ts-express,
-        #     go-fiber,
-        #     go-model,
-        #     go-sdk,
-        #     csharp-model,
-        #     csharp-sdk,
-        #     php-model,
-        #     php-sdk,
-        #     swift-sdk,
-        #     rust-model,
-        #     rust-sdk
-        #   ]
-    # outputs:
-    #   ruby-model: ${{ steps.set-test-matrix.outputs.ruby-model-test-matrix }}
-    #   ruby-sdk: ${{ steps.set-test-matrix.outputs.ruby-sdk-test-matrix }}
-    #   ruby-sdk-v2: ${{ steps.set-test-matrix.outputs.ruby-sdk-v2-test-matrix }}
-    #   pydantic: ${{ steps.set-test-matrix.outputs.pydantic-test-matrix }}
-    #   python-sdk: ${{ steps.set-test-matrix.outputs.python-sdk-test-matrix }}
-    #   fastapi: ${{ steps.set-test-matrix.outputs.fastapi-test-matrix }}
-    #   openapi: ${{ steps.set-test-matrix.outputs.openapi-test-matrix }}
-    #   postman: ${{ steps.set-test-matrix.outputs.postman-test-matrix }}
-    #   java-sdk: ${{ steps.set-test-matrix.outputs.java-sdk-test-matrix }}
-    #   java-model: ${{ steps.set-test-matrix.outputs.java-model-test-matrix }}
-    #   java-spring: ${{ steps.set-test-matrix.outputs.java-spring-test-matrix }}
-    #   ts-sdk: ${{ steps.set-test-matrix.outputs.ts-sdk-test-matrix }}
-    #   ts-express: ${{ steps.set-test-matrix.outputs.ts-express-test-matrix }}
-    #   go-fiber: ${{ steps.set-test-matrix.outputs.go-fiber-test-matrix }}
-    #   go-model: ${{ steps.set-test-matrix.outputs.go-model-test-matrix }}
-    #   go-sdk: ${{ steps.set-test-matrix.outputs.go-sdk-test-matrix }}
-    #   csharp-model: ${{ steps.set-test-matrix.outputs.csharp-model-test-matrix }}
-    #   csharp-sdk: ${{ steps.set-test-matrix.outputs.csharp-sdk-test-matrix }}
-    #   php-model: ${{ steps.set-test-matrix.outputs.php-model-test-matrix }}
-    #   php-sdk: ${{ steps.set-test-matrix.outputs.php-sdk-test-matrix }}
-    #   swift-sdk: ${{ steps.set-test-matrix.outputs.swift-sdk-test-matrix }}
-    #   rust-model: ${{ steps.set-test-matrix.outputs.rust-model-test-matrix }}
-    #   rust-sdk: ${{ steps.set-test-matrix.outputs.rust-sdk-test-matrix }}
+          [
+            ruby-model,
+            ruby-sdk,
+            ruby-sdk-v2,
+            pydantic,
+            python-sdk,
+            fastapi,
+            openapi,
+            postman,
+            java-sdk,
+            java-model,
+            java-spring,
+            ts-sdk,
+            ts-express,
+            go-fiber,
+            go-model,
+            go-sdk,
+            csharp-model,
+            csharp-sdk,
+            php-model,
+            php-sdk,
+            swift-sdk,
+            rust-model,
+            rust-sdk
+          ]
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -120,11 +94,11 @@ jobs:
   build-test-packages:
     runs-on: ubuntu-latest
     needs: [package-seed-tests]
-    outputs:
+    # outputs:
     #   ruby-model: ${{ steps.set-test-matrix.outputs.ruby-model-test-matrix }}
-      ruby-sdk: ${{ steps.output-packages.outputs.ruby-sdk-packages }}
+      # ruby-sdk: ${{ steps.output-packages.outputs.ruby-sdk-packages }}
     #   ruby-sdk-v2: ${{ steps.set-test-matrix.outputs.ruby-sdk-v2-test-matrix }}
-      pydantic: ${{ steps.output-packages.outputs.pydantic-packages }}
+      # pydantic: ${{ steps.output-packages.outputs.pydantic-packages }}
     #   python-sdk: ${{ steps.set-test-matrix.outputs.python-sdk-test-matrix }}
     #   fastapi: ${{ steps.set-test-matrix.outputs.fastapi-test-matrix }}
     #   openapi: ${{ steps.set-test-matrix.outputs.openapi-test-matrix }}
@@ -147,7 +121,31 @@ jobs:
     strategy:
       matrix:
         sdk-name:
-            [ ruby-sdk, pydantic ]
+          [
+            ruby-model,
+            ruby-sdk,
+            ruby-sdk-v2,
+            pydantic,
+            python-sdk,
+            fastapi,
+            openapi,
+            postman,
+            java-sdk,
+            java-model,
+            java-spring,
+            ts-sdk,
+            ts-express,
+            go-fiber,
+            go-model,
+            go-sdk,
+            csharp-model,
+            csharp-sdk,
+            php-model,
+            php-sdk,
+            swift-sdk,
+            rust-model,
+            rust-sdk
+          ]
     # needs: [package-seed-tests]
     steps:
         # - name: Checkout repo
@@ -178,7 +176,7 @@ jobs:
           with:
             seed-generator-alias: ${{ matrix.sdk-name }}
             max-runner-count: 10 #CHRISM - move to setting for everyone to use
-            split-tests-cutoff-time-in-seconds: 540 # 9 minutes - note, will depend on concurrency runners
+            split-tests-cutoff-time-in-seconds: 9600 # Roughly 10 minutes (across 16 batches, but will depend on concurrency runners)
             seed-test-log-file-path: artifacts/${{ matrix.sdk-name }}-seed-test-log.txt
 
         - name: Output Packages
@@ -232,66 +230,66 @@ jobs:
     #   - name: PR JSON File
     #     id: pr-json-file
 
-  run-balanced-ruby-sdk:
-    runs-on: ubuntu-latest
-    needs: [build-test-packages]
-    strategy:
-      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 10 # Limit the number of runners for this job to 10
+  # run-balanced-ruby-sdk:
+  #   runs-on: ubuntu-latest
+  #   needs: [build-test-packages]
+  #   strategy:
+  #     fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
+  #     max-parallel: 10 # Limit the number of runners for this job to 10
 
-      matrix:
-        include: ${{ fromJSON(needs.build-test-packages.outputs.ruby-sdk) }}
-    steps:
-      - name: Echo package
-        run: echo '${{toJson(matrix.fixtures)}}' | jq .
+  #     matrix:
+  #       include: ${{ fromJSON(needs.build-test-packages.outputs.ruby-sdk) }}
+  #   steps:
+  #     - name: Echo package
+  #       run: echo '${{toJson(matrix.fixtures)}}' | jq .
 
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
-      - name: Checkout repo
-        uses: actions/checkout@v4
+  #     # Format for seed tests
+  #     - name: JSON to String
+  #       id: json-to-string
+  #       run: |
+  #         json_data='${{toJson(matrix.fixtures)}}'
+  #         # Convert JSON array to space-separated string
+  #         string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+  #         echo "Generated string: '$string_result'"
+  #         echo "as-string=$string_result" >> $GITHUB_OUTPUT
+  #     - name: Checkout repo
+  #       uses: actions/checkout@v4
 
-      - name: Run seed
-        uses: ./.github/actions/cached-seed
-        with:
-          generator-name: ruby-sdk
-          generator-path: generators/ruby
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+  #     - name: Run seed
+  #       uses: ./.github/actions/cached-seed
+  #       with:
+  #         generator-name: ruby-sdk
+  #         generator-path: generators/ruby
+  #         fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
 
-  run-balanced-pydantic:
-    runs-on: ubuntu-latest
-    needs: [build-test-packages]
-    strategy:
-      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      max-parallel: 10 # Limit the number of runners for this job to 10
+  # run-balanced-pydantic:
+  #   runs-on: ubuntu-latest
+  #   needs: [build-test-packages]
+  #   strategy:
+  #     fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
+  #     max-parallel: 10 # Limit the number of runners for this job to 10
 
-      matrix:
-        include: ${{ fromJSON(needs.build-test-packages.outputs.pydantic) }}
-    steps:
-      - name: Echo package
-        run: echo '${{toJson(matrix.fixtures)}}' | jq .
+  #     matrix:
+  #       include: ${{ fromJSON(needs.build-test-packages.outputs.pydantic) }}
+  #   steps:
+  #     - name: Echo package
+  #       run: echo '${{toJson(matrix.fixtures)}}' | jq .
 
-      # Format for seed tests
-      - name: JSON to String
-        id: json-to-string
-        run: |
-          json_data='${{toJson(matrix.fixtures)}}'
-          # Convert JSON array to space-separated string
-          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-          echo "Generated string: '$string_result'"
-          echo "as-string=$string_result" >> $GITHUB_OUTPUT
-      - name: Checkout repo
-        uses: actions/checkout@v4
+  #     # Format for seed tests
+  #     - name: JSON to String
+  #       id: json-to-string
+  #       run: |
+  #         json_data='${{toJson(matrix.fixtures)}}'
+  #         # Convert JSON array to space-separated string
+  #         string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+  #         echo "Generated string: '$string_result'"
+  #         echo "as-string=$string_result" >> $GITHUB_OUTPUT
+  #     - name: Checkout repo
+  #       uses: actions/checkout@v4
 
-      - name: Run seed
-        uses: ./.github/actions/cached-seed
-        with:
-          generator-name: pydantic
-          generator-path: generators/python
-          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+  #     - name: Run seed
+  #       uses: ./.github/actions/cached-seed
+  #       with:
+  #         generator-name: pydantic
+  #         generator-path: generators/python
+  #         fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
