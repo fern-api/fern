@@ -15,10 +15,16 @@
       "path": "../model"
     },
     {
+      "path": "../dynamic-snippets"
+    },
+    {
       "path": "../codegen"
     },
     {
       "path": "../base"
+    },
+    {
+      "path": "../../../packages/cli/logger"
     },
     {
       "path": "../../../packages/commons/fs-utils"
