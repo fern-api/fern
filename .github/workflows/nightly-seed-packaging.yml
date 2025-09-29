@@ -186,9 +186,16 @@ jobs:
         - name: Output Packages
           id: output-packages
           run: |
+              BASH_VAR='${{ steps.package-tests.outputs.test-matrix }}'
+              echo "${{ matrix.sdk-name }}-packages=$BASH_VAR" >> $GITHUB_OUTPUT
+
+              # Echo the data to command line for visibility
+              echo "Packaged data for ${{ matrix.sdk-name }}-test-matrix:"
+              echo "$BASH_VAR" | jq .
+
+
             #  CHRISM - add back split tests
-            echo "${{ steps.package-tests.outputs.test-matrix }}" | jq .
-            echo "${{ matrix.sdk-name }}-packages=${{ steps.package-tests.outputs.test-matrix }}"
+            
 
     #   - name: Get output log data seed test and time data
     #     id: output-seed-test-and-time-data
