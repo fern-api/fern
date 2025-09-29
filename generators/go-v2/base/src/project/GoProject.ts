@@ -227,16 +227,10 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
             case "downloadFiles":
             case "publish": {
                 const modulePath = resolveRootImportPath({ config, customConfig: this.context.customConfig });
-                if (this.context.customConfig.module == null) {
-                    return {
-                        ...ModuleConfig.DEFAULT,
-                        path: modulePath
-                    };
-                }
                 return {
-                    path: this.context.customConfig.module.path,
-                    version: this.context.customConfig.module.version ?? ModuleConfig.DEFAULT.version,
-                    imports: this.context.customConfig.module.imports ?? ModuleConfig.DEFAULT.imports
+                    path: modulePath,
+                    version: this.context.customConfig.module?.version ?? ModuleConfig.DEFAULT.version,
+                    imports: this.context.customConfig.module?.imports ?? ModuleConfig.DEFAULT.imports
                 };
             }
             default:
