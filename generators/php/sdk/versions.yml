@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.17.1
+  changelogEntry:
+    - summary: |
+        Upgrade generator-cli dependency to fix local generation handling of .fernignore files.
+      type: fix
+  createdAt: "2025-09-29"
+  irVersion: 59
+
 - version: 1.17.0
   changelogEntry:
     - summary: |

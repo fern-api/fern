@@ -1,3 +1,11 @@
+- version: 3.7.1
+  changelogEntry:
+    - summary: |
+        Upgrade generator-cli dependency to fix local generation handling of .fernignore files.
+      type: fix
+  createdAt: "2025-09-29"
+  irVersion: 60
+
 - version: 3.7.0
   changelogEntry:
     - summary: |
