@@ -200,95 +200,91 @@ jobs:
             if-no-files-found: error
             retention-days: 1
             
+  pr-package-files:
+    strategy:
+      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
+      matrix:
+        sdk-name:
+          [
+            ruby-model,
+            ruby-sdk,
+            ruby-sdk-v2,
+            pydantic,
+            python-sdk,
+            fastapi,
+            openapi,
+            postman,
+            java-sdk,
+            java-model,
+            java-spring,
+            ts-sdk,
+            ts-express,
+            go-fiber,
+            go-model,
+            go-sdk,
+            csharp-model,
+            csharp-sdk,
+            php-model,
+            php-sdk,
+            swift-sdk,
+            rust-model,
+            rust-sdk
+          ]
+    runs-on: ubuntu-latest
+    needs: [build-test-packages]
+    steps:
+      # CHRISM - checked out on main?
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-    #   - name: Get output log data seed test and time data
-    #     id: output-seed-test-and-time-data
-    #     uses: ./.github/actions/parse-test-and-times
-    #     with:
-    #       sdk-name: ${{ matrix.sdk-name }}
+      - name: Download package file artifact
+        uses: actions/download-artifact@v5
+        with:
+          path: ./.github/workflow-resource-files/seed-packages
+          name: ${{ matrix.sdk-name }}-seed-packages.json
+          run-id: 18111300631 #CHRISM - temporary for testing, artifact ID = 4132496421
+          github-token: ${{ secrets.FERN_GITHUB_PAT }}
+          repository: ${{ github.repository }}
+          merge-multiple: true
 
-    #   - name: Parse seed test and time data
-    #     id: parse-seed-test-and-time-data
-    #     uses: ./.github/actions/parse-seed-test-and-time-data
-    #     with:
-    #       sdk-name: ${{ matrix.sdk-name }}
+      # Create PR, approve and set to merge per generator
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+          commit-message: "chore(internal): update ${{ matrix.sdk-name }} seed test packages"
+          title: "chore(internal): update ${{ matrix.sdk-name }} seed test packages"
+          branch: update-${{ matrix.sdk-name }}-seed-test-packages
+          body: "Auto-generated PR, triggered by nightly-seed-packaging workflow with: ${{ github.event_name }} from branch: ${{ github.ref_name }}.\nGitHub workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          delete-branch: true
+          labels: |
+            seed
 
-    #   - name: Create packages
-    #     id: set-test-matrix
-    #     # CHRISM - need to update on final push
-    #     uses: fern-api/package-seed-test@mallinson/working-branch
-    #     with:
-    #       seed-generator-alias: ${{ matrix.sdk-name }}
-    #       max-runner-count: 10 #CHRISM - move to setting for everyone to use
+      - name: Log PR Creation Failure
+        if: steps.cpr.outputs.pull-request-operation != 'created'
+        shell: bash
+        run: |
+          echo "PR was not created, likely due to no diff for seed test package file"
 
-    #   - name: Create JSON File with Packages
-    #     id: create-json-file-with-packages
-    #     run: |
-    #       echo "Ready to start creating JSON file"
+      - name: Log PR Creation Details
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        shell: bash
+        run: |
+          echo "PR Created: ${{ steps.cpr.outputs.pull-request-url }}"
 
-    #   - name: PR JSON File
-    #     id: pr-json-file
+      #  CHRISM add back
+      # - name: Enable Pull Request Automerge
+      #   if: steps.cpr.outputs.pull-request-operation == 'created'
+      #   uses: peter-evans/enable-pull-request-automerge@v3
+      #   with:
+      #     token: ${{ secrets.FERN_GITHUB_PAT }}
+      #     pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+      #     merge-method: squash
 
-  # run-balanced-ruby-sdk:
-  #   runs-on: ubuntu-latest
-  #   needs: [build-test-packages]
-  #   strategy:
-  #     fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-  #     max-parallel: 10 # Limit the number of runners for this job to 10
-
-  #     matrix:
-  #       include: ${{ fromJSON(needs.build-test-packages.outputs.ruby-sdk) }}
-  #   steps:
-  #     - name: Echo package
-  #       run: echo '${{toJson(matrix.fixtures)}}' | jq .
-
-  #     # Format for seed tests
-  #     - name: JSON to String
-  #       id: json-to-string
-  #       run: |
-  #         json_data='${{toJson(matrix.fixtures)}}'
-  #         # Convert JSON array to space-separated string
-  #         string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-  #         echo "Generated string: '$string_result'"
-  #         echo "as-string=$string_result" >> $GITHUB_OUTPUT
-  #     - name: Checkout repo
-  #       uses: actions/checkout@v4
-
-  #     - name: Run seed
-  #       uses: ./.github/actions/cached-seed
-  #       with:
-  #         generator-name: ruby-sdk
-  #         generator-path: generators/ruby
-  #         fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
-
-  # run-balanced-pydantic:
-  #   runs-on: ubuntu-latest
-  #   needs: [build-test-packages]
-  #   strategy:
-  #     fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-  #     max-parallel: 10 # Limit the number of runners for this job to 10
-
-  #     matrix:
-  #       include: ${{ fromJSON(needs.build-test-packages.outputs.pydantic) }}
-  #   steps:
-  #     - name: Echo package
-  #       run: echo '${{toJson(matrix.fixtures)}}' | jq .
-
-  #     # Format for seed tests
-  #     - name: JSON to String
-  #       id: json-to-string
-  #       run: |
-  #         json_data='${{toJson(matrix.fixtures)}}'
-  #         # Convert JSON array to space-separated string
-  #         string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
-  #         echo "Generated string: '$string_result'"
-  #         echo "as-string=$string_result" >> $GITHUB_OUTPUT
-  #     - name: Checkout repo
-  #       uses: actions/checkout@v4
-
-  #     - name: Run seed
-  #       uses: ./.github/actions/cached-seed
-  #       with:
-  #         generator-name: pydantic
-  #         generator-path: generators/python
-  #         fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+      # - name: Approve PR
+      #   if: steps.cpr.outputs.pull-request-operation == 'created'
+      #   uses: ./.github/actions/auto-approve
+      #   with:
+      #     approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+      #     pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
