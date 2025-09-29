@@ -2,7 +2,9 @@ use seed_nullable::{ClientConfig, GetUsersRequest, NullableClient};
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        base_url: "https://api.fern.com".to_string(),
+    };
     let client = NullableClient::new(config).expect("Failed to build client");
     client
         .nullable_get_users(GetUsersRequest {

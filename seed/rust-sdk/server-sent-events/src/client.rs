@@ -1,4 +1,4 @@
-use crate::api::resources::CompletionsClient;
+use crate::api::resources::ServerSentEventsClient;
 use crate::{ApiError, ClientConfig};
 use std::collections::HashMap;
 use std::time::Duration;
@@ -86,7 +86,7 @@ impl ApiClientBuilder {
     }
 
     /// Build the client with validation
-    pub fn build(self) -> Result<CompletionsClient, ApiError> {
-        CompletionsClient::new(self.config)
+    pub fn build(self) -> Result<ServerSentEventsClient, ApiError> {
+        ServerSentEventsClient::new(self.config)
     }
 }

@@ -70,11 +70,9 @@ export class RootClientGenerator {
             rawDeclarations.push(moduleDeclarations);
         }
 
-        // Generate root client if there are multiple services, or if no subpackages exist (empty client)
-        if (subpackages.length > 1 || subpackages.length === 0) {
-            const rootClient = this.generateRootClient(subpackages);
-            rawDeclarations.push(rootClient);
-        }
+        // Generate root client all services, or if no subpackages exist (empty client)
+        const rootClient = this.generateRootClient(subpackages);
+        rawDeclarations.push(rootClient);
 
         // Add re-exports for direct access to sub-clients
         const reExports = this.generateReExports(subpackages);
