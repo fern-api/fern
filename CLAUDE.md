@@ -153,6 +153,13 @@ Multi-stage process: API Schema → IR Updates → Generator Updates → Release
 ## Development Notes
 
 - **Generator Development**: Implement `AbstractGeneratorCli`, use IR as input, follow existing language patterns
+- **Generator-Specific Documentation**: Each major generator has its own CLAUDE.md file:
+  - `generators/python/CLAUDE.md` - Python v1+v2 tandem system
+  - `generators/java/CLAUDE.md` - Java v1+v2 tandem system
+  - `generators/go/CLAUDE.md` - Go v1+v2 tandem system
+  - `generators/typescript/CLAUDE.md` - Legacy TypeScript generator
+  - `generators/ruby-v2/CLAUDE.md` - Modern Ruby generator (standalone)
+  - `generators/csharp/CLAUDE.md` - Modern C# generator
 - **IR Changes**: Require migrations in `packages/generation/ir-migrations/`
 - **Testing**: Always run `pnpm test:ete` for end-to-end validation after CLI changes
 - **Monorepo**: Use Turbo filters for focused builds/tests on specific packages
