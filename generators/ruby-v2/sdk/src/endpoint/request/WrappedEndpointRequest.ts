@@ -79,7 +79,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     writer.writeLine(`${PATH_PARAM_NAMES_VN} = ${toExplicitArray(this.getPathParameterNames())}`);
                 }),
                 requestBodyReference: ruby.codeblock((writer) => {
-                    writer.write(`params = params.except(*${PATH_PARAM_NAMES_VN})`);
+                    writer.write(`params.except(*${PATH_PARAM_NAMES_VN})`);
                 })
             };
         }
