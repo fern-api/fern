@@ -147,7 +147,7 @@ jobs:
     strategy:
       matrix:
         sdk-name:
-            [ pydantic ]
+            [ ruby-sdk, pydantic ]
     # needs: [package-seed-tests]
     steps:
         # - name: Checkout repo
