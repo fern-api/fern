@@ -22,7 +22,7 @@ export class SwiftGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCont
         readmeConfigBuilder: ReadmeConfigBuilder;
         ir: IntermediateRepresentation;
     }) {
-        super({ logger, config, selfHosted: ir.selfHosted, skipInstall: true });
+        super({ logger, config, selfHosted: ir.selfHosted, skipInstall: false });
         this.readmeConfigBuilder = readmeConfigBuilder;
         this.publishConfig = ir.publishConfig;
     }
