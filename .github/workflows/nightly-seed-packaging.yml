@@ -213,7 +213,7 @@ jobs:
         uses: actions/download-artifact@v5
         with:
           path: ./artifacts
-          pattern: **-seed-packages.json
+          pattern: "*-seed-packages.json"
           # run-id: 18111300631 #CHRISM - temporary for testing, artifact ID = 4132496421
           merge-multiple: true
 
