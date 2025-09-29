@@ -57,6 +57,12 @@ client.Service.GetResource(
 <dd>
 
 ```go
+request := &fern.ListResourcesRequest{
+        PageLimit: 10,
+        BeforeDate: fern.MustParseDateTime(
+            "2023-01-01",
+        ),
+    }
 client.Service.ListResources(
         context.TODO(),
         request,

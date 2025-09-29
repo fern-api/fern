@@ -13,6 +13,10 @@
 <dd>
 
 ```go
+request := &fern.GetTokenRequest{
+        ClientId: "client_id",
+        ClientSecret: "client_secret",
+    }
 client.Auth.GetToken(
         context.TODO(),
         request,
