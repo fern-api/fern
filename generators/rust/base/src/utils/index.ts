@@ -44,7 +44,7 @@ export function validateAndSanitizeCrateName(crateName: string): string {
     sanitized = sanitized.replace(/[_-]+/g, "_");
     sanitized = sanitized.replace(/^_+|_+$/g, "");
 
-    if (!sanitized || sanitized.length === 0) {
+    if (!sanitized) {
         sanitized = "rust_sdk";
     }
 
