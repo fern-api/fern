@@ -4,7 +4,8 @@ use seed_inferred_auth_implicit::{ClientConfig, InferredAuthImplicitClient};
 async fn main() {
     let config = ClientConfig {
         base_url: "https://api.fern.com".to_string(),
+        ..Default::default()
     };
     let client = InferredAuthImplicitClient::new(config).expect("Failed to build client");
-    client.nested_no_auth_api_get_something().await;
+    client.nested_no_auth.api.get_something(None).await;
 }

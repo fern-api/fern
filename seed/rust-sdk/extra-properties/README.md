@@ -26,17 +26,24 @@ Instantiate and use the client with the following:
 
 ```rust
 use seed_extra_properties::{ClientConfig, CreateUserRequest, ExtraPropertiesClient};
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        ..Default::default()
+    };
     let client = ExtraPropertiesClient::new(config).expect("Failed to build client");
     client
-        .user_create_user(CreateUserRequest {
-            type_: "CreateUserRequest",
-            version: "v1",
-            name: "name",
-        })
+        .user
+        .create_user(
+            &CreateUserRequest {
+                r#type: "CreateUserRequest".to_string(),
+                version: "v1".to_string(),
+                name: "name".to_string(),
+            },
+            None,
+        )
         .await;
 }
 ```

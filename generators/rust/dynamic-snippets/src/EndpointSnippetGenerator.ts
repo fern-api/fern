@@ -64,7 +64,7 @@ export class EndpointSnippetGenerator {
             rust.Statement.let({
                 name: CLIENT_VAR_NAME,
                 value: rust.Expression.methodCall({
-                    target: rust.Expression.raw(`${this.getClientName({ endpoint })}::new(config)`),
+                    target: rust.Expression.raw(`${this.getClientName()}::new(config)`),
                     method: "expect",
                     args: [rust.Expression.stringLiteral("Failed to build client")]
                 })
@@ -106,20 +106,293 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): rust.UseStatement[] {
-        const imports = ["ClientConfig", this.getClientName({ endpoint })];
+        const imports = new Set<string>(["ClientConfig", this.getClientName()]);
+        const stdImports = new Set<string>();
+        const chronoImports = new Set<string>();
+        const uuidImports = new Set<string>();
 
-        // Add request struct import if this endpoint uses an inlined request
+        // Conditionally add imports based on actual usage in the snippet
+
+        // Add request struct import only if this endpoint actually uses a request struct
         if (endpoint.request.type === "inlined") {
-            const requestStructName = this.context.getStructName(endpoint.request.declaration.name);
-            imports.push(requestStructName);
+            const request = endpoint.request;
+            const hasQueryParams = (request.queryParameters ?? []).length > 0;
+            const hasBody = request.body != null;
+
+            if (hasQueryParams || hasBody) {
+                const requestStructName = this.getCorrectRequestStructName(endpoint, request);
+                imports.add(requestStructName);
+            }
+        } else if (endpoint.request.type === "body") {
+            // For body requests, we need to import the type referenced in the body
+            const bodyRequest = endpoint.request;
+            if (bodyRequest.body?.type === "typeReference") {
+                const typeRef = bodyRequest.body.value;
+                if (typeRef.type === "named") {
+                    const typeId = typeRef.value;
+                    const namedType = this.context.ir.types[typeId];
+                    if (namedType) {
+                        const typeName = this.context.getStructName(namedType.declaration.name);
+                        imports.add(typeName);
+                        // Also collect nested types used in this struct
+                        this.collectNestedTypeImports(namedType, imports);
+                    }
+                }
+            }
         }
 
-        return [
+        // Collect all types used in snippet values (enhanced collection)
+        this.collectSnippetTypeImports(snippet, imports, stdImports, chronoImports, uuidImports);
+
+        const useStatements: rust.UseStatement[] = [];
+
+        // Add standard library imports
+        if (stdImports.size > 0) {
+            useStatements.push(
+                new rust.UseStatement({
+                    path: "std::collections",
+                    items: Array.from(stdImports)
+                })
+            );
+        }
+
+        // Add chrono imports
+        if (chronoImports.size > 0) {
+            useStatements.push(
+                new rust.UseStatement({
+                    path: "chrono",
+                    items: Array.from(chronoImports)
+                })
+            );
+        }
+
+        // Add UUID imports
+        if (uuidImports.size > 0) {
+            useStatements.push(
+                new rust.UseStatement({
+                    path: "uuid",
+                    items: Array.from(uuidImports)
+                })
+            );
+        }
+
+        // Add crate imports
+        useStatements.push(
             new rust.UseStatement({
                 path: this.context.getCrateName(),
-                items: imports
+                items: Array.from(imports)
             })
-        ];
+        );
+
+        return useStatements;
+    }
+
+    // New method to collect types from snippet values
+    private collectSnippetTypeImports(
+        snippet: FernIr.dynamic.EndpointSnippetRequest,
+        imports: Set<string>,
+        stdImports: Set<string>,
+        chronoImports: Set<string>,
+        uuidImports: Set<string>
+    ): void {
+        // Collect types from request body if present
+        if (snippet.requestBody != null) {
+            this.collectTypesFromValue(snippet.requestBody, imports, stdImports, chronoImports, uuidImports);
+        }
+
+        // Collect types from query parameters
+        if (snippet.queryParameters != null) {
+            Object.values(snippet.queryParameters).forEach((value) => {
+                this.collectTypesFromValue(value, imports, stdImports, chronoImports, uuidImports);
+            });
+        }
+
+        // Collect types from headers
+        if (snippet.headers != null) {
+            Object.values(snippet.headers).forEach((value) => {
+                this.collectTypesFromValue(value, imports, stdImports, chronoImports, uuidImports);
+            });
+        }
+    }
+
+    // Helper to collect type imports from a value by analyzing its structure
+    private collectTypesFromValue(
+        value: unknown,
+        imports: Set<string>,
+        stdImports: Set<string>,
+        chronoImports: Set<string>,
+        uuidImports: Set<string>
+    ): void {
+        if (typeof value === "object" && value != null && !Array.isArray(value)) {
+            const obj = value as Record<string, unknown>;
+
+            // Check for HashMap usage
+            if (Object.keys(obj).length > 0) {
+                stdImports.add("HashMap");
+            }
+
+            // Look for discriminant fields that might indicate union types
+            Object.keys(obj).forEach((key) => {
+                // Common discriminant field names
+                if (key === "type" || key === "_type" || key.endsWith("_type")) {
+                    const discriminantValue = obj[key];
+                    if (typeof discriminantValue === "string") {
+                        // Try to find the corresponding union type
+                        this.findAndAddUnionTypes(discriminantValue, imports);
+                    }
+                }
+            });
+
+            // Recursively collect from nested objects
+            Object.values(obj).forEach((nestedValue) => {
+                this.collectTypesFromValue(nestedValue, imports, stdImports, chronoImports, uuidImports);
+            });
+        } else if (Array.isArray(value)) {
+            // Check for HashSet usage (arrays)
+            if (value.length > 0) {
+                stdImports.add("HashSet");
+            }
+            value.forEach((item) => this.collectTypesFromValue(item, imports, stdImports, chronoImports, uuidImports));
+        } else if (typeof value === "string") {
+            // Check for UUID pattern
+            if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value)) {
+                uuidImports.add("Uuid");
+            }
+            // Check for date/time patterns
+            if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+                chronoImports.add("NaiveDate");
+            }
+            if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/.test(value)) {
+                chronoImports.add("DateTime");
+                chronoImports.add("Utc");
+            }
+        }
+    }
+
+    // Helper to find union types based on discriminant values
+    private findAndAddUnionTypes(discriminantValue: string, imports: Set<string>): void {
+        // Search through all types to find unions with this discriminant value
+        Object.values(this.context.ir.types).forEach((namedType) => {
+            if (namedType.type === "discriminatedUnion") {
+                const unionType = namedType as FernIr.dynamic.DiscriminatedUnionType;
+                if (Object.keys(unionType.types).includes(discriminantValue)) {
+                    imports.add(this.context.getStructName(namedType.declaration.name));
+
+                    // Also add the variant types
+                    const variantType = unionType.types[discriminantValue];
+                    if (variantType && variantType.type === "samePropertiesAsObject") {
+                        const referencedType = this.context.ir.types[variantType.typeId];
+                        if (referencedType) {
+                            imports.add(this.context.getStructName(referencedType.declaration.name));
+                            this.collectNestedTypeImports(referencedType, imports);
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    private collectNestedTypeImports(
+        namedType: FernIr.dynamic.NamedType,
+        imports: Set<string>,
+        visited: Set<string> = new Set()
+    ): void {
+        const typeName = namedType.declaration.name.pascalCase.safeName;
+
+        // Prevent infinite recursion by tracking visited types
+        if (visited.has(typeName)) {
+            return;
+        }
+        visited.add(typeName);
+
+        switch (namedType.type) {
+            case "object":
+                // Add the object type itself
+                imports.add(this.context.getStructName(namedType.declaration.name));
+
+                // Recursively collect imports from object properties
+                for (const property of namedType.properties) {
+                    this.collectTypeReferenceImports(property.typeReference, imports, visited);
+                }
+                break;
+            case "alias":
+                // Add the alias type itself
+                imports.add(this.context.getStructName(namedType.declaration.name));
+
+                // Recursively collect imports from the aliased type
+                this.collectTypeReferenceImports(namedType.typeReference, imports, visited);
+                break;
+            case "enum":
+                // Add the enum type
+                imports.add(this.context.getEnumName(namedType.declaration.name));
+                break;
+            case "discriminatedUnion":
+            case "undiscriminatedUnion":
+                // Add the union type
+                imports.add(this.context.getStructName(namedType.declaration.name));
+
+                // For discriminated unions, collect imports from union members
+                if (namedType.type === "discriminatedUnion") {
+                    Object.values(namedType.types).forEach((unionType) => {
+                        if (unionType.type === "singleProperty") {
+                            this.collectTypeReferenceImports(unionType.typeReference, imports, visited);
+                        } else if (unionType.type === "samePropertiesAsObject") {
+                            // Handle object-based union types
+                            const referencedType = this.context.ir.types[unionType.typeId];
+                            if (referencedType) {
+                                this.collectNestedTypeImports(referencedType, imports, visited);
+                            }
+                        }
+                    });
+                } else if (namedType.type === "undiscriminatedUnion") {
+                    // For undiscriminated unions (like CastMember), collect all variant types
+                    namedType.types.forEach((unionType) => {
+                        this.collectTypeReferenceImports(unionType, imports, visited);
+                    });
+                }
+                break;
+        }
+    }
+
+    private collectTypeReferenceImports(
+        typeReference: FernIr.dynamic.TypeReference,
+        imports: Set<string>,
+        visited: Set<string> = new Set()
+    ): void {
+        switch (typeReference.type) {
+            case "named": {
+                const typeId = typeReference.value;
+                const namedType = this.context.ir.types[typeId];
+                if (namedType) {
+                    this.collectNestedTypeImports(namedType, imports, visited);
+                }
+                break;
+            }
+            case "optional":
+            case "nullable": {
+                // Recursively collect from the inner type
+                const innerType = (
+                    typeReference as FernIr.dynamic.TypeReference.Optional | FernIr.dynamic.TypeReference.Nullable
+                ).value;
+                if (innerType) {
+                    this.collectTypeReferenceImports(innerType, imports, visited);
+                }
+                break;
+            }
+            case "list": {
+                // Recursively collect from the list element type
+                const listElementType = (typeReference as FernIr.dynamic.TypeReference.List).value;
+                if (listElementType) {
+                    this.collectTypeReferenceImports(listElementType, imports, visited);
+                }
+                break;
+            }
+            case "primitive":
+            case "literal":
+            case "unknown":
+                // These don't require additional imports
+                break;
+        }
     }
 
     private getClientConfigStruct({
@@ -153,7 +426,7 @@ export class EndpointSnippetGenerator {
                 case "bearer":
                     if (snippet.auth.type === "bearer") {
                         fields.push({
-                            name: "api_key",
+                            name: "token",
                             value: rust.Expression.functionCall("Some", [
                                 rust.Expression.methodCall({
                                     target: rust.Expression.stringLiteral(snippet.auth.token),
@@ -207,11 +480,12 @@ export class EndpointSnippetGenerator {
 
         return rust.Expression.structConstruction(
             "ClientConfig",
-            fields.map((field) => ({ name: field.name, value: field.value }))
+            fields.map((field) => ({ name: field.name, value: field.value })),
+            true // Enable ..Default::default() pattern
         );
     }
 
-    private getClientName({ endpoint }: { endpoint?: FernIr.dynamic.Endpoint } = {}): string {
+    private getClientName(): string {
         // Use the configured client class name from custom config
         return this.context.getClientStructName();
     }
@@ -279,14 +553,20 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): rust.Expression[] {
+        let args: rust.Expression[] = [];
+
         switch (endpoint.request.type) {
             case "inlined":
-                return this.getMethodArgsForInlinedRequest({ request: endpoint.request, snippet });
+                args = this.getMethodArgsForInlinedRequest({ endpoint, request: endpoint.request, snippet });
+                break;
             case "body":
-                return this.getMethodArgsForBodyRequest({ request: endpoint.request, snippet });
+                args = this.getMethodArgsForBodyRequest({ request: endpoint.request, snippet });
+                break;
             default:
                 assertNever(endpoint.request);
         }
+
+        return args;
     }
 
     private getMethodArgsForBodyRequest({
@@ -298,28 +578,33 @@ export class EndpointSnippetGenerator {
     }): rust.Expression[] {
         const args: rust.Expression[] = [];
 
-        // Path parameters
-        this.context.errors.scope(Scope.PathParameters);
-        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
-        if (pathParameters.length > 0) {
-            args.push(...this.getPathParameterArgs({ namedParameters: pathParameters, snippet }));
-        }
-        this.context.errors.unscope();
+        // Organize request components like Swift does
+        const requestComponents = this.buildRequestComponents({
+            pathParameters: [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])],
+            snippet,
+            body: request.body
+        });
 
-        // Request body
-        this.context.errors.scope(Scope.RequestBody);
-        if (request.body != null) {
-            args.push(this.getBodyRequestArg({ body: request.body, value: snippet.requestBody }));
+        // Add path parameters
+        args.push(...requestComponents.pathArgs);
+
+        // Add request body
+        if (requestComponents.bodyArg != null) {
+            args.push(rust.Expression.referenceOf(requestComponents.bodyArg));
         }
-        this.context.errors.unscope();
+
+        // Add default None for RequestOptions parameter
+        args.push(rust.Expression.raw("None"));
 
         return args;
     }
 
     private getMethodArgsForInlinedRequest({
+        endpoint,
         request,
         snippet
     }: {
+        endpoint: FernIr.dynamic.Endpoint;
         request: FernIr.dynamic.InlinedRequest;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): rust.Expression[] {
@@ -327,14 +612,29 @@ export class EndpointSnippetGenerator {
 
         // Path parameters
         this.context.errors.scope(Scope.PathParameters);
-        const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
-        if (pathParameters.length > 0) {
-            args.push(...this.getPathParameterArgs({ namedParameters: pathParameters, snippet }));
+        this.context.scopeError("pathParameters");
+        try {
+            const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
+            if (pathParameters.length > 0) {
+                args.push(...this.getPathParameterArgs({ namedParameters: pathParameters, snippet }));
+            }
+        } finally {
+            this.context.unscopeError();
+            this.context.errors.unscope();
         }
-        this.context.errors.unscope();
 
-        // Create request struct
-        args.push(this.getInlinedRequestArg({ request, snippet }));
+        // Only create request struct if it has meaningful parameters beyond headers
+        // Match the SDK generator logic: headers are handled separately, not as request struct parameters
+        const hasQueryParams = (request.queryParameters ?? []).length > 0;
+        const hasBody = request.body != null;
+
+        if (hasQueryParams || hasBody) {
+            // Create request struct only if it has actual parameters (query params or body, not just headers)
+            args.push(rust.Expression.referenceOf(this.getInlinedRequestArg({ endpoint, request, snippet })));
+        }
+
+        // Add default None for RequestOptions parameter
+        args.push(rust.Expression.raw("None"));
 
         return args;
     }
@@ -350,7 +650,7 @@ export class EndpointSnippetGenerator {
             case "bytes":
                 return this.getBytesBodyRequestArg({ value });
             case "typeReference":
-                return this.context.dynamicTypeInstantiationMapper.convert({ typeReference: body.value, value });
+                return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value });
             default:
                 assertNever(body);
         }
@@ -368,27 +668,39 @@ export class EndpointSnippetGenerator {
     }
 
     private getInlinedRequestArg({
+        endpoint,
         request,
         snippet
     }: {
+        endpoint: FernIr.dynamic.Endpoint;
         request: FernIr.dynamic.InlinedRequest;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): rust.Expression {
         const structFields: Array<{ name: string; value: rust.Expression }> = [];
 
-        // Query parameters
+        // Query parameters with enhanced error scoping
         this.context.errors.scope(Scope.QueryParameters);
-        const queryParameters = this.context.associateQueryParametersByWireValue({
-            parameters: request.queryParameters ?? [],
-            values: snippet.queryParameters ?? {}
-        });
-        for (const queryParameter of queryParameters) {
-            structFields.push({
-                name: this.context.getPropertyName(queryParameter.name.name),
-                value: this.context.dynamicTypeInstantiationMapper.convert(queryParameter)
+        this.context.scopeError("queryParameters");
+        try {
+            const queryParameters = this.context.associateQueryParametersByWireValue({
+                parameters: request.queryParameters ?? [],
+                values: snippet.queryParameters ?? {}
             });
+            for (const queryParameter of queryParameters) {
+                this.context.scopeError(queryParameter.name.wireValue);
+                try {
+                    structFields.push({
+                        name: this.context.getPropertyName(queryParameter.name.name),
+                        value: this.context.dynamicTypeLiteralMapper.convert(queryParameter)
+                    });
+                } finally {
+                    this.context.unscopeError();
+                }
+            }
+        } finally {
+            this.context.unscopeError();
+            this.context.errors.unscope();
         }
-        this.context.errors.unscope();
 
         // Headers
         this.context.errors.scope(Scope.Headers);
@@ -399,7 +711,7 @@ export class EndpointSnippetGenerator {
         for (const header of headers) {
             structFields.push({
                 name: this.context.getPropertyName(header.name.name),
-                value: this.context.dynamicTypeInstantiationMapper.convert(header)
+                value: this.context.dynamicTypeLiteralMapper.convert(header)
             });
         }
         this.context.errors.unscope();
@@ -415,7 +727,9 @@ export class EndpointSnippetGenerator {
         }
         this.context.errors.unscope();
 
-        return rust.Expression.structLiteral(this.context.getStructName(request.declaration.name), structFields);
+        // Use organized struct construction for better readability
+        const structName = this.getCorrectRequestStructName(endpoint, request);
+        return this.createStructExpression(structName, structFields);
     }
 
     private getInlinedRequestBodyStructFields({
@@ -453,7 +767,7 @@ export class EndpointSnippetGenerator {
         for (const parameter of bodyProperties) {
             fields.push({
                 name: this.context.getPropertyName(parameter.name.name),
-                value: this.context.dynamicTypeInstantiationMapper.convert(parameter)
+                value: this.context.dynamicTypeLiteralMapper.convert(parameter)
             });
         }
 
@@ -484,7 +798,7 @@ export class EndpointSnippetGenerator {
             case "bytes":
                 return this.getBytesBodyRequestArg({ value });
             case "typeReference":
-                return this.context.dynamicTypeInstantiationMapper.convert({ typeReference: body.value, value });
+                return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value });
             default:
                 assertNever(body);
         }
@@ -533,18 +847,94 @@ export class EndpointSnippetGenerator {
             values: snippet.pathParameters ?? {}
         });
         for (const parameter of pathParameters) {
-            args.push(this.context.dynamicTypeInstantiationMapper.convert(parameter));
+            args.push(rust.Expression.referenceOf(this.context.dynamicTypeLiteralMapper.convert(parameter)));
         }
 
         return args;
+    }
+
+    private buildRequestComponents({
+        pathParameters,
+        snippet,
+        body
+    }: {
+        pathParameters: FernIr.dynamic.NamedParameter[];
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+        body?: FernIr.dynamic.ReferencedRequestBodyType;
+    }): {
+        pathArgs: rust.Expression[];
+        bodyArg: rust.Expression | null;
+    } {
+        const pathArgs: rust.Expression[] = [];
+        let bodyArg: rust.Expression | null = null;
+
+        // Handle path parameters with proper error scoping
+        this.context.errors.scope(Scope.PathParameters);
+        if (pathParameters.length > 0) {
+            pathArgs.push(...this.getPathParameterArgs({ namedParameters: pathParameters, snippet }));
+        }
+        this.context.errors.unscope();
+
+        // Handle request body with proper error scoping
+        this.context.errors.scope(Scope.RequestBody);
+        if (body != null) {
+            bodyArg = this.getBodyRequestArg({ body, value: snippet.requestBody });
+        }
+        this.context.errors.unscope();
+
+        return { pathArgs, bodyArg };
     }
 
     private getMethodName({ endpoint }: { endpoint: FernIr.dynamic.Endpoint }): string {
         if (endpoint.declaration.fernFilepath.allParts.length > 0) {
             return `${endpoint.declaration.fernFilepath.allParts
                 .map((val) => this.context.getMethodName(val))
-                .join("_")}_${this.context.getMethodName(endpoint.declaration.name)}`;
+                .join(".")}.${this.context.getMethodName(endpoint.declaration.name)}`;
         }
         return this.context.getMethodName(endpoint.declaration.name);
+    }
+
+    private createStructExpression(
+        structName: string,
+        structFields: Array<{ name: string; value: rust.Expression }>
+    ): rust.Expression {
+        // For complex objects with many fields or nested structures,
+        // prefer struct construction over JSON for better type safety and readability
+        if (this.shouldUseStructConstruction(structFields)) {
+            return rust.Expression.structConstruction(
+                structName,
+                structFields.map((field) => ({ name: field.name, value: field.value }))
+            );
+        }
+        return rust.Expression.structLiteral(structName, structFields);
+    }
+
+    private shouldUseStructConstruction(structFields: Array<{ name: string; value: rust.Expression }>): boolean {
+        // Use struct construction for more than 2 fields
+        if (structFields.length > 2) {
+            return true;
+        }
+
+        // Check for complex nested objects
+        return structFields.some((field) => {
+            const fieldString = field.value.toString();
+            return fieldString.includes("json!") || fieldString.includes("{") || fieldString.length > 30;
+        });
+    }
+
+    private getCorrectRequestStructName(
+        endpoint: FernIr.dynamic.Endpoint,
+        request: FernIr.dynamic.InlinedRequest
+    ): string {
+        const hasQueryParams = (request.queryParameters ?? []).length > 0;
+        const hasBody = request.body != null;
+
+        if (hasQueryParams && !hasBody) {
+            // Query-only: use QueryRequest suffix like SDK generator
+            const methodName = endpoint.declaration.name.pascalCase.safeName;
+            return `${methodName}QueryRequest`;
+        }
+        // Default: use regular naming for body requests or mixed requests
+        return this.context.getStructName(request.declaration.name);
     }
 }

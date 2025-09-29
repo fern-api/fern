@@ -25,13 +25,18 @@ cargo add seed_undiscriminated_unions
 Instantiate and use the client with the following:
 
 ```rust
-use seed_undiscriminated_unions::{ClientConfig, UndiscriminatedUnionsClient};
+use seed_undiscriminated_unions::{ClientConfig, MyUnion, UndiscriminatedUnionsClient};
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        ..Default::default()
+    };
     let client = UndiscriminatedUnionsClient::new(config).expect("Failed to build client");
-    client.union__get("string").await;
+    client
+        .union_
+        .get(&MyUnion::String("string".to_string()), None)
+        .await;
 }
 ```
 

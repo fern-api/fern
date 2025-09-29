@@ -4,7 +4,8 @@ use seed_literal::{ClientConfig, LiteralClient};
 async fn main() {
     let config = ClientConfig {
         base_url: "https://api.fern.com".to_string(),
+        ..Default::default()
     };
     let client = LiteralClient::new(config).expect("Failed to build client");
-    client.path_send("123").await;
+    client.path.send(&"123".to_string(), None).await;
 }

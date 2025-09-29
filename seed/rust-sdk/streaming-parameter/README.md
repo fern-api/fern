@@ -26,16 +26,23 @@ Instantiate and use the client with the following:
 
 ```rust
 use seed_streaming::{ClientConfig, GenerateRequest, StreamingClient};
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        ..Default::default()
+    };
     let client = StreamingClient::new(config).expect("Failed to build client");
     client
-        .dummy_generate(GenerateRequest {
-            stream: false,
-            num_events: 5,
-        })
+        .dummy
+        .generate(
+            &GenerateRequest {
+                stream: false,
+                num_events: 5,
+            },
+            None,
+        )
         .await;
 }
 ```

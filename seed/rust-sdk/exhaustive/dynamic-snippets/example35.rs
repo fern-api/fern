@@ -1,13 +1,20 @@
+use chrono::NaiveDate;
 use seed_exhaustive::{ClientConfig, ExhaustiveClient};
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         base_url: "https://api.fern.com".to_string(),
-        api_key: Some("<token>".to_string()),
+        token: Some("<token>".to_string()),
+        ..Default::default()
     };
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_primitive_get_and_return_date(todo!("Unhandled primitive: DATE"))
+        .endpoints
+        .primitive
+        .get_and_return_date(
+            &NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap(),
+            None,
+        )
         .await;
 }

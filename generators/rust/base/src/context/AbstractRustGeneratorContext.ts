@@ -2,10 +2,15 @@ import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationServi
 import { BaseRustCustomConfigSchema } from "@fern-api/rust-codegen";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { AsIsFileDefinition } from "../AsIs";
-import { RUST_KEYWORDS, RUST_RESERVED_TYPES } from "../constants";
 import { RustProject } from "../project";
+import {
+    convertPascalToSnakeCase,
+    escapeRustKeyword,
+    escapeRustReservedType,
+    generateDefaultCrateName,
+    validateAndSanitizeCrateName
+} from "../utils";
 
-// TODO: @iamnamananand996 Remove the utils function which are not used.
 export abstract class AbstractRustGeneratorContext<
     CustomConfig extends BaseRustCustomConfigSchema
 > extends AbstractGeneratorContext {
@@ -22,35 +27,13 @@ export abstract class AbstractRustGeneratorContext<
             context: this,
             crateName: this.getCrateName(),
             crateVersion: this.getCrateVersion(),
-            clientClassName: this.getClientClassName(this.ir.apiName.pascalCase.safeName)
+            clientClassName: this.getClientName()
         });
     }
 
     // =====================================
     // Configuration Management Methods
     // =====================================
-
-    /**
-     * Get a configuration value with optional fallback
-     */
-    public getConfigValue<K extends keyof CustomConfig>(key: K): CustomConfig[K];
-    public getConfigValue<K extends keyof CustomConfig>(
-        key: K,
-        fallback: NonNullable<CustomConfig[K]>
-    ): NonNullable<CustomConfig[K]>;
-    public getConfigValue<K extends keyof CustomConfig>(
-        key: K,
-        fallback?: CustomConfig[K]
-    ): CustomConfig[K] | NonNullable<CustomConfig[K]> {
-        const value = this.customConfig[key];
-        if (value !== undefined) {
-            return value;
-        }
-        if (fallback !== undefined) {
-            return fallback;
-        }
-        return value;
-    }
 
     /**
      * Get extra dependencies with empty object fallback
@@ -71,7 +54,7 @@ export abstract class AbstractRustGeneratorContext<
      */
     public getCrateName(): string {
         const crateName = this.customConfig.crateName ?? this.generateDefaultCrateName();
-        return this.validateAndSanitizeCrateName(crateName);
+        return validateAndSanitizeCrateName(crateName);
     }
 
     /**
@@ -84,47 +67,22 @@ export abstract class AbstractRustGeneratorContext<
     /**
      * Get the client class name with fallback to generated default
      */
-    public getClientClassName(apiName: string): string {
-        return this.customConfig.clientClassName ?? `${apiName}Client`;
-    }
-
-    /**
-     * Check if a configuration key exists and has a non-undefined value
-     */
-    public hasConfigValue<K extends keyof CustomConfig>(key: K): boolean {
-        return this.customConfig[key] !== undefined;
+    public getClientName(): string {
+        return this.customConfig.clientClassName ?? `${this.ir.apiName.pascalCase.safeName}Client`;
     }
 
     /**
      * Escapes Rust keywords by prefixing them with 'r#'
      */
     public escapeRustKeyword(name: string): string {
-        return RUST_KEYWORDS.has(name) ? `r#${name}` : name;
+        return escapeRustKeyword(name);
     }
 
     /**
      * Escapes Rust reserved types by prefixing them with 'r#'
      */
     public escapeRustReservedType(name: string): string {
-        return RUST_RESERVED_TYPES.has(name) ? `r#${name}` : name;
-    }
-
-    /**
-     * Validate that a string is a valid Rust identifier
-     */
-    public isValidRustIdentifier(name: string): boolean {
-        // Rust identifier: starts with letter or underscore, followed by letters, digits, or underscores
-        const rustIdentifierRegex = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
-        return rustIdentifierRegex.test(name) && !RUST_KEYWORDS.has(name);
-    }
-
-    /**
-     * Validate semver format
-     */
-    public isValidSemver(version: string): boolean {
-        // Basic semver validation (major.minor.patch)
-        const semverRegex = /^\d+\.\d+\.\d+(?:-[a-zA-Z0-9\-.]+)?(?:\+[a-zA-Z0-9\-.]+)?$/;
-        return semverRegex.test(version);
+        return escapeRustReservedType(name);
     }
 
     // =====================================
@@ -219,10 +177,7 @@ export abstract class AbstractRustGeneratorContext<
      * Converts PascalCase to snake_case consistently across the generator
      */
     private convertPascalToSnakeCase(pascalCase: string): string {
-        return pascalCase
-            .replace(/([A-Z])/g, "_$1")
-            .toLowerCase()
-            .replace(/^_/, "");
+        return convertPascalToSnakeCase(pascalCase);
     }
 
     /**
@@ -272,31 +227,6 @@ export abstract class AbstractRustGeneratorContext<
     private generateDefaultCrateName(): string {
         const orgName = this.config.organization;
         const apiName = this.ir.apiName.snakeCase.unsafeName;
-        return `${orgName}_${apiName}`.toLowerCase();
-    }
-
-    /**
-     * Validate and sanitize package name for Rust crate naming conventions
-     */
-    private validateAndSanitizeCrateName(crateName: string): string {
-        // Rust crate names must be lowercase alphanumeric with hyphens and underscores
-        // Cannot start with numbers
-        let sanitized = crateName
-            .toLowerCase()
-            .replace(/[^a-z0-9_-]/g, "_") // Replace invalid chars with underscore
-            .replace(/^[0-9]/, "_$&"); // Prefix numbers at start with underscore
-
-        // Remove consecutive underscores/hyphens
-        sanitized = sanitized.replace(/[_-]+/g, "_");
-
-        // Remove leading/trailing underscores
-        sanitized = sanitized.replace(/^_+|_+$/g, "");
-
-        // Ensure we have a valid name
-        if (!sanitized || sanitized.length === 0) {
-            sanitized = "rust_sdk";
-        }
-
-        return sanitized;
+        return generateDefaultCrateName(orgName, apiName);
     }
 }

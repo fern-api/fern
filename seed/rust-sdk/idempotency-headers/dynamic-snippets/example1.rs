@@ -4,8 +4,9 @@ use seed_idempotency_headers::{ClientConfig, IdempotencyHeadersClient};
 async fn main() {
     let config = ClientConfig {
         base_url: "https://api.fern.com".to_string(),
-        api_key: Some("<token>".to_string()),
+        token: Some("<token>".to_string()),
+        ..Default::default()
     };
     let client = IdempotencyHeadersClient::new(config).expect("Failed to build client");
-    client.payment_delete("paymentId").await;
+    client.payment.delete(&"paymentId".to_string(), None).await;
 }

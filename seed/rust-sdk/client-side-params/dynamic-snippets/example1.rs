@@ -1,19 +1,22 @@
-use seed_client_side_params::{ClientConfig, ClientSideParamsClient, GetResourceRequest};
+use seed_client_side_params::{ClientConfig, ClientSideParamsClient, GetResourceQueryRequest};
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         base_url: "https://api.fern.com".to_string(),
-        api_key: Some("<token>".to_string()),
+        token: Some("<token>".to_string()),
+        ..Default::default()
     };
     let client = ClientSideParamsClient::new(config).expect("Failed to build client");
     client
-        .service_get_resource(
-            "resourceId",
-            GetResourceRequest {
+        .service
+        .get_resource(
+            &"resourceId".to_string(),
+            &GetResourceQueryRequest {
                 include_metadata: true,
-                format: "json",
+                format: "json".to_string(),
             },
+            None,
         )
         .await;
 }

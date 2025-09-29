@@ -26,18 +26,25 @@ Instantiate and use the client with the following:
 
 ```rust
 use seed_request_parameters::{ClientConfig, CreateUsernameRequest, RequestParametersClient};
+use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        ..Default::default()
+    };
     let client = RequestParametersClient::new(config).expect("Failed to build client");
     client
-        .user_create_username(CreateUsernameRequest {
-            tags: vec!["tags", "tags"],
-            username: "username",
-            password: "password",
-            name: "test",
-        })
+        .user
+        .create_username(
+            &CreateUsernameRequest {
+                tags: vec!["tags".to_string(), "tags".to_string()],
+                username: "username".to_string(),
+                password: "password".to_string(),
+                name: "test".to_string(),
+            },
+            None,
+        )
         .await;
 }
 ```

@@ -1,13 +1,21 @@
 use seed_multi_url_environment::{BootInstanceRequest, ClientConfig, MultiUrlEnvironmentClient};
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         base_url: "https://api.fern.com".to_string(),
-        api_key: Some("<token>".to_string()),
+        token: Some("<token>".to_string()),
+        ..Default::default()
     };
     let client = MultiUrlEnvironmentClient::new(config).expect("Failed to build client");
     client
-        .ec_2_boot_instance(BootInstanceRequest { size: "size" })
+        .ec_2
+        .boot_instance(
+            &BootInstanceRequest {
+                size: "size".to_string(),
+            },
+            None,
+        )
         .await;
 }

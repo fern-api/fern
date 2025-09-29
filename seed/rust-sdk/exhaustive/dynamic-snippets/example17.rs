@@ -1,15 +1,25 @@
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::{ClientConfig, ExhaustiveClient, ObjectWithMapOfMap};
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
         base_url: "https://api.fern.com".to_string(),
-        api_key: Some("<token>".to_string()),
+        token: Some("<token>".to_string()),
+        ..Default::default()
     };
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_object_get_and_return_with_map_of_map(
-            serde_json::json!({"map":{"map":{"map":"map"}}}),
+        .endpoints
+        .object
+        .get_and_return_with_map_of_map(
+            &ObjectWithMapOfMap {
+                map: HashMap::from([(
+                    "map".to_string(),
+                    HashMap::from([("map".to_string(), "map".to_string())]),
+                )]),
+            },
+            None,
         )
         .await;
 }
