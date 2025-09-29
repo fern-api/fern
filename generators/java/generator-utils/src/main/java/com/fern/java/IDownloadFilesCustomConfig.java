@@ -35,12 +35,6 @@ public interface IDownloadFilesCustomConfig {
         return false;
     }
 
-    @Value.Default
-    @JsonProperty("expose-pagination-cursors")
-    default Boolean exposePaginationCursors() {
-        return false;
-    }
-
     @JsonProperty("package-prefix")
     Optional<String> packagePrefix();
 

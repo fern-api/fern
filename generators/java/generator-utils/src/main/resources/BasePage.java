@@ -6,10 +6,6 @@ public abstract class BasePage<T> {
     private final List<T> items;
     private final Object response;
 
-    public BasePage(boolean hasNext, List<T> items) {
-        this(hasNext, items, null);
-    }
-
     public BasePage(boolean hasNext, List<T> items, Object response) {
         this.hasNext = hasNext;
         this.items = items;
@@ -26,7 +22,6 @@ public abstract class BasePage<T> {
 
     /**
      * Returns the full response object for accessing pagination metadata like cursor tokens.
-     * Available when expose-pagination-cursors config is enabled.
      *
      * @return Optional containing the response, or empty if unavailable
      */
