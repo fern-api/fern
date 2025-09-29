@@ -15,10 +15,11 @@ func do() {
             "<token>",
         ),
     )
+    request := map[string]any{
+        "key": "value",
+    }
     client.NoAuth.PostWithNoAuth(
         context.TODO(),
-        map[string]any{
-            "key": "value",
-        },
+        request,
     )
 }

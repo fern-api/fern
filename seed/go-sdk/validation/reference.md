@@ -14,12 +14,7 @@
 ```go
 client.Create(
         context.TODO(),
-        &fern.CreateRequest{
-            Decimal: 2.2,
-            Even: 100,
-            Name: "fern",
-            Shape: fern.ShapeSquare,
-        },
+        request,
     )
 }
 ```
@@ -87,11 +82,7 @@ client.Create(
 ```go
 client.Get(
         context.TODO(),
-        &fern.GetRequest{
-            Decimal: 2.2,
-            Even: 100,
-            Name: "fern",
-        },
+        request,
     )
 }
 ```
