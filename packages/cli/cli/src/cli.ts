@@ -591,7 +591,9 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 if (argv.version != null) {
                     cliContext.logger.warn("--version is ignored when generating docs");
                 }
-                return await generateDocsWorkspace({
+                const startTime = Date.now();
+                cliContext.logger.info("Starting docs generation...");
+                await generateDocsWorkspace({
                     project: await loadProjectAndRegisterWorkspacesWithContext(
                         cliContext,
                         {
@@ -607,6 +609,10 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     strictBrokenLinks: argv.strictBrokenLinks,
                     disableTemplates: argv.disableSnippets
                 });
+                const endTime = Date.now();
+                const totalTime = endTime - startTime;
+                cliContext.logger.info(`Docs generation completed in ${totalTime}ms (${(totalTime / 1000).toFixed(2)}s)`);
+                return;
             }
             // default to loading api workspace to preserve legacy behavior
             return await generateAPIWorkspaces({

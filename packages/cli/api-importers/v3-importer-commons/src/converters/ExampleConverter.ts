@@ -842,7 +842,13 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         if (!("oneOf" in resolvedSchema) || resolvedSchema.oneOf == null) {
             return { isValid: false, coerced: false, validExample: null, errors: [] };
         }
-        const results = resolvedSchema.oneOf.map((subSchema, index) => {
+        
+        const results: ExampleConverter.Output[] = [];
+        let firstValidResult: ExampleConverter.Output | null = null;
+        let firstNonCoercedResult: ExampleConverter.Output | null = null;
+
+        for (let index = 0; index < resolvedSchema.oneOf.length; index++) {
+            const subSchema = resolvedSchema.oneOf[index];
             const exampleConverter = new ExampleConverter({
                 breadcrumbs: [...this.breadcrumbs, `oneOf[${index}]`],
                 context: this.context,
@@ -853,19 +859,26 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
                 exampleGenerationStrategy: this.exampleGenerationStrategy,
                 seenRefs: this.getMaybeUpdatedSeenRefs()
             });
-            return exampleConverter.convert();
-        });
+            
+            const result = exampleConverter.convert();
+            results.push(result);
 
-        const validResults = results.filter((result) => result.isValid);
-        const isValid = validResults.length > 0;
+            if (result.isValid && firstValidResult === null) {
+                firstValidResult = result;
+            }
 
-        let validExample;
-        if (isValid) {
-            const nonCoercedResult = validResults.find((result) => !result.coerced);
-            validExample = nonCoercedResult?.validExample ?? validResults[0]?.validExample;
-        } else {
-            validExample = results[0]?.validExample;
+            if (result.isValid && !result.coerced && firstNonCoercedResult === null) {
+                firstNonCoercedResult = result;
+            }
+
+            // If we found a non-coerced valid result, we can stop early
+            if (firstNonCoercedResult !== null) {
+                break;
+            }
         }
+
+        const isValid = firstValidResult !== null;
+        const validExample = firstNonCoercedResult?.validExample ?? firstValidResult?.validExample ?? results[0]?.validExample;
 
         return {
             isValid,
