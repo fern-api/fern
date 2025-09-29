@@ -186,7 +186,8 @@ jobs:
         - name: Output Packages
           id: output-packages
           run: |
-              BASH_VAR='${{ steps.package-tests.outputs.test-matrix }}'
+              BASH_VAR=$(echo "${{ steps.package-tests.outputs.test-matrix }}" | jq -c)
+              # BASH_VAR='${{ steps.package-tests.outputs.test-matrix }}'
               echo "${{ matrix.sdk-name }}-packages=$BASH_VAR" >> $GITHUB_OUTPUT
 
               # Echo the data to command line for visibility
