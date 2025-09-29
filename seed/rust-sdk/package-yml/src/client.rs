@@ -1,4 +1,4 @@
-use crate::api::resources::ServiceClient;
+use crate::api::resources::PackageYmlClient;
 use crate::{ApiError, ClientConfig};
 use std::collections::HashMap;
 use std::time::Duration;
@@ -86,7 +86,7 @@ impl ApiClientBuilder {
     }
 
     /// Build the client with validation
-    pub fn build(self) -> Result<ServiceClient, ApiError> {
-        ServiceClient::new(self.config)
+    pub fn build(self) -> Result<PackageYmlClient, ApiError> {
+        PackageYmlClient::new(self.config)
     }
 }
