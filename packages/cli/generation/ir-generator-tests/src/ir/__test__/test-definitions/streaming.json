@@ -297,6 +297,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -1021,6 +1022,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -2292,7 +2294,8 @@
                             "type": "primitive",
                             "value": "STRING"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -2324,7 +2327,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -2504,7 +2508,8 @@
                                         "value": true
                                     }
                                 },
-                                "propertyAccess": null
+                                "propertyAccess": null,
+                                "variable": null
                             },
                             {
                                 "name": {
@@ -2533,7 +2538,8 @@
                                     "type": "primitive",
                                     "value": "INTEGER"
                                 },
-                                "propertyAccess": null
+                                "propertyAccess": null,
+                                "variable": null
                             }
                         ]
                     },
@@ -2719,7 +2725,8 @@
                                         "value": false
                                     }
                                 },
-                                "propertyAccess": null
+                                "propertyAccess": null,
+                                "variable": null
                             },
                             {
                                 "name": {
@@ -2748,7 +2755,8 @@
                                     "type": "primitive",
                                     "value": "INTEGER"
                                 },
-                                "propertyAccess": null
+                                "propertyAccess": null,
+                                "variable": null
                             }
                         ]
                     },
@@ -2765,6 +2773,7 @@
         },
         "pathParameters": [],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,

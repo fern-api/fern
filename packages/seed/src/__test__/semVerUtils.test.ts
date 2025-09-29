@@ -265,6 +265,18 @@ describe("isValidSemVerChange", () => {
             const previous = new SemVer(1, 5, 10, 2);
             expect(isValidSemVerChange(current, previous)).toBe(false);
         });
+
+        it("should allow RC to final release transition", () => {
+            const current = new SemVer(4, 29, 2);
+            const previous = new SemVer(4, 29, 2, 0);
+            expect(isValidSemVerChange(current, previous)).toBe(true);
+        });
+
+        it("should allow RC to final release transition with higher rc number", () => {
+            const current = new SemVer(1, 5, 10);
+            const previous = new SemVer(1, 5, 10, 3);
+            expect(isValidSemVerChange(current, previous)).toBe(true);
+        });
     });
 });
 

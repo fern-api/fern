@@ -84,7 +84,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             flattenRequestParameters: parsed?.flattenRequestParameters ?? false,
             exportAllRequestsAtRoot: parsed?.exportAllRequestsAtRoot ?? false,
             testFramework: parsed?.testFramework ?? "vitest",
-            consolidateTypeFiles: parsed?.consolidateTypeFiles ?? false
+            consolidateTypeFiles: parsed?.consolidateTypeFiles ?? false,
+            generateEndpointMetadata: parsed?.generateEndpointMetadata ?? false
         };
 
         if (parsed?.noSerdeLayer === false && typeof parsed?.enableInlineTypes === "undefined") {
@@ -197,7 +198,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 flattenRequestParameters: customConfig.flattenRequestParameters ?? false,
                 exportAllRequestsAtRoot: customConfig.exportAllRequestsAtRoot ?? false,
                 testFramework: customConfig.testFramework,
-                consolidateTypeFiles: customConfig.consolidateTypeFiles ?? false
+                consolidateTypeFiles: customConfig.consolidateTypeFiles ?? false,
+                generateEndpointMetadata: customConfig.generateEndpointMetadata ?? false
             }
         });
         const typescriptProject = await sdkGenerator.generate();

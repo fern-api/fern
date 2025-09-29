@@ -247,7 +247,7 @@ import OauthClientCredentialsWithVariables
 private func main() async throws {
     let client = OauthClientCredentialsWithVariablesClient()
 
-    try await client.service.post(endpointParam: "endpointParam")
+    try await client.service.post()
 }
 
 try await main()

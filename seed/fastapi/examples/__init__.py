@@ -34,7 +34,7 @@ from .resources import (
     types,
 )
 from .security import ApiAuth
-from .types import BasicType, ComplexType, Identifier, Type
+from .types import BasicType, ComplexType, Identifier, Type, TypeWithSingleCharPropertyEqualToTypeStartingLetter
 
 __all__ = [
     "Actor",
@@ -68,6 +68,7 @@ __all__ = [
     "Test",
     "Tree",
     "Type",
+    "TypeWithSingleCharPropertyEqualToTypeStartingLetter",
     "commons",
     "file",
     "types",

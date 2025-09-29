@@ -18,7 +18,7 @@ export const SearchRequest: core.serialization.Schema<
 export declare namespace SearchRequest {
     export interface Raw {
         query: string;
-        filters?: Record<string, string | null> | null;
-        includeTypes: string[] | null;
+        filters?: Record<string, string | null | undefined> | null;
+        includeTypes?: string[] | null;
     }
 }

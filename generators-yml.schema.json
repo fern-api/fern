@@ -140,6 +140,9 @@
   },
   "additionalProperties": false,
   "definitions": {
+    "fernDefinition.auth.AuthScope": {
+      "type": "string"
+    },
     "fernDefinition.auth.OAuthAccessTokenRequestPropertiesSchema": {
       "type": "object",
       "properties": {
@@ -348,7 +351,7 @@
             {
               "type": "array",
               "items": {
-                "type": "string"
+                "$ref": "#/definitions/fernDefinition.auth.AuthScope"
               }
             },
             {
@@ -782,6 +785,26 @@
           ]
         },
         "idiomatic-request-names": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "wrap-references-to-nullable-in-optional": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "coerce-optional-schemas-to-nullable": {
           "oneOf": [
             {
               "type": "boolean"
@@ -1549,6 +1572,26 @@
             }
           ]
         },
+        "wrap-references-to-nullable-in-optional": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "coerce-optional-schemas-to-nullable": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "only-include-referenced-schemas": {
           "oneOf": [
             {
@@ -1798,6 +1841,26 @@
           ]
         },
         "idiomatic-request-names": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "wrap-references-to-nullable-in-optional": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "coerce-optional-schemas-to-nullable": {
           "oneOf": [
             {
               "type": "boolean"
@@ -2686,22 +2749,6 @@
         }
       ]
     },
-    "group.GithubSelfhostedSchema": {
-      "type": "object",
-      "properties": {
-        "uri": {
-          "type": "string"
-        },
-        "token": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "uri",
-        "token"
-      ],
-      "additionalProperties": false
-    },
     "license.GithubLicenseType": {
       "type": "string",
       "enum": [
@@ -2730,6 +2777,42 @@
           "$ref": "#/definitions/license.GithubLicenseCustomSchema"
         }
       ]
+    },
+    "group.GithubSelfhostedSchema": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "token": {
+          "type": "string"
+        },
+        "mode": {
+          "oneOf": [
+            {
+              "const": "pull-request"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "license": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/license.GithubLicenseSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "uri",
+        "token"
+      ],
+      "additionalProperties": false
     },
     "group.GithubCommitAndReleaseMode": {
       "type": "string",

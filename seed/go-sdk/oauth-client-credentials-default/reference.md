@@ -15,10 +15,7 @@
 ```go
 client.Auth.GetToken(
         context.TODO(),
-        &fern.GetTokenRequest{
-            ClientId: "client_id",
-            ClientSecret: "client_secret",
-        },
+        request,
     )
 }
 ```

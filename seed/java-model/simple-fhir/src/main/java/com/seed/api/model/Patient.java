@@ -189,7 +189,9 @@ public final class Patient implements IBaseResource {
         @JsonSetter(value = "scripts", nulls = Nulls.SKIP)
         public _FinalStage scripts(List<Script> scripts) {
             this.scripts.clear();
-            this.scripts.addAll(scripts);
+            if (scripts != null) {
+                this.scripts.addAll(scripts);
+            }
             return this;
         }
 
@@ -211,7 +213,9 @@ public final class Patient implements IBaseResource {
         @JsonSetter(value = "related_resources", nulls = Nulls.SKIP)
         public _FinalStage relatedResources(List<ResourceList> relatedResources) {
             this.relatedResources.clear();
-            this.relatedResources.addAll(relatedResources);
+            if (relatedResources != null) {
+                this.relatedResources.addAll(relatedResources);
+            }
             return this;
         }
 

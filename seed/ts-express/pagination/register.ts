@@ -5,14 +5,19 @@
 import express from "express";
 import { ComplexService } from "./api/resources/complex/service/ComplexService";
 import { UsersService } from "./api/resources/users/service/UsersService";
+import { InlineUsersService as inlineUsers_InlineUsersService } from "./api/resources/inlineUsers/resources/inlineUsers/service/InlineUsersService";
 
 export function register(
     expressApp: express.Express | express.Router,
     services: {
         complex: ComplexService;
         users: UsersService;
+        inlineUsers: {
+            inlineUsers: inlineUsers_InlineUsersService;
+        };
     },
 ): void {
     (expressApp as any).use("", services.complex.toRouter());
+    (expressApp as any).use("/inline-users", services.inlineUsers.inlineUsers.toRouter());
     (expressApp as any).use("/users", services.users.toRouter());
 }

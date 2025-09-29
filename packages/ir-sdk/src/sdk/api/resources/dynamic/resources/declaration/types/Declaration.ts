@@ -5,6 +5,6 @@
 import * as FernIr from "../../../../../index";
 
 export interface Declaration {
-    fernFilepath: FernIr.FernFilepath;
-    name: FernIr.Name;
+    fernFilepath: FernIr.dynamic.FernFilepath;
+    name: FernIr.dynamic.Name;
 }

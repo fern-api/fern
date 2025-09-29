@@ -4,4 +4,4 @@
 
 import * as FernIr from "../../../../../index";
 
-export type MultipleEnvironmentUrlValues = Record<FernIr.EnvironmentBaseUrlId, FernIr.EnvironmentUrl>;
+export type MultipleEnvironmentUrlValues = Record<FernIr.dynamic.EnvironmentBaseUrlId, FernIr.dynamic.EnvironmentUrl>;

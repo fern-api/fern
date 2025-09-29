@@ -157,12 +157,50 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.admin.users.read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/user-management",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "query",
+              "value": {
+                "value": {
+                  "value": "query",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "skip",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "take",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -444,6 +482,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.admin.users.create"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/api/user-management",
       "examples": [
@@ -692,6 +737,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.admin.users.read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/user-management/{id}",
       "examples": [
@@ -972,6 +1024,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.admin.users.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/user-management/{id}",
       "examples": [
@@ -1285,6 +1344,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.admin.users.unlock"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/api/user-management/{id}",
       "examples": [
@@ -1501,6 +1567,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.admin.users.lock"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/user-management/{id}/lock",
       "examples": [
@@ -1802,6 +1875,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.admin.users.unlock"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/user-management/{id}/unlock",
       "examples": [
@@ -1994,6 +2074,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": []
+        }
+      ],
       "method": "GET",
       "path": "/api",
       "examples": [
@@ -2163,12 +2248,28 @@
       "servers": [],
       "description": "Search the user by query that contains the email address or the part of the email address.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": []
+        }
+      ],
       "method": "GET",
       "path": "/api/users",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "query",
+              "value": {
+                "value": {
+                  "value": "query",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -2371,6 +2472,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": []
+        }
+      ],
       "method": "GET",
       "path": "/api/users/{id}",
       "examples": [
@@ -2582,6 +2688,7 @@
       },
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/api/users/{id}/picture",
       "examples": [],
@@ -2747,6 +2854,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.translate"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/api/apps/{app}/translations",
       "examples": [
@@ -2892,6 +3006,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": []
+        }
+      ],
       "method": "GET",
       "path": "/api/templates",
       "examples": [
@@ -3130,6 +3249,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": []
+        }
+      ],
       "method": "GET",
       "path": "/api/templates/{name}",
       "examples": [
@@ -3318,6 +3442,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.teams.{team}.contributors.read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/teams/{team}/contributors",
       "examples": [
@@ -3645,6 +3776,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.teams.{team}.contributors.assign"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/api/teams/{team}/contributors",
       "examples": [
@@ -3965,6 +4103,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": []
+        }
+      ],
       "method": "DELETE",
       "path": "/api/teams/{team}/contributors/me",
       "examples": [
@@ -4289,6 +4432,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.teams.{team}.contributors.revoke"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/api/teams/{team}/contributors/{id}",
       "examples": [
@@ -4544,6 +4694,11 @@
       "servers": [],
       "description": "You can only retrieve the list of teams when you are authenticated as a user (OpenID implicit flow).\nYou will retrieve all teams, where you are assigned as a contributor.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": []
+        }
+      ],
       "method": "GET",
       "path": "/api/teams",
       "examples": [
@@ -4825,6 +4980,11 @@
       "servers": [],
       "description": "You can only create an team when you are authenticated as a user (OpenID implicit flow).\nYou will be assigned as owner of the new team automatically.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": []
+        }
+      ],
       "method": "POST",
       "path": "/api/teams",
       "examples": [
@@ -5049,6 +5209,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": []
+        }
+      ],
       "method": "GET",
       "path": "/api/teams/{team}",
       "examples": [
@@ -5331,6 +5496,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.teams.{team}.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/teams/{team}",
       "examples": [
@@ -5567,6 +5739,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.usage"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/apps/{app}/usages/log",
       "examples": [
@@ -5753,6 +5932,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.usage"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/apps/{app}/usages/calls/{fromDate}/{toDate}",
       "examples": [
@@ -6056,6 +6242,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.teams.{team}.usage"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/teams/{team}/usages/calls/{fromDate}/{toDate}",
       "examples": [
@@ -6326,6 +6519,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.usage"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/apps/{app}/usages/storage/today",
       "examples": [
@@ -6484,6 +6684,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.teams.{team}.usage"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/teams/{team}/usages/storage/today",
       "examples": [
@@ -6682,6 +6889,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.usage"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/apps/{app}/usages/storage/{fromDate}/{toDate}",
       "examples": [
@@ -6911,6 +7125,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.teams.{team}.usage"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/teams/{team}/usages/storage/{fromDate}/{toDate}",
       "examples": [
@@ -7129,6 +7350,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.search"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/apps/{app}/search",
       "examples": [
@@ -7145,7 +7373,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "query",
+              "value": {
+                "value": {
+                  "value": "query",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -7442,6 +7681,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.schemas.{schema}.update"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/api/apps/{app}/schemas/{schema}/fields",
       "examples": [
@@ -7489,6 +7735,15 @@
                       },
                       "type": "primitive"
                     },
+                    "label": {
+                      "type": "null"
+                    },
+                    "hints": {
+                      "type": "null"
+                    },
+                    "placeholder": {
+                      "type": "null"
+                    },
                     "isRequired": {
                       "value": {
                         "value": true,
@@ -7509,6 +7764,12 @@
                         "type": "boolean"
                       },
                       "type": "primitive"
+                    },
+                    "editorUrl": {
+                      "type": "null"
+                    },
+                    "tags": {
+                      "type": "null"
                     }
                   },
                   "type": "discriminated"
@@ -7894,6 +8155,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -7914,6 +8184,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -7999,6 +8275,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -8019,6 +8304,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -8292,6 +8583,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.schemas.{schema}.update"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested",
       "examples": [
@@ -8349,6 +8647,15 @@
                       },
                       "type": "primitive"
                     },
+                    "label": {
+                      "type": "null"
+                    },
+                    "hints": {
+                      "type": "null"
+                    },
+                    "placeholder": {
+                      "type": "null"
+                    },
                     "isRequired": {
                       "value": {
                         "value": true,
@@ -8369,6 +8676,12 @@
                         "type": "boolean"
                       },
                       "type": "primitive"
+                    },
+                    "editorUrl": {
+                      "type": "null"
+                    },
+                    "tags": {
+                      "type": "null"
                     }
                   },
                   "type": "discriminated"
@@ -8754,6 +9067,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -8774,6 +9096,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -8859,6 +9187,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -8879,6 +9216,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -9096,6 +9439,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.schemas.{schema}.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/fields/ui",
       "examples": [
@@ -9504,6 +9854,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -9524,6 +9883,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -9609,6 +9974,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -9629,6 +10003,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -9846,6 +10226,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.schemas.{schema}.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/fields/ordering",
       "examples": [
@@ -10267,6 +10654,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -10287,6 +10683,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -10372,6 +10774,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -10392,6 +10803,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -10625,6 +11042,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.schemas.{schema}.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/ordering",
       "examples": [
@@ -11056,6 +11480,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -11076,6 +11509,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -11161,6 +11600,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -11181,6 +11629,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -11414,6 +11868,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.schemas.{schema}.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/fields/{id}",
       "examples": [
@@ -11464,6 +11925,15 @@
                       },
                       "type": "primitive"
                     },
+                    "label": {
+                      "type": "null"
+                    },
+                    "hints": {
+                      "type": "null"
+                    },
+                    "placeholder": {
+                      "type": "null"
+                    },
                     "isRequired": {
                       "value": {
                         "value": true,
@@ -11484,6 +11954,12 @@
                         "type": "boolean"
                       },
                       "type": "primitive"
+                    },
+                    "editorUrl": {
+                      "type": "null"
+                    },
+                    "tags": {
+                      "type": "null"
                     }
                   },
                   "type": "discriminated"
@@ -11869,6 +12345,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -11889,6 +12374,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -11974,6 +12465,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -11994,6 +12494,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -12208,6 +12714,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.schemas.{schema}.update"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/api/apps/{app}/schemas/{schema}/fields/{id}",
       "examples": [
@@ -12622,6 +13135,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -12642,6 +13164,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -12727,6 +13255,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -12747,6 +13284,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -12996,6 +13539,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.schemas.{schema}.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}",
       "examples": [
@@ -13056,6 +13606,15 @@
                       },
                       "type": "primitive"
                     },
+                    "label": {
+                      "type": "null"
+                    },
+                    "hints": {
+                      "type": "null"
+                    },
+                    "placeholder": {
+                      "type": "null"
+                    },
                     "isRequired": {
                       "value": {
                         "value": true,
@@ -13076,6 +13635,12 @@
                         "type": "boolean"
                       },
                       "type": "primitive"
+                    },
+                    "editorUrl": {
+                      "type": "null"
+                    },
+                    "tags": {
+                      "type": "null"
                     }
                   },
                   "type": "discriminated"
@@ -13461,6 +14026,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -13481,6 +14055,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -13566,6 +14146,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -13586,6 +14175,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -13816,6 +14411,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.schemas.{schema}.update"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}",
       "examples": [
@@ -14240,6 +14842,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -14260,6 +14871,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -14345,6 +14962,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -14365,6 +14991,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -14580,6 +15212,13 @@
       "servers": [],
       "description": "A locked field cannot be updated or deleted.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.schemas.{schema}.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/lock",
       "examples": [
@@ -14994,6 +15633,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -15014,6 +15662,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -15099,6 +15753,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -15119,6 +15782,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -15350,6 +16019,13 @@
       "servers": [],
       "description": "A locked field cannot be edited or deleted.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.schemas.{schema}.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/lock",
       "examples": [
@@ -15774,6 +16450,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -15794,6 +16479,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -15879,6 +16570,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -15899,6 +16599,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -16114,6 +16820,13 @@
       "servers": [],
       "description": "A hidden field is not part of the API response, but can still be edited in the portal.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.schemas.{schema}.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/hide",
       "examples": [
@@ -16528,6 +17241,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -16548,6 +17270,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -16633,6 +17361,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -16653,6 +17390,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -16884,6 +17627,13 @@
       "servers": [],
       "description": "A hidden field is not part of the API response, but can still be edited in the portal.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.schemas.{schema}.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/hide",
       "examples": [
@@ -17308,6 +18058,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -17328,6 +18087,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -17413,6 +18178,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -17433,6 +18207,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -17648,6 +18428,13 @@
       "servers": [],
       "description": "A hidden field is not part of the API response, but can still be edited in the portal.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.schemas.{schema}.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/show",
       "examples": [
@@ -18062,6 +18849,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -18082,6 +18878,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -18167,6 +18969,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -18187,6 +18998,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -18418,6 +19235,13 @@
       "servers": [],
       "description": "A hidden field is not part of the API response, but can still be edited in the portal.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.schemas.{schema}.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/show",
       "examples": [
@@ -18842,6 +19666,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -18862,6 +19695,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -18947,6 +19786,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -18967,6 +19815,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -19182,6 +20036,13 @@
       "servers": [],
       "description": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.schemas.{schema}.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/enable",
       "examples": [
@@ -19596,6 +20457,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -19616,6 +20486,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -19701,6 +20577,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -19721,6 +20606,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -19952,6 +20843,13 @@
       "servers": [],
       "description": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.schemas.{schema}.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/enable",
       "examples": [
@@ -20376,6 +21274,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -20396,6 +21303,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -20481,6 +21394,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -20501,6 +21423,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -20716,6 +21644,13 @@
       "servers": [],
       "description": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.schemas.{schema}.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/fields/{id}/disable",
       "examples": [
@@ -21130,6 +22065,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -21150,6 +22094,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -21235,6 +22185,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -21255,6 +22214,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -21486,6 +22451,13 @@
       "servers": [],
       "description": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.schemas.{schema}.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/fields/{parentId}/nested/{id}/disable",
       "examples": [
@@ -21910,6 +22882,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -21930,6 +22911,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -22015,6 +23002,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -22035,6 +23031,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -22177,6 +23179,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.schemas.read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/apps/{app}/schemas",
       "examples": [
@@ -22508,6 +23517,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -22528,6 +23546,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -22757,6 +23781,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.schemas.create"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/api/apps/{app}/schemas",
       "examples": [
@@ -23181,6 +24212,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -23201,6 +24241,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -23286,6 +24332,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -23306,6 +24361,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -23464,6 +24525,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.schemas.read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/apps/{app}/schemas/{schema}",
       "examples": [
@@ -23868,6 +24936,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -23888,6 +24965,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -23973,6 +25056,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -23993,6 +25085,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -24210,6 +25308,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.schemas.{schema}.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}",
       "examples": [
@@ -24626,6 +25731,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -24646,6 +25760,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -24731,6 +25851,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -24751,6 +25880,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -24930,6 +26065,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.schemas.{schema}.delete"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/api/apps/{app}/schemas/{schema}",
       "examples": [
@@ -25152,6 +26294,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.schemas.{schema}.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/sync",
       "examples": [
@@ -25582,6 +26731,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -25602,6 +26760,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -25687,6 +26851,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -25707,6 +26880,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -25924,6 +27103,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.schemas.{schema}.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/category",
       "examples": [
@@ -26332,6 +27518,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -26352,6 +27547,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -26437,6 +27638,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -26457,6 +27667,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -26674,6 +27890,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.schemas.{schema}.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/preview-urls",
       "examples": [
@@ -27096,6 +28319,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -27116,6 +28348,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -27201,6 +28439,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -27221,6 +28468,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -27438,6 +28691,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.schemas.{schema}.scripts"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/scripts",
       "examples": [
@@ -27846,6 +29106,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -27866,6 +29135,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -27951,6 +29226,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -27971,6 +29255,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -28188,6 +29478,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.schemas.{schema}.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/rules",
       "examples": [
@@ -28596,6 +29893,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -28616,6 +29922,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -28701,6 +30013,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -28721,6 +30042,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -28919,6 +30246,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.schemas.{schema}.publish"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/publish",
       "examples": [
@@ -29323,6 +30657,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -29343,6 +30686,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -29428,6 +30777,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -29448,6 +30806,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -29646,6 +31010,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.schemas.{schema}.publish"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/schemas/{schema}/unpublish",
       "examples": [
@@ -30050,6 +31421,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -30070,6 +31450,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -30155,6 +31541,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -30175,6 +31570,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -30300,6 +31701,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": []
+        }
+      ],
       "method": "GET",
       "path": "/api/rules/actions",
       "examples": [
@@ -30529,6 +31935,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.rules.read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/apps/{app}/rules",
       "examples": [
@@ -30952,6 +32365,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.rules.create"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/api/apps/{app}/rules",
       "examples": [
@@ -31355,6 +32775,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.rules.events.update"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/api/apps/{app}/rules/run",
       "examples": [
@@ -31567,6 +32994,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.rules.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/rules/{id}",
       "examples": [
@@ -31942,6 +33376,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.rules.delete"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/api/apps/{app}/rules/{id}",
       "examples": [
@@ -32145,6 +33586,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.rules.disable"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/rules/{id}/enable",
       "examples": [
@@ -32535,6 +33983,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.rules.disable"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/rules/{id}/disable",
       "examples": [
@@ -32906,6 +34361,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.rules.events.run"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/rules/{id}/trigger",
       "examples": [
@@ -33101,6 +34563,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.rules.events.run"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/rules/{id}/run",
       "examples": [
@@ -33127,7 +34596,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "fromSnapshots",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "codeSamples": [],
           "type": "full"
@@ -33273,6 +34753,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.rules.events.delete"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/api/apps/{app}/rules/{id}/events",
       "examples": [
@@ -33479,6 +34966,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.rules.events.read"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/api/apps/{app}/rules/simulate",
       "examples": [
@@ -33851,6 +35345,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.rules.events.read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/apps/{app}/rules/{id}/simulate",
       "examples": [
@@ -34213,6 +35714,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.rules.events.read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/apps/{app}/rules/events",
       "examples": [
@@ -34229,7 +35737,38 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "ruleId",
+              "value": {
+                "value": {
+                  "value": "ruleId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "skip",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "take",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -34508,6 +36047,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.rules.events.delete"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/api/apps/{app}/rules/events",
       "examples": [
@@ -34682,6 +36228,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.rules.events.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/rules/events/{id}",
       "examples": [
@@ -34866,6 +36419,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.rules.events.delete"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/api/apps/{app}/rules/events/{id}",
       "examples": [
@@ -34987,6 +36547,7 @@
       },
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/api/rules/eventtypes",
       "examples": [
@@ -35122,6 +36683,7 @@
       },
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/api/rules/eventtypes/{type}",
       "examples": [
@@ -35280,6 +36842,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.plans.read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/apps/{app}/plans",
       "examples": [
@@ -35622,6 +37191,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.plans.change"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/plan",
       "examples": [
@@ -35785,6 +37361,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.teams.{team}.plans.read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/teams/{team}/plans",
       "examples": [
@@ -36126,6 +37709,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.teams.{team}.plans.change"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/teams/{team}/plan",
       "examples": [
@@ -36260,6 +37850,7 @@
       },
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/api/info",
       "examples": [
@@ -36359,6 +37950,7 @@
       "servers": [],
       "description": "Can be used to test, if the Squidex API is alive and responding.",
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/api/ping",
       "examples": [
@@ -36455,6 +38047,13 @@
       "servers": [],
       "description": "Can be used to test, if the Squidex API is alive and responding.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.ping"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/ping/{app}",
       "examples": [
@@ -36585,12 +38184,28 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": []
+        }
+      ],
       "method": "GET",
       "path": "/api/news/features",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "version",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -36726,6 +38341,11 @@
       "servers": [],
       "description": "Provide a list of supported language codes, following the ISO2Code standard.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": []
+        }
+      ],
       "method": "GET",
       "path": "/api/languages",
       "examples": [
@@ -36913,6 +38533,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.history"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/apps/{app}/history",
       "examples": [
@@ -36929,7 +38556,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "channel",
+              "value": {
+                "value": {
+                  "value": "channel",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -37131,6 +38769,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.teams.{team}.history"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/teams/{team}/history",
       "examples": [
@@ -37147,7 +38792,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "channel",
+              "value": {
+                "value": {
+                  "value": "channel",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -37293,6 +38949,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.admin.events.read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/event-consumers",
       "examples": [
@@ -37585,6 +39248,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.admin.events.manage"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/event-consumers/{consumerName}/start",
       "examples": [
@@ -37848,6 +39518,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.admin.events.manage"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/event-consumers/{consumerName}/stop",
       "examples": [
@@ -38111,6 +39788,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.admin.events.manage"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/event-consumers/{consumerName}/reset",
       "examples": [
@@ -38326,6 +40010,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.admin.*"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/diagnostics/dump",
       "examples": [
@@ -38443,6 +40134,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.admin.*"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/diagnostics/gcdump",
       "examples": [
@@ -38629,6 +40327,11 @@
       "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": []
+        }
+      ],
       "method": "GET",
       "path": "/api/content/{app}/{schema}",
       "examples": [
@@ -38655,7 +40358,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "ids",
+              "value": {
+                "value": {
+                  "value": "ids",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "q",
+              "value": {
+                "value": {
+                  "value": "q",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -39005,6 +40729,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -39025,6 +40758,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -39345,6 +41084,13 @@
       "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.contents.{schema}.create"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/api/content/{app}/{schema}",
       "examples": [
@@ -39371,7 +41117,38 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "status",
+              "value": {
+                "value": {
+                  "value": "status",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "publish",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "request": {
             "value": [
@@ -39753,6 +41530,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -39773,6 +41559,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -40029,6 +41821,11 @@
       "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": []
+        }
+      ],
       "method": "POST",
       "path": "/api/content/{app}/{schema}/query",
       "examples": [
@@ -40409,6 +42206,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -40429,6 +42235,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -40665,6 +42477,11 @@
       "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": []
+        }
+      ],
       "method": "GET",
       "path": "/api/content/{app}/{schema}/{id}",
       "examples": [
@@ -40701,7 +42518,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "version",
+              "value": {
+                "value": {
+                  "value": 1000000,
+                  "type": "int64"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -41010,6 +42838,15 @@
                                 },
                                 "type": "primitive"
                               },
+                              "label": {
+                                "type": "null"
+                              },
+                              "hints": {
+                                "type": "null"
+                              },
+                              "placeholder": {
+                                "type": "null"
+                              },
                               "isRequired": {
                                 "value": {
                                   "value": true,
@@ -41030,6 +42867,12 @@
                                   "type": "boolean"
                                 },
                                 "type": "primitive"
+                              },
+                              "editorUrl": {
+                                "type": "null"
+                              },
+                              "tags": {
+                                "type": "null"
                               }
                             },
                             "type": "discriminated"
@@ -41115,6 +42958,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -41135,6 +42987,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -41447,6 +43305,13 @@
       "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.contents.{schema}.upsert"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/api/content/{app}/{schema}/{id}",
       "examples": [
@@ -41483,7 +43348,38 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "status",
+              "value": {
+                "value": {
+                  "value": "status",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "patch",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "publish",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "request": {
             "value": [
@@ -41865,6 +43761,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -41885,6 +43790,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -42157,6 +44068,13 @@
       "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.contents.{schema}.update.own"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/content/{app}/{schema}/{id}",
       "examples": [
@@ -42575,6 +44493,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -42595,6 +44522,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -42872,6 +44805,13 @@
       "servers": [],
       "description": "You can create an generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.contents.{schema}.delete.own"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/api/content/{app}/{schema}/{id}",
       "examples": [
@@ -42908,7 +44848,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "checkReferrers",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "permanent",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "codeSamples": [],
           "type": "full"
@@ -43121,6 +45082,13 @@
       "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.contents.{schema}.update.own"
+          ]
+        }
+      ],
       "method": "PATCH",
       "path": "/api/content/{app}/{schema}/{id}",
       "examples": [
@@ -43539,6 +45507,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -43559,6 +45536,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -43793,6 +45776,11 @@
       "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": []
+        }
+      ],
       "method": "GET",
       "path": "/api/content/{app}/{schema}/{id}/validity",
       "examples": [
@@ -44005,6 +45993,11 @@
       "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": []
+        }
+      ],
       "method": "GET",
       "path": "/api/content/{app}/{schema}/{id}/references",
       "examples": [
@@ -44041,7 +46034,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "q",
+              "value": {
+                "value": {
+                  "value": "q",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -44391,6 +46395,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -44411,6 +46424,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -44646,6 +46665,11 @@
       "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": []
+        }
+      ],
       "method": "GET",
       "path": "/api/content/{app}/{schema}/{id}/referencing",
       "examples": [
@@ -44682,7 +46706,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "q",
+              "value": {
+                "value": {
+                  "value": "q",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -45032,6 +47067,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -45052,6 +47096,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -45271,6 +47321,13 @@
       "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.contents.{schema}.read.own"
+          ]
+        }
+      ],
       "availability": "Deprecated",
       "method": "GET",
       "path": "/api/content/{app}/{schema}/{id}/{version}",
@@ -45471,6 +47528,13 @@
       "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.contents.{schema}.create"
+          ]
+        }
+      ],
       "availability": "Deprecated",
       "method": "POST",
       "path": "/api/content/{app}/{schema}/import",
@@ -45821,6 +47885,13 @@
       "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.contents.{schema}.read.own"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/api/content/{app}/{schema}/bulk",
       "examples": [
@@ -46153,6 +48224,13 @@
       "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.contents.{schema}.changestatus.own"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/content/{app}/{schema}/{id}/status",
       "examples": [
@@ -46551,6 +48629,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -46571,6 +48658,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -46824,6 +48917,13 @@
       "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.contents.{schema}.changestatus.own"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/api/content/{app}/{schema}/{id}/status",
       "examples": [
@@ -47210,6 +49310,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -47230,6 +49339,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -47483,6 +49598,13 @@
       "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.contents.{schema}.version.create.own"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/api/content/{app}/{schema}/{id}/draft",
       "examples": [
@@ -47869,6 +49991,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -47889,6 +50020,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -48142,6 +50279,13 @@
       "servers": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.contents.{schema}.version.delete.own"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/api/content/{app}/{schema}/{id}/draft",
       "examples": [
@@ -48528,6 +50672,15 @@
                                         },
                                         "type": "primitive"
                                       },
+                                      "label": {
+                                        "type": "null"
+                                      },
+                                      "hints": {
+                                        "type": "null"
+                                      },
+                                      "placeholder": {
+                                        "type": "null"
+                                      },
                                       "isRequired": {
                                         "value": {
                                           "value": true,
@@ -48548,6 +50701,12 @@
                                           "type": "boolean"
                                         },
                                         "type": "primitive"
+                                      },
+                                      "editorUrl": {
+                                        "type": "null"
+                                      },
+                                      "tags": {
+                                        "type": "null"
                                       }
                                     },
                                     "type": "discriminated"
@@ -48753,6 +50912,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": []
+        }
+      ],
       "method": "GET",
       "path": "/api/apps/{app}/watching/{resource}",
       "examples": [
@@ -48763,6 +50927,16 @@
               "value": {
                 "value": {
                   "value": "app",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "resource",
+              "value": {
+                "value": {
+                  "value": "resource",
                   "type": "string"
                 },
                 "type": "primitive"
@@ -48945,6 +51119,13 @@
       "servers": [],
       "description": "When passing in a version you can retrieve all updates since then.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.comments.read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/apps/{app}/comments/{commentsId}",
       "examples": [
@@ -48971,7 +51152,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "version",
+              "value": {
+                "value": {
+                  "value": 1000000,
+                  "type": "int64"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -49284,6 +51476,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.comments.create"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/api/apps/{app}/comments/{commentsId}",
       "examples": [
@@ -49558,6 +51757,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.comments.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/comments/{commentsId}/{commentId}",
       "examples": [
@@ -49780,6 +51986,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.comments.delete"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/api/apps/{app}/comments/{commentsId}/{commentId}",
       "examples": [
@@ -49948,6 +52161,11 @@
       "servers": [],
       "description": "When passing in a version you can retrieve all updates since then.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": []
+        }
+      ],
       "method": "GET",
       "path": "/api/users/{userId}/notifications",
       "examples": [
@@ -49964,7 +52182,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "version",
+              "value": {
+                "value": {
+                  "value": 1000000,
+                  "type": "int64"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -50238,6 +52467,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": []
+        }
+      ],
       "method": "DELETE",
       "path": "/api/users/{userId}/notifications/{commentId}",
       "examples": [
@@ -50391,6 +52625,7 @@
       },
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/api/apps/{app}/backups/{id}",
       "examples": [],
@@ -50546,6 +52781,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.backups.delete"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/api/apps/{app}/backups/{id}",
       "examples": [
@@ -50726,6 +52968,7 @@
       },
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/api/apps/backups/{id}",
       "examples": [],
@@ -50844,6 +53087,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.backups.read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/apps/{app}/backups",
       "examples": [
@@ -51126,6 +53376,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.backups.create"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/api/apps/{app}/backups",
       "examples": [
@@ -51233,6 +53490,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.admin.restore"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/apps/restore",
       "examples": [
@@ -51414,6 +53678,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.admin.restore"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/api/apps/restore",
       "examples": [
@@ -51874,6 +54145,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": []
+        }
+      ],
       "method": "GET",
       "path": "/api/assets/{app}/{idOrSlug}/{more}",
       "examples": [],
@@ -52276,6 +54552,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": []
+        }
+      ],
       "availability": "Deprecated",
       "method": "GET",
       "path": "/api/assets/{id}",
@@ -52439,6 +54720,13 @@
       "servers": [],
       "description": "Get all asset folders for the app.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.assets.read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/apps/{app}/assets/folders",
       "examples": [
@@ -52455,7 +54743,25 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "parentId",
+              "value": {
+                "value": {
+                  "value": "parentId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "scope",
+              "value": {
+                "value": "PathAndItems",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -52823,6 +55129,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.assets.folders.create"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/api/apps/{app}/assets/folders",
       "examples": [
@@ -53120,6 +55433,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.assets.folders.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/assets/folders/{id}",
       "examples": [
@@ -53389,6 +55709,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.assets.folders.delete"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/api/apps/{app}/assets/folders/{id}",
       "examples": [
@@ -53611,6 +55938,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.assets.folders.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/assets/folders/{id}/parent",
       "examples": [
@@ -53848,6 +56182,13 @@
       "servers": [],
       "description": "Get all tags for assets.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.assets.read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/apps/{app}/assets/tags",
       "examples": [
@@ -54093,6 +56434,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.assets.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/assets/tags/{name}",
       "examples": [
@@ -54422,6 +56770,13 @@
       "servers": [],
       "description": "Get all assets for the app.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.assets.read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/apps/{app}/assets",
       "examples": [
@@ -54438,7 +56793,78 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "parentId",
+              "value": {
+                "value": {
+                  "value": "parentId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "ids",
+              "value": {
+                "value": {
+                  "value": "ids",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "q",
+              "value": {
+                "value": {
+                  "value": "q",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "$top",
+              "value": {
+                "value": {
+                  "value": 1.1,
+                  "type": "double"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "$skip",
+              "value": {
+                "value": {
+                  "value": 1.1,
+                  "type": "double"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "$orderby",
+              "value": {
+                "value": {
+                  "value": "$orderby",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "$filter",
+              "value": {
+                "value": {
+                  "value": "$filter",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -54989,6 +57415,13 @@
       "servers": [],
       "description": "You can only upload one file at a time. The mime type of the file is not calculated by Squidex and is required correctly.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.assets.create"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/api/apps/{app}/assets",
       "examples": [
@@ -55005,7 +57438,38 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "parentId",
+              "value": {
+                "value": {
+                  "value": "parentId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "id",
+              "value": {
+                "value": {
+                  "value": "id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "duplicate",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "request": {
             "properties": {},
@@ -55410,6 +57874,13 @@
       "servers": [],
       "description": "Get all assets for the app.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.assets.read"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/api/apps/{app}/assets/query",
       "examples": [
@@ -55834,6 +58305,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.assets.read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/apps/{app}/assets/{id}",
       "examples": [
@@ -56359,6 +58837,13 @@
       "servers": [],
       "description": "You can only upload one file at a time. The mime type of the file is not calculated by Squidex and is required correctly.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.assets.create"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/api/apps/{app}/assets/{id}",
       "examples": [
@@ -56385,7 +58870,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "parentId",
+              "value": {
+                "value": {
+                  "value": "parentId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "duplicate",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "request": {
             "properties": {},
@@ -56805,6 +59311,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.assets.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/assets/{id}",
       "examples": [
@@ -57256,6 +59769,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.assets.delete"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/api/apps/{app}/assets/{id}",
       "examples": [
@@ -57282,7 +59802,28 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "checkReferrers",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "permanent",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "codeSamples": [],
           "type": "full"
@@ -57467,6 +60008,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.assets.read"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/api/apps/{app}/assets/bulk",
       "examples": [
@@ -57802,6 +60350,13 @@
       "servers": [],
       "description": "Use multipart request to upload an asset.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.assets.upload"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/assets/{id}/content",
       "examples": [
@@ -58248,6 +60803,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.assets.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/assets/{id}/parent",
       "examples": [
@@ -58619,6 +61181,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.asset-scripts.read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/apps/{app}/assets/scripts",
       "examples": [
@@ -58916,6 +61485,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.asset-scripts.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/assets/scripts",
       "examples": [
@@ -59159,6 +61735,13 @@
       "servers": [],
       "description": "Gets all configured clients for the app with the specified name.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.clients.read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/apps/{app}/clients",
       "examples": [
@@ -59490,6 +62073,13 @@
       "servers": [],
       "description": "Create a new client for the app with the specified name.\nThe client secret is auto generated on the server and returned. The client does not expire, the access token is valid for 30 days.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.clients.create"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/api/apps/{app}/clients",
       "examples": [
@@ -59849,6 +62439,13 @@
       "servers": [],
       "description": "Only the display name can be changed, create a new client if necessary.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.clients.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/clients/{id}",
       "examples": [
@@ -60191,6 +62788,13 @@
       "servers": [],
       "description": "The application that uses this client credentials cannot access the API after it has been revoked.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.clients.delete"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/api/apps/{app}/clients/{id}",
       "examples": [
@@ -60472,6 +63076,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.contributors.read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/apps/{app}/contributors",
       "examples": [
@@ -60800,6 +63411,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.contributors.assign"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/api/apps/{app}/contributors",
       "examples": [
@@ -61121,6 +63739,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": []
+        }
+      ],
       "method": "DELETE",
       "path": "/api/apps/{app}/contributors/me",
       "examples": [
@@ -61446,6 +64069,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.contributors.revoke"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/api/apps/{app}/contributors/{id}",
       "examples": [
@@ -61715,6 +64345,7 @@
       },
       "servers": [],
       "authed": true,
+      "security": [],
       "method": "GET",
       "path": "/api/apps/{app}/image",
       "examples": [],
@@ -61891,6 +64522,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.image"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/api/apps/{app}/image",
       "examples": [
@@ -62227,6 +64865,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.image"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/api/apps/{app}/image",
       "examples": [
@@ -62519,6 +65164,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.languages.read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/apps/{app}/languages",
       "examples": [
@@ -62840,6 +65492,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.languages.create"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/api/apps/{app}/languages",
       "examples": [
@@ -63189,6 +65848,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.languages.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/languages/{language}",
       "examples": [
@@ -63521,6 +66187,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.languages.delete"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/api/apps/{app}/languages/{language}",
       "examples": [
@@ -63793,6 +66466,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.roles.read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/apps/{app}/roles",
       "examples": [
@@ -64135,6 +66815,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.roles.create"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/api/apps/{app}/roles",
       "examples": [
@@ -64434,6 +67121,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.roles.read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/apps/{app}/roles/permissions",
       "examples": [
@@ -64661,6 +67355,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.roles.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/roles/{roleName}",
       "examples": [
@@ -65027,6 +67728,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.roles.delete"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/api/apps/{app}/roles/{roleName}",
       "examples": [
@@ -65296,6 +68004,11 @@
       "servers": [],
       "description": "You can only retrieve the list of apps when you are authenticated as a user (OpenID implicit flow).\nYou will retrieve all apps, where you are assigned as a contributor.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": []
+        }
+      ],
       "method": "GET",
       "path": "/api/apps",
       "examples": [
@@ -65645,6 +68358,11 @@
       "servers": [],
       "description": "You can only create an app when you are authenticated as a user (OpenID implicit flow).\nYou will be assigned as owner of the new app automatically.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": []
+        }
+      ],
       "method": "POST",
       "path": "/api/apps",
       "examples": [
@@ -65931,6 +68649,11 @@
       "servers": [],
       "description": "You can only retrieve the list of apps when you are authenticated as a user (OpenID implicit flow).\nYou will retrieve all apps, where you are assigned as a contributor.",
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": []
+        }
+      ],
       "method": "GET",
       "path": "/api/teams/{team}/apps",
       "examples": [
@@ -66221,6 +68944,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": []
+        }
+      ],
       "method": "GET",
       "path": "/api/apps/{app}",
       "examples": [
@@ -66572,6 +69300,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}",
       "examples": [
@@ -66889,6 +69624,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.delete"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/api/apps/{app}",
       "examples": [
@@ -67085,6 +69827,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.transfer"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/team",
       "examples": [
@@ -67381,6 +70130,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": []
+        }
+      ],
       "method": "GET",
       "path": "/api/apps/{app}/settings",
       "examples": [
@@ -67698,6 +70452,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.settings"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/settings",
       "examples": [
@@ -68009,6 +70770,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.workflows.read"
+          ]
+        }
+      ],
       "method": "GET",
       "path": "/api/apps/{app}/workflows",
       "examples": [
@@ -68350,6 +71118,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.workflows.update"
+          ]
+        }
+      ],
       "method": "POST",
       "path": "/api/apps/{app}/workflows",
       "examples": [
@@ -68719,6 +71494,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.workflows.update"
+          ]
+        }
+      ],
       "method": "PUT",
       "path": "/api/apps/{app}/workflows/{id}",
       "examples": [
@@ -69094,6 +71876,13 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "squidex-oauth-auth": [
+            "squidex.apps.{app}.workflows.update"
+          ]
+        }
+      ],
       "method": "DELETE",
       "path": "/api/apps/{app}/workflows/{id}",
       "examples": [

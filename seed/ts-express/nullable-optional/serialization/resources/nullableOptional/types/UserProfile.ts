@@ -34,13 +34,13 @@ export declare namespace UserProfile {
     export interface Raw {
         id: string;
         username: string;
-        nullableString: string | null;
-        nullableInteger: number | null;
-        nullableBoolean: boolean | null;
-        nullableDate: string | null;
-        nullableObject: serializers.Address.Raw | null;
-        nullableList: string[] | null;
-        nullableMap: Record<string, string> | null;
+        nullableString?: string | null;
+        nullableInteger?: number | null;
+        nullableBoolean?: boolean | null;
+        nullableDate?: string | null;
+        nullableObject?: serializers.Address.Raw | null;
+        nullableList?: string[] | null;
+        nullableMap?: Record<string, string> | null;
         optionalString?: string | null;
         optionalInteger?: number | null;
         optionalBoolean?: boolean | null;
@@ -48,7 +48,7 @@ export declare namespace UserProfile {
         optionalObject?: serializers.Address.Raw | null;
         optionalList?: string[] | null;
         optionalMap?: Record<string, string> | null;
-        optionalNullableString?: (string | null) | null;
-        optionalNullableObject?: (serializers.Address.Raw | null) | null;
+        optionalNullableString?: (string | null | undefined) | null;
+        optionalNullableObject?: (serializers.Address.Raw | null | undefined) | null;
     }
 }

@@ -51,4 +51,5 @@ export interface SdkCustomConfig {
     exportAllRequestsAtRoot: boolean | undefined;
     testFramework: "jest" | "vitest";
     consolidateTypeFiles: boolean | undefined;
+    generateEndpointMetadata: boolean | undefined;
 }

@@ -5,16 +5,22 @@ import { rust, UseStatement } from "@fern-api/rust-codegen";
 import { Package, Subpackage } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { ClientGeneratorContext } from "./ClientGeneratorContext";
 
 export class RootClientGenerator {
     private readonly context: SdkGeneratorContext;
     private readonly package: Package;
     private readonly projectName: string;
+    private readonly clientGeneratorContext: ClientGeneratorContext;
 
     constructor(context: SdkGeneratorContext) {
         this.context = context;
         this.package = context.ir.rootPackage;
         this.projectName = context.ir.apiName.pascalCase.safeName;
+        this.clientGeneratorContext = new ClientGeneratorContext({
+            packageOrSubpackage: this.package,
+            sdkGeneratorContext: context
+        });
     }
 
     // =============================================================================
@@ -32,9 +38,23 @@ export class RootClientGenerator {
 
         return new RustFile({
             filename: "mod.rs",
-            directory: RelativeFilePath.of("src/client"),
+            directory: RelativeFilePath.of("src/api/resources"),
             fileContents: module.toString()
         });
+    }
+
+    public generateAllFiles(): RustFile[] {
+        const files: RustFile[] = [];
+        const subpackages = this.getSubpackages();
+
+        // Generate main mod.rs file
+        files.push(this.generate());
+
+        // Generate mod.rs files for nested directories using ALL subpackages
+        const allSubpackages = this.getAllSubpackagesForModuleDetection();
+        files.push(...this.generateNestedModFiles(allSubpackages));
+
+        return files;
     }
 
     // =============================================================================
@@ -50,8 +70,8 @@ export class RootClientGenerator {
             rawDeclarations.push(moduleDeclarations);
         }
 
-        // Only generate root client if there are multiple services
-        if (subpackages.length > 1) {
+        // Generate root client if there are multiple services, or if no subpackages exist (empty client)
+        if (subpackages.length > 1 || subpackages.length === 0) {
             const rootClient = this.generateRootClient(subpackages);
             rawDeclarations.push(rootClient);
         }
@@ -70,9 +90,7 @@ export class RootClientGenerator {
     }
 
     private generateReExports(subpackages: Subpackage[]): string {
-        return subpackages
-            .map((subpackage) => `pub use ${subpackage.name.snakeCase.safeName}::${this.getSubClientName(subpackage)};`)
-            .join("\n");
+        return subpackages.map((subpackage) => `pub use ${subpackage.name.snakeCase.safeName}::*;`).join("\n");
     }
 
     private generateImports(): UseStatement[] {
@@ -105,20 +123,17 @@ export class RootClientGenerator {
                 type: rust.Type.reference(rust.reference({ name: "ClientConfig" })).toString(),
                 visibility: "pub" as const
             },
-            ...subpackages.map((subpackage) => ({
-                name: subpackage.name.snakeCase.safeName,
-                type: rust.Type.reference(rust.reference({ name: this.getSubClientName(subpackage) })).toString(),
+            ...this.clientGeneratorContext.subClients.map(({ fieldName, clientName }) => ({
+                name: fieldName,
+                type: rust.Type.reference(rust.reference({ name: clientName })).toString(),
                 visibility: "pub" as const
             }))
         ];
     }
 
     private generateConstructor(subpackages: Subpackage[]): rust.Client.SimpleMethod {
-        const subClientInits = subpackages
-            .map(
-                (subpackage) =>
-                    `${subpackage.name.snakeCase.safeName}: ${this.getSubClientName(subpackage)}::new(config.clone())?`
-            )
+        const subClientInits = this.clientGeneratorContext.subClients
+            .map(({ fieldName, clientName }) => `${fieldName}: ${clientName}::new(config.clone())?`)
             .join(",\n            ");
 
         const configType = rust.Type.reference(rust.reference({ name: "ClientConfig" }));
@@ -138,14 +153,108 @@ export class RootClientGenerator {
         };
     }
 
+    /* 
+    Bellow 2 function are very specific to rust :
+
+        - Directory traversal logic is inherently complex
+        - Module detection across nested structures requires this scanning
+        - Rust's module system demands both declarations and re-exports
+    */
+    private generateNestedModFiles(subpackages: Subpackage[]): RustFile[] {
+        const files: RustFile[] = [];
+        const directoriesCreated = new Set<string>();
+
+        // For each subpackage, create mod.rs files for its directory structure
+        subpackages.forEach((subpackage) => {
+            const fernFilepathDir = this.context.getDirectoryForFernFilepath(subpackage.fernFilepath);
+            if (fernFilepathDir) {
+                const parts = fernFilepathDir.split("/");
+                let currentPath = "";
+
+                // Create mod.rs for each directory level
+                parts.forEach((part, index) => {
+                    currentPath = currentPath ? `${currentPath}/${part}` : part;
+                    const fullPath = `src/api/resources/${currentPath}`;
+
+                    if (!directoriesCreated.has(fullPath)) {
+                        directoriesCreated.add(fullPath);
+
+                        // Determine what modules this directory should expose
+                        const moduleNames = this.getModuleNamesForDirectory(subpackages, currentPath);
+
+                        // Create both module declarations and wildcard re-exports
+                        const rawDeclarations = [
+                            ...moduleNames.map((name) => `pub mod ${name};`),
+                            ...moduleNames.map((name) => `pub use ${name}::*;`)
+                        ];
+
+                        const module = rust.module({
+                            useStatements: [],
+                            rawDeclarations
+                        });
+
+                        files.push(
+                            new RustFile({
+                                filename: "mod.rs",
+                                directory: RelativeFilePath.of(fullPath),
+                                fileContents: module.toString()
+                            })
+                        );
+                    }
+                });
+            }
+        });
+
+        return files;
+    }
+
+    private getModuleNamesForDirectory(subpackages: Subpackage[], targetPath: string): string[] {
+        // Use ALL subpackages (including those without services) for module detection
+        const allSubpackages = this.getAllSubpackagesForModuleDetection();
+        const moduleNames = new Set<string>();
+
+        allSubpackages.forEach((subpackage, index) => {
+            const fernFilepathDir = this.context.getDirectoryForFernFilepath(subpackage.fernFilepath);
+
+            if (fernFilepathDir) {
+                // Check if this subpackage creates a file in a subdirectory of targetPath
+                const targetPrefix = targetPath === "" ? "" : targetPath + "/";
+
+                if (fernFilepathDir.startsWith(targetPrefix) && fernFilepathDir !== targetPath) {
+                    // Extract the directory segment immediately after targetPath
+                    const relativePath = fernFilepathDir.substring(targetPrefix.length);
+                    const segments = relativePath.split("/");
+
+                    if (segments.length > 0 && segments[0]) {
+                        // First segment is a subdirectory we need to declare
+                        moduleNames.add(segments[0]);
+                    }
+                } else if (fernFilepathDir === targetPath) {
+                    // This is a file directly in the target directory
+                    const filename = this.context.getUniqueFilenameForSubpackage(subpackage);
+                    const moduleName = filename.replace(".rs", "");
+                    moduleNames.add(moduleName);
+                }
+            }
+        });
+
+        const result = Array.from(moduleNames).sort();
+
+        return result;
+    }
+
     // =============================================================================
     // UTILITY METHODS
     // =============================================================================
 
     private getSubpackages(): Subpackage[] {
-        return this.package.subpackages
-            .map((subpackageId) => this.context.getSubpackageOrThrow(subpackageId))
-            .filter((subpackage) => subpackage.service != null || subpackage.hasEndpointsInTree);
+        return this.package.subpackages.map((subpackageId) => this.context.getSubpackageOrThrow(subpackageId));
+    }
+
+    private getAllSubpackagesForModuleDetection(): Subpackage[] {
+        // Get ALL subpackages from the entire IR to detect nested directory structures
+        const allSubpackages: Subpackage[] = Object.values(this.context.ir.subpackages);
+        return allSubpackages;
     }
 
     private getRootClientName(): string {

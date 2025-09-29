@@ -7,7 +7,7 @@ import { generateModels } from "@fern-api/rust-model";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { HttpRequestBody, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { mkdir, writeFile } from "fs/promises";
 import { join } from "path";
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
@@ -90,6 +90,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         // Core files
         files.push(this.generateLibFile(context));
         files.push(this.generateErrorFile(context));
+        files.push(this.generateApiModFile(context));
 
         // Environment.rs (if environments are defined)
         const environmentFile = await this.generateEnvironmentFile(context);
@@ -101,9 +102,9 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         const clientConfigGenerator = new ClientConfigGenerator(context);
         files.push(clientConfigGenerator.generate());
 
-        // Client.rs
+        // Client.rs and nested mod.rs files
         const rootClientGenerator = new RootClientGenerator(context);
-        files.push(rootClientGenerator.generate());
+        files.push(...rootClientGenerator.generateAllFiles());
 
         // Services/**/*.rs
         this.generateSubClientFiles(context, files);
@@ -142,6 +143,36 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         });
     }
 
+    private generateApiModFile(context: SdkGeneratorContext): RustFile {
+        const hasTypes = this.hasTypes(context);
+        const clientName = context.getClientName();
+        const moduleDeclarations: ModuleDeclaration[] = [];
+        const useStatements: UseStatement[] = [];
+
+        // Add module declarations
+        moduleDeclarations.push(new ModuleDeclaration({ name: "resources", isPublic: true }));
+        if (hasTypes) {
+            moduleDeclarations.push(new ModuleDeclaration({ name: "types", isPublic: true }));
+        }
+
+        // Add re-exports
+        useStatements.push(new UseStatement({ path: "resources", items: [clientName], isPublic: true }));
+        if (hasTypes) {
+            useStatements.push(new UseStatement({ path: "types", items: ["*"], isPublic: true }));
+        }
+
+        const apiModule = new Module({
+            moduleDeclarations,
+            useStatements
+        });
+
+        return new RustFile({
+            filename: "mod.rs",
+            directory: RelativeFilePath.of("src/api"),
+            fileContents: apiModule.toString()
+        });
+    }
+
     private async generateEnvironmentFile(context: SdkGeneratorContext): Promise<RustFile | null> {
         const environmentGenerator = new EnvironmentGenerator({ context });
         return environmentGenerator.generate();
@@ -149,10 +180,9 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
     private generateSubClientFiles(context: SdkGeneratorContext, files: RustFile[]): void {
         Object.values(context.ir.subpackages).forEach((subpackage) => {
-            if (subpackage.service != null || subpackage.hasEndpointsInTree) {
-                const subClientGenerator = new SubClientGenerator(context, subpackage);
-                files.push(subClientGenerator.generate());
-            }
+            // Always generate client files, even for subpackages without services/endpoints
+            const subClientGenerator = new SubClientGenerator(context, subpackage);
+            files.push(subClientGenerator.generate());
         });
     }
 
@@ -179,7 +209,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             (file) =>
                 new RustFile({
                     filename: file.filename,
-                    directory: RelativeFilePath.of("src/types"),
+                    directory: RelativeFilePath.of("src/api/types"),
                     fileContents: this.getFileContents(file)
                 })
         );
@@ -189,7 +219,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         const typesModule = this.buildTypesModule(context);
         return new RustFile({
             filename: "mod.rs",
-            directory: RelativeFilePath.of("src/types"),
+            directory: RelativeFilePath.of("src/api/types"),
             fileContents: typesModule.toString()
         });
     }
@@ -204,29 +234,19 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         const rawDeclarations: string[] = [];
 
         // Add module declarations
-        moduleDeclarations.push(new ModuleDeclaration({ name: "client", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "api", isPublic: true }));
         moduleDeclarations.push(new ModuleDeclaration({ name: "error", isPublic: true }));
-        moduleDeclarations.push(new ModuleDeclaration({ name: "client_config", isPublic: true }));
-        moduleDeclarations.push(new ModuleDeclaration({ name: "api_client_builder", isPublic: true }));
-        moduleDeclarations.push(new ModuleDeclaration({ name: "http_client", isPublic: true }));
-        moduleDeclarations.push(new ModuleDeclaration({ name: "request_options", isPublic: true }));
-        moduleDeclarations.push(new ModuleDeclaration({ name: "pagination", isPublic: true }));
-        moduleDeclarations.push(new ModuleDeclaration({ name: "query_parameter_builder", isPublic: true }));
-        moduleDeclarations.push(new ModuleDeclaration({ name: "utils", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "core", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "config", isPublic: true }));
+        moduleDeclarations.push(new ModuleDeclaration({ name: "client", isPublic: true }));
 
         if (this.hasEnvironments(context)) {
             moduleDeclarations.push(new ModuleDeclaration({ name: "environment", isPublic: true }));
         }
 
-        if (hasTypes) {
-            moduleDeclarations.push(new ModuleDeclaration({ name: "types", isPublic: true }));
-        }
-
         // Add re-exports
         const clientExports = [];
-        const subpackages = Object.values(context.ir.subpackages).filter(
-            (subpackage) => subpackage.service != null || subpackage.hasEndpointsInTree
-        );
+        const subpackages = Object.values(context.ir.subpackages);
 
         // Only add root client if there are multiple services
         if (subpackages.length > 1) {
@@ -239,13 +259,6 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             clientExports.push(subClientName);
         });
 
-        useStatements.push(
-            new UseStatement({
-                path: "client",
-                items: ["*"],
-                isPublic: true
-            })
-        );
         useStatements.push(new UseStatement({ path: "error", items: ["ApiError"], isPublic: true }));
 
         if (this.hasEnvironments(context)) {
@@ -253,29 +266,14 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         }
 
         if (hasTypes) {
-            useStatements.push(new UseStatement({ path: "types", items: ["*"], isPublic: true }));
+            useStatements.push(new UseStatement({ path: "api::types", items: ["*"], isPublic: true }));
         }
 
         // Add re-exports
-        useStatements.push(new UseStatement({ path: "client_config", items: ["*"], isPublic: true }));
-        useStatements.push(
-            new UseStatement({
-                path: "api_client_builder",
-                items: ["*"],
-                isPublic: true
-            })
-        );
-        useStatements.push(new UseStatement({ path: "http_client", items: ["*"], isPublic: true }));
-        useStatements.push(
-            new UseStatement({
-                path: "request_options",
-                items: ["*"],
-                isPublic: true
-            })
-        );
-        useStatements.push(new UseStatement({ path: "pagination", items: ["*"], isPublic: true }));
-        useStatements.push(new UseStatement({ path: "query_parameter_builder", items: ["*"], isPublic: true }));
-        useStatements.push(new UseStatement({ path: "utils", items: ["*"], isPublic: true }));
+
+        useStatements.push(new UseStatement({ path: "core", items: ["*"], isPublic: true }));
+        useStatements.push(new UseStatement({ path: "config", items: ["*"], isPublic: true }));
+        useStatements.push(new UseStatement({ path: "client", items: ["*"], isPublic: true }));
 
         return new Module({
             moduleDeclarations,
@@ -292,6 +290,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         // Use a Set to track unique module names and prevent duplicates
         const uniqueModuleNames = new Set<string>();
 
+        // Add regular IR types
         for (const [_typeId, typeDeclaration] of Object.entries(context.ir.types)) {
             // Use centralized method to get unique filename and extract module name from it
             const filename = context.getUniqueFilenameForType(typeDeclaration);
@@ -309,6 +308,58 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
                         isPublic: true
                     })
                 );
+            }
+        }
+
+        // Add inlined request body types from services
+        for (const service of Object.values(context.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.requestBody?.type === "inlinedRequestBody") {
+                    const inlinedRequestBody = endpoint.requestBody as HttpRequestBody.InlinedRequestBody;
+                    const requestName = inlinedRequestBody.name.pascalCase.safeName;
+
+                    // Use centralized method for consistent snake_case conversion
+                    const rawModuleName = context.getModuleNameForInlinedRequestBody(requestName);
+                    const escapedModuleName = context.configManager.escapeRustKeyword(rawModuleName);
+
+                    // Only add if we haven't seen this module name before
+                    if (!uniqueModuleNames.has(escapedModuleName)) {
+                        uniqueModuleNames.add(escapedModuleName);
+                        moduleDeclarations.push(new ModuleDeclaration({ name: escapedModuleName, isPublic: true }));
+                        useStatements.push(
+                            new UseStatement({
+                                path: escapedModuleName,
+                                items: ["*"],
+                                isPublic: true
+                            })
+                        );
+                    }
+                }
+            }
+        }
+
+        // Add query parameter request structs for query-only endpoints
+        for (const service of Object.values(context.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                // Add query request structs for endpoints without request body but with query parameters
+                if (endpoint.queryParameters.length > 0 && !endpoint.requestBody) {
+                    const queryRequestTypeName = `${endpoint.name.pascalCase.safeName}QueryRequest`;
+                    const rawModuleName = context.getModuleNameForQueryRequest(queryRequestTypeName);
+                    const escapedModuleName = context.configManager.escapeRustKeyword(rawModuleName);
+
+                    // Only add if we haven't seen this module name before
+                    if (!uniqueModuleNames.has(escapedModuleName)) {
+                        uniqueModuleNames.add(escapedModuleName);
+                        moduleDeclarations.push(new ModuleDeclaration({ name: escapedModuleName, isPublic: true }));
+                        useStatements.push(
+                            new UseStatement({
+                                path: escapedModuleName,
+                                items: ["*"],
+                                isPublic: true
+                            })
+                        );
+                    }
+                }
             }
         }
 

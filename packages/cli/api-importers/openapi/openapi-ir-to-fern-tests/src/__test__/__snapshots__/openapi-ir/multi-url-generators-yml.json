@@ -68,6 +68,7 @@
       "servers": [],
       "description": "List information about all users",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/users",
       "examples": [
@@ -196,6 +197,7 @@
       ],
       "description": "Retrieve detailed information about a specific user",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/users/{userId}",
       "examples": [
@@ -307,6 +309,7 @@
       ],
       "description": "Retrieve an authentication token for the API",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/token",
       "examples": [

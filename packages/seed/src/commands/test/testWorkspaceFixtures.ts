@@ -29,22 +29,34 @@ export async function testGenerator({
 }): Promise<boolean> {
     const testCases: Promise<TestRunner.TestResult>[] = [];
     for (const fixture of fixtures) {
-        const config = generator.workspaceConfig.fixtures?.[fixture];
-        const matchingPrefix = LANGUAGE_SPECIFIC_FIXTURE_PREFIXES.filter((prefix) => fixture.startsWith(prefix))[0];
+        let fixtureName = fixture;
+        let fixtureOutputFolder = outputFolder;
+
+        // Parse fixture name and outputFolder if format is "name:outputFolder"
+        // Format name:outputFolder will override the passed in outputFolder
+        if (fixture.includes(":")) {
+            const [name, folder] = fixture.split(":", 2);
+            fixtureName = name ?? fixture;
+            fixtureOutputFolder = folder;
+        }
+
+        const config = generator.workspaceConfig.fixtures?.[fixtureName];
+        const matchingPrefix = LANGUAGE_SPECIFIC_FIXTURE_PREFIXES.filter((prefix) => fixtureName.startsWith(prefix))[0];
+
         if (matchingPrefix != null && !generator.workspaceName.startsWith(matchingPrefix)) {
             CONSOLE_LOGGER.debug(
-                `Skipping fixture ${fixture} for generator ${generator.workspaceName} because it was deemed specific to another language`
+                `Skipping fixture ${fixtureName} for generator ${generator.workspaceName} because it was deemed specific to another language`
             );
             continue;
         }
         if (config != null) {
             for (const instance of config) {
-                if (outputFolder != null && instance.outputFolder !== outputFolder) {
+                if (fixtureOutputFolder != null && instance.outputFolder !== fixtureOutputFolder) {
                     continue;
                 }
                 testCases.push(
                     runner.run({
-                        fixture,
+                        fixture: fixtureName,
                         configuration: instance,
                         inspect
                     })
@@ -53,7 +65,7 @@ export async function testGenerator({
         } else {
             testCases.push(
                 runner.run({
-                    fixture,
+                    fixture: fixtureName,
                     configuration: undefined,
                     inspect
                 })

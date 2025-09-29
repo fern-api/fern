@@ -29,9 +29,7 @@ Create a new organization.
 ```go
 client.Organization.Create(
         context.TODO(),
-        &fern.CreateOrganizationRequest{
-            Name: "name",
-        },
+        request,
     )
 }
 ```
@@ -90,11 +88,7 @@ List all users.
 ```go
 client.User.List(
         context.TODO(),
-        &fern.ListUsersRequest{
-            Limit: fern.Int(
-                1,
-            ),
-        },
+        request,
     )
 }
 ```
@@ -153,11 +147,7 @@ List all user events.
 ```go
 client.User.Events.ListEvents(
         context.TODO(),
-        &user.ListUserEventsRequest{
-            Limit: fern.Int(
-                1,
-            ),
-        },
+        request,
     )
 }
 ```
@@ -216,9 +206,7 @@ Get event metadata.
 ```go
 client.User.Events.Metadata.GetMetadata(
         context.TODO(),
-        &events.GetEventMetadataRequest{
-            Id: "id",
-        },
+        request,
     )
 }
 ```

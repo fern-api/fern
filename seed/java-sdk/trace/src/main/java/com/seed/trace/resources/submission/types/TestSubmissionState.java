@@ -180,7 +180,9 @@ public final class TestSubmissionState {
         @JsonSetter(value = "customTestCases", nulls = Nulls.SKIP)
         public _FinalStage customTestCases(List<TestCase> customTestCases) {
             this.customTestCases.clear();
-            this.customTestCases.addAll(customTestCases);
+            if (customTestCases != null) {
+                this.customTestCases.addAll(customTestCases);
+            }
             return this;
         }
 
@@ -202,7 +204,9 @@ public final class TestSubmissionState {
         @JsonSetter(value = "defaultTestCases", nulls = Nulls.SKIP)
         public _FinalStage defaultTestCases(List<TestCase> defaultTestCases) {
             this.defaultTestCases.clear();
-            this.defaultTestCases.addAll(defaultTestCases);
+            if (defaultTestCases != null) {
+                this.defaultTestCases.addAll(defaultTestCases);
+            }
             return this;
         }
 

@@ -1,0 +1,10 @@
+use crate::service_user::User;
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct NestedUser {
+    #[serde(rename = "Name")]
+    pub name: String,
+    #[serde(rename = "NestedUser")]
+    pub nested_user: User,
+}

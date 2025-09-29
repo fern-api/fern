@@ -1,4 +1,4 @@
-use chrono::{DateTime, Utc};
+use chrono::{DateTime, NaiveDate, Utc};
 use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
@@ -9,10 +9,10 @@ pub enum UnionWithTime {
         },
 
         Date {
-            value: chrono::NaiveDate,
+            value: NaiveDate,
         },
 
         Datetime {
-            value: chrono::DateTime<chrono::Utc>,
+            value: DateTime<Utc>,
         },
 }

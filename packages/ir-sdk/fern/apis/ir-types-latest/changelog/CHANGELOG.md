@@ -5,6 +5,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v60.5.0] - 2025-09-24
+
+- Feature: Add `variable` field to `NamedParameter` in dynamic IR to track which parameters reference client-level variables
+
+## [v60.4.0] - 2025-09-24
+
+- Feature: Add variables support to Dynamic IR for client-level variable configuration in SDK snippet generation
+
+## [v60.3.1] - 2025-09-23
+
+- - Fix: Pushing new version to fix ir migrations for java and python
+
+## [v60.3.0] - 2025-09-23
+
+- Feature: added mode to ir.GithubPublish to support pull-request mode for selfhosted sdk generation.
+
+## [v60.2.0] - 2025-09-19
+
+- Feature: Add `security` property to `HttpEndpoint` which mirrors OpenAPI's security requirement object.
+
 ## [v60.1.0] - 2025-09-18
 
 - Feature: added `x-fern-retries` OpenAPI extension flag 

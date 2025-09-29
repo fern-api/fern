@@ -44,6 +44,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/user",
       "examples": [
@@ -117,6 +118,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/users",
       "examples": [

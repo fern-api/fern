@@ -17,6 +17,7 @@
 package com.fern.java.client.generators;
 
 import com.fern.ir.model.auth.AuthScheme;
+import com.fern.ir.model.auth.AuthSchemeKey;
 import com.fern.ir.model.auth.BasicAuthScheme;
 import com.fern.ir.model.auth.BearerAuthScheme;
 import com.fern.ir.model.auth.HeaderAuthScheme;
@@ -121,6 +122,7 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
         }
         for (HttpHeader httpHeader : generatorContext.getIr().getHeaders()) {
             AuthScheme authScheme = AuthScheme.header(HeaderAuthScheme.builder()
+                    .key(AuthSchemeKey.of(httpHeader.getName().getWireValue()))
                     .name(httpHeader.getName())
                     .valueType(httpHeader.getValueType())
                     .build());

@@ -9,8 +9,9 @@ public class Example4 {
             .clientId("<clientId>")
             .clientSecret("<clientSecret>")
             .url("https://api.fern.com")
+            .rootVariable("YOUR_ROOT_VARIABLE")
             .build();
 
-        client.service().post("endpointParam");
+        client.service().post();
     }
 }

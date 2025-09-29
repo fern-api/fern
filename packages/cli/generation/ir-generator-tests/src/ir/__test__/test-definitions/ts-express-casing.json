@@ -48,6 +48,7 @@
                     }
                 },
                 "tokenEnvVar": null,
+                "key": "bearer",
                 "docs": null
             }
         ],
@@ -687,6 +688,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -1402,6 +1404,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -2880,7 +2883,8 @@
                             "type": "named",
                             "value": "type_imdb:MovieId"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -2909,7 +2913,8 @@
                             "type": "primitive",
                             "value": "STRING"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -2938,7 +2943,8 @@
                             "type": "primitive",
                             "value": "DOUBLE"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -3136,7 +3142,8 @@
                                     "type": "named",
                                     "value": "type_imdb:MovieId"
                                 },
-                                "propertyAccess": null
+                                "propertyAccess": null,
+                                "variable": null
                             },
                             {
                                 "name": {
@@ -3165,7 +3172,8 @@
                                     "type": "primitive",
                                     "value": "STRING"
                                 },
-                                "propertyAccess": null
+                                "propertyAccess": null,
+                                "variable": null
                             },
                             {
                                 "name": {
@@ -3194,7 +3202,8 @@
                                     "type": "primitive",
                                     "value": "DOUBLE"
                                 },
-                                "propertyAccess": null
+                                "propertyAccess": null,
+                                "variable": null
                             }
                         ]
                     },
@@ -3329,7 +3338,8 @@
                                 "type": "named",
                                 "value": "type_imdb:MovieId"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ],
                     "body": null
@@ -3342,6 +3352,7 @@
         },
         "pathParameters": [],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,

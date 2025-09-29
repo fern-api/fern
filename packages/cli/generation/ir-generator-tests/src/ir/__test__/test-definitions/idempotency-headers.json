@@ -48,6 +48,7 @@
                     }
                 },
                 "tokenEnvVar": null,
+                "key": "bearer",
                 "docs": null
             }
         ],
@@ -367,6 +368,11 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "security": [
+                        {
+                            "bearer": []
+                        }
+                    ],
                     "idempotent": true,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -873,6 +879,11 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "security": [
+                        {
+                            "bearer": []
+                        }
+                    ],
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -1414,7 +1425,8 @@
                                     "type": "primitive",
                                     "value": "INTEGER"
                                 },
-                                "propertyAccess": null
+                                "propertyAccess": null,
+                                "variable": null
                             },
                             {
                                 "name": {
@@ -1443,7 +1455,8 @@
                                     "type": "named",
                                     "value": "type_payment:Currency"
                                 },
-                                "propertyAccess": null
+                                "propertyAccess": null,
+                                "variable": null
                             }
                         ]
                     },
@@ -1578,7 +1591,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ],
                     "body": null
@@ -1591,6 +1605,7 @@
         },
         "pathParameters": [],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,

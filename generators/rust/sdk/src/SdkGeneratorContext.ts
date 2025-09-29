@@ -2,7 +2,15 @@ import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbstractRustGeneratorContext, AsIsFileDefinition, AsIsFiles } from "@fern-api/rust-base";
 import { ModelCustomConfigSchema, ModelGeneratorContext } from "@fern-api/rust-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { HttpService, IntermediateRepresentation, ServiceId, Subpackage, SubpackageId } from "@fern-fern/ir-sdk/api";
+import {
+    FernFilepath,
+    HttpService,
+    IntermediateRepresentation,
+    Package,
+    ServiceId,
+    Subpackage,
+    SubpackageId
+} from "@fern-fern/ir-sdk/api";
 import { RustGeneratorAgent } from "./RustGeneratorAgent";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
@@ -66,6 +74,16 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
             throw new Error(`Service with id ${serviceId} not found`);
         }
         return service;
+    }
+
+    public getSubpackagesOrThrow(packageOrSubpackage: Package | Subpackage): [string, Subpackage][] {
+        return packageOrSubpackage.subpackages.map((subpackageId) => {
+            return [subpackageId, this.getSubpackageOrThrow(subpackageId)];
+        });
+    }
+
+    public getDirectoryForFernFilepath(fernFilepath: FernFilepath): string {
+        return fernFilepath.allParts.map((path) => path.snakeCase.safeName).join("/");
     }
 
     public toModelGeneratorContext(): ModelGeneratorContext {

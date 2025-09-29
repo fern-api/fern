@@ -538,7 +538,7 @@
           }
         ]
       },
-      "displayName": "MetadataCreate0"
+      "displayName": "ObjectFormat"
     },
     "MetadataCreateOneOf1Items": {
       "name": "MetadataCreateOneOf1Items",
@@ -589,7 +589,7 @@
           }
         }
       },
-      "displayName": "MetadataCreate1"
+      "displayName": "ArrayFormat"
     },
     "MetadataCreate": {
       "description": "Metadata has two allowed formats. Either array format or object format. Refer to the metadata section in this documentation for more information.",
@@ -604,7 +604,7 @@
               "type": "id",
               "value": "MetadataCreate0"
             },
-            "displayName": "MetadataCreate0"
+            "displayName": "ObjectFormat"
           },
           {
             "typeName": "MetadataCreate1",
@@ -613,7 +613,7 @@
               "type": "id",
               "value": "MetadataCreate1"
             },
-            "displayName": "MetadataCreate1"
+            "displayName": "ArrayFormat"
           }
         ]
       }

@@ -112,6 +112,11 @@
       "servers": [],
       "description": "Gets the stream speech for the given input",
       "authed": true,
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/experimental/audio/stream",
       "examples": [
@@ -270,6 +275,11 @@
       "servers": [],
       "description": "Gets the speech data for the given input",
       "authed": true,
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/v1/audio/speech",
       "examples": [
@@ -531,6 +541,11 @@
       "servers": [],
       "description": "Gets the stream speech for the given input",
       "authed": true,
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/v1/audio/stream",
       "examples": [
@@ -667,6 +682,11 @@
       "servers": [],
       "description": "Create a new API token for the logged in user",
       "authed": true,
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/v1/auth/token",
       "examples": [
@@ -766,6 +786,11 @@
       "servers": [],
       "description": "Fetches all the API keys for the logged in user",
       "authed": true,
+      "security": [
+        {
+          "userAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/v1/token",
       "examples": [
@@ -870,6 +895,11 @@
       "servers": [],
       "description": "Create a new API key for the logged in user",
       "authed": true,
+      "security": [
+        {
+          "userAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/v1/token",
       "examples": [
@@ -967,6 +997,11 @@
       "servers": [],
       "description": "Deletes the given API key for the logged in user",
       "authed": true,
+      "security": [
+        {
+          "userAuth": []
+        }
+      ],
       "method": "DELETE",
       "path": "/v1/token/{id}",
       "examples": [
@@ -1062,6 +1097,11 @@
       "servers": [],
       "description": "Update API key name for the logged in user",
       "authed": true,
+      "security": [
+        {
+          "userAuth": []
+        }
+      ],
       "method": "PATCH",
       "path": "/v1/token/{id}",
       "examples": [
@@ -1209,6 +1249,11 @@
       "servers": [],
       "description": "Gets the list of voices available for the user",
       "authed": true,
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/v1/voices",
       "examples": [
@@ -1418,6 +1463,11 @@
       "servers": [],
       "description": "Create a personal (cloned) voice for the user",
       "authed": true,
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/v1/voices",
       "examples": [
@@ -1570,6 +1620,11 @@
       "servers": [],
       "description": "Delete a personal (cloned) voice",
       "authed": true,
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
       "method": "DELETE",
       "path": "/v1/voices/{id}",
       "examples": [

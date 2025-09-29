@@ -2124,7 +2124,7 @@ errors:
           "display-name": "Groups",
           "endpoints": {
             "createFilesGroup": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Create a file group",
               "docs": "Create a file group from a set of already uploaded files.
 
@@ -2344,7 +2344,7 @@ processing operations.
               },
             },
             "filesGroupInfo": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Get information about a file group",
               "docs": "Returns a JSON object with information about a file group (when the group was created,
 number of the files in the group, etc).
@@ -2550,7 +2550,6 @@ service:
     createFilesGroup:
       path: /group/
       method: POST
-      auth: false
       docs: >
         Create a file group from a set of already uploaded files.
 
@@ -2753,7 +2752,6 @@ service:
     filesGroupInfo:
       path: /group/info/
       method: GET
-      auth: false
       docs: >
         Returns a JSON object with information about a file group (when the
         group was created,
@@ -2935,7 +2933,7 @@ service:
           "display-name": "Upload",
           "endpoints": {
             "baseUpload": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Direct uploads",
               "docs": "Direct file uploads comply with the [RFC 7578](https://www.rfc-editor.org/rfc/rfc7578) standard.
 In other words, you can perform a direct upload by making an HTTP POST request with the Content-Type
@@ -3101,7 +3099,7 @@ Log.d("TAG", file.toString())
               },
             },
             "fileUploadInfo": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Get information about an uploaded file",
               "docs": "Returns a JSON object with information about an uploaded file (file size, MIME type, metadata, etc).
 ",
@@ -3329,7 +3327,7 @@ Log.d("TAG", file.toString())
               },
             },
             "fromURLUpload": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Upload files from URLs",
               "docs": "Uploadcare can fetch a file from a publicly available URL and then automatically upload the
 fetched file to your project.
@@ -3749,7 +3747,7 @@ to the value of the `check_URL_duplicates` parameter.
               },
             },
             "fromURLUploadStatus": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Check the status of a task to fetch/upload a file from a URL",
               "docs": "The endpoint notifies about the progress of the task by changing the value of the `status` field:
   * the field is set to `waiting` initially
@@ -4354,7 +4352,7 @@ Log.d("TAG", status.toString())
               },
             },
             "multipartFileUploadComplete": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Complete multipart upload",
               "docs": "Once all the file parts have been uploaded successfully, complete the
 upload session to assemble all the file parts into a single resulting file.
@@ -4610,7 +4608,7 @@ Log.d("TAG", file.toString())
               },
             },
             "multipartFileUploadPart": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Upload individual file parts",
               "docs": "The second phase is about uploading the file parts to the presigned upload URLs returned from the
 `/multipart/start/` endpoint.
@@ -4739,7 +4737,7 @@ Log.d("TAG", file.toString())
               },
             },
             "multipartFileUploadStart": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Start multipart upload",
               "docs": "Multipart uploads should be used if you need to upload files larger than 100 megabytes or if you want to
 explicitly trigger [AWS S3 Transfer Acceleration](https://aws.amazon.com/s3/transfer-acceleration/).
@@ -5146,7 +5144,6 @@ service:
     baseUpload:
       path: /base/
       method: POST
-      auth: false
       docs: >
         Direct file uploads comply with the [RFC
         7578](https://www.rfc-editor.org/rfc/rfc7578) standard.
@@ -5315,7 +5312,6 @@ service:
     multipartFileUploadStart:
       path: /multipart/start/
       method: POST
-      auth: false
       docs: >
         Multipart uploads should be used if you need to upload files larger than
         100 megabytes or if you want to
@@ -5540,7 +5536,6 @@ service:
     multipartFileUploadPart:
       path: /<presigned-url-x>
       method: PUT
-      auth: false
       docs: >
         The second phase is about uploading the file parts to the presigned
         upload URLs returned from the
@@ -5685,7 +5680,6 @@ service:
     multipartFileUploadComplete:
       path: /multipart/complete/
       method: POST
-      auth: false
       docs: >
         Once all the file parts have been uploaded successfully, complete the
 
@@ -5919,7 +5913,6 @@ service:
     fromURLUpload:
       path: /from_url/
       method: POST
-      auth: false
       docs: >
         Uploadcare can fetch a file from a publicly available URL and then
         automatically upload the
@@ -6328,7 +6321,6 @@ service:
     fromURLUploadStatus:
       path: /from_url/status/
       method: GET
-      auth: false
       docs: >
         The endpoint notifies about the progress of the task by changing the
         value of the `status` field:
@@ -6869,7 +6861,6 @@ service:
     fileUploadInfo:
       path: /info/
       method: GET
-      auth: false
       docs: >
         Returns a JSON object with information about an uploaded file (file
         size, MIME type, metadata, etc).

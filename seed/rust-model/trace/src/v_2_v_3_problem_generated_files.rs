@@ -3,7 +3,7 @@ use crate::v_2_problem_files::Files;
 use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct GeneratedFiles {
     #[serde(rename = "generatedTestCaseFiles")]
     pub generated_test_case_files: HashMap<Language, Files>,

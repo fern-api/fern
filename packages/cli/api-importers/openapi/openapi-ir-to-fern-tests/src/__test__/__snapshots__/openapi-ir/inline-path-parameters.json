@@ -35,6 +35,7 @@
       "servers": [],
       "description": "Returns the user with the provided user ID.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/users/{user_id}",
       "examples": [
@@ -169,6 +170,7 @@
       "servers": [],
       "description": "Returns the user with the provided user ID.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/organizations/{organization_id}/users/{user_id}",
       "examples": [
@@ -246,14 +248,12 @@
       ],
       "pathParameters": [
         {
-          "name": "id",
+          "name": "organization_id",
           "schema": {
-            "description": "Bookmark ID",
             "schema": {
               "type": "string"
             },
-            "generatedName": "SearchRequestId",
-            "groupName": [],
+            "generatedName": "",
             "type": "primitive"
           },
           "source": {
@@ -262,12 +262,14 @@
           }
         },
         {
-          "name": "organization_id",
+          "name": "id",
           "schema": {
+            "description": "Bookmark ID",
             "schema": {
               "type": "string"
             },
-            "generatedName": "",
+            "generatedName": "SearchRequestId",
+            "groupName": [],
             "type": "primitive"
           },
           "source": {
@@ -388,26 +390,27 @@
       "servers": [],
       "description": "",
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/organizations/{organization_id}/search",
       "examples": [
         {
           "pathParameters": [
             {
-              "name": "id",
+              "name": "organization_id",
               "value": {
                 "value": {
-                  "value": "id",
+                  "value": "organization_id",
                   "type": "string"
                 },
                 "type": "primitive"
               }
             },
             {
-              "name": "organization_id",
+              "name": "id",
               "value": {
                 "value": {
-                  "value": "organization_id",
+                  "value": "id",
                   "type": "string"
                 },
                 "type": "primitive"

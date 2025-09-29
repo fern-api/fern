@@ -3,8 +3,8 @@ package example
 import (
     client "github.com/errors/fern/client"
     option "github.com/errors/fern/option"
-    context "context"
     fern "github.com/errors/fern"
+    context "context"
 )
 
 func do() {
@@ -13,10 +13,11 @@ func do() {
             "https://api.fern.com",
         ),
     )
+    request := &fern.FooRequest{
+        Bar: "bar",
+    }
     client.Simple.FooWithExamples(
         context.TODO(),
-        &fern.FooRequest{
-            Bar: "bar",
-        },
+        request,
     )
 }

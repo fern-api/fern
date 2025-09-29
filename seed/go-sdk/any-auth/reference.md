@@ -15,13 +15,7 @@
 ```go
 client.Auth.GetToken(
         context.TODO(),
-        &fern.GetTokenRequest{
-            ClientId: "client_id",
-            ClientSecret: "client_secret",
-            Scope: fern.String(
-                "scope",
-            ),
-        },
+        request,
     )
 }
 ```
@@ -97,6 +91,34 @@ client.Auth.GetToken(
 
 ```go
 client.User.Get(
+        context.TODO(),
+    )
+}
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.User.GetAdmins() -> []*fern.User</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.User.GetAdmins(
         context.TODO(),
     )
 }

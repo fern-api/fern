@@ -9,13 +9,14 @@ import (
 
 	"github.com/fern-api/fern-go/internal/ast"
 	"github.com/fern-api/fern-go/internal/fern/ir"
+	"github.com/fern-api/fern-go/internal/fern/ir/common"
 )
 
 // SnippetWriter writes codes snippets as AST expressions from examples.
 type SnippetWriter struct {
 	baseImportPath string
 	unionVersion   UnionVersion
-	types          map[ir.TypeId]*ir.TypeDeclaration
+	types          map[common.TypeId]*ir.TypeDeclaration
 	writer         *fileWriter
 }
 
@@ -23,7 +24,7 @@ type SnippetWriter struct {
 func NewSnippetWriter(
 	baseImportPath string,
 	unionVersion UnionVersion,
-	types map[ir.TypeId]*ir.TypeDeclaration,
+	types map[common.TypeId]*ir.TypeDeclaration,
 	writer *fileWriter,
 ) *SnippetWriter {
 	return &SnippetWriter{
@@ -708,13 +709,13 @@ type exampleTypeReferenceShapeVisitor struct {
 	value ast.Expr
 
 	baseImportPath string
-	types          map[ir.TypeId]*ir.TypeDeclaration
+	types          map[common.TypeId]*ir.TypeDeclaration
 }
 
 // exampleTypeReferenceToGoType maps the given type reference into its Go-equivalent.
 func exampleTypeReferenceShapeToGoType(
 	exampleTypeReferenceShape *ir.ExampleTypeReferenceShape,
-	types map[ir.TypeId]*ir.TypeDeclaration,
+	types map[common.TypeId]*ir.TypeDeclaration,
 	baseImportPath string,
 ) ast.Expr {
 	visitor := &exampleTypeReferenceShapeVisitor{
@@ -754,31 +755,31 @@ func (e *exampleTypeReferenceShapeVisitor) VisitPrimitive(primitive *ir.ExampleP
 	var primitiveType *ir.PrimitiveType
 	switch primitive.Type {
 	case "integer":
-		primitiveType = &ir.PrimitiveType{V1: ir.PrimitiveTypeV1Integer}
+		primitiveType = &ir.PrimitiveType{V1: common.PrimitiveTypeV1Integer}
 	case "long":
-		primitiveType = &ir.PrimitiveType{V1: ir.PrimitiveTypeV1Long}
+		primitiveType = &ir.PrimitiveType{V1: common.PrimitiveTypeV1Long}
 	case "uint":
-		primitiveType = &ir.PrimitiveType{V1: ir.PrimitiveTypeV1Uint}
+		primitiveType = &ir.PrimitiveType{V1: common.PrimitiveTypeV1Uint}
 	case "uint64":
-		primitiveType = &ir.PrimitiveType{V1: ir.PrimitiveTypeV1Uint64}
+		primitiveType = &ir.PrimitiveType{V1: common.PrimitiveTypeV1Uint64}
 	case "float":
-		primitiveType = &ir.PrimitiveType{V1: ir.PrimitiveTypeV1Float}
+		primitiveType = &ir.PrimitiveType{V1: common.PrimitiveTypeV1Float}
 	case "double":
-		primitiveType = &ir.PrimitiveType{V1: ir.PrimitiveTypeV1Double}
+		primitiveType = &ir.PrimitiveType{V1: common.PrimitiveTypeV1Double}
 	case "boolean":
-		primitiveType = &ir.PrimitiveType{V1: ir.PrimitiveTypeV1Boolean}
+		primitiveType = &ir.PrimitiveType{V1: common.PrimitiveTypeV1Boolean}
 	case "string":
-		primitiveType = &ir.PrimitiveType{V1: ir.PrimitiveTypeV1String}
+		primitiveType = &ir.PrimitiveType{V1: common.PrimitiveTypeV1String}
 	case "date":
-		primitiveType = &ir.PrimitiveType{V1: ir.PrimitiveTypeV1Date}
+		primitiveType = &ir.PrimitiveType{V1: common.PrimitiveTypeV1Date}
 	case "datetime":
-		primitiveType = &ir.PrimitiveType{V1: ir.PrimitiveTypeV1DateTime}
+		primitiveType = &ir.PrimitiveType{V1: common.PrimitiveTypeV1DateTime}
 	case "uuid":
-		primitiveType = &ir.PrimitiveType{V1: ir.PrimitiveTypeV1Uuid}
+		primitiveType = &ir.PrimitiveType{V1: common.PrimitiveTypeV1Uuid}
 	case "base64":
-		primitiveType = &ir.PrimitiveType{V1: ir.PrimitiveTypeV1Base64}
+		primitiveType = &ir.PrimitiveType{V1: common.PrimitiveTypeV1Base64}
 	case "bigInteger":
-		primitiveType = &ir.PrimitiveType{V1: ir.PrimitiveTypeV1BigInteger}
+		primitiveType = &ir.PrimitiveType{V1: common.PrimitiveTypeV1BigInteger}
 	}
 	e.value = &ast.BasicLit{
 		Value: primitiveToGoType(primitiveType),
@@ -797,12 +798,12 @@ type exampleContainerVisitor struct {
 	value ast.Expr
 
 	baseImportPath string
-	types          map[ir.TypeId]*ir.TypeDeclaration
+	types          map[common.TypeId]*ir.TypeDeclaration
 }
 
 func exampleContainerTypeToGoType(
 	exampleContainer *ir.ExampleContainer,
-	types map[ir.TypeId]*ir.TypeDeclaration,
+	types map[common.TypeId]*ir.TypeDeclaration,
 	baseImportPath string,
 ) ast.Expr {
 	visitor := &exampleContainerVisitor{

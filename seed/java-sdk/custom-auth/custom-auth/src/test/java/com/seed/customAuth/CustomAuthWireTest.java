@@ -3,6 +3,7 @@ package com.seed.customAuth;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.customAuth.SeedCustomAuthClient;
+import com.seed.customAuth.core.ObjectMappers;
 import java.util.HashMap;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -15,14 +16,14 @@ import org.junit.jupiter.api.Test;
 public class CustomAuthWireTest {
     private MockWebServer server;
     private SeedCustomAuthClient client;
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private ObjectMapper objectMapper = ObjectMappers.JSON_MAPPER;
     @BeforeEach
     public void setup() throws Exception {
         server = new MockWebServer();
         server.start();
         client = SeedCustomAuthClient.builder()
             .url(server.url("/").toString())
-            .apiKey("test-api-key") // For header: CustomAuthScheme
+            .customAuthScheme("test-api-key")
             .build();
     }
     @AfterEach

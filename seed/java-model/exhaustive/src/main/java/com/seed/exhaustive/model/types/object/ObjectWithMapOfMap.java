@@ -66,7 +66,9 @@ public final class ObjectWithMapOfMap {
         @JsonSetter(value = "map", nulls = Nulls.SKIP)
         public Builder map(Map<String, Map<String, String>> map) {
             this.map.clear();
-            this.map.putAll(map);
+            if (map != null) {
+                this.map.putAll(map);
+            }
             return this;
         }
 

@@ -12,5 +12,5 @@ export const NullableUserId: core.serialization.Schema<
 > = core.serialization.string().nullable();
 
 export declare namespace NullableUserId {
-    export type Raw = string | null;
+    export type Raw = string | null | undefined;
 }

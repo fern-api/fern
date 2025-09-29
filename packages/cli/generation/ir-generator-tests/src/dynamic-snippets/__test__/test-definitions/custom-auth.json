@@ -95,7 +95,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": false
@@ -133,7 +134,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             },
             "declaration": {
@@ -244,7 +246,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             },
             "declaration": {
@@ -333,5 +336,6 @@
     },
     "pathParameters": [],
     "environments": null,
+    "variables": null,
     "generatorConfig": null
 }

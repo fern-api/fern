@@ -132,11 +132,7 @@ client.Organizations.SearchOrganizations(
         context.TODO(),
         "tenant_id",
         "organization_id",
-        &fern.SearchOrganizationsRequest{
-            Limit: fern.Int(
-                1,
-            ),
-        },
+        request,
     )
 }
 ```
@@ -251,13 +247,7 @@ client.User.GetUser(
 client.User.CreateUser(
         context.TODO(),
         "tenant_id",
-        &fern.User{
-            Name: "name",
-            Tags: []string{
-                "tags",
-                "tags",
-            },
-        },
+        request,
     )
 }
 ```
@@ -311,15 +301,7 @@ client.User.UpdateUser(
         context.TODO(),
         "tenant_id",
         "user_id",
-        &fern.UpdateUserRequest{
-            Body: &fern.User{
-                Name: "name",
-                Tags: []string{
-                    "tags",
-                    "tags",
-                },
-            },
-        },
+        request,
     )
 }
 ```
@@ -381,11 +363,7 @@ client.User.SearchUsers(
         context.TODO(),
         "tenant_id",
         "user_id",
-        &fern.SearchUsersRequest{
-            Limit: fern.Int(
-                1,
-            ),
-        },
+        request,
     )
 }
 ```

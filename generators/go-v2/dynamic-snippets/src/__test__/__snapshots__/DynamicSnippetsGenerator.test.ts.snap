@@ -16,22 +16,23 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := &acmego.GetMetadataRequest{
+		Shallow: acmego.Bool(
+			false,
+		),
+		Tag: []*string{
+			acmego.String(
+				"development",
+			),
+			acmego.String(
+				"public",
+			),
+		},
+		XAPIVersion: "0.0.1",
+	}
 	client.Service.GetMetadata(
 		context.TODO(),
-		&acmego.GetMetadataRequest{
-			Shallow: acmego.Bool(
-				false,
-			),
-			Tag: []*string{
-				acmego.String(
-					"development",
-				),
-				acmego.String(
-					"public",
-				),
-			},
-			XAPIVersion: "0.0.1",
-		},
+		request,
 	)
 }
 "
@@ -53,19 +54,20 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := &acmego.GetMetadataRequest{
+		Shallow: acmego.Bool(
+			false,
+		),
+		Tag: []*string{
+			acmego.String(
+				"development",
+			),
+		},
+		XAPIVersion: "0.0.1",
+	}
 	client.Service.GetMetadata(
 		context.TODO(),
-		&acmego.GetMetadataRequest{
-			Shallow: acmego.Bool(
-				false,
-			),
-			Tag: []*string{
-				acmego.String(
-					"development",
-				),
-			},
-			XAPIVersion: "0.0.1",
-		},
+		request,
 	)
 }
 "
@@ -88,54 +90,55 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	client.Service.CreateBigEntity(
-		context.TODO(),
-		&acmego.BigEntity{
-			CastMember: &acmego.CastMember{
-				Actor: &acmego.Actor{
-					ID:   "john.doe",
-					Name: "John Doe",
-				},
-			},
-			ExtendedMovie: &acmego.ExtendedMovie{
-				Cast: []string{
-					"John Travolta",
-					"Samuel L. Jackson",
-					"Uma Thurman",
-					"Bruce Willis",
-				},
-				ID:     "movie-sda231x",
-				Title:  "Pulp Fiction",
-				From:   "Quentin Tarantino",
-				Rating: 8.5,
-				Tag:    "tag-12efs9dv",
-				Metadata: map[string]any{
-					"academyAward": true,
-					"releaseDate":  "2023-12-08",
-					"ratings": map[string]any{
-						"rottenTomatoes": 97,
-						"imdb":           7.6,
-					},
-				},
-				Revenue: 1000000,
-			},
-			EventInfo: &commons.EventInfo{
-				Metadata: &commons.Metadata{
-					ID: "event-12345",
-					Data: map[string]string{
-						"key1": "val1",
-						"key2": "val2",
-					},
-					JSONString: acmego.String(
-						"abc",
-					),
-				},
-			},
-			Migration: &acmego.Migration{
-				Name:   "Migration 31 Aug",
-				Status: acmego.MigrationStatusRunning,
+	request := &acmego.BigEntity{
+		CastMember: &acmego.CastMember{
+			Actor: &acmego.Actor{
+				ID:   "john.doe",
+				Name: "John Doe",
 			},
 		},
+		ExtendedMovie: &acmego.ExtendedMovie{
+			Cast: []string{
+				"John Travolta",
+				"Samuel L. Jackson",
+				"Uma Thurman",
+				"Bruce Willis",
+			},
+			ID:     "movie-sda231x",
+			Title:  "Pulp Fiction",
+			From:   "Quentin Tarantino",
+			Rating: 8.5,
+			Tag:    "tag-12efs9dv",
+			Metadata: map[string]any{
+				"academyAward": true,
+				"releaseDate":  "2023-12-08",
+				"ratings": map[string]any{
+					"rottenTomatoes": 97,
+					"imdb":           7.6,
+				},
+			},
+			Revenue: 1000000,
+		},
+		EventInfo: &commons.EventInfo{
+			Metadata: &commons.Metadata{
+				ID: "event-12345",
+				Data: map[string]string{
+					"key1": "val1",
+					"key2": "val2",
+				},
+				JSONString: acmego.String(
+					"abc",
+				),
+			},
+		},
+		Migration: &acmego.Migration{
+			Name:   "Migration 31 Aug",
+			Status: acmego.MigrationStatusRunning,
+		},
+	}
+	client.Service.CreateBigEntity(
+		context.TODO(),
+		request,
 	)
 }
 "
@@ -170,31 +173,32 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := &acmego.Movie{
+		ID: "movie-c06a4ad7",
+		Prequel: acmego.String(
+			"movie-cv9b914f",
+		),
+		Title:  "The Boy and the Heron",
+		From:   "Hayao Miyazaki",
+		Rating: 8,
+		Tag:    "development",
+		Metadata: map[string]any{
+			"actors": []any{
+				"Christian Bale",
+				"Florence Pugh",
+				"Willem Dafoe",
+			},
+			"releaseDate": "2023-12-08",
+			"ratings": map[string]any{
+				"rottenTomatoes": 97,
+				"imdb":           7.6,
+			},
+		},
+		Revenue: 1000000,
+	}
 	client.Service.CreateMovie(
 		context.TODO(),
-		&acmego.Movie{
-			ID: "movie-c06a4ad7",
-			Prequel: acmego.String(
-				"movie-cv9b914f",
-			),
-			Title:  "The Boy and the Heron",
-			From:   "Hayao Miyazaki",
-			Rating: 8,
-			Tag:    "development",
-			Metadata: map[string]any{
-				"actors": []any{
-					"Christian Bale",
-					"Florence Pugh",
-					"Willem Dafoe",
-				},
-				"releaseDate": "2023-12-08",
-				"ratings": map[string]any{
-					"rottenTomatoes": 97,
-					"imdb":           7.6,
-				},
-			},
-			Revenue: 1000000,
-		},
+		request,
 	)
 }
 "
@@ -218,54 +222,55 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := &types.ObjectWithOptionalField{
+		String: acmego.String(
+			"string",
+		),
+		Integer: acmego.Int(
+			1,
+		),
+		Long: acmego.Int64(
+			1000000,
+		),
+		Double: acmego.Float64(
+			1.1,
+		),
+		Bool: acmego.Bool(
+			true,
+		),
+		Datetime: acmego.Time(
+			acmego.MustParseDateTime(
+				"2024-01-15T09:30:00Z",
+			),
+		),
+		Date: acmego.Time(
+			acmego.MustParseDateTime(
+				"2023-01-15",
+			),
+		),
+		UUID: acmego.UUID(
+			uuid.MustParse(
+				"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+			),
+		),
+		Base64: []byte("SGVsbG8gd29ybGQh"),
+		List: []string{
+			"list",
+			"list",
+		},
+		Set: []string{
+			"set",
+		},
+		Map: map[int]string{
+			1: "map",
+		},
+		Bigint: acmego.String(
+			"1000000",
+		),
+	}
 	client.Endpoints.Object.GetAndReturnWithOptionalField(
 		context.TODO(),
-		&types.ObjectWithOptionalField{
-			String: acmego.String(
-				"string",
-			),
-			Integer: acmego.Int(
-				1,
-			),
-			Long: acmego.Int64(
-				1000000,
-			),
-			Double: acmego.Float64(
-				1.1,
-			),
-			Bool: acmego.Bool(
-				true,
-			),
-			Datetime: acmego.Time(
-				acmego.MustParseDateTime(
-					"2024-01-15T09:30:00Z",
-				),
-			),
-			Date: acmego.Time(
-				acmego.MustParseDateTime(
-					"2023-01-15",
-				),
-			),
-			UUID: acmego.UUID(
-				uuid.MustParse(
-					"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-				),
-			),
-			Base64: []byte("SGVsbG8gd29ybGQh"),
-			List: []string{
-				"list",
-				"list",
-			},
-			Set: []string{
-				"set",
-			},
-			Map: map[int]string{
-				1: "map",
-			},
-			Bigint: acmego.String(
-				"1000000",
-			),
-		},
+		request,
 	)
 }
 "
@@ -316,19 +321,20 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := []*types.ObjectWithRequiredField{
+		&types.ObjectWithRequiredField{
+			String: "one",
+		},
+		&types.ObjectWithRequiredField{
+			String: "two",
+		},
+		&types.ObjectWithRequiredField{
+			String: "three",
+		},
+	}
 	client.Endpoints.Container.GetAndReturnListOfObjects(
 		context.TODO(),
-		[]*types.ObjectWithRequiredField{
-			&types.ObjectWithRequiredField{
-				String: "one",
-			},
-			&types.ObjectWithRequiredField{
-				String: "two",
-			},
-			&types.ObjectWithRequiredField{
-				String: "three",
-			},
-		},
+		request,
 	)
 }
 "
@@ -349,13 +355,14 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := []string{
+		"one",
+		"two",
+		"three",
+	}
 	client.Endpoints.Container.GetAndReturnListOfPrimitives(
 		context.TODO(),
-		[]string{
-			"one",
-			"two",
-			"three",
-		},
+		request,
 	)
 }
 "
@@ -374,21 +381,25 @@ import (
 
 func do() {
 	client := client.NewClient()
+	request := &acmego.MyRequest{
+		File: strings.NewReader(
+			"Hello, world!",
+		),
+		FileList: []io.Reader{
+			strings.NewReader(
+				"First",
+			),
+			strings.NewReader(
+				"Second",
+			),
+		},
+		MaybeFile: strings.NewReader(
+			"",
+		),
+	}
 	client.Service.Post(
 		context.TODO(),
-		&acmego.MyRequest{
-			File: strings.NewReader(
-				"Hello, world!",
-			),
-			FileList: []io.Reader{
-				strings.NewReader(
-					"First",
-				),
-				strings.NewReader(
-					"Second",
-				),
-			},
-		},
+		request,
 	)
 }
 "
@@ -406,13 +417,14 @@ import (
 
 func do() {
 	client := client.NewClient()
+	request := &acmego.JustFileRequest{
+		File: strings.NewReader(
+			"Hello, world!",
+		),
+	}
 	client.Service.JustFile(
 		context.TODO(),
-		&acmego.JustFileRequest{
-			File: strings.NewReader(
-				"Hello, world!",
-			),
-		},
+		request,
 	)
 }
 "
@@ -430,17 +442,18 @@ import (
 
 func do() {
 	client := client.NewClient()
+	request := &acmego.JustFileWithQueryParamsRequest{
+		Integer: 42,
+		MaybeString: acmego.String(
+			"exists",
+		),
+		File: strings.NewReader(
+			"Hello, world!",
+		),
+	}
 	client.Service.JustFileWithQueryParams(
 		context.TODO(),
-		&acmego.JustFileWithQueryParamsRequest{
-			Integer: 42,
-			MaybeString: acmego.String(
-				"exists",
-			),
-			File: strings.NewReader(
-				"Hello, world!",
-			),
-		},
+		request,
 	)
 }
 "
@@ -485,12 +498,13 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := &acmego.CreateMovieRequest{
+		Title:  "The Matrix",
+		Rating: 8.2,
+	}
 	client.Imdb.CreateMovie(
 		context.TODO(),
-		&acmego.CreateMovieRequest{
-			Title:  "The Matrix",
-			Rating: 8.2,
-		},
+		request,
 	)
 }
 "
@@ -535,11 +549,12 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := &acmego.GetPresignedURLRequest{
+		S3Key: "xyz",
+	}
 	client.S3.GetPresignedURL(
 		context.TODO(),
-		&acmego.GetPresignedURLRequest{
-			S3Key: "xyz",
-		},
+		request,
 	)
 }
 "
@@ -564,11 +579,12 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := &acmego.GetPresignedURLRequest{
+		S3Key: "xyz",
+	}
 	client.S3.GetPresignedURL(
 		context.TODO(),
-		&acmego.GetPresignedURLRequest{
-			S3Key: "xyz",
-		},
+		request,
 	)
 }
 "
@@ -600,22 +616,23 @@ func do() {
 			"https://api.example.com",
 		),
 	)
+	request := &acmego.CreateUserRequest{
+		Username: "john.doe",
+		Tags: []string{
+			"admin",
+		},
+		Metadata: &acmego.Metadata{
+			CreatedAt: acmego.MustParseDateTime(
+				"1980-01-01T00:00:00Z",
+			),
+			UpdatedAt: acmego.MustParseDateTime(
+				"1980-01-01T00:00:00Z",
+			),
+		},
+	}
 	client.Nullable.CreateUser(
 		context.TODO(),
-		&acmego.CreateUserRequest{
-			Username: "john.doe",
-			Tags: []string{
-				"admin",
-			},
-			Metadata: &acmego.Metadata{
-				CreatedAt: acmego.MustParseDateTime(
-					"1980-01-01T00:00:00Z",
-				),
-				UpdatedAt: acmego.MustParseDateTime(
-					"1980-01-01T00:00:00Z",
-				),
-			},
-		},
+		request,
 	)
 }
 "
@@ -649,19 +666,20 @@ func do() {
 			"https://api.example.com",
 		),
 	)
+	request := &acmego.GetUsersRequest{
+		Usernames: []*string{
+			acmego.String(
+				"john.doe",
+			),
+			acmego.String(
+				"jane.doe",
+			),
+		},
+		Tags: []*string{},
+	}
 	client.Nullable.GetUsers(
 		context.TODO(),
-		&acmego.GetUsersRequest{
-			Usernames: []*string{
-				acmego.String(
-					"john.doe",
-				),
-				acmego.String(
-					"jane.doe",
-				),
-			},
-			Tags: []*string{},
-		},
+		request,
 	)
 }
 "
@@ -683,16 +701,17 @@ func do() {
 			"https://api.example.com",
 		),
 	)
+	request := &acmego.User{
+		Password: "password",
+		Profile: &acmego.UserProfile{
+			Name:         "name",
+			Verification: &acmego.UserProfileVerification{},
+			Ssn:          "ssn",
+		},
+	}
 	client.CreateUser(
 		context.TODO(),
-		&acmego.User{
-			Password: "password",
-			Profile: &acmego.UserProfile{
-				Name:         "name",
-				Verification: &acmego.UserProfileVerification{},
-				Ssn:          "ssn",
-			},
-		},
+		request,
 	)
 }
 "
@@ -714,17 +733,18 @@ func do() {
 			"https://api.example.com",
 		),
 	)
+	request := &acmego.User{
+		ID:       "id",
+		Password: "password",
+		Profile: &acmego.UserProfile{
+			Name:         "name",
+			Verification: &acmego.UserProfileVerification{},
+			Ssn:          "ssn",
+		},
+	}
 	client.CreateUser(
 		context.TODO(),
-		&acmego.User{
-			ID:       "id",
-			Password: "password",
-			Profile: &acmego.UserProfile{
-				Name:         "name",
-				Verification: &acmego.UserProfileVerification{},
-				Ssn:          "ssn",
-			},
-		},
+		request,
 	)
 }
 "
@@ -843,22 +863,23 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := &acmego.GetMetadataRequest{
+		Shallow: acmego.Bool(
+			false,
+		),
+		Tag: []*string{
+			acmego.String(
+				"development",
+			),
+			acmego.String(
+				"public",
+			),
+		},
+		XAPIVersion: "0.0.1",
+	}
 	client.Service.GetMetadata(
 		context.TODO(),
-		&acmego.GetMetadataRequest{
-			Shallow: acmego.Bool(
-				false,
-			),
-			Tag: []*string{
-				acmego.String(
-					"development",
-				),
-				acmego.String(
-					"public",
-				),
-			},
-			XAPIVersion: "0.0.1",
-		},
+		request,
 	)
 }
 "
@@ -880,19 +901,20 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := &acmego.GetMetadataRequest{
+		Shallow: acmego.Bool(
+			false,
+		),
+		Tag: []*string{
+			acmego.String(
+				"development",
+			),
+		},
+		XAPIVersion: "0.0.1",
+	}
 	client.Service.GetMetadata(
 		context.TODO(),
-		&acmego.GetMetadataRequest{
-			Shallow: acmego.Bool(
-				false,
-			),
-			Tag: []*string{
-				acmego.String(
-					"development",
-				),
-			},
-			XAPIVersion: "0.0.1",
-		},
+		request,
 	)
 }
 "
@@ -915,54 +937,55 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	client.Service.CreateBigEntity(
-		context.TODO(),
-		&acmego.BigEntity{
-			CastMember: &acmego.CastMember{
-				Actor: &acmego.Actor{
-					ID:   "john.doe",
-					Name: "John Doe",
-				},
-			},
-			ExtendedMovie: &acmego.ExtendedMovie{
-				Cast: []string{
-					"John Travolta",
-					"Samuel L. Jackson",
-					"Uma Thurman",
-					"Bruce Willis",
-				},
-				ID:     "movie-sda231x",
-				Title:  "Pulp Fiction",
-				From:   "Quentin Tarantino",
-				Rating: 8.5,
-				Tag:    "tag-12efs9dv",
-				Metadata: map[string]any{
-					"academyAward": true,
-					"releaseDate":  "2023-12-08",
-					"ratings": map[string]any{
-						"rottenTomatoes": 97,
-						"imdb":           7.6,
-					},
-				},
-				Revenue: 1000000,
-			},
-			EventInfo: &commons.EventInfo{
-				Metadata: &commons.Metadata{
-					ID: "event-12345",
-					Data: map[string]string{
-						"key1": "val1",
-						"key2": "val2",
-					},
-					JSONString: acmego.String(
-						"abc",
-					),
-				},
-			},
-			Migration: &acmego.Migration{
-				Name:   "Migration 31 Aug",
-				Status: acmego.MigrationStatusRunning,
+	request := &acmego.BigEntity{
+		CastMember: &acmego.CastMember{
+			Actor: &acmego.Actor{
+				ID:   "john.doe",
+				Name: "John Doe",
 			},
 		},
+		ExtendedMovie: &acmego.ExtendedMovie{
+			Cast: []string{
+				"John Travolta",
+				"Samuel L. Jackson",
+				"Uma Thurman",
+				"Bruce Willis",
+			},
+			ID:     "movie-sda231x",
+			Title:  "Pulp Fiction",
+			From:   "Quentin Tarantino",
+			Rating: 8.5,
+			Tag:    "tag-12efs9dv",
+			Metadata: map[string]any{
+				"academyAward": true,
+				"releaseDate":  "2023-12-08",
+				"ratings": map[string]any{
+					"rottenTomatoes": 97,
+					"imdb":           7.6,
+				},
+			},
+			Revenue: 1000000,
+		},
+		EventInfo: &commons.EventInfo{
+			Metadata: &commons.Metadata{
+				ID: "event-12345",
+				Data: map[string]string{
+					"key1": "val1",
+					"key2": "val2",
+				},
+				JSONString: acmego.String(
+					"abc",
+				),
+			},
+		},
+		Migration: &acmego.Migration{
+			Name:   "Migration 31 Aug",
+			Status: acmego.MigrationStatusRunning,
+		},
+	}
+	client.Service.CreateBigEntity(
+		context.TODO(),
+		request,
 	)
 }
 "
@@ -997,31 +1020,32 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := &acmego.Movie{
+		ID: "movie-c06a4ad7",
+		Prequel: acmego.String(
+			"movie-cv9b914f",
+		),
+		Title:  "The Boy and the Heron",
+		From:   "Hayao Miyazaki",
+		Rating: 8,
+		Tag:    "development",
+		Metadata: map[string]any{
+			"actors": []any{
+				"Christian Bale",
+				"Florence Pugh",
+				"Willem Dafoe",
+			},
+			"releaseDate": "2023-12-08",
+			"ratings": map[string]any{
+				"rottenTomatoes": 97,
+				"imdb":           7.6,
+			},
+		},
+		Revenue: 1000000,
+	}
 	client.Service.CreateMovie(
 		context.TODO(),
-		&acmego.Movie{
-			ID: "movie-c06a4ad7",
-			Prequel: acmego.String(
-				"movie-cv9b914f",
-			),
-			Title:  "The Boy and the Heron",
-			From:   "Hayao Miyazaki",
-			Rating: 8,
-			Tag:    "development",
-			Metadata: map[string]any{
-				"actors": []any{
-					"Christian Bale",
-					"Florence Pugh",
-					"Willem Dafoe",
-				},
-				"releaseDate": "2023-12-08",
-				"ratings": map[string]any{
-					"rottenTomatoes": 97,
-					"imdb":           7.6,
-				},
-			},
-			Revenue: 1000000,
-		},
+		request,
 	)
 }
 "
@@ -1045,54 +1069,55 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := &types.ObjectWithOptionalField{
+		String: acmego.String(
+			"string",
+		),
+		Integer: acmego.Int(
+			1,
+		),
+		Long: acmego.Int64(
+			1000000,
+		),
+		Double: acmego.Float64(
+			1.1,
+		),
+		Bool: acmego.Bool(
+			true,
+		),
+		Datetime: acmego.Time(
+			acmego.MustParseDateTime(
+				"2024-01-15T09:30:00Z",
+			),
+		),
+		Date: acmego.Time(
+			acmego.MustParseDateTime(
+				"2023-01-15",
+			),
+		),
+		UUID: acmego.UUID(
+			uuid.MustParse(
+				"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+			),
+		),
+		Base64: []byte("SGVsbG8gd29ybGQh"),
+		List: []string{
+			"list",
+			"list",
+		},
+		Set: []string{
+			"set",
+		},
+		Map: map[int]string{
+			1: "map",
+		},
+		Bigint: acmego.String(
+			"1000000",
+		),
+	}
 	client.Endpoints.Object.GetAndReturnWithOptionalField(
 		context.TODO(),
-		&types.ObjectWithOptionalField{
-			String: acmego.String(
-				"string",
-			),
-			Integer: acmego.Int(
-				1,
-			),
-			Long: acmego.Int64(
-				1000000,
-			),
-			Double: acmego.Float64(
-				1.1,
-			),
-			Bool: acmego.Bool(
-				true,
-			),
-			Datetime: acmego.Time(
-				acmego.MustParseDateTime(
-					"2024-01-15T09:30:00Z",
-				),
-			),
-			Date: acmego.Time(
-				acmego.MustParseDateTime(
-					"2023-01-15",
-				),
-			),
-			UUID: acmego.UUID(
-				uuid.MustParse(
-					"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-				),
-			),
-			Base64: []byte("SGVsbG8gd29ybGQh"),
-			List: []string{
-				"list",
-				"list",
-			},
-			Set: []string{
-				"set",
-			},
-			Map: map[int]string{
-				1: "map",
-			},
-			Bigint: acmego.String(
-				"1000000",
-			),
-		},
+		request,
 	)
 }
 "
@@ -1143,19 +1168,20 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := []*types.ObjectWithRequiredField{
+		&types.ObjectWithRequiredField{
+			String: "one",
+		},
+		&types.ObjectWithRequiredField{
+			String: "two",
+		},
+		&types.ObjectWithRequiredField{
+			String: "three",
+		},
+	}
 	client.Endpoints.Container.GetAndReturnListOfObjects(
 		context.TODO(),
-		[]*types.ObjectWithRequiredField{
-			&types.ObjectWithRequiredField{
-				String: "one",
-			},
-			&types.ObjectWithRequiredField{
-				String: "two",
-			},
-			&types.ObjectWithRequiredField{
-				String: "three",
-			},
-		},
+		request,
 	)
 }
 "
@@ -1176,13 +1202,14 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := []string{
+		"one",
+		"two",
+		"three",
+	}
 	client.Endpoints.Container.GetAndReturnListOfPrimitives(
 		context.TODO(),
-		[]string{
-			"one",
-			"two",
-			"three",
-		},
+		request,
 	)
 }
 "
@@ -1201,21 +1228,25 @@ import (
 
 func do() {
 	client := client.NewClient()
+	request := &acmego.MyRequest{
+		File: strings.NewReader(
+			"Hello, world!",
+		),
+		FileList: []io.Reader{
+			strings.NewReader(
+				"First",
+			),
+			strings.NewReader(
+				"Second",
+			),
+		},
+		MaybeFile: strings.NewReader(
+			"",
+		),
+	}
 	client.Service.Post(
 		context.TODO(),
-		&acmego.MyRequest{
-			File: strings.NewReader(
-				"Hello, world!",
-			),
-			FileList: []io.Reader{
-				strings.NewReader(
-					"First",
-				),
-				strings.NewReader(
-					"Second",
-				),
-			},
-		},
+		request,
 	)
 }
 "
@@ -1233,13 +1264,14 @@ import (
 
 func do() {
 	client := client.NewClient()
+	request := &acmego.JustFileRequest{
+		File: strings.NewReader(
+			"Hello, world!",
+		),
+	}
 	client.Service.JustFile(
 		context.TODO(),
-		&acmego.JustFileRequest{
-			File: strings.NewReader(
-				"Hello, world!",
-			),
-		},
+		request,
 	)
 }
 "
@@ -1257,17 +1289,18 @@ import (
 
 func do() {
 	client := client.NewClient()
+	request := &acmego.JustFileWithQueryParamsRequest{
+		Integer: 42,
+		MaybeString: acmego.String(
+			"exists",
+		),
+		File: strings.NewReader(
+			"Hello, world!",
+		),
+	}
 	client.Service.JustFileWithQueryParams(
 		context.TODO(),
-		&acmego.JustFileWithQueryParamsRequest{
-			Integer: 42,
-			MaybeString: acmego.String(
-				"exists",
-			),
-			File: strings.NewReader(
-				"Hello, world!",
-			),
-		},
+		request,
 	)
 }
 "
@@ -1312,12 +1345,13 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := &acmego.CreateMovieRequest{
+		Title:  "The Matrix",
+		Rating: 8.2,
+	}
 	client.Imdb.CreateMovie(
 		context.TODO(),
-		&acmego.CreateMovieRequest{
-			Title:  "The Matrix",
-			Rating: 8.2,
-		},
+		request,
 	)
 }
 "
@@ -1362,11 +1396,12 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := &acmego.GetPresignedURLRequest{
+		S3Key: "xyz",
+	}
 	client.S3.GetPresignedURL(
 		context.TODO(),
-		&acmego.GetPresignedURLRequest{
-			S3Key: "xyz",
-		},
+		request,
 	)
 }
 "
@@ -1391,11 +1426,12 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := &acmego.GetPresignedURLRequest{
+		S3Key: "xyz",
+	}
 	client.S3.GetPresignedURL(
 		context.TODO(),
-		&acmego.GetPresignedURLRequest{
-			S3Key: "xyz",
-		},
+		request,
 	)
 }
 "
@@ -1427,22 +1463,23 @@ func do() {
 			"https://api.example.com",
 		),
 	)
+	request := &acmego.CreateUserRequest{
+		Username: "john.doe",
+		Tags: []string{
+			"admin",
+		},
+		Metadata: &acmego.Metadata{
+			CreatedAt: acmego.MustParseDateTime(
+				"1980-01-01T00:00:00Z",
+			),
+			UpdatedAt: acmego.MustParseDateTime(
+				"1980-01-01T00:00:00Z",
+			),
+		},
+	}
 	client.Nullable.CreateUser(
 		context.TODO(),
-		&acmego.CreateUserRequest{
-			Username: "john.doe",
-			Tags: []string{
-				"admin",
-			},
-			Metadata: &acmego.Metadata{
-				CreatedAt: acmego.MustParseDateTime(
-					"1980-01-01T00:00:00Z",
-				),
-				UpdatedAt: acmego.MustParseDateTime(
-					"1980-01-01T00:00:00Z",
-				),
-			},
-		},
+		request,
 	)
 }
 "
@@ -1476,19 +1513,20 @@ func do() {
 			"https://api.example.com",
 		),
 	)
+	request := &acmego.GetUsersRequest{
+		Usernames: []*string{
+			acmego.String(
+				"john.doe",
+			),
+			acmego.String(
+				"jane.doe",
+			),
+		},
+		Tags: []*string{},
+	}
 	client.Nullable.GetUsers(
 		context.TODO(),
-		&acmego.GetUsersRequest{
-			Usernames: []*string{
-				acmego.String(
-					"john.doe",
-				),
-				acmego.String(
-					"jane.doe",
-				),
-			},
-			Tags: []*string{},
-		},
+		request,
 	)
 }
 "
@@ -1510,16 +1548,17 @@ func do() {
 			"https://api.example.com",
 		),
 	)
+	request := &acmego.User{
+		Password: "password",
+		Profile: &acmego.UserProfile{
+			Name:         "name",
+			Verification: &acmego.UserProfileVerification{},
+			Ssn:          "ssn",
+		},
+	}
 	client.CreateUser(
 		context.TODO(),
-		&acmego.User{
-			Password: "password",
-			Profile: &acmego.UserProfile{
-				Name:         "name",
-				Verification: &acmego.UserProfileVerification{},
-				Ssn:          "ssn",
-			},
-		},
+		request,
 	)
 }
 "
@@ -1541,17 +1580,18 @@ func do() {
 			"https://api.example.com",
 		),
 	)
+	request := &acmego.User{
+		ID:       "id",
+		Password: "password",
+		Profile: &acmego.UserProfile{
+			Name:         "name",
+			Verification: &acmego.UserProfileVerification{},
+			Ssn:          "ssn",
+		},
+	}
 	client.CreateUser(
 		context.TODO(),
-		&acmego.User{
-			ID:       "id",
-			Password: "password",
-			Profile: &acmego.UserProfile{
-				Name:         "name",
-				Verification: &acmego.UserProfileVerification{},
-				Ssn:          "ssn",
-			},
-		},
+		request,
 	)
 }
 "
@@ -1670,22 +1710,23 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := &acmego.GetMetadataRequest{
+		Shallow: acmego.Bool(
+			false,
+		),
+		Tag: []*string{
+			acmego.String(
+				"development",
+			),
+			acmego.String(
+				"public",
+			),
+		},
+		XAPIVersion: "0.0.1",
+	}
 	client.Service.GetMetadata(
 		context.TODO(),
-		&acmego.GetMetadataRequest{
-			Shallow: acmego.Bool(
-				false,
-			),
-			Tag: []*string{
-				acmego.String(
-					"development",
-				),
-				acmego.String(
-					"public",
-				),
-			},
-			XAPIVersion: "0.0.1",
-		},
+		request,
 	)
 }
 "
@@ -1707,19 +1748,20 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := &acmego.GetMetadataRequest{
+		Shallow: acmego.Bool(
+			false,
+		),
+		Tag: []*string{
+			acmego.String(
+				"development",
+			),
+		},
+		XAPIVersion: "0.0.1",
+	}
 	client.Service.GetMetadata(
 		context.TODO(),
-		&acmego.GetMetadataRequest{
-			Shallow: acmego.Bool(
-				false,
-			),
-			Tag: []*string{
-				acmego.String(
-					"development",
-				),
-			},
-			XAPIVersion: "0.0.1",
-		},
+		request,
 	)
 }
 "
@@ -1742,54 +1784,55 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
-	client.Service.CreateBigEntity(
-		context.TODO(),
-		&acmego.BigEntity{
-			CastMember: &acmego.CastMember{
-				Actor: &acmego.Actor{
-					ID:   "john.doe",
-					Name: "John Doe",
-				},
-			},
-			ExtendedMovie: &acmego.ExtendedMovie{
-				Cast: []string{
-					"John Travolta",
-					"Samuel L. Jackson",
-					"Uma Thurman",
-					"Bruce Willis",
-				},
-				ID:     "movie-sda231x",
-				Title:  "Pulp Fiction",
-				From:   "Quentin Tarantino",
-				Rating: 8.5,
-				Tag:    "tag-12efs9dv",
-				Metadata: map[string]any{
-					"academyAward": true,
-					"releaseDate":  "2023-12-08",
-					"ratings": map[string]any{
-						"rottenTomatoes": 97,
-						"imdb":           7.6,
-					},
-				},
-				Revenue: 1000000,
-			},
-			EventInfo: &commons.EventInfo{
-				Metadata: &commons.Metadata{
-					ID: "event-12345",
-					Data: map[string]string{
-						"key1": "val1",
-						"key2": "val2",
-					},
-					JSONString: acmego.String(
-						"abc",
-					),
-				},
-			},
-			Migration: &acmego.Migration{
-				Name:   "Migration 31 Aug",
-				Status: acmego.MigrationStatusRunning,
+	request := &acmego.BigEntity{
+		CastMember: &acmego.CastMember{
+			Actor: &acmego.Actor{
+				ID:   "john.doe",
+				Name: "John Doe",
 			},
 		},
+		ExtendedMovie: &acmego.ExtendedMovie{
+			Cast: []string{
+				"John Travolta",
+				"Samuel L. Jackson",
+				"Uma Thurman",
+				"Bruce Willis",
+			},
+			ID:     "movie-sda231x",
+			Title:  "Pulp Fiction",
+			From:   "Quentin Tarantino",
+			Rating: 8.5,
+			Tag:    "tag-12efs9dv",
+			Metadata: map[string]any{
+				"academyAward": true,
+				"releaseDate":  "2023-12-08",
+				"ratings": map[string]any{
+					"rottenTomatoes": 97,
+					"imdb":           7.6,
+				},
+			},
+			Revenue: 1000000,
+		},
+		EventInfo: &commons.EventInfo{
+			Metadata: &commons.Metadata{
+				ID: "event-12345",
+				Data: map[string]string{
+					"key1": "val1",
+					"key2": "val2",
+				},
+				JSONString: acmego.String(
+					"abc",
+				),
+			},
+		},
+		Migration: &acmego.Migration{
+			Name:   "Migration 31 Aug",
+			Status: acmego.MigrationStatusRunning,
+		},
+	}
+	client.Service.CreateBigEntity(
+		context.TODO(),
+		request,
 	)
 }
 "
@@ -1824,31 +1867,32 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := &acmego.Movie{
+		ID: "movie-c06a4ad7",
+		Prequel: acmego.String(
+			"movie-cv9b914f",
+		),
+		Title:  "The Boy and the Heron",
+		From:   "Hayao Miyazaki",
+		Rating: 8,
+		Tag:    "development",
+		Metadata: map[string]any{
+			"actors": []any{
+				"Christian Bale",
+				"Florence Pugh",
+				"Willem Dafoe",
+			},
+			"releaseDate": "2023-12-08",
+			"ratings": map[string]any{
+				"rottenTomatoes": 97,
+				"imdb":           7.6,
+			},
+		},
+		Revenue: 1000000,
+	}
 	client.Service.CreateMovie(
 		context.TODO(),
-		&acmego.Movie{
-			ID: "movie-c06a4ad7",
-			Prequel: acmego.String(
-				"movie-cv9b914f",
-			),
-			Title:  "The Boy and the Heron",
-			From:   "Hayao Miyazaki",
-			Rating: 8,
-			Tag:    "development",
-			Metadata: map[string]any{
-				"actors": []any{
-					"Christian Bale",
-					"Florence Pugh",
-					"Willem Dafoe",
-				},
-				"releaseDate": "2023-12-08",
-				"ratings": map[string]any{
-					"rottenTomatoes": 97,
-					"imdb":           7.6,
-				},
-			},
-			Revenue: 1000000,
-		},
+		request,
 	)
 }
 "
@@ -1872,54 +1916,55 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := &types.ObjectWithOptionalField{
+		String: acmego.String(
+			"string",
+		),
+		Integer: acmego.Int(
+			1,
+		),
+		Long: acmego.Int64(
+			1000000,
+		),
+		Double: acmego.Float64(
+			1.1,
+		),
+		Bool: acmego.Bool(
+			true,
+		),
+		Datetime: acmego.Time(
+			acmego.MustParseDateTime(
+				"2024-01-15T09:30:00Z",
+			),
+		),
+		Date: acmego.Time(
+			acmego.MustParseDateTime(
+				"2023-01-15",
+			),
+		),
+		UUID: acmego.UUID(
+			uuid.MustParse(
+				"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+			),
+		),
+		Base64: []byte("SGVsbG8gd29ybGQh"),
+		List: []string{
+			"list",
+			"list",
+		},
+		Set: []string{
+			"set",
+		},
+		Map: map[int]string{
+			1: "map",
+		},
+		Bigint: acmego.String(
+			"1000000",
+		),
+	}
 	client.Endpoints.Object.GetAndReturnWithOptionalField(
 		context.TODO(),
-		&types.ObjectWithOptionalField{
-			String: acmego.String(
-				"string",
-			),
-			Integer: acmego.Int(
-				1,
-			),
-			Long: acmego.Int64(
-				1000000,
-			),
-			Double: acmego.Float64(
-				1.1,
-			),
-			Bool: acmego.Bool(
-				true,
-			),
-			Datetime: acmego.Time(
-				acmego.MustParseDateTime(
-					"2024-01-15T09:30:00Z",
-				),
-			),
-			Date: acmego.Time(
-				acmego.MustParseDateTime(
-					"2023-01-15",
-				),
-			),
-			UUID: acmego.UUID(
-				uuid.MustParse(
-					"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-				),
-			),
-			Base64: []byte("SGVsbG8gd29ybGQh"),
-			List: []string{
-				"list",
-				"list",
-			},
-			Set: []string{
-				"set",
-			},
-			Map: map[int]string{
-				1: "map",
-			},
-			Bigint: acmego.String(
-				"1000000",
-			),
-		},
+		request,
 	)
 }
 "
@@ -1970,19 +2015,20 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := []*types.ObjectWithRequiredField{
+		&types.ObjectWithRequiredField{
+			String: "one",
+		},
+		&types.ObjectWithRequiredField{
+			String: "two",
+		},
+		&types.ObjectWithRequiredField{
+			String: "three",
+		},
+	}
 	client.Endpoints.Container.GetAndReturnListOfObjects(
 		context.TODO(),
-		[]*types.ObjectWithRequiredField{
-			&types.ObjectWithRequiredField{
-				String: "one",
-			},
-			&types.ObjectWithRequiredField{
-				String: "two",
-			},
-			&types.ObjectWithRequiredField{
-				String: "three",
-			},
-		},
+		request,
 	)
 }
 "
@@ -2003,13 +2049,14 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := []string{
+		"one",
+		"two",
+		"three",
+	}
 	client.Endpoints.Container.GetAndReturnListOfPrimitives(
 		context.TODO(),
-		[]string{
-			"one",
-			"two",
-			"three",
-		},
+		request,
 	)
 }
 "
@@ -2028,21 +2075,25 @@ import (
 
 func do() {
 	client := client.NewFernClient()
+	request := &acmego.MyRequest{
+		File: strings.NewReader(
+			"Hello, world!",
+		),
+		FileList: []io.Reader{
+			strings.NewReader(
+				"First",
+			),
+			strings.NewReader(
+				"Second",
+			),
+		},
+		MaybeFile: strings.NewReader(
+			"",
+		),
+	}
 	client.Service.Post(
 		context.TODO(),
-		&acmego.MyRequest{
-			File: strings.NewReader(
-				"Hello, world!",
-			),
-			FileList: []io.Reader{
-				strings.NewReader(
-					"First",
-				),
-				strings.NewReader(
-					"Second",
-				),
-			},
-		},
+		request,
 	)
 }
 "
@@ -2060,13 +2111,14 @@ import (
 
 func do() {
 	client := client.NewFernClient()
+	request := &acmego.JustFileRequest{
+		File: strings.NewReader(
+			"Hello, world!",
+		),
+	}
 	client.Service.JustFile(
 		context.TODO(),
-		&acmego.JustFileRequest{
-			File: strings.NewReader(
-				"Hello, world!",
-			),
-		},
+		request,
 	)
 }
 "
@@ -2084,17 +2136,18 @@ import (
 
 func do() {
 	client := client.NewFernClient()
+	request := &acmego.JustFileWithQueryParamsRequest{
+		Integer: 42,
+		MaybeString: acmego.String(
+			"exists",
+		),
+		File: strings.NewReader(
+			"Hello, world!",
+		),
+	}
 	client.Service.JustFileWithQueryParams(
 		context.TODO(),
-		&acmego.JustFileWithQueryParamsRequest{
-			Integer: 42,
-			MaybeString: acmego.String(
-				"exists",
-			),
-			File: strings.NewReader(
-				"Hello, world!",
-			),
-		},
+		request,
 	)
 }
 "
@@ -2139,12 +2192,13 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := &acmego.CreateMovieRequest{
+		Title:  "The Matrix",
+		Rating: 8.2,
+	}
 	client.Imdb.CreateMovie(
 		context.TODO(),
-		&acmego.CreateMovieRequest{
-			Title:  "The Matrix",
-			Rating: 8.2,
-		},
+		request,
 	)
 }
 "
@@ -2189,11 +2243,12 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := &acmego.GetPresignedURLRequest{
+		S3Key: "xyz",
+	}
 	client.S3.GetPresignedURL(
 		context.TODO(),
-		&acmego.GetPresignedURLRequest{
-			S3Key: "xyz",
-		},
+		request,
 	)
 }
 "
@@ -2218,11 +2273,12 @@ func do() {
 			"<YOUR_API_KEY>",
 		),
 	)
+	request := &acmego.GetPresignedURLRequest{
+		S3Key: "xyz",
+	}
 	client.S3.GetPresignedURL(
 		context.TODO(),
-		&acmego.GetPresignedURLRequest{
-			S3Key: "xyz",
-		},
+		request,
 	)
 }
 "
@@ -2254,22 +2310,23 @@ func do() {
 			"https://api.example.com",
 		),
 	)
+	request := &acmego.CreateUserRequest{
+		Username: "john.doe",
+		Tags: []string{
+			"admin",
+		},
+		Metadata: &acmego.Metadata{
+			CreatedAt: acmego.MustParseDateTime(
+				"1980-01-01T00:00:00Z",
+			),
+			UpdatedAt: acmego.MustParseDateTime(
+				"1980-01-01T00:00:00Z",
+			),
+		},
+	}
 	client.Nullable.CreateUser(
 		context.TODO(),
-		&acmego.CreateUserRequest{
-			Username: "john.doe",
-			Tags: []string{
-				"admin",
-			},
-			Metadata: &acmego.Metadata{
-				CreatedAt: acmego.MustParseDateTime(
-					"1980-01-01T00:00:00Z",
-				),
-				UpdatedAt: acmego.MustParseDateTime(
-					"1980-01-01T00:00:00Z",
-				),
-			},
-		},
+		request,
 	)
 }
 "
@@ -2303,19 +2360,20 @@ func do() {
 			"https://api.example.com",
 		),
 	)
+	request := &acmego.GetUsersRequest{
+		Usernames: []*string{
+			acmego.String(
+				"john.doe",
+			),
+			acmego.String(
+				"jane.doe",
+			),
+		},
+		Tags: []*string{},
+	}
 	client.Nullable.GetUsers(
 		context.TODO(),
-		&acmego.GetUsersRequest{
-			Usernames: []*string{
-				acmego.String(
-					"john.doe",
-				),
-				acmego.String(
-					"jane.doe",
-				),
-			},
-			Tags: []*string{},
-		},
+		request,
 	)
 }
 "
@@ -2337,16 +2395,17 @@ func do() {
 			"https://api.example.com",
 		),
 	)
+	request := &acmego.User{
+		Password: "password",
+		Profile: &acmego.UserProfile{
+			Name:         "name",
+			Verification: &acmego.UserProfileVerification{},
+			Ssn:          "ssn",
+		},
+	}
 	client.CreateUser(
 		context.TODO(),
-		&acmego.User{
-			Password: "password",
-			Profile: &acmego.UserProfile{
-				Name:         "name",
-				Verification: &acmego.UserProfileVerification{},
-				Ssn:          "ssn",
-			},
-		},
+		request,
 	)
 }
 "
@@ -2368,17 +2427,18 @@ func do() {
 			"https://api.example.com",
 		),
 	)
+	request := &acmego.User{
+		ID:       "id",
+		Password: "password",
+		Profile: &acmego.UserProfile{
+			Name:         "name",
+			Verification: &acmego.UserProfileVerification{},
+			Ssn:          "ssn",
+		},
+	}
 	client.CreateUser(
 		context.TODO(),
-		&acmego.User{
-			ID:       "id",
-			Password: "password",
-			Profile: &acmego.UserProfile{
-				Name:         "name",
-				Verification: &acmego.UserProfileVerification{},
-				Ssn:          "ssn",
-			},
-		},
+		request,
 	)
 }
 "

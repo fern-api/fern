@@ -275,7 +275,9 @@ public final class JustFileWithQueryParamsRequest {
         @JsonSetter(value = "listOfStrings", nulls = Nulls.SKIP)
         public _FinalStage listOfStrings(List<String> listOfStrings) {
             this.listOfStrings.clear();
-            this.listOfStrings.addAll(listOfStrings);
+            if (listOfStrings != null) {
+                this.listOfStrings.addAll(listOfStrings);
+            }
             return this;
         }
 

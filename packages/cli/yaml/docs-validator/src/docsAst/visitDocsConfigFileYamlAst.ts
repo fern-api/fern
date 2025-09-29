@@ -43,6 +43,7 @@ export async function visitDocsConfigFileYamlAst({
         analytics: noop,
         aiChat: noop,
         aiSearch: noop,
+        pageActions: noop,
         announcement: noop,
         backgroundImage: async (background) => {
             if (background == null) {

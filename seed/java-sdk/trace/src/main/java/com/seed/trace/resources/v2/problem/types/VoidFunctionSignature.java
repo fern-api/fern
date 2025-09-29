@@ -81,7 +81,9 @@ public final class VoidFunctionSignature {
         @JsonSetter(value = "parameters", nulls = Nulls.SKIP)
         public Builder parameters(List<Parameter> parameters) {
             this.parameters.clear();
-            this.parameters.addAll(parameters);
+            if (parameters != null) {
+                this.parameters.addAll(parameters);
+            }
             return this;
         }
 

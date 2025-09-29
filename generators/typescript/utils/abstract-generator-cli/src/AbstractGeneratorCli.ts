@@ -3,16 +3,22 @@ import {
     GeneratorNotificationService,
     NopGeneratorNotificationService,
     parseGeneratorConfig,
-    parseIR
+    parseIR,
+    type RawGithubConfig,
+    type ResolvedGithubConfig,
+    resolveGitHubConfig
 } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
+import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { FernIr, serialization } from "@fern-fern/ir-sdk";
 import { AuthScheme, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { constructNpmPackage, NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
-
+import { writeFile } from "fs/promises";
+import { tmpdir } from "os";
+import tmp from "tmp-promise";
 import { publishPackage } from "./publishPackage";
 import { writeGitHubWorkflows } from "./writeGitHubWorkflows";
 
@@ -108,7 +114,6 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 AbsoluteFilePath.of(config.output.path),
                 RelativeFilePath.of(options?.outputSubDirectory ?? "")
             );
-            await Promise.all([typescriptProject.generateLockfile(logger), typescriptProject.format(logger)]);
             await config.output.mode._visit<void | Promise<void>>({
                 publish: async () => {
                     await publishPackage({
@@ -119,6 +124,11 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         typescriptProject,
                         shouldTolerateRepublish: this.shouldTolerateRepublish(customConfig)
                     });
+                    await Promise.all([
+                        typescriptProject.installDependencies(logger),
+                        typescriptProject.format(logger)
+                    ]);
+                    await typescriptProject.build(logger);
                     await typescriptProject.npmPackTo({
                         logger,
                         destinationPath,
@@ -127,7 +137,6 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     });
                 },
                 github: async (githubOutputMode) => {
-                    await typescriptProject.deleteGitIgnoredFiles(logger);
                     await typescriptProject.writeArbitraryFiles(async (pathToProject) => {
                         await writeGitHubWorkflows({
                             githubOutputMode,
@@ -138,14 +147,33 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                             packageManager: this.getPackageManager(customConfig)
                         });
                     });
+                    await Promise.all([
+                        typescriptProject.generateLockfile(logger),
+                        typescriptProject.format(logger),
+                        typescriptProject.deleteGitIgnoredFiles(logger)
+                    ]);
                     await typescriptProject.copyProjectTo({
                         logger,
                         destinationPath,
                         zipFilename: OUTPUT_ZIP_FILENAME,
                         unzipOutput: options?.unzipOutput
                     });
+                    if (ir.selfHosted) {
+                        const tmpDir = await tmp.dir();
+                        await typescriptProject.copyProjectTo({
+                            destinationPath: AbsoluteFilePath.of(tmpDir.path),
+                            zipFilename: OUTPUT_ZIP_FILENAME,
+                            unzipOutput: true,
+                            logger
+                        });
+                        await this.pushToGitHub(ir, tmpDir.path, logger);
+                    }
                 },
                 downloadFiles: async () => {
+                    await Promise.all([
+                        typescriptProject.installDependencies(logger),
+                        typescriptProject.format(logger)
+                    ]);
                     if (this.shouldGenerateFullProject(ir)) {
                         await typescriptProject.copyProjectTo({
                             destinationPath,
@@ -164,6 +192,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         });
                         return;
                     }
+                    await typescriptProject.build(logger);
                     await typescriptProject.copyDistTo({
                         destinationPath,
                         zipFilename: OUTPUT_ZIP_FILENAME,
@@ -230,6 +259,39 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             default:
                 assertNever(publishConfig);
         }
+    }
+
+    private async pushToGitHub(
+        ir: IntermediateRepresentation,
+        sourceDirectory: string,
+        logger: Logger
+    ): Promise<string> {
+        const rawGithubConfig = this.getRawGitHubConfig({ ir, sourceDirectory });
+        const githubConfig = resolveGitHubConfig({ rawGithubConfig, logger });
+        const file = await tmp.file();
+        await writeFile(file.path, JSON.stringify(githubConfig));
+        const filePath = AbsoluteFilePath.of(file.path);
+        const cmd = githubConfig.mode === "pull-request" ? "pr" : "push";
+        const args = ["github", cmd, "--config", filePath];
+        const loggingExecutable = createLoggingExecutable("generator-cli", { cwd: process.cwd(), logger });
+        const content = await loggingExecutable(args);
+        return content.stdout;
+    }
+
+    public getRawGitHubConfig({
+        ir,
+        sourceDirectory
+    }: {
+        ir: IntermediateRepresentation;
+        sourceDirectory: string;
+    }): RawGithubConfig {
+        return {
+            sourceDirectory,
+            type: ir.publishConfig?.type,
+            uri: ir.publishConfig?.type === "github" ? ir.publishConfig.uri : undefined,
+            token: ir.publishConfig?.type === "github" ? ir.publishConfig.token : undefined,
+            mode: ir.publishConfig?.type === "github" ? ir.publishConfig.mode : undefined
+        };
     }
 }
 

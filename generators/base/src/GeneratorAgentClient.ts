@@ -9,12 +9,13 @@ const GENERATOR_AGENT_NPM_PACKAGE = "@fern-api/generator-cli";
 export class GeneratorAgentClient {
     private logger: Logger;
     private skipInstall: boolean;
-    private cli: LoggingExecutable | undefined;
+    private installAttempted: boolean;
     private selfHosted: boolean;
 
     constructor({ logger, skipInstall, selfHosted }: { logger: Logger; skipInstall?: boolean; selfHosted?: boolean }) {
         this.logger = logger;
         this.skipInstall = skipInstall ?? false;
+        this.installAttempted = false;
         this.selfHosted = selfHosted ?? false;
     }
 
@@ -23,16 +24,23 @@ export class GeneratorAgentClient {
             config: readmeConfig
         });
         const args = ["generate", "readme", "--config", readmeConfigFilepath];
-        const cli = await this.getOrInstall();
+        const cli = await this.getOrInstall({ doNotPipeOutput: true });
         const content = await cli(args);
         return content.stdout;
     }
 
-    public async pushToGitHub<GitHubConfig>({ githubConfig }: { githubConfig: GitHubConfig }): Promise<string> {
+    public async pushToGitHub<GitHubConfig>({
+        githubConfig,
+        withPullRequest
+    }: {
+        githubConfig: GitHubConfig;
+        withPullRequest?: boolean;
+    }): Promise<string> {
         const githubConfigFilepath = await this.writeConfig({
             config: githubConfig
         });
-        const args = ["github", "push", "--config", githubConfigFilepath];
+        const cmd = withPullRequest ? "pr" : "push";
+        const args = ["github", cmd, "--config", githubConfigFilepath];
         const cli = await this.getOrInstall();
 
         const content = await cli(args);
@@ -48,7 +56,7 @@ export class GeneratorAgentClient {
             config: referenceConfig
         });
         const args = ["generate-reference", "--config", referenceConfigFilepath];
-        const cli = await this.getOrInstall();
+        const cli = await this.getOrInstall({ doNotPipeOutput: true });
         const content = await cli(args);
         return content.stdout;
     }
@@ -59,43 +67,54 @@ export class GeneratorAgentClient {
         return AbsoluteFilePath.of(file.path);
     }
 
-    private async getOrInstall(): Promise<LoggingExecutable> {
-        if (this.cli) {
-            return this.cli;
-        }
+    private async getOrInstall(options: createLoggingExecutable.Options = {}): Promise<LoggingExecutable> {
         if (this.skipInstall) {
-            this.cli = createLoggingExecutable("generator-cli", {
+            return createLoggingExecutable("generator-cli", {
                 cwd: process.cwd(),
-                logger: this.logger
+                logger: this.logger,
+                ...options
             });
-            return this.cli;
         }
-        return this.install();
+        return this.install(options);
     }
 
-    private async install(): Promise<LoggingExecutable> {
-        const npm = createLoggingExecutable("npm", {
-            cwd: process.cwd(),
-            logger: this.logger
-        });
-        this.logger.debug(`Installing ${GENERATOR_AGENT_NPM_PACKAGE} ...`);
-        try {
-            await npm(["install", "-f", "-g", GENERATOR_AGENT_NPM_PACKAGE]);
-        } catch (error) {
-            this.logger.debug(
-                `Failed to install ${GENERATOR_AGENT_NPM_PACKAGE}, falling back to already installed version: ${error}`
-            );
-            // Continue execution as the package might already be installed
+    private async install(options: createLoggingExecutable.Options = {}): Promise<LoggingExecutable> {
+        // Only attempt npm install once per instance
+        if (!this.installAttempted) {
+            const npm = createLoggingExecutable("npm", {
+                cwd: process.cwd(),
+                logger: this.logger,
+                ...options
+            });
+            this.logger.debug(`Installing ${GENERATOR_AGENT_NPM_PACKAGE} ...`);
+            try {
+                await npm(["install", "-f", "-g", GENERATOR_AGENT_NPM_PACKAGE]);
+            } catch (error) {
+                this.logger.debug(
+                    `Failed to install ${GENERATOR_AGENT_NPM_PACKAGE}, falling back to already installed version: ${error}`
+                );
+                // Continue execution as the package might already be installed
+            }
+            this.installAttempted = true;
+
+            const cli = createLoggingExecutable("generator-cli", {
+                cwd: process.cwd(),
+                logger: this.logger,
+                ...options
+            });
+            const version = await cli(["--version"]);
+            this.logger.debug(`Successfully installed ${GENERATOR_AGENT_NPM_PACKAGE} version ${version.stdout}`);
+
+            return cli;
         }
 
         const cli = createLoggingExecutable("generator-cli", {
             cwd: process.cwd(),
-            logger: this.logger
+            logger: this.logger,
+            ...options
         });
         const version = await cli(["--version"]);
-        this.logger.debug(`Successfully installed ${GENERATOR_AGENT_NPM_PACKAGE} version ${version.stdout}`);
-
-        this.cli = cli;
+        this.logger.debug(`Using previously installed ${GENERATOR_AGENT_NPM_PACKAGE} version ${version.stdout}`);
         return cli;
     }
 }

@@ -10,7 +10,7 @@
           "base-path": "",
           "endpoints": {
             "getAUser": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Get a user",
               "docs": undefined,
               "examples": [
@@ -155,7 +155,6 @@
     getAUser:
       path: /users/{userId}
       method: GET
-      auth: false
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -252,13 +251,17 @@ types:
           "base-path": "",
           "endpoints": {
             "listOrganizationUsers": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List organization users",
               "docs": undefined,
               "examples": [
                 {
                   "path-parameters": {
                     "organizationId": "organizationId",
+                  },
+                  "query-parameters": {
+                    "page": 1,
+                    "pageSize": 1,
                   },
                   "response": {
                     "body": {
@@ -311,7 +314,6 @@ service:
     listOrganizationUsers:
       path: /organizations/{organizationId}/users
       method: GET
-      auth: false
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -329,6 +331,9 @@ service:
       examples:
         - path-parameters:
             organizationId: organizationId
+          query-parameters:
+            page: 1
+            pageSize: 1
           response:
             body:
               users:
@@ -351,11 +356,15 @@ service:
           "base-path": "",
           "endpoints": {
             "listUsers": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List users",
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "page": 1,
+                    "pageSize": 1,
+                  },
                   "response": {
                     "body": {
                       "users": [
@@ -404,7 +413,6 @@ service:
     listUsers:
       path: /users
       method: GET
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: List users
@@ -418,7 +426,10 @@ service:
         type: root.UserList
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            page: 1
+            pageSize: 1
+          response:
             body:
               users:
                 - id: id

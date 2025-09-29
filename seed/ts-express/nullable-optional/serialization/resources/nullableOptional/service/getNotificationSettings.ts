@@ -12,5 +12,5 @@ export const Response: core.serialization.Schema<
 > = core.serialization.lazy(() => serializers.NotificationMethod).nullable();
 
 export declare namespace Response {
-    export type Raw = serializers.NotificationMethod.Raw | null;
+    export type Raw = serializers.NotificationMethod.Raw | null | undefined;
 }

@@ -15,8 +15,9 @@ func do() {
             "<token>",
         ),
     )
+    request := 1.1
     client.Endpoints.Primitive.GetAndReturnDouble(
         context.TODO(),
-        1.1,
+        request,
     )
 }

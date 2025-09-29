@@ -7,6 +7,7 @@ import { GeneratedSdkClientClassImpl } from "../GeneratedSdkClientClassImpl";
 import { getReadableTypeNode } from "../getReadableTypeNode";
 import { GeneratedEndpointResponse } from "./default/endpoint-response/GeneratedEndpointResponse";
 import { buildUrl } from "./utils/buildUrl";
+import { generateEndpointMetadata } from "./utils/generateEndpointMetadata";
 import {
     getAbortSignalExpression,
     getMaxRetriesExpression,
@@ -27,23 +28,25 @@ export declare namespace GeneratedStreamingEndpointImplementation {
         retainOriginalCasing: boolean;
         omitUndefined: boolean;
         streamType: "wrapper" | "web";
+        generateEndpointMetadata: boolean;
     }
 }
 
 export class GeneratedStreamingEndpointImplementation implements GeneratedEndpointImplementation {
-    public static DATA_PARAMETER_NAME = "data";
+    public static readonly DATA_PARAMETER_NAME = "data";
 
     public readonly endpoint: HttpEndpoint;
 
-    public response: GeneratedEndpointResponse;
-    private generatedSdkClientClass: GeneratedSdkClientClassImpl;
-    private includeCredentialsOnCrossOriginRequests: boolean;
-    private defaultTimeoutInSeconds: number | "infinity" | undefined;
-    private request: GeneratedEndpointRequest;
-    private includeSerdeLayer: boolean;
-    private retainOriginalCasing: boolean;
-    private omitUndefined: boolean;
-    private streamType: "wrapper" | "web";
+    public readonly response: GeneratedEndpointResponse;
+    private readonly generatedSdkClientClass: GeneratedSdkClientClassImpl;
+    private readonly includeCredentialsOnCrossOriginRequests: boolean;
+    private readonly defaultTimeoutInSeconds: number | "infinity" | undefined;
+    private readonly request: GeneratedEndpointRequest;
+    private readonly includeSerdeLayer: boolean;
+    private readonly retainOriginalCasing: boolean;
+    private readonly omitUndefined: boolean;
+    private readonly streamType: "wrapper" | "web";
+    private readonly generateEndpointMetadata: boolean;
 
     constructor({
         endpoint,
@@ -55,7 +58,8 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         includeSerdeLayer,
         retainOriginalCasing,
         omitUndefined,
-        streamType
+        streamType,
+        generateEndpointMetadata
     }: GeneratedStreamingEndpointImplementation.Init) {
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
@@ -67,6 +71,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         this.retainOriginalCasing = retainOriginalCasing;
         this.omitUndefined = omitUndefined;
         this.streamType = streamType;
+        this.generateEndpointMetadata = generateEndpointMetadata;
     }
 
     public isPaginated(context: SdkContext): boolean {
@@ -193,6 +198,12 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
 
     public getStatements(context: SdkContext): ts.Statement[] {
         return [
+            ...(this.generateEndpointMetadata
+                ? generateEndpointMetadata({
+                      httpEndpoint: this.endpoint,
+                      context
+                  })
+                : []),
             ...this.getRequestBuilderStatements(context),
             ...this.invokeFetcher(context),
             ...this.response.getReturnResponseStatements(context)
@@ -245,7 +256,10 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                 )
             }),
             responseType: "sse",
-            withCredentials: this.includeCredentialsOnCrossOriginRequests
+            withCredentials: this.includeCredentialsOnCrossOriginRequests,
+            endpointMetadata: this.generateEndpointMetadata
+                ? this.generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier()
+                : undefined
         };
 
         return [

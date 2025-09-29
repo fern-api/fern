@@ -8,6 +8,6 @@ import * as FernIr from "../../../../../index";
  * Represents the endpoint location (e.g. "POST /users").
  */
 export interface EndpointLocation {
-    method: FernIr.HttpMethod;
+    method: FernIr.dynamic.HttpMethod;
     path: string;
 }

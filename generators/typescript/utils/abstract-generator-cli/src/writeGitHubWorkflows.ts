@@ -66,9 +66,8 @@ jobs:
             usePnpm
                 ? `
 
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10`
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4`
                 : ""
         }
 
@@ -84,6 +83,7 @@ ${getTestJob({ config, packageManager })}`;
         publishInfo?.shouldGeneratePublishWorkflow === true
     ) {
         const access = isPackagePrivate ? "restricted" : "public";
+        const secretsVarName = publishInfo.tokenEnvironmentVariable?.toString() || "NPM_TOKEN";
         workflowYaml += `
   publish:
     needs: [ compile, test ]
@@ -98,9 +98,8 @@ ${getTestJob({ config, packageManager })}`;
             usePnpm
                 ? `
 
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10`
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4`
                 : ""
         }
 
@@ -121,7 +120,7 @@ ${getTestJob({ config, packageManager })}`;
             npm publish --access ${access}
           fi
         env:
-          NPM_TOKEN: \${{ secrets.${publishInfo.tokenEnvironmentVariable} }}`;
+          NPM_TOKEN: \${{ secrets.${secretsVarName} }}`;
     }
 
     if (publishToJsr) {
@@ -143,9 +142,8 @@ ${getTestJob({ config, packageManager })}`;
             usePnpm
                 ? `
 
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10`
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4`
                 : ""
         }
       
@@ -183,9 +181,8 @@ function getTestJob({
             usePnpm
                 ? `
                 
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10`
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4`
                 : ""
         }
 

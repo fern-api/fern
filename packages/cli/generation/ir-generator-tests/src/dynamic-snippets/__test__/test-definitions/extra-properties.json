@@ -60,7 +60,8 @@
                             "value": "failure"
                         }
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": true
@@ -159,7 +160,8 @@
                         "type": "primitive",
                         "value": "STRING"
                     },
-                    "propertyAccess": null
+                    "propertyAccess": null,
+                    "variable": null
                 }
             ],
             "additionalProperties": true
@@ -339,7 +341,8 @@
                                     "value": "CreateUserRequest"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -371,7 +374,8 @@
                                     "value": "v1"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -400,7 +404,8 @@
                                 "type": "primitive",
                                 "value": "STRING"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ]
                 },
@@ -417,5 +422,6 @@
     },
     "pathParameters": [],
     "environments": null,
+    "variables": null,
     "generatorConfig": null
 }

@@ -34,6 +34,7 @@ export function constructUndiscriminatedOneOf({
     title,
     description,
     availability,
+    wrapAsOptional,
     wrapAsNullable,
     context,
     subtypes,
@@ -48,6 +49,7 @@ export function constructUndiscriminatedOneOf({
     breadcrumbs: string[];
     description: string | undefined;
     availability: Availability | undefined;
+    wrapAsOptional: boolean;
     wrapAsNullable: boolean;
     context: SchemaParserContext;
     subtypes: SchemaWithExample[];
@@ -63,6 +65,7 @@ export function constructUndiscriminatedOneOf({
         nameOverride,
         generatedName,
         title,
+        wrapAsOptional,
         wrapAsNullable,
         description,
         availability,
@@ -81,6 +84,7 @@ export function convertUndiscriminatedOneOf({
     breadcrumbs,
     description,
     availability,
+    wrapAsOptional,
     wrapAsNullable,
     context,
     subtypes,
@@ -96,6 +100,7 @@ export function convertUndiscriminatedOneOf({
     breadcrumbs: string[];
     description: string | undefined;
     availability: Availability | undefined;
+    wrapAsOptional: boolean;
     wrapAsNullable: boolean;
     context: SchemaParserContext;
     subtypes: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[];
@@ -135,7 +140,15 @@ export function convertUndiscriminatedOneOf({
             }
         }
         return [
-            convertSchema(schema, false, context, [...breadcrumbs, subtypePrefix ?? `${index}`], source, namespace)
+            convertSchema(
+                schema,
+                false,
+                false,
+                context,
+                [...breadcrumbs, subtypePrefix ?? `${index}`],
+                source,
+                namespace
+            )
         ];
     });
 
@@ -145,6 +158,7 @@ export function convertUndiscriminatedOneOf({
         nameOverride,
         generatedName,
         title,
+        wrapAsOptional,
         wrapAsNullable,
         description,
         availability,
@@ -180,6 +194,7 @@ function processSubtypes({
     nameOverride,
     generatedName,
     title,
+    wrapAsOptional,
     wrapAsNullable,
     description,
     availability,
@@ -193,6 +208,7 @@ function processSubtypes({
     nameOverride: string | undefined;
     generatedName: string;
     title: string | undefined;
+    wrapAsOptional: boolean;
     wrapAsNullable: boolean;
     description: string | undefined;
     availability: Availability | undefined;
@@ -222,6 +238,7 @@ function processSubtypes({
             nameOverride,
             generatedName,
             title,
+            wrapAsOptional,
             wrapAsNullable,
             description,
             availability,
@@ -245,6 +262,7 @@ function processSubtypes({
         nameOverride,
         generatedName,
         title,
+        wrapAsOptional,
         wrapAsNullable,
         description,
         availability,
@@ -262,6 +280,7 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
     title,
     description,
     availability,
+    wrapAsOptional,
     wrapAsNullable,
     context,
     namespace,
@@ -275,6 +294,7 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
     title: string | undefined;
     description: string | undefined;
     availability: Availability | undefined;
+    wrapAsOptional: boolean;
     wrapAsNullable: boolean;
     context: SchemaParserContext;
     namespace: string | undefined;
@@ -289,6 +309,7 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
         };
         const subtypeReference = convertReferenceObject(
             subtypeReferenceSchema,
+            false,
             false,
             context,
             [schema],
@@ -359,6 +380,7 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
             nameOverride,
             generatedName,
             title,
+            wrapAsOptional,
             wrapAsNullable,
             description,
             availability,
@@ -382,6 +404,7 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
         nameOverride,
         generatedName,
         title,
+        wrapAsOptional,
         wrapAsNullable,
         description,
         availability,
@@ -456,6 +479,7 @@ export function wrapUndiscriminatedOneOf({
     nameOverride,
     generatedName,
     title,
+    wrapAsOptional,
     wrapAsNullable,
     description,
     availability,
@@ -465,6 +489,7 @@ export function wrapUndiscriminatedOneOf({
     encoding,
     source
 }: {
+    wrapAsOptional: boolean;
     wrapAsNullable: boolean;
     nameOverride: string | undefined;
     generatedName: string;
@@ -477,34 +502,7 @@ export function wrapUndiscriminatedOneOf({
     encoding: Encoding | undefined;
     source: Source;
 }): SchemaWithExample {
-    if (wrapAsNullable) {
-        return SchemaWithExample.nullable({
-            nameOverride,
-            generatedName,
-            title,
-            value: SchemaWithExample.oneOf(
-                OneOfSchemaWithExample.undiscriminated({
-                    description,
-                    availability,
-                    nameOverride,
-                    generatedName,
-                    title,
-                    schemas: subtypes,
-                    namespace,
-                    groupName,
-                    encoding,
-                    source,
-                    inline: undefined
-                })
-            ),
-            description,
-            availability,
-            namespace,
-            groupName,
-            inline: undefined
-        });
-    }
-    return SchemaWithExample.oneOf(
+    let result: SchemaWithExample = SchemaWithExample.oneOf(
         OneOfSchemaWithExample.undiscriminated({
             description,
             availability,
@@ -519,4 +517,31 @@ export function wrapUndiscriminatedOneOf({
             inline: undefined
         })
     );
+    if (wrapAsNullable) {
+        result = SchemaWithExample.nullable({
+            nameOverride,
+            generatedName,
+            title,
+            value: result,
+            description,
+            availability,
+            namespace,
+            groupName,
+            inline: undefined
+        });
+    }
+    if (wrapAsOptional) {
+        result = SchemaWithExample.optional({
+            nameOverride,
+            generatedName,
+            title,
+            value: result,
+            description,
+            availability,
+            namespace,
+            groupName,
+            inline: undefined
+        });
+    }
+    return result;
 }

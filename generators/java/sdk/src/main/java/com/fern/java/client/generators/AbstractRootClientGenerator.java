@@ -17,6 +17,7 @@
 package com.fern.java.client.generators;
 
 import com.fern.ir.model.auth.AuthScheme;
+import com.fern.ir.model.auth.AuthSchemeKey;
 import com.fern.ir.model.auth.BasicAuthScheme;
 import com.fern.ir.model.auth.BearerAuthScheme;
 import com.fern.ir.model.auth.EnvironmentVariable;
@@ -259,6 +260,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             if (hasCustomHeaders) {
                 generatorContext.getIr().getHeaders().forEach(httpHeader -> {
                     authSchemeHandler.visitNonAuthHeader(HeaderAuthScheme.builder()
+                            .key(AuthSchemeKey.of(httpHeader.getName().getWireValue()))
                             .name(httpHeader.getName())
                             .valueType(httpHeader.getValueType())
                             .docs(httpHeader.getDocs())
@@ -354,6 +356,17 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .addStatement(isExtensible ? "return self()" : "return this")
                 .build());
 
+        generatorContext.getIr().getVariables().forEach(variableDeclaration -> {
+            String variableName = variableDeclaration.getName().getCamelCase().getSafeName();
+            clientBuilder.addField(FieldSpec.builder(
+                            generatorContext
+                                    .getPoetTypeNameMapper()
+                                    .convertToTypeName(true, variableDeclaration.getType()),
+                            variableName)
+                    .addModifiers(Modifier.PRIVATE)
+                    .build());
+        });
+
         generatorContext.getIr().getVariables().stream()
                 .map(variableDeclaration -> {
                     String variableName =
@@ -366,11 +379,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                                             .getPoetTypeNameMapper()
                                             .convertToTypeName(true, variableDeclaration.getType()),
                                     variableName)
-                            .addStatement(
-                                    "$L.$N($L)",
-                                    CLIENT_OPTIONS_BUILDER_NAME,
-                                    generatedClientOptions.variableGetters().get(variableDeclaration.getId()),
-                                    variableName)
+                            .addStatement("this.$L = $L", variableName, variableName)
                             .addStatement(isExtensible ? "return self()" : "return this")
                             .build();
                 })
@@ -430,7 +439,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         }
 
         if (hasVariables) {
-            MethodSpec setVariablesMethod = MethodSpec.methodBuilder("setVariables")
+            MethodSpec.Builder setVariablesMethodBuilder = MethodSpec.methodBuilder("setVariables")
                     .addModifiers(Modifier.PROTECTED)
                     .addParameter(generatedClientOptions.builderClassName(), "builder")
                     .addJavadoc("Override this method to configure API variables defined in the specification.\n"
@@ -439,9 +448,20 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                                     .map(v -> v.getName().getCamelCase().getSafeName())
                                     .collect(java.util.stream.Collectors.joining(", "))
                             + "\n\n"
-                            + "@param builder The ClientOptions.Builder to configure")
-                    .build();
-            clientBuilder.addMethod(setVariablesMethod);
+                            + "@param builder The ClientOptions.Builder to configure");
+
+            generatorContext.getIr().getVariables().forEach(variableDeclaration -> {
+                String variableName =
+                        variableDeclaration.getName().getCamelCase().getSafeName();
+                MethodSpec variableMethod =
+                        generatedClientOptions.variableGetters().get(variableDeclaration.getId());
+                setVariablesMethodBuilder
+                        .beginControlFlow("if (this.$L != null)", variableName)
+                        .addStatement("builder.$N(this.$L)", variableMethod, variableName)
+                        .endControlFlow();
+            });
+
+            clientBuilder.addMethod(setVariablesMethodBuilder.build());
         }
 
         MethodSpec setTimeoutsMethod = MethodSpec.methodBuilder("setTimeouts")
@@ -719,14 +739,30 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 ClassName oauthTokenSupplierClassName =
                         generatedOAuthTokenSupplier.get().getClassName();
                 if (configureAuthMethod != null) {
+                    configureAuthMethod.beginControlFlow("if (this.clientId != null && this.clientSecret != null)");
+
+                    configureAuthMethod.addStatement(
+                            "$T.Builder authClientOptionsBuilder = $T.builder().environment(this.$L)",
+                            generatedClientOptions.getClassName(),
+                            generatedClientOptions.getClassName(),
+                            ENVIRONMENT_FIELD_NAME);
+
+                    generatorContext.getIr().getVariables().forEach(variableDeclaration -> {
+                        String variableName =
+                                variableDeclaration.getName().getCamelCase().getSafeName();
+                        MethodSpec variableMethod =
+                                generatedClientOptions.variableGetters().get(variableDeclaration.getId());
+                        configureAuthMethod
+                                .beginControlFlow("if (this.$L != null)", variableName)
+                                .addStatement("authClientOptionsBuilder.$N(this.$L)", variableMethod, variableName)
+                                .endControlFlow();
+                    });
+
                     configureAuthMethod
-                            .beginControlFlow("if (this.clientId != null && this.clientSecret != null)")
                             .addStatement(
-                                    "$T authClient = new $T($T.builder().environment(this.$L).build())",
+                                    "$T authClient = new $T(authClientOptionsBuilder.build())",
                                     authClientClassName,
-                                    authClientClassName,
-                                    generatedClientOptions.getClassName(),
-                                    ENVIRONMENT_FIELD_NAME)
+                                    authClientClassName)
                             .addStatement(
                                     "$T oAuthTokenSupplier = new $T(this.clientId, this.clientSecret, authClient)",
                                     oauthTokenSupplierClassName,

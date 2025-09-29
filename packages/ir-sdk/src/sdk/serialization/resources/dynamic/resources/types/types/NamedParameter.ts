@@ -5,8 +5,8 @@
 import * as serializers from "../../../../../index";
 import * as FernIr from "../../../../../../api/index";
 import * as core from "../../../../../../core";
-import { NameAndWireValue } from "../../../../commons/types/NameAndWireValue";
-import { ObjectPropertyAccess } from "../../../../types/types/ObjectPropertyAccess";
+import { NameAndWireValue } from "../../commons/types/NameAndWireValue";
+import { ObjectPropertyAccess } from "./ObjectPropertyAccess";
 
 export const NamedParameter: core.serialization.ObjectSchema<
     serializers.dynamic.NamedParameter.Raw,
@@ -15,6 +15,7 @@ export const NamedParameter: core.serialization.ObjectSchema<
     name: NameAndWireValue,
     typeReference: core.serialization.lazy(() => serializers.dynamic.TypeReference),
     propertyAccess: ObjectPropertyAccess.optional(),
+    variable: core.serialization.string().optional(),
 });
 
 export declare namespace NamedParameter {
@@ -22,5 +23,6 @@ export declare namespace NamedParameter {
         name: NameAndWireValue.Raw;
         typeReference: serializers.dynamic.TypeReference.Raw;
         propertyAccess?: ObjectPropertyAccess.Raw | null;
+        variable?: string | null;
     }
 }

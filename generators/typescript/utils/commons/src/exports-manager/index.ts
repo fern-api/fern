@@ -3,5 +3,6 @@ export {
     type ExportedDirectory,
     type ExportedFilePath,
     type ExportedFilePathPart,
-    ExportsManager
+    ExportsManager,
+    type NamedExport
 } from "./ExportsManager";

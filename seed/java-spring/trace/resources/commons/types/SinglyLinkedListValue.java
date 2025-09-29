@@ -104,7 +104,9 @@ public final class SinglyLinkedListValue {
     )
     public Builder nodes(Map<NodeId, SinglyLinkedListNodeValue> nodes) {
       this.nodes.clear();
-      this.nodes.putAll(nodes);
+      if (nodes != null) {
+        this.nodes.putAll(nodes);
+      }
       return this;
     }
 

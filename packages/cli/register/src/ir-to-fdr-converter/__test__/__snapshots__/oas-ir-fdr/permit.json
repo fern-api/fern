@@ -4849,8 +4849,7 @@
             "value": "ResourceRoleRead"
           }
         }
-      },
-      "displayName": "ResourceRoleListRoles0"
+      }
     },
     "ResourceRoleListRoles": {
       "name": "ResourceRoleListRoles",
@@ -4862,8 +4861,7 @@
             "type": {
               "type": "id",
               "value": "ResourceRoleListRoles0"
-            },
-            "displayName": "ResourceRoleListRoles0"
+            }
           },
           {
             "typeName": "PaginatedResult_ResourceRoleRead_",
@@ -5587,8 +5585,7 @@
             "value": "RoleRead"
           }
         }
-      },
-      "displayName": "RoleListRoles0"
+      }
     },
     "RoleListRoles": {
       "name": "RoleListRoles",
@@ -5600,8 +5597,7 @@
             "type": {
               "type": "id",
               "value": "RoleListRoles0"
-            },
-            "displayName": "RoleListRoles0"
+            }
           },
           {
             "typeName": "PaginatedResult_RoleRead_",
@@ -6900,8 +6896,7 @@
             "value": "ResourceRead"
           }
         }
-      },
-      "displayName": "ResourcesListResourcesResponse2001"
+      }
     },
     "Resources_list_resources_Response_200": {
       "name": "Resources_list_resources_Response_200",
@@ -6921,8 +6916,7 @@
             "type": {
               "type": "id",
               "value": "ResourcesListResourcesResponse2001"
-            },
-            "displayName": "ResourcesListResourcesResponse2001"
+            }
           }
         ]
       }
@@ -6992,8 +6986,7 @@
             "value": "RoleRead"
           }
         }
-      },
-      "displayName": "RolesListRolesResponse2001"
+      }
     },
     "Roles_list_roles_Response_200": {
       "name": "Roles_list_roles_Response_200",
@@ -7013,8 +7006,7 @@
             "type": {
               "type": "id",
               "value": "RolesListRolesResponse2001"
-            },
-            "displayName": "RolesListRolesResponse2001"
+            }
           }
         ]
       }
@@ -7039,8 +7031,7 @@
             "value": "ConditionSetRead"
           }
         }
-      },
-      "displayName": "ConditionSetsListConditionSetsResponse2001"
+      }
     },
     "Condition Sets_list_condition_sets_Response_200": {
       "name": "Condition Sets_list_condition_sets_Response_200",
@@ -7060,8 +7051,7 @@
             "type": {
               "type": "id",
               "value": "ConditionSetsListConditionSetsResponse2001"
-            },
-            "displayName": "ConditionSetsListConditionSetsResponse2001"
+            }
           }
         ]
       }
@@ -7104,8 +7094,7 @@
             "value": "TenantRead"
           }
         }
-      },
-      "displayName": "TenantsListTenantsResponse2001"
+      }
     },
     "Tenants_list_tenants_Response_200": {
       "name": "Tenants_list_tenants_Response_200",
@@ -7125,8 +7114,7 @@
             "type": {
               "type": "id",
               "value": "TenantsListTenantsResponse2001"
-            },
-            "displayName": "TenantsListTenantsResponse2001"
+            }
           }
         ]
       }

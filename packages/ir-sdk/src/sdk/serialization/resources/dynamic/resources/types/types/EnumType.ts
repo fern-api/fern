@@ -6,7 +6,7 @@ import * as serializers from "../../../../../index";
 import * as FernIr from "../../../../../../api/index";
 import * as core from "../../../../../../core";
 import { Declaration } from "../../declaration/types/Declaration";
-import { NameAndWireValue } from "../../../../commons/types/NameAndWireValue";
+import { NameAndWireValue } from "../../commons/types/NameAndWireValue";
 
 export const EnumType: core.serialization.ObjectSchema<serializers.dynamic.EnumType.Raw, FernIr.dynamic.EnumType> =
     core.serialization.objectWithoutOptionalProperties({

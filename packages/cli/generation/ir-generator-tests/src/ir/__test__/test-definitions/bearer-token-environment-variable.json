@@ -48,6 +48,7 @@
                     }
                 },
                 "tokenEnvVar": "COURIER_API_KEY",
+                "key": "Bearer",
                 "docs": null
             }
         ],
@@ -185,6 +186,11 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "security": [
+                        {
+                            "Bearer": []
+                        }
+                    ],
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -352,7 +358,8 @@
                         "value": "1.0.0"
                     }
                 },
-                "propertyAccess": null
+                "propertyAccess": null,
+                "variable": null
             }
         ],
         "endpoints": {
@@ -460,6 +467,7 @@
         },
         "pathParameters": [],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,

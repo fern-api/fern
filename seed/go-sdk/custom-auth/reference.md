@@ -71,9 +71,7 @@ POST request with custom auth scheme
 ```go
 client.CustomAuth.PostWithCustomAuth(
         context.TODO(),
-        map[string]any{
-            "key": "value",
-        },
+        request,
     )
 }
 ```

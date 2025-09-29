@@ -13,9 +13,8 @@ jobs:
       - name: Set up node
         uses: actions/setup-node@v3
 
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
 
       - name: Install dependencies
         run: pnpm install
@@ -33,9 +32,8 @@ jobs:
       - name: Set up node
         uses: actions/setup-node@v3
                 
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
 
       - name: Install dependencies
         run: pnpm install
@@ -54,9 +52,8 @@ jobs:
       - name: Set up node
         uses: actions/setup-node@v3
 
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
 
       - name: Install dependencies
         run: pnpm install
@@ -75,4 +72,4 @@ jobs:
             npm publish --access public
           fi
         env:
-          NPM_TOKEN: ${{ secrets. }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

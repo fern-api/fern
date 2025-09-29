@@ -63,7 +63,7 @@ export function parseAsyncAPIV3({
     const parsedChannels: Record<string, WebsocketChannel> = {};
 
     for (const [schemaId, schema] of Object.entries(document.components?.schemas ?? {})) {
-        schemas[schemaId] = convertSchema(schema, false, context, [schemaId], source, context.namespace);
+        schemas[schemaId] = convertSchema(schema, false, false, context, [schemaId], source, context.namespace);
     }
 
     for (const [channelId, channel] of Object.entries(document.channels ?? {})) {
@@ -101,6 +101,7 @@ export function parseAsyncAPIV3({
             messageSchemas[occurrenceChannelId][originalMessageId] = convertSchema(
                 occurrence.payload,
                 false,
+                false,
                 context,
                 [originalMessageId],
                 source,
@@ -116,6 +117,7 @@ export function parseAsyncAPIV3({
                 }
                 messageSchemas[channelId][newSchemaId] = convertSchema(
                     payload,
+                    false,
                     false,
                     context,
                     [newSchemaId],
@@ -229,6 +231,7 @@ export function parseAsyncAPIV3({
                 };
                 let parameterSchema: SchemaWithExample = convertSchema(
                     parameterSchemaObject,
+                    false,
                     false,
                     context,
                     [parameterKey],

@@ -363,7 +363,7 @@
             "safeName": "DefaultAndValidationRulesResponse2001"
           }
         },
-        "displayName": "DefaultAndValidationRulesResponse2001"
+        "displayName": "Message"
       },
       "shape": {
         "properties": [
@@ -516,7 +516,7 @@
                 }
               },
               "typeId": "DefaultAndValidationRulesResponse2001",
-              "displayName": "DefaultAndValidationRulesResponse2001",
+              "displayName": "Message",
               "inline": false,
               "type": "named"
             }

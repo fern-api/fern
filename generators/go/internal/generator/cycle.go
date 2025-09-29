@@ -5,6 +5,7 @@ import (
 	"sort"
 
 	fernir "github.com/fern-api/fern-go/internal/fern/ir"
+	common "github.com/fern-api/fern-go/internal/fern/ir/common"
 	"github.com/hmdsefi/gograph"
 	"github.com/hmdsefi/gograph/connectivity"
 )
@@ -14,13 +15,13 @@ type PackageName = string
 
 // CycleInfo will eventually exist in the IR definition.
 type CycleInfo struct {
-	RecursiveTypes []fernir.TypeId
-	LeafTypes      []fernir.TypeId
+	RecursiveTypes []common.TypeId
+	LeafTypes      []common.TypeId
 }
 
 func cycleInfoFromIR(ir *fernir.IntermediateRepresentation, baseImportPath string) (*CycleInfo, error) {
 	var (
-		typeToPackage  = make(map[fernir.TypeId]PackageName)
+		typeToPackage  = make(map[common.TypeId]PackageName)
 		packageToTypes = make(map[PackageName][]*fernir.TypeDeclaration)
 	)
 	typeList := make([]*fernir.TypeDeclaration, 0, len(ir.Types))
@@ -34,7 +35,7 @@ func cycleInfoFromIR(ir *fernir.IntermediateRepresentation, baseImportPath strin
 		packageToTypes[packageName] = append(packageToTypes[packageName], typeDecl)
 	}
 	sort.Slice(typeList, func(i, j int) bool { return typeList[i].Name.TypeId < typeList[j].Name.TypeId })
-	// Create a graph, where ever node is represented by a fernir.TypeId,
+	// Create a graph, where ever node is represented by a common.TypeId,
 	// and each edge is defined by a reference between two types.
 	typeGraph, err := typeGraphFromTypes(typeList)
 	if err != nil {
@@ -73,8 +74,8 @@ func cycleInfoFromIR(ir *fernir.IntermediateRepresentation, baseImportPath strin
 		cycleInfos = append(cycleInfos, cycleInfo)
 	}
 	var (
-		leafTypeMap      = make(map[fernir.TypeId]struct{})
-		recursiveTypeMap = make(map[fernir.TypeId]struct{})
+		leafTypeMap      = make(map[common.TypeId]struct{})
+		recursiveTypeMap = make(map[common.TypeId]struct{})
 	)
 	for _, cycleInfo := range cycleInfos {
 		for _, leafType := range cycleInfo.LeafTypes {
@@ -93,8 +94,8 @@ func cycleInfoFromIR(ir *fernir.IntermediateRepresentation, baseImportPath strin
 
 func typeGraphFromTypes(
 	types []*fernir.TypeDeclaration,
-) (gograph.Graph[fernir.TypeId], error) {
-	graph := gograph.New[fernir.TypeId](gograph.Directed())
+) (gograph.Graph[common.TypeId], error) {
+	graph := gograph.New[common.TypeId](gograph.Directed())
 	for _, irType := range types {
 		from := graph.AddVertexByLabel(irType.Name.TypeId)
 		if from == nil {
@@ -118,7 +119,7 @@ func typeGraphFromTypes(
 
 func packageGraphFromTypes(
 	types []*fernir.TypeDeclaration,
-	typeToPackage map[fernir.TypeId]PackageName,
+	typeToPackage map[common.TypeId]PackageName,
 ) (gograph.Graph[PackageName], error) {
 	graph := gograph.New[PackageName](gograph.Directed())
 	for _, irType := range types {
@@ -164,9 +165,9 @@ func invalidComponentsFromGraph(
 }
 
 func resolveCycleForComponent(
-	types map[fernir.TypeId]*fernir.TypeDeclaration,
-	typeGraph gograph.Graph[fernir.TypeId],
-	typeToPackage map[fernir.TypeId]PackageName,
+	types map[common.TypeId]*fernir.TypeDeclaration,
+	typeGraph gograph.Graph[common.TypeId],
+	typeToPackage map[common.TypeId]PackageName,
 	packageToTypes map[PackageName][]*fernir.TypeDeclaration,
 	component []*gograph.Vertex[PackageName],
 ) (*CycleInfo, error) {
@@ -175,8 +176,8 @@ func resolveCycleForComponent(
 		componentPackageNames[vertex.Label()] = struct{}{}
 	}
 	var (
-		leafTypeMap      = make(map[fernir.TypeId]struct{})
-		recursiveTypeMap = make(map[fernir.TypeId]struct{})
+		leafTypeMap      = make(map[common.TypeId]struct{})
+		recursiveTypeMap = make(map[common.TypeId]struct{})
 	)
 	for _, vertex := range component {
 		typeDecls, ok := packageToTypes[vertex.Label()]
@@ -238,8 +239,8 @@ func resolveCycleForComponent(
 }
 
 func referencedTypeIdsForType(
-	types map[fernir.TypeId]*fernir.TypeDeclaration,
-	typeToPackage map[fernir.TypeId]PackageName,
+	types map[common.TypeId]*fernir.TypeDeclaration,
+	typeToPackage map[common.TypeId]PackageName,
 	typeDecl *fernir.TypeDeclaration,
 	componentPackageNames map[PackageName]struct{},
 ) []string {
@@ -255,8 +256,8 @@ func referencedTypeIdsForType(
 }
 
 func referencedTypeIdsForTypeRecurse(
-	types map[fernir.TypeId]*fernir.TypeDeclaration,
-	typeToPackage map[fernir.TypeId]PackageName,
+	types map[common.TypeId]*fernir.TypeDeclaration,
+	typeToPackage map[common.TypeId]PackageName,
 	typeDecl *fernir.TypeDeclaration,
 	componentPackageNames map[PackageName]struct{},
 	result map[string]struct{},
@@ -286,8 +287,8 @@ func referencedTypeIdsForTypeRecurse(
 // every reference of the given TypeId to use the given FernFilepath.
 func replaceFilepathForTypeInIR(
 	ir *fernir.IntermediateRepresentation,
-	typeId fernir.TypeId,
-	fernFilepath *fernir.FernFilepath,
+	typeId common.TypeId,
+	fernFilepath *common.FernFilepath,
 ) {
 	if ir.Auth != nil {
 		for _, irScheme := range ir.Auth.Schemes {
@@ -382,8 +383,8 @@ func replaceFilepathForTypeInIR(
 
 func replaceFilepathForTypeInHttpRequestBody(
 	httpRequestBody *fernir.HttpRequestBody,
-	typeId fernir.TypeId,
-	fernFilepath *fernir.FernFilepath,
+	typeId common.TypeId,
+	fernFilepath *common.FernFilepath,
 ) {
 	if httpRequestBody.InlinedRequestBody != nil {
 		for _, extend := range httpRequestBody.InlinedRequestBody.Extends {
@@ -407,8 +408,8 @@ func replaceFilepathForTypeInHttpRequestBody(
 
 func replaceFilepathForTypeInHttpResponse(
 	httpResponse *fernir.HttpResponse,
-	typeId fernir.TypeId,
-	fernFilepath *fernir.FernFilepath,
+	typeId common.TypeId,
+	fernFilepath *common.FernFilepath,
 ) {
 	if httpResponse.Body != nil && httpResponse.Body.Json != nil {
 		if typeReference := typeReferenceFromJsonResponse(httpResponse.Body.Json); typeReference != nil {
@@ -427,8 +428,8 @@ func replaceFilepathForTypeInHttpResponse(
 
 func replaceFilepathForTypeInType(
 	irType *fernir.Type,
-	typeId fernir.TypeId,
-	fernFilepath *fernir.FernFilepath,
+	typeId common.TypeId,
+	fernFilepath *common.FernFilepath,
 ) {
 	if alias := irType.Alias; alias != nil {
 		replaceFilepathForTypeInTypeReference(alias.AliasOf, typeId, fernFilepath)
@@ -469,8 +470,8 @@ func replaceFilepathForTypeInType(
 
 func replaceFilepathForTypeInResolvedTypeReference(
 	resolvedTypeReference *fernir.ResolvedTypeReference,
-	typeId fernir.TypeId,
-	fernFilepath *fernir.FernFilepath,
+	typeId common.TypeId,
+	fernFilepath *common.FernFilepath,
 ) {
 	if container := resolvedTypeReference.Container; container != nil {
 		replaceFilepathForTypeInContainer(container, typeId, fernFilepath)
@@ -482,8 +483,8 @@ func replaceFilepathForTypeInResolvedTypeReference(
 
 func replaceFilepathForTypeInTypeReference(
 	typeReference *fernir.TypeReference,
-	typeId fernir.TypeId,
-	fernFilepath *fernir.FernFilepath,
+	typeId common.TypeId,
+	fernFilepath *common.FernFilepath,
 ) {
 	if container := typeReference.Container; container != nil {
 		replaceFilepathForTypeInContainer(container, typeId, fernFilepath)
@@ -495,8 +496,8 @@ func replaceFilepathForTypeInTypeReference(
 
 func replaceFilepathForTypeInContainer(
 	container *fernir.ContainerType,
-	typeId fernir.TypeId,
-	fernFilepath *fernir.FernFilepath,
+	typeId common.TypeId,
+	fernFilepath *common.FernFilepath,
 ) {
 	if container.List != nil {
 		replaceFilepathForTypeInTypeReference(container.List, typeId, fernFilepath)
@@ -515,8 +516,8 @@ func replaceFilepathForTypeInContainer(
 
 func replaceFilepathForTypeInDeclaredTypeName(
 	declaredTypeName *fernir.DeclaredTypeName,
-	typeId fernir.TypeId,
-	fernFilepath *fernir.FernFilepath,
+	typeId common.TypeId,
+	fernFilepath *common.FernFilepath,
 ) {
 	if declaredTypeName.TypeId == typeId {
 		declaredTypeName.FernFilepath = fernFilepath
@@ -526,21 +527,21 @@ func replaceFilepathForTypeInDeclaredTypeName(
 // commonPackageElement is prepended to all of the leaf types'
 // FernFilepath so that they're deposited in a common, shared
 // package.
-var commonPackageElement = &fernir.Name{
+var commonPackageElement = &common.Name{
 	OriginalName: "common",
-	CamelCase: &fernir.SafeAndUnsafeString{
+	CamelCase: &common.SafeAndUnsafeString{
 		UnsafeName: "common",
 		SafeName:   "common",
 	},
-	PascalCase: &fernir.SafeAndUnsafeString{
+	PascalCase: &common.SafeAndUnsafeString{
 		UnsafeName: "Common",
 		SafeName:   "Common",
 	},
-	SnakeCase: &fernir.SafeAndUnsafeString{
+	SnakeCase: &common.SafeAndUnsafeString{
 		UnsafeName: "common",
 		SafeName:   "common",
 	},
-	ScreamingSnakeCase: &fernir.SafeAndUnsafeString{
+	ScreamingSnakeCase: &common.SafeAndUnsafeString{
 		UnsafeName: "COMMON",
 		SafeName:   "COMMON",
 	},

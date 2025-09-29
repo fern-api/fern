@@ -25,27 +25,31 @@ const AsIsFileSpecs = {
     // Core infrastructure templates
     ApiClientBuilder: {
         relativePathToDir: "src",
-        filename: "api_client_builder.rs"
+        filename: "client.rs"
     },
     HttpClient: {
-        relativePathToDir: "src",
+        relativePathToDir: "src/core",
         filename: "http_client.rs"
     },
     RequestOptions: {
-        relativePathToDir: "src",
+        relativePathToDir: "src/core",
         filename: "request_options.rs"
     },
     Pagination: {
-        relativePathToDir: "src",
+        relativePathToDir: "src/core",
         filename: "pagination.rs"
     },
     QueryParameterBuilder: {
-        relativePathToDir: "src",
+        relativePathToDir: "src/core",
         filename: "query_parameter_builder.rs"
     },
     Utils: {
-        relativePathToDir: "src",
+        relativePathToDir: "src/core",
         filename: "utils.rs"
+    },
+    CoreMod: {
+        relativePathToDir: "src/core",
+        filename: "mod.rs"
     },
     // Project-level configuration files
     CargoToml: {

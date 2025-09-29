@@ -15,9 +15,7 @@
 ```go
 client.Simple.FooWithoutEndpointError(
         context.TODO(),
-        &fern.FooRequest{
-            Bar: "bar",
-        },
+        request,
     )
 }
 ```
@@ -61,9 +59,7 @@ client.Simple.FooWithoutEndpointError(
 ```go
 client.Simple.Foo(
         context.TODO(),
-        &fern.FooRequest{
-            Bar: "bar",
-        },
+        request,
     )
 }
 ```
@@ -107,9 +103,7 @@ client.Simple.Foo(
 ```go
 client.Simple.FooWithExamples(
         context.TODO(),
-        &fern.FooRequest{
-            Bar: "hello",
-        },
+        request,
     )
 }
 ```

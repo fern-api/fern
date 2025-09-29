@@ -6,6 +6,7 @@
     "useIgnoreFile": false
   },
   "files": {
+    "includes": ["**", "!seed/"],
     "ignoreUnknown": false,
     "maxSize": 80000000
   },
@@ -411,6 +412,7 @@
         "seed/**/gradlew.bat",
         "seed/**/gradle",
         "generators/csharp/playground/**/obj/**",
+        "generators/go/internal/fern/ir.json",
         "!generators/ruby/playground/lib/**",
         ".next",
         "next-env.d.ts",

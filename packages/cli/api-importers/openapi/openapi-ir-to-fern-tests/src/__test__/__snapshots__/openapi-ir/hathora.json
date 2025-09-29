@@ -51,6 +51,11 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "auth0": []
+        }
+      ],
       "method": "GET",
       "path": "/apps/v1/list",
       "examples": [
@@ -359,6 +364,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "auth0": []
+        }
+      ],
       "method": "POST",
       "path": "/apps/v1/create",
       "examples": [
@@ -595,6 +605,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "auth0": []
+        }
+      ],
       "method": "POST",
       "path": "/apps/v1/update/{appId}",
       "examples": [
@@ -796,6 +811,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "auth0": []
+        }
+      ],
       "method": "GET",
       "path": "/apps/v1/info/{appId}",
       "examples": [
@@ -989,6 +1009,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "auth0": []
+        }
+      ],
       "method": "DELETE",
       "path": "/apps/v1/delete/{appId}",
       "examples": [
@@ -1112,6 +1137,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/auth/v1/{appId}/login/anonymous",
       "examples": [
@@ -1288,6 +1314,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/auth/v1/{appId}/login/nickname",
       "examples": [
@@ -1503,6 +1530,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/auth/v1/{appId}/login/google",
       "examples": [
@@ -1639,6 +1667,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "auth0": []
+        }
+      ],
       "method": "GET",
       "path": "/builds/v1/{appId}/list",
       "examples": [
@@ -1853,6 +1886,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "auth0": []
+        }
+      ],
       "method": "GET",
       "path": "/builds/v1/{appId}/info/{buildId}",
       "examples": [
@@ -2110,6 +2148,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "auth0": []
+        }
+      ],
       "method": "POST",
       "path": "/builds/v1/{appId}/create",
       "examples": [
@@ -2354,6 +2397,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "auth0": []
+        }
+      ],
       "method": "POST",
       "path": "/builds/v1/{appId}/run/{buildId}",
       "examples": [],
@@ -2490,6 +2538,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "auth0": []
+        }
+      ],
       "method": "DELETE",
       "path": "/builds/v1/{appId}/delete/{buildId}",
       "examples": [
@@ -2609,6 +2662,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "auth0": []
+        }
+      ],
       "method": "GET",
       "path": "/deployments/v1/{appId}/list",
       "examples": [
@@ -2837,6 +2895,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "auth0": []
+        }
+      ],
       "method": "GET",
       "path": "/deployments/v1/{appId}/info/{deploymentId}",
       "examples": [
@@ -3143,6 +3206,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "auth0": []
+        }
+      ],
       "method": "POST",
       "path": "/deployments/v1/{appId}/create/{buildId}",
       "examples": [
@@ -3366,6 +3434,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/discovery/v1/ping",
       "examples": [
@@ -3656,6 +3725,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "availability": "Deprecated",
       "method": "POST",
       "path": "/lobby/v1/{appId}/create/private",
@@ -3673,7 +3743,25 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "region",
+              "value": {
+                "value": "Seattle",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "local",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "Authorization",
@@ -3948,6 +4036,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "availability": "Deprecated",
       "method": "POST",
       "path": "/lobby/v1/{appId}/create/public",
@@ -3965,7 +4054,25 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "region",
+              "value": {
+                "value": "Seattle",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "local",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "Authorization",
@@ -4164,6 +4271,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "availability": "Deprecated",
       "method": "GET",
       "path": "/lobby/v1/{appId}/list",
@@ -4181,7 +4289,25 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "local",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "region",
+              "value": {
+                "value": "Seattle",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "Authorization",
@@ -4587,6 +4713,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "availability": "Deprecated",
       "method": "POST",
       "path": "/lobby/v2/{appId}/create/private",
@@ -4604,7 +4731,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "roomId",
+              "value": {
+                "value": {
+                  "value": "roomId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "Authorization",
@@ -5035,6 +5173,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "availability": "Deprecated",
       "method": "POST",
       "path": "/lobby/v2/{appId}/create/public",
@@ -5052,7 +5191,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "roomId",
+              "value": {
+                "value": {
+                  "value": "roomId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "Authorization",
@@ -5483,6 +5633,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "availability": "Deprecated",
       "method": "POST",
       "path": "/lobby/v2/{appId}/create/local",
@@ -5500,7 +5651,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "roomId",
+              "value": {
+                "value": {
+                  "value": "roomId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "Authorization",
@@ -5963,6 +6125,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/lobby/v2/{appId}/create",
       "examples": [
@@ -5979,7 +6142,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "roomId",
+              "value": {
+                "value": {
+                  "value": "roomId",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "Authorization",
@@ -6203,6 +6377,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/lobby/v2/{appId}/list/public",
       "examples": [
@@ -6219,7 +6394,15 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "region",
+              "value": {
+                "value": "Seattle",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -6421,6 +6604,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/lobby/v2/{appId}/info/{roomId}",
       "examples": [
@@ -6718,6 +6902,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "auth0": []
+        }
+      ],
       "method": "POST",
       "path": "/lobby/v2/{appId}/setState/{roomId}",
       "examples": [
@@ -7003,6 +7192,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "auth0": []
+        }
+      ],
       "method": "GET",
       "path": "/logs/v1/{appId}/all",
       "examples": [],
@@ -7136,6 +7330,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "auth0": []
+        }
+      ],
       "method": "GET",
       "path": "/logs/v1/{appId}/process/{processId}",
       "examples": [],
@@ -7269,6 +7468,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "auth0": []
+        }
+      ],
       "method": "GET",
       "path": "/logs/v1/{appId}/deployment/{deploymentId}",
       "examples": [],
@@ -7485,6 +7689,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "auth0": []
+        }
+      ],
       "method": "GET",
       "path": "/metrics/v1/{appId}/process/{processId}",
       "examples": [
@@ -7511,7 +7720,38 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "end",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "start",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "step",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -7729,6 +7969,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "auth0": []
+        }
+      ],
       "method": "GET",
       "path": "/processes/v1/{appId}/list/running",
       "examples": [
@@ -7745,7 +7990,15 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "region",
+              "value": {
+                "value": "Seattle",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -7882,6 +8135,9 @@
                             "status": {
                               "value": "scheduling",
                               "type": "enum"
+                            },
+                            "currentAllocation": {
+                              "type": "null"
                             }
                           },
                           "type": "object"
@@ -8016,6 +8272,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "auth0": []
+        }
+      ],
       "method": "GET",
       "path": "/processes/v1/{appId}/list/stopped",
       "examples": [
@@ -8032,7 +8293,15 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "region",
+              "value": {
+                "value": "Seattle",
+                "type": "enum"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -8258,6 +8527,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "auth0": []
+        }
+      ],
       "method": "GET",
       "path": "/processes/v1/{appId}/info/{processId}",
       "examples": [
@@ -8557,6 +8831,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "auth0": []
+        }
+      ],
       "method": "POST",
       "path": "/rooms/v1/{appId}/create",
       "examples": [
@@ -8696,6 +8975,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "auth0": []
+        }
+      ],
       "method": "GET",
       "path": "/rooms/v1/{appId}/info/{roomId}",
       "examples": [
@@ -8928,6 +9212,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "auth0": []
+        }
+      ],
       "method": "GET",
       "path": "/rooms/v1/{appId}/list/{processId}/active",
       "examples": [
@@ -9127,6 +9416,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "auth0": []
+        }
+      ],
       "method": "GET",
       "path": "/rooms/v1/{appId}/list/{processId}/inactive",
       "examples": [
@@ -9329,6 +9623,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "auth0": []
+        }
+      ],
       "method": "POST",
       "path": "/rooms/v1/{appId}/destroy/{roomId}",
       "examples": [
@@ -9467,6 +9766,11 @@
       },
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "auth0": []
+        }
+      ],
       "method": "POST",
       "path": "/rooms/v1/{appId}/suspend/{roomId}",
       "examples": [
@@ -9651,6 +9955,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/rooms/v1/{appId}/connectioninfo/{roomId}",
       "examples": [

@@ -131,7 +131,9 @@ public final class NamedMetadata {
         @JsonSetter(value = "value", nulls = Nulls.SKIP)
         public _FinalStage value(Map<String, Object> value) {
             this.value.clear();
-            this.value.putAll(value);
+            if (value != null) {
+                this.value.putAll(value);
+            }
             return this;
         }
 

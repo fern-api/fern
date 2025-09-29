@@ -7,8 +7,9 @@ public class Example0 {
         SeedVariablesClient client = SeedVariablesClient
             .builder()
             .url("https://api.fern.com")
+            .rootVariable("YOUR_ROOT_VARIABLE")
             .build();
 
-        client.service().post("endpointParam");
+        client.service().post();
     }
 }

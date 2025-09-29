@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { rust } from "@fern-api/rust-codegen";
 import { PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api";
+import { isFloatingPointType } from "../utils/primitiveTypeUtils";
 
 export function generateRustTypeForTypeReference(typeReference: TypeReference): rust.Type {
     switch (typeReference.type) {
@@ -23,11 +24,21 @@ export function generateRustTypeForTypeReference(typeReference: TypeReference): 
                     ),
                 set: (setType) => {
                     // Rust doesn't have a built-in Set, use HashSet
+                    const elementType = isFloatingPointType(setType)
+                        ? rust.Type.reference(
+                              rust.reference({
+                                  name: "OrderedFloat",
+                                  module: "ordered_float",
+                                  genericArgs: [generateRustTypeForTypeReference(setType)]
+                              })
+                          )
+                        : generateRustTypeForTypeReference(setType);
+
                     return rust.Type.reference(
                         rust.reference({
                             name: "HashSet",
                             module: "std::collections",
-                            genericArgs: [generateRustTypeForTypeReference(setType)]
+                            genericArgs: [elementType]
                         })
                     );
                 },
@@ -64,25 +75,22 @@ export function generateRustTypeForTypeReference(typeReference: TypeReference): 
                     );
                 },
                 date: () => {
-                    // Use chrono::NaiveDate for date-only
+                    // Use NaiveDate for date-only (imported from chrono)
                     return rust.Type.reference(
                         rust.reference({
-                            name: "NaiveDate",
-                            module: "chrono"
+                            name: "NaiveDate"
                         })
                     );
                 },
                 dateTime: () => {
-                    // Use chrono::DateTime<Utc> for timestamps
+                    // Use DateTime<Utc> for timestamps (imported from chrono)
                     return rust.Type.reference(
                         rust.reference({
                             name: "DateTime",
-                            module: "chrono",
                             genericArgs: [
                                 rust.Type.reference(
                                     rust.reference({
-                                        name: "Utc",
-                                        module: "chrono"
+                                        name: "Utc"
                                     })
                                 )
                             ]

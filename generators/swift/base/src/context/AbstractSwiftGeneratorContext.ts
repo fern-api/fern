@@ -80,6 +80,11 @@ export abstract class AbstractSwiftGeneratorContext<
                         endpointId: endpoint.id,
                         requestNamePascalCase: endpoint.requestBody.name.pascalCase.unsafeName
                     });
+                } else if (endpoint.requestBody?.type === "fileUpload") {
+                    project.symbolRegistry.registerRequestTypeSymbol({
+                        endpointId: endpoint.id,
+                        requestNamePascalCase: endpoint.requestBody.name.pascalCase.unsafeName
+                    });
                 }
             });
         });

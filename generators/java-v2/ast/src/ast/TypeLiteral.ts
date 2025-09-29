@@ -202,14 +202,14 @@ export class TypeLiteral extends AstNode {
                 writer.write(`${this.internalType.value}f`);
                 break;
             case "integer":
-                writer.write(this.internalType.value.toString());
+                writer.write(Math.floor(this.internalType.value).toString());
                 break;
             case "list": {
                 this.writeList({ writer, list: this.internalType });
                 break;
             }
             case "long": {
-                writer.write(`${this.internalType.value}L`);
+                writer.write(`${Math.floor(this.internalType.value)}L`);
                 break;
             }
             case "map": {

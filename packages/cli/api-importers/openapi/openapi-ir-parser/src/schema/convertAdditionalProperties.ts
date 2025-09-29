@@ -23,6 +23,7 @@ export function convertAdditionalProperties({
     additionalProperties,
     description,
     availability,
+    wrapAsOptional,
     wrapAsNullable,
     context,
     namespace,
@@ -38,6 +39,7 @@ export function convertAdditionalProperties({
     additionalProperties: undefined | boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
     description: string | undefined;
     availability: Availability | undefined;
+    wrapAsOptional: boolean;
     wrapAsNullable: boolean;
     context: SchemaParserContext;
     namespace: string | undefined;
@@ -50,51 +52,11 @@ export function convertAdditionalProperties({
         additionalProperties = context.options.additionalPropertiesDefaultsTo;
     }
 
-    if (typeof additionalProperties === "boolean" || isAdditionalPropertiesAny(additionalProperties, context.options)) {
-        return wrapMap({
-            nameOverride,
-            generatedName,
-            title,
-            wrapAsNullable,
-            description,
-            availability,
-            keySchema: {
-                nameOverride: undefined,
-                generatedName: `${generatedName}Key`,
-                title: undefined,
-                description: undefined,
-                availability: undefined,
-                schema: PrimitiveSchemaValueWithExample.string({
-                    default: undefined,
-                    pattern: undefined,
-                    format: undefined,
-                    minLength: undefined,
-                    maxLength: undefined,
-                    example: undefined
-                }),
-                namespace: undefined,
-                groupName: undefined
-            },
-            valueSchema: SchemaWithExample.unknown({
-                nameOverride: undefined,
-                generatedName: `${generatedName}Value`,
-                title: undefined,
-                description: undefined,
-                availability: undefined,
-                example: undefined,
-                namespace: undefined,
-                groupName: undefined
-            }),
-            namespace,
-            groupName,
-            example,
-            encoding
-        });
-    }
     return wrapMap({
         nameOverride,
         generatedName,
         title,
+        wrapAsOptional,
         wrapAsNullable,
         description,
         availability,
@@ -115,22 +77,33 @@ export function convertAdditionalProperties({
             namespace: undefined,
             groupName: undefined
         },
-        // Whether a type is inline is usually determined later by checking if a declaration is nested within another declaration,
-        // however this map is generated from the additionalProperties and thus is inline of the object (depending on the value type),
-        // so we allways add inline (depending on the value type).
-        valueSchema: addInline(
-            convertSchema(
-                additionalProperties,
-                context.options.optionalAdditionalProperties ? wrapAsNullable : false,
-                context,
-                [...breadcrumbs, "Value"],
-                source,
-                namespace,
-                undefined,
-                undefined,
-                undefined
-            )
-        ),
+        valueSchema:
+            typeof additionalProperties === "boolean" ||
+            isAdditionalPropertiesAny(additionalProperties, context.options)
+                ? SchemaWithExample.unknown({
+                      nameOverride: undefined,
+                      generatedName: `${generatedName}Value`,
+                      title: undefined,
+                      description: undefined,
+                      availability: undefined,
+                      example: undefined,
+                      namespace: undefined,
+                      groupName: undefined
+                  })
+                : addInline(
+                      convertSchema(
+                          additionalProperties,
+                          false,
+                          context.options.optionalAdditionalProperties ? wrapAsNullable : false,
+                          context,
+                          [...breadcrumbs, "Value"],
+                          source,
+                          namespace,
+                          undefined,
+                          undefined,
+                          undefined
+                      )
+                  ),
         namespace,
         groupName,
         example,
@@ -172,6 +145,7 @@ export function wrapMap({
     title,
     keySchema,
     valueSchema,
+    wrapAsOptional,
     wrapAsNullable,
     description,
     availability,
@@ -185,6 +159,7 @@ export function wrapMap({
     title: string | undefined;
     keySchema: PrimitiveSchemaWithExample;
     valueSchema: SchemaWithExample;
+    wrapAsOptional: boolean;
     wrapAsNullable: boolean;
     description: string | undefined;
     availability: Availability | undefined;
@@ -193,33 +168,7 @@ export function wrapMap({
     example: unknown | undefined;
     encoding: Encoding | undefined;
 }): SchemaWithExample {
-    if (wrapAsNullable) {
-        return SchemaWithExample.nullable({
-            nameOverride,
-            generatedName,
-            title,
-            value: SchemaWithExample.map({
-                nameOverride,
-                generatedName,
-                title,
-                description,
-                availability: keySchema.availability,
-                key: keySchema,
-                value: valueSchema,
-                namespace,
-                groupName,
-                encoding,
-                example,
-                inline: undefined
-            }),
-            description,
-            availability,
-            namespace,
-            groupName,
-            inline: undefined
-        });
-    }
-    return SchemaWithExample.map({
+    let result: SchemaWithExample = SchemaWithExample.map({
         nameOverride,
         generatedName,
         title,
@@ -233,6 +182,34 @@ export function wrapMap({
         example,
         inline: undefined
     });
+    if (wrapAsNullable) {
+        result = SchemaWithExample.nullable({
+            nameOverride,
+            generatedName,
+            title,
+            value: result,
+            description,
+            availability,
+            namespace,
+            groupName,
+            inline: undefined
+        });
+    }
+    if (wrapAsOptional) {
+        result = SchemaWithExample.optional({
+            nameOverride,
+            generatedName,
+            title,
+            value: result,
+            description,
+            availability,
+            namespace,
+            groupName,
+            inline: undefined
+        });
+    }
+
+    return result;
 }
 
 export function isAdditionalPropertiesAny(

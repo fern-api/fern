@@ -10,10 +10,15 @@
           "base-path": "",
           "endpoints": {
             "search": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
+                  "query-parameters": {
+                    "after": 1,
+                    "limit": 1,
+                    "sort": "asc",
+                  },
                   "response": {
                     "body": {
                       "results": [
@@ -191,7 +196,6 @@ service:
     search:
       path: /search
       method: GET
-      auth: false
       source:
         openapi: ../openapi.yml
       request:
@@ -213,7 +217,11 @@ service:
         type: SearchResponse
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            sort: asc
+            limit: 1
+            after: 1
+          response:
             body:
               results:
                 - results

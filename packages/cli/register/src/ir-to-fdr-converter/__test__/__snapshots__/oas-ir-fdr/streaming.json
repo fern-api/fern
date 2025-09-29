@@ -215,6 +215,86 @@
           }
         ]
       }
+    },
+    "user_v3_Response_stream_streaming": {
+      "name": "user_v3_Response_stream_streaming",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          },
+          {
+            "key": "inline",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          {
+            "key": "streamed",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "user_v3_Response_stream": {
+      "name": "user_v3_Response_stream",
+      "shape": {
+        "type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "key": "id",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          },
+          {
+            "key": "inline",
+            "valueType": {
+              "type": "optional",
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        ]
+      }
     }
   },
   "subpackages": {},
@@ -260,10 +340,13 @@
           "responses": [
             {
               "type": {
-                "type": "reference",
-                "value": {
-                  "type": "id",
-                  "value": "User"
+                "type": "stream",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "StreamUser"
+                  }
                 }
               },
               "statusCode": 200,
@@ -391,10 +474,13 @@
           "responses": [
             {
               "type": {
-                "type": "reference",
-                "value": {
-                  "type": "id",
-                  "value": "User-2"
+                "type": "stream",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "StreamUser-2"
+                  }
                 }
               },
               "statusCode": 200,
@@ -511,7 +597,7 @@
               "type": "reference",
               "value": {
                 "type": "id",
-                "value": "user_v3_Response_200_streaming"
+                "value": "user_v3_Response_stream_streaming"
               }
             }
           },
@@ -522,10 +608,13 @@
           "responses": [
             {
               "type": {
-                "type": "reference",
-                "value": {
-                  "type": "id",
-                  "value": "user_v3_Response_200"
+                "type": "stream",
+                "shape": {
+                  "type": "reference",
+                  "value": {
+                    "type": "id",
+                    "value": "user_v3_Response_stream_streaming"
+                  }
                 }
               },
               "statusCode": 200,
@@ -542,10 +631,14 @@
             "queryParameters": {},
             "headers": {},
             "responseStatusCode": 200,
-            "responseBody": {},
+            "responseBody": [
+              {}
+            ],
             "responseBodyV3": {
-              "type": "json",
-              "value": {}
+              "type": "stream",
+              "value": [
+                {}
+              ]
             }
           }
         ],
@@ -582,7 +675,7 @@
             "type": "reference",
             "value": {
               "type": "id",
-              "value": "user_v3_Response_200"
+              "value": "user_v3_Response_stream"
             }
           },
           "statusCode": 200,
@@ -595,7 +688,7 @@
                 "type": "reference",
                 "value": {
                   "type": "id",
-                  "value": "user_v3_Response_200"
+                  "value": "user_v3_Response_stream"
                 }
               },
               "statusCode": 200,

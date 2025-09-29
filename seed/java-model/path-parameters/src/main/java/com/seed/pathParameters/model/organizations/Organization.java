@@ -116,7 +116,9 @@ public final class Organization {
         @JsonSetter(value = "tags", nulls = Nulls.SKIP)
         public _FinalStage tags(List<String> tags) {
             this.tags.clear();
-            this.tags.addAll(tags);
+            if (tags != null) {
+                this.tags.addAll(tags);
+            }
             return this;
         }
 

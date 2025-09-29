@@ -116,11 +116,13 @@ exports[`generateDynamicIR > go 1`] = `
               "value": "STRING",
             },
           },
+          "variable": undefined,
         },
       ],
       "type": "object",
     },
   },
+  "variables": undefined,
   "version": "1.0.0",
 }
 `;

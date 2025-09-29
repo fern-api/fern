@@ -10,7 +10,7 @@
           "base-path": "",
           "endpoints": {
             "createAUser": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Create a user",
               "docs": undefined,
               "examples": [
@@ -63,7 +63,7 @@
               },
             },
             "getAUser": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Get a user",
               "docs": undefined,
               "examples": [
@@ -73,6 +73,7 @@
                   },
                   "query-parameters": {
                     "activated": "activated",
+                    "email": "email",
                   },
                   "response": {
                     "body": {
@@ -104,7 +105,7 @@
                 "name": "GetUsersUserIdRequest",
                 "query-parameters": {
                   "activated": "string",
-                  "email": "optional<nullable<string>>",
+                  "email": "nullable<string>",
                 },
               },
               "response": {
@@ -117,7 +118,7 @@
               },
             },
             "updateAUser": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Update a user",
               "docs": undefined,
               "examples": [
@@ -234,7 +235,6 @@
     createAUser:
       path: /users
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: Create a user
@@ -269,7 +269,6 @@
     updateAUser:
       path: /users
       method: PUT
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: Update a user
@@ -304,7 +303,6 @@
     getAUser:
       path: /users/{userId}
       method: GET
-      auth: false
       source:
         openapi: ../openapi.yml
       path-parameters:
@@ -314,7 +312,7 @@
         name: GetUsersUserIdRequest
         query-parameters:
           activated: string
-          email: optional<nullable<string>>
+          email: nullable<string>
       response:
         docs: User retrieved successfully
         type: User
@@ -324,6 +322,7 @@
             userId: userId
           query-parameters:
             activated: activated
+            email: email
           response:
             body:
               id: id

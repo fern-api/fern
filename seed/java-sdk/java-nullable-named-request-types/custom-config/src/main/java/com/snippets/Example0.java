@@ -2,7 +2,7 @@ package com.snippets;
 
 import com.seed.api.SeedApiClient;
 import com.seed.api.requests.PostWithNullableNamedRequestBodyTypeRequest;
-import com.seed.api.types.NullableObject;
+import java.util.Optional;
 
 public class Example0 {
     public static void main(String[] args) {
@@ -16,12 +16,7 @@ public class Example0 {
             PostWithNullableNamedRequestBodyTypeRequest
                 .builder()
                 .body(
-                    NullableObject
-                        .builder()
-                        .id("id")
-                        .name("name")
-                        .age(1)
-                        .build()
+                    Optional.empty()
                 )
                 .build()
         );

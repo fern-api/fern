@@ -7,7 +7,8 @@ use crate::nullable_optional_organization::Organization;
 use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+/// Request body for testing deserialization of null values
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct DeserializationTestRequest {
     #[serde(rename = "requiredString")]
     pub required_string: String,

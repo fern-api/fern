@@ -129,7 +129,9 @@ public final class DefaultProvidedFile {
     )
     public _FinalStage relatedTypes(List<VariableType> relatedTypes) {
       this.relatedTypes.clear();
-      this.relatedTypes.addAll(relatedTypes);
+      if (relatedTypes != null) {
+        this.relatedTypes.addAll(relatedTypes);
+      }
       return this;
     }
 
