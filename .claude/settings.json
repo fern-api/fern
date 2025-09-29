@@ -1,21 +1,18 @@
 {
   "permissions": {
     "allow": [
-      "Bash",
-      "Edit",
-      "MultiEdit",
-      "Write", 
-      "Read",
+      "Read(~/git/fern)",
+      "Edit(~/git/fern)",
+      "MultiEdit(~/git/fern)",
+      "Write(~/git/fern)",
+      "Bash(mkdir:*)",
       "Glob",
       "Grep",
-      "LS",
       "Task",
       "TodoWrite",
-      "WebFetch",
-      "WebSearch",
-      "NotebookRead",
-      "NotebookEdit",
-      "exit_plan_mode"
+      "WebFetch(domain:docs.anthropic.com)",
+      "WebFetch(domain:docs.claude.com)",
+      "WebFetch(domain:buildwithfern.com)"
     ]
   },
   "env": {
