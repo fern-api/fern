@@ -71,6 +71,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 // TODO: Update this to '.every' once AsyncAPI sources are correctly recognized.
                 .some((spec) => spec.settings?.respectForwardCompatibleEnums),
             inlineAllOfSchemas: specs.every((spec) => spec.settings?.inlineAllOfSchemas),
+            resolveNamedAliases: specs.every((spec) => spec.settings?.resolveNamedAliases),
             exampleGeneration: specs[0]?.settings?.exampleGeneration
         });
         this.specs = specs;
@@ -109,6 +110,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 exampleGeneration: settings?.exampleGeneration ?? this.exampleGeneration,
                 useBytesForBinaryResponse: settings?.useBytesForBinaryResponse ?? this.useBytesForBinaryResponse,
                 inlineAllOfSchemas: settings?.inlineAllOfSchemas ?? this.inlineAllOfSchemas,
+                resolveNamedAliases: settings?.resolveNamedAliases ?? this.resolveNamedAliases,
                 groupMultiApiEnvironments:
                     settings?.groupMultiApiEnvironments ??
                     this.specs.some((spec) => spec.settings?.groupMultiApiEnvironments)

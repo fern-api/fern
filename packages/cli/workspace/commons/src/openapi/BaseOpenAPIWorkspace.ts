@@ -20,6 +20,7 @@ export declare namespace BaseOpenAPIWorkspace {
         useBytesForBinaryResponse: boolean | undefined;
         respectForwardCompatibleEnums: boolean | undefined;
         inlineAllOfSchemas: boolean | undefined;
+        resolveNamedAliases: generatorsYml.ResolveNamedAliases | undefined;
     }
 
     export type Settings = Partial<OpenAPISettings>;

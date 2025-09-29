@@ -40,6 +40,8 @@ export interface ParseOpenAPIOptions {
     respectForwardCompatibleEnums: boolean;
     /* Whether or not to inline allOf schemas. */
     inlineAllOfSchemas: boolean;
+    /* Whether to resolve named aliases. If provided, all named aliases will be resolved except for the ones in the except array. */
+    resolveNamedAliases: generatorsYml.ResolveNamedAliases;
 
     /* The filter to apply to the OpenAPI document. */
     filter: generatorsYml.OpenApiFilterSchema | undefined;
@@ -101,6 +103,7 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     typeDatesAsStrings: true,
     preserveSingleSchemaOneOf: false,
     inlineAllOfSchemas: false,
+    resolveNamedAliases: false,
     groupMultiApiEnvironments: false,
     wrapReferencesToNullableInOptional: true,
     coerceOptionalSchemasToNullable: true
@@ -189,6 +192,10 @@ export function getParseOptions({
             overrides?.inlineAllOfSchemas ??
             options?.inlineAllOfSchemas ??
             DEFAULT_PARSE_OPENAPI_SETTINGS.inlineAllOfSchemas,
+        resolveNamedAliases:
+            overrides?.resolveNamedAliases ??
+            options?.resolveNamedAliases ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.resolveNamedAliases,
         groupMultiApiEnvironments:
             overrides?.groupMultiApiEnvironments ??
             options?.groupMultiApiEnvironments ??

@@ -8,6 +8,7 @@ import * as core from "../../../../core";
 import { FormParameterEncoding } from "./FormParameterEncoding";
 import { OpenApiFilterSchema } from "./OpenApiFilterSchema";
 import { OpenApiExampleGenerationSchema } from "./OpenApiExampleGenerationSchema";
+import { ResolveNamedAliases } from "./ResolveNamedAliases";
 import { BaseApiSettingsSchema } from "./BaseApiSettingsSchema";
 
 export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
@@ -29,6 +30,7 @@ export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
         "type-dates-as-strings": core.serialization.boolean().optional(),
         "preserve-single-schema-oneof": core.serialization.boolean().optional(),
         "inline-all-of-schemas": core.serialization.boolean().optional(),
+        "resolve-named-aliases": ResolveNamedAliases.optional(),
         "group-multi-api-environments": core.serialization.boolean().optional(),
     })
     .extend(BaseApiSettingsSchema);
@@ -49,6 +51,7 @@ export declare namespace OpenApiSettingsSchema {
         "type-dates-as-strings"?: boolean | null;
         "preserve-single-schema-oneof"?: boolean | null;
         "inline-all-of-schemas"?: boolean | null;
+        "resolve-named-aliases"?: ResolveNamedAliases.Raw | null;
         "group-multi-api-environments"?: boolean | null;
     }
 }
