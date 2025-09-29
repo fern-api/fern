@@ -42,6 +42,7 @@ package com.example.usage;
 
 import com.seed.api.SeedApiClient;
 import com.seed.api.requests.PostWithNullableNamedRequestBodyTypeRequest;
+import java.util.Optional;
 
 public class Example {
     public static void main(String[] args) {
@@ -53,6 +54,9 @@ public class Example {
             "id",
             PostWithNullableNamedRequestBodyTypeRequest
                 .builder()
+                .body(
+                    Optional.empty()
+                )
                 .build()
         );
     }

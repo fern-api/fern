@@ -15,10 +15,7 @@
 ```go
 client.Payment.Create(
         context.TODO(),
-        &fern.CreatePaymentRequest{
-            Amount: 1,
-            Currency: fern.CurrencyUsd,
-        },
+        request,
     )
 }
 ```

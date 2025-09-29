@@ -17,17 +17,18 @@ package example
 
 import (
     client "github.com/server-sent-event-examples/fern/client"
-    context "context"
     fern "github.com/server-sent-event-examples/fern"
+    context "context"
 )
 
 func do() {
     client := client.NewClient()
+    request := &fern.StreamCompletionRequest{
+        Query: "foo",
+    }
     client.Completions.Stream(
         context.TODO(),
-        &fern.StreamCompletionRequest{
-            Query: "foo",
-        },
+        request,
     )
 }
 ```
