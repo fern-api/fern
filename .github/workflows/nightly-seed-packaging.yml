@@ -243,10 +243,8 @@ jobs:
         with:
           path: ./.github/workflow-resource-files/seed-packages
           name: ${{ matrix.sdk-name }}-seed-packages.json
-          run-id: 18111300631 #CHRISM - temporary for testing, artifact ID = 4132496421
-          github-token: ${{ secrets.FERN_GITHUB_PAT }}
-          repository: ${{ github.repository }}
-          merge-multiple: true
+          # run-id: 18111300631 #CHRISM - temporary for testing, artifact ID = 4132496421
+          # merge-multiple: true
 
       # Create PR, approve and set to merge per generator
       - name: Create Pull Request
