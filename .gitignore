@@ -76,7 +76,7 @@ seed/python-sdk/**/output.prof
 .cursor
 
 # Claude
-.claude
+**/settings.local.json
 
 # Preview
 **/.preview/

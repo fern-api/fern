@@ -154,6 +154,74 @@ pnpm seed run --generator ts-sdk --path /path/to/fern/apis/v1 --log-level debug 
 - Fixtures prefixed with language names (e.g., `java-specific-test`) only run on matching generators
 - Unprefixed fixtures run on all generators by default
 
+### Feature Addition Workflow (Generated Code)
+
+Feature additions that require changes to generated code follow a multi-stage workflow across API definitions, IR, and generators.
+
+**Example Use Case**: Adding new parameters to generators.yml schema (like `customSections` in [PR #9371](https://github.com/fern-api/fern/pull/9371))
+
+#### Stage 1: API Schema Changes
+
+1. **Modify API Definition**: Update relevant API definition in `/fern/apis/`
+   - Example: `/fern/apis/generators-yml/definition/` for generators.yml changes
+   - Other definitions: `docs-yml`, `fern-definition`, `public-api`
+
+2. **Generate TypeScript Schemas**: Run definition-specific update command
+   ```bash
+   # For generators-yml changes
+   pnpm update:generators
+   # Commands vary by definition - check generators.yml in each API folder
+   ```
+   - Updates corresponding schema files (e.g., `/packages/cli/configuration/src/generators-yml/schemas`)
+   - Uses generator configuration in each API's `generators.yml`
+
+#### Stage 2: IR Definition Updates
+
+3. **Update IR Definition**: Modify IR types in `/packages/ir-sdk/fern/apis/ir-types-latest/definition/`
+
+4. **Generate IR SDK**: 
+   ```bash
+   pnpm ir:generate
+   ```
+   - Updates IR SDK files in `/packages/ir-sdk/src/`
+
+5. **Version Management**: Update version files for publication
+   - **Changelog**: `/packages/ir-sdk/fern/apis/ir-types-latest/changelog/CHANGELOG.md`
+   - **Version**: `/packages/ir-sdk/fern/apis/ir-types-latest/VERSION` (semantic versioning)
+     - Major: Breaking changes
+     - Minor: Non-breaking feature additions  
+     - Patch: Non-breaking fixes
+   - **CLI Version**: `/packages/cli/cli/versions.yml` for new CLI release
+
+6. **Compile and Fix**: Run `pnpm compile` and resolve any breaking changes
+   - Common pattern: `switch` statements with `assert never` may need new cases
+   - Sometimes temporary "throw error does not support" for unimplemented features
+
+#### Stage 3: IR Publication (Automatic)
+
+7. **IR SDK Publishing**: On PR merge to main, CI/CD automatically publishes new IR SDK versions when VERSION and CHANGELOG files are updated
+
+#### Stage 4: Generator Updates (Multi-PR Process)
+
+8. **Generator Dependency Updates**: Update each generator to use new IR SDK version
+   - **Legacy generators** (Java, Python, Go): Written in target language
+   - **Modern generators** (C#, newer ones): Written in TypeScript  
+   - **Migration approach**: New v2 generators (java-v2, python-v2) alongside legacy
+   - **IR version specification**: Each generator has files specifying required IR SDK version
+
+9. **Migration Logic**: Update IR migrations in `/packages/cli/generation/ir-migrations/`
+   - Handles backward compatibility when generators expect older IR versions
+   - Converts newer IR to format expected by older generators
+
+10. **CLI Version Publishing**: Update CLI version in `versions.yml` triggers new CLI release on merge
+
+**Key Characteristics**:
+- **Cross-repo dependency chain**: API Schema → IR Definition → Published IR SDK → Generator Updates → Final CLI Release
+- **Generators use published versions**: Not workspace versions, ensuring stable dependencies
+- **Multiple PRs required**: Initial IR changes, then separate PRs for each generator family
+- **Automatic publishing**: `versions.yml` files throughout codebase trigger releases on merge to main
+- **Backward compatibility**: Migration system ensures older generators continue working
+
 ### Other Core Workflows
 
 1. **Documentation**: Markdown processing + API references → Static site
@@ -269,3 +337,6 @@ If IR generation fails:
 - **IR output**: Usually in temp directories during generation
 - **Docker logs**: Container stdout/stderr during generation
 - **Test outputs**: `seed/*/generated/` directories
+
+# Individual Preferences
+@~/.claude/my-fern-instructions.md
