@@ -54,7 +54,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     }),
                     method: "symbolize_keys",
                     arguments_: [ruby.codeblock("params")]
-                });
+                }).write(writer);
                 writer.newLine();
                 writer.write(`${QUERY_PARAM_NAMES_VN} = `);
                 writer.writeLine(`${toExplicitArray(this.getQueryParameterNames())}`);
