@@ -204,35 +204,6 @@ jobs:
     runs-on: ubuntu-latest
     if: always()
     needs: [build-test-packages]
-    strategy:
-      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
-      matrix:
-        sdk-name:
-          [
-            ruby-model,
-            ruby-sdk,
-            ruby-sdk-v2,
-            pydantic,
-            python-sdk,
-            fastapi,
-            openapi,
-            postman,
-            java-sdk,
-            java-model,
-            java-spring,
-            ts-sdk,
-            ts-express,
-            go-fiber,
-            go-model,
-            go-sdk,
-            csharp-model,
-            csharp-sdk,
-            php-model,
-            php-sdk,
-            swift-sdk,
-            rust-model,
-            rust-sdk
-          ]
     steps:
       # CHRISM - checked out on main?
       - name: Checkout repo
@@ -241,10 +212,14 @@ jobs:
       - name: Download package file artifact
         uses: actions/download-artifact@v5
         with:
-          path: ./.github/workflow-resource-files/seed-packages
-          name: ${{ matrix.sdk-name }}-seed-packages.json
+          path: ./artifacts
+          name: *-seed-packages.json
           # run-id: 18111300631 #CHRISM - temporary for testing, artifact ID = 4132496421
-          # merge-multiple: true
+          merge-multiple: true
+
+      - name: Overwrite Repo Package Files
+        run: |
+          cp artifacts/*-seed-packages.json .github/workflow-resource-files/seed-packages/
 
       # Create PR, approve and set to merge per generator
       - name: Create Pull Request
@@ -252,11 +227,13 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
-          commit-message: "chore(internal): update ${{ matrix.sdk-name }} seed test packages"
-          title: "chore(internal): update ${{ matrix.sdk-name }} seed test packages"
-          branch: update-${{ matrix.sdk-name }}-seed-test-packages
+          commit-message: "chore(internal): update seed test packages"
+          title: "chore(internal): update seed test packages"
+          branch: update-seed-test-packages
           body: "Auto-generated PR, triggered by nightly-seed-packaging workflow with: ${{ github.event_name }} from branch: ${{ github.ref_name }}.\nGitHub workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           delete-branch: true
+          add-paths: |
+            .github/workflow-resource-files/seed-packages/**
           labels: |
             seed
 
