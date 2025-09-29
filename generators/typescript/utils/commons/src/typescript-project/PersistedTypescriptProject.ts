@@ -280,23 +280,20 @@ export class PersistedTypescriptProject {
         const parsedRegistryUrl = new URL(publishInfo.registryUrl);
         const registryUrlWithoutProtocol = urlJoin(parsedRegistryUrl.hostname, parsedRegistryUrl.pathname);
 
-        // intentionally not writing these to the project config with `--location project`,
-        // so the registry url and token aren't persisted
-        await npm(["config", "set", "registry", publishInfo.registryUrl], {
-            secrets: [publishInfo.registryUrl]
-        });
         await npm(["config", "set", `//${registryUrlWithoutProtocol}:_authToken`, publishInfo.token], {
             secrets: [registryUrlWithoutProtocol, publishInfo.token]
         });
 
-        const publishCommand = ["publish"];
+        const publishCommand = ["publish", "--registry", publishInfo.registryUrl];
         if (dryRun) {
             publishCommand.push("--dry-run");
         }
         if (shouldTolerateRepublish) {
             publishCommand.push("--tolerate-republish");
         }
-        await npm(publishCommand);
+        await npm(publishCommand, {
+            secrets: [publishInfo.registryUrl]
+        });
     }
 
     public async deleteGitIgnoredFiles(logger: Logger): Promise<void> {

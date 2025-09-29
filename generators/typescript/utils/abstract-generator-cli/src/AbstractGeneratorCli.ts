@@ -116,6 +116,10 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             );
             await config.output.mode._visit<void | Promise<void>>({
                 publish: async () => {
+                    await Promise.all([
+                        typescriptProject.installDependencies(logger),
+                        typescriptProject.format(logger)
+                    ]);
                     await publishPackage({
                         logger,
                         npmPackage,
@@ -124,10 +128,6 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         typescriptProject,
                         shouldTolerateRepublish: this.shouldTolerateRepublish(customConfig)
                     });
-                    await Promise.all([
-                        typescriptProject.installDependencies(logger),
-                        typescriptProject.format(logger)
-                    ]);
                     await typescriptProject.build(logger);
                     await typescriptProject.npmPackTo({
                         logger,
