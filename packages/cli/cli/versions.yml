@@ -10,7 +10,7 @@
       type: feat
   irVersion: 60
   createdAt: "2025-09-28"
-  version: 0.83.0
+  version: 0.83.1
 
 - changelogEntry:
     - summary: |
