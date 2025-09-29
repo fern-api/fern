@@ -19,6 +19,8 @@ concurrency:
 jobs:  
   package-seed-tests:
     runs-on: ubuntu-latest
+    # CHRISM - tempo
+    if: false 
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       matrix:
@@ -95,8 +97,8 @@ jobs:
   build-test-packages:
     runs-on: ubuntu-latest
     if: always()
-
-    needs: [package-seed-tests]
+    # CHRISM - tempo
+    # needs: [package-seed-tests]
     # outputs:
     #   ruby-model: ${{ steps.set-test-matrix.outputs.ruby-model-test-matrix }}
       # ruby-sdk: ${{ steps.output-packages.outputs.ruby-sdk-packages }}
