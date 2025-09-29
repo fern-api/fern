@@ -23,14 +23,7 @@
     "metadata": {
       "oneOf": [
         {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/nullable.Metadata"
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "$ref": "#/definitions/nullable.Metadata"
         },
         {
           "type": "null"
@@ -46,17 +39,10 @@
     "numbers": {
       "oneOf": [
         {
-          "oneOf": [
-            {
-              "type": "array",
-              "items": {
-                "type": "integer"
-              }
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
         },
         {
           "type": "null"
@@ -66,24 +52,17 @@
     "strings": {
       "oneOf": [
         {
-          "oneOf": [
-            {
-              "type": "object",
-              "additionalProperties": {
-                "type": [
-                  "string",
-                  "number",
-                  "boolean",
-                  "object",
-                  "array",
-                  "null"
-                ]
-              }
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "type": "object",
+          "additionalProperties": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "object",
+              "array",
+              "null"
+            ]
+          }
         },
         {
           "type": "null"
@@ -194,14 +173,7 @@
         "activated": {
           "oneOf": [
             {
-              "oneOf": [
-                {
-                  "type": "boolean"
-                },
-                {
-                  "type": "null"
-                }
-              ]
+              "type": "boolean"
             },
             {
               "type": "null"
@@ -218,14 +190,7 @@
               "additionalProperties": {
                 "oneOf": [
                   {
-                    "oneOf": [
-                      {
-                        "type": "string"
-                      },
-                      {
-                        "type": "null"
-                      }
-                    ]
+                    "type": "string"
                   },
                   {
                     "type": "null"
@@ -275,14 +240,7 @@
         {
           "oneOf": [
             {
-              "oneOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ]
+              "type": "string"
             },
             {
               "type": "null"

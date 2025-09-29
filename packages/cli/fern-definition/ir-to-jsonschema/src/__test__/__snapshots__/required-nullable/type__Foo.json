@@ -14,14 +14,7 @@
     "nullable_bar": {
       "oneOf": [
         {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "type": "string"
         },
         {
           "type": "null"
