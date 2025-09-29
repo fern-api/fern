@@ -26,7 +26,7 @@ func TestUserGetUserWithWireMock(
         gowiremock.Matching("user_id"),
     ).WillReturnResponse(
         gowiremock.NewResponse().WithJSONBody(
-            map[string]interface{}{},
+            map[string]interface{}{"name": "name", "tags": []interface{}{"tags", "tags",},},
         ).WithStatus(http.StatusOK),
     )
     err := WireMockClient.StubFor(stub)
@@ -148,7 +148,7 @@ func TestUserSearchUsersWithWireMock(
         gowiremock.Matching("user_id"),
     ).WillReturnResponse(
         gowiremock.NewResponse().WithJSONBody(
-            map[string]interface{}{},
+            []interface{}{map[string]interface{}{"name": "name", "tags": []interface{}{"tags", "tags",},}, map[string]interface{}{"name": "name", "tags": []interface{}{"tags", "tags",},},},
         ).WithStatus(http.StatusOK),
     )
     err := WireMockClient.StubFor(stub)

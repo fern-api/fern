@@ -1,16 +1,16 @@
 package wiremock
 
 import (
-	context "context"
-	http "net/http"
-	testing "testing"
-
-	fern "github.com/imdb/fern"
-	client "github.com/imdb/fern/client"
-	option "github.com/imdb/fern/option"
-	require "github.com/stretchr/testify/require"
-	gowiremock "github.com/wiremock/go-wiremock"
+    testing "testing"
+    gowiremock "github.com/wiremock/go-wiremock"
+    http "net/http"
+    require "github.com/stretchr/testify/require"
+    client "github.com/imdb/fern/client"
+    option "github.com/imdb/fern/option"
+    fern "github.com/imdb/fern"
+    context "context"
 )
+
 
 
 func TestImdbCreateMovieWithWireMock(
@@ -20,21 +20,21 @@ func TestImdbCreateMovieWithWireMock(
     defer WireMockClient.Reset()
     stub := gowiremock.Post(gowiremock.URLPathTemplate("/movies/create-movie")).WithBodyPattern(gowiremock.MatchesJsonSchema("{}", "V202012")).WillReturnResponse(
         gowiremock.NewResponse().WithJSONBody(
-            map[string]interface{}{"title": "title", "rating": 1.1,},
+            "string",
         ).WithStatus(http.StatusOK),
     )
     err := WireMockClient.StubFor(stub)
     require.NoError(t, err, "Failed to create WireMock stub")
-    
-    client := client.NewClient(
-        option.WithBaseURL(
-            WireMockBaseURL,
-        ),
-    )
-    request := &fern.CreateMovieRequest{
-        Title: "title",
-        Rating: 1.1,
-    }
+
+        client := client.NewClient(
+            option.WithBaseURL(
+                WireMockBaseURL,
+            ),
+        )
+        request := &fern.CreateMovieRequest{
+            Title: "title",
+            Rating: 1.1,
+        }
     _, invocationErr :=     client.Imdb.CreateMovie(
             context.TODO(),
             request,
@@ -56,17 +56,17 @@ func TestImdbGetMovieWithWireMock(
         gowiremock.Matching("movieId"),
     ).WillReturnResponse(
         gowiremock.NewResponse().WithJSONBody(
-            map[string]interface{}{},
+            map[string]interface{}{"id": "id", "title": "title", "rating": 1.1,},
         ).WithStatus(http.StatusOK),
     )
     err := WireMockClient.StubFor(stub)
     require.NoError(t, err, "Failed to create WireMock stub")
 
-    client := client.NewClient(
-        option.WithBaseURL(
-            WireMockBaseURL,
-        ),
-    )
+        client := client.NewClient(
+            option.WithBaseURL(
+                WireMockBaseURL,
+            ),
+        )
     _, invocationErr :=     client.Imdb.GetMovie(
             context.TODO(),
             "movieId",
