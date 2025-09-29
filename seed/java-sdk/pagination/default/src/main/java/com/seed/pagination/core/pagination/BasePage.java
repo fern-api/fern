@@ -30,11 +30,10 @@ public abstract class BasePage<T> {
     }
 
     /**
-     * Returns the full response object from the API.
-     * This allows access to response metadata like cursor tokens, page information,
-     * and other fields not exposed through the standard pagination interface.
+     * Returns the full response object for accessing pagination metadata like cursor tokens.
+     * Available when expose-pagination-cursors config is enabled.
      *
-     * @return Optional containing the response object, or empty if not available
+     * @return Optional containing the response, or empty if unavailable
      */
     public <R> Optional<R> getResponse() {
         @SuppressWarnings("unchecked")
