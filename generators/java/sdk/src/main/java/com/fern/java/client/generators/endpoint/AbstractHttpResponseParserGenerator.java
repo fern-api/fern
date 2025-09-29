@@ -1094,14 +1094,26 @@ public abstract class AbstractHttpResponseParserGenerator {
             }
 
             TypeName responseType = getResponseType(httpEndpoint, clientGeneratorContext);
-            handleSuccessfulResult(
-                    httpResponseBuilder,
-                    CodeBlock.of(
-                            "new $T($L, $L, $L)",
-                            responseType,
-                            hasNextPageBlock,
-                            variables.getResultVariableName(),
-                            getNextPageGetter(endpointName, methodParameters)));
+
+            CodeBlock paginationConstructor;
+            if (clientGeneratorContext.getCustomConfig().exposePaginationCursors()) {
+                paginationConstructor = CodeBlock.of(
+                        "new $T($L, $L, $L, $L)",
+                        responseType,
+                        hasNextPageBlock,
+                        variables.getResultVariableName(),
+                        variables.getParsedResponseVariableName(),
+                        getNextPageGetter(endpointName, methodParameters));
+            } else {
+                paginationConstructor = CodeBlock.of(
+                        "new $T($L, $L, $L)",
+                        responseType,
+                        hasNextPageBlock,
+                        variables.getResultVariableName(),
+                        getNextPageGetter(endpointName, methodParameters));
+            }
+
+            handleSuccessfulResult(httpResponseBuilder, paginationConstructor);
             endpointMethodBuilder.returns(responseType);
             return null;
         }
@@ -1326,13 +1338,24 @@ public abstract class AbstractHttpResponseParserGenerator {
                     .build();
             httpResponseBuilder.addStatement(resultBlock);
             TypeName responseType = getResponseType(httpEndpoint, clientGeneratorContext);
-            handleSuccessfulResult(
-                    httpResponseBuilder,
-                    CodeBlock.of(
-                            "new $T(true, $L, $L)",
-                            responseType,
-                            variables.getResultVariableName(),
-                            getNextPageGetter(endpointName, methodParameters)));
+
+            CodeBlock paginationConstructor;
+            if (clientGeneratorContext.getCustomConfig().exposePaginationCursors()) {
+                paginationConstructor = CodeBlock.of(
+                        "new $T(true, $L, $L, $L)",
+                        responseType,
+                        variables.getResultVariableName(),
+                        variables.getParsedResponseVariableName(),
+                        getNextPageGetter(endpointName, methodParameters));
+            } else {
+                paginationConstructor = CodeBlock.of(
+                        "new $T(true, $L, $L)",
+                        responseType,
+                        variables.getResultVariableName(),
+                        getNextPageGetter(endpointName, methodParameters));
+            }
+
+            handleSuccessfulResult(httpResponseBuilder, paginationConstructor);
             endpointMethodBuilder.returns(responseType);
             return null;
         }

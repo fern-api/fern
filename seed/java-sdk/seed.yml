@@ -153,6 +153,10 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: default
+    - customConfig:
+        enable-wire-tests: true
+        expose-pagination-cursors: true
+      outputFolder: with-cursor-access
   unions:
     - customConfig:
         enable-wire-tests: true

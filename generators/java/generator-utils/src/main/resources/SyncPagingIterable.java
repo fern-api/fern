@@ -17,6 +17,14 @@ public class SyncPagingIterable<T> extends SyncPage<T> implements Iterable<T> {
         super(hasNext, items.orElse(new ArrayList<>()), getNext);
     }
 
+    public SyncPagingIterable(boolean hasNext, List<T> items, Object response, Supplier<? extends SyncPage<T>> getNext) {
+        super(hasNext, items, response, getNext);
+    }
+
+    public SyncPagingIterable(boolean hasNext, Optional<List<T>> items, Object response, Supplier<? extends SyncPage<T>> getNext) {
+        super(hasNext, items.orElse(new ArrayList<>()), response, getNext);
+    }
+
     public Stream<T> streamItems() {
         return StreamSupport.stream(this.spliterator(), false);
     }
