@@ -1,6 +1,6 @@
 # Reference
-## Service
-<details><summary><code>client.Service.GetWithApiKey() -> String</code></summary>
+## service
+<details><summary><code>client.service.get_with_api_key() -> String</code></summary>
 <dl>
 <dd>
 
@@ -39,7 +39,7 @@ client.service.get_with_api_key();
 </dl>
 </details>
 
-<details><summary><code>client.Service.GetWithHeader() -> String</code></summary>
+<details><summary><code>client.service.get_with_header() -> String</code></summary>
 <dl>
 <dd>
 

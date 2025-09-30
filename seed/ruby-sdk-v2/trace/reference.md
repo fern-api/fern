@@ -1,6 +1,6 @@
 # Reference
-## V2
-<details><summary><code>client.V2.Test() -> </code></summary>
+## v_2
+<details><summary><code>client.v_2.test() -> </code></summary>
 <dl>
 <dd>
 
@@ -25,8 +25,8 @@ client.v_2.test();
 </dl>
 </details>
 
-## Admin
-<details><summary><code>client.Admin.UpdateTestSubmissionStatus(SubmissionId, request) -> </code></summary>
+## admin
+<details><summary><code>client.admin.update_test_submission_status(submission_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -74,7 +74,7 @@ client.admin.update_test_submission_status();
 </dl>
 </details>
 
-<details><summary><code>client.Admin.SendTestSubmissionUpdate(SubmissionId, request) -> </code></summary>
+<details><summary><code>client.admin.send_test_submission_update(submission_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -124,7 +124,7 @@ client.admin.send_test_submission_update({
 </dl>
 </details>
 
-<details><summary><code>client.Admin.UpdateWorkspaceSubmissionStatus(SubmissionId, request) -> </code></summary>
+<details><summary><code>client.admin.update_workspace_submission_status(submission_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -172,7 +172,7 @@ client.admin.update_workspace_submission_status();
 </dl>
 </details>
 
-<details><summary><code>client.Admin.SendWorkspaceSubmissionUpdate(SubmissionId, request) -> </code></summary>
+<details><summary><code>client.admin.send_workspace_submission_update(submission_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -222,7 +222,7 @@ client.admin.send_workspace_submission_update({
 </dl>
 </details>
 
-<details><summary><code>client.Admin.StoreTracedTestCase(SubmissionId, TestCaseId, request) -> </code></summary>
+<details><summary><code>client.admin.store_traced_test_case(submission_id, test_case_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -336,7 +336,7 @@ client.admin.store_traced_test_case({
 </dl>
 </details>
 
-<details><summary><code>client.Admin.StoreTracedTestCaseV2(SubmissionId, TestCaseId, request) -> </code></summary>
+<details><summary><code>client.admin.store_traced_test_case_v_2(submission_id, test_case_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -392,7 +392,7 @@ client.admin.store_traced_test_case_v_2();
 </dl>
 </details>
 
-<details><summary><code>client.Admin.StoreTracedWorkspace(SubmissionId, request) -> </code></summary>
+<details><summary><code>client.admin.store_traced_workspace(submission_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -499,7 +499,7 @@ client.admin.store_traced_workspace({
 </dl>
 </details>
 
-<details><summary><code>client.Admin.StoreTracedWorkspaceV2(SubmissionId, request) -> </code></summary>
+<details><summary><code>client.admin.store_traced_workspace_v_2(submission_id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -547,8 +547,8 @@ client.admin.store_traced_workspace_v_2();
 </dl>
 </details>
 
-## Homepage
-<details><summary><code>client.Homepage.GetHomepageProblems() -> Internal::Types::Array[String]</code></summary>
+## homepage
+<details><summary><code>client.homepage.get_homepage_problems() -> Internal::Types::Array[String]</code></summary>
 <dl>
 <dd>
 
@@ -573,7 +573,7 @@ client.homepage.get_homepage_problems();
 </dl>
 </details>
 
-<details><summary><code>client.Homepage.SetHomepageProblems(request) -> </code></summary>
+<details><summary><code>client.homepage.set_homepage_problems(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -613,8 +613,8 @@ client.homepage.set_homepage_problems();
 </dl>
 </details>
 
-## Migration
-<details><summary><code>client.Migration.GetAttemptedMigrations() -> Internal::Types::Array[Seed::Migration::Types::Migration]</code></summary>
+## migration
+<details><summary><code>client.migration.get_attempted_migrations() -> Internal::Types::Array[Seed::Migration::Types::Migration]</code></summary>
 <dl>
 <dd>
 
@@ -656,8 +656,8 @@ client.migration.get_attempted_migrations({
 </dl>
 </details>
 
-## Playlist
-<details><summary><code>client.Playlist.CreatePlaylist(ServiceParam, request) -> Seed::Playlist::Types::Playlist</code></summary>
+## playlist
+<details><summary><code>client.playlist.create_playlist(service_param, request) -> Seed::Playlist::Types::Playlist</code></summary>
 <dl>
 <dd>
 
@@ -739,7 +739,7 @@ client.playlist.create_playlist({
 </dl>
 </details>
 
-<details><summary><code>client.Playlist.GetPlaylists(ServiceParam) -> Internal::Types::Array[Seed::Playlist::Types::Playlist]</code></summary>
+<details><summary><code>client.playlist.get_playlists(service_param) -> Internal::Types::Array[Seed::Playlist::Types::Playlist]</code></summary>
 <dl>
 <dd>
 
@@ -841,7 +841,7 @@ description
 </dl>
 </details>
 
-<details><summary><code>client.Playlist.GetPlaylist(ServiceParam, PlaylistId) -> Seed::Playlist::Types::Playlist</code></summary>
+<details><summary><code>client.playlist.get_playlist(service_param, playlist_id) -> Seed::Playlist::Types::Playlist</code></summary>
 <dl>
 <dd>
 
@@ -903,7 +903,7 @@ client.playlist.get_playlist();
 </dl>
 </details>
 
-<details><summary><code>client.Playlist.UpdatePlaylist(ServiceParam, PlaylistId, request) -> Seed::Playlist::Types::Playlist</code></summary>
+<details><summary><code>client.playlist.update_playlist(service_param, playlist_id, request) -> Seed::Playlist::Types::Playlist</code></summary>
 <dl>
 <dd>
 
@@ -976,7 +976,7 @@ client.playlist.update_playlist({
 </dl>
 </details>
 
-<details><summary><code>client.Playlist.DeletePlaylist(ServiceParam, PlaylistId) -> </code></summary>
+<details><summary><code>client.playlist.delete_playlist(service_param, playlist_id) -> </code></summary>
 <dl>
 <dd>
 
@@ -1038,8 +1038,8 @@ client.playlist.delete_playlist();
 </dl>
 </details>
 
-## Problem
-<details><summary><code>client.Problem.CreateProblem(request) -> Seed::Problem::Types::CreateProblemResponse</code></summary>
+## problem
+<details><summary><code>client.problem.create_problem(request) -> Seed::Problem::Types::CreateProblemResponse</code></summary>
 <dl>
 <dd>
 
@@ -1116,7 +1116,7 @@ client.problem.create_problem({
 </dl>
 </details>
 
-<details><summary><code>client.Problem.UpdateProblem(ProblemId, request) -> Seed::Problem::Types::UpdateProblemResponse</code></summary>
+<details><summary><code>client.problem.update_problem(problem_id, request) -> Seed::Problem::Types::UpdateProblemResponse</code></summary>
 <dl>
 <dd>
 
@@ -1201,7 +1201,7 @@ client.problem.update_problem({
 </dl>
 </details>
 
-<details><summary><code>client.Problem.DeleteProblem(ProblemId) -> </code></summary>
+<details><summary><code>client.problem.delete_problem(problem_id) -> </code></summary>
 <dl>
 <dd>
 
@@ -1255,7 +1255,7 @@ client.problem.delete_problem();
 </dl>
 </details>
 
-<details><summary><code>client.Problem.GetDefaultStarterFiles(request) -> Seed::Problem::Types::GetDefaultStarterFilesResponse</code></summary>
+<details><summary><code>client.problem.get_default_starter_files(request) -> Seed::Problem::Types::GetDefaultStarterFilesResponse</code></summary>
 <dl>
 <dd>
 
@@ -1339,8 +1339,8 @@ The method name cannot include the following characters:
 </dl>
 </details>
 
-## Submission
-<details><summary><code>client.Submission.CreateExecutionSession(Language) -> Seed::Submission::Types::ExecutionSessionResponse</code></summary>
+## submission
+<details><summary><code>client.submission.create_execution_session(language) -> Seed::Submission::Types::ExecutionSessionResponse</code></summary>
 <dl>
 <dd>
 
@@ -1394,7 +1394,7 @@ client.submission.create_execution_session();
 </dl>
 </details>
 
-<details><summary><code>client.Submission.GetExecutionSession(SessionId) -> Seed::Submission::Types::ExecutionSessionResponse</code></summary>
+<details><summary><code>client.submission.get_execution_session(session_id) -> Seed::Submission::Types::ExecutionSessionResponse</code></summary>
 <dl>
 <dd>
 
@@ -1448,7 +1448,7 @@ client.submission.get_execution_session();
 </dl>
 </details>
 
-<details><summary><code>client.Submission.StopExecutionSession(SessionId) -> </code></summary>
+<details><summary><code>client.submission.stop_execution_session(session_id) -> </code></summary>
 <dl>
 <dd>
 
@@ -1502,7 +1502,7 @@ client.submission.stop_execution_session();
 </dl>
 </details>
 
-<details><summary><code>client.Submission.GetExecutionSessionsState() -> Seed::Submission::Types::GetExecutionSessionStateResponse</code></summary>
+<details><summary><code>client.submission.get_execution_sessions_state() -> Seed::Submission::Types::GetExecutionSessionStateResponse</code></summary>
 <dl>
 <dd>
 
@@ -1527,8 +1527,8 @@ client.submission.get_execution_sessions_state();
 </dl>
 </details>
 
-## Sysprop
-<details><summary><code>client.Sysprop.SetNumWarmInstances(Language, NumWarmInstances) -> </code></summary>
+## sysprop
+<details><summary><code>client.sysprop.set_num_warm_instances(language, num_warm_instances) -> </code></summary>
 <dl>
 <dd>
 
@@ -1576,7 +1576,7 @@ client.sysprop.set_num_warm_instances();
 </dl>
 </details>
 
-<details><summary><code>client.Sysprop.GetNumWarmInstances() -> Internal::Types::Hash[Seed::Commons::Types::Language, Integer]</code></summary>
+<details><summary><code>client.sysprop.get_num_warm_instances() -> Internal::Types::Hash[Seed::Commons::Types::Language, Integer]</code></summary>
 <dl>
 <dd>
 
@@ -1601,8 +1601,8 @@ client.sysprop.get_num_warm_instances();
 </dl>
 </details>
 
-## V2 Problem
-<details><summary><code>client.V2.Problem.GetLightweightProblems() -> Internal::Types::Array[Seed::V2::Problem::Types::LightweightProblemInfoV2]</code></summary>
+## v_2 problem
+<details><summary><code>client.v_2.problem.get_lightweight_problems() -> Internal::Types::Array[Seed::V2::Problem::Types::LightweightProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -1641,7 +1641,7 @@ client.v_2.problem.get_lightweight_problems();
 </dl>
 </details>
 
-<details><summary><code>client.V2.Problem.GetProblems() -> Internal::Types::Array[Seed::V2::Problem::Types::ProblemInfoV2]</code></summary>
+<details><summary><code>client.v_2.problem.get_problems() -> Internal::Types::Array[Seed::V2::Problem::Types::ProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -1680,7 +1680,7 @@ client.v_2.problem.get_problems();
 </dl>
 </details>
 
-<details><summary><code>client.V2.Problem.GetLatestProblem(ProblemId) -> Seed::V2::Problem::Types::ProblemInfoV2</code></summary>
+<details><summary><code>client.v_2.problem.get_latest_problem(problem_id) -> Seed::V2::Problem::Types::ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -1734,7 +1734,7 @@ client.v_2.problem.get_latest_problem();
 </dl>
 </details>
 
-<details><summary><code>client.V2.Problem.GetProblemVersion(ProblemId, ProblemVersion) -> Seed::V2::Problem::Types::ProblemInfoV2</code></summary>
+<details><summary><code>client.v_2.problem.get_problem_version(problem_id, problem_version) -> Seed::V2::Problem::Types::ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -1796,8 +1796,8 @@ client.v_2.problem.get_problem_version();
 </dl>
 </details>
 
-## V2 V3 Problem
-<details><summary><code>client.V2.V3.Problem.GetLightweightProblems() -> Internal::Types::Array[Seed::V2::V3::Problem::Types::LightweightProblemInfoV2]</code></summary>
+## v_2 v_3 problem
+<details><summary><code>client.v_2.v_3.problem.get_lightweight_problems() -> Internal::Types::Array[Seed::V2::V3::Problem::Types::LightweightProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -1836,7 +1836,7 @@ client.v_2.problem.get_lightweight_problems();
 </dl>
 </details>
 
-<details><summary><code>client.V2.V3.Problem.GetProblems() -> Internal::Types::Array[Seed::V2::V3::Problem::Types::ProblemInfoV2]</code></summary>
+<details><summary><code>client.v_2.v_3.problem.get_problems() -> Internal::Types::Array[Seed::V2::V3::Problem::Types::ProblemInfoV2]</code></summary>
 <dl>
 <dd>
 
@@ -1875,7 +1875,7 @@ client.v_2.problem.get_problems();
 </dl>
 </details>
 
-<details><summary><code>client.V2.V3.Problem.GetLatestProblem(ProblemId) -> Seed::V2::V3::Problem::Types::ProblemInfoV2</code></summary>
+<details><summary><code>client.v_2.v_3.problem.get_latest_problem(problem_id) -> Seed::V2::V3::Problem::Types::ProblemInfoV2</code></summary>
 <dl>
 <dd>
 
@@ -1929,7 +1929,7 @@ client.v_2.problem.get_latest_problem();
 </dl>
 </details>
 
-<details><summary><code>client.V2.V3.Problem.GetProblemVersion(ProblemId, ProblemVersion) -> Seed::V2::V3::Problem::Types::ProblemInfoV2</code></summary>
+<details><summary><code>client.v_2.v_3.problem.get_problem_version(problem_id, problem_version) -> Seed::V2::V3::Problem::Types::ProblemInfoV2</code></summary>
 <dl>
 <dd>
 

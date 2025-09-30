@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.Echo(Id, request) -> String</code></summary>
+<details><summary><code>client.echo(id, request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -50,8 +50,8 @@ client.echo({
 </dl>
 </details>
 
-## Service
-<details><summary><code>client.Service.Nop(Id, NestedId) -> </code></summary>
+## service
+<details><summary><code>client.service.nop(id, nested_id) -> </code></summary>
 <dl>
 <dd>
 

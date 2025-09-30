@@ -1,6 +1,6 @@
 # Reference
-## Service
-<details><summary><code>client.Service.Endpoint() -> </code></summary>
+## service
+<details><summary><code>client.service.endpoint() -> </code></summary>
 <dl>
 <dd>
 

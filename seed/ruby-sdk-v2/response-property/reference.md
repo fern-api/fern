@@ -1,6 +1,6 @@
 # Reference
-## Service
-<details><summary><code>client.Service.GetMovie(request) -> Seed::Service::Types::Response</code></summary>
+## service
+<details><summary><code>client.service.get_movie(request) -> Seed::Service::Types::Response</code></summary>
 <dl>
 <dd>
 
@@ -40,7 +40,7 @@ client.service.get_optional_movie_docs();
 </dl>
 </details>
 
-<details><summary><code>client.Service.GetMovieDocs(request) -> Seed::Service::Types::Response</code></summary>
+<details><summary><code>client.service.get_movie_docs(request) -> Seed::Service::Types::Response</code></summary>
 <dl>
 <dd>
 
@@ -80,7 +80,7 @@ client.service.get_optional_movie_docs();
 </dl>
 </details>
 
-<details><summary><code>client.Service.GetMovieName(request) -> Seed::Types::StringResponse</code></summary>
+<details><summary><code>client.service.get_movie_name(request) -> Seed::Types::StringResponse</code></summary>
 <dl>
 <dd>
 
@@ -120,7 +120,7 @@ client.service.get_optional_movie_docs();
 </dl>
 </details>
 
-<details><summary><code>client.Service.GetMovieMetadata(request) -> Seed::Service::Types::Response</code></summary>
+<details><summary><code>client.service.get_movie_metadata(request) -> Seed::Service::Types::Response</code></summary>
 <dl>
 <dd>
 
@@ -160,7 +160,7 @@ client.service.get_optional_movie_docs();
 </dl>
 </details>
 
-<details><summary><code>client.Service.GetOptionalMovie(request) -> Seed::Service::Types::Response</code></summary>
+<details><summary><code>client.service.get_optional_movie(request) -> Seed::Service::Types::Response</code></summary>
 <dl>
 <dd>
 
@@ -200,7 +200,7 @@ client.service.get_optional_movie_docs();
 </dl>
 </details>
 
-<details><summary><code>client.Service.GetOptionalMovieDocs(request) -> Seed::Service::Types::WithDocs</code></summary>
+<details><summary><code>client.service.get_optional_movie_docs(request) -> Seed::Service::Types::WithDocs</code></summary>
 <dl>
 <dd>
 
@@ -240,7 +240,7 @@ client.service.get_optional_movie_docs();
 </dl>
 </details>
 
-<details><summary><code>client.Service.GetOptionalMovieName(request) -> Seed::Types::StringResponse</code></summary>
+<details><summary><code>client.service.get_optional_movie_name(request) -> Seed::Types::StringResponse</code></summary>
 <dl>
 <dd>
 

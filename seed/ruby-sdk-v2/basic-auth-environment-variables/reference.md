@@ -1,6 +1,6 @@
 # Reference
-## BasicAuth
-<details><summary><code>client.BasicAuth.GetWithBasicAuth() -> Internal::Types::Boolean</code></summary>
+## basic_auth
+<details><summary><code>client.basic_auth.get_with_basic_auth() -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -39,7 +39,7 @@ client.basic_auth.get_with_basic_auth();
 </dl>
 </details>
 
-<details><summary><code>client.BasicAuth.PostWithBasicAuth(request) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.basic_auth.post_with_basic_auth(request) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 

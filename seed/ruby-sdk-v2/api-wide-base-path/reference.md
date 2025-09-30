@@ -1,6 +1,6 @@
 # Reference
-## Service
-<details><summary><code>client.Service.Post(PathParam, ServiceParam, ResourceParam, EndpointParam) -> </code></summary>
+## service
+<details><summary><code>client.service.post(path_param, service_param, resource_param, endpoint_param) -> </code></summary>
 <dl>
 <dd>
 

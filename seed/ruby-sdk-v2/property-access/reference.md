@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.CreateUser(request) -> Seed::Types::User</code></summary>
+<details><summary><code>client.create_user(request) -> Seed::Types::User</code></summary>
 <dl>
 <dd>
 

@@ -1,6 +1,6 @@
 # Reference
-## Service
-<details><summary><code>client.Service.Simple() -> </code></summary>
+## service
+<details><summary><code>client.service.simple() -> </code></summary>
 <dl>
 <dd>
 

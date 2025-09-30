@@ -1,6 +1,6 @@
 # Reference
-## Auth
-<details><summary><code>client.Auth.GetTokenWithClientCredentials(request) -> Seed::Auth::Types::TokenResponse</code></summary>
+## auth
+<details><summary><code>client.auth.get_token_with_client_credentials(request) -> Seed::Auth::Types::TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -87,7 +87,7 @@ client.auth.get_token_with_client_credentials({
 </dl>
 </details>
 
-<details><summary><code>client.Auth.RefreshToken(request) -> Seed::Auth::Types::TokenResponse</code></summary>
+<details><summary><code>client.auth.refresh_token(request) -> Seed::Auth::Types::TokenResponse</code></summary>
 <dl>
 <dd>
 

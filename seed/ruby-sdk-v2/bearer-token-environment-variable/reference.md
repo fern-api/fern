@@ -1,6 +1,6 @@
 # Reference
-## Service
-<details><summary><code>client.Service.GetWithBearerToken() -> String</code></summary>
+## service
+<details><summary><code>client.service.get_with_bearer_token() -> String</code></summary>
 <dl>
 <dd>
 

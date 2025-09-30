@@ -1,6 +1,6 @@
 # Reference
-## Service
-<details><summary><code>client.Service.Upload(request) -> </code></summary>
+## service
+<details><summary><code>client.service.upload(request) -> </code></summary>
 <dl>
 <dd>
 

@@ -1,6 +1,6 @@
 # Reference
-## Payment
-<details><summary><code>client.Payment.Create(request) -> String</code></summary>
+## payment
+<details><summary><code>client.payment.create(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -50,7 +50,7 @@ client.payment.create({
 </dl>
 </details>
 
-<details><summary><code>client.Payment.Delete(PaymentId) -> </code></summary>
+<details><summary><code>client.payment.delete(payment_id) -> </code></summary>
 <dl>
 <dd>
 

@@ -1,6 +1,6 @@
 # Reference
-## Organizations
-<details><summary><code>client.Organizations.GetOrganization(TenantId, OrganizationId) -> Seed::Organizations::Types::Organization</code></summary>
+## organizations
+<details><summary><code>client.organizations.get_organization(tenant_id, organization_id) -> Seed::Organizations::Types::Organization</code></summary>
 <dl>
 <dd>
 
@@ -48,7 +48,7 @@ client.organizations.get_organization();
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.GetOrganizationUser(TenantId, OrganizationId, UserId) -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.organizations.get_organization_user(tenant_id, organization_id, user_id) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -107,7 +107,7 @@ client.organizations.get_organization_user({
 </dl>
 </details>
 
-<details><summary><code>client.Organizations.SearchOrganizations(TenantId, OrganizationId) -> Internal::Types::Array[Seed::Organizations::Types::Organization]</code></summary>
+<details><summary><code>client.organizations.search_organizations(tenant_id, organization_id) -> Internal::Types::Array[Seed::Organizations::Types::Organization]</code></summary>
 <dl>
 <dd>
 
@@ -166,8 +166,8 @@ client.organizations.search_organizations({
 </dl>
 </details>
 
-## User
-<details><summary><code>client.User.GetUser(TenantId, UserId) -> Seed::User::Types::User</code></summary>
+## user
+<details><summary><code>client.user.get_user(tenant_id, user_id) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -217,7 +217,7 @@ client.user.get_user({
 </dl>
 </details>
 
-<details><summary><code>client.User.CreateUser(TenantId, request) -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.user.create_user(tenant_id, request) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -268,7 +268,7 @@ client.user.create_user({
 </dl>
 </details>
 
-<details><summary><code>client.User.UpdateUser(TenantId, UserId, request) -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.user.update_user(tenant_id, user_id, request) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -326,7 +326,7 @@ client.user.update_user({
 </dl>
 </details>
 
-<details><summary><code>client.User.SearchUsers(TenantId, UserId) -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
+<details><summary><code>client.user.search_users(tenant_id, user_id) -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
 <dl>
 <dd>
 

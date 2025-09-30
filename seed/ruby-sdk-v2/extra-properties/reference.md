@@ -1,6 +1,6 @@
 # Reference
-## User
-<details><summary><code>client.User.CreateUser(request) -> Seed::User::Types::User</code></summary>
+## user
+<details><summary><code>client.user.create_user(request) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 

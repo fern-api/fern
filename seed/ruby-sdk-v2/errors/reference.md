@@ -1,6 +1,6 @@
 # Reference
-## Simple
-<details><summary><code>client.Simple.FooWithoutEndpointError(request) -> Seed::Simple::Types::FooResponse</code></summary>
+## simple
+<details><summary><code>client.simple.foo_without_endpoint_error(request) -> Seed::Simple::Types::FooResponse</code></summary>
 <dl>
 <dd>
 
@@ -42,7 +42,7 @@ client.simple.foo_without_endpoint_error({
 </dl>
 </details>
 
-<details><summary><code>client.Simple.Foo(request) -> Seed::Simple::Types::FooResponse</code></summary>
+<details><summary><code>client.simple.foo(request) -> Seed::Simple::Types::FooResponse</code></summary>
 <dl>
 <dd>
 
@@ -84,7 +84,7 @@ client.simple.foo({
 </dl>
 </details>
 
-<details><summary><code>client.Simple.FooWithExamples(request) -> Seed::Simple::Types::FooResponse</code></summary>
+<details><summary><code>client.simple.foo_with_examples(request) -> Seed::Simple::Types::FooResponse</code></summary>
 <dl>
 <dd>
 

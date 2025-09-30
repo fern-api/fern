@@ -1,6 +1,6 @@
 # Reference
-## Endpoints Container
-<details><summary><code>client.Endpoints.Container.GetAndReturnListOfPrimitives(request) -> Internal::Types::Array[String]</code></summary>
+## endpoints container
+<details><summary><code>client.endpoints.container.get_and_return_list_of_primitives(request) -> Internal::Types::Array[String]</code></summary>
 <dl>
 <dd>
 
@@ -40,7 +40,7 @@ client.endpoints.container.get_and_return_list_of_primitives();
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Container.GetAndReturnListOfObjects(request) -> Internal::Types::Array[Seed::Types::Object_::Types::ObjectWithRequiredField]</code></summary>
+<details><summary><code>client.endpoints.container.get_and_return_list_of_objects(request) -> Internal::Types::Array[Seed::Types::Object_::Types::ObjectWithRequiredField]</code></summary>
 <dl>
 <dd>
 
@@ -80,7 +80,7 @@ client.endpoints.container.get_and_return_list_of_objects();
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Container.GetAndReturnSetOfPrimitives(request) -> Internal::Types::Array[String]</code></summary>
+<details><summary><code>client.endpoints.container.get_and_return_set_of_primitives(request) -> Internal::Types::Array[String]</code></summary>
 <dl>
 <dd>
 
@@ -120,7 +120,7 @@ client.endpoints.container.get_and_return_set_of_primitives();
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Container.GetAndReturnSetOfObjects(request) -> Internal::Types::Array[Seed::Types::Object_::Types::ObjectWithRequiredField]</code></summary>
+<details><summary><code>client.endpoints.container.get_and_return_set_of_objects(request) -> Internal::Types::Array[Seed::Types::Object_::Types::ObjectWithRequiredField]</code></summary>
 <dl>
 <dd>
 
@@ -160,7 +160,7 @@ client.endpoints.container.get_and_return_set_of_objects();
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Container.GetAndReturnMapPrimToPrim(request) -> Internal::Types::Hash[String, String]</code></summary>
+<details><summary><code>client.endpoints.container.get_and_return_map_prim_to_prim(request) -> Internal::Types::Hash[String, String]</code></summary>
 <dl>
 <dd>
 
@@ -202,7 +202,7 @@ client.endpoints.container.get_and_return_map_prim_to_prim({
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Container.GetAndReturnMapOfPrimToObject(request) -> Internal::Types::Hash[String, Seed::Types::Object_::Types::ObjectWithRequiredField]</code></summary>
+<details><summary><code>client.endpoints.container.get_and_return_map_of_prim_to_object(request) -> Internal::Types::Hash[String, Seed::Types::Object_::Types::ObjectWithRequiredField]</code></summary>
 <dl>
 <dd>
 
@@ -246,7 +246,7 @@ client.endpoints.container.get_and_return_map_of_prim_to_object({
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Container.GetAndReturnOptional(request) -> Seed::Types::Object_::Types::ObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.container.get_and_return_optional(request) -> Seed::Types::Object_::Types::ObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -288,8 +288,8 @@ client.endpoints.container.get_and_return_optional({
 </dl>
 </details>
 
-## Endpoints ContentType
-<details><summary><code>client.Endpoints.ContentType.PostJsonPatchContentType(request) -> </code></summary>
+## endpoints content_type
+<details><summary><code>client.endpoints.content_type.post_json_patch_content_type(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -345,7 +345,7 @@ client.endpoints.content_type.post_json_patch_content_type({
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.ContentType.PostJsonPatchContentWithCharsetType(request) -> </code></summary>
+<details><summary><code>client.endpoints.content_type.post_json_patch_content_with_charset_type(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -401,8 +401,8 @@ client.endpoints.content_type.post_json_patch_content_with_charset_type({
 </dl>
 </details>
 
-## Endpoints Enum
-<details><summary><code>client.Endpoints.Enum.GetAndReturnEnum(request) -> Seed::Types::Enum::Types::WeatherReport</code></summary>
+## endpoints enum
+<details><summary><code>client.endpoints.enum.get_and_return_enum(request) -> Seed::Types::Enum::Types::WeatherReport</code></summary>
 <dl>
 <dd>
 
@@ -442,8 +442,8 @@ client.endpoints.enum.get_and_return_enum();
 </dl>
 </details>
 
-## Endpoints HttpMethods
-<details><summary><code>client.Endpoints.HttpMethods.TestGet(Id) -> String</code></summary>
+## endpoints http_methods
+<details><summary><code>client.endpoints.http_methods.test_get(id) -> String</code></summary>
 <dl>
 <dd>
 
@@ -483,7 +483,7 @@ client.endpoints.http_methods.test_get();
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.HttpMethods.TestPost(request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.http_methods.test_post(request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -525,7 +525,7 @@ client.endpoints.http_methods.test_post({
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.HttpMethods.TestPut(Id, request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.http_methods.test_put(id, request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -575,7 +575,7 @@ client.endpoints.http_methods.test_put({
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.HttpMethods.TestPatch(Id, request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.http_methods.test_patch(id, request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -639,7 +639,7 @@ client.endpoints.http_methods.test_patch({
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.HttpMethods.TestDelete(Id) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.endpoints.http_methods.test_delete(id) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -679,8 +679,8 @@ client.endpoints.http_methods.test_delete();
 </dl>
 </details>
 
-## Endpoints Object_
-<details><summary><code>client.Endpoints.Object_.GetAndReturnWithOptionalField(request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
+## endpoints object
+<details><summary><code>client.endpoints.object.get_and_return_with_optional_field(request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -736,7 +736,7 @@ client.endpoints.object.get_and_return_with_optional_field({
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Object_.GetAndReturnWithRequiredField(request) -> Seed::Types::Object_::Types::ObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.object.get_and_return_with_required_field(request) -> Seed::Types::Object_::Types::ObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -778,7 +778,7 @@ client.endpoints.object.get_and_return_with_required_field({
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Object_.GetAndReturnWithMapOfMap(request) -> Seed::Types::Object_::Types::ObjectWithMapOfMap</code></summary>
+<details><summary><code>client.endpoints.object.get_and_return_with_map_of_map(request) -> Seed::Types::Object_::Types::ObjectWithMapOfMap</code></summary>
 <dl>
 <dd>
 
@@ -824,7 +824,7 @@ client.endpoints.object.get_and_return_with_map_of_map({
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Object_.GetAndReturnNestedWithOptionalField(request) -> Seed::Types::Object_::Types::NestedObjectWithOptionalField</code></summary>
+<details><summary><code>client.endpoints.object.get_and_return_nested_with_optional_field(request) -> Seed::Types::Object_::Types::NestedObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -883,7 +883,7 @@ client.endpoints.object.get_and_return_nested_with_optional_field({
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Object_.GetAndReturnNestedWithRequiredField(String, request) -> Seed::Types::Object_::Types::NestedObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.object.get_and_return_nested_with_required_field(string, request) -> Seed::Types::Object_::Types::NestedObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -950,7 +950,7 @@ client.endpoints.object.get_and_return_nested_with_required_field({
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Object_.GetAndReturnNestedWithRequiredFieldAsList(request) -> Seed::Types::Object_::Types::NestedObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.object.get_and_return_nested_with_required_field_as_list(request) -> Seed::Types::Object_::Types::NestedObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -990,8 +990,8 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list();
 </dl>
 </details>
 
-## Endpoints Params
-<details><summary><code>client.Endpoints.Params.GetWithPath(Param) -> String</code></summary>
+## endpoints params
+<details><summary><code>client.endpoints.params.get_with_path(param) -> String</code></summary>
 <dl>
 <dd>
 
@@ -1045,7 +1045,7 @@ client.endpoints.params.get_with_path();
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Params.GetWithInlinePath(Param) -> String</code></summary>
+<details><summary><code>client.endpoints.params.get_with_inline_path(param) -> String</code></summary>
 <dl>
 <dd>
 
@@ -1099,7 +1099,7 @@ client.endpoints.params.get_with_path();
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Params.GetWithQuery() -> </code></summary>
+<details><summary><code>client.endpoints.params.get_with_query() -> </code></summary>
 <dl>
 <dd>
 
@@ -1164,7 +1164,7 @@ client.endpoints.params.get_with_query({
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Params.GetWithAllowMultipleQuery() -> </code></summary>
+<details><summary><code>client.endpoints.params.get_with_allow_multiple_query() -> </code></summary>
 <dl>
 <dd>
 
@@ -1229,7 +1229,7 @@ client.endpoints.params.get_with_query({
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Params.GetWithPathAndQuery(Param) -> </code></summary>
+<details><summary><code>client.endpoints.params.get_with_path_and_query(param) -> </code></summary>
 <dl>
 <dd>
 
@@ -1294,7 +1294,7 @@ client.endpoints.params.get_with_path_and_query({
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Params.GetWithInlinePathAndQuery(Param) -> </code></summary>
+<details><summary><code>client.endpoints.params.get_with_inline_path_and_query(param) -> </code></summary>
 <dl>
 <dd>
 
@@ -1359,7 +1359,7 @@ client.endpoints.params.get_with_path_and_query({
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Params.ModifyWithPath(Param, request) -> String</code></summary>
+<details><summary><code>client.endpoints.params.modify_with_path(param, request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -1423,7 +1423,7 @@ client.endpoints.params.modify_with_inline_path({
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Params.ModifyWithInlinePath(Param, request) -> String</code></summary>
+<details><summary><code>client.endpoints.params.modify_with_inline_path(param, request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -1487,8 +1487,8 @@ client.endpoints.params.modify_with_inline_path({
 </dl>
 </details>
 
-## Endpoints Primitive
-<details><summary><code>client.Endpoints.Primitive.GetAndReturnString(request) -> String</code></summary>
+## endpoints primitive
+<details><summary><code>client.endpoints.primitive.get_and_return_string(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -1528,7 +1528,7 @@ client.endpoints.primitive.get_and_return_string();
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Primitive.GetAndReturnInt(request) -> Integer</code></summary>
+<details><summary><code>client.endpoints.primitive.get_and_return_int(request) -> Integer</code></summary>
 <dl>
 <dd>
 
@@ -1568,7 +1568,7 @@ client.endpoints.primitive.get_and_return_int();
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Primitive.GetAndReturnLong(request) -> Integer</code></summary>
+<details><summary><code>client.endpoints.primitive.get_and_return_long(request) -> Integer</code></summary>
 <dl>
 <dd>
 
@@ -1608,7 +1608,7 @@ client.endpoints.primitive.get_and_return_long();
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Primitive.GetAndReturnDouble(request) -> Integer</code></summary>
+<details><summary><code>client.endpoints.primitive.get_and_return_double(request) -> Integer</code></summary>
 <dl>
 <dd>
 
@@ -1648,7 +1648,7 @@ client.endpoints.primitive.get_and_return_double();
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Primitive.GetAndReturnBool(request) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.endpoints.primitive.get_and_return_bool(request) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -1688,7 +1688,7 @@ client.endpoints.primitive.get_and_return_bool();
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Primitive.GetAndReturnDatetime(request) -> String</code></summary>
+<details><summary><code>client.endpoints.primitive.get_and_return_datetime(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -1728,7 +1728,7 @@ client.endpoints.primitive.get_and_return_datetime();
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Primitive.GetAndReturnDate(request) -> String</code></summary>
+<details><summary><code>client.endpoints.primitive.get_and_return_date(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -1768,7 +1768,7 @@ client.endpoints.primitive.get_and_return_date();
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Primitive.GetAndReturnUuid(request) -> String</code></summary>
+<details><summary><code>client.endpoints.primitive.get_and_return_uuid(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -1808,7 +1808,7 @@ client.endpoints.primitive.get_and_return_uuid();
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Primitive.GetAndReturnBase64(request) -> String</code></summary>
+<details><summary><code>client.endpoints.primitive.get_and_return_base_64(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -1848,8 +1848,8 @@ client.endpoints.primitive.get_and_return_base_64();
 </dl>
 </details>
 
-## Endpoints Put
-<details><summary><code>client.Endpoints.Put.Add(Id) -> Seed::Endpoints::Put::Types::PutResponse</code></summary>
+## endpoints put
+<details><summary><code>client.endpoints.put.add(id) -> Seed::Endpoints::Put::Types::PutResponse</code></summary>
 <dl>
 <dd>
 
@@ -1891,8 +1891,8 @@ client.endpoints.put.add({
 </dl>
 </details>
 
-## Endpoints Union
-<details><summary><code>client.Endpoints.Union.GetAndReturnUnion(request) -> Seed::Types::Union::Types::Animal</code></summary>
+## endpoints union
+<details><summary><code>client.endpoints.union.get_and_return_union(request) -> Seed::Types::Union::Types::Animal</code></summary>
 <dl>
 <dd>
 
@@ -1932,8 +1932,8 @@ client.endpoints.union.get_and_return_union();
 </dl>
 </details>
 
-## Endpoints Urls
-<details><summary><code>client.Endpoints.Urls.WithMixedCase() -> String</code></summary>
+## endpoints urls
+<details><summary><code>client.endpoints.urls.with_mixed_case() -> String</code></summary>
 <dl>
 <dd>
 
@@ -1958,7 +1958,7 @@ client.endpoints.urls.with_mixed_case();
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Urls.NoEndingSlash() -> String</code></summary>
+<details><summary><code>client.endpoints.urls.no_ending_slash() -> String</code></summary>
 <dl>
 <dd>
 
@@ -1983,7 +1983,7 @@ client.endpoints.urls.no_ending_slash();
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Urls.WithEndingSlash() -> String</code></summary>
+<details><summary><code>client.endpoints.urls.with_ending_slash() -> String</code></summary>
 <dl>
 <dd>
 
@@ -2008,7 +2008,7 @@ client.endpoints.urls.with_ending_slash();
 </dl>
 </details>
 
-<details><summary><code>client.Endpoints.Urls.WithUnderscores() -> String</code></summary>
+<details><summary><code>client.endpoints.urls.with_underscores() -> String</code></summary>
 <dl>
 <dd>
 
@@ -2033,8 +2033,8 @@ client.endpoints.urls.with_underscores();
 </dl>
 </details>
 
-## InlinedRequests
-<details><summary><code>client.InlinedRequests.PostWithObjectBodyandResponse(request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
+## inlined_requests
+<details><summary><code>client.inlined_requests.post_with_object_bodyand_response(request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -2124,8 +2124,8 @@ client.inlined_requests.post_with_object_bodyand_response({
 </dl>
 </details>
 
-## NoAuth
-<details><summary><code>client.NoAuth.PostWithNoAuth(request) -> Internal::Types::Boolean</code></summary>
+## no_auth
+<details><summary><code>client.no_auth.post_with_no_auth(request) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -2179,8 +2179,8 @@ client.no_auth.post_with_no_auth();
 </dl>
 </details>
 
-## NoReqBody
-<details><summary><code>client.NoReqBody.GetWithNoRequestBody() -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
+## no_req_body
+<details><summary><code>client.no_req_body.get_with_no_request_body() -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
 
@@ -2205,7 +2205,7 @@ client.no_req_body.get_with_no_request_body();
 </dl>
 </details>
 
-<details><summary><code>client.NoReqBody.PostWithNoRequestBody() -> String</code></summary>
+<details><summary><code>client.no_req_body.post_with_no_request_body() -> String</code></summary>
 <dl>
 <dd>
 
@@ -2230,8 +2230,8 @@ client.no_req_body.post_with_no_request_body();
 </dl>
 </details>
 
-## ReqWithHeaders
-<details><summary><code>client.ReqWithHeaders.GetWithCustomHeader(request) -> </code></summary>
+## req_with_headers
+<details><summary><code>client.req_with_headers.get_with_custom_header(request) -> </code></summary>
 <dl>
 <dd>
 

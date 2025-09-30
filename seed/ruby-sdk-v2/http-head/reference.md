@@ -1,6 +1,6 @@
 # Reference
-## User
-<details><summary><code>client.User.Head() -> </code></summary>
+## user
+<details><summary><code>client.user.head() -> </code></summary>
 <dl>
 <dd>
 
@@ -25,7 +25,7 @@ client.user.head();
 </dl>
 </details>
 
-<details><summary><code>client.User.List() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
+<details><summary><code>client.user.list() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
 <dl>
 <dd>
 

@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.Echo(request) -> String</code></summary>
+<details><summary><code>client.echo(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -39,7 +39,7 @@ client.create_type();
 </dl>
 </details>
 
-<details><summary><code>client.CreateType(request) -> Seed::Types::Identifier</code></summary>
+<details><summary><code>client.create_type(request) -> Seed::Types::Identifier</code></summary>
 <dl>
 <dd>
 
@@ -79,8 +79,8 @@ client.create_type();
 </dl>
 </details>
 
-## File Notification Service
-<details><summary><code>client.File.Notification.Service.GetException(NotificationId) -> Seed::Types::Types::Exception</code></summary>
+## file notification service
+<details><summary><code>client.file.notification.service.get_exception(notification_id) -> Seed::Types::Types::Exception</code></summary>
 <dl>
 <dd>
 
@@ -120,8 +120,8 @@ client.file.notification.service.get_exception();
 </dl>
 </details>
 
-## File Service
-<details><summary><code>client.File.Service.GetFile(Filename) -> Seed::Types::Types::File</code></summary>
+## file service
+<details><summary><code>client.file.service.get_file(filename) -> Seed::Types::Types::File</code></summary>
 <dl>
 <dd>
 
@@ -178,8 +178,8 @@ client.file.service.get_file({
 </dl>
 </details>
 
-## Health Service
-<details><summary><code>client.Health.Service.Check(Id) -> </code></summary>
+## health service
+<details><summary><code>client.health.service.check(id) -> </code></summary>
 <dl>
 <dd>
 
@@ -233,7 +233,7 @@ client.health.service.check();
 </dl>
 </details>
 
-<details><summary><code>client.Health.Service.Ping() -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.health.service.ping() -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -272,8 +272,8 @@ client.health.service.ping();
 </dl>
 </details>
 
-## Service
-<details><summary><code>client.Service.GetMovie(MovieId) -> Seed::Types::Types::Movie</code></summary>
+## service
+<details><summary><code>client.service.get_movie(movie_id) -> Seed::Types::Types::Movie</code></summary>
 <dl>
 <dd>
 
@@ -313,7 +313,7 @@ client.service.get_movie();
 </dl>
 </details>
 
-<details><summary><code>client.Service.CreateMovie(request) -> String</code></summary>
+<details><summary><code>client.service.create_movie(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -363,7 +363,7 @@ client.service.create_movie({
 </dl>
 </details>
 
-<details><summary><code>client.Service.GetMetadata() -> Seed::Types::Types::Metadata</code></summary>
+<details><summary><code>client.service.get_metadata() -> Seed::Types::Types::Metadata</code></summary>
 <dl>
 <dd>
 
@@ -422,7 +422,7 @@ client.service.get_metadata({
 </dl>
 </details>
 
-<details><summary><code>client.Service.CreateBigEntity(request) -> Seed::Types::Types::Response</code></summary>
+<details><summary><code>client.service.create_big_entity(request) -> Seed::Types::Types::Response</code></summary>
 <dl>
 <dd>
 
@@ -598,7 +598,7 @@ client.service.create_big_entity({
 </dl>
 </details>
 
-<details><summary><code>client.Service.RefreshToken(request) -> </code></summary>
+<details><summary><code>client.service.refresh_token(request) -> </code></summary>
 <dl>
 <dd>
 

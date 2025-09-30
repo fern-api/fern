@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.Create(request) -> Seed::Types::Type</code></summary>
+<details><summary><code>client.create(request) -> Seed::Types::Type</code></summary>
 <dl>
 <dd>
 
@@ -67,7 +67,7 @@ client.create({
 </dl>
 </details>
 
-<details><summary><code>client.Get() -> Seed::Types::Type</code></summary>
+<details><summary><code>client.get() -> Seed::Types::Type</code></summary>
 <dl>
 <dd>
 

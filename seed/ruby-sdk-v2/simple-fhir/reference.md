@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.GetAccount(AccountId) -> Seed::Types::Account</code></summary>
+<details><summary><code>client.get_account(account_id) -> Seed::Types::Account</code></summary>
 <dl>
 <dd>
 

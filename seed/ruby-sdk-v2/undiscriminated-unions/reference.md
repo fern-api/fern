@@ -1,6 +1,6 @@
 # Reference
-## Union
-<details><summary><code>client.Union.Get(request) -> Seed::Union::Types::MyUnion</code></summary>
+## union
+<details><summary><code>client.union.get(request) -> Seed::Union::Types::MyUnion</code></summary>
 <dl>
 <dd>
 
@@ -40,7 +40,7 @@ client.union.get();
 </dl>
 </details>
 
-<details><summary><code>client.Union.GetMetadata() -> Internal::Types::Hash[Seed::Union::Types::Key, String]</code></summary>
+<details><summary><code>client.union.get_metadata() -> Internal::Types::Hash[Seed::Union::Types::Key, String]</code></summary>
 <dl>
 <dd>
 
@@ -65,7 +65,7 @@ client.union.get_metadata();
 </dl>
 </details>
 
-<details><summary><code>client.Union.UpdateMetadata(request) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.union.update_metadata(request) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -105,7 +105,7 @@ client.union.update_metadata();
 </dl>
 </details>
 
-<details><summary><code>client.Union.Call(request) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.union.call(request) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -145,7 +145,7 @@ client.union.call({});
 </dl>
 </details>
 
-<details><summary><code>client.Union.DuplicateTypesUnion(request) -> Seed::Union::Types::UnionWithDuplicateTypes</code></summary>
+<details><summary><code>client.union.duplicate_types_union(request) -> Seed::Union::Types::UnionWithDuplicateTypes</code></summary>
 <dl>
 <dd>
 
@@ -185,7 +185,7 @@ client.union.duplicate_types_union();
 </dl>
 </details>
 
-<details><summary><code>client.Union.NestedUnions(request) -> String</code></summary>
+<details><summary><code>client.union.nested_unions(request) -> String</code></summary>
 <dl>
 <dd>
 

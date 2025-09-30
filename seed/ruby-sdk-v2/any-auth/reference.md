@@ -1,6 +1,6 @@
 # Reference
-## Auth
-<details><summary><code>client.Auth.GetToken(request) -> Seed::Auth::Types::TokenResponse</code></summary>
+## auth
+<details><summary><code>client.auth.get_token(request) -> Seed::Auth::Types::TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -78,8 +78,8 @@ client.auth.get_token({
 </dl>
 </details>
 
-## User
-<details><summary><code>client.User.Get() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
+## user
+<details><summary><code>client.user.get() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -104,7 +104,7 @@ client.user.get();
 </dl>
 </details>
 
-<details><summary><code>client.User.GetAdmins() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
+<details><summary><code>client.user.get_admins() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
 <dl>
 <dd>
 

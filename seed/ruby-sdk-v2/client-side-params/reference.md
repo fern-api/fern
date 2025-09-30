@@ -1,6 +1,6 @@
 # Reference
-## Service
-<details><summary><code>client.Service.ListResources() -> Internal::Types::Array[Seed::Types::Types::Resource]</code></summary>
+## service
+<details><summary><code>client.service.list_resources() -> Internal::Types::Array[Seed::Types::Types::Resource]</code></summary>
 <dl>
 <dd>
 
@@ -110,7 +110,7 @@ client.service.list_resources({
 </dl>
 </details>
 
-<details><summary><code>client.Service.GetResource(ResourceId) -> Seed::Types::Types::Resource</code></summary>
+<details><summary><code>client.service.get_resource(resource_id) -> Seed::Types::Types::Resource</code></summary>
 <dl>
 <dd>
 
@@ -184,7 +184,7 @@ client.service.get_resource({
 </dl>
 </details>
 
-<details><summary><code>client.Service.SearchResources(request) -> Seed::Types::Types::SearchResponse</code></summary>
+<details><summary><code>client.service.search_resources(request) -> Seed::Types::Types::SearchResponse</code></summary>
 <dl>
 <dd>
 
@@ -267,7 +267,7 @@ client.service.search_resources({
 </dl>
 </details>
 
-<details><summary><code>client.Service.ListUsers() -> Seed::Types::Types::PaginatedUserResponse</code></summary>
+<details><summary><code>client.service.list_users() -> Seed::Types::Types::PaginatedUserResponse</code></summary>
 <dl>
 <dd>
 
@@ -386,7 +386,7 @@ client.service.list_users({
 </dl>
 </details>
 
-<details><summary><code>client.Service.GetUserById(UserId) -> Seed::Types::Types::User</code></summary>
+<details><summary><code>client.service.get_user_by_id(user_id) -> Seed::Types::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -460,7 +460,7 @@ client.service.get_user_by_id({
 </dl>
 </details>
 
-<details><summary><code>client.Service.CreateUser(request) -> Seed::Types::Types::User</code></summary>
+<details><summary><code>client.service.create_user(request) -> Seed::Types::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -524,7 +524,7 @@ client.service.create_user({
 </dl>
 </details>
 
-<details><summary><code>client.Service.UpdateUser(UserId, request) -> Seed::Types::Types::User</code></summary>
+<details><summary><code>client.service.update_user(user_id, request) -> Seed::Types::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -596,7 +596,7 @@ client.service.update_user({
 </dl>
 </details>
 
-<details><summary><code>client.Service.DeleteUser(UserId) -> </code></summary>
+<details><summary><code>client.service.delete_user(user_id) -> </code></summary>
 <dl>
 <dd>
 
@@ -650,7 +650,7 @@ client.service.delete_user();
 </dl>
 </details>
 
-<details><summary><code>client.Service.ListConnections() -> Internal::Types::Array[Seed::Types::Types::Connection]</code></summary>
+<details><summary><code>client.service.list_connections() -> Internal::Types::Array[Seed::Types::Types::Connection]</code></summary>
 <dl>
 <dd>
 
@@ -724,7 +724,7 @@ client.service.list_connections({
 </dl>
 </details>
 
-<details><summary><code>client.Service.GetConnection(ConnectionId) -> Seed::Types::Types::Connection</code></summary>
+<details><summary><code>client.service.get_connection(connection_id) -> Seed::Types::Types::Connection</code></summary>
 <dl>
 <dd>
 
@@ -789,7 +789,7 @@ client.service.get_connection({
 </dl>
 </details>
 
-<details><summary><code>client.Service.ListClients() -> Seed::Types::Types::PaginatedClientResponse</code></summary>
+<details><summary><code>client.service.list_clients() -> Seed::Types::Types::PaginatedClientResponse</code></summary>
 <dl>
 <dd>
 
@@ -908,7 +908,7 @@ client.service.list_clients({
 </dl>
 </details>
 
-<details><summary><code>client.Service.GetClient(ClientId) -> Seed::Types::Types::Client</code></summary>
+<details><summary><code>client.service.get_client(client_id) -> Seed::Types::Types::Client</code></summary>
 <dl>
 <dd>
 

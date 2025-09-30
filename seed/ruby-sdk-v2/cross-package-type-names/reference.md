@@ -1,6 +1,6 @@
 # Reference
-## FolderA Service
-<details><summary><code>client.FolderA.Service.GetDirectThread() -> Seed::FolderA::Service::Types::Response</code></summary>
+## folder_a service
+<details><summary><code>client.folder_a.service.get_direct_thread() -> Seed::FolderA::Service::Types::Response</code></summary>
 <dl>
 <dd>
 
@@ -25,8 +25,8 @@ client.folder_a.service.get_direct_thread();
 </dl>
 </details>
 
-## FolderD Service
-<details><summary><code>client.FolderD.Service.GetDirectThread() -> Seed::FolderD::Service::Types::Response</code></summary>
+## folder_d service
+<details><summary><code>client.folder_d.service.get_direct_thread() -> Seed::FolderD::Service::Types::Response</code></summary>
 <dl>
 <dd>
 
@@ -51,8 +51,8 @@ client.folder_a.service.get_direct_thread();
 </dl>
 </details>
 
-## Foo
-<details><summary><code>client.Foo.Find(request) -> Seed::Foo::Types::ImportingType</code></summary>
+## foo
+<details><summary><code>client.foo.find(request) -> Seed::Foo::Types::ImportingType</code></summary>
 <dl>
 <dd>
 

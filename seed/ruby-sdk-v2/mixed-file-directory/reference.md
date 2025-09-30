@@ -1,6 +1,6 @@
 # Reference
-## Organization
-<details><summary><code>client.Organization.Create(request) -> Seed::Organization::Types::Organization</code></summary>
+## organization
+<details><summary><code>client.organization.create(request) -> Seed::Organization::Types::Organization</code></summary>
 <dl>
 <dd>
 
@@ -56,8 +56,8 @@ client.organization.create({
 </dl>
 </details>
 
-## User
-<details><summary><code>client.User.List() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
+## user
+<details><summary><code>client.user.list() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -113,8 +113,8 @@ client.user.list({
 </dl>
 </details>
 
-## User Events
-<details><summary><code>client.User.Events.ListEvents() -> Internal::Types::Array[Seed::User::Events::Types::Event]</code></summary>
+## user events
+<details><summary><code>client.user.events.list_events() -> Internal::Types::Array[Seed::User::Events::Types::Event]</code></summary>
 <dl>
 <dd>
 
@@ -170,8 +170,8 @@ client.user.events.list_events({
 </dl>
 </details>
 
-## User Events Metadata
-<details><summary><code>client.User.Events.Metadata.GetMetadata() -> Seed::User::Events::Metadata::Types::Metadata</code></summary>
+## user events metadata
+<details><summary><code>client.user.events.metadata.get_metadata() -> Seed::User::Events::Metadata::Types::Metadata</code></summary>
 <dl>
 <dd>
 

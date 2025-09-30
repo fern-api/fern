@@ -1,6 +1,6 @@
 # Reference
-## Headers
-<details><summary><code>client.Headers.Send(request) -> Seed::Types::SendResponse</code></summary>
+## headers
+<details><summary><code>client.headers.send_(request) -> Seed::Types::SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -60,8 +60,8 @@ client.headers.send_({
 </dl>
 </details>
 
-## Inlined
-<details><summary><code>client.Inlined.Send(request) -> Seed::Types::SendResponse</code></summary>
+## inlined
+<details><summary><code>client.inlined.send_(request) -> Seed::Types::SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -170,8 +170,8 @@ client.inlined.send_({
 </dl>
 </details>
 
-## Path
-<details><summary><code>client.Path.Send(Id) -> Seed::Types::SendResponse</code></summary>
+## path
+<details><summary><code>client.path.send_(id) -> Seed::Types::SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -211,8 +211,8 @@ client.path.send_();
 </dl>
 </details>
 
-## Query
-<details><summary><code>client.Query.Send() -> Seed::Types::SendResponse</code></summary>
+## query
+<details><summary><code>client.query.send_() -> Seed::Types::SendResponse</code></summary>
 <dl>
 <dd>
 
@@ -326,8 +326,8 @@ client.query.send_({
 </dl>
 </details>
 
-## Reference
-<details><summary><code>client.Reference.Send(request) -> Seed::Types::SendResponse</code></summary>
+## reference
+<details><summary><code>client.reference.send_(request) -> Seed::Types::SendResponse</code></summary>
 <dl>
 <dd>
 

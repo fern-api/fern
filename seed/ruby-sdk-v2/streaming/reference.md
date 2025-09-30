@@ -1,6 +1,6 @@
 # Reference
-## Dummy
-<details><summary><code>client.Dummy.GenerateStream(request) -> Seed::Dummy::Types::StreamResponse</code></summary>
+## dummy
+<details><summary><code>client.dummy.generate_stream(request) -> Seed::Dummy::Types::StreamResponse</code></summary>
 <dl>
 <dd>
 
@@ -51,7 +51,7 @@ client.dummy.generate_stream({
 </dl>
 </details>
 
-<details><summary><code>client.Dummy.Generate(request) -> Seed::Dummy::Types::StreamResponse</code></summary>
+<details><summary><code>client.dummy.generate(request) -> Seed::Dummy::Types::StreamResponse</code></summary>
 <dl>
 <dd>
 

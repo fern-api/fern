@@ -1,6 +1,6 @@
 # Reference
-## Auth
-<details><summary><code>client.Auth.GetToken(request) -> Seed::Auth::Types::TokenResponse</code></summary>
+## auth
+<details><summary><code>client.auth.get_token(request) -> Seed::Auth::Types::TokenResponse</code></summary>
 <dl>
 <dd>
 
@@ -78,8 +78,8 @@ client.auth.get_token({
 </dl>
 </details>
 
-## NestedNoAuth Api
-<details><summary><code>client.NestedNoAuth.Api.GetSomething() -> </code></summary>
+## nested_no_auth api
+<details><summary><code>client.nested_no_auth.api.get_something() -> </code></summary>
 <dl>
 <dd>
 
@@ -104,8 +104,8 @@ client.nested_no_auth.api.get_something();
 </dl>
 </details>
 
-## Nested Api
-<details><summary><code>client.Nested.Api.GetSomething() -> </code></summary>
+## nested api
+<details><summary><code>client.nested.api.get_something() -> </code></summary>
 <dl>
 <dd>
 
@@ -130,8 +130,8 @@ client.nested.api.get_something();
 </dl>
 </details>
 
-## Simple
-<details><summary><code>client.Simple.GetSomething() -> </code></summary>
+## simple
+<details><summary><code>client.simple.get_something() -> </code></summary>
 <dl>
 <dd>
 

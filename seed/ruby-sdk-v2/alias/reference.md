@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.Get(TypeId) -> </code></summary>
+<details><summary><code>client.get(type_id) -> </code></summary>
 <dl>
 <dd>
 

@@ -1,6 +1,6 @@
 # Reference
-## Nullable
-<details><summary><code>client.Nullable.GetUsers() -> Internal::Types::Array[Seed::Nullable::Types::User]</code></summary>
+## nullable
+<details><summary><code>client.nullable.get_users() -> Internal::Types::Array[Seed::Nullable::Types::User]</code></summary>
 <dl>
 <dd>
 
@@ -75,7 +75,7 @@ client.nullable.get_users({
 </dl>
 </details>
 
-<details><summary><code>client.Nullable.CreateUser(request) -> Seed::Nullable::Types::User</code></summary>
+<details><summary><code>client.nullable.create_user(request) -> Seed::Nullable::Types::User</code></summary>
 <dl>
 <dd>
 
@@ -152,7 +152,7 @@ client.nullable.create_user({
 </dl>
 </details>
 
-<details><summary><code>client.Nullable.DeleteUser(request) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.nullable.delete_user(request) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 

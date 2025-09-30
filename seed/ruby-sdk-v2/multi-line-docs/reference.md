@@ -1,6 +1,6 @@
 # Reference
-## User
-<details><summary><code>client.User.GetUser(UserId) -> </code></summary>
+## user
+<details><summary><code>client.user.get_user(user_id) -> </code></summary>
 <dl>
 <dd>
 
@@ -58,7 +58,7 @@ This ID is unique to each user.
 </dl>
 </details>
 
-<details><summary><code>client.User.CreateUser(request) -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.user.create_user(request) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 

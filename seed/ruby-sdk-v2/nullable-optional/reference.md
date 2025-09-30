@@ -1,6 +1,6 @@
 # Reference
-## NullableOptional
-<details><summary><code>client.NullableOptional.GetUser(UserId) -> Seed::NullableOptional::Types::UserResponse</code></summary>
+## nullable_optional
+<details><summary><code>client.nullable_optional.get_user(user_id) -> Seed::NullableOptional::Types::UserResponse</code></summary>
 <dl>
 <dd>
 
@@ -54,7 +54,7 @@ client.nullable_optional.get_user();
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.CreateUser(request) -> Seed::NullableOptional::Types::UserResponse</code></summary>
+<details><summary><code>client.nullable_optional.create_user(request) -> Seed::NullableOptional::Types::UserResponse</code></summary>
 <dl>
 <dd>
 
@@ -121,7 +121,7 @@ client.nullable_optional.create_user({
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.UpdateUser(UserId, request) -> Seed::NullableOptional::Types::UserResponse</code></summary>
+<details><summary><code>client.nullable_optional.update_user(user_id, request) -> Seed::NullableOptional::Types::UserResponse</code></summary>
 <dl>
 <dd>
 
@@ -196,7 +196,7 @@ client.nullable_optional.update_user({
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.ListUsers() -> Internal::Types::Array[Seed::NullableOptional::Types::UserResponse]</code></summary>
+<details><summary><code>client.nullable_optional.list_users() -> Internal::Types::Array[Seed::NullableOptional::Types::UserResponse]</code></summary>
 <dl>
 <dd>
 
@@ -279,7 +279,7 @@ client.nullable_optional.list_users({
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.SearchUsers() -> Internal::Types::Array[Seed::NullableOptional::Types::UserResponse]</code></summary>
+<details><summary><code>client.nullable_optional.search_users() -> Internal::Types::Array[Seed::NullableOptional::Types::UserResponse]</code></summary>
 <dl>
 <dd>
 
@@ -362,7 +362,7 @@ client.nullable_optional.search_users({
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.CreateComplexProfile(request) -> Seed::NullableOptional::Types::ComplexProfile</code></summary>
+<details><summary><code>client.nullable_optional.create_complex_profile(request) -> Seed::NullableOptional::Types::ComplexProfile</code></summary>
 <dl>
 <dd>
 
@@ -435,7 +435,7 @@ client.nullable_optional.create_complex_profile({
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.GetComplexProfile(ProfileId) -> Seed::NullableOptional::Types::ComplexProfile</code></summary>
+<details><summary><code>client.nullable_optional.get_complex_profile(profile_id) -> Seed::NullableOptional::Types::ComplexProfile</code></summary>
 <dl>
 <dd>
 
@@ -489,7 +489,7 @@ client.nullable_optional.get_complex_profile();
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.UpdateComplexProfile(ProfileId, request) -> Seed::NullableOptional::Types::ComplexProfile</code></summary>
+<details><summary><code>client.nullable_optional.update_complex_profile(profile_id, request) -> Seed::NullableOptional::Types::ComplexProfile</code></summary>
 <dl>
 <dd>
 
@@ -586,7 +586,7 @@ client.nullable_optional.update_complex_profile({
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.TestDeserialization(request) -> Seed::NullableOptional::Types::DeserializationTestResponse</code></summary>
+<details><summary><code>client.nullable_optional.test_deserialization(request) -> Seed::NullableOptional::Types::DeserializationTestResponse</code></summary>
 <dl>
 <dd>
 
@@ -664,7 +664,7 @@ client.nullable_optional.test_deserialization({
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.FilterByRole() -> Internal::Types::Array[Seed::NullableOptional::Types::UserResponse]</code></summary>
+<details><summary><code>client.nullable_optional.filter_by_role() -> Internal::Types::Array[Seed::NullableOptional::Types::UserResponse]</code></summary>
 <dl>
 <dd>
 
@@ -734,7 +734,7 @@ client.nullable_optional.filter_by_role({});
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.GetNotificationSettings(UserId) -> Seed::NullableOptional::Types::NotificationMethod</code></summary>
+<details><summary><code>client.nullable_optional.get_notification_settings(user_id) -> Seed::NullableOptional::Types::NotificationMethod</code></summary>
 <dl>
 <dd>
 
@@ -788,7 +788,7 @@ client.nullable_optional.get_notification_settings();
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.UpdateTags(UserId, request) -> Internal::Types::Array[String]</code></summary>
+<details><summary><code>client.nullable_optional.update_tags(user_id, request) -> Internal::Types::Array[String]</code></summary>
 <dl>
 <dd>
 
@@ -871,7 +871,7 @@ client.nullable_optional.update_tags({
 </dl>
 </details>
 
-<details><summary><code>client.NullableOptional.GetSearchResults(request) -> Internal::Types::Array[Seed::NullableOptional::Types::SearchResult]</code></summary>
+<details><summary><code>client.nullable_optional.get_search_results(request) -> Internal::Types::Array[Seed::NullableOptional::Types::SearchResult]</code></summary>
 <dl>
 <dd>
 

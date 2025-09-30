@@ -1,6 +1,6 @@
 # Reference
-## User
-<details><summary><code>client.User.GetUser(UserId) -> Seed::User::Types::User</code></summary>
+## user
+<details><summary><code>client.user.get_user(user_id) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 

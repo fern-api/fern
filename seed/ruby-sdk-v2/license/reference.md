@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.Get() -> </code></summary>
+<details><summary><code>client.get() -> </code></summary>
 <dl>
 <dd>
 

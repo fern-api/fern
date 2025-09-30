@@ -1,6 +1,6 @@
 # Reference
-## Headers
-<details><summary><code>client.Headers.Send() -> </code></summary>
+## headers
+<details><summary><code>client.headers.send_() -> </code></summary>
 <dl>
 <dd>
 
@@ -64,8 +64,8 @@ client.headers.send_({});
 </dl>
 </details>
 
-## InlinedRequest
-<details><summary><code>client.InlinedRequest.Send(request) -> </code></summary>
+## inlined_request
+<details><summary><code>client.inlined_request.send_(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -129,8 +129,8 @@ client.inlined_request.send_({});
 </dl>
 </details>
 
-## PathParam
-<details><summary><code>client.PathParam.Send(Operand, OperandOrColor) -> </code></summary>
+## path_param
+<details><summary><code>client.path_param.send_(operand, operand_or_color) -> </code></summary>
 <dl>
 <dd>
 
@@ -178,8 +178,8 @@ client.path_param.send_();
 </dl>
 </details>
 
-## QueryParam
-<details><summary><code>client.QueryParam.Send() -> </code></summary>
+## query_param
+<details><summary><code>client.query_param.send_() -> </code></summary>
 <dl>
 <dd>
 
@@ -243,7 +243,7 @@ client.query_param.send_({});
 </dl>
 </details>
 
-<details><summary><code>client.QueryParam.SendList() -> </code></summary>
+<details><summary><code>client.query_param.send_list() -> </code></summary>
 <dl>
 <dd>
 

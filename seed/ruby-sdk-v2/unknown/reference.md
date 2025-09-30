@@ -1,6 +1,6 @@
 # Reference
-## Unknown
-<details><summary><code>client.Unknown.Post(request) -> Internal::Types::Array[Internal::Types::Hash[String, Object]]</code></summary>
+## unknown
+<details><summary><code>client.unknown.post(request) -> Internal::Types::Array[Internal::Types::Hash[String, Object]]</code></summary>
 <dl>
 <dd>
 
@@ -40,7 +40,7 @@ client.unknown.post();
 </dl>
 </details>
 
-<details><summary><code>client.Unknown.PostObject(request) -> Internal::Types::Array[Internal::Types::Hash[String, Object]]</code></summary>
+<details><summary><code>client.unknown.post_object(request) -> Internal::Types::Array[Internal::Types::Hash[String, Object]]</code></summary>
 <dl>
 <dd>
 

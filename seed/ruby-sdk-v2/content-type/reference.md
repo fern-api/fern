@@ -1,6 +1,6 @@
 # Reference
-## Service
-<details><summary><code>client.Service.Patch(request) -> </code></summary>
+## service
+<details><summary><code>client.service.patch(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -51,7 +51,7 @@ client.service.patch({
 </dl>
 </details>
 
-<details><summary><code>client.Service.PatchComplex(Id, request) -> </code></summary>
+<details><summary><code>client.service.patch_complex(id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -200,7 +200,7 @@ client.service.patch_complex({
 </dl>
 </details>
 
-<details><summary><code>client.Service.NamedPatchWithMixed(Id, request) -> </code></summary>
+<details><summary><code>client.service.named_patch_with_mixed(id, request) -> </code></summary>
 <dl>
 <dd>
 
@@ -284,7 +284,7 @@ client.service.named_patch_with_mixed({
 </dl>
 </details>
 
-<details><summary><code>client.Service.OptionalMergePatchTest(request) -> </code></summary>
+<details><summary><code>client.service.optional_merge_patch_test(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -379,7 +379,7 @@ client.service.optional_merge_patch_test({
 </dl>
 </details>
 
-<details><summary><code>client.Service.RegularPatch(Id, request) -> </code></summary>
+<details><summary><code>client.service.regular_patch(id, request) -> </code></summary>
 <dl>
 <dd>
 

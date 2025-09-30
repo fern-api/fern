@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.ExtendedInlineRequestBody(request) -> </code></summary>
+<details><summary><code>client.extended_inline_request_body(request) -> </code></summary>
 <dl>
 <dd>
 

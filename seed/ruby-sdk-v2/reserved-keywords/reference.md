@@ -1,6 +1,6 @@
 # Reference
-## Package
-<details><summary><code>client.Package.Test() -> </code></summary>
+## package
+<details><summary><code>client.package.test() -> </code></summary>
 <dl>
 <dd>
 

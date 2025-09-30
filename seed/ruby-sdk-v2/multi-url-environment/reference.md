@@ -1,6 +1,6 @@
 # Reference
-## Ec2
-<details><summary><code>client.Ec2.BootInstance(request) -> </code></summary>
+## ec_2
+<details><summary><code>client.ec_2.boot_instance(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -42,8 +42,8 @@ client.ec_2.boot_instance({
 </dl>
 </details>
 
-## S3
-<details><summary><code>client.S3.GetPresignedUrl(request) -> String</code></summary>
+## s_3
+<details><summary><code>client.s_3.get_presigned_url(request) -> String</code></summary>
 <dl>
 <dd>
 

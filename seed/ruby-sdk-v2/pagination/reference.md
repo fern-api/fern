@@ -1,6 +1,6 @@
 # Reference
 ## Conversations
-<details><summary><code>client.Complex.Search(Index, request) -> Seed::Complex::Types::PaginatedConversationResponse</code></summary>
+<details><summary><code>client.complex.search(index, request) -> Seed::Complex::Types::PaginatedConversationResponse</code></summary>
 <dl>
 <dd>
 
@@ -53,8 +53,8 @@ client.complex.search({
 </dl>
 </details>
 
-## InlineUsers InlineUsers
-<details><summary><code>client.InlineUsers.InlineUsers.ListWithCursorPagination() -> Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse</code></summary>
+## inline_users inline_users
+<details><summary><code>client.inline_users.inline_users.list_with_cursor_pagination() -> Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -125,7 +125,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsers.InlineUsers.ListWithMixedTypeCursorPagination() -> Seed::InlineUsers::InlineUsers::Types::ListUsersMixedTypePaginationResponse</code></summary>
+<details><summary><code>client.inline_users.inline_users.list_with_mixed_type_cursor_pagination() -> Seed::InlineUsers::InlineUsers::Types::ListUsersMixedTypePaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -167,7 +167,7 @@ client.inline_users.inline_users.list_with_mixed_type_cursor_pagination({
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsers.InlineUsers.ListWithBodyCursorPagination(request) -> Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inline_users.inline_users.list_with_body_cursor_pagination(request) -> Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -210,7 +210,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsers.InlineUsers.ListWithOffsetPagination() -> Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inline_users.inline_users.list_with_offset_pagination() -> Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -281,7 +281,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsers.InlineUsers.ListWithDoubleOffsetPagination() -> Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inline_users.inline_users.list_with_double_offset_pagination() -> Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -352,7 +352,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsers.InlineUsers.ListWithBodyOffsetPagination(request) -> Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inline_users.inline_users.list_with_body_offset_pagination(request) -> Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -395,7 +395,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsers.InlineUsers.ListWithOffsetStepPagination() -> Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inline_users.inline_users.list_with_offset_step_pagination() -> Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -457,7 +457,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsers.InlineUsers.ListWithOffsetPaginationHasNextPage() -> Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.inline_users.inline_users.list_with_offset_pagination_has_next_page() -> Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -519,7 +519,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsers.InlineUsers.ListWithExtendedResults() -> Seed::InlineUsers::InlineUsers::Types::ListUsersExtendedResponse</code></summary>
+<details><summary><code>client.inline_users.inline_users.list_with_extended_results() -> Seed::InlineUsers::InlineUsers::Types::ListUsersExtendedResponse</code></summary>
 <dl>
 <dd>
 
@@ -559,7 +559,7 @@ client.inline_users.inline_users.list_with_cursor_pagination({});
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsers.InlineUsers.ListWithExtendedResultsAndOptionalData() -> Seed::InlineUsers::InlineUsers::Types::ListUsersExtendedOptionalListResponse</code></summary>
+<details><summary><code>client.inline_users.inline_users.list_with_extended_results_and_optional_data() -> Seed::InlineUsers::InlineUsers::Types::ListUsersExtendedOptionalListResponse</code></summary>
 <dl>
 <dd>
 
@@ -599,7 +599,7 @@ client.inline_users.inline_users.list_with_cursor_pagination({});
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsers.InlineUsers.ListUsernames() -> Seed::Types::UsernameCursor</code></summary>
+<details><summary><code>client.inline_users.inline_users.list_usernames() -> Seed::Types::UsernameCursor</code></summary>
 <dl>
 <dd>
 
@@ -644,7 +644,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.InlineUsers.InlineUsers.ListWithGlobalConfig() -> Seed::InlineUsers::InlineUsers::Types::UsernameContainer</code></summary>
+<details><summary><code>client.inline_users.inline_users.list_with_global_config() -> Seed::InlineUsers::InlineUsers::Types::UsernameContainer</code></summary>
 <dl>
 <dd>
 
@@ -684,8 +684,8 @@ client.inline_users.inline_users.list_with_cursor_pagination({});
 </dl>
 </details>
 
-## Users
-<details><summary><code>client.Users.ListWithCursorPagination() -> Seed::Users::Types::ListUsersPaginationResponse</code></summary>
+## users
+<details><summary><code>client.users.list_with_cursor_pagination() -> Seed::Users::Types::ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -756,7 +756,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.Users.ListWithMixedTypeCursorPagination() -> Seed::Users::Types::ListUsersMixedTypePaginationResponse</code></summary>
+<details><summary><code>client.users.list_with_mixed_type_cursor_pagination() -> Seed::Users::Types::ListUsersMixedTypePaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -798,7 +798,7 @@ client.users.list_with_mixed_type_cursor_pagination({
 </dl>
 </details>
 
-<details><summary><code>client.Users.ListWithBodyCursorPagination(request) -> Seed::Users::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.list_with_body_cursor_pagination(request) -> Seed::Users::Types::ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -841,7 +841,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.Users.ListWithOffsetPagination() -> Seed::Users::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.list_with_offset_pagination() -> Seed::Users::Types::ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -912,7 +912,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.Users.ListWithDoubleOffsetPagination() -> Seed::Users::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.list_with_double_offset_pagination() -> Seed::Users::Types::ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -983,7 +983,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.Users.ListWithBodyOffsetPagination(request) -> Seed::Users::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.list_with_body_offset_pagination(request) -> Seed::Users::Types::ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1026,7 +1026,7 @@ in order to fetch the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.Users.ListWithOffsetStepPagination() -> Seed::Users::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.list_with_offset_step_pagination() -> Seed::Users::Types::ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1088,7 +1088,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.Users.ListWithOffsetPaginationHasNextPage() -> Seed::Users::Types::ListUsersPaginationResponse</code></summary>
+<details><summary><code>client.users.list_with_offset_pagination_has_next_page() -> Seed::Users::Types::ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
 
@@ -1150,7 +1150,7 @@ paginated endpoint.
 </dl>
 </details>
 
-<details><summary><code>client.Users.ListWithExtendedResults() -> Seed::Users::Types::ListUsersExtendedResponse</code></summary>
+<details><summary><code>client.users.list_with_extended_results() -> Seed::Users::Types::ListUsersExtendedResponse</code></summary>
 <dl>
 <dd>
 
@@ -1190,7 +1190,7 @@ client.users.list_with_cursor_pagination({});
 </dl>
 </details>
 
-<details><summary><code>client.Users.ListWithExtendedResultsAndOptionalData() -> Seed::Users::Types::ListUsersExtendedOptionalListResponse</code></summary>
+<details><summary><code>client.users.list_with_extended_results_and_optional_data() -> Seed::Users::Types::ListUsersExtendedOptionalListResponse</code></summary>
 <dl>
 <dd>
 
@@ -1230,7 +1230,7 @@ client.users.list_with_cursor_pagination({});
 </dl>
 </details>
 
-<details><summary><code>client.Users.ListUsernames() -> Seed::Types::UsernameCursor</code></summary>
+<details><summary><code>client.users.list_usernames() -> Seed::Types::UsernameCursor</code></summary>
 <dl>
 <dd>
 
@@ -1275,7 +1275,7 @@ the next page of results.
 </dl>
 </details>
 
-<details><summary><code>client.Users.ListWithGlobalConfig() -> Seed::Users::Types::UsernameContainer</code></summary>
+<details><summary><code>client.users.list_with_global_config() -> Seed::Users::Types::UsernameContainer</code></summary>
 <dl>
 <dd>
 

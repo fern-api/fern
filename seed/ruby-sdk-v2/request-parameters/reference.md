@@ -1,6 +1,6 @@
 # Reference
-## User
-<details><summary><code>client.User.CreateUsername(request) -> </code></summary>
+## user
+<details><summary><code>client.user.create_username(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -69,7 +69,7 @@ client.user.create_username({
 </dl>
 </details>
 
-<details><summary><code>client.User.CreateUsernameWithReferencedType(request) -> </code></summary>
+<details><summary><code>client.user.create_username_with_referenced_type(request) -> </code></summary>
 <dl>
 <dd>
 
@@ -119,7 +119,7 @@ client.user.create_username_with_referenced_type({
 </dl>
 </details>
 
-<details><summary><code>client.User.GetUsername() -> Seed::User::Types::User</code></summary>
+<details><summary><code>client.user.get_username() -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
 

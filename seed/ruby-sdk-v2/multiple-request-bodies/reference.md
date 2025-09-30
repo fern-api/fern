@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.UploadJsonDocument(request) -> Seed::Types::UploadDocumentResponse</code></summary>
+<details><summary><code>client.upload_json_document(request) -> Seed::Types::UploadDocumentResponse</code></summary>
 <dl>
 <dd>
 

@@ -1,6 +1,6 @@
 # Reference
-## CustomAuth
-<details><summary><code>client.CustomAuth.GetWithCustomAuth() -> Internal::Types::Boolean</code></summary>
+## custom_auth
+<details><summary><code>client.custom_auth.get_with_custom_auth() -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 
@@ -39,7 +39,7 @@ client.custom_auth.get_with_custom_auth();
 </dl>
 </details>
 
-<details><summary><code>client.CustomAuth.PostWithCustomAuth(request) -> Internal::Types::Boolean</code></summary>
+<details><summary><code>client.custom_auth.post_with_custom_auth(request) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
 

@@ -1,5 +1,5 @@
 # Reference
-<details><summary><code>client.Search() -> Seed::Types::SearchResponse</code></summary>
+<details><summary><code>client.search() -> Seed::Types::SearchResponse</code></summary>
 <dl>
 <dd>
 

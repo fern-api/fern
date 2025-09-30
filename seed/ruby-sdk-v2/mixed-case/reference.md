@@ -1,6 +1,6 @@
 # Reference
-## Service
-<details><summary><code>client.Service.GetResource(ResourceId) -> Seed::Service::Types::Resource</code></summary>
+## service
+<details><summary><code>client.service.get_resource(resource_id) -> Seed::Service::Types::Resource</code></summary>
 <dl>
 <dd>
 
@@ -40,7 +40,7 @@ client.service.get_resource();
 </dl>
 </details>
 
-<details><summary><code>client.Service.ListResources() -> Internal::Types::Array[Seed::Service::Types::Resource]</code></summary>
+<details><summary><code>client.service.list_resources() -> Internal::Types::Array[Seed::Service::Types::Resource]</code></summary>
 <dl>
 <dd>
 

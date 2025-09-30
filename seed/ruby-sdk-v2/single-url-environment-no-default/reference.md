@@ -1,6 +1,6 @@
 # Reference
-## Dummy
-<details><summary><code>client.Dummy.GetDummy() -> String</code></summary>
+## dummy
+<details><summary><code>client.dummy.get_dummy() -> String</code></summary>
 <dl>
 <dd>
 
