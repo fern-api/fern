@@ -853,7 +853,6 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
         const results: ExampleConverter.Output[] = [];
         let firstValidResult: ExampleConverter.Output | null = null;
-        let firstNonCoercedResult: ExampleConverter.Output | null = null;
 
         for (let index = 0; index < unionSchemas.length; index++) {
             const subSchema = unionSchemas[index];
