@@ -109,11 +109,9 @@ export function convertSchema(
     const source = getSourceExtension(schema) ?? fileSource;
     const encoding = getEncoding({ schema, logger: context.logger });
     if (isReferenceObject(schema)) {
-        console.log("convertSchemas for reference object", schema);
         const schemaId = getSchemaIdFromReference(schema);
         if (schemaId != null) {
             if (shouldResolveAlias(schemaId, schema, context)) {
-                console.log("shouldResolveAlias for reference object", schemaId);
                 // If the schema is a named alias we are configured to inline, we should do that and return immediately
                 return convertSchemaObject(
                     context.resolveSchemaReference(schema),
