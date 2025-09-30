@@ -3,7 +3,7 @@
   changelogEntry:
     - summary: |
         Add reserved keywords alias anti-collision to v2 generator logic.
-      type: feat
+      type: fix
   createdAt: "2025-10-30"
   irVersion: 60
 
