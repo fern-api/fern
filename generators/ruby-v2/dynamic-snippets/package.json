@@ -40,6 +40,7 @@
     "@fern-api/dynamic-ir-sdk": "^59.6.1",
     "@fern-api/path-utils": "workspace:*",
     "@fern-api/ruby-ast": "workspace:*",
+    "@types/lodash-es": "^4.17.12",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "lodash-es": "^4.17.21",
