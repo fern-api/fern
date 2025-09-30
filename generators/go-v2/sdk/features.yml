@@ -66,7 +66,8 @@ features:
       bitfield for that setter's object; during serialization, any property with a flipped bit will have its
       omittable status stripped, so zero or `nil` values will be sent explicitly rather than omitted altogether:
 
-  - id: WIRE_TEST
+  - id: WIRE_TESTS
+    advanced: true
     description: |
       SDKS's are generated with wire tests by default (opt-out of this feature with `customConfig.enableWireTests: false` in your generator configuration).
       Wire tests validate serialization, deserialization of request/response types, HTTP method, path, path parameters, query parameters (soon to come) using mock requests
