@@ -18,37 +18,41 @@ concurrency:
 
 jobs:
   run-seed-test:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.runs-on }}
     strategy:
-      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
+      fail-fast: false # Let all tests run and cascade errors, will only PR generator updates that passed
       matrix:
         sdk-name:
-          [pydantic]
-          # [
-          #   ruby-model,
-          #   ruby-sdk,
-          #   ruby-sdk-v2,
-          #   pydantic,
-          #   python-sdk,
-          #   fastapi,
-          #   openapi,
-          #   postman,
-          #   java-sdk,
-          #   java-model,
-          #   java-spring,
-          #   ts-sdk,
-          #   ts-express,
-          #   go-fiber,
-          #   go-model,
-          #   go-sdk,
-          #   csharp-model,
-          #   csharp-sdk,
-          #   php-model,
-          #   php-sdk,
-          #   swift-sdk,
-          #   rust-model,
-          #   rust-sdk,
-          # ]
+          [
+            ruby-model,
+            ruby-sdk,
+            ruby-sdk-v2,
+            pydantic,
+            python-sdk,
+            fastapi,
+            openapi,
+            postman,
+            java-sdk,
+            java-model,
+            java-spring,
+            ts-sdk,
+            ts-express,
+            go-fiber,
+            go-model,
+            go-sdk,
+            csharp-model,
+            csharp-sdk,
+            php-model,
+            php-sdk,
+            swift-sdk,
+            rust-model,
+            rust-sdk,
+          ]
+        include:
+          # Every generator runs on ubuntu-latest except the python-sdk, which requires more space right now
+          - runs-on: Seed
+            sdk-name: python-sdk
+          - runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -93,40 +97,40 @@ jobs:
           echo "GitHub workflow name: ${{ github.workflow }}"
           echo "GitHub workflow run ID: ${{ github.run_id }}"
 
+  # Always trigger this stage. Failing jobs for a generator will continue to fail and won't PR any changes
   build-test-packages:
     runs-on: ubuntu-latest
     if: always()
     needs: [run-seed-test]
     strategy:
-      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
+      fail-fast: false
       matrix:
         sdk-name:
-          [pydantic]
-          # [
-          #   ruby-model,
-          #   ruby-sdk,
-          #   ruby-sdk-v2,
-          #   pydantic,
-          #   python-sdk,
-          #   fastapi,
-          #   openapi,
-          #   postman,
-          #   java-sdk,
-          #   java-model,
-          #   java-spring,
-          #   ts-sdk,
-          #   ts-express,
-          #   go-fiber,
-          #   go-model,
-          #   go-sdk,
-          #   csharp-model,
-          #   csharp-sdk,
-          #   php-model,
-          #   php-sdk,
-          #   swift-sdk,
-          #   rust-model,
-          #   rust-sdk,
-          # ]
+          [
+            ruby-model,
+            ruby-sdk,
+            ruby-sdk-v2,
+            pydantic,
+            python-sdk,
+            fastapi,
+            openapi,
+            postman,
+            java-sdk,
+            java-model,
+            java-spring,
+            ts-sdk,
+            ts-express,
+            go-fiber,
+            go-model,
+            go-sdk,
+            csharp-model,
+            csharp-sdk,
+            php-model,
+            php-sdk,
+            swift-sdk,
+            rust-model,
+            rust-sdk,
+          ]
     steps:
       - name: Make artifacts directory
         shell: bash
@@ -147,7 +151,7 @@ jobs:
         uses: fern-api/package-seed-test@mallinson/packaging-setup
         with:
           seed-generator-alias: ${{ matrix.sdk-name }}
-          number-of-packages: 10 #CHRISM - move to setting for everyone to use
+          number-of-packages: 10
           add-package-for-leftovers: true
           split-tests-cutoff-time-in-seconds: 9600 # Roughly 10 minutes (across 16 batches, but will depend on concurrency runners)
           seed-test-log-file-path: artifacts/${{ matrix.sdk-name }}-seed-test-log.txt
