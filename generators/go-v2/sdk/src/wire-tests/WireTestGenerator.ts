@@ -1,6 +1,6 @@
-import { File } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
+import { GoFile } from "@fern-api/go-base";
 import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
 import {
     dynamic,
@@ -15,6 +15,7 @@ import {
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
 import { convertIr } from "../utils/convertIr";
+import { TEST_MAIN_FUNCTION_CONTENT, TEST_MAIN_FUNCTION_IMPORTS } from "./TestMainFunctionContent";
 
 const WIREMOCK_BASE_URL = "WireMockBaseURL";
 const WIREMOCK_CLIENT_VAR_NAME = "WireMockClient";
@@ -64,7 +65,7 @@ export class WireTestGenerator {
                 }
             );
 
-            this.context.project.addRawFiles(serviceTestFile);
+            this.context.project.addGoFiles(serviceTestFile);
         }
     }
 
@@ -72,7 +73,7 @@ export class WireTestGenerator {
         serviceName: string,
         endpoints: HttpEndpoint[],
         filePath: FernFilepath
-    ): Promise<File> {
+    ): Promise<GoFile> {
         const endpointTestCases = new Map<string, string>();
         for (const endpoint of endpoints) {
             const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
@@ -108,38 +109,42 @@ export class WireTestGenerator {
             })
             .filter((endpointTestCaseCodeBlock) => endpointTestCaseCodeBlock !== null);
 
-        const serviceTestFileContent = go
-            .codeblock((writer) => {
-                for (const [_, importPath] of imports.entries()) {
-                    // Manually add any imports that were used in the snippet (client/request types)
-                    // but that may not be used in the rest of the generated test file and therefore would be missed
-                    writer.addImport(importPath);
-                }
+        const serviceTestFileContent = go.codeblock((writer) => {
+            for (const [_, importPath] of imports.entries()) {
+                // Manually add any imports that were used in the snippet (client/request types)
+                // but that may not be used in the rest of the generated test file and therefore would be missed
+                writer.addImport(importPath);
+            }
+            for (const mainTestImport of TEST_MAIN_FUNCTION_IMPORTS) {
+                writer.addImport(mainTestImport);
+            }
+            writer.writeNewLineIfLastLineNot();
+            writer.newLine();
+            writer.write(TEST_MAIN_FUNCTION_CONTENT);
+            writer.writeNewLineIfLastLineNot();
+            writer.newLine();
+            for (const endpointTestCaseCodeBlock of endpointTestCaseCodeBlocks) {
+                writer.writeNode(endpointTestCaseCodeBlock);
                 writer.writeNewLineIfLastLineNot();
                 writer.newLine();
-                for (const endpointTestCaseCodeBlock of endpointTestCaseCodeBlocks) {
-                    writer.writeNode(endpointTestCaseCodeBlock);
-                    writer.writeNewLineIfLastLineNot();
-                    writer.newLine();
-                }
-            })
-            .toString({
-                packageName: `${serviceName}_test`,
-                rootImportPath: this.context.getRootPackageName(),
-                importPath: this.context.getRootPackageName(),
-                customConfig: this.context.customConfig ?? {},
-                formatter: undefined
-            });
+            }
+        });
 
         const packageLocation = this.context.getClientFileLocation({
             fernFilepath: filePath,
             subpackage: undefined
         });
-        return new File(
-            serviceName + "_test.go",
-            RelativeFilePath.of(`./${packageLocation.directory}/${serviceName}_test`),
-            serviceTestFileContent
-        );
+
+        return new GoFile({
+            node: serviceTestFileContent,
+            directory: RelativeFilePath.of(`./${packageLocation.directory}/${serviceName}_test`),
+            filename: serviceName + "_test.go",
+            packageName: `${serviceName}_test`,
+            rootImportPath: this.context.getRootPackageName(),
+            importPath: this.context.getRootPackageName(),
+            customConfig: this.context.customConfig ?? {},
+            formatter: undefined
+        });
     }
 
     private async generateSnippetForExample(example: dynamic.EndpointExample): Promise<string> {
@@ -154,7 +159,6 @@ export class WireTestGenerator {
     }
 
     private generateEndpointTestMethod(endpoint: HttpEndpoint, snippet: string): [go.CodeBlock, Map<string, string>] {
-        const clientCall = this.parseClientCallFromSnippet(snippet);
         const imports = this.parseImportsFromSnippet(snippet);
         const testFunctionName = this.parseTestFunctionNameFromSnippet(snippet);
 
