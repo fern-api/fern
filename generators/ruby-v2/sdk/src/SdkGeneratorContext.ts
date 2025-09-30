@@ -360,7 +360,6 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             AsIsFiles.TestHelper,
             AsIsFiles.TestCursorItemIterator,
             AsIsFiles.TestOffsetItemIterator,
-            AsIsFiles.TestFormData,
             AsIsFiles.TestArrayType,
             AsIsFiles.TestBooleanType,
             AsIsFiles.TestEnumType,

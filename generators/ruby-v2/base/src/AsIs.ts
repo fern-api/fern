@@ -51,7 +51,6 @@ export const AsIsFiles = {
     TestHelper: "test/test_helper.Template.rb",
     TestCursorItemIterator: "test/unit/internal/iterators/test_cursor_item_iterator.Template.rb",
     TestOffsetItemIterator: "test/unit/internal/iterators/test_offset_item_iterator.Template.rb",
-    TestFormData: "test/unit/internal/multipart/test_form_data.Template.rb",
     TestArrayType: "test/unit/internal/types/test_array.Template.rb",
     TestBooleanType: "test/unit/internal/types/test_boolean.Template.rb",
     TestEnumType: "test/unit/internal/types/test_enum.Template.rb",

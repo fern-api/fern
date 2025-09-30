@@ -2,21 +2,21 @@
 
 require "test_helper"
 
-describe <%= gem_namespace %>::Internal::Types::Union do
-  class Rectangle < <%= gem_namespace %>::Internal::Types::Model
+describe Seed::Internal::Types::Union do
+  class Rectangle < Seed::Internal::Types::Model
     literal :type, "square"
 
     field :area, Float
   end
 
-  class Circle < <%= gem_namespace %>::Internal::Types::Model
+  class Circle < Seed::Internal::Types::Model
     literal :type, "circle"
 
     field :area, Float
   end
 
   module Shape
-    extend <%= gem_namespace %>::Internal::Types::Union
+    extend Seed::Internal::Types::Union
 
     discriminant :type
 
@@ -25,7 +25,7 @@ describe <%= gem_namespace %>::Internal::Types::Union do
   end
 
   module StringOrInteger
-    extend <%= gem_namespace %>::Internal::Types::Union
+    extend Seed::Internal::Types::Union
 
     member String
     member Integer
