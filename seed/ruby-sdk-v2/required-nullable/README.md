@@ -17,10 +17,10 @@ require "seed"
 
 client = seed::Client.new();
 
-client.get_foo({
-  requiredBaz:'required_baz',
-  requiredNullableBaz:'required_nullable_baz'
-});
+client.get_foo(
+  requiredBaz: 'required_baz',
+  requiredNullableBaz: 'required_nullable_baz'
+);
 ```
 
 ## Environments

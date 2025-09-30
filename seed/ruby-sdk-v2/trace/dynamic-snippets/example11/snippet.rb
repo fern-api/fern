@@ -5,6 +5,4 @@ client = seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.migration.get_attempted_migrations({
-  adminKeyHeader:'admin-key-header'
-});
+client.migration.get_attempted_migrations(adminKeyHeader: 'admin-key-header');

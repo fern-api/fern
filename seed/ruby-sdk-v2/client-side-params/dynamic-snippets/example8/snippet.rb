@@ -5,8 +5,8 @@ client = seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.service.list_connections({
-  strategy:'strategy',
-  name:'name',
-  fields:'fields'
-});
+client.service.list_connections(
+  strategy: 'strategy',
+  name: 'name',
+  fields: 'fields'
+);

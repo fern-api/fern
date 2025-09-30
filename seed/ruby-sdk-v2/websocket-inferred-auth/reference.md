@@ -13,14 +13,14 @@
 <dd>
 
 ```ruby
-client.auth.get_token_with_client_credentials({
-  xApiKey:'X-Api-Key',
-  clientId:'client_id',
-  clientSecret:'client_secret',
-  audience:'https://api.example.com',
-  grantType:'client_credentials',
-  scope:'scope'
-});
+client.auth.get_token_with_client_credentials(
+  xApiKey: 'X-Api-Key',
+  clientId: 'client_id',
+  clientSecret: 'client_secret',
+  audience: 'https://api.example.com',
+  grantType: 'client_credentials',
+  scope: 'scope'
+);
 ```
 </dd>
 </dl>
@@ -100,15 +100,15 @@ client.auth.get_token_with_client_credentials({
 <dd>
 
 ```ruby
-client.auth.refresh_token({
-  xApiKey:'X-Api-Key',
-  clientId:'client_id',
-  clientSecret:'client_secret',
-  refreshToken:'refresh_token',
-  audience:'https://api.example.com',
-  grantType:'refresh_token',
-  scope:'scope'
-});
+client.auth.refresh_token(
+  xApiKey: 'X-Api-Key',
+  clientId: 'client_id',
+  clientSecret: 'client_secret',
+  refreshToken: 'refresh_token',
+  audience: 'https://api.example.com',
+  grantType: 'refresh_token',
+  scope: 'scope'
+);
 ```
 </dd>
 </dl>

@@ -13,13 +13,13 @@
 <dd>
 
 ```ruby
-client.auth.get_token({
-  clientId:'client_id',
-  clientSecret:'client_secret',
-  audience:'https://api.example.com',
-  grantType:'client_credentials',
-  scope:'scope'
-});
+client.auth.get_token(
+  clientId: 'client_id',
+  clientSecret: 'client_secret',
+  audience: 'https://api.example.com',
+  grantType: 'client_credentials',
+  scope: 'scope'
+);
 ```
 </dd>
 </dl>

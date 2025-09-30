@@ -5,6 +5,4 @@ client = seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.service.get_with_header({
-  xEndpointHeader:'X-Endpoint-Header'
-});
+client.service.get_with_header(xEndpointHeader: 'X-Endpoint-Header');

@@ -13,10 +13,13 @@
 <dd>
 
 ```ruby
-client.nullable.get_users({
-  avatar:'avatar',
-  extra:true
-});
+client.nullable.get_users(
+  usernames: ,
+  avatar: 'avatar',
+  activated: ,
+  tags: ,
+  extra: true
+);
 ```
 </dd>
 </dl>
@@ -88,10 +91,10 @@ client.nullable.get_users({
 <dd>
 
 ```ruby
-client.nullable.create_user({
-  username:'username',
-  tags:['tags', 'tags'],
-  metadata:{
+client.nullable.create_user(
+  username: 'username',
+  tags: ['tags', 'tags'],
+  metadata: {
     createdAt:'2024-01-15T09:30:00Z',
     updatedAt:'2024-01-15T09:30:00Z',
     avatar:'avatar',
@@ -100,8 +103,8 @@ client.nullable.create_user({
       values:'values'
     }
   },
-  avatar:'avatar'
-});
+  avatar: 'avatar'
+);
 ```
 </dd>
 </dl>
@@ -165,9 +168,7 @@ client.nullable.create_user({
 <dd>
 
 ```ruby
-client.nullable.delete_user({
-  username:'xy'
-});
+client.nullable.delete_user(username: 'xy');
 ```
 </dd>
 </dl>

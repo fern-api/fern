@@ -17,9 +17,7 @@ require "seed"
 
 client = seed::Client.new(token: '<token>');
 
-client.ec_2.boot_instance({
-  size:'size'
-});
+client.ec_2.boot_instance(size: 'size');
 ```
 
 ## Environments

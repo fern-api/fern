@@ -13,11 +13,11 @@
 <dd>
 
 ```ruby
-client.auth.get_token({
-  clientId:'client_id',
-  clientSecret:'client_secret',
-  grantType:'client_credentials'
-});
+client.auth.get_token(
+  clientId: 'client_id',
+  clientSecret: 'client_secret',
+  grantType: 'client_credentials'
+);
 ```
 </dd>
 </dl>

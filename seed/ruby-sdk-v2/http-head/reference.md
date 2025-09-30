@@ -38,9 +38,7 @@ client.user.head();
 <dd>
 
 ```ruby
-client.user.list({
-  limit:1
-});
+client.user.list(limit: 1);
 ```
 </dd>
 </dl>

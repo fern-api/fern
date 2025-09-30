@@ -148,10 +148,10 @@ This endpoint returns a file by its name.
 <dd>
 
 ```ruby
-client.file.service.get_file({
-  filename:'file.txt',
-  xFileApiVersion:'0.0.2'
-});
+client.file.service.get_file(
+  filename: 'file.txt',
+  xFileApiVersion: '0.0.2'
+);
 ```
 </dd>
 </dl>
@@ -376,10 +376,11 @@ client.service.create_movie({
 <dd>
 
 ```ruby
-client.service.get_metadata({
-  shallow:false,
-  xApiVersion:'0.0.1'
-});
+client.service.get_metadata(
+  shallow: false,
+  tag: ,
+  xApiVersion: '0.0.1'
+);
 ```
 </dd>
 </dl>

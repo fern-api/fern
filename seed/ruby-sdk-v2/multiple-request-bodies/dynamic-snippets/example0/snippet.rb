@@ -5,4 +5,4 @@ client = seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.upload_json_document({});
+client.upload_json_document();

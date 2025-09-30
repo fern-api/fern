@@ -13,9 +13,7 @@
 <dd>
 
 ```ruby
-client.ec_2.boot_instance({
-  size:'size'
-});
+client.ec_2.boot_instance(size: 'size');
 ```
 </dd>
 </dl>
@@ -56,9 +54,7 @@ client.ec_2.boot_instance({
 <dd>
 
 ```ruby
-client.s_3.get_presigned_url({
-  s3Key:'s3Key'
-});
+client.s_3.get_presigned_url(s3Key: 's3Key');
 ```
 </dd>
 </dl>

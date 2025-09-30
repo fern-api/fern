@@ -13,15 +13,15 @@
 <dd>
 
 ```ruby
-client.auth.get_token_with_client_credentials({
-  cid:'cid',
-  csr:'csr',
-  scp:'scp',
-  entityId:'entity_id',
-  audience:'https://api.example.com',
-  grantType:'client_credentials',
-  scope:'scope'
-});
+client.auth.get_token_with_client_credentials(
+  cid: 'cid',
+  csr: 'csr',
+  scp: 'scp',
+  entityId: 'entity_id',
+  audience: 'https://api.example.com',
+  grantType: 'client_credentials',
+  scope: 'scope'
+);
 ```
 </dd>
 </dl>
@@ -109,14 +109,14 @@ client.auth.get_token_with_client_credentials({
 <dd>
 
 ```ruby
-client.auth.refresh_token({
-  clientId:'client_id',
-  clientSecret:'client_secret',
-  refreshToken:'refresh_token',
-  audience:'https://api.example.com',
-  grantType:'refresh_token',
-  scope:'scope'
-});
+client.auth.refresh_token(
+  clientId: 'client_id',
+  clientSecret: 'client_secret',
+  refreshToken: 'refresh_token',
+  audience: 'https://api.example.com',
+  grantType: 'refresh_token',
+  scope: 'scope'
+);
 ```
 </dd>
 </dl>

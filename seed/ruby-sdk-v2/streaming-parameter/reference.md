@@ -13,10 +13,10 @@
 <dd>
 
 ```ruby
-client.dummy.generate({
-  stream:false,
-  numEvents:5
-});
+client.dummy.generate(
+  stream: false,
+  numEvents: 5
+);
 ```
 </dd>
 </dl>

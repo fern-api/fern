@@ -5,11 +5,12 @@ client = seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.problem.get_default_starter_files({
-  inputParams:[{
+client.problem.get_default_starter_files(
+  inputParams: [{
     name:'name'
   }, {
     name:'name'
   }],
-  methodName:'methodName'
-});
+  outputType: ,
+  methodName: 'methodName'
+);

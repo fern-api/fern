@@ -5,6 +5,4 @@ client = seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.endpoints.put.add({
-  id:'id'
-});
+client.endpoints.put.add(id: 'id');

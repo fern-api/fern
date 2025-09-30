@@ -17,10 +17,10 @@ require "seed"
 
 client = seed::Client.new();
 
-client.extended_inline_request_body({
-  parent:'parent',
-  child:'child'
-});
+client.extended_inline_request_body(
+  parent: 'parent',
+  child: 'child'
+);
 ```
 
 ## Environments

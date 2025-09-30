@@ -5,10 +5,10 @@ client = seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.inlined_requests.post_with_object_bodyand_response({
-  string:'string',
-  integer:1,
-  nestedObject:{
+client.inlined_requests.post_with_object_bodyand_response(
+  string: 'string',
+  integer: 1,
+  nestedObject: {
     string:'string',
     integer:1,
     long:1000000,
@@ -25,4 +25,4 @@ client.inlined_requests.post_with_object_bodyand_response({
     },
     bigint:'1000000'
   }
-});
+);

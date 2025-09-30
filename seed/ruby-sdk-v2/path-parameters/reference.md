@@ -61,10 +61,10 @@ client.organizations.get_organization();
 <dd>
 
 ```ruby
-client.organizations.get_organization_user({
-  organizationId:'organization_id',
-  userId:'user_id'
-});
+client.organizations.get_organization_user(
+  organizationId: 'organization_id',
+  userId: 'user_id'
+);
 ```
 </dd>
 </dl>
@@ -120,10 +120,10 @@ client.organizations.get_organization_user({
 <dd>
 
 ```ruby
-client.organizations.search_organizations({
-  organizationId:'organization_id',
-  limit:1
-});
+client.organizations.search_organizations(
+  organizationId: 'organization_id',
+  limit: 1
+);
 ```
 </dd>
 </dl>
@@ -180,9 +180,7 @@ client.organizations.search_organizations({
 <dd>
 
 ```ruby
-client.user.get_user({
-  userId:'user_id'
-});
+client.user.get_user(userId: 'user_id');
 ```
 </dd>
 </dl>
@@ -281,9 +279,7 @@ client.user.create_user({
 <dd>
 
 ```ruby
-client.user.update_user({
-  userId:'user_id'
-});
+client.user.update_user(userId: 'user_id');
 ```
 </dd>
 </dl>
@@ -339,10 +335,10 @@ client.user.update_user({
 <dd>
 
 ```ruby
-client.user.search_users({
-  userId:'user_id',
-  limit:1
-});
+client.user.search_users(
+  userId: 'user_id',
+  limit: 1
+);
 ```
 </dd>
 </dl>

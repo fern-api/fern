@@ -17,12 +17,12 @@ require "seed"
 
 client = seed::Client.new();
 
-client.user.create_username({
-  tags:['tags', 'tags'],
-  username:'username',
-  password:'password',
-  name:'test'
-});
+client.user.create_username(
+  tags: ['tags', 'tags'],
+  username: 'username',
+  password: 'password',
+  name: 'test'
+);
 ```
 
 ## Environments

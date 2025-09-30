@@ -12,11 +12,12 @@
 <dd>
 
 ```ruby
-client.create({
-  decimal:2.2,
-  even:100,
-  name:'fern'
-});
+client.create(
+  decimal: 2.2,
+  even: 100,
+  name: 'fern',
+  shape: 
+);
 ```
 </dd>
 </dl>
@@ -80,11 +81,11 @@ client.create({
 <dd>
 
 ```ruby
-client.get({
-  decimal:2.2,
-  even:100,
-  name:'fern'
-});
+client.get(
+  decimal: 2.2,
+  even: 100,
+  name: 'fern'
+);
 ```
 </dd>
 </dl>

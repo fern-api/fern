@@ -65,11 +65,11 @@ client.folder_d.service.get_direct_thread();
 <dd>
 
 ```ruby
-client.foo.find({
-  optionalString:'optionalString',
-  publicProperty:'publicProperty',
-  privateProperty:1
-});
+client.foo.find(
+  optionalString: 'optionalString',
+  publicProperty: 'publicProperty',
+  privateProperty: 1
+);
 ```
 </dd>
 </dl>

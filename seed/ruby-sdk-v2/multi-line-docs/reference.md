@@ -86,10 +86,10 @@ This endpoint is used to create a new user.
 <dd>
 
 ```ruby
-client.user.create_user({
-  name:'name',
-  age:1
-});
+client.user.create_user(
+  name: 'name',
+  age: 1
+);
 ```
 </dd>
 </dl>

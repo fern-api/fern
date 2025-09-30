@@ -5,13 +5,13 @@ client = seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.service.list_users({
-  page:1,
-  perPage:1,
-  includeTotals:true,
-  sort:'sort',
-  connection:'connection',
-  q:'q',
-  searchEngine:'search_engine',
-  fields:'fields'
-});
+client.service.list_users(
+  page: 1,
+  perPage: 1,
+  includeTotals: true,
+  sort: 'sort',
+  connection: 'connection',
+  q: 'q',
+  searchEngine: 'search_engine',
+  fields: 'fields'
+);

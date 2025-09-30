@@ -17,9 +17,7 @@ require "seed"
 
 client = seed::Client.new();
 
-client.completions.stream({
-  query:'foo'
-});
+client.completions.stream(query: 'foo');
 ```
 
 ## Environments

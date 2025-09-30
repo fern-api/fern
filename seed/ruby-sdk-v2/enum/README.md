@@ -17,7 +17,11 @@ require "seed"
 
 client = seed::Client.new();
 
-client.headers.send_({});
+client.headers.send_(
+  operand: ,
+  maybeOperand: ,
+  operandOrColor: 
+);
 ```
 
 ## Environments

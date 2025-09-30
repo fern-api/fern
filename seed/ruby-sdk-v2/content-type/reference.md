@@ -13,10 +13,10 @@
 <dd>
 
 ```ruby
-client.service.patch({
-  application:'application',
-  requireAuth:true
-});
+client.service.patch(
+  application: 'application',
+  requireAuth: true
+);
 ```
 </dd>
 </dl>
@@ -81,19 +81,19 @@ This endpoint demonstrates the distinction between:
 <dd>
 
 ```ruby
-client.service.patch_complex({
-  id:'id',
-  name:'name',
-  age:1,
-  active:true,
-  metadata:{},
-  tags:['tags', 'tags'],
-  email:'email',
-  nickname:'nickname',
-  bio:'bio',
-  profileImageUrl:'profileImageUrl',
-  settings:{}
-});
+client.service.patch_complex(
+  id: 'id',
+  name: 'name',
+  age: 1,
+  active: true,
+  metadata: {},
+  tags: ['tags', 'tags'],
+  email: 'email',
+  nickname: 'nickname',
+  bio: 'bio',
+  profileImageUrl: 'profileImageUrl',
+  settings: {}
+);
 ```
 </dd>
 </dl>
@@ -228,12 +228,12 @@ This should trigger the NPE issue when optional fields aren't initialized.
 <dd>
 
 ```ruby
-client.service.named_patch_with_mixed({
-  id:'id',
-  appId:'appId',
-  instructions:'instructions',
-  active:true
-});
+client.service.named_patch_with_mixed(
+  id: 'id',
+  appId: 'appId',
+  instructions: 'instructions',
+  active: true
+);
 ```
 </dd>
 </dl>
@@ -314,13 +314,13 @@ This endpoint should:
 <dd>
 
 ```ruby
-client.service.optional_merge_patch_test({
-  requiredField:'requiredField',
-  optionalString:'optionalString',
-  optionalInteger:1,
-  optionalBoolean:true,
-  nullableString:'nullableString'
-});
+client.service.optional_merge_patch_test(
+  requiredField: 'requiredField',
+  optionalString: 'optionalString',
+  optionalInteger: 1,
+  optionalBoolean: true,
+  nullableString: 'nullableString'
+);
 ```
 </dd>
 </dl>
@@ -406,11 +406,11 @@ Regular PATCH endpoint without merge-patch semantics
 <dd>
 
 ```ruby
-client.service.regular_patch({
-  id:'id',
-  field1:'field1',
-  field2:1
-});
+client.service.regular_patch(
+  id: 'id',
+  field1: 'field1',
+  field2: 1
+);
 ```
 </dd>
 </dl>

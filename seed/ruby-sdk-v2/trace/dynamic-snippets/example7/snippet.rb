@@ -5,9 +5,9 @@ client = seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.admin.store_traced_workspace({
-  submissionId:'d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-  workspaceRunDetails:{
+client.admin.store_traced_workspace(
+  submissionId: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+  workspaceRunDetails: {
     exception:{
       exceptionType:'exceptionType',
       exceptionMessage:'exceptionMessage',
@@ -15,7 +15,7 @@ client.admin.store_traced_workspace({
     },
     stdout:'stdout'
   },
-  traceResponses:[{
+  traceResponses: [{
     submissionId:'d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
     lineNumber:1,
     expressionLocation:{
@@ -56,4 +56,4 @@ client.admin.store_traced_workspace({
     },
     stdout:'stdout'
   }]
-});
+);

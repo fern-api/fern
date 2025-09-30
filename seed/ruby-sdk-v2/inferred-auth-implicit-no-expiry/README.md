@@ -17,14 +17,14 @@ require "seed"
 
 client = seed::Client.new();
 
-client.auth.get_token_with_client_credentials({
-  xApiKey:'X-Api-Key',
-  clientId:'client_id',
-  clientSecret:'client_secret',
-  audience:'https://api.example.com',
-  grantType:'client_credentials',
-  scope:'scope'
-});
+client.auth.get_token_with_client_credentials(
+  xApiKey: 'X-Api-Key',
+  clientId: 'client_id',
+  clientSecret: 'client_secret',
+  audience: 'https://api.example.com',
+  grantType: 'client_credentials',
+  scope: 'scope'
+);
 ```
 
 ## Environments

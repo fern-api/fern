@@ -17,10 +17,10 @@ require "seed"
 
 client = seed::Client.new();
 
-client.dummy.generate_stream({
-  stream:true,
-  numEvents:1
-});
+client.dummy.generate_stream(
+  stream: true,
+  numEvents: 1
+);
 ```
 
 ## Environments

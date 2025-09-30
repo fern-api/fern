@@ -53,10 +53,10 @@ client.service.get_resource();
 <dd>
 
 ```ruby
-client.service.list_resources({
-  pageLimit:10,
-  beforeDate:'2023-01-01'
-});
+client.service.list_resources(
+  pageLimit: 10,
+  beforeDate: '2023-01-01'
+);
 ```
 </dd>
 </dl>

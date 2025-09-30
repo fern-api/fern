@@ -1126,10 +1126,10 @@ GET with query param
 <dd>
 
 ```ruby
-client.endpoints.params.get_with_query({
-  query:'query',
-  number:1
-});
+client.endpoints.params.get_with_query(
+  query: 'query',
+  number: 1
+);
 ```
 </dd>
 </dl>
@@ -1191,10 +1191,10 @@ GET with multiple of same query param
 <dd>
 
 ```ruby
-client.endpoints.params.get_with_query({
-  query:'query',
-  number:1
-});
+client.endpoints.params.get_with_query(
+  query: 'query',
+  number: 1
+);
 ```
 </dd>
 </dl>
@@ -1256,10 +1256,10 @@ GET with path and query params
 <dd>
 
 ```ruby
-client.endpoints.params.get_with_path_and_query({
-  param:'param',
-  query:'query'
-});
+client.endpoints.params.get_with_path_and_query(
+  param: 'param',
+  query: 'query'
+);
 ```
 </dd>
 </dl>
@@ -1321,10 +1321,10 @@ GET with path and query params
 <dd>
 
 ```ruby
-client.endpoints.params.get_with_path_and_query({
-  param:'param',
-  query:'query'
-});
+client.endpoints.params.get_with_path_and_query(
+  param: 'param',
+  query: 'query'
+);
 ```
 </dd>
 </dl>
@@ -1386,9 +1386,7 @@ PUT to update with path param
 <dd>
 
 ```ruby
-client.endpoints.params.modify_with_inline_path({
-  param:'param'
-});
+client.endpoints.params.modify_with_inline_path(param: 'param');
 ```
 </dd>
 </dl>
@@ -1450,9 +1448,7 @@ PUT to update with path param
 <dd>
 
 ```ruby
-client.endpoints.params.modify_with_inline_path({
-  param:'param'
-});
+client.endpoints.params.modify_with_inline_path(param: 'param');
 ```
 </dd>
 </dl>
@@ -1862,9 +1858,7 @@ client.endpoints.primitive.get_and_return_base_64();
 <dd>
 
 ```ruby
-client.endpoints.put.add({
-  id:'id'
-});
+client.endpoints.put.add(id: 'id');
 ```
 </dd>
 </dl>
@@ -2061,10 +2055,10 @@ POST with custom object in request body, response is an object
 <dd>
 
 ```ruby
-client.inlined_requests.post_with_object_bodyand_response({
-  string:'string',
-  integer:1,
-  nestedObject:{
+client.inlined_requests.post_with_object_bodyand_response(
+  string: 'string',
+  integer: 1,
+  nestedObject: {
     string:'string',
     integer:1,
     long:1000000,
@@ -2081,7 +2075,7 @@ client.inlined_requests.post_with_object_bodyand_response({
     },
     bigint:'1000000'
   }
-});
+);
 ```
 </dd>
 </dl>
@@ -2244,10 +2238,10 @@ client.no_req_body.post_with_no_request_body();
 <dd>
 
 ```ruby
-client.req_with_headers.get_with_custom_header({
-  xTestServiceHeader:'X-TEST-SERVICE-HEADER',
-  xTestEndpointHeader:'X-TEST-ENDPOINT-HEADER'
-});
+client.req_with_headers.get_with_custom_header(
+  xTestServiceHeader: 'X-TEST-SERVICE-HEADER',
+  xTestEndpointHeader: 'X-TEST-ENDPOINT-HEADER'
+);
 ```
 </dd>
 </dl>

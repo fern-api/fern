@@ -13,11 +13,11 @@
 <dd>
 
 ```ruby
-client.headers.send_({
-  endpointVersion:'02-12-2024',
-  async:true,
-  query:'What is the weather today'
-});
+client.headers.send_(
+  endpointVersion: '02-12-2024',
+  async: true,
+  query: 'What is the weather today'
+);
 ```
 </dd>
 </dl>
@@ -74,20 +74,20 @@ client.headers.send_({
 <dd>
 
 ```ruby
-client.inlined.send_({
-  temperature:10.1,
-  prompt:'You are a helpful assistant',
-  context:"You're super wise",
-  aliasedContext:"You're super wise",
-  maybeContext:"You're super wise",
-  objectWithLiteral:{
+client.inlined.send_(
+  temperature: 10.1,
+  prompt: 'You are a helpful assistant',
+  context: "You're super wise",
+  aliasedContext: "You're super wise",
+  maybeContext: "You're super wise",
+  objectWithLiteral: {
     nestedLiteral:{
       myLiteral:'How super cool'
     }
   },
-  stream:false,
-  query:'What is the weather today'
-});
+  stream: false,
+  query: 'What is the weather today'
+);
 ```
 </dd>
 </dl>
@@ -225,17 +225,17 @@ client.path.send_();
 <dd>
 
 ```ruby
-client.query.send_({
-  prompt:'You are a helpful assistant',
-  optionalPrompt:'You are a helpful assistant',
-  aliasPrompt:'You are a helpful assistant',
-  aliasOptionalPrompt:'You are a helpful assistant',
-  stream:false,
-  optionalStream:false,
-  aliasStream:false,
-  aliasOptionalStream:false,
-  query:'What is the weather today'
-});
+client.query.send_(
+  prompt: 'You are a helpful assistant',
+  optionalPrompt: 'You are a helpful assistant',
+  aliasPrompt: 'You are a helpful assistant',
+  aliasOptionalPrompt: 'You are a helpful assistant',
+  stream: false,
+  optionalStream: false,
+  aliasStream: false,
+  aliasOptionalStream: false,
+  query: 'What is the weather today'
+);
 ```
 </dd>
 </dl>

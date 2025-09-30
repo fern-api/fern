@@ -17,11 +17,11 @@ require "seed"
 
 client = seed::Client.new();
 
-client.foo.find({
-  optionalString:'optionalString',
-  publicProperty:'publicProperty',
-  privateProperty:1
-});
+client.foo.find(
+  optionalString: 'optionalString',
+  publicProperty: 'publicProperty',
+  privateProperty: 1
+);
 ```
 
 ## Environments

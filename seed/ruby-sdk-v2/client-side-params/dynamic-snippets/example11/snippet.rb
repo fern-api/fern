@@ -5,8 +5,8 @@ client = seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.service.get_client({
-  clientId:'clientId',
-  fields:'fields',
-  includeFields:true
-});
+client.service.get_client(
+  clientId: 'clientId',
+  fields: 'fields',
+  includeFields: true
+);

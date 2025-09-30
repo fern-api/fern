@@ -66,9 +66,7 @@ GET request with custom api key
 <dd>
 
 ```ruby
-client.service.get_with_header({
-  xEndpointHeader:'X-Endpoint-Header'
-});
+client.service.get_with_header(xEndpointHeader: 'X-Endpoint-Header');
 ```
 </dd>
 </dl>

@@ -6,8 +6,8 @@ client = seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.auth.get_token({
-  clientId:'client_id',
-  clientSecret:'client_secret',
-  grantType:'client_credentials'
-});
+client.auth.get_token(
+  clientId: 'client_id',
+  clientSecret: 'client_secret',
+  grantType: 'client_credentials'
+);

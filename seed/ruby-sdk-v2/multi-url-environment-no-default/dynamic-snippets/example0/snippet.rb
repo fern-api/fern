@@ -5,6 +5,4 @@ client = seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.ec_2.boot_instance({
-  size:'size'
-});
+client.ec_2.boot_instance(size: 'size');

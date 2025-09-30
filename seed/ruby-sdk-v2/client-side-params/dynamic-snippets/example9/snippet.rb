@@ -5,7 +5,7 @@ client = seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.service.get_connection({
-  connectionId:'connectionId',
-  fields:'fields'
-});
+client.service.get_connection(
+  connectionId: 'connectionId',
+  fields: 'fields'
+);

@@ -67,11 +67,12 @@ client.complex.search({
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_cursor_pagination({
-  page:1,
-  perPage:1,
-  startingAfter:'starting_after'
-});
+client.inline_users.inline_users.list_with_cursor_pagination(
+  page: 1,
+  perPage: 1,
+  order: ,
+  startingAfter: 'starting_after'
+);
 ```
 </dd>
 </dl>
@@ -138,9 +139,7 @@ the next page of results.
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_mixed_type_cursor_pagination({
-  cursor:'cursor'
-});
+client.inline_users.inline_users.list_with_mixed_type_cursor_pagination(cursor: 'cursor');
 ```
 </dd>
 </dl>
@@ -180,7 +179,7 @@ client.inline_users.inline_users.list_with_mixed_type_cursor_pagination({
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_mixed_type_cursor_pagination({});
+client.inline_users.inline_users.list_with_mixed_type_cursor_pagination();
 ```
 </dd>
 </dl>
@@ -223,11 +222,12 @@ in order to fetch the next page of results.
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_cursor_pagination({
-  page:1,
-  perPage:1,
-  startingAfter:'starting_after'
-});
+client.inline_users.inline_users.list_with_cursor_pagination(
+  page: 1,
+  perPage: 1,
+  order: ,
+  startingAfter: 'starting_after'
+);
 ```
 </dd>
 </dl>
@@ -294,11 +294,12 @@ the next page of results.
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_cursor_pagination({
-  page:1.1,
-  perPage:1.1,
-  startingAfter:'starting_after'
-});
+client.inline_users.inline_users.list_with_cursor_pagination(
+  page: 1.1,
+  perPage: 1.1,
+  order: ,
+  startingAfter: 'starting_after'
+);
 ```
 </dd>
 </dl>
@@ -365,7 +366,7 @@ the next page of results.
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_mixed_type_cursor_pagination({});
+client.inline_users.inline_users.list_with_mixed_type_cursor_pagination();
 ```
 </dd>
 </dl>
@@ -408,9 +409,10 @@ in order to fetch the next page of results.
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_cursor_pagination({
-  page:1
-});
+client.inline_users.inline_users.list_with_cursor_pagination(
+  page: 1,
+  order: 
+);
 ```
 </dd>
 </dl>
@@ -470,9 +472,10 @@ paginated endpoint.
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_cursor_pagination({
-  page:1
-});
+client.inline_users.inline_users.list_with_cursor_pagination(
+  page: 1,
+  order: 
+);
 ```
 </dd>
 </dl>
@@ -532,7 +535,7 @@ paginated endpoint.
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_cursor_pagination({});
+client.inline_users.inline_users.list_with_cursor_pagination();
 ```
 </dd>
 </dl>
@@ -572,7 +575,7 @@ client.inline_users.inline_users.list_with_cursor_pagination({});
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_cursor_pagination({});
+client.inline_users.inline_users.list_with_cursor_pagination();
 ```
 </dd>
 </dl>
@@ -612,9 +615,7 @@ client.inline_users.inline_users.list_with_cursor_pagination({});
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_cursor_pagination({
-  startingAfter:'starting_after'
-});
+client.inline_users.inline_users.list_with_cursor_pagination(startingAfter: 'starting_after');
 ```
 </dd>
 </dl>
@@ -657,7 +658,7 @@ the next page of results.
 <dd>
 
 ```ruby
-client.inline_users.inline_users.list_with_cursor_pagination({});
+client.inline_users.inline_users.list_with_cursor_pagination();
 ```
 </dd>
 </dl>
@@ -698,11 +699,12 @@ client.inline_users.inline_users.list_with_cursor_pagination({});
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination({
-  page:1,
-  perPage:1,
-  startingAfter:'starting_after'
-});
+client.users.list_with_cursor_pagination(
+  page: 1,
+  perPage: 1,
+  order: ,
+  startingAfter: 'starting_after'
+);
 ```
 </dd>
 </dl>
@@ -769,9 +771,7 @@ the next page of results.
 <dd>
 
 ```ruby
-client.users.list_with_mixed_type_cursor_pagination({
-  cursor:'cursor'
-});
+client.users.list_with_mixed_type_cursor_pagination(cursor: 'cursor');
 ```
 </dd>
 </dl>
@@ -811,7 +811,7 @@ client.users.list_with_mixed_type_cursor_pagination({
 <dd>
 
 ```ruby
-client.users.list_with_mixed_type_cursor_pagination({});
+client.users.list_with_mixed_type_cursor_pagination();
 ```
 </dd>
 </dl>
@@ -854,11 +854,12 @@ in order to fetch the next page of results.
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination({
-  page:1,
-  perPage:1,
-  startingAfter:'starting_after'
-});
+client.users.list_with_cursor_pagination(
+  page: 1,
+  perPage: 1,
+  order: ,
+  startingAfter: 'starting_after'
+);
 ```
 </dd>
 </dl>
@@ -925,11 +926,12 @@ the next page of results.
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination({
-  page:1.1,
-  perPage:1.1,
-  startingAfter:'starting_after'
-});
+client.users.list_with_cursor_pagination(
+  page: 1.1,
+  perPage: 1.1,
+  order: ,
+  startingAfter: 'starting_after'
+);
 ```
 </dd>
 </dl>
@@ -996,7 +998,7 @@ the next page of results.
 <dd>
 
 ```ruby
-client.users.list_with_mixed_type_cursor_pagination({});
+client.users.list_with_mixed_type_cursor_pagination();
 ```
 </dd>
 </dl>
@@ -1039,9 +1041,10 @@ in order to fetch the next page of results.
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination({
-  page:1
-});
+client.users.list_with_cursor_pagination(
+  page: 1,
+  order: 
+);
 ```
 </dd>
 </dl>
@@ -1101,9 +1104,10 @@ paginated endpoint.
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination({
-  page:1
-});
+client.users.list_with_cursor_pagination(
+  page: 1,
+  order: 
+);
 ```
 </dd>
 </dl>
@@ -1163,7 +1167,7 @@ paginated endpoint.
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination({});
+client.users.list_with_cursor_pagination();
 ```
 </dd>
 </dl>
@@ -1203,7 +1207,7 @@ client.users.list_with_cursor_pagination({});
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination({});
+client.users.list_with_cursor_pagination();
 ```
 </dd>
 </dl>
@@ -1243,9 +1247,7 @@ client.users.list_with_cursor_pagination({});
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination({
-  startingAfter:'starting_after'
-});
+client.users.list_with_cursor_pagination(startingAfter: 'starting_after');
 ```
 </dd>
 </dl>
@@ -1288,7 +1290,7 @@ the next page of results.
 <dd>
 
 ```ruby
-client.users.list_with_cursor_pagination({});
+client.users.list_with_cursor_pagination();
 ```
 </dd>
 </dl>

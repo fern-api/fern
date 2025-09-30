@@ -223,12 +223,12 @@ List all users
 <dd>
 
 ```ruby
-client.nullable_optional.list_users({
-  limit:1,
-  offset:1,
-  includeDeleted:true,
-  sortBy:'sortBy'
-});
+client.nullable_optional.list_users(
+  limit: 1,
+  offset: 1,
+  includeDeleted: true,
+  sortBy: 'sortBy'
+);
 ```
 </dd>
 </dl>
@@ -306,12 +306,12 @@ Search users
 <dd>
 
 ```ruby
-client.nullable_optional.search_users({
-  query:'query',
-  department:'department',
-  role:'role',
-  isActive:true
-});
+client.nullable_optional.search_users(
+  query: 'query',
+  department: 'department',
+  role: 'role',
+  isActive: true
+);
 ```
 </dd>
 </dl>
@@ -516,10 +516,14 @@ Update complex profile to test nullable field updates
 <dd>
 
 ```ruby
-client.nullable_optional.update_complex_profile({
-  profileId:'profileId',
-  nullableArray:['nullableArray', 'nullableArray']
-});
+client.nullable_optional.update_complex_profile(
+  profileId: 'profileId',
+  nullableRole: ,
+  nullableStatus: ,
+  nullableNotification: ,
+  nullableSearchResult: ,
+  nullableArray: ['nullableArray', 'nullableArray']
+);
 ```
 </dd>
 </dl>
@@ -691,7 +695,11 @@ Filter users by role with nullable enum
 <dd>
 
 ```ruby
-client.nullable_optional.filter_by_role({});
+client.nullable_optional.filter_by_role(
+  role: ,
+  status: ,
+  secondaryRole: 
+);
 ```
 </dd>
 </dl>
@@ -815,12 +823,12 @@ Update tags to test array handling
 <dd>
 
 ```ruby
-client.nullable_optional.update_tags({
-  userId:'userId',
-  tags:['tags', 'tags'],
-  categories:['categories', 'categories'],
-  labels:['labels', 'labels']
-});
+client.nullable_optional.update_tags(
+  userId: 'userId',
+  tags: ['tags', 'tags'],
+  categories: ['categories', 'categories'],
+  labels: ['labels', 'labels']
+);
 ```
 </dd>
 </dl>
@@ -898,13 +906,13 @@ Get search results with nullable unions
 <dd>
 
 ```ruby
-client.nullable_optional.get_search_results({
-  query:'query',
-  filters:{
+client.nullable_optional.get_search_results(
+  query: 'query',
+  filters: {
     filters:'filters'
   },
-  includeTypes:['includeTypes', 'includeTypes']
-});
+  includeTypes: ['includeTypes', 'includeTypes']
+);
 ```
 </dd>
 </dl>

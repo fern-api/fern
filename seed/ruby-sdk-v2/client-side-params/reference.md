@@ -27,15 +27,15 @@ List resources with pagination
 <dd>
 
 ```ruby
-client.service.list_resources({
-  page:1,
-  perPage:1,
-  sort:'created_at',
-  order:'desc',
-  includeTotals:true,
-  fields:'fields',
-  search:'search'
-});
+client.service.list_resources(
+  page: 1,
+  perPage: 1,
+  sort: 'created_at',
+  order: 'desc',
+  includeTotals: true,
+  fields: 'fields',
+  search: 'search'
+);
 ```
 </dd>
 </dl>
@@ -137,11 +137,11 @@ Get a single resource
 <dd>
 
 ```ruby
-client.service.get_resource({
-  resourceId:'resourceId',
-  includeMetadata:true,
-  format:'json'
-});
+client.service.get_resource(
+  resourceId: 'resourceId',
+  includeMetadata: true,
+  format: 'json'
+);
 ```
 </dd>
 </dl>
@@ -211,12 +211,12 @@ Search resources with complex parameters
 <dd>
 
 ```ruby
-client.service.search_resources({
-  limit:1,
-  offset:1,
-  query:'query',
-  filters:{}
-});
+client.service.search_resources(
+  limit: 1,
+  offset: 1,
+  query: 'query',
+  filters: {}
+);
 ```
 </dd>
 </dl>
@@ -294,16 +294,16 @@ List or search for users
 <dd>
 
 ```ruby
-client.service.list_users({
-  page:1,
-  perPage:1,
-  includeTotals:true,
-  sort:'sort',
-  connection:'connection',
-  q:'q',
-  searchEngine:'search_engine',
-  fields:'fields'
-});
+client.service.list_users(
+  page: 1,
+  perPage: 1,
+  includeTotals: true,
+  sort: 'sort',
+  connection: 'connection',
+  q: 'q',
+  searchEngine: 'search_engine',
+  fields: 'fields'
+);
 ```
 </dd>
 </dl>
@@ -413,11 +413,11 @@ Get a user by ID
 <dd>
 
 ```ruby
-client.service.get_user_by_id({
-  userId:'userId',
-  fields:'fields',
-  includeFields:true
-});
+client.service.get_user_by_id(
+  userId: 'userId',
+  fields: 'fields',
+  includeFields: true
+);
 ```
 </dd>
 </dl>
@@ -677,11 +677,11 @@ List all connections
 <dd>
 
 ```ruby
-client.service.list_connections({
-  strategy:'strategy',
-  name:'name',
-  fields:'fields'
-});
+client.service.list_connections(
+  strategy: 'strategy',
+  name: 'name',
+  fields: 'fields'
+);
 ```
 </dd>
 </dl>
@@ -751,10 +751,10 @@ Get a connection by ID
 <dd>
 
 ```ruby
-client.service.get_connection({
-  connectionId:'connectionId',
-  fields:'fields'
-});
+client.service.get_connection(
+  connectionId: 'connectionId',
+  fields: 'fields'
+);
 ```
 </dd>
 </dl>
@@ -816,16 +816,16 @@ List all clients/applications
 <dd>
 
 ```ruby
-client.service.list_clients({
-  fields:'fields',
-  includeFields:true,
-  page:1,
-  perPage:1,
-  includeTotals:true,
-  isGlobal:true,
-  isFirstParty:true,
-  appType:['app_type', 'app_type']
-});
+client.service.list_clients(
+  fields: 'fields',
+  includeFields: true,
+  page: 1,
+  perPage: 1,
+  includeTotals: true,
+  isGlobal: true,
+  isFirstParty: true,
+  appType: ['app_type', 'app_type']
+);
 ```
 </dd>
 </dl>
@@ -935,11 +935,11 @@ Get a client by ID
 <dd>
 
 ```ruby
-client.service.get_client({
-  clientId:'clientId',
-  fields:'fields',
-  includeFields:true
-});
+client.service.get_client(
+  clientId: 'clientId',
+  fields: 'fields',
+  includeFields: true
+);
 ```
 </dd>
 </dl>

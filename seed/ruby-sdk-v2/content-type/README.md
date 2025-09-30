@@ -17,10 +17,10 @@ require "seed"
 
 client = seed::Client.new();
 
-client.service.patch({
-  application:'application',
-  requireAuth:true
-});
+client.service.patch(
+  application: 'application',
+  requireAuth: true
+);
 ```
 
 ## Environments

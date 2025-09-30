@@ -5,8 +5,8 @@ client = seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.service.get_resource({
-  resourceId:'resourceId',
-  includeMetadata:true,
-  format:'json'
-});
+client.service.get_resource(
+  resourceId: 'resourceId',
+  includeMetadata: true,
+  format: 'json'
+);

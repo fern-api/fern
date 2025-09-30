@@ -17,11 +17,11 @@ require "seed"
 
 client = seed::Client.new();
 
-client.user.create_user({
-  type:'CreateUserRequest',
-  version:'v1',
-  name:'name'
-});
+client.user.create_user(
+  type: 'CreateUserRequest',
+  version: 'v1',
+  name: 'name'
+);
 ```
 
 ## Environments

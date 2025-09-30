@@ -13,11 +13,11 @@
 <dd>
 
 ```ruby
-client.user.create_user({
-  type:'CreateUserRequest',
-  version:'v1',
-  name:'name'
-});
+client.user.create_user(
+  type: 'CreateUserRequest',
+  version: 'v1',
+  name: 'name'
+);
 ```
 </dd>
 </dl>

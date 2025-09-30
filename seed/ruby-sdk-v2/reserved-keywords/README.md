@@ -17,9 +17,7 @@ require "seed"
 
 client = seed::Client.new();
 
-client.package.test({
-  for_:'for'
-});
+client.package.test(for_: 'for');
 ```
 
 ## Environments

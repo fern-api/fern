@@ -12,10 +12,10 @@
 <dd>
 
 ```ruby
-client.get_foo({
-  requiredBaz:'required_baz',
-  requiredNullableBaz:'required_nullable_baz'
-});
+client.get_foo(
+  requiredBaz: 'required_baz',
+  requiredNullableBaz: 'required_nullable_baz'
+);
 ```
 </dd>
 </dl>

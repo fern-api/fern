@@ -235,16 +235,16 @@ client.admin.send_workspace_submission_update({
 <dd>
 
 ```ruby
-client.admin.store_traced_test_case({
-  submissionId:'d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-  testCaseId:'testCaseId',
-  result:{
+client.admin.store_traced_test_case(
+  submissionId: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+  testCaseId: 'testCaseId',
+  result: {
     result:{
       passed:true
     },
     stdout:'stdout'
   },
-  traceResponses:[{
+  traceResponses: [{
     submissionId:'d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
     lineNumber:1,
     expressionLocation:{
@@ -285,7 +285,7 @@ client.admin.store_traced_test_case({
     },
     stdout:'stdout'
   }]
-});
+);
 ```
 </dd>
 </dl>
@@ -405,9 +405,9 @@ client.admin.store_traced_test_case_v_2();
 <dd>
 
 ```ruby
-client.admin.store_traced_workspace({
-  submissionId:'d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-  workspaceRunDetails:{
+client.admin.store_traced_workspace(
+  submissionId: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+  workspaceRunDetails: {
     exception:{
       exceptionType:'exceptionType',
       exceptionMessage:'exceptionMessage',
@@ -415,7 +415,7 @@ client.admin.store_traced_workspace({
     },
     stdout:'stdout'
   },
-  traceResponses:[{
+  traceResponses: [{
     submissionId:'d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
     lineNumber:1,
     expressionLocation:{
@@ -456,7 +456,7 @@ client.admin.store_traced_workspace({
     },
     stdout:'stdout'
   }]
-});
+);
 ```
 </dd>
 </dl>
@@ -627,9 +627,7 @@ client.homepage.set_homepage_problems();
 <dd>
 
 ```ruby
-client.migration.get_attempted_migrations({
-  adminKeyHeader:'admin-key-header'
-});
+client.migration.get_attempted_migrations(adminKeyHeader: 'admin-key-header');
 ```
 </dd>
 </dl>
@@ -684,11 +682,11 @@ Create a new playlist
 <dd>
 
 ```ruby
-client.playlist.create_playlist({
-  serviceParam:1,
-  datetime:'2024-01-15T09:30:00Z',
-  optionalDatetime:'2024-01-15T09:30:00Z'
-});
+client.playlist.create_playlist(
+  serviceParam: 1,
+  datetime: '2024-01-15T09:30:00Z',
+  optionalDatetime: '2024-01-15T09:30:00Z'
+);
 ```
 </dd>
 </dl>
@@ -766,12 +764,14 @@ Returns the user's playlists
 <dd>
 
 ```ruby
-client.playlist.get_playlists({
-  serviceParam:1,
-  limit:1,
-  otherField:'otherField',
-  multiLineDocs:'multiLineDocs'
-});
+client.playlist.get_playlists(
+  serviceParam: 1,
+  limit: 1,
+  otherField: 'otherField',
+  multiLineDocs: 'multiLineDocs',
+  optionalMultipleField: ,
+  multipleField: 
+);
 ```
 </dd>
 </dl>
@@ -1282,14 +1282,15 @@ Returns default starter files for problem
 <dd>
 
 ```ruby
-client.problem.get_default_starter_files({
-  inputParams:[{
+client.problem.get_default_starter_files(
+  inputParams: [{
     name:'name'
   }, {
     name:'name'
   }],
-  methodName:'methodName'
-});
+  outputType: ,
+  methodName: 'methodName'
+);
 ```
 </dd>
 </dl>

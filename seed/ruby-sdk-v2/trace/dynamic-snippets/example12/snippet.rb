@@ -5,8 +5,8 @@ client = seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.playlist.create_playlist({
-  serviceParam:1,
-  datetime:'2024-01-15T09:30:00Z',
-  optionalDatetime:'2024-01-15T09:30:00Z'
-});
+client.playlist.create_playlist(
+  serviceParam: 1,
+  datetime: '2024-01-15T09:30:00Z',
+  optionalDatetime: '2024-01-15T09:30:00Z'
+);
