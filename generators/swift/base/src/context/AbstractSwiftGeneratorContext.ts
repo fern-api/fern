@@ -18,7 +18,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 
 import { AsIsFileDefinition, SourceAsIsFiles, TestAsIsFiles } from "../AsIs";
-import { ProjectSymbolRegistry, SwiftProject } from "../project";
+import { SourceSymbolRegistry, SwiftProject } from "../project";
 import { TestSymbolRegistry } from "../project/TestSymbolRegistry";
 
 /**
@@ -57,7 +57,7 @@ export abstract class AbstractSwiftGeneratorContext<
      * followed by schema types and inline request types which are commonly referenced, and
      * finally subclient symbols last since they're unlikely to be used directly by end users.
      */
-    private registerSourceSymbols(symbolRegistry: ProjectSymbolRegistry, ir: IntermediateRepresentation) {
+    private registerSourceSymbols(symbolRegistry: SourceSymbolRegistry, ir: IntermediateRepresentation) {
         symbolRegistry.registerModuleSymbol({
             configModuleName: this.customConfig.moduleName,
             apiNamePascalCase: ir.apiName.pascalCase.unsafeName
@@ -100,7 +100,7 @@ export abstract class AbstractSwiftGeneratorContext<
         });
     }
 
-    private registerTestSymbols(testSymbolRegistry: TestSymbolRegistry, sourceSymbolRegistry: ProjectSymbolRegistry) {
+    private registerTestSymbols(testSymbolRegistry: TestSymbolRegistry, sourceSymbolRegistry: SourceSymbolRegistry) {
         // TODO(kafkas): Implement
     }
 

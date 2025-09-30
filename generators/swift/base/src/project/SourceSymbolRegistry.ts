@@ -3,7 +3,7 @@ import { swift } from "@fern-api/swift-codegen";
 
 const SYMBOL_ID_PREFIX = "symbol_id:";
 
-export class ProjectSymbolRegistry {
+export class SourceSymbolRegistry {
     private static readonly reservedSymbols = [
         "Swift",
         "Foundation",
@@ -12,9 +12,9 @@ export class ProjectSymbolRegistry {
         ...values(swift.Protocol)
     ];
 
-    public static create(additionalReservedSymbols?: string[]): ProjectSymbolRegistry {
-        return new ProjectSymbolRegistry([
-            ...ProjectSymbolRegistry.reservedSymbols,
+    public static create(additionalReservedSymbols?: string[]): SourceSymbolRegistry {
+        return new SourceSymbolRegistry([
+            ...SourceSymbolRegistry.reservedSymbols,
             ...(additionalReservedSymbols ?? [])
         ]);
     }
