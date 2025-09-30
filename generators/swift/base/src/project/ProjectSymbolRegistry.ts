@@ -12,8 +12,11 @@ export class ProjectSymbolRegistry {
         ...values(swift.Protocol)
     ];
 
-    public static create(): ProjectSymbolRegistry {
-        return new ProjectSymbolRegistry(ProjectSymbolRegistry.reservedSymbols);
+    public static create(additionalReservedSymbols?: string[]): ProjectSymbolRegistry {
+        return new ProjectSymbolRegistry([
+            ...ProjectSymbolRegistry.reservedSymbols,
+            ...(additionalReservedSymbols ?? [])
+        ]);
     }
 
     private readonly registry: SymbolRegistry;
