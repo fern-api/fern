@@ -48,6 +48,7 @@ export abstract class AbstractSwiftGeneratorContext<
     private initProject(ir: IntermediateRepresentation): SwiftProject {
         const project = new SwiftProject({ context: this });
         this.registerSourceSymbols(project.srcSymbolRegistry, ir);
+        this.registerTestSymbols(project.testSymbolRegistry, project.srcSymbolRegistry);
         return project;
     }
 
@@ -101,7 +102,9 @@ export abstract class AbstractSwiftGeneratorContext<
     }
 
     private registerTestSymbols(testSymbolRegistry: TestSymbolRegistry, sourceSymbolRegistry: SourceSymbolRegistry) {
-        // TODO(kafkas): Implement
+        sourceSymbolRegistry.getAllSubClientSymbols().forEach((s) => {
+            testSymbolRegistry.registerWireTestSuiteSymbol({ subclientName: s.name });
+        });
     }
 
     public get packageName(): string {

@@ -542,9 +542,14 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     private async generateTestFiles(context: SdkGeneratorContext): Promise<void> {
-        if (context.customConfig.enableWireTests) {
-            await this.generateWireTestFiles(context);
+        if (!context.hasTests) {
+            return;
         }
+        const promises = [this.generateTestAsIsFiles(context)];
+        if (context.customConfig.enableWireTests) {
+            promises.push(this.generateWireTestFiles(context));
+        }
+        await Promise.all(promises);
     }
 
     private async generateTestAsIsFiles(context: SdkGeneratorContext): Promise<void> {
@@ -560,6 +565,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     private async generateWireTestFiles(context: SdkGeneratorContext): Promise<void> {
-        // TODO(kafkas): Generate wire tests
+        // TODO(kafkas): Generate wire test suites
+        // TODO(kafkas): Generate the test client factory
     }
 }
