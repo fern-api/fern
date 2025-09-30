@@ -160,10 +160,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
 
         // Add named re-exports for types
         if (hasTypes) {
-          
-         
-                useStatements.push(new UseStatement({ path: "types", items: ["*"], isPublic: true }));
-            
+            useStatements.push(new UseStatement({ path: "types", items: ["*"], isPublic: true }));
         }
 
         const apiModule = new Module({
