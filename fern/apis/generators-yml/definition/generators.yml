@@ -344,11 +344,12 @@ types:
           Whether to inline allOf schemas. If false, allOf schemas will be 
           extended in the code generation.
         default: false
-      resolve-named-aliases:
-        type: optional<ResolveNamedAliases>
+      resolve-aliases:
+        type: optional<ResolveAliases>
         docs: |
-          Whether to resolve named aliases. If provided, all named aliases will be resolved except for the ones in the except array.
-          Defaults to false, meaning that no named aliases will be resolved.
+          Whether to resolve aliases and inline them if possible.
+          If provided, all aliases will be resolved except for the ones in the except array.
+          Defaults to false, meaning that no aliases will be resolved.
       group-multi-api-environments:
         type: optional<boolean>
         docs: |
@@ -356,13 +357,13 @@ types:
           This is useful for organizations with multiple APIs deployed to the same set of environments.
         default: false
 
-  ResolveNamedAliases:
+  ResolveAliases:
     discriminated: false
     union:
       - boolean
-      - ResolveNamedAliasesSchema
+      - ResolveAliasesSchema
 
-  ResolveNamedAliasesSchema:
+  ResolveAliasesSchema:
     properties:
       except:
         type: optional<list<string>>

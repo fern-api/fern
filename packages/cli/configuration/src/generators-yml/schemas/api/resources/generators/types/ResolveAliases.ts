@@ -4,4 +4,4 @@
 
 import * as FernDefinition from "../../../index";
 
-export type ResolveNamedAliases = boolean | FernDefinition.ResolveNamedAliasesSchema;
+export type ResolveAliases = boolean | FernDefinition.ResolveAliasesSchema;

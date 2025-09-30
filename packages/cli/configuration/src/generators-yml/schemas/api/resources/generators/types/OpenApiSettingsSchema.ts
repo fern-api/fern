@@ -45,10 +45,11 @@ export interface OpenApiSettingsSchema extends FernDefinition.BaseApiSettingsSch
      */
     "inline-all-of-schemas"?: boolean;
     /**
-     * Whether to resolve named aliases. If provided, all named aliases will be resolved except for the ones in the except array.
-     * Defaults to false, meaning that no named aliases will be resolved.
+     * Whether to resolve aliases and inline them if possible.
+     * If provided, all aliases will be resolved except for the ones in the except array.
+     * Defaults to false, meaning that no aliases will be resolved.
      */
-    "resolve-named-aliases"?: FernDefinition.ResolveNamedAliases;
+    "resolve-aliases"?: FernDefinition.ResolveAliases;
     /**
      * If true, automatically group multiple APIs with matching environments into unified environments with multiple base URLs.
      * This is useful for organizations with multiple APIs deployed to the same set of environments.

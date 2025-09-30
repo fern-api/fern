@@ -6,14 +6,14 @@ import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const ResolveNamedAliasesSchema: core.serialization.ObjectSchema<
-    serializers.ResolveNamedAliasesSchema.Raw,
-    FernDefinition.ResolveNamedAliasesSchema
+export const ResolveAliasesSchema: core.serialization.ObjectSchema<
+    serializers.ResolveAliasesSchema.Raw,
+    FernDefinition.ResolveAliasesSchema
 > = core.serialization.object({
     except: core.serialization.list(core.serialization.string()).optional(),
 });
 
-export declare namespace ResolveNamedAliasesSchema {
+export declare namespace ResolveAliasesSchema {
     export interface Raw {
         except?: string[] | null;
     }

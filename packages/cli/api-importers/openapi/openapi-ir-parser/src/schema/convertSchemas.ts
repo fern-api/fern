@@ -74,16 +74,16 @@ function isInlinable(
     }
 }
 
-function shouldResolveNamedAlias(
+function shouldResolveAlias(
     schemaId: string,
     schema: OpenAPIV3.ReferenceObject,
     context: SchemaParserContext
 ): boolean {
-    if (context.options.resolveNamedAliases) {
-        // If resolveNamedAliases is an object or true, we should check further
+    if (context.options.resolveAliases) {
+        // If resolveAliases is an object or true, we should check further
         if (
-            typeof context.options.resolveNamedAliases === "object" &&
-            context.options.resolveNamedAliases.except?.includes(schemaId)
+            typeof context.options.resolveAliases === "object" &&
+            context.options.resolveAliases.except?.includes(schemaId)
         ) {
             // If the schema is in the except list, we should not resolve it
             return false;
@@ -111,7 +111,7 @@ export function convertSchema(
     if (isReferenceObject(schema)) {
         const schemaId = getSchemaIdFromReference(schema);
         if (schemaId != null) {
-            if (shouldResolveNamedAlias(schemaId, schema, context)) {
+            if (shouldResolveAlias(schemaId, schema, context)) {
                 // If the schema is a named alias we are configured to inline, we should do that and return immediately
                 return convertSchemaObject(
                     context.resolveSchemaReference(schema),
