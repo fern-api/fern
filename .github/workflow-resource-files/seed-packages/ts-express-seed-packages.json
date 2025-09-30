@@ -1,0 +1,163 @@
+{
+  "total-test-time": 5621,
+  "split-cutoff-time": 30000,
+  "split-tests": false,
+  "packages": [
+    {
+      "fixtures": [
+        "trace:no-custom-config",
+        "unions",
+        "pagination",
+        "path-parameters",
+        "oauth-client-credentials-default",
+        "oauth-client-credentials-with-variables",
+        "circular-references",
+        "imdb:output-compiled",
+        "imdb:no-custom-config"
+      ],
+      "packageTotalTime": 562
+    },
+    {
+      "fixtures": [
+        "trace:no-zurg-trace",
+        "property-access",
+        "request-parameters",
+        "extra-properties",
+        "multi-url-environment",
+        "multi-url-environment-no-default",
+        "audiences",
+        "exhaustive:no-optional-properties",
+        "ts-express-casing:no-custom-config",
+        "server-sent-events"
+      ],
+      "packageTotalTime": 553
+    },
+    {
+      "fixtures": [
+        "nullable-optional",
+        "bearer-token-environment-variable",
+        "query-parameters",
+        "license",
+        "custom-auth",
+        "oauth-client-credentials-environment-variables",
+        "cross-package-type-names",
+        "bytes-download",
+        "variables",
+        "public-object",
+        "streaming"
+      ],
+      "packageTotalTime": 559
+    },
+    {
+      "fixtures": [
+        "nullable",
+        "version",
+        "api-wide-base-path",
+        "basic-auth-environment-variables",
+        "literals-unions",
+        "websocket-bearer-auth",
+        "inferred-auth-implicit-no-expiry",
+        "bytes-upload",
+        "unknown",
+        "plain-text",
+        "undiscriminated-unions"
+      ],
+      "packageTotalTime": 552
+    },
+    {
+      "fixtures": [
+        "content-type",
+        "query-parameters-openapi",
+        "accept-header",
+        "errors",
+        "oauth-client-credentials-custom",
+        "validation",
+        "circular-references-advanced",
+        "examples",
+        "idempotency-headers",
+        "imdb:skip-response-validation"
+      ],
+      "packageTotalTime": 571
+    },
+    {
+      "fixtures": [
+        "alias-extends",
+        "client-side-params",
+        "no-environment",
+        "response-property",
+        "websocket-inferred-auth",
+        "enum",
+        "websocket",
+        "ts-inline-types",
+        "imdb:skip-request-validation",
+        "single-url-environment-no-default"
+      ],
+      "packageTotalTime": 571
+    },
+    {
+      "fixtures": [
+        "exhaustive:allow-extra-fields",
+        "version-no-default",
+        "object",
+        "multi-line-docs",
+        "inferred-auth-explicit",
+        "inferred-auth-implicit",
+        "simple-api",
+        "file-upload",
+        "exhaustive:no-custom-config",
+        "ts-express-casing:no-serde-layer"
+      ],
+      "packageTotalTime": 570
+    },
+    {
+      "fixtures": [
+        "extends",
+        "auth-environment-variables",
+        "imdb:validation-status-code",
+        "error-property",
+        "basic-auth",
+        "objects-with-imports",
+        "mixed-file-directory",
+        "file-download",
+        "exhaustive:test-package-path",
+        "server-sent-event-examples"
+      ],
+      "packageTotalTime": 552
+    },
+    {
+      "fixtures": [
+        "query-parameters-openapi-as-objects",
+        "mixed-case:retain-original-casing",
+        "exhaustive:retain-original-casing",
+        "package-yml",
+        "any-auth",
+        "oauth-client-credentials",
+        "empty-clients",
+        "folders",
+        "http-head",
+        "simple-fhir"
+      ],
+      "packageTotalTime": 572
+    },
+    {
+      "fixtures": [
+        "alias",
+        "mixed-case:no-custom-config",
+        "optional",
+        "pagination-custom",
+        "reserved-keywords",
+        "oauth-client-credentials-nested-root",
+        "literal",
+        "exhaustive:union-utils",
+        "single-url-environment-default",
+        "multiple-request-bodies",
+        "streaming-parameter"
+      ],
+      "packageTotalTime": 559
+    },
+    {
+      "fixtures": ["leftovers"],
+      "packageTotalTime": 0
+    }
+  ]
+}

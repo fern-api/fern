@@ -1,0 +1,157 @@
+{
+  "total-test-time": 4563,
+  "split-cutoff-time": 30000,
+  "split-tests": false,
+  "packages": [
+    {
+      "fixtures": [
+        "query-parameters-openapi-as-objects",
+        "errors",
+        "nullable",
+        "inferred-auth-implicit",
+        "basic-auth-environment-variables",
+        "imdb",
+        "reserved-keywords",
+        "http-head",
+        "literal",
+        "enum"
+      ],
+      "packageTotalTime": 471
+    },
+    {
+      "fixtures": [
+        "accept-header",
+        "extends",
+        "circular-references-advanced:no-custom-config",
+        "multi-line-docs",
+        "any-auth",
+        "simple-fhir:no-inheritance-for-extended-models",
+        "server-sent-events",
+        "query-parameters",
+        "websocket-bearer-auth"
+      ],
+      "packageTotalTime": 438
+    },
+    {
+      "fixtures": [
+        "alias",
+        "bytes-upload",
+        "unions:no-inheritance-for-extended-models",
+        "unknown",
+        "circular-references-advanced:no-inheritance-for-extended-models",
+        "streaming",
+        "simple-api",
+        "request-parameters",
+        "literals-unions"
+      ],
+      "packageTotalTime": 437
+    },
+    {
+      "fixtures": [
+        "alias-extends:no-custom-config",
+        "content-type",
+        "circular-references:no-inheritance-for-extended-models",
+        "custom-auth",
+        "optional",
+        "license",
+        "basic-auth",
+        "idempotency-headers",
+        "variables"
+      ],
+      "packageTotalTime": 437
+    },
+    {
+      "fixtures": [
+        "alias-extends:no-inheritance-for-extended-models",
+        "file-download:no-inheritance-for-extended-models",
+        "inferred-auth-explicit",
+        "empty-clients",
+        "package-yml",
+        "multi-url-environment",
+        "circular-references:no-custom-config",
+        "objects-with-imports",
+        "examples",
+        "folders"
+      ],
+      "packageTotalTime": 470
+    },
+    {
+      "fixtures": [
+        "query-parameters-openapi",
+        "oauth-client-credentials",
+        "unions:no-custom-config",
+        "extra-properties",
+        "simple-fhir:no-custom-config",
+        "oauth-client-credentials-environment-variables",
+        "multi-url-environment-no-default",
+        "pagination:no-inheritance-for-extended-models",
+        "mixed-file-directory",
+        "exhaustive:pydantic-v2"
+      ],
+      "packageTotalTime": 467
+    },
+    {
+      "fixtures": [
+        "version",
+        "inferred-auth-implicit-no-expiry",
+        "oauth-client-credentials-default",
+        "plain-text",
+        "file-upload",
+        "server-sent-event-examples",
+        "websocket",
+        "response-property",
+        "pagination-custom",
+        "exhaustive:pydantic-v1"
+      ],
+      "packageTotalTime": 465
+    },
+    {
+      "fixtures": [
+        "version-no-default",
+        "client-side-params",
+        "nullable-optional",
+        "object",
+        "error-property",
+        "oauth-client-credentials-custom",
+        "single-url-environment-default",
+        "single-url-environment-no-default",
+        "audiences",
+        "public-object"
+      ],
+      "packageTotalTime": 471
+    },
+    {
+      "fixtures": [
+        "api-wide-base-path",
+        "bearer-token-environment-variable",
+        "mixed-case",
+        "property-access",
+        "streaming-parameter",
+        "oauth-client-credentials-nested-root",
+        "no-environment",
+        "websocket-inferred-auth",
+        "file-download:no-custom-config",
+        "cross-package-type-names"
+      ],
+      "packageTotalTime": 470
+    },
+    {
+      "fixtures": [
+        "auth-environment-variables",
+        "bytes-download",
+        "multiple-request-bodies",
+        "undiscriminated-unions",
+        "validation",
+        "path-parameters",
+        "pagination:no-custom-config",
+        "oauth-client-credentials-with-variables",
+        "trace"
+      ],
+      "packageTotalTime": 437
+    },
+    {
+      "fixtures": ["leftovers"],
+      "packageTotalTime": 0
+    }
+  ]
+}
