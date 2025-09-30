@@ -216,7 +216,7 @@ reference = "fern-prod"
 
 [[package]]
 name = "fern-fern-generator-cli-sdk"
-version = "0.1.4"
+version = "0.1.5"
 description = ""
 optional = false
 python-versions = ">=3.8,<4.0"
