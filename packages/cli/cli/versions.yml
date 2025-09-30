@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add a `resolve-aliases` config flag to the OpenAPI parser which will inline aliases if possible.
+      type: feat
+  irVersion: 60
+  createdAt: "2025-09-30"
+  version: 0.84.0
+
+- changelogEntry:
+    - summary: |
         Optimized how examples are generated for union types.
       type: fix
   irVersion: 60

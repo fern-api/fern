@@ -101,6 +101,7 @@ export async function loadSingleNamespaceAPIWorkspace({
                     typeDatesAsStrings: definition.settings?.typeDatesAsStrings ?? true,
                     preserveSingleSchemaOneOf: definition.settings?.preserveSingleSchemaOneOf ?? false,
                     inlineAllOfSchemas: definition.settings?.inlineAllOfSchemas ?? false,
+                    resolveAliases: definition.settings?.resolveAliases ?? false,
                     groupMultiApiEnvironments: definition.settings?.groupMultiApiEnvironments ?? false,
                     wrapReferencesToNullableInOptional: definition.settings?.wrapReferencesToNullableInOptional ?? true,
                     coerceOptionalSchemasToNullable: definition.settings?.coerceOptionalSchemasToNullable ?? true
@@ -176,6 +177,7 @@ export async function loadSingleNamespaceAPIWorkspace({
                 typeDatesAsStrings: definition.settings?.typeDatesAsStrings ?? true,
                 preserveSingleSchemaOneOf: definition.settings?.preserveSingleSchemaOneOf ?? false,
                 inlineAllOfSchemas: definition.settings?.inlineAllOfSchemas ?? false,
+                resolveAliases: definition.settings?.resolveAliases ?? false,
                 groupMultiApiEnvironments: definition.settings?.groupMultiApiEnvironments ?? false,
                 wrapReferencesToNullableInOptional: definition.settings?.wrapReferencesToNullableInOptional ?? true,
                 coerceOptionalSchemasToNullable: definition.settings?.coerceOptionalSchemasToNullable ?? true
