@@ -1,14 +1,25 @@
-use seed_exhaustive::{ClientConfig, ExhaustiveClient};
+use seed_exhaustive::{Animal, Cat, ClientConfig, Dog, ExhaustiveClient};
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
-        api_key: Some("<token>".to_string()),
+        base_url: "https://api.fern.com".to_string(),
+        token: Some("<token>".to_string()),
+        ..Default::default()
     };
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
     client
-        .endpoints_union__get_and_return_union(
-            serde_json::json!({"animal":"dog","name":"name","likesToWoof":true}),
+        .endpoints
+        .union_
+        .get_and_return_union(
+            &Animal::Dog {
+                data: Dog {
+                    name: "name".to_string(),
+                    likes_to_woof: true,
+                },
+            },
+            None,
         )
         .await;
 }

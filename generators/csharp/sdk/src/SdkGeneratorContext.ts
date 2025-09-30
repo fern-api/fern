@@ -245,6 +245,66 @@ export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomCon
         return files;
     }
 
+    public getAsyncCoreNamespace(): string {
+        return `${this.getCoreNamespace()}.Async`;
+    }
+
+    public getAsyncApiOptionsClassReference(): ast.ClassReference {
+        return this.csharp.classReference({
+            name: "AsyncApiOptions",
+            namespace: `${this.getAsyncCoreNamespace()}.Models`
+        });
+    }
+
+    public getAsyncApiClassReference(
+        genericType: ast.ClassReference | ast.Type | ast.TypeParameter
+    ): ast.ClassReference {
+        return this.csharp.classReference({
+            name: "AsyncApi",
+            namespace: `${this.getAsyncCoreNamespace()}`,
+            generics: [genericType]
+        });
+    }
+
+    public getQueryBuilderClassReference(): ast.ClassReference {
+        return this.csharp.classReference({
+            name: "Query",
+            namespace: this.getAsyncCoreNamespace()
+        });
+    }
+
+    public getAsyncEventClassReference(
+        genericType?: ast.ClassReference | ast.Type | ast.TypeParameter
+    ): ast.ClassReference {
+        return this.csharp.classReference({
+            name: "Event",
+            namespace: `${this.getAsyncCoreNamespace()}.Events`,
+            generics: genericType ? [genericType] : []
+        });
+    }
+
+    public getAsyncCoreAsIsFiles(): string[] {
+        if (this.hasWebSocketEndpoints) {
+            // recurse thru all the entries in AsIsFiles.WebSocketAsync and create the files from the templates
+            const files: string[] = [];
+
+            async function recurse(name: string, entries: Record<string, string | object>) {
+                for (const [key, entry] of Object.entries(entries)) {
+                    const filename = name + "/" + key;
+                    if (typeof entry === "string") {
+                        files.push(entry);
+                    } else {
+                        await recurse(filename, entry as Record<string, string | object>);
+                    }
+                }
+            }
+            recurse("Async", AsIsFiles.WebSocketAsync);
+            return files;
+        }
+
+        return [];
+    }
+
     public getPublicCoreAsIsFiles(): string[] {
         const files = [AsIsFiles.FileParameter];
         if (this.generateNewAdditionalProperties()) {
@@ -360,12 +420,43 @@ export class SdkGeneratorContext extends BaseCsharpGeneratorContext<SdkCustomCon
      * This method is a interim workaround that recursively checks all
      * subpackages in order to determine if the subpackage has endpoints.
      *
+     * If a child subpackage has a WebSocket endpoint, it will be included in the check.
+     *
      * There may be other cases that this method does not handle (GRPC, etc?)
      */
     public subPackageHasEndpoints(subpackage: Subpackage): boolean {
         return (
             subpackage.hasEndpointsInTree ||
-            subpackage.subpackages.some((pkg) => this.subPackageHasEndpoints(this.getSubpackageOrThrow(pkg)))
+            subpackage.subpackages.some(
+                (pkg) =>
+                    this.subPackageHasEndpoints(this.getSubpackageOrThrow(pkg)) ||
+                    this.subPackageHasWebsocketEndpoints(this.getSubpackageOrThrow(pkg))
+            )
+        );
+    }
+
+    /**
+     * Recursively checks if a subpackage contains WebSocket endpoints.
+     *
+     * @param subpackage - The subpackage to check for WebSocket endpoints.
+     * @returns True if the subpackage has WebSocket endpoints, false otherwise.
+     *
+     * @remarks
+     * This method only returns true if WebSockets are enabled via the `enableWebsockets`
+     * configuration flag. It recursively traverses the subpackage tree to check for:
+     * - Direct WebSocket endpoints in the current subpackage
+     * - WebSocket endpoints in any nested subpackages
+     *
+     * The method will return false if WebSockets are disabled, regardless of whether
+     * the subpackage actually contains WebSocket endpoint definitions.
+     */
+    public subPackageHasWebsocketEndpoints(subpackage: Subpackage): boolean {
+        return (
+            this.enableWebsockets &&
+            (subpackage.websocket != null ||
+                subpackage.subpackages.some((pkg) =>
+                    this.subPackageHasWebsocketEndpoints(this.getSubpackageOrThrow(pkg))
+                ))
         );
     }
 

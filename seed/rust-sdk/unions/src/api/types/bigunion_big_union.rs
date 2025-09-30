@@ -38,10 +38,10 @@ pub enum BigUnion {
         data: NormalSweet,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: chrono::DateTime<chrono::Utc>,
+        created_at: DateTime<Utc>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<chrono::DateTime<chrono::Utc>>,
+        archived_at: Option<DateTime<Utc>>,
     },
 
     ThankfulFactor {
@@ -49,10 +49,10 @@ pub enum BigUnion {
         data: ThankfulFactor,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: chrono::DateTime<chrono::Utc>,
+        created_at: DateTime<Utc>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<chrono::DateTime<chrono::Utc>>,
+        archived_at: Option<DateTime<Utc>>,
     },
 
     JumboEnd {
@@ -60,10 +60,10 @@ pub enum BigUnion {
         data: JumboEnd,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: chrono::DateTime<chrono::Utc>,
+        created_at: DateTime<Utc>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<chrono::DateTime<chrono::Utc>>,
+        archived_at: Option<DateTime<Utc>>,
     },
 
     HastyPain {
@@ -71,10 +71,10 @@ pub enum BigUnion {
         data: HastyPain,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: chrono::DateTime<chrono::Utc>,
+        created_at: DateTime<Utc>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<chrono::DateTime<chrono::Utc>>,
+        archived_at: Option<DateTime<Utc>>,
     },
 
     MistySnow {
@@ -82,10 +82,10 @@ pub enum BigUnion {
         data: MistySnow,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: chrono::DateTime<chrono::Utc>,
+        created_at: DateTime<Utc>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<chrono::DateTime<chrono::Utc>>,
+        archived_at: Option<DateTime<Utc>>,
     },
 
     DistinctFailure {
@@ -93,10 +93,10 @@ pub enum BigUnion {
         data: DistinctFailure,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: chrono::DateTime<chrono::Utc>,
+        created_at: DateTime<Utc>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<chrono::DateTime<chrono::Utc>>,
+        archived_at: Option<DateTime<Utc>>,
     },
 
     PracticalPrinciple {
@@ -104,10 +104,10 @@ pub enum BigUnion {
         data: PracticalPrinciple,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: chrono::DateTime<chrono::Utc>,
+        created_at: DateTime<Utc>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<chrono::DateTime<chrono::Utc>>,
+        archived_at: Option<DateTime<Utc>>,
     },
 
     LimpingStep {
@@ -115,10 +115,10 @@ pub enum BigUnion {
         data: LimpingStep,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: chrono::DateTime<chrono::Utc>,
+        created_at: DateTime<Utc>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<chrono::DateTime<chrono::Utc>>,
+        archived_at: Option<DateTime<Utc>>,
     },
 
     VibrantExcitement {
@@ -126,10 +126,10 @@ pub enum BigUnion {
         data: VibrantExcitement,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: chrono::DateTime<chrono::Utc>,
+        created_at: DateTime<Utc>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<chrono::DateTime<chrono::Utc>>,
+        archived_at: Option<DateTime<Utc>>,
     },
 
     ActiveDiamond {
@@ -137,10 +137,10 @@ pub enum BigUnion {
         data: ActiveDiamond,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: chrono::DateTime<chrono::Utc>,
+        created_at: DateTime<Utc>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<chrono::DateTime<chrono::Utc>>,
+        archived_at: Option<DateTime<Utc>>,
     },
 
     PopularLimit {
@@ -148,10 +148,10 @@ pub enum BigUnion {
         data: PopularLimit,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: chrono::DateTime<chrono::Utc>,
+        created_at: DateTime<Utc>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<chrono::DateTime<chrono::Utc>>,
+        archived_at: Option<DateTime<Utc>>,
     },
 
     FalseMirror {
@@ -159,10 +159,10 @@ pub enum BigUnion {
         data: FalseMirror,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: chrono::DateTime<chrono::Utc>,
+        created_at: DateTime<Utc>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<chrono::DateTime<chrono::Utc>>,
+        archived_at: Option<DateTime<Utc>>,
     },
 
     PrimaryBlock {
@@ -170,10 +170,10 @@ pub enum BigUnion {
         data: PrimaryBlock,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: chrono::DateTime<chrono::Utc>,
+        created_at: DateTime<Utc>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<chrono::DateTime<chrono::Utc>>,
+        archived_at: Option<DateTime<Utc>>,
     },
 
     RotatingRatio {
@@ -181,10 +181,10 @@ pub enum BigUnion {
         data: RotatingRatio,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: chrono::DateTime<chrono::Utc>,
+        created_at: DateTime<Utc>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<chrono::DateTime<chrono::Utc>>,
+        archived_at: Option<DateTime<Utc>>,
     },
 
     ColorfulCover {
@@ -192,10 +192,10 @@ pub enum BigUnion {
         data: ColorfulCover,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: chrono::DateTime<chrono::Utc>,
+        created_at: DateTime<Utc>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<chrono::DateTime<chrono::Utc>>,
+        archived_at: Option<DateTime<Utc>>,
     },
 
     DisloyalValue {
@@ -203,10 +203,10 @@ pub enum BigUnion {
         data: DisloyalValue,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: chrono::DateTime<chrono::Utc>,
+        created_at: DateTime<Utc>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<chrono::DateTime<chrono::Utc>>,
+        archived_at: Option<DateTime<Utc>>,
     },
 
     GruesomeCoach {
@@ -214,10 +214,10 @@ pub enum BigUnion {
         data: GruesomeCoach,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: chrono::DateTime<chrono::Utc>,
+        created_at: DateTime<Utc>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<chrono::DateTime<chrono::Utc>>,
+        archived_at: Option<DateTime<Utc>>,
     },
 
     TotalWork {
@@ -225,10 +225,10 @@ pub enum BigUnion {
         data: TotalWork,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: chrono::DateTime<chrono::Utc>,
+        created_at: DateTime<Utc>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<chrono::DateTime<chrono::Utc>>,
+        archived_at: Option<DateTime<Utc>>,
     },
 
     HarmoniousPlay {
@@ -236,10 +236,10 @@ pub enum BigUnion {
         data: HarmoniousPlay,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: chrono::DateTime<chrono::Utc>,
+        created_at: DateTime<Utc>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<chrono::DateTime<chrono::Utc>>,
+        archived_at: Option<DateTime<Utc>>,
     },
 
     UniqueStress {
@@ -247,10 +247,10 @@ pub enum BigUnion {
         data: UniqueStress,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: chrono::DateTime<chrono::Utc>,
+        created_at: DateTime<Utc>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<chrono::DateTime<chrono::Utc>>,
+        archived_at: Option<DateTime<Utc>>,
     },
 
     UnwillingSmoke {
@@ -258,10 +258,10 @@ pub enum BigUnion {
         data: UnwillingSmoke,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: chrono::DateTime<chrono::Utc>,
+        created_at: DateTime<Utc>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<chrono::DateTime<chrono::Utc>>,
+        archived_at: Option<DateTime<Utc>>,
     },
 
     FrozenSleep {
@@ -269,10 +269,10 @@ pub enum BigUnion {
         data: FrozenSleep,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: chrono::DateTime<chrono::Utc>,
+        created_at: DateTime<Utc>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<chrono::DateTime<chrono::Utc>>,
+        archived_at: Option<DateTime<Utc>>,
     },
 
     DiligentDeal {
@@ -280,10 +280,10 @@ pub enum BigUnion {
         data: DiligentDeal,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: chrono::DateTime<chrono::Utc>,
+        created_at: DateTime<Utc>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<chrono::DateTime<chrono::Utc>>,
+        archived_at: Option<DateTime<Utc>>,
     },
 
     AttractiveScript {
@@ -291,10 +291,10 @@ pub enum BigUnion {
         data: AttractiveScript,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: chrono::DateTime<chrono::Utc>,
+        created_at: DateTime<Utc>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<chrono::DateTime<chrono::Utc>>,
+        archived_at: Option<DateTime<Utc>>,
     },
 
     HoarseMouse {
@@ -302,10 +302,10 @@ pub enum BigUnion {
         data: HoarseMouse,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: chrono::DateTime<chrono::Utc>,
+        created_at: DateTime<Utc>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<chrono::DateTime<chrono::Utc>>,
+        archived_at: Option<DateTime<Utc>>,
     },
 
     CircularCard {
@@ -313,10 +313,10 @@ pub enum BigUnion {
         data: CircularCard,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: chrono::DateTime<chrono::Utc>,
+        created_at: DateTime<Utc>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<chrono::DateTime<chrono::Utc>>,
+        archived_at: Option<DateTime<Utc>>,
     },
 
     PotableBad {
@@ -324,10 +324,10 @@ pub enum BigUnion {
         data: PotableBad,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: chrono::DateTime<chrono::Utc>,
+        created_at: DateTime<Utc>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<chrono::DateTime<chrono::Utc>>,
+        archived_at: Option<DateTime<Utc>>,
     },
 
     TriangularRepair {
@@ -335,10 +335,10 @@ pub enum BigUnion {
         data: TriangularRepair,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: chrono::DateTime<chrono::Utc>,
+        created_at: DateTime<Utc>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<chrono::DateTime<chrono::Utc>>,
+        archived_at: Option<DateTime<Utc>>,
     },
 
     GaseousRoad {
@@ -346,10 +346,10 @@ pub enum BigUnion {
         data: GaseousRoad,
         id: String,
         #[serde(rename = "created-at")]
-        created_at: chrono::DateTime<chrono::Utc>,
+        created_at: DateTime<Utc>,
         #[serde(rename = "archived-at")]
         #[serde(skip_serializing_if = "Option::is_none")]
-        archived_at: Option<chrono::DateTime<chrono::Utc>>,
+        archived_at: Option<DateTime<Utc>>,
     },
 }
 
@@ -388,7 +388,7 @@ impl BigUnion {
         }
     }
 
-    pub fn get_created_at(&self) -> &chrono::DateTime<chrono::Utc> {
+    pub fn get_created_at(&self) -> &DateTime<Utc> {
         match self {
             Self::NormalSweet { created_at, .. } => created_at,
             Self::ThankfulFactor { created_at, .. } => created_at,
@@ -422,7 +422,7 @@ impl BigUnion {
         }
     }
 
-    pub fn get_archived_at(&self) -> &Option<chrono::DateTime<chrono::Utc>> {
+    pub fn get_archived_at(&self) -> &Option<DateTime<Utc>> {
         match self {
             Self::NormalSweet { archived_at, .. } => archived_at,
             Self::ThankfulFactor { archived_at, .. } => archived_at,

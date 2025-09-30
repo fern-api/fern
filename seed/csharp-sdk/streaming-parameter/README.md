@@ -27,7 +27,7 @@ Instantiate and use the client with the following:
 using SeedStreaming;
 
 var client = new SeedStreamingClient();
-await client.Dummy.GenerateAsync(new GenerateRequest { Stream = false, NumEvents = 5 });
+client.Dummy.GenerateAsync(new GenerateRequest { Stream = false, NumEvents = 5 });
 ```
 
 ## Exception Handling

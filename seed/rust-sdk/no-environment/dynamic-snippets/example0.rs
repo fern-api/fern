@@ -3,8 +3,10 @@ use seed_no_environment::{ClientConfig, NoEnvironmentClient};
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
-        api_key: Some("<token>".to_string()),
+        base_url: "https://api.fern.com".to_string(),
+        token: Some("<token>".to_string()),
+        ..Default::default()
     };
     let client = NoEnvironmentClient::new(config).expect("Failed to build client");
-    client.dummy_get_dummy().await;
+    client.dummy.get_dummy(None).await;
 }

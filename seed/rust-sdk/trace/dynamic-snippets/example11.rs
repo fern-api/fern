@@ -1,14 +1,12 @@
-use seed_trace::{ClientConfig, GetAttemptedMigrationsRequest, TraceClient};
+use seed_trace::{ClientConfig, TraceClient};
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
-        api_key: Some("<token>".to_string()),
+        base_url: "https://api.fern.com".to_string(),
+        token: Some("<token>".to_string()),
+        ..Default::default()
     };
     let client = TraceClient::new(config).expect("Failed to build client");
-    client
-        .migration_get_attempted_migrations(GetAttemptedMigrationsRequest {
-            admin_key_header: "admin-key-header",
-        })
-        .await;
+    client.migration.get_attempted_migrations(None).await;
 }

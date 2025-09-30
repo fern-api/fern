@@ -23,6 +23,6 @@ export declare namespace OptionalMergePatchRequest {
         optionalString?: string | null;
         optionalInteger?: number | null;
         optionalBoolean?: boolean | null;
-        nullableString: string | null;
+        nullableString?: string | null;
     }
 }

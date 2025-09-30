@@ -681,7 +681,7 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": "f8674e52",
+                                "id": "b30fc2f1",
                                 "name": null,
                                 "url": "/telemetry",
                                 "rootPathParameters": [],
@@ -689,7 +689,64 @@
                                 "servicePathParameters": [],
                                 "endpointHeaders": [],
                                 "serviceHeaders": [],
-                                "queryParameters": [],
+                                "queryParameters": [
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "anonymize",
+                                                "camelCase": {
+                                                    "unsafeName": "anonymize",
+                                                    "safeName": "anonymize"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "anonymize",
+                                                    "safeName": "anonymize"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "ANONYMIZE",
+                                                    "safeName": "ANONYMIZE"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Anonymize",
+                                                    "safeName": "Anonymize"
+                                                }
+                                            },
+                                            "wireValue": "anonymize"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "container",
+                                                "container": {
+                                                    "type": "optional",
+                                                    "optional": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "boolean",
+                                                                "boolean": true
+                                                            }
+                                                        },
+                                                        "jsonExample": true
+                                                    },
+                                                    "valueType": {
+                                                        "_type": "primitive",
+                                                        "primitive": {
+                                                            "v1": "BOOLEAN",
+                                                            "v2": {
+                                                                "type": "boolean",
+                                                                "default": null
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": true
+                                        },
+                                        "shape": {
+                                            "type": "single"
+                                        }
+                                    }
+                                ],
                                 "request": null,
                                 "response": {
                                     "type": "ok",
@@ -2043,7 +2100,8 @@
                                 "value": "FLOAT"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -2075,7 +2133,8 @@
                                 "value": "STRING"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -2107,7 +2166,8 @@
                                 "value": "type_:TelemetryData"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -2171,7 +2231,8 @@
                                 "value": "FLOAT"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -2203,7 +2264,8 @@
                                 "value": "FLOAT"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -2235,7 +2297,8 @@
                                 "value": "FLOAT"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -2356,7 +2419,8 @@
                                     "value": "BOOLEAN"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ],
                     "headers": [],
@@ -2374,6 +2438,7 @@
         },
         "pathParameters": [],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,

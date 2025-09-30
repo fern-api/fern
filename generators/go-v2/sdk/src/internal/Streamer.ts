@@ -145,12 +145,14 @@ export class Streamer {
                 value: go.TypeInstantiation.reference(args.request)
             });
         }
-        if (args.errorCodes != null) {
-            arguments_.push({
-                name: "ErrorDecoder",
-                value: go.TypeInstantiation.reference(this.context.callNewErrorDecoder([args.errorCodes]))
-            });
-        }
+        arguments_.push({
+            name: "ErrorDecoder",
+            value: go.TypeInstantiation.reference(
+                this.context.callNewErrorDecoder([
+                    go.TypeInstantiation.reference(this.context.getErrorCodesVariableReference())
+                ])
+            )
+        });
         return go.codeblock((writer) => {
             writer.writeNode(
                 go.invokeMethod({

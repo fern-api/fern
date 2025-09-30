@@ -69,11 +69,12 @@ GET request with custom api key
 <dd>
 
 ```go
+request := &fern.HeaderAuthRequest{
+        XEndpointHeader: "X-Endpoint-Header",
+    }
 client.Service.GetWithHeader(
         context.TODO(),
-        &fern.HeaderAuthRequest{
-            XEndpointHeader: "X-Endpoint-Header",
-        },
+        request,
     )
 }
 ```

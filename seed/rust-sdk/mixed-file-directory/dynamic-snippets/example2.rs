@@ -1,10 +1,15 @@
-use seed_mixed_file_directory::{ClientConfig, ListUserEventsRequest, MixedFileDirectoryClient};
+use seed_mixed_file_directory::{ClientConfig, ListEventsQueryRequest, MixedFileDirectoryClient};
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        base_url: "https://api.fern.com".to_string(),
+        ..Default::default()
+    };
     let client = MixedFileDirectoryClient::new(config).expect("Failed to build client");
     client
-        .user_events_list_events(ListUserEventsRequest { limit: Some(1) })
+        .user
+        .events
+        .list_events(&ListEventsQueryRequest { limit: Some(1) }, None)
         .await;
 }

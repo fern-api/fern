@@ -17,22 +17,57 @@ package example
 
 import (
     client "github.com/query-parameters-openapi/fern/client"
-    context "context"
     fern "github.com/query-parameters-openapi/fern"
+    context "context"
 )
 
 func do() {
     client := client.NewClient()
-    client.Search(
-        context.TODO(),
-        &fern.SearchRequest{
-            Limit: 1,
-            Id: "id",
-            Date: "date",
-            Deadline: fern.MustParseDateTime(
+    request := &fern.SearchRequest{
+        Limit: 1,
+        Id: "id",
+        Date: "date",
+        Deadline: fern.MustParseDateTime(
+            "2024-01-15T09:30:00Z",
+        ),
+        Bytes: "bytes",
+        User: &fern.User{
+            Name: fern.String(
+                "name",
+            ),
+            Tags: []string{
+                "tags",
+                "tags",
+            },
+        },
+        UserList: []*fern.User{
+            &fern.User{
+                Name: fern.String(
+                    "name",
+                ),
+                Tags: []string{
+                    "tags",
+                    "tags",
+                },
+            },
+        },
+        OptionalDeadline: fern.Time(
+            fern.MustParseDateTime(
                 "2024-01-15T09:30:00Z",
             ),
-            Bytes: "bytes",
+        ),
+        KeyValue: map[string]*string{
+            "keyValue": fern.String(
+                "keyValue",
+            ),
+        },
+        OptionalString: fern.String(
+            "optionalString",
+        ),
+        NestedUser: &fern.NestedUser{
+            Name: fern.String(
+                "name",
+            ),
             User: &fern.User{
                 Name: fern.String(
                     "name",
@@ -42,90 +77,56 @@ func do() {
                     "tags",
                 },
             },
-            UserList: []*fern.User{
-                &fern.User{
-                    Name: fern.String(
-                        "name",
-                    ),
-                    Tags: []string{
-                        "tags",
-                        "tags",
-                    },
-                },
-            },
-            OptionalDeadline: fern.Time(
-                fern.MustParseDateTime(
-                    "2024-01-15T09:30:00Z",
-                ),
+        },
+        OptionalUser: &fern.User{
+            Name: fern.String(
+                "name",
             ),
-            KeyValue: map[string]*string{
-                "keyValue": fern.String(
-                    "keyValue",
-                ),
+            Tags: []string{
+                "tags",
+                "tags",
             },
-            OptionalString: fern.String(
-                "optionalString",
-            ),
-            NestedUser: &fern.NestedUser{
-                Name: fern.String(
-                    "name",
-                ),
-                User: &fern.User{
-                    Name: fern.String(
-                        "name",
-                    ),
-                    Tags: []string{
-                        "tags",
-                        "tags",
-                    },
-                },
-            },
-            OptionalUser: &fern.User{
+        },
+        ExcludeUser: []*fern.User{
+            &fern.User{
                 Name: fern.String(
                     "name",
                 ),
                 Tags: []string{
                     "tags",
                     "tags",
-                },
-            },
-            ExcludeUser: []*fern.User{
-                &fern.User{
-                    Name: fern.String(
-                        "name",
-                    ),
-                    Tags: []string{
-                        "tags",
-                        "tags",
-                    },
-                },
-            },
-            Filter: []*string{
-                fern.String(
-                    "filter",
-                ),
-            },
-            Neighbor: &fern.User{
-                Name: fern.String(
-                    "name",
-                ),
-                Tags: []string{
-                    "tags",
-                    "tags",
-                },
-            },
-            NeighborRequired: &fern.SearchRequestNeighborRequired{
-                User: &fern.User{
-                    Name: fern.String(
-                        "name",
-                    ),
-                    Tags: []string{
-                        "tags",
-                        "tags",
-                    },
                 },
             },
         },
+        Filter: []*string{
+            fern.String(
+                "filter",
+            ),
+        },
+        Neighbor: &fern.User{
+            Name: fern.String(
+                "name",
+            ),
+            Tags: []string{
+                "tags",
+                "tags",
+            },
+        },
+        NeighborRequired: &fern.SearchRequestNeighborRequired{
+            User: &fern.User{
+                Name: fern.String(
+                    "name",
+                ),
+                Tags: []string{
+                    "tags",
+                    "tags",
+                },
+            },
+        },
+    }
+    client.Search(
+        context.TODO(),
+        request,
     )
 }
 ```
@@ -214,6 +215,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
 - [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
 
+If the `Retry-After` header is present in the response, the SDK will prioritize respecting its value exactly
+over the default exponential backoff.
+
 Use the `option.WithMaxAttempts` option to configure this behavior for the entire client or an individual request:
 
 ```go
@@ -236,6 +240,28 @@ ctx, cancel := context.WithTimeout(ctx, time.Second)
 defer cancel()
 
 response, err := client.Search(ctx, ...)
+```
+
+### Explicit Null
+
+If you want to send the explicit `null` JSON value through an optional parameter, you can use the setters\
+that come with every object. Calling a setter method for a property will flip a bit in the `explicitFields`
+bitfield for that setter's object; during serialization, any property with a flipped bit will have its
+omittable status stripped, so zero or `nil` values will be sent explicitly rather than omitted altogether:
+
+```go
+type ExampleRequest struct {
+    // An optional string parameter.
+    Name *string `json:"name,omitempty" url:"-"`
+
+    // Private bitmask of fields set to an explicit value and therefore not to be omitted
+    explicitFields *big.Int `json:"-" url:"-"`
+}
+
+request := &ExampleRequest{}
+request.SetName(nil)
+
+response, err := client.Search(ctx, request, ...)
 ```
 
 ## Contributing

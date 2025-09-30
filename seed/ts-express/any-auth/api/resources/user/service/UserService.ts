@@ -17,6 +17,15 @@ export interface UserServiceMethods {
         },
         next: express.NextFunction,
     ): void | Promise<void>;
+    getAdmins(
+        req: express.Request<never, SeedAnyAuth.User[], never, never>,
+        res: {
+            send: (responseBody: SeedAnyAuth.User[]) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
 }
 
 export class UserService {
@@ -64,6 +73,40 @@ export class UserService {
                 if (error instanceof errors.SeedAnyAuthError) {
                     console.warn(
                         `Endpoint 'get' unexpectedly threw ${error.constructor.name}.` +
+                            ` If this was intentional, please add ${error.constructor.name} to` +
+                            " the endpoint's errors list in your Fern Definition.",
+                    );
+                    await error.send(res);
+                } else {
+                    res.status(500).json("Internal Server Error");
+                }
+                next(error);
+            }
+        });
+        this.router.get("/admins", async (req, res, next) => {
+            try {
+                await this.methods.getAdmins(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                serializers.user.getAdmins.Response.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                }),
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
+                    },
+                    next,
+                );
+                if (!res.writableEnded) {
+                    next();
+                }
+            } catch (error) {
+                if (error instanceof errors.SeedAnyAuthError) {
+                    console.warn(
+                        `Endpoint 'getAdmins' unexpectedly threw ${error.constructor.name}.` +
                             ` If this was intentional, please add ${error.constructor.name} to` +
                             " the endpoint's errors list in your Fern Definition.",
                     );

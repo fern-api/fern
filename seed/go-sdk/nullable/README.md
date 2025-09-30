@@ -17,46 +17,47 @@ package example
 
 import (
     client "github.com/nullable/fern/client"
-    context "context"
     fern "github.com/nullable/fern"
+    context "context"
 )
 
 func do() {
     client := client.NewClient()
-    client.Nullable.CreateUser(
-        context.TODO(),
-        &fern.CreateUserRequest{
-            Username: "username",
-            Tags: []string{
-                "tags",
-                "tags",
-            },
-            Metadata: &fern.Metadata{
-                CreatedAt: fern.MustParseDateTime(
-                    "2024-01-15T09:30:00Z",
-                ),
-                UpdatedAt: fern.MustParseDateTime(
-                    "2024-01-15T09:30:00Z",
-                ),
-                Avatar: fern.String(
-                    "avatar",
-                ),
-                Activated: fern.Bool(
-                    true,
-                ),
-                Status: &fern.Status{
-                    Active: "active",
-                },
-                Values: map[string]*string{
-                    "values": fern.String(
-                        "values",
-                    ),
-                },
-            },
+    request := &fern.CreateUserRequest{
+        Username: "username",
+        Tags: []string{
+            "tags",
+            "tags",
+        },
+        Metadata: &fern.Metadata{
+            CreatedAt: fern.MustParseDateTime(
+                "2024-01-15T09:30:00Z",
+            ),
+            UpdatedAt: fern.MustParseDateTime(
+                "2024-01-15T09:30:00Z",
+            ),
             Avatar: fern.String(
                 "avatar",
             ),
+            Activated: fern.Bool(
+                true,
+            ),
+            Status: &fern.Status{
+                Active: "active",
+            },
+            Values: map[string]*string{
+                "values": fern.String(
+                    "values",
+                ),
+            },
         },
+        Avatar: fern.String(
+            "avatar",
+        ),
+    }
+    client.Nullable.CreateUser(
+        context.TODO(),
+        request,
     )
 }
 ```
@@ -145,6 +146,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
 - [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
 
+If the `Retry-After` header is present in the response, the SDK will prioritize respecting its value exactly
+over the default exponential backoff.
+
 Use the `option.WithMaxAttempts` option to configure this behavior for the entire client or an individual request:
 
 ```go
@@ -167,6 +171,28 @@ ctx, cancel := context.WithTimeout(ctx, time.Second)
 defer cancel()
 
 response, err := client.Nullable.CreateUser(ctx, ...)
+```
+
+### Explicit Null
+
+If you want to send the explicit `null` JSON value through an optional parameter, you can use the setters\
+that come with every object. Calling a setter method for a property will flip a bit in the `explicitFields`
+bitfield for that setter's object; during serialization, any property with a flipped bit will have its
+omittable status stripped, so zero or `nil` values will be sent explicitly rather than omitted altogether:
+
+```go
+type ExampleRequest struct {
+    // An optional string parameter.
+    Name *string `json:"name,omitempty" url:"-"`
+
+    // Private bitmask of fields set to an explicit value and therefore not to be omitted
+    explicitFields *big.Int `json:"-" url:"-"`
+}
+
+request := &ExampleRequest{}
+request.SetName(nil)
+
+response, err := client.Nullable.CreateUser(ctx, request, ...)
 ```
 
 ## Contributing

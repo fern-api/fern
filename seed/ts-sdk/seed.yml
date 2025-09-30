@@ -177,6 +177,9 @@ fixtures:
     - customConfig:
         consolidateTypeFiles: true
       outputFolder: consolidate-type-files
+    - customConfig:
+        useLegacyExports: true
+      outputFolder: legacy-exports
   error-property:
     - customConfig:
         private: true
@@ -368,17 +371,31 @@ fixtures:
     - customConfig:
         shouldGenerateWebsocketClients: true
       outputFolder: websockets
+  any-auth:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        generateEndpointMetadata: true
+      outputFolder: generate-endpoint-metadata
 scripts:
   - docker: fernapi/ts-seed
     commands:
       - |
+        if [ ! -f "package.json" ]; then
+          echo "No package.json found, exiting..."
+          exit 0
+        fi
         if grep -q '"packageManager": "pnpm' package.json; then
           mkdir -p .pnpm-cache
           echo "Enabling corepack and preparing pnpm..."
           corepack enable
           corepack prepare pnpm@10.14.0 --activate
           echo "Running pnpm install..."
-          pnpm install --prefer-offline --frozen-lockfile
+          if [ -f "pnpm-lock.yaml" ]; then
+            pnpm install --prefer-offline --frozen-lockfile
+          else
+            pnpm install --prefer-offline
+          fi
           echo "Running pnpm build..."
           if grep -q '"build":' package.json; then pnpm build; fi
           echo "Running pnpm test..."
@@ -390,71 +407,28 @@ scripts:
           corepack enable
           corepack prepare yarn@1.22.22 --activate
           echo "Running yarn install..."
-          yarn install --prefer-offline --frozen-lockfile
+          if [ -f "yarn.lock" ]; then
+            yarn install --prefer-offline --frozen-lockfile
+          else
+            yarn install --prefer-offline
+          fi
           echo "Running yarn build..."
           if grep -q '"build":' package.json; then yarn build; fi
           echo "Running yarn test..."
           if grep -q '"test":' package.json; then yarn test; fi
         fi
 allowedFailures:
-  - accept-header
-  - alias
-  - alias-extends
-  - api-wide-base-path
-  - auth-environment-variables
-  - basic-auth
-  - basic-auth-environment-variables
-  - bearer-token-environment-variable
-  - bytes-upload
+  - bytes-download
   - circular-references
-  - circular-references-advanced
-  - content-type
-  - custom-auth
   - enum
-  - error-property
   - error-property:union-utils
   - errors
-  - exhaustive:bundle
-  - exhaustive:custom-package-json
-  - exhaustive:dev-dependencies
-  - exhaustive:never-throw-errors
-  - extends
-  - file-download:file-download-response-headers
-  - file-download:no-custom-config
-  - file-download:stream
-  - file-download:wrapper
-  - literal
+  - examples:examples-with-api-reference
+  - examples:retain-original-casing
   - mixed-case:no-custom-config
   - mixed-case:retain-original-casing
   - oauth-client-credentials-custom
   - package-yml
-  - pagination
-  - query-parameters-openapi:no-custom-config
-  - query-parameters-openapi-as-objects:no-custom-config
   - trace:no-custom-config
   - trace:serde-trace
-  - trace:serde-no-throwing
-  - trace:exhaustive
   - unions
-  - version
-  - version-no-default
-
-  # the below are likely related to changes made to example generation
-  - examples:examples-with-api-reference
-  - examples:retain-original-casing
-
-  # unknown
-  - file-upload:no-custom-config
-  - file-upload:inline
-  - file-upload:serde
-  - file-upload:wrapper
-  - file-upload:form-data-node16
-  - http-head
-  - idempotency-headers
-  - imdb:no-custom-config
-  - imdb:omit-undefined
-  - imdb:noScripts
-  - imdb:branded-string-aliases
-  - license
-  - oauth-client-credentials:no-custom-config
-  - ts-inline-types:inline

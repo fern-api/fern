@@ -12,16 +12,51 @@
 <dd>
 
 ```go
-client.Search(
-        context.TODO(),
-        &fern.SearchRequest{
-            Limit: 1,
-            Id: "id",
-            Date: "date",
-            Deadline: fern.MustParseDateTime(
+request := &fern.SearchRequest{
+        Limit: 1,
+        Id: "id",
+        Date: "date",
+        Deadline: fern.MustParseDateTime(
+            "2024-01-15T09:30:00Z",
+        ),
+        Bytes: "bytes",
+        User: &fern.User{
+            Name: fern.String(
+                "name",
+            ),
+            Tags: []string{
+                "tags",
+                "tags",
+            },
+        },
+        UserList: []*fern.User{
+            &fern.User{
+                Name: fern.String(
+                    "name",
+                ),
+                Tags: []string{
+                    "tags",
+                    "tags",
+                },
+            },
+        },
+        OptionalDeadline: fern.Time(
+            fern.MustParseDateTime(
                 "2024-01-15T09:30:00Z",
             ),
-            Bytes: "bytes",
+        ),
+        KeyValue: map[string]*string{
+            "keyValue": fern.String(
+                "keyValue",
+            ),
+        },
+        OptionalString: fern.String(
+            "optionalString",
+        ),
+        NestedUser: &fern.NestedUser{
+            Name: fern.String(
+                "name",
+            ),
             User: &fern.User{
                 Name: fern.String(
                     "name",
@@ -31,45 +66,18 @@ client.Search(
                     "tags",
                 },
             },
-            UserList: []*fern.User{
-                &fern.User{
-                    Name: fern.String(
-                        "name",
-                    ),
-                    Tags: []string{
-                        "tags",
-                        "tags",
-                    },
-                },
-            },
-            OptionalDeadline: fern.Time(
-                fern.MustParseDateTime(
-                    "2024-01-15T09:30:00Z",
-                ),
+        },
+        OptionalUser: &fern.User{
+            Name: fern.String(
+                "name",
             ),
-            KeyValue: map[string]*string{
-                "keyValue": fern.String(
-                    "keyValue",
-                ),
+            Tags: []string{
+                "tags",
+                "tags",
             },
-            OptionalString: fern.String(
-                "optionalString",
-            ),
-            NestedUser: &fern.NestedUser{
-                Name: fern.String(
-                    "name",
-                ),
-                User: &fern.User{
-                    Name: fern.String(
-                        "name",
-                    ),
-                    Tags: []string{
-                        "tags",
-                        "tags",
-                    },
-                },
-            },
-            OptionalUser: &fern.User{
+        },
+        ExcludeUser: []*fern.User{
+            &fern.User{
                 Name: fern.String(
                     "name",
                 ),
@@ -78,45 +86,38 @@ client.Search(
                     "tags",
                 },
             },
-            ExcludeUser: []*fern.User{
-                &fern.User{
-                    Name: fern.String(
-                        "name",
-                    ),
-                    Tags: []string{
-                        "tags",
-                        "tags",
-                    },
-                },
-            },
-            Filter: []*string{
-                fern.String(
-                    "filter",
+        },
+        Filter: []*string{
+            fern.String(
+                "filter",
+            ),
+        },
+        Neighbor: &fern.SearchRequestNeighbor{
+            User: &fern.User{
+                Name: fern.String(
+                    "name",
                 ),
-            },
-            Neighbor: &fern.SearchRequestNeighbor{
-                User: &fern.User{
-                    Name: fern.String(
-                        "name",
-                    ),
-                    Tags: []string{
-                        "tags",
-                        "tags",
-                    },
-                },
-            },
-            NeighborRequired: &fern.SearchRequestNeighborRequired{
-                User: &fern.User{
-                    Name: fern.String(
-                        "name",
-                    ),
-                    Tags: []string{
-                        "tags",
-                        "tags",
-                    },
+                Tags: []string{
+                    "tags",
+                    "tags",
                 },
             },
         },
+        NeighborRequired: &fern.SearchRequestNeighborRequired{
+            User: &fern.User{
+                Name: fern.String(
+                    "name",
+                ),
+                Tags: []string{
+                    "tags",
+                    "tags",
+                },
+            },
+        },
+    }
+client.Search(
+        context.TODO(),
+        request,
     )
 }
 ```

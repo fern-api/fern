@@ -1,14 +1,20 @@
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
+import { BaseRustCustomConfigSchema } from "@fern-api/rust-codegen";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { AsIsFileDefinition } from "../AsIs";
-import { BaseRustCustomConfigSchema, RustConfigurationManager } from "../config";
 import { RustProject } from "../project";
+import {
+    convertPascalToSnakeCase,
+    escapeRustKeyword,
+    escapeRustReservedType,
+    generateDefaultCrateName,
+    validateAndSanitizeCrateName
+} from "../utils";
 
 export abstract class AbstractRustGeneratorContext<
     CustomConfig extends BaseRustCustomConfigSchema
 > extends AbstractGeneratorContext {
     public readonly project: RustProject;
-    public readonly configManager: RustConfigurationManager<CustomConfig>;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -17,29 +23,71 @@ export abstract class AbstractRustGeneratorContext<
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(config, generatorNotificationService);
-        this.configManager = new RustConfigurationManager(customConfig, this);
         this.project = new RustProject({
             context: this,
-            packageName: this.configManager.getPackageName(),
-            packageVersion: this.configManager.getPackageVersion()
+            crateName: this.getCrateName(),
+            crateVersion: this.getCrateVersion(),
+            clientClassName: this.getClientName()
         });
+    }
+
+    // =====================================
+    // Configuration Management Methods
+    // =====================================
+
+    /**
+     * Get extra dependencies with empty object fallback
+     */
+    public getExtraDependencies(): Record<string, string> {
+        return this.customConfig.extraDependencies ?? {};
+    }
+
+    /**
+     * Get extra dev dependencies with empty object fallback
+     */
+    public getExtraDevDependencies(): Record<string, string> {
+        return this.customConfig.extraDevDependencies ?? {};
+    }
+
+    /**
+     * Get the crate name with fallback to generated default
+     */
+    public getCrateName(): string {
+        const crateName = this.customConfig.crateName ?? this.generateDefaultCrateName();
+        return validateAndSanitizeCrateName(crateName);
+    }
+
+    /**
+     * Get the crate version with fallback to default
+     */
+    public getCrateVersion(): string {
+        return this.customConfig.crateVersion ?? "0.1.0";
+    }
+
+    /**
+     * Get the client class name with fallback to generated default
+     */
+    public getClientName(): string {
+        return this.customConfig.clientClassName ?? `${this.ir.apiName.pascalCase.safeName}Client`;
     }
 
     /**
      * Escapes Rust keywords by prefixing them with 'r#'
-     * @deprecated Use configManager.escapeRustKeyword() instead
      */
     public escapeRustKeyword(name: string): string {
-        return this.configManager.escapeRustKeyword(name);
+        return escapeRustKeyword(name);
     }
 
     /**
      * Escapes Rust reserved types by prefixing them with 'r#'
-     * @deprecated Use configManager.escapeRustReservedType() instead
      */
     public escapeRustReservedType(name: string): string {
-        return this.configManager.escapeRustReservedType(name);
+        return escapeRustReservedType(name);
     }
+
+    // =====================================
+    // Type and Module Path Methods
+    // =====================================
 
     /**
      * Get the correct module path for a type using fernFilepath + type name
@@ -129,10 +177,7 @@ export abstract class AbstractRustGeneratorContext<
      * Converts PascalCase to snake_case consistently across the generator
      */
     private convertPascalToSnakeCase(pascalCase: string): string {
-        return pascalCase
-            .replace(/([A-Z])/g, "_$1")
-            .toLowerCase()
-            .replace(/^_/, "");
+        return convertPascalToSnakeCase(pascalCase);
     }
 
     /**
@@ -171,4 +216,17 @@ export abstract class AbstractRustGeneratorContext<
      * Get the core AsIs template files for this generator type
      */
     public abstract getCoreAsIsFiles(): AsIsFileDefinition[];
+
+    // =====================================
+    // Private Helper Methods
+    // =====================================
+
+    /**
+     * Generate default package name from organization and API name
+     */
+    private generateDefaultCrateName(): string {
+        const orgName = this.config.organization;
+        const apiName = this.ir.apiName.snakeCase.unsafeName;
+        return generateDefaultCrateName(orgName, apiName);
+    }
 }

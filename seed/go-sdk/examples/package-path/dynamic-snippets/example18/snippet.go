@@ -3,8 +3,8 @@ package example
 import (
     client "github.com/examples/fern/pleaseinhere/client"
     option "github.com/examples/fern/pleaseinhere/option"
-    context "context"
     pleaseinhere "github.com/examples/fern/pleaseinhere"
+    context "context"
 )
 
 func do() {
@@ -16,18 +16,19 @@ func do() {
             "<token>",
         ),
     )
+    request := &pleaseinhere.GetMetadataRequest{
+        Shallow: pleaseinhere.Bool(
+            true,
+        ),
+        Tag: []*string{
+            pleaseinhere.String(
+                "tag",
+            ),
+        },
+        XApiVersion: "X-API-Version",
+    }
     client.Service.GetMetadata(
         context.TODO(),
-        &pleaseinhere.GetMetadataRequest{
-            Shallow: pleaseinhere.Bool(
-                true,
-            ),
-            Tag: []*string{
-                pleaseinhere.String(
-                    "tag",
-                ),
-            },
-            XApiVersion: "X-API-Version",
-        },
+        request,
     )
 }

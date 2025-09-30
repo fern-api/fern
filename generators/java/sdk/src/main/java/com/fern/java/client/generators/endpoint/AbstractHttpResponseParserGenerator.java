@@ -217,7 +217,9 @@ public abstract class AbstractHttpResponseParserGenerator {
                             @Override
                             public TypeName visitCursor(CursorPagination cursor) {
                                 SnippetAndResultType resultSnippet = getNestedPropertySnippet(
-                                        cursor.getResults().getPropertyPath(),
+                                        cursor.getResults().getPropertyPath().map(path -> path.stream()
+                                                .map(PropertyPathItem::getName)
+                                                .collect(Collectors.toList())),
                                         cursor.getResults().getProperty(),
                                         body.getResponseBodyType());
                                 com.fern.ir.model.types.ContainerType resultContainerType = resultSnippet
@@ -237,7 +239,9 @@ public abstract class AbstractHttpResponseParserGenerator {
                             @Override
                             public TypeName visitOffset(OffsetPagination offset) {
                                 SnippetAndResultType resultSnippet = getNestedPropertySnippet(
-                                        offset.getResults().getPropertyPath(),
+                                        offset.getResults().getPropertyPath().map(path -> path.stream()
+                                                .map(PropertyPathItem::getName)
+                                                .collect(Collectors.toList())),
                                         offset.getResults().getProperty(),
                                         body.getResponseBodyType());
                                 com.fern.ir.model.types.ContainerType resultContainerType = resultSnippet
@@ -973,7 +977,11 @@ public abstract class AbstractHttpResponseParserGenerator {
         @Override
         public Void visitCursor(CursorPagination cursor) {
             SnippetAndResultType nextSnippet = getNestedPropertySnippet(
-                    cursor.getNext().getPropertyPath(), cursor.getNext().getProperty(), body.getResponseBodyType());
+                    cursor.getNext().getPropertyPath().map(path -> path.stream()
+                            .map(PropertyPathItem::getName)
+                            .collect(Collectors.toList())),
+                    cursor.getNext().getProperty(),
+                    body.getResponseBodyType());
             CodeBlock nextBlock = CodeBlock.builder()
                     .add(
                             "$T $L = $L",
@@ -1016,7 +1024,9 @@ public abstract class AbstractHttpResponseParserGenerator {
             if (cursor.getPage().getPropertyPath().isPresent()
                     && !cursor.getPage().getPropertyPath().get().isEmpty()) {
                 List<EnrichedCursorPathSetter> setters = PaginationPathUtils.getPathSetters(
-                        cursor.getPage().getPropertyPath().get(),
+                        cursor.getPage().getPropertyPath().get().stream()
+                                .map(PropertyPathItem::getName)
+                                .collect(Collectors.toList()),
                         httpEndpoint,
                         clientGeneratorContext,
                         requestParameterSpec.name,
@@ -1047,7 +1057,9 @@ public abstract class AbstractHttpResponseParserGenerator {
                     propertyOverrideOnRequest,
                     propertyOverrideValueOnRequest);
             SnippetAndResultType resultSnippet = getNestedPropertySnippet(
-                    cursor.getResults().getPropertyPath(),
+                    cursor.getResults().getPropertyPath().map(path -> path.stream()
+                            .map(PropertyPathItem::getName)
+                            .collect(Collectors.toList())),
                     cursor.getResults().getProperty(),
                     body.getResponseBodyType());
 
@@ -1082,14 +1094,16 @@ public abstract class AbstractHttpResponseParserGenerator {
             }
 
             TypeName responseType = getResponseType(httpEndpoint, clientGeneratorContext);
-            handleSuccessfulResult(
-                    httpResponseBuilder,
-                    CodeBlock.of(
-                            "new $T($L, $L, $L)",
-                            responseType,
-                            hasNextPageBlock,
-                            variables.getResultVariableName(),
-                            getNextPageGetter(endpointName, methodParameters)));
+
+            CodeBlock paginationConstructor = CodeBlock.of(
+                    "new $T($L, $L, $L, $L)",
+                    responseType,
+                    hasNextPageBlock,
+                    variables.getResultVariableName(),
+                    variables.getParsedResponseVariableName(),
+                    getNextPageGetter(endpointName, methodParameters));
+
+            handleSuccessfulResult(httpResponseBuilder, paginationConstructor);
             endpointMethodBuilder.returns(responseType);
             return null;
         }
@@ -1153,7 +1167,9 @@ public abstract class AbstractHttpResponseParserGenerator {
                 // NOTE: We don't care about the build-after property names because we're not going to
                 // use the setter--just the getter.
                 List<EnrichedCursorPathSetter> setters = PaginationPathUtils.getPathSetters(
-                        offset.getPage().getPropertyPath().get(),
+                        offset.getPage().getPropertyPath().get().stream()
+                                .map(PropertyPathItem::getName)
+                                .collect(Collectors.toList()),
                         httpEndpoint,
                         clientGeneratorContext,
                         requestParameterSpec.name,
@@ -1263,7 +1279,9 @@ public abstract class AbstractHttpResponseParserGenerator {
             if (offset.getPage().getPropertyPath().isPresent()
                     && !offset.getPage().getPropertyPath().get().isEmpty()) {
                 List<EnrichedCursorPathSetter> setters = PaginationPathUtils.getPathSetters(
-                        offset.getPage().getPropertyPath().get(),
+                        offset.getPage().getPropertyPath().get().stream()
+                                .map(PropertyPathItem::getName)
+                                .collect(Collectors.toList()),
                         httpEndpoint,
                         clientGeneratorContext,
                         requestParameterSpec.name,
@@ -1295,7 +1313,9 @@ public abstract class AbstractHttpResponseParserGenerator {
                     propertyOverrideValueOnRequest);
 
             SnippetAndResultType resultSnippet = getNestedPropertySnippet(
-                    offset.getResults().getPropertyPath(),
+                    offset.getResults().getPropertyPath().map(path -> path.stream()
+                            .map(PropertyPathItem::getName)
+                            .collect(Collectors.toList())),
                     offset.getResults().getProperty(),
                     body.getResponseBodyType());
             CodeBlock resultBlock = CodeBlock.builder()
@@ -1308,13 +1328,15 @@ public abstract class AbstractHttpResponseParserGenerator {
                     .build();
             httpResponseBuilder.addStatement(resultBlock);
             TypeName responseType = getResponseType(httpEndpoint, clientGeneratorContext);
-            handleSuccessfulResult(
-                    httpResponseBuilder,
-                    CodeBlock.of(
-                            "new $T(true, $L, $L)",
-                            responseType,
-                            variables.getResultVariableName(),
-                            getNextPageGetter(endpointName, methodParameters)));
+
+            CodeBlock paginationConstructor = CodeBlock.of(
+                    "new $T(true, $L, $L, $L)",
+                    responseType,
+                    variables.getResultVariableName(),
+                    variables.getParsedResponseVariableName(),
+                    getNextPageGetter(endpointName, methodParameters));
+
+            handleSuccessfulResult(httpResponseBuilder, paginationConstructor);
             endpointMethodBuilder.returns(responseType);
             return null;
         }

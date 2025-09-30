@@ -71,19 +71,20 @@ client.FolderD.Service.GetDirectThread(
 <dd>
 
 ```go
+request := &fern.FindRequest{
+        OptionalString: fern.String(
+            "optionalString",
+        ),
+        PublicProperty: fern.String(
+            "publicProperty",
+        ),
+        PrivateProperty: fern.Int(
+            1,
+        ),
+    }
 client.Foo.Find(
         context.TODO(),
-        &fern.FindRequest{
-            OptionalString: fern.String(
-                "optionalString",
-            ),
-            PublicProperty: fern.String(
-                "publicProperty",
-            ),
-            PrivateProperty: fern.Int(
-                1,
-            ),
-        },
+        request,
     )
 }
 ```

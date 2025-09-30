@@ -879,10 +879,20 @@ function convertV2HttpEndpointExample({
                           return { type: "json", value };
                       },
                       stream: (value: unknown[]) => {
-                          return {
-                              type: "stream",
-                              value: value.map((v) => ({ type: "json", value: v }))
-                          };
+                          // If every value is an object with "event" and "data" properties, treat as SSE, else as stream
+                          const isSse =
+                              Array.isArray(value) && value.length > 0 && value.every(isExampleServerSentEvent);
+                          if (isSse) {
+                              return {
+                                  type: "sse",
+                                  value: value
+                              };
+                          } else {
+                              return {
+                                  type: "stream",
+                                  value
+                              };
+                          }
                       },
                       error: () => {
                           return undefined;
@@ -902,6 +912,17 @@ function convertV2HttpEndpointExample({
             }))
             .filter(isNonNullish)
     };
+}
+
+function isExampleServerSentEvent(obj: unknown): obj is { event: string; data: unknown } {
+    return (
+        typeof obj === "object" &&
+        obj !== null &&
+        "event" in obj &&
+        // biome-ignore lint/suspicious/noExplicitAny: legacy type usage
+        typeof (obj as any)?.event === "string" &&
+        "data" in obj
+    );
 }
 
 function convertHttpEndpointExample({

@@ -1,0 +1,9 @@
+dist
+*.tsbuildinfo
+_tmp_*
+*.tmp
+.tmp/
+*.log
+.DS_Store
+Thumbs.db
+            

@@ -5,14 +5,13 @@ import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 import { Audiences } from "../commons";
 import {
     AiChatConfig,
+    AnnouncementConfig,
     Availability,
     DocsInstance,
     ExperimentalConfig,
     PlaygroundSettings,
     VersionAvailability
 } from "./schemas";
-// TODO: Update this import
-import { AnnouncementConfig } from "./schemas/sdk/api/resources/docs/types/AnnouncementConfig";
 
 export interface ParsedDocsConfiguration {
     instances: DocsInstance[];
@@ -55,6 +54,8 @@ export interface ParsedDocsConfiguration {
     aiChatConfig: AiChatConfig | undefined;
 
     experimental: ExperimentalConfig | undefined;
+
+    pageActions: CjsFdrSdk.docs.v1.commons.PageActionsConfig | undefined;
 }
 
 export interface AbsoluteJsFileConfig {

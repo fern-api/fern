@@ -6,11 +6,12 @@ import (
 	"strings"
 
 	"github.com/fern-api/fern-go/internal/fern/ir"
+	"github.com/fern-api/fern-go/internal/fern/ir/common"
 )
 
 // WriteFiberRequestType writes a Fiber-compatible type dedicated to the in-lined request (if any).
 // This allows QueryParser to correctly interpret generated query parameter types.
-func (f *fileWriter) WriteFiberRequestType(fernFilepath *ir.FernFilepath, endpoint *ir.HttpEndpoint, includeGenericOptionals bool) error {
+func (f *fileWriter) WriteFiberRequestType(fernFilepath *common.FernFilepath, endpoint *ir.HttpEndpoint, includeGenericOptionals bool) error {
 	var (
 		// At this point, we've already verified that the given endpoint's request
 		// is a wrapper, so we can safely access it without any nil-checks.

@@ -26,16 +26,22 @@ Instantiate and use the client with the following:
 
 ```rust
 use seed_alias_extends::{AliasExtendsClient, ClientConfig, InlinedChildRequest};
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        ..Default::default()
+    };
     let client = AliasExtendsClient::new(config).expect("Failed to build client");
     client
-        .extended_inline_request_body(InlinedChildRequest {
-            parent: "parent",
-            child: "child",
-        })
+        .extended_inline_request_body(
+            &InlinedChildRequest {
+                parent: "parent".to_string(),
+                child: "child".to_string(),
+            },
+            None,
+        )
         .await;
 }
 ```

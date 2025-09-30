@@ -21,6 +21,6 @@ export declare namespace CreateUserRequest {
         username: string;
         tags?: string[] | null;
         metadata?: serializers.Metadata.Raw | null;
-        avatar?: (string | null) | null;
+        avatar?: (string | null | undefined) | null;
     }
 }

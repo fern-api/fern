@@ -128,24 +128,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             this.writeUnpagedMethodBody(endpointSignatureInfo, writer, rawClient, endpoint, rawClientReference);
         });
 
-        // is the endpoint is streaming or has a stream parameter (ie, determined at runtime)
-        // we need to return an async enumerable regardless.
-        const isAsyncEnumerable =
-            endpoint.response?.body?._visit({
-                streaming: () => true,
-                streamParameter: () => true,
-                json: () => false,
-                fileDownload: () => false,
-                text: () => false,
-                bytes: () => false,
-                _other: () => false
-            }) ?? false;
-
         return this.csharp.method({
             name: this.getUnpagedEndpointMethodName(endpoint),
             access: this.hasPagination(endpoint) ? ast.Access.Private : ast.Access.Public,
             isAsync: true,
-            isAsyncEnumerable,
             parameters,
             summary: endpoint.docs,
             return_,

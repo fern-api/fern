@@ -22,9 +22,9 @@ export declare namespace Metadata {
     export interface Raw {
         createdAt: string;
         updatedAt: string;
-        avatar: string | null;
-        activated?: (boolean | null) | null;
+        avatar?: string | null;
+        activated?: (boolean | null | undefined) | null;
         status: serializers.Status.Raw;
-        values?: Record<string, (string | null) | null | undefined> | null;
+        values?: Record<string, (string | null | undefined) | null | undefined> | null;
     }
 }

@@ -12,6 +12,7 @@ import {
     SubpackageId
 } from "@fern-fern/ir-sdk/api";
 import { RustGeneratorAgent } from "./RustGeneratorAgent";
+import { ReadmeConfigBuilder } from "./readme";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
 export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomConfigSchema> {
@@ -27,12 +28,9 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
         this.generatorAgent = new RustGeneratorAgent({
             logger: this.logger,
             config: generatorConfig,
+            readmeConfigBuilder: new ReadmeConfigBuilder(),
             ir
         });
-    }
-
-    public getClientName(): string {
-        return this.configManager.get("clientName", `${this.ir.apiName.pascalCase.safeName}Client`);
     }
 
     public getApiClientBuilderClientName(): string {
@@ -45,15 +43,9 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
             // Single service - use the sub-client name
             return `${subpackages[0].name.pascalCase.safeName}Client`;
         } else {
-            // Multiple services or no subpackages - use the root client name
+            // Multiple services or no subpackages - use the root client name (which now uses clientClassName config)
             return this.getClientName();
         }
-    }
-
-    public getClientBuilderName(): string {
-        // For README snippets, we need the client builder name (e.g., ImdbClientBuilder)
-        const clientName = this.getApiClientBuilderClientName();
-        return `${clientName}Builder`;
     }
 
     public getCoreAsIsFiles(): AsIsFileDefinition[] {
@@ -92,10 +84,10 @@ export class SdkGeneratorContext extends AbstractRustGeneratorContext<SdkCustomC
             this.config,
             ModelCustomConfigSchema.parse({
                 // Convert SDK config to model config - use centralized configuration manager
-                packageName: this.configManager.get("packageName"),
-                packageVersion: this.configManager.get("packageVersion"),
-                extraDependencies: this.configManager.get("extraDependencies"),
-                extraDevDependencies: this.configManager.get("extraDevDependencies"),
+                crateName: this.getCrateName(),
+                crateVersion: this.getCrateVersion(),
+                extraDependencies: this.getExtraDependencies(),
+                extraDevDependencies: this.getExtraDevDependencies(),
                 generateBuilders: false,
                 deriveDebug: true,
                 deriveClone: true

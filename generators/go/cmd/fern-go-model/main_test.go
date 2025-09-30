@@ -24,7 +24,7 @@ const (
 )
 
 func TestFixtures(t *testing.T) {
-  t.Skip("These tests require running in a Docker container with /bin/go-v2 installed")
+	t.Skip("These tests require running in a Docker container with /bin/go-v2 installed")
 	cmdtest.TestFixtures(t, commandName, testdataPath, usage, run)
 }
 

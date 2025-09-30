@@ -164,14 +164,7 @@
     "optionalNullableString": {
       "oneOf": [
         {
-          "oneOf": [
-            {
-              "type": "string"
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "type": "string"
         },
         {
           "type": "null"
@@ -181,14 +174,7 @@
     "optionalNullableObject": {
       "oneOf": [
         {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/nullable-optional.Address"
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "$ref": "#/definitions/nullable-optional.Address"
         },
         {
           "type": "null"
@@ -261,14 +247,7 @@
         "country": {
           "oneOf": [
             {
-              "oneOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ]
+              "type": "string"
             },
             {
               "type": "null"

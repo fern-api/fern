@@ -26,17 +26,24 @@ Instantiate and use the client with the following:
 
 ```rust
 use seed_audiences::{AudiencesClient, ClientConfig, FindRequest};
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        ..Default::default()
+    };
     let client = AudiencesClient::new(config).expect("Failed to build client");
     client
-        .foo_find(FindRequest {
-            optional_string: "optionalString",
-            public_property: Some("publicProperty"),
-            private_property: Some(1),
-        })
+        .foo
+        .find(
+            &FindRequest {
+                optional_string: OptionalString(Some("optionalString".to_string())),
+                public_property: Some("publicProperty".to_string()),
+                private_property: Some(1),
+            },
+            None,
+        )
         .await;
 }
 ```

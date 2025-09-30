@@ -25,16 +25,24 @@ cargo add seed_path_parameters
 Instantiate and use the client with the following:
 
 ```rust
-use seed_path_parameters::{ClientConfig, PathParametersClient};
+use seed_path_parameters::{ClientConfig, PathParametersClient, User};
+use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        ..Default::default()
+    };
     let client = PathParametersClient::new(config).expect("Failed to build client");
     client
-        .user_create_user(
-            "tenant_id",
-            serde_json::json!({"name":"name","tags":["tags","tags"]}),
+        .user
+        .create_user(
+            &"tenant_id".to_string(),
+            &User {
+                name: "name".to_string(),
+                tags: vec!["tags".to_string(), "tags".to_string()],
+            },
+            None,
         )
         .await;
 }

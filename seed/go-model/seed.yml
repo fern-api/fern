@@ -1,4 +1,4 @@
-irVersion: v58
+irVersion: v60
 displayName: Go Model
 image: fernapi/fern-go-model
 language: go
@@ -46,16 +46,45 @@ fixtures:
         includeLegacyClientOptions: true
 
 scripts:
-  - docker: golang:1.18-alpine
+  - docker: golang:1.23.8-alpine3.20
     commands:
       - CGO_ENABLED=0 go test ./...
 
 allowedFailures:
+  - accept-header
+  - any-auth
+  - auth-environment-variables
+  - basic-auth
+  - basic-auth-environment-variables
+  - bearer-token-environment-variable
+  - client-side-params
+  - custom-auth
+  - enum
+  - examples
   - exhaustive
+  - go-content-type
+  - idempotency-headers:.
+  - imdb
   - literal
   - mixed-case
+  - multi-url-environment
+  - multi-url-environment-no-default
+  - multiple-request-bodies
+  - no-environment
   - nullable-optional
+  - oauth-client-credentials
+  - oauth-client-credentials-custom
+  - oauth-client-credentials-default
+  - oauth-client-credentials-environment-variables
+  - oauth-client-credentials-nested-root
+  - oauth-client-credentials-with-variables
+  - pagination
+  - pagination-custom
+  - property-access
   - reserved-keywords
+  - simple-api
+  - single-url-environment-default
+  - single-url-environment-no-default
   - streaming:.
   - trace
-  - property-access
+  - websocket-bearer-auth

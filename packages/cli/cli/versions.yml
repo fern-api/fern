@@ -5,6 +5,101 @@
       type: fix
   irVersion: 60
   createdAt: "2025-09-30"
+  version: 0.83.2
+
+- changelogEntry:
+    - summary: |
+        Allow `null` examples for nullable/optional properties, parameters, and types.
+      type: fix
+  irVersion: 60
+  createdAt: "2025-09-30"
+  version: 0.83.1
+
+- changelogEntry:
+    - summary: |
+        Introduce `page-actions` configuration in the `docs.yml` so that users can choose which 
+        actions are visible. 
+
+        ```docs.yml 
+        page-actions:
+          chatgpt: false
+          claude: true
+          vscode: true
+          cursor: true
+        ```
+      type: feat
+  irVersion: 60
+  createdAt: "2025-09-28"
+  version: 0.83.0
+
+- changelogEntry:
+    - summary: |
+        Even when no success status codes are defined for the endpoint, `x-fern-streaming` responses are still respected.
+      type: fix
+  irVersion: 60
+  createdAt: "2025-09-26"
+  version: 0.82.4
+
+- changelogEntry:
+    - summary: Allow `wrap-references-to-nullable-in-optional` setting in more API specs.
+      type: fix
+  irVersion: 60
+  createdAt: "2025-09-26"
+  version: 0.82.3
+
+- changelogEntry:
+    - summary: |
+        Update display names for undiscriminated unions without titles.
+
+        Now, if no title or description is provided, and one cannot be generated from the object properties, the display name will be undefined.
+      type: fix
+  irVersion: 60
+  createdAt: "2025-09-26"
+  version: 0.82.2
+
+- changelogEntry:
+    - summary: |
+        Ensure path parameters are parsed in the same order as they appear in the endpoint's URL.
+      type: fix
+  irVersion: 60
+  createdAt: "2025-09-25"
+  version: 0.82.1
+
+- changelogEntry:
+    - summary: |
+        Update migration versions for ir-v60 for python and java generators
+      type: feat
+  irVersion: 60
+  createdAt: "2025-09-25"
+  version: 0.82.0
+
+- changelogEntry:
+    - summary: |
+        Control how type references are wrapped when they refer to nullable schemas using the new `wrap-references-to-nullable-in-optional` setting:
+        - `true`: When a type reference points to a nullable schema, it will be wrapped in `optional<>`.
+        - `false`: When a type reference points to a nullable schema, it will be wrapped in `nullable<>`.
+        The default is `true`.
+      type: feat
+    - summary: |
+        Add new `coerce-optional-schemas-to-nullable` setting to control how optional schemas are treated:
+        - `true`: Optional schemas will be coerced to nullable, resulting in `nullable<T>`.
+        - `false`: Optional schemas will remain as `optional<T>`.
+        The default is `true`.
+      type: feat
+    - summary: |
+        Add type for nullable schema examples.
+        If a schema is nullable, examples for its inner type will be parsed or generated, or `null` will be used as an example if no inner examples are available.
+      type: feat
+  irVersion: 60
+  createdAt: "2025-09-24"
+  version: 0.81.0
+
+- changelogEntry:
+    - summary: |
+        Update migrations for go to support IRv60.
+      type: chore
+  irVersion: 60
+  createdAt: "2025-09-24"
   version: 0.80.2
 
 - changelogEntry:
@@ -67,7 +162,7 @@
   version: 0.78.5
 
 - changelogEntry:
-    - summary: Collapse any combination of optional and nullable to optional<nullable<T>>.
+    - summary: Collapse any combination of optional and nullable to `optional<nullable<T>>`.
       type: fix
   irVersion: 59
   createdAt: "2025-09-22"
@@ -539,9 +634,9 @@
               request:
                 body:
                   properties:
-                    author: optional<string>
-                    tags: optional<list<string>>
-                    title: optional<string>
+                    author: `optional<string>`
+                    tags: `optional<list<string>>`
+                    title: `optional<string>`
                 content-type: application/json
                 name: UploadDocumentRequest
                 ...
@@ -3868,7 +3963,7 @@
         ```yml docs.yml
         navigation:
           - api: API Reference
-            openrpc: <path to openrpc file>
+            openrpc: `<path to openrpc file>`
         ```
       type: fix
   irVersion: 55
@@ -3931,7 +4026,7 @@
           User:
             properties:
               name: string
-              email: nullable<string>
+              email: `nullable<string>`
         ```
       type: feat
   irVersion: 55
@@ -5595,13 +5690,13 @@
 
         ```yml
         types:
-          GenericTest<T>:
+          `GenericTest<T>`:
             properties:
               value: T
               other-value: string
 
           GenericApplication:
-            type: GenericTest<string>
+            type: `GenericTest<string>`
         ```
 
         More information can be found here: https://buildwithfern.com/learn/api-definition/fern/types#generics.
@@ -9212,8 +9307,8 @@
 - changelogEntry:
     - summary: "## What's Changed\r\n* feature: allow specifying OpenAPI overrides in\
         \ generators.yml by @dsinghvi in https://github.com/fern-api/fern/pull/2613\r\
-        \n  ```yaml\r\n  # generators.yml \r\n  openapi: <path to openapi> \r\n  openapi-overrides:\
-        \ <path to openapi overrides> \r\n  ```\r\n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.16.29...0.16.30"
+        \n  ```yaml\r\n  # generators.yml \r\n  openapi: `<path to openapi>` \r\n  openapi-overrides:\
+        \ `<path to openapi overrides>` \r\n  ```\r\n\r\n\r\n**Full Changelog**: https://github.com/fern-api/fern/compare/0.16.29...0.16.30"
       type: chore
   createdAt: "2024-01-12"
   irVersion: 32
@@ -10166,7 +10261,7 @@
   version: 0.15.0-rc15
 - changelogEntry:
     - summary: "- Support specifying instance when running docs generation `fern generate
-        --docs --instance <url>`"
+        --docs --instance` `<url>`"
       type: chore
   createdAt: "2023-09-06"
   irVersion: 25
@@ -10357,9 +10452,9 @@
         \ what types are referenced from exactly one service (@amckinney).\r\n```yaml\r\
         \n  ServiceTypeReferenceInfo:\r\n    properties:\r\n      typesReferencedOnlyByService:\r\
         \n        docs: \"Types referenced by exactly one service.\"\r\n        type:\
-        \ map<commons.ServiceId, list<commons.TypeId>>\r\n      sharedTypes:\r\n   \
+        \ `map<commons.ServiceId, list<commons.TypeId>>`\r\n      sharedTypes:\r\n   \
         \     docs: \"Types referenced by either zero or multiple services.\"\r\n  \
-        \      type: list<commons.TypeId>\r\n```"
+        \      type: `list<commons.TypeId>`\r\n```"
       type: chore
   createdAt: "2023-08-01"
   irVersion: 22

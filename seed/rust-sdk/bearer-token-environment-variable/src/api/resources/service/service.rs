@@ -1,4 +1,4 @@
-use crate::{ApiError, ClientConfig, HttpClient, QueryBuilder, RequestOptions};
+use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
 
 pub struct ServiceClient {
@@ -12,6 +12,15 @@ impl ServiceClient {
         })
     }
 
+    /// GET request with custom api key
+    ///
+    /// # Arguments
+    ///
+    /// * `options` - Additional request options such as headers, timeout, etc.
+    ///
+    /// # Returns
+    ///
+    /// JSON response from the API
     pub async fn get_with_bearer_token(
         &self,
         options: Option<RequestOptions>,

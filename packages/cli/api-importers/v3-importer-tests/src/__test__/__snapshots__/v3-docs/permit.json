@@ -22120,8 +22120,7 @@
             "unsafeName": "ResourceRoleListRoles0",
             "safeName": "ResourceRoleListRoles0"
           }
-        },
-        "displayName": "ResourceRoleListRoles0"
+        }
       },
       "shape": {
         "aliasOf": {
@@ -22272,7 +22271,6 @@
                 }
               },
               "typeId": "ResourceRoleListRoles0",
-              "displayName": "ResourceRoleListRoles0",
               "inline": false,
               "type": "named"
             }
@@ -25343,8 +25341,7 @@
             "unsafeName": "RoleListRoles0",
             "safeName": "RoleListRoles0"
           }
-        },
-        "displayName": "RoleListRoles0"
+        }
       },
       "shape": {
         "aliasOf": {
@@ -25494,7 +25491,6 @@
                 }
               },
               "typeId": "RoleListRoles0",
-              "displayName": "RoleListRoles0",
               "inline": false,
               "type": "named"
             }
@@ -31602,8 +31598,7 @@
             "unsafeName": "ResourcesListResourcesResponse2001",
             "safeName": "ResourcesListResourcesResponse2001"
           }
-        },
-        "displayName": "ResourcesListResourcesResponse2001"
+        }
       },
       "shape": {
         "aliasOf": {
@@ -31784,7 +31779,6 @@
                 }
               },
               "typeId": "ResourcesListResourcesResponse2001",
-              "displayName": "ResourcesListResourcesResponse2001",
               "inline": false,
               "type": "named"
             }
@@ -32118,8 +32112,7 @@
             "unsafeName": "RolesListRolesResponse2001",
             "safeName": "RolesListRolesResponse2001"
           }
-        },
-        "displayName": "RolesListRolesResponse2001"
+        }
       },
       "shape": {
         "aliasOf": {
@@ -32300,7 +32293,6 @@
                 }
               },
               "typeId": "RolesListRolesResponse2001",
-              "displayName": "RolesListRolesResponse2001",
               "inline": false,
               "type": "named"
             }
@@ -32404,8 +32396,7 @@
             "unsafeName": "ConditionSetsListConditionSetsResponse2001",
             "safeName": "ConditionSetsListConditionSetsResponse2001"
           }
-        },
-        "displayName": "ConditionSetsListConditionSetsResponse2001"
+        }
       },
       "shape": {
         "aliasOf": {
@@ -32586,7 +32577,6 @@
                 }
               },
               "typeId": "ConditionSetsListConditionSetsResponse2001",
-              "displayName": "ConditionSetsListConditionSetsResponse2001",
               "inline": false,
               "type": "named"
             }
@@ -32782,8 +32772,7 @@
             "unsafeName": "TenantsListTenantsResponse2001",
             "safeName": "TenantsListTenantsResponse2001"
           }
-        },
-        "displayName": "TenantsListTenantsResponse2001"
+        }
       },
       "shape": {
         "aliasOf": {
@@ -32965,7 +32954,6 @@
                 }
               },
               "typeId": "TenantsListTenantsResponse2001",
-              "displayName": "TenantsListTenantsResponse2001",
               "inline": false,
               "type": "named"
             }

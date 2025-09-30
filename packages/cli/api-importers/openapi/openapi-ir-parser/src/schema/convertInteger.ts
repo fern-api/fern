@@ -15,6 +15,7 @@ export function convertInteger({
     multipleOf,
     description,
     availability,
+    wrapAsOptional,
     wrapAsNullable,
     example,
     namespace,
@@ -32,6 +33,7 @@ export function convertInteger({
     multipleOf: number | undefined;
     description: string | undefined;
     availability: Availability | undefined;
+    wrapAsOptional: boolean;
     wrapAsNullable: boolean;
     example: number | undefined;
     namespace: string | undefined;
@@ -46,6 +48,7 @@ export function convertInteger({
                 default: _default,
                 example
             }),
+            wrapAsOptional,
             wrapAsNullable,
             description,
             availability,
@@ -61,6 +64,7 @@ export function convertInteger({
                 default: _default,
                 example
             }),
+            wrapAsOptional,
             wrapAsNullable,
             description,
             availability,
@@ -76,6 +80,7 @@ export function convertInteger({
                 default: _default,
                 example
             }),
+            wrapAsOptional,
             wrapAsNullable,
             description,
             availability,
@@ -96,6 +101,7 @@ export function convertInteger({
             multipleOf,
             example
         }),
+        wrapAsOptional,
         wrapAsNullable,
         description,
         availability,

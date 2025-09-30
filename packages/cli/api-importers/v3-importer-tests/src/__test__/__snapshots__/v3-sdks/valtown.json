@@ -8992,8 +8992,7 @@
             "unsafeName": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args0",
             "safeName": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args0"
           }
-        },
-        "displayName": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args0"
+        }
       },
       "shape": {
         "aliasOf": {
@@ -9195,8 +9194,7 @@
             "unsafeName": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args1",
             "safeName": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args1"
           }
-        },
-        "displayName": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args1"
+        }
       },
       "shape": {
         "aliasOf": {
@@ -9365,7 +9363,6 @@
                 }
               },
               "typeId": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args0",
-              "displayName": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args0",
               "inline": false,
               "type": "named"
             }
@@ -9396,7 +9393,6 @@
                 }
               },
               "typeId": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args1",
-              "displayName": "V1SqliteExecutePostRequestBodyContentApplicationJsonSchemaStatementOneOf1Args1",
               "inline": false,
               "type": "named"
             }
@@ -9759,8 +9755,7 @@
             "unsafeName": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args0",
             "safeName": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args0"
           }
-        },
-        "displayName": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args0"
+        }
       },
       "shape": {
         "aliasOf": {
@@ -9962,8 +9957,7 @@
             "unsafeName": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args1",
             "safeName": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args1"
           }
-        },
-        "displayName": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args1"
+        }
       },
       "shape": {
         "aliasOf": {
@@ -10132,7 +10126,6 @@
                 }
               },
               "typeId": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args0",
-              "displayName": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args0",
               "inline": false,
               "type": "named"
             }
@@ -10163,7 +10156,6 @@
                 }
               },
               "typeId": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args1",
-              "displayName": "V1SqliteBatchPostRequestBodyContentApplicationJsonSchemaStatementsItemsOneOf1Args1",
               "inline": false,
               "type": "named"
             }

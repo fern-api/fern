@@ -11278,6 +11278,10 @@ errors:
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "issued_from_date": "issued_from_date",
+                    "issued_to_date": "issued_to_date",
+                  },
                   "response": {
                     "body": {
                       "data": {
@@ -11288,6 +11292,7 @@ errors:
                               "id": "rhCTiRd9Mad41RwjsFWw-",
                               "name": "Lisandro Shanahan-Dynamic Web Specialist",
                             },
+                            "created_at": null,
                             "currency": "USD",
                             "id": 5586317,
                             "invoice_id": "rhCTiRd9Mad41RwjsFWw-",
@@ -11362,13 +11367,19 @@ errors:
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "date_from": "1999-12-31",
+                    "date_to": "1999-12-31",
+                  },
                   "response": {
                     "body": {
                       "data": {
                         "rows": [
                           {
+                            "created_at": null,
                             "id": 12345,
                             "label": "label",
+                            "paid_at": null,
                             "payment_currency": "USD",
                             "payment_method": {
                               "type": "stripe_bacs_debit",
@@ -11378,6 +11389,7 @@ errors:
                             "workers": [
                               {
                                 "name": "Jane Doe",
+                                "picUrl": null,
                               },
                             ],
                           },
@@ -11479,7 +11491,10 @@ service:
         - root.NotFoundError
         - root.InternalServerError
       examples:
-        - response:
+        - query-parameters:
+            issued_from_date: issued_from_date
+            issued_to_date: issued_to_date
+          response:
             body:
               data:
                 rows:
@@ -11492,6 +11507,7 @@ service:
                       id: rhCTiRd9Mad41RwjsFWw-
                       name: Lisandro Shanahan-Dynamic Web Specialist
                       contract_type: pay_as_you_go_time_based
+                    created_at: null
                     total: 1000
                 total: 1.1
       audiences:
@@ -11619,7 +11635,10 @@ service:
         - root.NotFoundError
         - root.InternalServerError
       examples:
-        - response:
+        - query-parameters:
+            date_from: '1999-12-31'
+            date_to: '1999-12-31'
+          response:
             body:
               data:
                 rows:
@@ -11629,9 +11648,12 @@ service:
                     status: paid
                     payment_currency: USD
                     label: label
+                    paid_at: null
+                    created_at: null
                     total: 1015
                     workers:
                       - name: Jane Doe
+                        picUrl: null
                 total: 1.1
       audiences:
         - external
@@ -11961,6 +11983,10 @@ service:
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "limit": 1.1,
+                    "offset": 1000000,
+                  },
                   "response": {
                     "body": {
                       "data": [
@@ -11991,8 +12017,10 @@ service:
                           "last_name": "last_name",
                           "payments": [
                             {
+                              "created_at": null,
                               "id": 12345,
                               "label": "label",
+                              "paid_at": null,
                               "payment_currency": "USD",
                               "payment_method": {
                                 "type": "stripe_bacs_debit",
@@ -12002,6 +12030,7 @@ service:
                               "workers": [
                                 {
                                   "name": "Jane Doe",
+                                  "picUrl": null,
                                 },
                               ],
                             },
@@ -12104,7 +12133,10 @@ service:
         - root.TooManyRequestsError
         - root.InternalServerError
       examples:
-        - response:
+        - query-parameters:
+            offset: 1000000
+            limit: 1.1
+          response:
             body:
               data:
                 - id: id
@@ -12125,9 +12157,12 @@ service:
                       status: paid
                       payment_currency: USD
                       label: label
+                      paid_at: null
+                      created_at: null
                       total: 1015
                       workers:
                         - name: Jane Doe
+                          picUrl: null
                   hourly_report_total: hourly_report_total
                   state: state
                   seniority: seniority
@@ -12431,6 +12466,7 @@ service:
                           "full_name": "full_name",
                           "id": 1000000,
                           "legal_entity": {
+                            "email": null,
                             "id": 1000000,
                             "name": "name",
                             "registration_number": "registration_number",
@@ -12502,6 +12538,7 @@ service:
                         "worker": {
                           "alternate_email": [
                             {
+                              "email": null,
                               "isVerified": true,
                             },
                           ],
@@ -12609,6 +12646,7 @@ service:
                           "full_name": "full_name",
                           "id": 1000000,
                           "legal_entity": {
+                            "email": null,
                             "id": 1000000,
                             "name": "name",
                             "registration_number": "registration_number",
@@ -12680,6 +12718,7 @@ service:
                         "worker": {
                           "alternate_email": [
                             {
+                              "email": null,
                               "isVerified": true,
                             },
                           ],
@@ -12785,6 +12824,7 @@ service:
                           "full_name": "full_name",
                           "id": 1000000,
                           "legal_entity": {
+                            "email": null,
                             "id": 1000000,
                             "name": "name",
                             "registration_number": "registration_number",
@@ -12856,6 +12896,7 @@ service:
                         "worker": {
                           "alternate_email": [
                             {
+                              "email": null,
                               "isVerified": true,
                             },
                           ],
@@ -12961,6 +13002,7 @@ service:
                           "full_name": "full_name",
                           "id": 1000000,
                           "legal_entity": {
+                            "email": null,
                             "id": 1000000,
                             "name": "name",
                             "registration_number": "registration_number",
@@ -13032,6 +13074,7 @@ service:
                         "worker": {
                           "alternate_email": [
                             {
+                              "email": null,
                               "isVerified": true,
                             },
                           ],
@@ -13139,6 +13182,7 @@ service:
                           "full_name": "full_name",
                           "id": 1000000,
                           "legal_entity": {
+                            "email": null,
                             "id": 1000000,
                             "name": "name",
                             "registration_number": "registration_number",
@@ -13210,6 +13254,7 @@ service:
                         "worker": {
                           "alternate_email": [
                             {
+                              "email": null,
                               "isVerified": true,
                             },
                           ],
@@ -13288,6 +13333,9 @@ service:
                   "path-parameters": {
                     "contract_id": "37nex2x",
                   },
+                  "query-parameters": {
+                    "templateId": "templateId",
+                  },
                 },
               ],
               "method": "GET",
@@ -13341,6 +13389,9 @@ service:
                 {
                   "path-parameters": {
                     "contract_id": "37nex2x",
+                  },
+                  "query-parameters": {
+                    "reason": "reason",
                   },
                   "response": {
                     "body": {
@@ -13542,6 +13593,7 @@ service:
                   legal_entity:
                     id: 1000000
                     name: name
+                    email: null
                     type: individual
                     subtype: subtype
                     registration_number: registration_number
@@ -13551,7 +13603,8 @@ service:
                   full_name: full_name
                   email: email
                   alternate_email:
-                    - isVerified: true
+                    - email: null
+                      isVerified: true
                   nationality: US
                   image: image
                   legal_entity:
@@ -13671,6 +13724,7 @@ service:
                   legal_entity:
                     id: 1000000
                     name: name
+                    email: null
                     type: individual
                     subtype: subtype
                     registration_number: registration_number
@@ -13680,7 +13734,8 @@ service:
                   full_name: full_name
                   email: email
                   alternate_email:
-                    - isVerified: true
+                    - email: null
+                      isVerified: true
                   nationality: US
                   image: image
                   legal_entity:
@@ -13800,6 +13855,7 @@ service:
                   legal_entity:
                     id: 1000000
                     name: name
+                    email: null
                     type: individual
                     subtype: subtype
                     registration_number: registration_number
@@ -13809,7 +13865,8 @@ service:
                   full_name: full_name
                   email: email
                   alternate_email:
-                    - isVerified: true
+                    - email: null
+                      isVerified: true
                   nationality: US
                   image: image
                   legal_entity:
@@ -13931,6 +13988,7 @@ service:
                   legal_entity:
                     id: 1000000
                     name: name
+                    email: null
                     type: individual
                     subtype: subtype
                     registration_number: registration_number
@@ -13940,7 +13998,8 @@ service:
                   full_name: full_name
                   email: email
                   alternate_email:
-                    - isVerified: true
+                    - email: null
+                      isVerified: true
                   nationality: US
                   image: image
                   legal_entity:
@@ -14063,6 +14122,7 @@ service:
                   legal_entity:
                     id: 1000000
                     name: name
+                    email: null
                     type: individual
                     subtype: subtype
                     registration_number: registration_number
@@ -14072,7 +14132,8 @@ service:
                   full_name: full_name
                   email: email
                   alternate_email:
-                    - isVerified: true
+                    - email: null
+                      isVerified: true
                   nationality: US
                   image: image
                   legal_entity:
@@ -14153,6 +14214,8 @@ service:
       examples:
         - path-parameters:
             contract_id: 37nex2x
+          query-parameters:
+            templateId: templateId
       audiences:
         - external
     amendContractDetails:
@@ -14335,6 +14398,8 @@ service:
       examples:
         - path-parameters:
             contract_id: 37nex2x
+          query-parameters:
+            reason: reason
           response:
             body:
               data:
@@ -14589,6 +14654,12 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                   "path-parameters": {
                     "contract_id": "37nex2x",
                   },
+                  "query-parameters": {
+                    "calculation_type": "CUSTOM_AMOUNT",
+                    "end_date": "1999-12-31",
+                    "workweek_end": "workweek_end",
+                    "workweek_start": "workweek_start",
+                  },
                   "response": {
                     "body": {
                       "data": {
@@ -14819,6 +14890,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                           "full_name": "full_name",
                           "id": 1000000,
                           "legal_entity": {
+                            "email": null,
                             "id": 1000000,
                             "name": "name",
                             "registration_number": "registration_number",
@@ -14890,6 +14962,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                         "worker": {
                           "alternate_email": [
                             {
+                              "email": null,
                               "isVerified": true,
                             },
                           ],
@@ -14959,6 +15032,15 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "after_cursor": "after_cursor",
+                    "external_id": "external_id",
+                    "limit": 1.1,
+                    "order_direction": "asc",
+                    "search": "search",
+                    "sort_by": "contract_title",
+                    "team_id": 1.1,
+                  },
                   "response": {
                     "body": {
                       "data": [
@@ -14972,7 +15054,9 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                           "is_shielded": true,
                           "notice_period": 15,
                           "signatures": {
+                            "client_signed_at": null,
                             "worker_signature": "Jane Doe",
+                            "worker_signed_at": null,
                           },
                           "status": "new",
                           "termination_date": "2022-05-24T09:38:46Z",
@@ -14980,6 +15064,7 @@ docs: The Contracts resource lets you create, amend and, retrieve Deel contracts
                           "type": "ongoing_time_based",
                           "who_reports": "both",
                           "worker": {
+                            "email": null,
                             "full_name": "full_name",
                             "id": 1000000,
                           },
@@ -15501,7 +15586,15 @@ service:
         - root.TooManyRequestsError
         - root.InternalServerError
       examples:
-        - response:
+        - query-parameters:
+            after_cursor: after_cursor
+            limit: 1.1
+            order_direction: asc
+            team_id: 1.1
+            external_id: external_id
+            search: search
+            sort_by: contract_title
+          response:
             body:
               data:
                 - id: id
@@ -15512,9 +15605,12 @@ service:
                   worker:
                     id: 1000000
                     full_name: full_name
+                    email: null
                   invitations: {}
                   signatures:
+                    client_signed_at: null
                     worker_signature: Jane Doe
+                    worker_signed_at: null
                   is_shielded: true
                   is_archived: true
                   created_at: '2022-05-24T09:38:46Z'
@@ -15587,6 +15683,7 @@ service:
                   legal_entity:
                     id: 1000000
                     name: name
+                    email: null
                     type: individual
                     subtype: subtype
                     registration_number: registration_number
@@ -15596,7 +15693,8 @@ service:
                   full_name: full_name
                   email: email
                   alternate_email:
-                    - isVerified: true
+                    - email: null
+                      isVerified: true
                   nationality: US
                   image: image
                   legal_entity:
@@ -16028,6 +16126,11 @@ service:
       examples:
         - path-parameters:
             contract_id: 37nex2x
+          query-parameters:
+            end_date: '1999-12-31'
+            calculation_type: CUSTOM_AMOUNT
+            workweek_start: workweek_start
+            workweek_end: workweek_end
           response:
             body:
               data:
@@ -16991,6 +17094,9 @@ docs: API end-points related to HRIS data.
                   "path-parameters": {
                     "invoice_adjustment_id": 1.1,
                   },
+                  "query-parameters": {
+                    "reason": "reason",
+                  },
                   "response": {
                     "body": {
                       "data": {
@@ -17055,6 +17161,15 @@ docs: API end-points related to HRIS data.
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "contract_id": "contract_id",
+                    "date_from": "1999-12-31",
+                    "date_to": "1999-12-31",
+                    "invoice_id": 1000000,
+                    "limit": 1.1,
+                    "offset": 1000000,
+                    "reporter_id": 1.1,
+                  },
                   "response": {
                     "body": {
                       "data": [
@@ -17074,7 +17189,10 @@ docs: API end-points related to HRIS data.
                           "date_submitted": "2022-05-24T09:38:46Z",
                           "description": "description",
                           "id": "id",
-                          "payment_cycle": {},
+                          "payment_cycle": {
+                            "end_date": null,
+                            "start_date": null,
+                          },
                           "public_id": "00000000-0000-0000-0000-000000000000",
                           "quantity": 1,
                           "reported_by": {
@@ -17208,6 +17326,14 @@ docs: API end-points related to HRIS data.
                   "path-parameters": {
                     "contract_id": "37nex2x",
                   },
+                  "query-parameters": {
+                    "date_from": "1999-12-31",
+                    "date_to": "1999-12-31",
+                    "invoice_id": 1000000,
+                    "limit": 1.1,
+                    "offset": 1000000,
+                    "reporter_id": 1.1,
+                  },
                   "response": {
                     "body": {
                       "data": [
@@ -17227,7 +17353,10 @@ docs: API end-points related to HRIS data.
                           "date_submitted": "2022-05-24T09:38:46Z",
                           "description": "description",
                           "id": "id",
-                          "payment_cycle": {},
+                          "payment_cycle": {
+                            "end_date": null,
+                            "start_date": null,
+                          },
                           "public_id": "00000000-0000-0000-0000-000000000000",
                           "quantity": 1,
                           "reported_by": {
@@ -17499,6 +17628,13 @@ service:
       examples:
         - path-parameters:
             contract_id: 37nex2x
+          query-parameters:
+            invoice_id: 1000000
+            reporter_id: 1.1
+            date_from: '1999-12-31'
+            date_to: '1999-12-31'
+            limit: 1.1
+            offset: 1000000
           response:
             body:
               data:
@@ -17531,7 +17667,9 @@ service:
                     id: id
                     title: title
                     type: ongoing_time_based
-                  payment_cycle: {}
+                  payment_cycle:
+                    start_date: null
+                    end_date: null
                   reported_by:
                     id: 123456
                     full_name: John Smith
@@ -17621,7 +17759,15 @@ service:
         - root.TooManyRequestsError
         - root.InternalServerError
       examples:
-        - response:
+        - query-parameters:
+            contract_id: contract_id
+            invoice_id: 1000000
+            reporter_id: 1.1
+            date_from: '1999-12-31'
+            date_to: '1999-12-31'
+            limit: 1.1
+            offset: 1000000
+          response:
             body:
               data:
                 - id: id
@@ -17653,7 +17799,9 @@ service:
                     id: id
                     title: title
                     type: ongoing_time_based
-                  payment_cycle: {}
+                  payment_cycle:
+                    start_date: null
+                    end_date: null
                   reported_by:
                     id: 123456
                     full_name: John Smith
@@ -17747,6 +17895,8 @@ service:
       examples:
         - path-parameters:
             invoice_adjustment_id: 1.1
+          query-parameters:
+            reason: reason
           response:
             body:
               data:
@@ -18039,6 +18189,10 @@ docs: >-
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "after_cursor": "after_cursor",
+                    "limit": 1000000,
+                  },
                   "response": {
                     "body": {
                       "data": [
@@ -18105,6 +18259,9 @@ docs: >-
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "limit": 1000000,
+                  },
                   "response": {
                     "body": {
                       "data": [
@@ -18301,7 +18458,10 @@ service:
         - root.TooManyRequestsError
         - root.InternalServerError
       examples:
-        - response:
+        - query-parameters:
+            limit: 1000000
+            after_cursor: after_cursor
+          response:
             body:
               data:
                 - id: 1
@@ -18344,7 +18504,9 @@ service:
         - root.TooManyRequestsError
         - root.InternalServerError
       examples:
-        - response:
+        - query-parameters:
+            limit: 1000000
+          response:
             body:
               data:
                 - id: 2
@@ -19606,6 +19768,8 @@ docs: End-points to manage off-cycle payments for a given contract
                 {
                   "query-parameters": {
                     "contract_id": "37nex2x",
+                    "limit": "limit",
+                    "offset": "offset",
                   },
                   "response": {
                     "body": {
@@ -19967,6 +20131,8 @@ service:
       examples:
         - query-parameters:
             contract_id: 37nex2x
+            limit: limit
+            offset: offset
           response:
             body:
               data:
@@ -20284,6 +20450,9 @@ docs: Helper end-points for additional information about your organizations
                   "path-parameters": {
                     "contract_id": "37nex2x",
                     "task_id": "task_id",
+                  },
+                  "query-parameters": {
+                    "reason": "reason",
                   },
                   "response": {
                     "body": {
@@ -20646,6 +20815,8 @@ service:
         - path-parameters:
             contract_id: 37nex2x
             task_id: task_id
+          query-parameters:
+            reason: reason
           response:
             body:
               data:
@@ -20710,6 +20881,7 @@ docs: End-points to manage tasks for a given contract
                           {
                             "days_used_end_year": "2.00",
                             "days_used_start_year": "2.00",
+                            "requested_at": null,
                             "status": "REQUESTED",
                             "total_days_used": "4.00",
                             "type": "VACATION",
@@ -20912,6 +21084,7 @@ docs: End-points to manage tasks for a given contract
                           {
                             "days_used_end_year": "2.00",
                             "days_used_start_year": "2.00",
+                            "requested_at": null,
                             "status": "REQUESTED",
                             "total_days_used": "4.00",
                             "type": "VACATION",
@@ -21047,9 +21220,12 @@ docs: End-points to manage tasks for a given contract
                                 "requests": [
                                   {
                                     "contract_id": "abc123",
+                                    "created_at": null,
                                     "days_used_end_year": "2.00",
                                     "days_used_start_year": "2.00",
                                     "id": 6938,
+                                    "requested_at": null,
+                                    "start_date": null,
                                     "status": "REQUESTED",
                                     "total_days_used": "4.00",
                                     "type": "VACATION",
@@ -21063,9 +21239,12 @@ docs: End-points to manage tasks for a given contract
                                 "requests": [
                                   {
                                     "contract_id": "abc123",
+                                    "created_at": null,
                                     "days_used_end_year": "2.00",
                                     "days_used_start_year": "2.00",
                                     "id": 6938,
+                                    "requested_at": null,
+                                    "start_date": null,
                                     "status": "REQUESTED",
                                     "total_days_used": "4.00",
                                     "type": "VACATION",
@@ -21080,9 +21259,12 @@ docs: End-points to manage tasks for a given contract
                                 "requests": [
                                   {
                                     "contract_id": "abc123",
+                                    "created_at": null,
                                     "days_used_end_year": "2.00",
                                     "days_used_start_year": "2.00",
                                     "id": 6938,
+                                    "requested_at": null,
+                                    "start_date": null,
                                     "status": "REQUESTED",
                                     "total_days_used": "4.00",
                                     "type": "VACATION",
@@ -21221,6 +21403,7 @@ docs: End-points to manage tasks for a given contract
                             {
                               "days_used_end_year": "2.00",
                               "days_used_start_year": "2.00",
+                              "requested_at": null,
                               "status": "REQUESTED",
                               "total_days_used": "4.00",
                               "type": "VACATION",
@@ -21233,6 +21416,7 @@ docs: End-points to manage tasks for a given contract
                           "change_request": {
                             "days_used_end_year": "2.00",
                             "days_used_start_year": "2.00",
+                            "requested_at": null,
                             "status": "REQUESTED",
                             "total_days_used": "4.00",
                             "type": "VACATION",
@@ -21445,12 +21629,14 @@ service:
                   is_updated: true
                   change_request:
                     type: VACATION
+                    requested_at: null
                     status: REQUESTED
                     days_used_start_year: '2.00'
                     days_used_end_year: '2.00'
                     total_days_used: '4.00'
                   applied_changes:
                     - type: VACATION
+                      requested_at: null
                       status: REQUESTED
                       days_used_start_year: '2.00'
                       days_used_end_year: '2.00'
@@ -21559,6 +21745,7 @@ service:
                     - {}
                 applied_changes:
                   - type: VACATION
+                    requested_at: null
                     status: REQUESTED
                     days_used_start_year: '2.00'
                     days_used_end_year: '2.00'
@@ -21671,6 +21858,7 @@ service:
                     - {}
                 applied_changes:
                   - type: VACATION
+                    requested_at: null
                     status: REQUESTED
                     days_used_start_year: '2.00'
                     days_used_end_year: '2.00'
@@ -21793,32 +21981,41 @@ service:
                       - year: 2022
                         requests:
                           - type: VACATION
+                            requested_at: null
                             status: REQUESTED
                             days_used_start_year: '2.00'
                             days_used_end_year: '2.00'
                             total_days_used: '4.00'
                             id: 6938
                             contract_id: abc123
+                            created_at: null
+                            start_date: null
                     sick_leaves:
                       - year: 2022
                         requests:
                           - type: VACATION
+                            requested_at: null
                             status: REQUESTED
                             days_used_start_year: '2.00'
                             days_used_end_year: '2.00'
                             total_days_used: '4.00'
                             id: 6938
                             contract_id: abc123
+                            created_at: null
+                            start_date: null
                     others:
                       - year: 2022
                         requests:
                           - type: VACATION
+                            requested_at: null
                             status: REQUESTED
                             days_used_start_year: '2.00'
                             days_used_end_year: '2.00'
                             total_days_used: '4.00'
                             id: 6938
                             contract_id: abc123
+                            created_at: null
+                            start_date: null
                     time_zones: time_zones
                 total_requests: 1.1
       audiences:
@@ -22130,6 +22327,9 @@ docs: Manage time off requests.
                   "path-parameters": {
                     "timesheet_id": 1000000,
                   },
+                  "query-parameters": {
+                    "reason": "reason",
+                  },
                   "response": {
                     "body": {
                       "data": {
@@ -22299,6 +22499,14 @@ docs: Manage time off requests.
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "contract_id": "contract_id",
+                    "date_from": "1999-12-31",
+                    "date_to": "1999-12-31",
+                    "limit": 1000000,
+                    "offset": 1000000,
+                    "reporter_id": 1.1,
+                  },
                   "response": {
                     "body": {
                       "data": [
@@ -22432,6 +22640,13 @@ docs: Manage time off requests.
                 {
                   "path-parameters": {
                     "contract_id": "37nex2x",
+                  },
+                  "query-parameters": {
+                    "date_from": "1999-12-31",
+                    "date_to": "1999-12-31",
+                    "limit": 1000000,
+                    "offset": 1000000,
+                    "reporter_id": 1.1,
                   },
                   "response": {
                     "body": {
@@ -22692,6 +22907,12 @@ service:
       examples:
         - path-parameters:
             contract_id: 37nex2x
+          query-parameters:
+            reporter_id: 1.1
+            date_from: '1999-12-31'
+            date_to: '1999-12-31'
+            limit: 1000000
+            offset: 1000000
           response:
             body:
               data:
@@ -22798,7 +23019,14 @@ service:
         - root.TooManyRequestsError
         - root.InternalServerError
       examples:
-        - response:
+        - query-parameters:
+            contract_id: contract_id
+            reporter_id: 1.1
+            date_from: '1999-12-31'
+            date_to: '1999-12-31'
+            limit: 1000000
+            offset: 1000000
+          response:
             body:
               data:
                 - id: id
@@ -22994,6 +23222,8 @@ service:
       examples:
         - path-parameters:
             timesheet_id: 1000000
+          query-parameters:
+            reason: reason
           response:
             body:
               data:

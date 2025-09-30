@@ -12,6 +12,7 @@ import (
 	"github.com/fern-api/fern-go"
 	"github.com/fern-api/fern-go/internal/coordinator"
 	"github.com/fern-api/fern-go/internal/generator"
+	v2 "github.com/fern-api/fern-go/internal/generator/v2"
 	"github.com/fern-api/fern-go/internal/goexec"
 	"github.com/fern-api/fern-go/internal/gospec"
 	"github.com/fern-api/fern-go/internal/writer"
@@ -81,7 +82,7 @@ type Config struct {
 }
 
 // GeneratorFunc is a function that generates files.
-type GeneratorFunc func(*Config, *coordinator.Client) ([]*generator.File, error)
+type GeneratorFunc func(*Config, *coordinator.Client) ([]*generator.File, generator.Mode, error)
 
 // Run runs the given command that produces generated files.
 func Run(usage string, fn GeneratorFunc) {
@@ -161,13 +162,23 @@ func run(fn GeneratorFunc) (retErr error) {
 		}
 		retErr = multierr.Append(retErr, coordinator.Exit(exitStatusUpdate))
 	}()
-	files, err := fn(config, coordinator)
+	files, mode, err := fn(config, coordinator)
 	if err != nil {
 		return err
 	}
 	if err := writeFiles(coordinator, config.Writer, config.Module, files); err != nil {
 		return err
 	}
+	
+	// Run the go-v2 SDK generator after files are written to disk, but only for client mode.
+	// This ensures all files (including internal/caller.go and other templated files)
+	// are available on disk before the go-v2 generator tries to read them.
+	if mode == generator.ModeClient {
+		if err := runGoV2Generator(coordinator); err != nil {
+			return err
+		}
+	}
+	
 	return nil
 }
 
@@ -477,4 +488,25 @@ func maybeAppendVersionSuffix(importPath string, version string) string {
 		return importPath
 	}
 	return path.Join(importPath, version)
+}
+
+// runGoV2Generator runs the go-v2 SDK generator after files have been written to disk.
+// This ensures all generated files are available before the go-v2 generator tries to read them.
+func runGoV2Generator(coordinator *coordinator.Client) error {
+	coordinator.Log(
+		generatorexec.LogLevelDebug,
+		"Running go-v2 SDK generator after files have been written to disk...",
+	)
+
+	v2 := v2.New(coordinator)
+	if err := v2.Run(); err != nil {
+		return fmt.Errorf("failed to run go-v2 generator: %w", err)
+	}
+
+	coordinator.Log(
+		generatorexec.LogLevelDebug,
+		"Successfully completed go-v2 SDK generator",
+	)
+	
+	return nil
 }

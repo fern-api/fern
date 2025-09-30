@@ -156,11 +156,12 @@ client.Folder.Service.Endpoint(
 <dd>
 
 ```go
+request := map[string]any{
+        "key": "value",
+    }
 client.Folder.Service.UnknownRequest(
         context.TODO(),
-        map[string]any{
-            "key": "value",
-        },
+        request,
     )
 }
 ```
