@@ -17,15 +17,20 @@ class Publisher:
         should_format: bool,
         generator_exec_wrapper: GeneratorExecWrapper,
         generator_config: GeneratorConfig,
+        pyproject_format: str = "poetry_v1",
     ):
         self._should_fix = should_fix
         self._should_format = should_format
         self._generator_exec_wrapper = generator_exec_wrapper
         self._generator_config = generator_config
+        self._pyproject_format = pyproject_format
 
     def run_ruff_check_fix(self, path: Optional[str] = None, *, cwd: Optional[str] = None) -> None:
         if self._should_fix:
-            command = ["poetry", "run", "ruff", "check", "--fix", "--no-cache", "--ignore", "E741"]
+            if self._pyproject_format == "uv":
+                command = ["ruff", "check", "--fix", "--no-cache", "--ignore", "E741"]
+            else:
+                command = ["poetry", "run", "ruff", "check", "--fix", "--no-cache", "--ignore", "E741"]
             if path is not None:
                 command.append(path)
             self._run_command(
@@ -36,7 +41,10 @@ class Publisher:
 
     def run_ruff_format(self, path: Optional[str] = None, *, cwd: Optional[str] = None) -> None:
         if self._should_format:
-            command = ["poetry", "run", "ruff", "format", "--no-cache"]
+            if self._pyproject_format == "uv":
+                command = ["ruff", "format", "--no-cache"]
+            else:
+                command = ["poetry", "run", "ruff", "format", "--no-cache"]
             if path is not None:
                 command.append(path)
             self._run_command(

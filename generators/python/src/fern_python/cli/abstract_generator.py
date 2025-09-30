@@ -73,6 +73,10 @@ class AbstractGenerator(ABC):
         ):
             exclude_types_from_init_exports = generator_config.custom_config.get("exclude_types_from_init_exports")
 
+        pyproject_format = "poetry_v1"
+        if generator_config.custom_config is not None and "pyproject_format" in generator_config.custom_config:
+            pyproject_format = generator_config.custom_config.get("pyproject_format")
+
         with Project(
             filepath=generator_config.output.path,
             relative_path_to_project=os.path.join(
@@ -94,6 +98,7 @@ class AbstractGenerator(ABC):
             user_defined_toml=user_defined_toml,
             exclude_types_from_init_exports=exclude_types_from_init_exports,
             lazy_imports=self.should_use_lazy_imports(generator_config=generator_config),
+            pyproject_format=pyproject_format,
         ) as project:
             self.run(
                 generator_exec_wrapper=generator_exec_wrapper,
@@ -126,6 +131,7 @@ class AbstractGenerator(ABC):
             should_format=self.should_format_files(generator_config=generator_config),
             generator_exec_wrapper=generator_exec_wrapper,
             generator_config=generator_config,
+            pyproject_format=pyproject_format,
         )
 
         output_mode: OutputMode = generator_config.output.mode
@@ -137,11 +143,15 @@ class AbstractGenerator(ABC):
             publisher.run_ruff_check_fix("/fern/output", cwd="/")
             publisher.run_ruff_format("/fern/output", cwd="/")
         elif output_mode_union.type == "github":
-            publisher.run_poetry_install()
+            # Skip poetry install for UV format since it uses hatchling build backend
+            if pyproject_format != "uv":
+                publisher.run_poetry_install()
             publisher.run_ruff_check_fix()
             publisher.run_ruff_format()
         elif output_mode_union.type == "publish":
-            publisher.run_poetry_install()
+            # Skip poetry install for UV format since it uses hatchling build backend
+            if pyproject_format != "uv":
+                publisher.run_poetry_install()
             publisher.run_ruff_check_fix()
             publisher.run_ruff_format()
             publisher.publish_package(publish_config=output_mode_union)

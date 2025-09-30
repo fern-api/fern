@@ -103,6 +103,8 @@ class SDKCustomConfig(pydantic.BaseModel):
 
     pyproject_toml: Optional[str] = None
 
+    pyproject_format: Literal["poetry_v1", "poetry_v2", "uv"] = "poetry_v1"
+
     # The chunk size to use (if any) when processing a response bytes stream within `iter_bytes` or `aiter_bytes`
     # results in: `for _chunk in _response.iter_bytes(chunk_size=<default_bytes_stream_chunk_size>):`
     default_bytes_stream_chunk_size: Optional[int] = None

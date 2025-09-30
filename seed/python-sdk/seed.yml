@@ -283,6 +283,16 @@ fixtures:
     - customConfig:
         use_inheritance_for_extended_models: false
       outputFolder: no-inheritance-for-extended-models
+  pyproject-format:
+    - customConfig:
+        pyproject_format: "poetry_v1"
+      outputFolder: poetry-v1-format
+    - customConfig:
+        pyproject_format: "poetry_v2"
+      outputFolder: poetry-v2-format
+    - customConfig:
+        pyproject_format: "uv"
+      outputFolder: uv-format
   query-parameters:
     - customConfig: null
       outputFolder: no-custom-config
@@ -364,3 +374,4 @@ allowedFailures:
   - response-property
   - streaming-parameter
   - trace
+
