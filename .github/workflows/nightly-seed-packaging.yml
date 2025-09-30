@@ -18,7 +18,7 @@ concurrency:
 
 jobs:
   run-seed-test:
-    runs-on: ${{ matrix.runs-on }}
+    runs-on: ubuntu-latest
     # CHRISM - temp
     if: false
     strategy:
@@ -50,12 +50,6 @@ jobs:
             rust-model,
             rust-sdk,
           ]
-        include:
-          # CHRISM???
-          # Every generator runs on ubuntu-latest except the python-sdk, which requires more space right now
-          - runs-on: Seed
-            sdk-name: python-sdk
-          - runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -158,7 +152,7 @@ jobs:
           seed-generator-alias: ${{ matrix.sdk-name }}
           number-of-packages: 10
           add-package-for-leftovers: true
-          split-tests-cutoff-time-in-seconds: 9600 # Roughly 10 minutes (across 16 batches, but will depend on concurrency runners)
+          split-tests-cutoff-time-in-seconds: 30000 # Determined by inspection to be a sweet spot. Difficult to map this to real time when including parallel runners and concurrent fixtures.
           seed-test-log-file-path: artifacts/${{ matrix.sdk-name }}-seed-test-log.txt
 
       - name: Create Seed Packages File
