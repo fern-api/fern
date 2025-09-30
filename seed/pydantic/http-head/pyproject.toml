@@ -1,6 +1,3 @@
-[project]
-name = "fern_http-head"
-
 [tool.poetry]
 name = "fern_http-head"
 version = "0.0.1"
@@ -30,7 +27,7 @@ packages = [
     { include = "seed/http_head", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/http-head/fern'
 
 [tool.poetry.dependencies]

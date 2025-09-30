@@ -1,6 +1,3 @@
-[project]
-name = "fern_alias-extends"
-
 [tool.poetry]
 name = "fern_alias-extends"
 version = "0.0.1"
@@ -30,7 +27,7 @@ packages = [
     { include = "seed", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/alias-extends/fern'
 
 [tool.poetry.dependencies]

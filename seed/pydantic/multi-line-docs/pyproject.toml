@@ -1,6 +1,3 @@
-[project]
-name = "fern_multi-line-docs"
-
 [tool.poetry]
 name = "fern_multi-line-docs"
 version = "0.0.1"
@@ -30,7 +27,7 @@ packages = [
     { include = "seed/multi_line_docs", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/multi-line-docs/fern'
 
 [tool.poetry.dependencies]

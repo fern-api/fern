@@ -1,6 +1,3 @@
-[project]
-name = "fern_oauth-client-credentials-with-variables"
-
 [tool.poetry]
 name = "fern_oauth-client-credentials-with-variables"
 version = "0.0.1"
@@ -30,7 +27,7 @@ packages = [
     { include = "seed/oauth_client_credentials_with_variables", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/oauth-client-credentials-with-variables/fern'
 
 [tool.poetry.dependencies]

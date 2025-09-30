@@ -1,6 +1,3 @@
-[project]
-name = "fern_custom-auth"
-
 [tool.poetry]
 name = "fern_custom-auth"
 version = "0.0.1"
@@ -30,7 +27,7 @@ packages = [
     { include = "seed/custom_auth", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/custom-auth/fern'
 
 [tool.poetry.dependencies]

@@ -1,6 +1,3 @@
-[project]
-name = "fern_property-access"
-
 [tool.poetry]
 name = "fern_property-access"
 version = "0.0.1"
@@ -30,7 +27,7 @@ packages = [
     { include = "seed/property_access", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/property-access/fern'
 
 [tool.poetry.dependencies]

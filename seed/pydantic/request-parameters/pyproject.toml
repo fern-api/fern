@@ -1,6 +1,3 @@
-[project]
-name = "fern_request-parameters"
-
 [tool.poetry]
 name = "fern_request-parameters"
 version = "0.0.1"
@@ -30,7 +27,7 @@ packages = [
     { include = "seed/request_parameters", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/request-parameters/fern'
 
 [tool.poetry.dependencies]

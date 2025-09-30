@@ -1,6 +1,3 @@
-[project]
-name = "fern_bearer-token-environment-variable"
-
 [tool.poetry]
 name = "fern_bearer-token-environment-variable"
 version = "0.0.1"
@@ -30,7 +27,7 @@ packages = [
     { include = "seed/bearer_token_environment_variable", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/bearer-token-environment-variable/fern'
 
 [tool.poetry.dependencies]

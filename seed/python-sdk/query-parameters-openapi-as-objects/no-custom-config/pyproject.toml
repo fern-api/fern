@@ -1,6 +1,3 @@
-[project]
-name = "fern_query-parameters-openapi-as-objects"
-
 [tool.poetry]
 name = "fern_query-parameters-openapi-as-objects"
 version = "0.0.1"
@@ -30,7 +27,7 @@ packages = [
     { include = "seed", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/query-parameters-openapi-as-objects/fern'
 
 [tool.poetry.dependencies]

@@ -1,6 +1,3 @@
-[project]
-name = "fern_basic-auth"
-
 [tool.poetry]
 name = "fern_basic-auth"
 version = "0.0.1"
@@ -30,7 +27,7 @@ packages = [
     { include = "seed/basic_auth", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/basic-auth/fern'
 
 [tool.poetry.dependencies]

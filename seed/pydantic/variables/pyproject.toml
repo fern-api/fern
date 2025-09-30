@@ -1,6 +1,3 @@
-[project]
-name = "fern_variables"
-
 [tool.poetry]
 name = "fern_variables"
 version = "0.0.1"
@@ -30,7 +27,7 @@ packages = [
     { include = "seed/variables", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/variables/fern'
 
 [tool.poetry.dependencies]

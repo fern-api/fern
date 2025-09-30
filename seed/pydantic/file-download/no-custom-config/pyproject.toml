@@ -1,6 +1,3 @@
-[project]
-name = "fern_file-download"
-
 [tool.poetry]
 name = "fern_file-download"
 version = "0.0.1"
@@ -30,7 +27,7 @@ packages = [
     { include = "seed/file_download", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/file-download/fern'
 
 [tool.poetry.dependencies]

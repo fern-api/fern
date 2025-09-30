@@ -1,6 +1,3 @@
-[project]
-name = "fern_pagination"
-
 [tool.poetry]
 name = "fern_pagination"
 version = "0.0.1"
@@ -30,7 +27,7 @@ packages = [
     { include = "seed", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/pagination/fern'
 
 [tool.poetry.dependencies]

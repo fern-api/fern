@@ -1,6 +1,3 @@
-[project]
-name = "fern_content-type"
-
 [tool.poetry]
 name = "fern_content-type"
 version = "0.0.1"
@@ -30,7 +27,7 @@ packages = [
     { include = "seed/content_types", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/content-type/fern'
 
 [tool.poetry.dependencies]

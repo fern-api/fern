@@ -1,6 +1,3 @@
-[project]
-name = "fern_response-property"
-
 [tool.poetry]
 name = "fern_response-property"
 version = "0.0.1"
@@ -30,7 +27,7 @@ packages = [
     { include = "seed/response_property", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/response-property/fern'
 
 [tool.poetry.dependencies]

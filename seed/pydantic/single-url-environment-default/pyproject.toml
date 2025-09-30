@@ -1,6 +1,3 @@
-[project]
-name = "fern_single-url-environment-default"
-
 [tool.poetry]
 name = "fern_single-url-environment-default"
 version = "0.0.1"
@@ -30,7 +27,7 @@ packages = [
     { include = "seed/single_url_environment_default", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/single-url-environment-default/fern'
 
 [tool.poetry.dependencies]

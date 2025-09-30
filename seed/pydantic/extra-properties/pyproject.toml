@@ -1,6 +1,3 @@
-[project]
-name = "fern_extra-properties"
-
 [tool.poetry]
 name = "fern_extra-properties"
 version = "0.0.1"
@@ -30,7 +27,7 @@ packages = [
     { include = "seed/extra_properties", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/extra-properties/fern'
 
 [tool.poetry.dependencies]

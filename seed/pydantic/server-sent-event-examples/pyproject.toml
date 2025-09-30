@@ -1,6 +1,3 @@
-[project]
-name = "fern_server-sent-event-examples"
-
 [tool.poetry]
 name = "fern_server-sent-event-examples"
 version = "0.0.1"
@@ -30,7 +27,7 @@ packages = [
     { include = "seed/server_sent_events", from = "src"}
 ]
 
-[project.urls]
+[tool.poetry.urls]
 Repository = 'https://github.com/server-sent-event-examples/fern'
 
 [tool.poetry.dependencies]
