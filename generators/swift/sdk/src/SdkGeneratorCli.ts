@@ -19,7 +19,8 @@ import {
     PackageSwiftGenerator,
     RootClientGenerator,
     SingleUrlEnvironmentGenerator,
-    SubClientGenerator
+    SubClientGenerator,
+    WireTestSuiteGenerator
 } from "./generators";
 import { ReferenceConfigAssembler } from "./reference";
 import { SdkCustomConfigSchema, SdkCustomConfigSchemaDefaults } from "./SdkCustomConfig";
@@ -573,16 +574,24 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         Object.entries(context.ir.subpackages).forEach(([subpackageId, subpackage]) => {
             const subclientName = context.project.srcSymbolRegistry.getSubClientSymbolOrThrow(subpackageId);
             const testSuiteName = context.project.testSymbolRegistry.getWireTestSuiteSymbolOrThrow(subclientName);
-            // TODO(kafkas): Implement
-            const struct = swift.struct({
-                name: testSuiteName,
-                properties: []
+            const testSuiteGenerator = new WireTestSuiteGenerator({
+                suiteName: testSuiteName,
+                subclientName,
+                subpackage,
+                sdkGeneratorContext: context
             });
+            const struct = testSuiteGenerator.generate();
             const fernFilepathDir = context.getDirectoryForFernFilepath(subpackage.fernFilepath);
             context.project.addTestFile({
                 nameCandidateWithoutExtension: struct.name,
                 directory: join(RelativeFilePath.of("Wire/Resources"), RelativeFilePath.of(fernFilepathDir)),
-                contents: [struct]
+                contents: [
+                    swift.Statement.import("Foundation"),
+                    swift.Statement.import("Testing"),
+                    swift.Statement.import(context.srcTargetName),
+                    swift.LineBreak.single(),
+                    struct
+                ]
             });
         });
     }
