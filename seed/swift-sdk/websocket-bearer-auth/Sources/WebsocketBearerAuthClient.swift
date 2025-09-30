@@ -24,7 +24,7 @@ public final class WebsocketBearerAuthClient: Sendable {
         self.init(
             baseURL: baseURL,
             headerAuth: nil,
-            bearerAuth: .init(token: apiKey),
+            bearerAuth: .init(token: .staticToken(apiKey)),
             basicAuth: nil,
             headers: headers,
             timeout: timeout,
@@ -43,7 +43,7 @@ public final class WebsocketBearerAuthClient: Sendable {
     /// - Parameter urlSession: Custom `URLSession` to use for requests. If not provided, a default session will be created with the specified timeout.
     public convenience init(
         baseURL: String,
-        apiKey: ClientConfig.CredentialProvider,
+        apiKey: @escaping ClientConfig.CredentialProvider,
         headers: [String: String]? = nil,
         timeout: Int? = nil,
         maxRetries: Int? = nil,
@@ -52,7 +52,7 @@ public final class WebsocketBearerAuthClient: Sendable {
         self.init(
             baseURL: baseURL,
             headerAuth: nil,
-            bearerAuth: .init(token: apiKey),
+            bearerAuth: .init(token: .provider(apiKey)),
             basicAuth: nil,
             headers: headers,
             timeout: timeout,

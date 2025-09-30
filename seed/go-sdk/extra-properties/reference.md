@@ -13,6 +13,9 @@
 <dd>
 
 ```go
+request := &fern.CreateUserRequest{
+        Name: "name",
+    }
 client.User.CreateUser(
         context.TODO(),
         request,

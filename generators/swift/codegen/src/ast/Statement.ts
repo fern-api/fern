@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-
+import { escapeReservedKeyword } from "../syntax";
 import { AccessLevel } from "./AccessLevel";
 import { CodeBlock } from "./CodeBlock";
 import { AstNode, Writer } from "./core";
@@ -8,7 +8,6 @@ import { DocComment } from "./DocComment";
 import { Expression } from "./Expression";
 import { FunctionParameter } from "./FunctionParameter";
 import { Pattern } from "./Pattern";
-import { escapeReservedKeyword } from "./syntax";
 import { Type } from "./Type";
 
 type TypealiasDeclaration = {

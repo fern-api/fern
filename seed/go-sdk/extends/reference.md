@@ -12,6 +12,11 @@
 <dd>
 
 ```go
+request := &fern.Inlined{
+        Name: "name",
+        Docs: "docs",
+        Unique: "unique",
+    }
 client.ExtendedInlineRequestBody(
         context.TODO(),
         request,

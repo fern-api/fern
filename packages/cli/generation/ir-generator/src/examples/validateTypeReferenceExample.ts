@@ -215,7 +215,7 @@ export function validateTypeReferenceExample({
                 });
             },
             nullable: (itemType) => {
-                if (example == null) {
+                if (example === null) {
                     return [];
                 }
                 return validateTypeReferenceExample({

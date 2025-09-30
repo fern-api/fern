@@ -13,6 +13,15 @@
 <dd>
 
 ```go
+request := &fern.GetTokenRequest{
+        Cid: "cid",
+        Csr: "csr",
+        Scp: "scp",
+        EntityId: "entity_id",
+        Scope: fern.String(
+            "scope",
+        ),
+    }
 client.Auth.GetTokenWithClientCredentials(
         context.TODO(),
         request,
@@ -105,6 +114,14 @@ client.Auth.GetTokenWithClientCredentials(
 <dd>
 
 ```go
+request := &fern.RefreshTokenRequest{
+        ClientId: "client_id",
+        ClientSecret: "client_secret",
+        RefreshToken: "refresh_token",
+        Scope: fern.String(
+            "scope",
+        ),
+    }
 client.Auth.RefreshToken(
         context.TODO(),
         request,

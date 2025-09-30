@@ -5,8 +5,8 @@ module Seed
     module EnumWithSpecialCharacters
       extend Seed::Internal::Types::Enum
 
-      BLA = "$bla"
-      YO = "$yo"
+      BLA = "\\$bla"
+      YO = "\\$yo"
     end
   end
 end

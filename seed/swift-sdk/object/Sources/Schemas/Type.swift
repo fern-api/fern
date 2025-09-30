@@ -8,7 +8,7 @@ public struct Type: Codable, Hashable, Sendable {
     public let four: Bool
     public let five: Int64
     public let six: Date
-    public let seven: Date
+    public let seven: CalendarDate
     public let eight: UUID
     public let nine: String
     public let ten: [Int]
@@ -26,7 +26,7 @@ public struct Type: Codable, Hashable, Sendable {
     public let twentytwo: Float
     public let twentythree: String
     public let twentyfour: Date?
-    public let twentyfive: Date?
+    public let twentyfive: CalendarDate?
     /// Additional properties that are not explicitly defined in the schema
     public let additionalProperties: [String: JSONValue]
 
@@ -37,7 +37,7 @@ public struct Type: Codable, Hashable, Sendable {
         four: Bool,
         five: Int64,
         six: Date,
-        seven: Date,
+        seven: CalendarDate,
         eight: UUID,
         nine: String,
         ten: [Int],
@@ -55,7 +55,7 @@ public struct Type: Codable, Hashable, Sendable {
         twentytwo: Float,
         twentythree: String,
         twentyfour: Date? = nil,
-        twentyfive: Date? = nil,
+        twentyfive: CalendarDate? = nil,
         additionalProperties: [String: JSONValue] = .init()
     ) {
         self.one = one
@@ -94,7 +94,7 @@ public struct Type: Codable, Hashable, Sendable {
         self.four = try container.decode(Bool.self, forKey: .four)
         self.five = try container.decode(Int64.self, forKey: .five)
         self.six = try container.decode(Date.self, forKey: .six)
-        self.seven = try container.decode(Date.self, forKey: .seven)
+        self.seven = try container.decode(CalendarDate.self, forKey: .seven)
         self.eight = try container.decode(UUID.self, forKey: .eight)
         self.nine = try container.decode(String.self, forKey: .nine)
         self.ten = try container.decode([Int].self, forKey: .ten)
@@ -112,7 +112,7 @@ public struct Type: Codable, Hashable, Sendable {
         self.twentytwo = try container.decode(Float.self, forKey: .twentytwo)
         self.twentythree = try container.decode(String.self, forKey: .twentythree)
         self.twentyfour = try container.decodeIfPresent(Date.self, forKey: .twentyfour)
-        self.twentyfive = try container.decodeIfPresent(Date.self, forKey: .twentyfive)
+        self.twentyfive = try container.decodeIfPresent(CalendarDate.self, forKey: .twentyfive)
         self.additionalProperties = try decoder.decodeAdditionalProperties(using: CodingKeys.self)
     }
 

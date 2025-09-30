@@ -27,14 +27,7 @@
     "optionalNullableRole": {
       "oneOf": [
         {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/nullable-optional.UserRole"
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "$ref": "#/definitions/nullable-optional.UserRole"
         },
         {
           "type": "null"
@@ -64,14 +57,7 @@
     "optionalNullableStatus": {
       "oneOf": [
         {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/nullable-optional.UserStatus"
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "$ref": "#/definitions/nullable-optional.UserStatus"
         },
         {
           "type": "null"
@@ -101,14 +87,7 @@
     "optionalNullableNotification": {
       "oneOf": [
         {
-          "oneOf": [
-            {
-              "$ref": "#/definitions/nullable-optional.NotificationMethod"
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "$ref": "#/definitions/nullable-optional.NotificationMethod"
         },
         {
           "type": "null"
@@ -164,17 +143,10 @@
     "optionalNullableArray": {
       "oneOf": [
         {
-          "oneOf": [
-            {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         },
         {
           "type": "null"
@@ -434,14 +406,7 @@
         "country": {
           "oneOf": [
             {
-              "oneOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ]
+              "type": "string"
             },
             {
               "type": "null"
