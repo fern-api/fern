@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fail loud when no configuration files are found for either SDKs or docs.
+      type: chore
+  irVersion: 60
+  createdAt: "2025-09-30"
+  version: 0.84.1
+
+- changelogEntry:
+    - summary: |
         Add a `resolve-aliases` config flag to the OpenAPI parser which will inline aliases if possible.
       type: feat
   irVersion: 60
@@ -25,10 +33,10 @@
 
 - changelogEntry:
     - summary: |
-        Introduce `page-actions` configuration in the `docs.yml` so that users can choose which 
-        actions are visible. 
+        Introduce `page-actions` configuration in the `docs.yml` so that users can choose which
+        actions are visible.
 
-        ```docs.yml 
+        ```docs.yml
         page-actions:
           chatgpt: false
           claude: true

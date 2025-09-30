@@ -1519,6 +1519,35 @@
       },
       "additionalProperties": false
     },
+    "generators.ResolveAliasesSchema": {
+      "type": "object",
+      "properties": {
+        "except": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "generators.ResolveAliases": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "$ref": "#/definitions/generators.ResolveAliasesSchema"
+        }
+      ]
+    },
     "generators.OpenAPISettingsSchema": {
       "type": "object",
       "properties": {
@@ -1726,6 +1755,16 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resolve-aliases": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.ResolveAliases"
             },
             {
               "type": "null"
