@@ -51,8 +51,31 @@ export class WireTestSuiteGenerator {
 
     private generateTestFunctions(): swift.Method[] {
         return (this.service?.endpoints ?? []).map((endpoint) => {
-            // TODO(kafkas): Implement this
             const statements: swift.Statement[] = [
+                swift.Statement.constantDeclaration({
+                    unsafeName: "stub",
+                    value: swift.Expression.structInitialization({ unsafeName: "WireStub" })
+                }),
+                swift.Statement.expressionStatement(
+                    swift.Expression.methodCall({
+                        target: swift.Expression.reference("stub"),
+                        methodName: "setResponse",
+                        arguments_: [
+                            swift.functionArgument({
+                                label: "body",
+                                value: swift.Expression.structInitialization({
+                                    unsafeName: "Data",
+                                    arguments_: [
+                                        // TODO(kafkas): Implement this
+                                        swift.functionArgument({ value: swift.Expression.stringLiteral(`""\n{}\n""`) })
+                                    ],
+                                    multiline: true
+                                })
+                            })
+                        ],
+                        multiline: true
+                    })
+                ),
                 swift.Statement.constantDeclaration({
                     unsafeName: "expected",
                     value: swift.Expression.stringLiteral("abc")
@@ -78,6 +101,7 @@ export class WireTestSuiteGenerator {
                 )
             ];
             return swift.method({
+                attributes: [{ name: "Test" }],
                 unsafeName: endpoint.name.camelCase.unsafeName,
                 async: true,
                 throws: true,
