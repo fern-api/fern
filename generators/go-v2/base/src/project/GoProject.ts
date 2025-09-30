@@ -38,23 +38,16 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
 
     public async persist({ tidy }: { tidy?: boolean } = {}): Promise<void> {
         this.context.logger.debug(`Writing go files to ${this.absolutePathToOutputDirectory}`);
-
-        const goFiles = Object.values(this.goFiles).flat();
+        // hotfix: disable go.mod generation after inverting overwrite order of generator execution so v2 wins
         await this.writeGoMod();
         await this.writeInternalFiles();
         await this.writeRootAsIsFiles();
         await this.writeGoFiles({
-            files: goFiles
+            files: Object.values(this.goFiles).flat()
         });
         await this.writeRawFiles();
         if (tidy) {
             await this.runGoModTidy();
-        }
-        if (goFiles.length > 0) {
-            await loggingExeca(this.context.logger, "go", ["fmt", "./..."], {
-                doNotPipeOutput: true,
-                cwd: this.absolutePathToOutputDirectory
-            });
         }
         this.context.logger.debug(`Successfully wrote go files to ${this.absolutePathToOutputDirectory}`);
     }
@@ -82,6 +75,12 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         );
 
         await Promise.all(files.map(async (file) => await file.write(AbsoluteFilePath.of(outputDir))));
+        if (files.length > 0) {
+            await loggingExeca(this.context.logger, "go", ["fmt", "./..."], {
+                doNotPipeOutput: true,
+                cwd: this.absolutePathToOutputDirectory
+            });
+        }
         return this.absolutePathToOutputDirectory;
     }
 
