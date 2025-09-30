@@ -3,11 +3,19 @@ import { AccessLevel } from "./AccessLevel";
 import { CodeBlock } from "./CodeBlock";
 import { AstNode, Writer } from "./core";
 import { DocComment } from "./DocComment";
+import { Expression } from "./Expression";
+import { FunctionArgument } from "./FunctionArgument";
 import { FunctionParameter } from "./FunctionParameter";
 import { Type } from "./Type";
 
 export declare namespace Method {
+    interface Attribute {
+        name: string;
+        arguments?: FunctionArgument[];
+    }
+
     interface Args {
+        attributes?: Attribute[];
         unsafeName: string;
         accessLevel?: AccessLevel;
         static_?: boolean;
@@ -21,6 +29,7 @@ export declare namespace Method {
 }
 
 export class Method extends AstNode {
+    public readonly attributes: Method.Attribute[];
     public readonly unsafeName: string;
     public readonly accessLevel?: AccessLevel;
     public readonly static_?: boolean;
@@ -32,6 +41,7 @@ export class Method extends AstNode {
     public readonly docs?: DocComment;
 
     public constructor({
+        attributes,
         unsafeName,
         accessLevel,
         static_,
@@ -43,6 +53,7 @@ export class Method extends AstNode {
         docs
     }: Method.Args) {
         super();
+        this.attributes = attributes ?? [];
         this.unsafeName = unsafeName;
         this.accessLevel = accessLevel;
         this.static_ = static_;
@@ -58,6 +69,18 @@ export class Method extends AstNode {
         if (this.docs != null) {
             this.docs.write(writer);
         }
+        this.attributes.forEach((attribute) => {
+            if (attribute.arguments?.length) {
+                Expression.functionCall({
+                    unsafeName: `@${attribute.name}`,
+                    arguments_: attribute.arguments
+                }).write(writer);
+            } else {
+                writer.write("@");
+                writer.write(attribute.name);
+            }
+            writer.write(" ");
+        });
         if (this.accessLevel != null) {
             writer.write(this.accessLevel);
             writer.write(" ");
