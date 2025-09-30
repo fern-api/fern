@@ -565,7 +565,29 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     private async generateWireTestFiles(context: SdkGeneratorContext): Promise<void> {
-        // TODO(kafkas): Generate wire test suites
+        this.generateWireTestSuiteFiles(context);
+        this.generateWireTestClientFactoryFile(context);
+    }
+
+    private generateWireTestSuiteFiles(context: SdkGeneratorContext): void {
+        Object.entries(context.ir.subpackages).forEach(([subpackageId, subpackage]) => {
+            const subclientName = context.project.srcSymbolRegistry.getSubClientSymbolOrThrow(subpackageId);
+            const testSuiteName = context.project.testSymbolRegistry.getWireTestSuiteSymbolOrThrow(subclientName);
+            // TODO(kafkas): Implement
+            const struct = swift.struct({
+                name: testSuiteName,
+                properties: []
+            });
+            const fernFilepathDir = context.getDirectoryForFernFilepath(subpackage.fernFilepath);
+            context.project.addTestFile({
+                nameCandidateWithoutExtension: struct.name,
+                directory: join(RelativeFilePath.of("Wire/Resources"), RelativeFilePath.of(fernFilepathDir)),
+                contents: [struct]
+            });
+        });
+    }
+
+    private generateWireTestClientFactoryFile(context: SdkGeneratorContext): void {
         // TODO(kafkas): Generate the test client factory
     }
 }

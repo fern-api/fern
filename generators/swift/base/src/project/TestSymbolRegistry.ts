@@ -36,7 +36,7 @@ export class TestSymbolRegistry {
         return symbolName;
     }
 
-    public registerWireTestSuiteSymbol({ subclientName }: { subclientName: string }): string {
+    public registerWireTestSuiteSymbol(subclientName: string): string {
         return this.registry.registerSymbol(this.getWireTestSuiteSymbolId(subclientName), [
             `${subclientName}WireTests`,
             `${subclientName}WireTestSuite`

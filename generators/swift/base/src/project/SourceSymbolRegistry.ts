@@ -119,7 +119,7 @@ export class SourceSymbolRegistry {
     }
 
     public getAllSubClientSymbols() {
-        return this.registry.getAllSymbols().filter((symbol) => symbol.name.startsWith(this.subClientSymbolIdPrefix));
+        return this.registry.getAllSymbols().filter((symbol) => symbol.id.startsWith(this.subClientSymbolIdPrefix));
     }
 
     /**

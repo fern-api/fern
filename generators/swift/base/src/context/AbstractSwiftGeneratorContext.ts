@@ -103,7 +103,7 @@ export abstract class AbstractSwiftGeneratorContext<
 
     private registerTestSymbols(testSymbolRegistry: TestSymbolRegistry, sourceSymbolRegistry: SourceSymbolRegistry) {
         sourceSymbolRegistry.getAllSubClientSymbols().forEach((s) => {
-            testSymbolRegistry.registerWireTestSuiteSymbol({ subclientName: s.name });
+            testSymbolRegistry.registerWireTestSuiteSymbol(s.name);
         });
     }
 
