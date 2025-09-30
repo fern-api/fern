@@ -15,6 +15,12 @@ describe Seed::Internal::Types::Union do
     field :area, Float
   end
 
+  class Pineapple < Seed::Internal::Types::Model
+    literal :type, "pineapple"
+
+    field :area, Float
+  end
+
   module Shape
     extend Seed::Internal::Types::Union
 
@@ -43,11 +49,14 @@ describe Seed::Internal::Types::Union do
     it "defines Model members" do
       assert Shape.member?(Rectangle)
       assert Shape.member?(Circle)
+      refute Shape.member?(Pineapple)
     end
 
     it "defines other members" do
       assert StringOrInteger.member?(String)
       assert StringOrInteger.member?(Integer)
+      refute StringOrInteger.member?(Float)
+      refute StringOrInteger.member?(Pineapple)
     end
   end
 end
