@@ -577,14 +577,30 @@ export class SubClientGenerator {
         TypeReference._visit(typeRef, {
             primitive: (primitive) => {
                 PrimitiveTypeV1._visit(primitive.v1, {
-                    string: () => {}, // String is built-in
-                    boolean: () => {}, // Bool is built-in
-                    integer: () => {}, // i32 is built-in
-                    uint: () => {}, // u32 is built-in
-                    uint64: () => {}, // u64 is built-in
-                    long: () => {}, // i64 is built-in
-                    float: () => {}, // f32 is built-in
-                    double: () => {}, // f64 is built-in
+                    string: () => {
+                        // String is built-in
+                    },
+                    boolean: () => {
+                        // Bool is built-in
+                    },
+                    integer: () => {
+                        // i32 is built-in
+                    },
+                    uint: () => {
+                        // u32 is built-in
+                    },
+                    uint64: () => {
+                        // u64 is built-in
+                    },
+                    long: () => {
+                        // i64 is built-in
+                    },
+                    float: () => {
+                        // f32 is built-in
+                    },
+                    double: () => {
+                        // f64 is built-in
+                    },
                     bigInteger: () => requiredTypes.add("BigInt"), // Direct BigInt parameter
                     date: () => requiredTypes.add("NaiveDate"), // Direct NaiveDate parameter
                     dateTime: () => {
@@ -592,9 +608,13 @@ export class SubClientGenerator {
                         requiredTypes.add("DateTime");
                         requiredTypes.add("Utc");
                     },
-                    base64: () => {}, // String is built-in
+                    base64: () => {
+                        // String is built-in
+                    },
                     uuid: () => requiredTypes.add("Uuid"), // Direct Uuid parameter
-                    _other: () => {}
+                    _other: () => {
+                        // Other types don't need imports
+                    }
                 });
             },
             named: () => {
@@ -627,7 +647,9 @@ export class SubClientGenerator {
                         // Option<T> is built-in, no import needed
                         this.collectDirectParameterImports(nullableType, requiredTypes);
                     },
-                    literal: () => {}, // Literals are built-in
+                    literal: () => {
+                        // Literals are built-in
+                    },
                     _other: () => requiredTypes.add("serde_json::Value")
                 });
             },
@@ -666,7 +688,9 @@ export class SubClientGenerator {
                     nullable: (nullableType) => {
                         this.collectTypeFromReference(nullableType, requiredTypes);
                     },
-                    literal: () => {}, // Literals are built-in
+                    literal: () => {
+                        // Literals are built-in
+                    },
                     _other: () => requiredTypes.add("serde_json::Value")
                 });
             },

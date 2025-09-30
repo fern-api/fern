@@ -1,5 +1,5 @@
 import { Attribute, rust } from "@fern-api/rust-codegen";
-import { InlinedRequestBodyProperty, ObjectProperty } from "@fern-fern/ir-sdk/api";
+import { InlinedRequestBodyProperty, ObjectProperty, PrimitiveTypeV1, TypeReference } from "@fern-fern/ir-sdk/api";
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import {
@@ -70,15 +70,17 @@ export function hasBigIntFields(properties: (ObjectProperty | InlinedRequestBody
     });
 }
 
-function hasHashMapInType(typeRef: any): boolean {
-    if (!typeRef || typeof typeRef !== "object") return false;
+function hasHashMapInType(typeRef: TypeReference): boolean {
+    if (!typeRef || typeof typeRef !== "object") {
+        return false;
+    }
 
     if (typeRef.type === "container") {
         return typeRef.container._visit({
             map: () => true,
-            optional: (innerType: any) => hasHashMapInType(innerType),
-            nullable: (innerType: any) => hasHashMapInType(innerType),
-            list: (innerType: any) => hasHashMapInType(innerType),
+            optional: (innerType: TypeReference) => hasHashMapInType(innerType),
+            nullable: (innerType: TypeReference) => hasHashMapInType(innerType),
+            list: (innerType: TypeReference) => hasHashMapInType(innerType),
             set: () => false,
             literal: () => false,
             _other: () => false
@@ -88,15 +90,17 @@ function hasHashMapInType(typeRef: any): boolean {
     return false;
 }
 
-function hasHashSetInType(typeRef: any): boolean {
-    if (!typeRef || typeof typeRef !== "object") return false;
+function hasHashSetInType(typeRef: TypeReference): boolean {
+    if (!typeRef || typeof typeRef !== "object") {
+        return false;
+    }
 
     if (typeRef.type === "container") {
         return typeRef.container._visit({
             set: () => true,
-            optional: (innerType: any) => hasHashSetInType(innerType),
-            nullable: (innerType: any) => hasHashSetInType(innerType),
-            list: (innerType: any) => hasHashSetInType(innerType),
+            optional: (innerType: TypeReference) => hasHashSetInType(innerType),
+            nullable: (innerType: TypeReference) => hasHashSetInType(innerType),
+            list: (innerType: TypeReference) => hasHashSetInType(innerType),
             map: () => false,
             literal: () => false,
             _other: () => false
@@ -106,20 +110,38 @@ function hasHashSetInType(typeRef: any): boolean {
     return false;
 }
 
-function hasBigIntInType(typeRef: any): boolean {
-    if (!typeRef || typeof typeRef !== "object") return false;
+function hasBigIntInType(typeRef: TypeReference): boolean {
+    if (!typeRef || typeof typeRef !== "object") {
+        return false;
+    }
 
     if (typeRef.type === "primitive") {
-        return typeRef.primitive.v1 === "bigInteger";
+        return PrimitiveTypeV1._visit(typeRef.primitive.v1, {
+            string: () => false,
+            boolean: () => false,
+            integer: () => false,
+            uint: () => false,
+            uint64: () => false,
+            long: () => false,
+            float: () => false,
+            double: () => false,
+            bigInteger: () => true,
+            date: () => false,
+            dateTime: () => false,
+            base64: () => false,
+            uuid: () => false,
+            _other: () => false
+        });
     }
 
     if (typeRef.type === "container") {
         return typeRef.container._visit({
-            optional: (innerType: any) => hasBigIntInType(innerType),
-            nullable: (innerType: any) => hasBigIntInType(innerType),
-            list: (innerType: any) => hasBigIntInType(innerType),
-            set: (innerType: any) => hasBigIntInType(innerType),
-            map: (mapType: any) => hasBigIntInType(mapType.keyType) || hasBigIntInType(mapType.valueType),
+            optional: (innerType: TypeReference) => hasBigIntInType(innerType),
+            nullable: (innerType: TypeReference) => hasBigIntInType(innerType),
+            list: (innerType: TypeReference) => hasBigIntInType(innerType),
+            set: (innerType: TypeReference) => hasBigIntInType(innerType),
+            map: (mapType: { keyType: TypeReference; valueType: TypeReference }) =>
+                hasBigIntInType(mapType.keyType) || hasBigIntInType(mapType.valueType),
             literal: () => false,
             _other: () => false
         });

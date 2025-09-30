@@ -79,17 +79,17 @@ export class UnionGenerator {
             writer.writeLine("use chrono::{DateTime, Utc};");
         }
 
-          // Add std::collections imports based on specific collection types used
-          const needsHashMap = hasHashMapFields(this.unionTypeDeclaration.baseProperties);
-          const needsHashSet = hasHashSetFields(this.unionTypeDeclaration.baseProperties);
-  
-          if (needsHashMap && needsHashSet) {
-              writer.writeLine("use std::collections::{HashMap, HashSet};");
-          } else if (needsHashMap) {
-              writer.writeLine("use std::collections::HashMap;");
-          } else if (needsHashSet) {
-              writer.writeLine("use std::collections::HashSet;");
-          }
+        // Add std::collections imports based on specific collection types used
+        const needsHashMap = hasHashMapFields(this.unionTypeDeclaration.baseProperties);
+        const needsHashSet = hasHashSetFields(this.unionTypeDeclaration.baseProperties);
+
+        if (needsHashMap && needsHashSet) {
+            writer.writeLine("use std::collections::{HashMap, HashSet};");
+        } else if (needsHashMap) {
+            writer.writeLine("use std::collections::HashMap;");
+        } else if (needsHashSet) {
+            writer.writeLine("use std::collections::HashSet;");
+        }
 
         // TODO: @iamnamananand996 build to use serde_json::Value ---> Value directly
         // if (hasJsonValueFields(properties)) {
