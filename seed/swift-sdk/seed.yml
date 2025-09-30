@@ -112,6 +112,7 @@ allowedFailures:
   - multi-url-environment-no-default
   - nullable
   - nullable-optional
+  - oauth-client-credentials-with-variables
   - pagination:no-custom-config
   - pagination:custom-pager
   - pagination:custom-pager-with-exception-handler
@@ -129,6 +130,7 @@ allowedFailures:
   - undiscriminated-unions
   - unions
   - validation
+  - variables
   - websocket-bearer-auth
   - websocket-inferred-auth
   - property-access

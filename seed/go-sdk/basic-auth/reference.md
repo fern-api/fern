@@ -69,6 +69,9 @@ POST request with basic auth scheme
 <dd>
 
 ```go
+request := map[string]any{
+        "key": "value",
+    }
 client.BasicAuth.PostWithBasicAuth(
         context.TODO(),
         request,
