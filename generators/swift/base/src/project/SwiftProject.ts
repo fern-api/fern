@@ -81,10 +81,10 @@ export class SwiftProject extends AbstractProject<AbstractSwiftGeneratorContext<
     }
 
     /**
-     * Adds a test file to the project. The file will include a Foundation import so you don't need to add it to the file contents manually.
+     * Adds a test file to the project.
      */
     public addTestFile(candidate: FileCandidate): SwiftFile {
-        return this.testFileRegistry.add({ ...candidate, includeFoundationImport: true });
+        return this.testFileRegistry.add(candidate);
     }
 
     /**
