@@ -5,7 +5,9 @@ import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
 import {
     dynamic,
     ExampleEndpointCall,
+    FernFilepath,
     HttpEndpoint,
+    HttpService,
     PrimitiveTypeV1,
     QueryParameter,
     TypeReference
@@ -37,9 +39,10 @@ export class WireTestGenerator {
     }
 
     public async generate(): Promise<void> {
-        await this.context.project.writeSharedTestFiles();
+        // await this.context.project.writeSharedTestFiles();
 
         const endpointsByService = this.groupEndpointsByService();
+        const filePathsByServiceName = this.getFilePathsByServiceName();
 
         for (const [serviceName, endpoints] of endpointsByService.entries()) {
             const endpointsWithExamples = endpoints.filter((endpoint) => {
@@ -51,13 +54,25 @@ export class WireTestGenerator {
                 continue;
             }
 
-            const serviceTestFile = await this.generateServiceTestFile(serviceName, endpointsWithExamples);
+            const serviceTestFile = await this.generateServiceTestFile(
+                serviceName,
+                endpointsWithExamples,
+                filePathsByServiceName.get(serviceName) ?? {
+                    allParts: [],
+                    packagePath: [],
+                    file: undefined
+                }
+            );
 
             this.context.project.addRawFiles(serviceTestFile);
         }
     }
 
-    private async generateServiceTestFile(serviceName: string, endpoints: HttpEndpoint[]): Promise<File> {
+    private async generateServiceTestFile(
+        serviceName: string,
+        endpoints: HttpEndpoint[],
+        filePath: FernFilepath
+    ): Promise<File> {
         const endpointTestCases = new Map<string, string>();
         for (const endpoint of endpoints) {
             const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
@@ -109,14 +124,22 @@ export class WireTestGenerator {
                 }
             })
             .toString({
-                packageName: "wiremock",
+                packageName: `${serviceName}_test`,
                 rootImportPath: this.context.getRootPackageName(),
                 importPath: this.context.getRootPackageName(),
                 customConfig: this.context.customConfig ?? {},
                 formatter: undefined
             });
 
-        return new File(serviceName + "_test.go", RelativeFilePath.of("./test"), serviceTestFileContent);
+        const packageLocation = this.context.getClientFileLocation({
+            fernFilepath: filePath,
+            subpackage: undefined
+        });
+        return new File(
+            serviceName + "_test.go",
+            RelativeFilePath.of(`./${packageLocation.directory}/${serviceName}_test`),
+            serviceTestFileContent
+        );
     }
 
     private async generateSnippetForExample(example: dynamic.EndpointExample): Promise<string> {
@@ -1093,12 +1116,24 @@ export class WireTestGenerator {
         const endpointsByService = new Map<string, HttpEndpoint[]>();
 
         for (const service of Object.values(this.context.ir.services)) {
-            const serviceName =
-                service.name?.fernFilepath?.allParts?.map((part) => part.snakeCase.safeName).join("_") || "root";
+            const serviceName = this.getFormattedServiceName(service);
 
             endpointsByService.set(serviceName, service.endpoints);
         }
 
         return endpointsByService;
+    }
+
+    private getFilePathsByServiceName(): Map<string, FernFilepath> {
+        const filePathsByServiceName = new Map<string, FernFilepath>();
+        for (const service of Object.values(this.context.ir.services)) {
+            const serviceName = this.getFormattedServiceName(service);
+            filePathsByServiceName.set(serviceName, service.name?.fernFilepath);
+        }
+        return filePathsByServiceName;
+    }
+
+    private getFormattedServiceName(service: HttpService): string {
+        return service.name?.fernFilepath?.allParts?.map((part) => part.snakeCase.safeName).join("_") || "root";
     }
 }
