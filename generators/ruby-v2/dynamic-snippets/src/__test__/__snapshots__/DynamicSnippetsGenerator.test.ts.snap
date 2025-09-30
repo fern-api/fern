@@ -5,11 +5,11 @@ exports[`snippets (default) > examples > 'GET /metadata (allow-multiple)' 1`] = 
 
 client = acme::Client.new(token: '<YOUR_API_KEY>');
 
-client.service.get_metadata({
-  shallow:false,
-  tag:['development', 'public'],
-  xAPIVersion:'0.0.1'
-});
+client.service.get_metadata(
+  shallow: false,
+  tag: ['development', 'public'],
+  xAPIVersion: '0.0.1'
+);
 "
 `;
 
@@ -140,7 +140,7 @@ exports[`snippets (default) > file-upload > 'POST /' 1`] = `
 
 client = acme::Client.new();
 
-client.service.post({});
+client.service.post();
 "
 `;
 
@@ -149,7 +149,7 @@ exports[`snippets (default) > file-upload > 'POST /just-file' 1`] = `
 
 client = acme::Client.new();
 
-client.service.just_file({});
+client.service.just_file();
 "
 `;
 
@@ -158,10 +158,10 @@ exports[`snippets (default) > file-upload > 'POST /just-file-with-query-params' 
 
 client = acme::Client.new();
 
-client.service.just_file_with_query_params({
-  integer:42,
-  maybeString:'exists'
-});
+client.service.just_file_with_query_params(
+  integer: 42,
+  maybeString: 'exists'
+);
 "
 `;
 
@@ -214,9 +214,7 @@ client = acme::Client.new(
   environment: acme::Environment::PRODUCTION
 );
 
-client.s3.get_presigned_url({
-  s3Key:'xyz'
-});
+client.s3.get_presigned_url(s3Key: 'xyz');
 "
 `;
 
@@ -228,9 +226,7 @@ client = acme::Client.new(
   environment: acme::Environment::STAGING
 );
 
-client.s3.get_presigned_url({
-  s3Key:'xyz'
-});
+client.s3.get_presigned_url(s3Key: 'xyz');
 "
 `;
 
@@ -249,17 +245,17 @@ exports[`snippets (default) > nullable > 'Body properties' 1`] = `
 
 client = acme::Client.new(base_url: 'https://api.example.com');
 
-client.nullable.create_user({
-  username:'john.doe',
-  tags:['admin'],
-  metadata:{
+client.nullable.create_user(
+  username: 'john.doe',
+  tags: ['admin'],
+  metadata: {
     createdAt:'1980-01-01T00:00:00Z',
     updatedAt:'1980-01-01T00:00:00Z',
     avatar:nil,
     activated:nil
   },
-  avatar:nil
-});
+  avatar: nil
+);
 "
 `;
 
@@ -278,11 +274,11 @@ exports[`snippets (default) > nullable > 'Query parameters' 1`] = `
 
 client = acme::Client.new(base_url: 'https://api.example.com');
 
-client.nullable.get_users({
-  usernames:['john.doe', 'jane.doe'],
-  tags:[nil],
-  extra:nil
-});
+client.nullable.get_users(
+  usernames: ['john.doe', 'jane.doe'],
+  tags: [nil],
+  extra: nil
+);
 "
 `;
 
