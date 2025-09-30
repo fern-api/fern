@@ -214,14 +214,14 @@ export function primitiveSupportsPartialEq(primitive: PrimitiveTypeV1): boolean 
         uint: () => true,
         uint64: () => true,
         long: () => true,
-        float: () => true,    // f32 DOES implement PartialEq (but not Eq/Hash)
-        double: () => true,   // f64 DOES implement PartialEq (but not Eq/Hash)
+        float: () => true, // f32 DOES implement PartialEq (but not Eq/Hash)
+        double: () => true, // f64 DOES implement PartialEq (but not Eq/Hash)
         bigInteger: () => true,
         date: () => true,
         dateTime: () => true,
         base64: () => true,
         uuid: () => true,
-        _other: () => true  // Be more permissive for PartialEq
+        _other: () => true // Be more permissive for PartialEq
     });
 }
 

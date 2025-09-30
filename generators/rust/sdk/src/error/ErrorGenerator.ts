@@ -63,7 +63,7 @@ export class ErrorGenerator {
         const seenNames = new Set<string>();
         const variants: EnumVariant[] = [];
 
-        Object.values(this.context.ir.errors).forEach(errorDecl => {
+        Object.values(this.context.ir.errors).forEach((errorDecl) => {
             const name = this.getErrorVariantName(errorDecl);
             if (!seenNames.has(name)) {
                 seenNames.add(name);
@@ -86,9 +86,7 @@ export class ErrorGenerator {
             this.buildStandardVariant("Serialization", "Serialization error: {0}", undefined, [
                 Type.reference(new Reference({ name: "serde_json::Error" }))
             ]),
-            this.buildStandardVariant("Configuration", "Configuration error: {0}", undefined, [
-                Type.string()
-            ]),
+            this.buildStandardVariant("Configuration", "Configuration error: {0}", undefined, [Type.string()]),
             this.buildStandardVariant("InvalidHeader", "Invalid header value"),
             this.buildStandardVariant("RequestClone", "Could not clone request for retry")
         ];
@@ -119,7 +117,6 @@ export class ErrorGenerator {
             namedFields: fields
         });
     }
-
 
     private buildErrorFields(errorDeclaration: ErrorDeclaration): Array<{ name: string; type: Type }> {
         const fields = [{ name: "message", type: Type.string() }];
@@ -202,7 +199,11 @@ export class ErrorGenerator {
 
         const arms = Array.from(errorsByStatusCode.entries()).map(([statusCode, errors]) => {
             if (errors.length === 1) {
-                return this.buildSingleErrorMatchArm(errors[0]!);
+                const [singleError] = errors;
+                if (!singleError) {
+                    throw new Error("Unexpected: errors array should not be empty");
+                }
+                return this.buildSingleErrorMatchArm(singleError);
             } else {
                 return this.buildMultiErrorMatchArm(statusCode, errors);
             }
@@ -217,7 +218,7 @@ export class ErrorGenerator {
     private groupErrorsByStatusCode(): Map<number, ErrorDeclaration[]> {
         const groups = new Map<number, Map<string, ErrorDeclaration>>();
 
-        Object.values(this.context.ir.errors).forEach(error => {
+        Object.values(this.context.ir.errors).forEach((error) => {
             const statusCode = error.statusCode;
             const name = this.getErrorVariantName(error);
 
@@ -226,8 +227,8 @@ export class ErrorGenerator {
             }
 
             // Keep only first error with each name (deduplication)
-            const statusGroup = groups.get(statusCode)!;
-            if (!statusGroup.has(name)) {
+            const statusGroup = groups.get(statusCode);
+            if (statusGroup && !statusGroup.has(name)) {
                 statusGroup.set(name, error);
             }
         });
@@ -269,9 +270,10 @@ export class ErrorGenerator {
         const statusFields = this.getStatusCodeFields(errorDeclaration.statusCode);
         const fieldAssignments = statusFields.map(({ name }) => ({
             name,
-            value: name === "retry_after_seconds"
-                ? this.buildU64FieldExtraction(name)
-                : this.buildStringFieldExtraction(name)
+            value:
+                name === "retry_after_seconds"
+                    ? this.buildU64FieldExtraction(name)
+                    : this.buildStringFieldExtraction(name)
         }));
 
         return Expression.structConstruction(`Self::${errorName}`, [
@@ -325,9 +327,7 @@ export class ErrorGenerator {
         innerStatements.push(
             Statement.ifLet(
                 "Ok(parsed)",
-                Expression.functionCall("serde_json::from_str::<serde_json::Value>", [
-                    Expression.variable("body_str")
-                ]),
+                Expression.functionCall("serde_json::from_str::<serde_json::Value>", [Expression.variable("body_str")]),
                 [
                     // Extract common fields and error_type discriminator
                     Statement.let({
@@ -366,16 +366,14 @@ export class ErrorGenerator {
         );
 
         // Add fallback for when parsing fails
-        const firstError = errors[0]!;
-        const fallbackConstruction = this.buildFallbackConstruction(
-            this.getErrorVariantName(firstError),
-            firstError
-        );
+        const [firstError] = errors;
+        if (!firstError) {
+            throw new Error("Unexpected: errors array should not be empty");
+        }
+        const fallbackConstruction = this.buildFallbackConstruction(this.getErrorVariantName(firstError), firstError);
         innerStatements.push(Statement.return(fallbackConstruction));
 
-        parseBodyStatements.push(
-            Statement.ifLet("Some(body_str)", Expression.variable("body"), innerStatements)
-        );
+        parseBodyStatements.push(Statement.ifLet("Some(body_str)", Expression.variable("body"), innerStatements));
 
         // Add final fallback when no body
         parseBodyStatements.push(
@@ -397,7 +395,7 @@ export class ErrorGenerator {
         const fields = this.buildDynamicFieldAssignments(statusCode);
 
         // Create match arms for each error type
-        const matchArms = errors.map(error => {
+        const matchArms = errors.map((error) => {
             const errorName = this.getErrorVariantName(error);
             return MatchArm.withExpression(
                 Pattern.some(Pattern.literal(errorName)),
@@ -409,7 +407,11 @@ export class ErrorGenerator {
         });
 
         // Add default fallback to first error type
-        const fallbackName = this.getErrorVariantName(errors[0]!);
+        const [firstError] = errors;
+        if (!firstError) {
+            throw new Error("Unexpected: errors array should not be empty");
+        }
+        const fallbackName = this.getErrorVariantName(firstError);
         matchArms.push(
             MatchArm.withExpression(
                 Pattern.wildcard(),
@@ -427,9 +429,10 @@ export class ErrorGenerator {
         const fields = this.getStatusCodeFields(statusCode);
 
         return fields.map(({ name }) => {
-            const fieldValue = name === "retry_after_seconds"
-                ? this.buildU64FieldExtraction(name)
-                : this.buildStringFieldExtraction(name);
+            const fieldValue =
+                name === "retry_after_seconds"
+                    ? this.buildU64FieldExtraction(name)
+                    : this.buildStringFieldExtraction(name);
 
             return { name, value: fieldValue };
         });
@@ -442,7 +445,8 @@ export class ErrorGenerator {
                 method: "get",
                 args: [Expression.literal(fieldName)]
             }),
-            Expression.closure([{ name: "v" }],
+            Expression.closure(
+                [{ name: "v" }],
                 Expression.map(
                     Expression.raw("v.as_str()"),
                     Expression.closure([{ name: "s" }], Expression.toString(Expression.variable("s")))
@@ -490,7 +494,6 @@ export class ErrorGenerator {
             args: [`"${message}"`]
         });
     }
-
 
     // Helper methods
     private getErrorVariantName(errorDeclaration: ErrorDeclaration): string {
