@@ -1,6 +1,6 @@
 require "seed"
 
-client = seed::Client.new(
+client = Seed::Client.new(
   custom_auth_scheme: '<value>',
   base_url: 'https://api.fern.com'
 );

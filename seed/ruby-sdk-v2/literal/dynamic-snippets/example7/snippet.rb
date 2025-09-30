@@ -1,6 +1,6 @@
 require "seed"
 
-client = seed::Client.new(base_url: 'https://api.fern.com');
+client = Seed::Client.new(base_url: 'https://api.fern.com');
 
 client.query.send_(
   prompt: 'You are a helpful assistant',

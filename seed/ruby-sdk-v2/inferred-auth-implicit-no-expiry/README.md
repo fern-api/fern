@@ -15,7 +15,7 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = seed::Client.new();
+client = Seed::Client.new();
 
 client.auth.get_token_with_client_credentials(
   xApiKey: 'X-Api-Key',

@@ -33,7 +33,7 @@ Instantiate and use the client with the following:
 ```ruby
 require "seed"
 
-client = seed::Client.new(token: '<token>');
+client = Seed::Client.new(token: '<token>');
 
 client.service.create_big_entity({
   extendedMovie: {

@@ -1,6 +1,6 @@
 require "seed"
 
-client = seed::Client.new(base_url: 'https://api.fern.com');
+client = Seed::Client.new(base_url: 'https://api.fern.com');
 
 client.auth.get_token_with_client_credentials(
   xApiKey: 'X-Api-Key',
