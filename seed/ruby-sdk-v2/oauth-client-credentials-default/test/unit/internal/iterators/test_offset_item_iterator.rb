@@ -149,8 +149,4 @@ class OffsetItemIteratorTest < Minitest::Test
     assert_equal 3, iterator.first(3).length
     assert_equal 3, @times_called
   end
-
-  def test_always_fails
-    assert false
-  end
 end
