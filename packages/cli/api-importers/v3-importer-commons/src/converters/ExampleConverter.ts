@@ -857,7 +857,9 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
 
         for (let index = 0; index < unionSchemas.length; index++) {
             const subSchema = unionSchemas[index];
-            if (!subSchema) continue;
+            if (!subSchema) {
+                continue;
+            }
 
             // Different schema handling for oneOf vs anyOf
             const schemaToUse =
@@ -875,25 +877,28 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
             });
 
             const result = exampleConverter.convert();
+
+            // If valid and non-coerced, return immediately
+            if (result.isValid && !result.coerced) {
+                return {
+                    isValid: true,
+                    coerced: false,
+                    validExample: result.validExample,
+                    errors: []
+                };
+            }
+
             results.push(result);
 
+            // Track first valid result (even if coerced) as fallback
             if (result.isValid && firstValidResult === null) {
                 firstValidResult = result;
             }
-
-            if (result.isValid && !result.coerced && firstNonCoercedResult === null) {
-                firstNonCoercedResult = result;
-            }
-
-            // If we found a non-coerced valid result, we can stop early
-            if (firstNonCoercedResult !== null) {
-                break;
-            }
         }
 
+        // No non-coerced valid result found, use fallback
         const isValid = firstValidResult !== null;
-        const validExample =
-            firstNonCoercedResult?.validExample ?? firstValidResult?.validExample ?? results[0]?.validExample;
+        const validExample = firstValidResult?.validExample ?? results[0]?.validExample;
 
         return {
             isValid,
