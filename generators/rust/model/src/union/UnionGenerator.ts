@@ -13,8 +13,11 @@ import {
     isUnknownType,
     isUuidType,
     namedTypeSupportsHashAndEq,
-    typeSupportsHashAndEq
+    namedTypeSupportsPartialEq,
+    typeSupportsHashAndEq,
+    typeSupportsPartialEq
 } from "../utils/primitiveTypeUtils";
+import { hasHashMapFields, hasHashSetFields } from "../utils/structUtils";
 
 export class UnionGenerator {
     private readonly typeDeclaration: TypeDeclaration;
@@ -76,10 +79,17 @@ export class UnionGenerator {
             writer.writeLine("use chrono::{DateTime, Utc};");
         }
 
-        // Add std::collections if we have maps or sets
-        if (this.hasCollectionFields()) {
-            writer.writeLine("use std::collections::HashMap;");
-        }
+          // Add std::collections imports based on specific collection types used
+          const needsHashMap = hasHashMapFields(this.unionTypeDeclaration.baseProperties);
+          const needsHashSet = hasHashSetFields(this.unionTypeDeclaration.baseProperties);
+  
+          if (needsHashMap && needsHashSet) {
+              writer.writeLine("use std::collections::{HashMap, HashSet};");
+          } else if (needsHashMap) {
+              writer.writeLine("use std::collections::HashMap;");
+          } else if (needsHashSet) {
+              writer.writeLine("use std::collections::HashSet;");
+          }
 
         // TODO: @iamnamananand996 build to use serde_json::Value ---> Value directly
         // if (hasJsonValueFields(properties)) {
@@ -132,6 +142,11 @@ export class UnionGenerator {
             derives.push("PartialEq");
         }
 
+        // Only add Hash and Eq if all variant types support them
+        if (this.needsDeriveHashAndEq()) {
+            derives.push("Eq", "Hash");
+        }
+
         attributes.push(Attribute.derive(derives));
 
         // Serde tag attribute for discriminated union
@@ -148,6 +163,29 @@ export class UnionGenerator {
             return unionType.shape._visit({
                 noProperties: () => true, // Unit variants always support PartialEq
                 samePropertiesAsObject: (declaredTypeName) =>
+                    namedTypeSupportsPartialEq(
+                        {
+                            name: declaredTypeName.name,
+                            typeId: declaredTypeName.typeId,
+                            default: undefined,
+                            inline: undefined,
+                            fernFilepath: declaredTypeName.fernFilepath,
+                            displayName: declaredTypeName.name.originalName
+                        },
+                        this.context
+                    ),
+                singleProperty: (property) => typeSupportsPartialEq(property.type, this.context),
+                _other: () => true // serde_json::Value does support PartialEq
+            });
+        });
+    }
+
+    private needsDeriveHashAndEq(): boolean {
+        // Check if all variant types can support Hash and Eq derives
+        return this.unionTypeDeclaration.types.every((unionType) => {
+            return unionType.shape._visit({
+                noProperties: () => true, // Unit variants always support Hash and Eq
+                samePropertiesAsObject: (declaredTypeName) =>
                     namedTypeSupportsHashAndEq(
                         {
                             name: declaredTypeName.name,
@@ -160,7 +198,7 @@ export class UnionGenerator {
                         this.context
                     ),
                 singleProperty: (property) => typeSupportsHashAndEq(property.type, this.context),
-                _other: () => false
+                _other: () => false // serde_json::Value doesn't support Hash or Eq
             });
         });
     }
