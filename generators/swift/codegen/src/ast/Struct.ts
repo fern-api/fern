@@ -2,13 +2,21 @@ import { AccessLevel } from "./AccessLevel";
 import { AstNode, Writer } from "./core";
 import { DocComment } from "./DocComment";
 import type { EnumWithRawValues } from "./EnumWithRawValues";
+import { Expression } from "./Expression";
+import { FunctionArgument } from "./FunctionArgument";
 import { Initializer } from "./Initializer";
 import { Method } from "./Method";
 import { Property } from "./Property";
 import { Protocol } from "./Protocol";
 
 export declare namespace Struct {
+    interface Attribute {
+        name: string;
+        arguments?: FunctionArgument[];
+    }
+
     interface Args {
+        attributes?: Attribute[];
         name: string;
         accessLevel?: AccessLevel;
         conformances?: Protocol[];
@@ -21,6 +29,7 @@ export declare namespace Struct {
 }
 
 export class Struct extends AstNode {
+    public readonly attributes: Struct.Attribute[];
     public readonly name: string;
     public readonly accessLevel?: AccessLevel;
     public readonly conformances: string[];
@@ -31,6 +40,7 @@ export class Struct extends AstNode {
     public readonly docs?: DocComment;
 
     public constructor({
+        attributes,
         accessLevel,
         name,
         conformances,
@@ -41,6 +51,7 @@ export class Struct extends AstNode {
         docs
     }: Struct.Args) {
         super();
+        this.attributes = attributes ?? [];
         this.name = name;
         this.accessLevel = accessLevel;
         this.conformances = conformances ?? [];
@@ -55,6 +66,18 @@ export class Struct extends AstNode {
         if (this.docs != null) {
             this.docs.write(writer);
         }
+        this.attributes.forEach((attribute) => {
+            if (attribute.arguments?.length) {
+                Expression.functionCall({
+                    unsafeName: `@${attribute.name}`,
+                    arguments_: attribute.arguments
+                }).write(writer);
+            } else {
+                writer.write("@");
+                writer.write(attribute.name);
+            }
+            writer.write(" ");
+        });
         if (this.accessLevel != null) {
             writer.write(this.accessLevel);
             writer.write(" ");
