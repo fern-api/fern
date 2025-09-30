@@ -193,9 +193,7 @@ export function getParseOptions({
             options?.inlineAllOfSchemas ??
             DEFAULT_PARSE_OPENAPI_SETTINGS.inlineAllOfSchemas,
         resolveAliases:
-            overrides?.resolveAliases ??
-            options?.resolveAliases ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.resolveAliases,
+            overrides?.resolveAliases ?? options?.resolveAliases ?? DEFAULT_PARSE_OPENAPI_SETTINGS.resolveAliases,
         groupMultiApiEnvironments:
             overrides?.groupMultiApiEnvironments ??
             options?.groupMultiApiEnvironments ??

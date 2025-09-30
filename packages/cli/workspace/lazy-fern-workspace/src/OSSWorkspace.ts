@@ -79,7 +79,9 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 }
 
                 // Merge all except arrays into a single array
-                const excepts = specs.flatMap((spec) => typeof spec.settings?.resolveAliases === "object" ? spec.settings.resolveAliases.except ?? [] : []);
+                const excepts = specs.flatMap((spec) =>
+                    typeof spec.settings?.resolveAliases === "object" ? (spec.settings.resolveAliases.except ?? []) : []
+                );
                 return { except: excepts };
             })(),
             exampleGeneration: specs[0]?.settings?.exampleGeneration

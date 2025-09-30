@@ -112,7 +112,8 @@ export function convertSchema(
         const schemaId = getSchemaIdFromReference(schema);
         if (schemaId != null) {
             if (shouldResolveAlias(schemaId, schema, context)) {
-                // If the schema is a named alias we are configured to inline, we should do that and return immediately
+                // If the schema is an alias we are configured to inline, we should do that and return immediately.
+                // This prevents reference registration which happens below.
                 return convertSchemaObject(
                     context.resolveSchemaReference(schema),
                     wrapAsOptional,
