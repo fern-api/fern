@@ -3,7 +3,7 @@
 exports[`snippets (default) > examples > 'GET /metadata (allow-multiple)' 1`] = `
 "require "acme"
 
-client = acme::Client.new(token: '<YOUR_API_KEY>');
+client = Acme::Client.new(token: '<YOUR_API_KEY>');
 
 client.service.get_metadata(
   shallow: false,
@@ -28,7 +28,7 @@ exports[`snippets (default) > examples > 'GET /metadata (simple)' 1`] = `
 exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
 "require "acme"
 
-client = acme::Client.new(token: '<YOUR_API_KEY>');
+client = Acme::Client.new(token: '<YOUR_API_KEY>');
 
 client.service.create_big_entity({
   extendedMovie: {
@@ -64,7 +64,7 @@ exports[`snippets (default) > examples > 'POST /movie (invalid request body)' 1`
 exports[`snippets (default) > examples > 'POST /movie (simple)' 1`] = `
 "require "acme"
 
-client = acme::Client.new(token: '<YOUR_API_KEY>');
+client = Acme::Client.new(token: '<YOUR_API_KEY>');
 
 client.service.create_movie({
   id: 'movie-c06a4ad7',
@@ -83,7 +83,7 @@ client.service.create_movie({
 exports[`snippets (default) > exhaustive > 'GET /object/get-and-return-with-optio…' 1`] = `
 "require "acme"
 
-client = acme::Client.new(token: '<YOUR_API_KEY>');
+client = Acme::Client.new(token: '<YOUR_API_KEY>');
 
 client.endpoints.object.get_and_return_with_optional_field({
   string: 'string',
@@ -138,7 +138,7 @@ exports[`snippets (default) > exhaustive > 'POST /container/list-of-primitives (
 exports[`snippets (default) > file-upload > 'POST /' 1`] = `
 "require "acme"
 
-client = acme::Client.new();
+client = Acme::Client.new();
 
 client.service.post();
 "
@@ -147,7 +147,7 @@ client.service.post();
 exports[`snippets (default) > file-upload > 'POST /just-file' 1`] = `
 "require "acme"
 
-client = acme::Client.new();
+client = Acme::Client.new();
 
 client.service.just_file();
 "
@@ -156,7 +156,7 @@ client.service.just_file();
 exports[`snippets (default) > file-upload > 'POST /just-file-with-query-params' 1`] = `
 "require "acme"
 
-client = acme::Client.new();
+client = Acme::Client.new();
 
 client.service.just_file_with_query_params(
   integer: 42,
@@ -168,7 +168,7 @@ client.service.just_file_with_query_params(
 exports[`snippets (default) > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
 "require "acme"
 
-client = acme::Client.new(token: '<YOUR_API_KEY>');
+client = Acme::Client.new(token: '<YOUR_API_KEY>');
 
 client.imdb.get_movie();
 "
@@ -177,7 +177,7 @@ client.imdb.get_movie();
 exports[`snippets (default) > imdb > 'POST /movies/create-movie (simple)' 1`] = `
 "require "acme"
 
-client = acme::Client.new(token: '<YOUR_API_KEY>');
+client = Acme::Client.new(token: '<YOUR_API_KEY>');
 
 client.imdb.create_movie({
   title: 'The Matrix',
@@ -209,9 +209,9 @@ exports[`snippets (default) > multi-url-environment > 'Invalid multi url environ
 exports[`snippets (default) > multi-url-environment > 'Production environment' 1`] = `
 "require "acme"
 
-client = acme::Client.new(
+client = Acme::Client.new(
   token: '<YOUR_API_KEY>',
-  environment: acme::Environment::PRODUCTION
+  environment: Acme::Environment::PRODUCTION
 );
 
 client.s3.get_presigned_url(s3Key: 'xyz');
@@ -221,9 +221,9 @@ client.s3.get_presigned_url(s3Key: 'xyz');
 exports[`snippets (default) > multi-url-environment > 'Staging environment' 1`] = `
 "require "acme"
 
-client = acme::Client.new(
+client = Acme::Client.new(
   token: '<YOUR_API_KEY>',
-  environment: acme::Environment::STAGING
+  environment: Acme::Environment::STAGING
 );
 
 client.s3.get_presigned_url(s3Key: 'xyz');
@@ -243,7 +243,7 @@ exports[`snippets (default) > multi-url-environment > 'Unrecognized environment'
 exports[`snippets (default) > nullable > 'Body properties' 1`] = `
 "require "acme"
 
-client = acme::Client.new(base_url: 'https://api.example.com');
+client = Acme::Client.new(base_url: 'https://api.example.com');
 
 client.nullable.create_user(
   username: 'john.doe',
@@ -272,7 +272,7 @@ exports[`snippets (default) > nullable > 'Invalid null value' 1`] = `
 exports[`snippets (default) > nullable > 'Query parameters' 1`] = `
 "require "acme"
 
-client = acme::Client.new(base_url: 'https://api.example.com');
+client = Acme::Client.new(base_url: 'https://api.example.com');
 
 client.nullable.get_users(
   usernames: ['john.doe', 'jane.doe'],
@@ -285,7 +285,7 @@ client.nullable.get_users(
 exports[`snippets (default) > read-write-only > 'Body properties' 1`] = `
 "require "acme"
 
-client = acme::Client.new(base_url: 'https://api.example.com');
+client = Acme::Client.new(base_url: 'https://api.example.com');
 
 client.create_user({
   password: 'password',
@@ -301,7 +301,7 @@ client.create_user({
 exports[`snippets (default) > read-write-only > 'Readonly value in request' 1`] = `
 "require "acme"
 
-client = acme::Client.new(base_url: 'https://api.example.com');
+client = Acme::Client.new(base_url: 'https://api.example.com');
 
 client.create_user({
   id: 'id',
@@ -318,9 +318,9 @@ client.create_user({
 exports[`snippets (default) > single-url-environment-default > 'Production environment' 1`] = `
 "require "acme"
 
-client = acme::Client.new(
+client = Acme::Client.new(
   token: '<YOUR_API_KEY>',
-  environment: acme::Environment::PRODUCTION
+  environment: Acme::Environment::PRODUCTION
 );
 
 client.dummy.get_dummy();
@@ -330,9 +330,9 @@ client.dummy.get_dummy();
 exports[`snippets (default) > single-url-environment-default > 'Staging environment' 1`] = `
 "require "acme"
 
-client = acme::Client.new(
+client = Acme::Client.new(
   token: '<YOUR_API_KEY>',
-  environment: acme::Environment::STAGING
+  environment: Acme::Environment::STAGING
 );
 
 client.dummy.get_dummy();
@@ -342,7 +342,7 @@ client.dummy.get_dummy();
 exports[`snippets (default) > single-url-environment-default > 'custom baseURL' 1`] = `
 "require "acme"
 
-client = acme::Client.new(
+client = Acme::Client.new(
   token: '<YOUR_API_KEY>',
   base_url: 'http://localhost:8080'
 );

@@ -1582,6 +1582,9 @@ importers:
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
       string.prototype.replaceall:
         specifier: ^1.0.10
         version: 1.0.11

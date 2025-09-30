@@ -67,7 +67,7 @@ export class EndpointSnippetGenerator {
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): ruby.AstNode {
         return ruby.codeblock((writer) => {
-            writer.addRequire(this.context.getRootModuleName());
+            writer.addRequire(this.context.getRootModuleName().toLowerCase());
 
             const clientClassRef = this.context.getRootClientClassReference();
             const builderArgs = this.getRootClientBuilderArgs({ endpoint, snippet });
