@@ -454,63 +454,35 @@ export class SubClientGenerator {
         };
 
         const endpoints = this.service?.endpoints || [];
+        if (endpoints.length === 0) {
+            return analysis; // No endpoints means no imports needed
+        }
+
         const requiredTypes = new Set<string>();
 
         // Analyze all type references used in endpoints
         endpoints.forEach((endpoint) => {
-            // Analyze path parameters
+            // Analyze path parameters - these can be direct types in method signatures
             endpoint.allPathParameters.forEach((pathParam) => {
-                this.collectTypeFromReference(pathParam.valueType, requiredTypes);
+                this.collectDirectParameterImports(pathParam.valueType, requiredTypes);
             });
 
-            // Analyze query parameters
-            endpoint.queryParameters.forEach((queryParam) => {
-                this.collectTypeFromReference(queryParam.valueType, requiredTypes);
-            });
+            // Query parameters are usually bundled into request structs,
+            // so they don't need direct imports in most cases
+            // Only collect serde_json::Value for serialize cases
 
-            // Analyze request body
-            if (endpoint.requestBody) {
-                endpoint.requestBody._visit({
-                    inlinedRequestBody: (inlinedBody) => {
-                        // For inlined request bodies, analyze all properties
-                        inlinedBody.properties.forEach((property) => {
-                            this.collectTypeFromReference(property.valueType, requiredTypes);
-                        });
-                        inlinedBody.extends.forEach((extension) => {
-                            // Extensions are DeclaredTypeName, need to convert to NamedType for TypeReference
-                            const namedType = {
-                                ...extension,
-                                default: undefined,
-                                inline: undefined
-                            };
-                            const typeRef = TypeReference.named(namedType);
-                            this.collectTypeFromReference(typeRef, requiredTypes);
-                        });
-                    },
-                    reference: (reference) => {
-                        this.collectTypeFromReference(reference.requestBodyType, requiredTypes);
-                    },
-                    fileUpload: () => {
-                        // File uploads might need specific types
-                    },
-                    bytes: () => {
-                        // Bytes don't need external imports
-                    },
-                    _other: () => {
-                        // Handle unknown request body types
-                    }
-                });
-            }
+            // Request body and response types are usually serialized/deserialized,
+            // so they rarely need direct type imports. Most usage is through
+            // generated structs that handle serialization internally.
 
-            // Analyze response types
+            // Only add serde_json::Value for untyped responses
             if (endpoint.response?.body) {
                 endpoint.response.body._visit({
                     json: (jsonResponse) => {
-                        if (jsonResponse.responseBodyType) {
-                            this.collectTypeFromReference(jsonResponse.responseBodyType, requiredTypes);
-                        } else {
+                        if (!jsonResponse.responseBodyType) {
                             requiredTypes.add("serde_json::Value");
                         }
+                        // Typed responses don't need direct imports in client code
                     },
                     fileDownload: () => {
                         // File downloads use Vec<u8>, no external imports needed
@@ -601,7 +573,7 @@ export class SubClientGenerator {
         return analysis;
     }
 
-    private collectTypeFromReference(typeRef: TypeReference, requiredTypes: Set<string>): void {
+    private collectDirectParameterImports(typeRef: TypeReference, requiredTypes: Set<string>): void {
         TypeReference._visit(typeRef, {
             primitive: (primitive) => {
                 PrimitiveTypeV1._visit(primitive.v1, {
@@ -613,14 +585,15 @@ export class SubClientGenerator {
                     long: () => {}, // i64 is built-in
                     float: () => {}, // f32 is built-in
                     double: () => {}, // f64 is built-in
-                    bigInteger: () => requiredTypes.add("BigInt"),
-                    date: () => requiredTypes.add("NaiveDate"),
+                    bigInteger: () => requiredTypes.add("BigInt"), // Direct BigInt parameter
+                    date: () => requiredTypes.add("NaiveDate"), // Direct NaiveDate parameter
                     dateTime: () => {
+                        // Direct DateTime<Utc> parameter
                         requiredTypes.add("DateTime");
                         requiredTypes.add("Utc");
                     },
                     base64: () => {}, // String is built-in
-                    uuid: () => requiredTypes.add("Uuid"),
+                    uuid: () => requiredTypes.add("Uuid"), // Direct Uuid parameter
                     _other: () => {}
                 });
             },
@@ -630,17 +603,59 @@ export class SubClientGenerator {
             container: (container) => {
                 container._visit({
                     map: (mapType) => {
-                        requiredTypes.add("HashMap");
-                        this.collectTypeFromReference(mapType.keyType, requiredTypes);
-                        this.collectTypeFromReference(mapType.valueType, requiredTypes);
+                        requiredTypes.add("HashMap"); // Direct HashMap parameter
+                        this.collectDirectParameterImports(mapType.keyType, requiredTypes);
+                        this.collectDirectParameterImports(mapType.valueType, requiredTypes);
                     },
                     set: (setType) => {
-                        requiredTypes.add("HashSet");
-                        this.collectTypeFromReference(setType, requiredTypes);
+                        requiredTypes.add("HashSet"); // Direct HashSet parameter
+                        this.collectDirectParameterImports(setType, requiredTypes);
                         // Check if we need OrderedFloat for floating point sets
                         if (this.isFloatingPointType(setType)) {
                             requiredTypes.add("OrderedFloat");
                         }
+                    },
+                    list: (listType) => {
+                        // Vec<T> is built-in, no import needed
+                        this.collectDirectParameterImports(listType, requiredTypes);
+                    },
+                    optional: (optionalType) => {
+                        // Option<T> is built-in, no import needed
+                        this.collectDirectParameterImports(optionalType, requiredTypes);
+                    },
+                    nullable: (nullableType) => {
+                        // Option<T> is built-in, no import needed
+                        this.collectDirectParameterImports(nullableType, requiredTypes);
+                    },
+                    literal: () => {}, // Literals are built-in
+                    _other: () => requiredTypes.add("serde_json::Value")
+                });
+            },
+            unknown: () => requiredTypes.add("serde_json::Value"),
+            _other: () => requiredTypes.add("serde_json::Value")
+        });
+    }
+
+    private collectTypeFromReference(typeRef: TypeReference, requiredTypes: Set<string>): void {
+        // This method is mostly unused now since we only collect direct parameter imports
+        // Most types in request/response bodies are serialized and don't need direct imports
+        TypeReference._visit(typeRef, {
+            primitive: () => {
+                // Primitive types in serialized contexts don't need imports
+            },
+            named: () => {
+                // Named types are user-defined, no specific imports needed here
+            },
+            container: (container) => {
+                container._visit({
+                    map: (mapType) => {
+                        // Recursively check nested types but don't add HashMap import
+                        this.collectTypeFromReference(mapType.keyType, requiredTypes);
+                        this.collectTypeFromReference(mapType.valueType, requiredTypes);
+                    },
+                    set: (setType) => {
+                        // Recursively check nested types but don't add HashSet import
+                        this.collectTypeFromReference(setType, requiredTypes);
                     },
                     list: (listType) => {
                         this.collectTypeFromReference(listType, requiredTypes);
