@@ -55,7 +55,7 @@ export class Struct extends AstNode {
         this.name = name;
         this.accessLevel = accessLevel;
         this.conformances = conformances ?? [];
-        this.properties = properties;
+        this.properties = properties ?? [];
         this.initializers = initializers ?? [];
         this.methods = methods ?? [];
         this.nestedTypes = nestedTypes ?? [];
@@ -94,12 +94,19 @@ export class Struct extends AstNode {
         writer.write(" {");
         writer.newLine();
         writer.indent();
+        const hasProperties = this.properties.length > 0;
+        const hasInitializers = this.initializers.length > 0;
+        const hasMethods = this.methods.length > 0;
+        const hasNestedTypes = this.nestedTypes.length > 0;
         this.properties.forEach((property) => {
             property.write(writer);
             writer.newLine();
         });
-        if (this.initializers.length > 0) {
-            writer.newLine();
+        let wroteMember = hasProperties;
+        if (hasInitializers) {
+            if (wroteMember) {
+                writer.newLine();
+            }
             this.initializers.forEach((initializer, initializerIdx) => {
                 if (initializerIdx > 0) {
                     writer.newLine();
@@ -107,9 +114,12 @@ export class Struct extends AstNode {
                 initializer.write(writer);
                 writer.newLine();
             });
+            wroteMember = true;
         }
-        if (this.methods.length > 0) {
-            writer.newLine();
+        if (hasMethods) {
+            if (wroteMember) {
+                writer.newLine();
+            }
             this.methods.forEach((method, methodIdx) => {
                 if (methodIdx > 0) {
                     writer.newLine();
@@ -117,9 +127,12 @@ export class Struct extends AstNode {
                 method.write(writer);
                 writer.newLine();
             });
+            wroteMember = true;
         }
-        if (this.nestedTypes.length > 0) {
-            writer.newLine();
+        if (hasNestedTypes) {
+            if (wroteMember) {
+                writer.newLine();
+            }
             this.nestedTypes.forEach((nestedType, nestedTypeIdx) => {
                 if (nestedTypeIdx > 0) {
                     writer.newLine();
