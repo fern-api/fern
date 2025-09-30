@@ -23,31 +23,32 @@ jobs:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       matrix:
         sdk-name:
-          [
-            ruby-model,
-            ruby-sdk,
-            ruby-sdk-v2,
-            pydantic,
-            python-sdk,
-            fastapi,
-            openapi,
-            postman,
-            java-sdk,
-            java-model,
-            java-spring,
-            ts-sdk,
-            ts-express,
-            go-fiber,
-            go-model,
-            go-sdk,
-            csharp-model,
-            csharp-sdk,
-            php-model,
-            php-sdk,
-            swift-sdk,
-            rust-model,
-            rust-sdk,
-          ]
+          [pydantic]
+          # [
+          #   ruby-model,
+          #   ruby-sdk,
+          #   ruby-sdk-v2,
+          #   pydantic,
+          #   python-sdk,
+          #   fastapi,
+          #   openapi,
+          #   postman,
+          #   java-sdk,
+          #   java-model,
+          #   java-spring,
+          #   ts-sdk,
+          #   ts-express,
+          #   go-fiber,
+          #   go-model,
+          #   go-sdk,
+          #   csharp-model,
+          #   csharp-sdk,
+          #   php-model,
+          #   php-sdk,
+          #   swift-sdk,
+          #   rust-model,
+          #   rust-sdk,
+          # ]
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -100,31 +101,32 @@ jobs:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       matrix:
         sdk-name:
-          [
-            ruby-model,
-            ruby-sdk,
-            ruby-sdk-v2,
-            pydantic,
-            python-sdk,
-            fastapi,
-            openapi,
-            postman,
-            java-sdk,
-            java-model,
-            java-spring,
-            ts-sdk,
-            ts-express,
-            go-fiber,
-            go-model,
-            go-sdk,
-            csharp-model,
-            csharp-sdk,
-            php-model,
-            php-sdk,
-            swift-sdk,
-            rust-model,
-            rust-sdk,
-          ]
+          [pydantic]
+          # [
+          #   ruby-model,
+          #   ruby-sdk,
+          #   ruby-sdk-v2,
+          #   pydantic,
+          #   python-sdk,
+          #   fastapi,
+          #   openapi,
+          #   postman,
+          #   java-sdk,
+          #   java-model,
+          #   java-spring,
+          #   ts-sdk,
+          #   ts-express,
+          #   go-fiber,
+          #   go-model,
+          #   go-sdk,
+          #   csharp-model,
+          #   csharp-sdk,
+          #   php-model,
+          #   php-sdk,
+          #   swift-sdk,
+          #   rust-model,
+          #   rust-sdk,
+          # ]
     steps:
       - name: Make artifacts directory
         shell: bash
@@ -145,7 +147,8 @@ jobs:
         uses: fern-api/package-seed-test@mallinson/packaging-setup
         with:
           seed-generator-alias: ${{ matrix.sdk-name }}
-          max-runner-count: 10 #CHRISM - move to setting for everyone to use
+          number-of-packages: 10 #CHRISM - move to setting for everyone to use
+          add-package-for-leftovers: true
           split-tests-cutoff-time-in-seconds: 9600 # Roughly 10 minutes (across 16 batches, but will depend on concurrency runners)
           seed-test-log-file-path: artifacts/${{ matrix.sdk-name }}-seed-test-log.txt
 
