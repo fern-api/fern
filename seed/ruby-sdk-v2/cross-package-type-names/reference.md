@@ -1,5 +1,5 @@
 # Reference
-## folder_a service
+## FolderA Service
 <details><summary><code>client.folder_a.service.get_direct_thread() -> Seed::FolderA::Service::Types::Response</code></summary>
 <dl>
 <dd>
@@ -25,7 +25,7 @@ client.folder_a.service.get_direct_thread();
 </dl>
 </details>
 
-## folder_d service
+## FolderD Service
 <details><summary><code>client.folder_d.service.get_direct_thread() -> Seed::FolderD::Service::Types::Response</code></summary>
 <dl>
 <dd>
@@ -51,7 +51,7 @@ client.folder_a.service.get_direct_thread();
 </dl>
 </details>
 
-## foo
+## Foo
 <details><summary><code>client.foo.find(request) -> Seed::Foo::Types::ImportingType</code></summary>
 <dl>
 <dd>

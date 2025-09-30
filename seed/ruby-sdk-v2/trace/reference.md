@@ -1,5 +1,5 @@
 # Reference
-## v_2
+## V2
 <details><summary><code>client.v_2.test() -> </code></summary>
 <dl>
 <dd>
@@ -25,7 +25,7 @@ client.v_2.test();
 </dl>
 </details>
 
-## admin
+## Admin
 <details><summary><code>client.admin.update_test_submission_status(submission_id, request) -> </code></summary>
 <dl>
 <dd>
@@ -547,7 +547,7 @@ client.admin.store_traced_workspace_v_2();
 </dl>
 </details>
 
-## homepage
+## Homepage
 <details><summary><code>client.homepage.get_homepage_problems() -> Internal::Types::Array[String]</code></summary>
 <dl>
 <dd>
@@ -613,7 +613,7 @@ client.homepage.set_homepage_problems();
 </dl>
 </details>
 
-## migration
+## Migration
 <details><summary><code>client.migration.get_attempted_migrations() -> Internal::Types::Array[Seed::Migration::Types::Migration]</code></summary>
 <dl>
 <dd>
@@ -656,7 +656,7 @@ client.migration.get_attempted_migrations({
 </dl>
 </details>
 
-## playlist
+## Playlist
 <details><summary><code>client.playlist.create_playlist(service_param, request) -> Seed::Playlist::Types::Playlist</code></summary>
 <dl>
 <dd>
@@ -1038,7 +1038,7 @@ client.playlist.delete_playlist();
 </dl>
 </details>
 
-## problem
+## Problem
 <details><summary><code>client.problem.create_problem(request) -> Seed::Problem::Types::CreateProblemResponse</code></summary>
 <dl>
 <dd>
@@ -1339,7 +1339,7 @@ The method name cannot include the following characters:
 </dl>
 </details>
 
-## submission
+## Submission
 <details><summary><code>client.submission.create_execution_session(language) -> Seed::Submission::Types::ExecutionSessionResponse</code></summary>
 <dl>
 <dd>
@@ -1527,7 +1527,7 @@ client.submission.get_execution_sessions_state();
 </dl>
 </details>
 
-## sysprop
+## Sysprop
 <details><summary><code>client.sysprop.set_num_warm_instances(language, num_warm_instances) -> </code></summary>
 <dl>
 <dd>
@@ -1601,7 +1601,7 @@ client.sysprop.get_num_warm_instances();
 </dl>
 </details>
 
-## v_2 problem
+## V2 Problem
 <details><summary><code>client.v_2.problem.get_lightweight_problems() -> Internal::Types::Array[Seed::V2::Problem::Types::LightweightProblemInfoV2]</code></summary>
 <dl>
 <dd>
@@ -1796,7 +1796,7 @@ client.v_2.problem.get_problem_version();
 </dl>
 </details>
 
-## v_2 v_3 problem
+## V2 V3 Problem
 <details><summary><code>client.v_2.v_3.problem.get_lightweight_problems() -> Internal::Types::Array[Seed::V2::V3::Problem::Types::LightweightProblemInfoV2]</code></summary>
 <dl>
 <dd>

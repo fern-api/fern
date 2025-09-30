@@ -1,5 +1,5 @@
 # Reference
-## user
+## User
 <details><summary><code>client.user.create_username(request) -> </code></summary>
 <dl>
 <dd>

@@ -1,5 +1,5 @@
 # Reference
-## union
+## Union
 <details><summary><code>client.union.get(request) -> Seed::Union::Types::MyUnion</code></summary>
 <dl>
 <dd>

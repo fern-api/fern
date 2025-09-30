@@ -1,5 +1,5 @@
 # Reference
-## dummy
+## Dummy
 <details><summary><code>client.dummy.get_dummy() -> String</code></summary>
 <dl>
 <dd>

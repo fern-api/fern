@@ -1,5 +1,5 @@
 # Reference
-## completions
+## Completions
 <details><summary><code>client.completions.stream(request) -> Seed::Completions::Types::StreamedCompletion</code></summary>
 <dl>
 <dd>

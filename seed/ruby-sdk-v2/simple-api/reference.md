@@ -1,5 +1,5 @@
 # Reference
-## user
+## User
 <details><summary><code>client.user.get(id) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>

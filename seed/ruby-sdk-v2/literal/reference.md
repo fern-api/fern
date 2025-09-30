@@ -1,5 +1,5 @@
 # Reference
-## headers
+## Headers
 <details><summary><code>client.headers.send_(request) -> Seed::Types::SendResponse</code></summary>
 <dl>
 <dd>
@@ -60,7 +60,7 @@ client.headers.send_({
 </dl>
 </details>
 
-## inlined
+## Inlined
 <details><summary><code>client.inlined.send_(request) -> Seed::Types::SendResponse</code></summary>
 <dl>
 <dd>
@@ -170,7 +170,7 @@ client.inlined.send_({
 </dl>
 </details>
 
-## path
+## Path
 <details><summary><code>client.path.send_(id) -> Seed::Types::SendResponse</code></summary>
 <dl>
 <dd>
@@ -211,7 +211,7 @@ client.path.send_();
 </dl>
 </details>
 
-## query
+## Query
 <details><summary><code>client.query.send_() -> Seed::Types::SendResponse</code></summary>
 <dl>
 <dd>
@@ -326,7 +326,7 @@ client.query.send_({
 </dl>
 </details>
 
-## reference
+## Reference
 <details><summary><code>client.reference.send_(request) -> Seed::Types::SendResponse</code></summary>
 <dl>
 <dd>

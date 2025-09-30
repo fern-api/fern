@@ -1,5 +1,5 @@
 # Reference
-## service
+## Service
 <details><summary><code>client.service.get_with_bearer_token() -> String</code></summary>
 <dl>
 <dd>

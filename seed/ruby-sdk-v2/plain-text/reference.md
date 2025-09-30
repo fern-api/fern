@@ -1,5 +1,5 @@
 # Reference
-## service
+## Service
 <details><summary><code>client.service.get_text() -> String</code></summary>
 <dl>
 <dd>

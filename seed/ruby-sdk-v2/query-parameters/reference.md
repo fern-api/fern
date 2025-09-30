@@ -1,5 +1,5 @@
 # Reference
-## user
+## User
 <details><summary><code>client.user.get_username() -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>

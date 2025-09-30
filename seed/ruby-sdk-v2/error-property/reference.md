@@ -1,5 +1,5 @@
 # Reference
-## property_based_error
+## PropertyBasedError
 <details><summary><code>client.property_based_error.throw_error() -> String</code></summary>
 <dl>
 <dd>

@@ -1,5 +1,5 @@
 # Reference
-## service
+## Service
 <details><summary><code>client.service.get_movie(request) -> Seed::Service::Types::Response</code></summary>
 <dl>
 <dd>

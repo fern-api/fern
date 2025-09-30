@@ -1,5 +1,5 @@
 # Reference
-## nullable
+## Nullable
 <details><summary><code>client.nullable.get_users() -> Internal::Types::Array[Seed::Nullable::Types::User]</code></summary>
 <dl>
 <dd>

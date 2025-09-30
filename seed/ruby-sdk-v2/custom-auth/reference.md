@@ -1,5 +1,5 @@
 # Reference
-## custom_auth
+## CustomAuth
 <details><summary><code>client.custom_auth.get_with_custom_auth() -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>

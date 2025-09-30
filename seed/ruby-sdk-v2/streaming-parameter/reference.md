@@ -1,5 +1,5 @@
 # Reference
-## dummy
+## Dummy
 <details><summary><code>client.dummy.generate(request) -> Seed::Dummy::Types::StreamResponse</code></summary>
 <dl>
 <dd>

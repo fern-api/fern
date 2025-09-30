@@ -1,5 +1,5 @@
 # Reference
-## user
+## User
 <details><summary><code>client.user.head() -> </code></summary>
 <dl>
 <dd>

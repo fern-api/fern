@@ -24,7 +24,7 @@ client.foo();
 </dl>
 </details>
 
-## a b
+## A B
 <details><summary><code>client.a.b.foo() -> </code></summary>
 <dl>
 <dd>
@@ -50,7 +50,7 @@ client.foo();
 </dl>
 </details>
 
-## a c
+## A C
 <details><summary><code>client.a.c.foo() -> </code></summary>
 <dl>
 <dd>
@@ -76,7 +76,7 @@ client.foo();
 </dl>
 </details>
 
-## folder
+## Folder
 <details><summary><code>client.folder.foo() -> </code></summary>
 <dl>
 <dd>
@@ -102,7 +102,7 @@ client.foo();
 </dl>
 </details>
 
-## folder service
+## Folder Service
 <details><summary><code>client.folder.service.endpoint() -> </code></summary>
 <dl>
 <dd>

@@ -1,5 +1,5 @@
 # Reference
-## auth
+## Auth
 <details><summary><code>client.auth.get_token_with_client_credentials(request) -> Seed::Auth::Types::TokenResponse</code></summary>
 <dl>
 <dd>
@@ -183,7 +183,7 @@ client.auth.refresh_token({
 </dl>
 </details>
 
-## nested_no_auth api
+## NestedNoAuth Api
 <details><summary><code>client.nested_no_auth.api.get_something() -> </code></summary>
 <dl>
 <dd>
@@ -209,7 +209,7 @@ client.nested_no_auth.api.get_something();
 </dl>
 </details>
 
-## nested api
+## Nested Api
 <details><summary><code>client.nested.api.get_something() -> </code></summary>
 <dl>
 <dd>
@@ -235,7 +235,7 @@ client.nested.api.get_something();
 </dl>
 </details>
 
-## simple
+## Simple
 <details><summary><code>client.simple.get_something() -> </code></summary>
 <dl>
 <dd>

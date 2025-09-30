@@ -1,5 +1,5 @@
 # Reference
-## service
+## Service
 <details><summary><code>client.service.get_resource(resource_id) -> Seed::Service::Types::Resource</code></summary>
 <dl>
 <dd>

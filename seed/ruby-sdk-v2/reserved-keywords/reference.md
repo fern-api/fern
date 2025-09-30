@@ -1,5 +1,5 @@
 # Reference
-## package
+## Package
 <details><summary><code>client.package.test() -> </code></summary>
 <dl>
 <dd>

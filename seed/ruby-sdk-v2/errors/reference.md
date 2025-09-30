@@ -1,5 +1,5 @@
 # Reference
-## simple
+## Simple
 <details><summary><code>client.simple.foo_without_endpoint_error(request) -> Seed::Simple::Types::FooResponse</code></summary>
 <dl>
 <dd>

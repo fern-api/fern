@@ -1,5 +1,5 @@
 # Reference
-## bigunion
+## Bigunion
 <details><summary><code>client.bigunion.get(id) -> Seed::Bigunion::Types::BigUnion</code></summary>
 <dl>
 <dd>
@@ -120,7 +120,7 @@ client.bigunion.update_many();
 </dl>
 </details>
 
-## union
+## Union
 <details><summary><code>client.union.get(id) -> Seed::Union::Types::Shape</code></summary>
 <dl>
 <dd>

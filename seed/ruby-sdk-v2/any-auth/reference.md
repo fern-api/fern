@@ -1,5 +1,5 @@
 # Reference
-## auth
+## Auth
 <details><summary><code>client.auth.get_token(request) -> Seed::Auth::Types::TokenResponse</code></summary>
 <dl>
 <dd>
@@ -78,7 +78,7 @@ client.auth.get_token({
 </dl>
 </details>
 
-## user
+## User
 <details><summary><code>client.user.get() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
 <dl>
 <dd>

@@ -1,5 +1,5 @@
 # Reference
-## payment
+## Payment
 <details><summary><code>client.payment.create(request) -> String</code></summary>
 <dl>
 <dd>

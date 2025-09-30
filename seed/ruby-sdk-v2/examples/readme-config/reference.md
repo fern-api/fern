@@ -79,7 +79,7 @@ client.create_type();
 </dl>
 </details>
 
-## file notification service
+## File Notification Service
 <details><summary><code>client.file.notification.service.get_exception(notification_id) -> Seed::Types::Types::Exception</code></summary>
 <dl>
 <dd>
@@ -120,7 +120,7 @@ client.file.notification.service.get_exception();
 </dl>
 </details>
 
-## file service
+## File Service
 <details><summary><code>client.file.service.get_file(filename) -> Seed::Types::Types::File</code></summary>
 <dl>
 <dd>
@@ -178,7 +178,7 @@ client.file.service.get_file({
 </dl>
 </details>
 
-## health service
+## Health Service
 <details><summary><code>client.health.service.check(id) -> </code></summary>
 <dl>
 <dd>
@@ -272,7 +272,7 @@ client.health.service.ping();
 </dl>
 </details>
 
-## service
+## Service
 <details><summary><code>client.service.get_movie(movie_id) -> Seed::Types::Types::Movie</code></summary>
 <dl>
 <dd>

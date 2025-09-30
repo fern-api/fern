@@ -1,5 +1,5 @@
 # Reference
-## service
+## Service
 <details><summary><code>client.service.post(endpoint_param) -> </code></summary>
 <dl>
 <dd>

@@ -1,5 +1,5 @@
 # Reference
-## auth
+## Auth
 <details><summary><code>client.auth.get_token_with_client_credentials(request) -> Seed::Auth::Types::TokenResponse</code></summary>
 <dl>
 <dd>

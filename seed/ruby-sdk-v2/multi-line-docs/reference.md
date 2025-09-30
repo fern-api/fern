@@ -1,5 +1,5 @@
 # Reference
-## user
+## User
 <details><summary><code>client.user.get_user(user_id) -> </code></summary>
 <dl>
 <dd>

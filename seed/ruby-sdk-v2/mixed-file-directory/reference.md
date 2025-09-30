@@ -1,5 +1,5 @@
 # Reference
-## organization
+## Organization
 <details><summary><code>client.organization.create(request) -> Seed::Organization::Types::Organization</code></summary>
 <dl>
 <dd>
@@ -56,7 +56,7 @@ client.organization.create({
 </dl>
 </details>
 
-## user
+## User
 <details><summary><code>client.user.list() -> Internal::Types::Array[Seed::User::Types::User]</code></summary>
 <dl>
 <dd>
@@ -113,7 +113,7 @@ client.user.list({
 </dl>
 </details>
 
-## user events
+## User Events
 <details><summary><code>client.user.events.list_events() -> Internal::Types::Array[Seed::User::Events::Types::Event]</code></summary>
 <dl>
 <dd>
@@ -170,7 +170,7 @@ client.user.events.list_events({
 </dl>
 </details>
 
-## user events metadata
+## User Events Metadata
 <details><summary><code>client.user.events.metadata.get_metadata() -> Seed::User::Events::Metadata::Types::Metadata</code></summary>
 <dl>
 <dd>

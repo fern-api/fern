@@ -1,5 +1,5 @@
 # Reference
-## endpoints container
+## Endpoints Container
 <details><summary><code>client.endpoints.container.get_and_return_list_of_primitives(request) -> Internal::Types::Array[String]</code></summary>
 <dl>
 <dd>
@@ -288,7 +288,7 @@ client.endpoints.container.get_and_return_optional({
 </dl>
 </details>
 
-## endpoints content_type
+## Endpoints ContentType
 <details><summary><code>client.endpoints.content_type.post_json_patch_content_type(request) -> </code></summary>
 <dl>
 <dd>
@@ -401,7 +401,7 @@ client.endpoints.content_type.post_json_patch_content_with_charset_type({
 </dl>
 </details>
 
-## endpoints enum
+## Endpoints Enum
 <details><summary><code>client.endpoints.enum.get_and_return_enum(request) -> Seed::Types::Enum::Types::WeatherReport</code></summary>
 <dl>
 <dd>
@@ -442,7 +442,7 @@ client.endpoints.enum.get_and_return_enum();
 </dl>
 </details>
 
-## endpoints http_methods
+## Endpoints HttpMethods
 <details><summary><code>client.endpoints.http_methods.test_get(id) -> String</code></summary>
 <dl>
 <dd>
@@ -679,7 +679,7 @@ client.endpoints.http_methods.test_delete();
 </dl>
 </details>
 
-## endpoints object
+## Endpoints Object_
 <details><summary><code>client.endpoints.object.get_and_return_with_optional_field(request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
@@ -990,7 +990,7 @@ client.endpoints.object.get_and_return_nested_with_required_field_as_list();
 </dl>
 </details>
 
-## endpoints params
+## Endpoints Params
 <details><summary><code>client.endpoints.params.get_with_path(param) -> String</code></summary>
 <dl>
 <dd>
@@ -1487,7 +1487,7 @@ client.endpoints.params.modify_with_inline_path({
 </dl>
 </details>
 
-## endpoints primitive
+## Endpoints Primitive
 <details><summary><code>client.endpoints.primitive.get_and_return_string(request) -> String</code></summary>
 <dl>
 <dd>
@@ -1848,7 +1848,7 @@ client.endpoints.primitive.get_and_return_base_64();
 </dl>
 </details>
 
-## endpoints put
+## Endpoints Put
 <details><summary><code>client.endpoints.put.add(id) -> Seed::Endpoints::Put::Types::PutResponse</code></summary>
 <dl>
 <dd>
@@ -1891,7 +1891,7 @@ client.endpoints.put.add({
 </dl>
 </details>
 
-## endpoints union
+## Endpoints Union
 <details><summary><code>client.endpoints.union.get_and_return_union(request) -> Seed::Types::Union::Types::Animal</code></summary>
 <dl>
 <dd>
@@ -1932,7 +1932,7 @@ client.endpoints.union.get_and_return_union();
 </dl>
 </details>
 
-## endpoints urls
+## Endpoints Urls
 <details><summary><code>client.endpoints.urls.with_mixed_case() -> String</code></summary>
 <dl>
 <dd>
@@ -2033,7 +2033,7 @@ client.endpoints.urls.with_underscores();
 </dl>
 </details>
 
-## inlined_requests
+## InlinedRequests
 <details><summary><code>client.inlined_requests.post_with_object_bodyand_response(request) -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
@@ -2124,7 +2124,7 @@ client.inlined_requests.post_with_object_bodyand_response({
 </dl>
 </details>
 
-## no_auth
+## NoAuth
 <details><summary><code>client.no_auth.post_with_no_auth(request) -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>
@@ -2179,7 +2179,7 @@ client.no_auth.post_with_no_auth();
 </dl>
 </details>
 
-## no_req_body
+## NoReqBody
 <details><summary><code>client.no_req_body.get_with_no_request_body() -> Seed::Types::Object_::Types::ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
@@ -2230,7 +2230,7 @@ client.no_req_body.post_with_no_request_body();
 </dl>
 </details>
 
-## req_with_headers
+## ReqWithHeaders
 <details><summary><code>client.req_with_headers.get_with_custom_header(request) -> </code></summary>
 <dl>
 <dd>

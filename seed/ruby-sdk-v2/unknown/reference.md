@@ -1,5 +1,5 @@
 # Reference
-## unknown
+## Unknown
 <details><summary><code>client.unknown.post(request) -> Internal::Types::Array[Internal::Types::Hash[String, Object]]</code></summary>
 <dl>
 <dd>

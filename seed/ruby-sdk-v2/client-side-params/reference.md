@@ -1,5 +1,5 @@
 # Reference
-## service
+## Service
 <details><summary><code>client.service.list_resources() -> Internal::Types::Array[Seed::Types::Types::Resource]</code></summary>
 <dl>
 <dd>

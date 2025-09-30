@@ -1,5 +1,5 @@
 # Reference
-## headers
+## Headers
 <details><summary><code>client.headers.send_() -> </code></summary>
 <dl>
 <dd>
@@ -64,7 +64,7 @@ client.headers.send_({});
 </dl>
 </details>
 
-## inlined_request
+## InlinedRequest
 <details><summary><code>client.inlined_request.send_(request) -> </code></summary>
 <dl>
 <dd>
@@ -129,7 +129,7 @@ client.inlined_request.send_({});
 </dl>
 </details>
 
-## path_param
+## PathParam
 <details><summary><code>client.path_param.send_(operand, operand_or_color) -> </code></summary>
 <dl>
 <dd>
@@ -178,7 +178,7 @@ client.path_param.send_();
 </dl>
 </details>
 
-## query_param
+## QueryParam
 <details><summary><code>client.query_param.send_() -> </code></summary>
 <dl>
 <dd>

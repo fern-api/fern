@@ -1,5 +1,5 @@
 # Reference
-## service
+## Service
 <details><summary><code>client.service.upload(request) -> </code></summary>
 <dl>
 <dd>

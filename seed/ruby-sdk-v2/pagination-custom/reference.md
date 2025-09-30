@@ -1,5 +1,5 @@
 # Reference
-## users
+## Users
 <details><summary><code>client.users.list_usernames_custom() -> Seed::Types::UsernameCursor</code></summary>
 <dl>
 <dd>

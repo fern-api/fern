@@ -1,5 +1,5 @@
 # Reference
-## ec_2
+## Ec2
 <details><summary><code>client.ec_2.boot_instance(request) -> </code></summary>
 <dl>
 <dd>
@@ -42,7 +42,7 @@ client.ec_2.boot_instance({
 </dl>
 </details>
 
-## s_3
+## S3
 <details><summary><code>client.s_3.get_presigned_url(request) -> String</code></summary>
 <dl>
 <dd>

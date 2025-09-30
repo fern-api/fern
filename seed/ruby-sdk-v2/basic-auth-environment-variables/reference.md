@@ -1,5 +1,5 @@
 # Reference
-## basic_auth
+## BasicAuth
 <details><summary><code>client.basic_auth.get_with_basic_auth() -> Internal::Types::Boolean</code></summary>
 <dl>
 <dd>

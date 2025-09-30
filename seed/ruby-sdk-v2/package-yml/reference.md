@@ -50,7 +50,7 @@ client.echo({
 </dl>
 </details>
 
-## service
+## Service
 <details><summary><code>client.service.nop(id, nested_id) -> </code></summary>
 <dl>
 <dd>

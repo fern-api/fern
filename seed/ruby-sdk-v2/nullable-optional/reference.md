@@ -1,5 +1,5 @@
 # Reference
-## nullable_optional
+## NullableOptional
 <details><summary><code>client.nullable_optional.get_user(user_id) -> Seed::NullableOptional::Types::UserResponse</code></summary>
 <dl>
 <dd>

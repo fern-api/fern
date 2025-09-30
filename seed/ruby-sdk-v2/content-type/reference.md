@@ -1,5 +1,5 @@
 # Reference
-## service
+## Service
 <details><summary><code>client.service.patch(request) -> </code></summary>
 <dl>
 <dd>

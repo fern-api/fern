@@ -53,7 +53,7 @@ client.complex.search({
 </dl>
 </details>
 
-## inline_users inline_users
+## InlineUsers InlineUsers
 <details><summary><code>client.inline_users.inline_users.list_with_cursor_pagination() -> Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>
@@ -684,7 +684,7 @@ client.inline_users.inline_users.list_with_cursor_pagination({});
 </dl>
 </details>
 
-## users
+## Users
 <details><summary><code>client.users.list_with_cursor_pagination() -> Seed::Users::Types::ListUsersPaginationResponse</code></summary>
 <dl>
 <dd>

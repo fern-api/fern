@@ -1,5 +1,5 @@
 # Reference
-## organizations
+## Organizations
 <details><summary><code>client.organizations.get_organization(tenant_id, organization_id) -> Seed::Organizations::Types::Organization</code></summary>
 <dl>
 <dd>
@@ -166,7 +166,7 @@ client.organizations.search_organizations({
 </dl>
 </details>
 
-## user
+## User
 <details><summary><code>client.user.get_user(tenant_id, user_id) -> Seed::User::Types::User</code></summary>
 <dl>
 <dd>
