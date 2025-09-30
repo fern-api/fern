@@ -1,6 +1,6 @@
 # Reference
-## Imdb
-<details><summary><code>client.Imdb.CreateMovie(request) -> String</code></summary>
+## imdb
+<details><summary><code>client.imdb.create_movie(request) -> String</code></summary>
 <dl>
 <dd>
 
@@ -57,7 +57,7 @@ client.imdb.create_movie({
 </dl>
 </details>
 
-<details><summary><code>client.Imdb.GetMovie(MovieId) -> Seed::Imdb::Types::Movie</code></summary>
+<details><summary><code>client.imdb.get_movie(movie_id) -> Seed::Imdb::Types::Movie</code></summary>
 <dl>
 <dd>
 

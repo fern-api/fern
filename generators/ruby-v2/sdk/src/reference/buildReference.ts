@@ -94,12 +94,12 @@ function getEndpointReference({
 
 function getAccessFromRootClient({ context, service }: { context: SdkGeneratorContext; service: HttpService }): string {
     const clientVariableName = "client";
-    const servicePath = service.name.fernFilepath.allParts.map((part) => part.pascalCase.safeName);
+    const servicePath = service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
     return servicePath.length > 0 ? `${clientVariableName}.${servicePath.join(".")}` : clientVariableName;
 }
 
 function getEndpointMethodName({ endpoint }: { endpoint: HttpEndpoint }): string {
-    return endpoint.name.pascalCase.safeName;
+    return endpoint.name.snakeCase.safeName;
 }
 
 function getReferenceEndpointInvocationParameters({
@@ -112,7 +112,7 @@ function getReferenceEndpointInvocationParameters({
     const parameters: string[] = [];
 
     endpoint.allPathParameters.forEach((pathParam) => {
-        parameters.push(pathParam.name.pascalCase.safeName);
+        parameters.push(pathParam.name.snakeCase.safeName);
     });
 
     if (endpoint.requestBody != null) {
@@ -234,5 +234,5 @@ function isRootServiceId({ context, serviceId }: { context: SdkGeneratorContext;
 }
 
 function getSectionTitle({ service }: { service: HttpService }): string {
-    return service.displayName ?? service.name.fernFilepath.allParts.map((part) => part.pascalCase.safeName).join(" ");
+    return service.displayName ?? service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName).join(" ");
 }
