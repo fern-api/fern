@@ -114,7 +114,7 @@ function parseOpenApiDefinitionSettingsSchema(
         typeDatesAsStrings: settings?.["type-dates-as-strings"],
         preserveSingleSchemaOneOf: settings?.["preserve-single-schema-oneof"],
         inlineAllOfSchemas: settings?.["inline-all-of-schemas"],
-        resolveAliases: settings?.["resolve-named-aliases"],
+        resolveAliases: settings?.["resolve-aliases"],
         groupMultiApiEnvironments: settings?.["group-multi-api-environments"]
     };
 }
