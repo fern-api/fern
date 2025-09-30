@@ -6,5 +6,5 @@ client = seed::Client.new(
 );
 
 client.endpoints.container.get_and_return_optional({
-  string:'string'
+  string: 'string'
 });

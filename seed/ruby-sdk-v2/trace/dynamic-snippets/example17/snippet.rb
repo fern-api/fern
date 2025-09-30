@@ -6,6 +6,6 @@ client = seed::Client.new(
 );
 
 client.playlist.update_playlist({
-  name:'name',
-  problems:['problems', 'problems']
+  name: 'name',
+  problems: ['problems', 'problems']
 });

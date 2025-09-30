@@ -18,7 +18,7 @@ require "seed"
 client = seed::Client.new();
 
 client.organization.create({
-  name:'name'
+  name: 'name'
 });
 ```
 

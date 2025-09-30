@@ -14,7 +14,7 @@
 
 ```ruby
 client.simple.foo_without_endpoint_error({
-  bar:'bar'
+  bar: 'bar'
 });
 ```
 </dd>
@@ -56,7 +56,7 @@ client.simple.foo_without_endpoint_error({
 
 ```ruby
 client.simple.foo({
-  bar:'bar'
+  bar: 'bar'
 });
 ```
 </dd>
@@ -98,7 +98,7 @@ client.simple.foo({
 
 ```ruby
 client.simple.foo_with_examples({
-  bar:'hello'
+  bar: 'hello'
 });
 ```
 </dd>

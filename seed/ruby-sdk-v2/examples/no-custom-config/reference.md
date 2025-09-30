@@ -327,15 +327,15 @@ client.service.get_movie();
 
 ```ruby
 client.service.create_movie({
-  id:'movie-c06a4ad7',
-  prequel:'movie-cv9b914f',
-  title:'The Boy and the Heron',
-  from:'Hayao Miyazaki',
-  rating:8,
-  type:'movie',
-  tag:'tag-wf9as23d',
-  metadata:{},
-  revenue:1000000
+  id: 'movie-c06a4ad7',
+  prequel: 'movie-cv9b914f',
+  title: 'The Boy and the Heron',
+  from: 'Hayao Miyazaki',
+  rating: 8,
+  type: 'movie',
+  tag: 'tag-wf9as23d',
+  metadata: {},
+  revenue: 1000000
 });
 ```
 </dd>
@@ -437,140 +437,140 @@ client.service.get_metadata(
 
 ```ruby
 client.service.create_big_entity({
-  extendedMovie:{
-    cast:['cast', 'cast'],
-    id:'id',
-    prequel:'prequel',
-    title:'title',
-    from:'from',
-    rating:1.1,
-    type:'movie',
-    tag:'tag',
-    book:'book',
-    metadata:{},
-    revenue:1000000
+  extendedMovie: {
+    cast: ['cast', 'cast'],
+    id: 'id',
+    prequel: 'prequel',
+    title: 'title',
+    from: 'from',
+    rating: 1.1,
+    type: 'movie',
+    tag: 'tag',
+    book: 'book',
+    metadata: {},
+    revenue: 1000000
   },
-  entity:{
-    name:'name'
+  entity: {
+    name: 'name'
   },
-  commonMetadata:{
-    id:'id',
-    data:{
-      data:'data'
+  commonMetadata: {
+    id: 'id',
+    data: {
+      data: 'data'
     },
-    jsonString:'jsonString'
+    jsonString: 'jsonString'
   },
-  migration:{
-    name:'name'
+  migration: {
+    name: 'name'
   },
-  node:{
-    name:'name',
-    nodes:[{
-      name:'name',
-      nodes:[{
-        name:'name',
-        nodes:[],
-        trees:[]
+  node: {
+    name: 'name',
+    nodes: [{
+      name: 'name',
+      nodes: [{
+        name: 'name',
+        nodes: [],
+        trees: []
       }, {
-        name:'name',
-        nodes:[],
-        trees:[]
+        name: 'name',
+        nodes: [],
+        trees: []
       }],
-      trees:[{
-        nodes:[]
+      trees: [{
+        nodes: []
       }, {
-        nodes:[]
+        nodes: []
       }]
     }, {
-      name:'name',
-      nodes:[{
-        name:'name',
-        nodes:[],
-        trees:[]
+      name: 'name',
+      nodes: [{
+        name: 'name',
+        nodes: [],
+        trees: []
       }, {
-        name:'name',
-        nodes:[],
-        trees:[]
+        name: 'name',
+        nodes: [],
+        trees: []
       }],
-      trees:[{
-        nodes:[]
+      trees: [{
+        nodes: []
       }, {
-        nodes:[]
+        nodes: []
       }]
     }],
-    trees:[{
-      nodes:[{
-        name:'name',
-        nodes:[],
-        trees:[]
+    trees: [{
+      nodes: [{
+        name: 'name',
+        nodes: [],
+        trees: []
       }, {
-        name:'name',
-        nodes:[],
-        trees:[]
+        name: 'name',
+        nodes: [],
+        trees: []
       }]
     }, {
-      nodes:[{
-        name:'name',
-        nodes:[],
-        trees:[]
+      nodes: [{
+        name: 'name',
+        nodes: [],
+        trees: []
       }, {
-        name:'name',
-        nodes:[],
-        trees:[]
+        name: 'name',
+        nodes: [],
+        trees: []
       }]
     }]
   },
-  directory:{
-    name:'name',
-    files:[{
-      name:'name',
-      contents:'contents'
+  directory: {
+    name: 'name',
+    files: [{
+      name: 'name',
+      contents: 'contents'
     }, {
-      name:'name',
-      contents:'contents'
+      name: 'name',
+      contents: 'contents'
     }],
-    directories:[{
-      name:'name',
-      files:[{
-        name:'name',
-        contents:'contents'
+    directories: [{
+      name: 'name',
+      files: [{
+        name: 'name',
+        contents: 'contents'
       }, {
-        name:'name',
-        contents:'contents'
+        name: 'name',
+        contents: 'contents'
       }],
-      directories:[{
-        name:'name',
-        files:[],
-        directories:[]
+      directories: [{
+        name: 'name',
+        files: [],
+        directories: []
       }, {
-        name:'name',
-        files:[],
-        directories:[]
+        name: 'name',
+        files: [],
+        directories: []
       }]
     }, {
-      name:'name',
-      files:[{
-        name:'name',
-        contents:'contents'
+      name: 'name',
+      files: [{
+        name: 'name',
+        contents: 'contents'
       }, {
-        name:'name',
-        contents:'contents'
+        name: 'name',
+        contents: 'contents'
       }],
-      directories:[{
-        name:'name',
-        files:[],
-        directories:[]
+      directories: [{
+        name: 'name',
+        files: [],
+        directories: []
       }, {
-        name:'name',
-        files:[],
-        directories:[]
+        name: 'name',
+        files: [],
+        directories: []
       }]
     }]
   },
-  moment:{
-    id:'d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-    date:'2023-01-15',
-    datetime:'2024-01-15T09:30:00Z'
+  moment: {
+    id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    date: '2023-01-15',
+    datetime: '2024-01-15T09:30:00Z'
   }
 });
 ```

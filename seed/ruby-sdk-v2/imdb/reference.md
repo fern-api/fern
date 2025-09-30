@@ -28,8 +28,8 @@ Add a movie to the database using the movies/* /... path.
 
 ```ruby
 client.imdb.create_movie({
-  title:'title',
-  rating:1.1
+  title: 'title',
+  rating: 1.1
 });
 ```
 </dd>

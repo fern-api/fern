@@ -82,17 +82,17 @@ Create a new user
 
 ```ruby
 client.nullable_optional.create_user({
-  username:'username',
-  email:'email',
-  phone:'phone',
-  address:{
-    street:'street',
-    city:'city',
-    state:'state',
-    zipCode:'zipCode',
-    country:'country',
-    buildingId:'buildingId',
-    tenantId:'tenantId'
+  username: 'username',
+  email: 'email',
+  phone: 'phone',
+  address: {
+    street: 'street',
+    city: 'city',
+    state: 'state',
+    zipCode: 'zipCode',
+    country: 'country',
+    buildingId: 'buildingId',
+    tenantId: 'tenantId'
   }
 });
 ```
@@ -149,17 +149,17 @@ Update a user (partial update)
 
 ```ruby
 client.nullable_optional.update_user({
-  username:'username',
-  email:'email',
-  phone:'phone',
-  address:{
-    street:'street',
-    city:'city',
-    state:'state',
-    zipCode:'zipCode',
-    country:'country',
-    buildingId:'buildingId',
-    tenantId:'tenantId'
+  username: 'username',
+  email: 'email',
+  phone: 'phone',
+  address: {
+    street: 'street',
+    city: 'city',
+    state: 'state',
+    zipCode: 'zipCode',
+    country: 'country',
+    buildingId: 'buildingId',
+    tenantId: 'tenantId'
   }
 });
 ```
@@ -390,24 +390,24 @@ Create a complex profile to test nullable enums and unions
 
 ```ruby
 client.nullable_optional.create_complex_profile({
-  id:'id',
-  nullableArray:['nullableArray', 'nullableArray'],
-  optionalArray:['optionalArray', 'optionalArray'],
-  optionalNullableArray:['optionalNullableArray', 'optionalNullableArray'],
-  nullableListOfNullables:['nullableListOfNullables', 'nullableListOfNullables'],
-  nullableMapOfNullables:{
-    nullableMapOfNullables:{
-      street:'street',
-      city:'city',
-      state:'state',
-      zipCode:'zipCode',
-      country:'country',
-      buildingId:'buildingId',
-      tenantId:'tenantId'
+  id: 'id',
+  nullableArray: ['nullableArray', 'nullableArray'],
+  optionalArray: ['optionalArray', 'optionalArray'],
+  optionalNullableArray: ['optionalNullableArray', 'optionalNullableArray'],
+  nullableListOfNullables: ['nullableListOfNullables', 'nullableListOfNullables'],
+  nullableMapOfNullables: {
+    nullableMapOfNullables: {
+      street: 'street',
+      city: 'city',
+      state: 'state',
+      zipCode: 'zipCode',
+      country: 'country',
+      buildingId: 'buildingId',
+      tenantId: 'tenantId'
     }
   },
-  nullableListOfUnions:[],
-  optionalMapOfEnums:{}
+  nullableListOfUnions: [],
+  optionalMapOfEnums: {}
 });
 ```
 </dd>
@@ -618,28 +618,28 @@ Test endpoint for validating null deserialization
 
 ```ruby
 client.nullable_optional.test_deserialization({
-  requiredString:'requiredString',
-  nullableString:'nullableString',
-  optionalString:'optionalString',
-  optionalNullableString:'optionalNullableString',
-  nullableList:['nullableList', 'nullableList'],
-  nullableMap:{
-    nullableMap:1
+  requiredString: 'requiredString',
+  nullableString: 'nullableString',
+  optionalString: 'optionalString',
+  optionalNullableString: 'optionalNullableString',
+  nullableList: ['nullableList', 'nullableList'],
+  nullableMap: {
+    nullableMap: 1
   },
-  nullableObject:{
-    street:'street',
-    city:'city',
-    state:'state',
-    zipCode:'zipCode',
-    country:'country',
-    buildingId:'buildingId',
-    tenantId:'tenantId'
+  nullableObject: {
+    street: 'street',
+    city: 'city',
+    state: 'state',
+    zipCode: 'zipCode',
+    country: 'country',
+    buildingId: 'buildingId',
+    tenantId: 'tenantId'
   },
-  optionalObject:{
-    id:'id',
-    name:'name',
-    domain:'domain',
-    employeeCount:1
+  optionalObject: {
+    id: 'id',
+    name: 'name',
+    domain: 'domain',
+    employeeCount: 1
   }
 });
 ```
@@ -909,7 +909,7 @@ Get search results with nullable unions
 client.nullable_optional.get_search_results(
   query: 'query',
   filters: {
-    filters:'filters'
+    filters: 'filters'
   },
   includeTypes: ['includeTypes', 'includeTypes']
 );

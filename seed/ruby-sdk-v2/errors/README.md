@@ -18,7 +18,7 @@ require "seed"
 client = seed::Client.new();
 
 client.simple.foo_without_endpoint_error({
-  bar:'bar'
+  bar: 'bar'
 });
 ```
 

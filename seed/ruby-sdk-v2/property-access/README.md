@@ -18,15 +18,15 @@ require "seed"
 client = seed::Client.new();
 
 client.create_user({
-  id:'id',
-  email:'email',
-  password:'password',
-  profile:{
-    name:'name',
-    verification:{
-      verified:'verified'
+  id: 'id',
+  email: 'email',
+  password: 'password',
+  profile: {
+    name: 'name',
+    verification: {
+      verified: 'verified'
     },
-    ssn:'ssn'
+    ssn: 'ssn'
   }
 });
 ```

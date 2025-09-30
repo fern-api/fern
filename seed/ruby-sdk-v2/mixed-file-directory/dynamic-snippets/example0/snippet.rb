@@ -3,5 +3,5 @@ require "seed"
 client = seed::Client.new(base_url: 'https://api.fern.com');
 
 client.organization.create({
-  name:'name'
+  name: 'name'
 });

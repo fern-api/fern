@@ -6,7 +6,7 @@ client = seed::Client.new(
 );
 
 client.endpoints.container.get_and_return_map_of_prim_to_object({
-  string:{
-    string:'string'
+  string: {
+    string: 'string'
   }
 });

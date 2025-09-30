@@ -488,15 +488,15 @@ Create a new user
 
 ```ruby
 client.service.create_user({
-  email:'email',
-  email_verified:true,
-  username:'username',
-  password:'password',
-  phone_number:'phone_number',
-  phone_verified:true,
-  user_metadata:{},
-  app_metadata:{},
-  connection:'connection'
+  email: 'email',
+  email_verified: true,
+  username: 'username',
+  password: 'password',
+  phone_number: 'phone_number',
+  phone_verified: true,
+  user_metadata: {},
+  app_metadata: {},
+  connection: 'connection'
 });
 ```
 </dd>
@@ -552,15 +552,15 @@ Update a user
 
 ```ruby
 client.service.update_user({
-  email:'email',
-  email_verified:true,
-  username:'username',
-  phone_number:'phone_number',
-  phone_verified:true,
-  user_metadata:{},
-  app_metadata:{},
-  password:'password',
-  blocked:true
+  email: 'email',
+  email_verified: true,
+  username: 'username',
+  phone_number: 'phone_number',
+  phone_verified: true,
+  user_metadata: {},
+  app_metadata: {},
+  password: 'password',
+  blocked: true
 });
 ```
 </dd>

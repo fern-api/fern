@@ -88,7 +88,7 @@ client.admin.update_test_submission_status();
 
 ```ruby
 client.admin.send_test_submission_update({
-  updateTime:'2024-01-15T09:30:00Z'
+  updateTime: '2024-01-15T09:30:00Z'
 });
 ```
 </dd>
@@ -186,7 +186,7 @@ client.admin.update_workspace_submission_status();
 
 ```ruby
 client.admin.send_workspace_submission_update({
-  updateTime:'2024-01-15T09:30:00Z'
+  updateTime: '2024-01-15T09:30:00Z'
 });
 ```
 </dd>
@@ -239,51 +239,51 @@ client.admin.store_traced_test_case(
   submissionId: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
   testCaseId: 'testCaseId',
   result: {
-    result:{
-      passed:true
+    result: {
+      passed: true
     },
-    stdout:'stdout'
+    stdout: 'stdout'
   },
   traceResponses: [{
-    submissionId:'d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-    lineNumber:1,
-    expressionLocation:{
-      start:1,
-      offset:1
+    submissionId: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    lineNumber: 1,
+    expressionLocation: {
+      start: 1,
+      offset: 1
     },
-    stack:{
-      numStackFrames:1,
-      topStackFrame:{
-        methodName:'methodName',
-        lineNumber:1,
-        scopes:[{
-          variables:{}
+    stack: {
+      numStackFrames: 1,
+      topStackFrame: {
+        methodName: 'methodName',
+        lineNumber: 1,
+        scopes: [{
+          variables: {}
         }, {
-          variables:{}
+          variables: {}
         }]
       }
     },
-    stdout:'stdout'
+    stdout: 'stdout'
   }, {
-    submissionId:'d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-    lineNumber:1,
-    expressionLocation:{
-      start:1,
-      offset:1
+    submissionId: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    lineNumber: 1,
+    expressionLocation: {
+      start: 1,
+      offset: 1
     },
-    stack:{
-      numStackFrames:1,
-      topStackFrame:{
-        methodName:'methodName',
-        lineNumber:1,
-        scopes:[{
-          variables:{}
+    stack: {
+      numStackFrames: 1,
+      topStackFrame: {
+        methodName: 'methodName',
+        lineNumber: 1,
+        scopes: [{
+          variables: {}
         }, {
-          variables:{}
+          variables: {}
         }]
       }
     },
-    stdout:'stdout'
+    stdout: 'stdout'
   }]
 );
 ```
@@ -408,53 +408,53 @@ client.admin.store_traced_test_case_v_2();
 client.admin.store_traced_workspace(
   submissionId: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
   workspaceRunDetails: {
-    exception:{
-      exceptionType:'exceptionType',
-      exceptionMessage:'exceptionMessage',
-      exceptionStacktrace:'exceptionStacktrace'
+    exception: {
+      exceptionType: 'exceptionType',
+      exceptionMessage: 'exceptionMessage',
+      exceptionStacktrace: 'exceptionStacktrace'
     },
-    stdout:'stdout'
+    stdout: 'stdout'
   },
   traceResponses: [{
-    submissionId:'d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-    lineNumber:1,
-    expressionLocation:{
-      start:1,
-      offset:1
+    submissionId: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    lineNumber: 1,
+    expressionLocation: {
+      start: 1,
+      offset: 1
     },
-    stack:{
-      numStackFrames:1,
-      topStackFrame:{
-        methodName:'methodName',
-        lineNumber:1,
-        scopes:[{
-          variables:{}
+    stack: {
+      numStackFrames: 1,
+      topStackFrame: {
+        methodName: 'methodName',
+        lineNumber: 1,
+        scopes: [{
+          variables: {}
         }, {
-          variables:{}
+          variables: {}
         }]
       }
     },
-    stdout:'stdout'
+    stdout: 'stdout'
   }, {
-    submissionId:'d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-    lineNumber:1,
-    expressionLocation:{
-      start:1,
-      offset:1
+    submissionId: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    lineNumber: 1,
+    expressionLocation: {
+      start: 1,
+      offset: 1
     },
-    stack:{
-      numStackFrames:1,
-      topStackFrame:{
-        methodName:'methodName',
-        lineNumber:1,
-        scopes:[{
-          variables:{}
+    stack: {
+      numStackFrames: 1,
+      topStackFrame: {
+        methodName: 'methodName',
+        lineNumber: 1,
+        scopes: [{
+          variables: {}
         }, {
-          variables:{}
+          variables: {}
         }]
       }
     },
-    stdout:'stdout'
+    stdout: 'stdout'
   }]
 );
 ```
@@ -931,8 +931,8 @@ Updates a playlist
 
 ```ruby
 client.playlist.update_playlist({
-  name:'name',
-  problems:['problems', 'problems']
+  name: 'name',
+  problems: ['problems', 'problems']
 });
 ```
 </dd>
@@ -1067,28 +1067,28 @@ Creates a problem
 
 ```ruby
 client.problem.create_problem({
-  problemName:'problemName',
-  problemDescription:{
-    boards:[]
+  problemName: 'problemName',
+  problemDescription: {
+    boards: []
   },
-  files:{},
-  inputParams:[{
-    name:'name'
+  files: {},
+  inputParams: [{
+    name: 'name'
   }, {
-    name:'name'
+    name: 'name'
   }],
-  testcases:[{
-    testCase:{
-      id:'id',
-      params:[]
+  testcases: [{
+    testCase: {
+      id: 'id',
+      params: []
     }
   }, {
-    testCase:{
-      id:'id',
-      params:[]
+    testCase: {
+      id: 'id',
+      params: []
     }
   }],
-  methodName:'methodName'
+  methodName: 'methodName'
 });
 ```
 </dd>
@@ -1144,28 +1144,28 @@ Updates a problem
 
 ```ruby
 client.problem.update_problem({
-  problemName:'problemName',
-  problemDescription:{
-    boards:[]
+  problemName: 'problemName',
+  problemDescription: {
+    boards: []
   },
-  files:{},
-  inputParams:[{
-    name:'name'
+  files: {},
+  inputParams: [{
+    name: 'name'
   }, {
-    name:'name'
+    name: 'name'
   }],
-  testcases:[{
-    testCase:{
-      id:'id',
-      params:[]
+  testcases: [{
+    testCase: {
+      id: 'id',
+      params: []
     }
   }, {
-    testCase:{
-      id:'id',
-      params:[]
+    testCase: {
+      id: 'id',
+      params: []
     }
   }],
-  methodName:'methodName'
+  methodName: 'methodName'
 });
 ```
 </dd>
@@ -1284,9 +1284,9 @@ Returns default starter files for problem
 ```ruby
 client.problem.get_default_starter_files(
   inputParams: [{
-    name:'name'
+    name: 'name'
   }, {
-    name:'name'
+    name: 'name'
   }],
   outputType: ,
   methodName: 'methodName'

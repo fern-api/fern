@@ -9,8 +9,8 @@ client.inlined.send_(
   aliasedContext: "You're super wise",
   maybeContext: "You're super wise",
   objectWithLiteral: {
-    nestedLiteral:{
-      myLiteral:'How super cool'
+    nestedLiteral: {
+      myLiteral: 'How super cool'
     }
   },
   stream: false,

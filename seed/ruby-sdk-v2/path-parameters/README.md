@@ -18,8 +18,8 @@ require "seed"
 client = seed::Client.new();
 
 client.user.create_user({
-  name:'name',
-  tags:['tags', 'tags']
+  name: 'name',
+  tags: ['tags', 'tags']
 });
 ```
 

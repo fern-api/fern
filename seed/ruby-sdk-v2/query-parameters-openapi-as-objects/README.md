@@ -24,25 +24,25 @@ client.search(
   deadline: '2024-01-15T09:30:00Z',
   bytes: 'bytes',
   user: {
-    name:'name',
-    tags:['tags', 'tags']
+    name: 'name',
+    tags: ['tags', 'tags']
   },
   userList: ,
   optionalDeadline: '2024-01-15T09:30:00Z',
   keyValue: {
-    keyValue:'keyValue'
+    keyValue: 'keyValue'
   },
   optionalString: 'optionalString',
   nestedUser: {
-    name:'name',
-    user:{
-      name:'name',
-      tags:['tags', 'tags']
+    name: 'name',
+    user: {
+      name: 'name',
+      tags: ['tags', 'tags']
     }
   },
   optionalUser: {
-    name:'name',
-    tags:['tags', 'tags']
+    name: 'name',
+    tags: ['tags', 'tags']
   },
   excludeUser: ,
   filter: ,

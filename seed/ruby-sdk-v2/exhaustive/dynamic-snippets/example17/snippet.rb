@@ -6,9 +6,9 @@ client = seed::Client.new(
 );
 
 client.endpoints.object.get_and_return_with_map_of_map({
-  map:{
-    map:{
-      map:'map'
+  map: {
+    map: {
+      map: 'map'
     }
   }
 });

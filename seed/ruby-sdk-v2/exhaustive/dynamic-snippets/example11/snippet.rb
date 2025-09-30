@@ -6,5 +6,5 @@ client = seed::Client.new(
 );
 
 client.endpoints.http_methods.test_post({
-  string:'string'
+  string: 'string'
 });

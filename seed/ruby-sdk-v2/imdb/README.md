@@ -18,8 +18,8 @@ require "seed"
 client = seed::Client.new(token: '<token>');
 
 client.imdb.create_movie({
-  title:'title',
-  rating:1.1
+  title: 'title',
+  rating: 1.1
 });
 ```
 

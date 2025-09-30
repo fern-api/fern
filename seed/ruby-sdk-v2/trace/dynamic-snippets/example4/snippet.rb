@@ -6,5 +6,5 @@ client = seed::Client.new(
 );
 
 client.admin.send_workspace_submission_update({
-  updateTime:'2024-01-15T09:30:00Z'
+  updateTime: '2024-01-15T09:30:00Z'
 });

@@ -6,5 +6,5 @@ client = seed::Client.new(
 );
 
 client.service.refresh_token({
-  ttl:1
+  ttl: 1
 });

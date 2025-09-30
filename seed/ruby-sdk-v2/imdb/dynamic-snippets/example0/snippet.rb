@@ -6,6 +6,6 @@ client = seed::Client.new(
 );
 
 client.imdb.create_movie({
-  title:'title',
-  rating:1.1
+  title: 'title',
+  rating: 1.1
 });

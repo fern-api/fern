@@ -6,26 +6,26 @@ client = seed::Client.new(
 );
 
 client.problem.update_problem({
-  problemName:'problemName',
-  problemDescription:{
-    boards:[]
+  problemName: 'problemName',
+  problemDescription: {
+    boards: []
   },
-  files:{},
-  inputParams:[{
-    name:'name'
+  files: {},
+  inputParams: [{
+    name: 'name'
   }, {
-    name:'name'
+    name: 'name'
   }],
-  testcases:[{
-    testCase:{
-      id:'id',
-      params:[]
+  testcases: [{
+    testCase: {
+      id: 'id',
+      params: []
     }
   }, {
-    testCase:{
-      id:'id',
-      params:[]
+    testCase: {
+      id: 'id',
+      params: []
     }
   }],
-  methodName:'methodName'
+  methodName: 'methodName'
 });

@@ -13,8 +13,8 @@
 
 ```ruby
 client.echo({
-  name:'Hello world!',
-  size:20
+  name: 'Hello world!',
+  size: 20
 });
 ```
 </dd>

@@ -229,8 +229,8 @@ client.user.get_user(userId: 'user_id');
 
 ```ruby
 client.user.create_user({
-  name:'name',
-  tags:['tags', 'tags']
+  name: 'name',
+  tags: ['tags', 'tags']
 });
 ```
 </dd>

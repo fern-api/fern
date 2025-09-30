@@ -14,9 +14,9 @@
 
 ```ruby
 client.complex.search({
-  pagination:{
-    per_page:1,
-    starting_after:'starting_after'
+  pagination: {
+    per_page: 1,
+    starting_after: 'starting_after'
   }
 });
 ```
