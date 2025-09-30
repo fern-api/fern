@@ -12,8 +12,10 @@ import com.fern.ir.model.types.NamedType;
 import com.fern.ir.model.types.ObjectProperty;
 import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.fern.ir.model.types.PrimitiveType;
+import com.fern.ir.model.types.SingleUnionType;
 import com.fern.ir.model.types.Type;
 import com.fern.ir.model.types.TypeDeclaration;
+import com.fern.ir.model.types.UndiscriminatedUnionMember;
 import com.fern.ir.model.types.UndiscriminatedUnionTypeDeclaration;
 import com.fern.ir.model.types.UnionTypeDeclaration;
 import com.fern.java.client.ClientGeneratorContext;
@@ -876,13 +878,88 @@ public abstract class AbstractHttpResponseParserGenerator {
 
                 @Override
                 public GetSnippetOutput visitUnion(UnionTypeDeclaration union) {
-                    throw new RuntimeException("Cannot create a snippet with a union");
+                    List<String> variantErrors = new ArrayList<>();
+                    int variantIndex = 0;
+
+                    for (SingleUnionType variant : union.getTypes()) {
+                        try {
+                            com.fern.ir.model.types.TypeReference variantTypeRef = variant.getShape().visit(
+                                    new com.fern.ir.model.types.SingleUnionTypeProperties.Visitor<com.fern.ir.model.types.TypeReference>() {
+                                        @Override
+                                        public com.fern.ir.model.types.TypeReference visitSamePropertiesAsObject(DeclaredTypeName declaredTypeName) {
+                                            return com.fern.ir.model.types.TypeReference.named(
+                                                    NamedType.builder()
+                                                            .typeId(declaredTypeName.getTypeId())
+                                                            .fernFilepath(declaredTypeName.getFernFilepath())
+                                                            .name(declaredTypeName.getName())
+                                                            .build());
+                                        }
+
+                                        @Override
+                                        public com.fern.ir.model.types.TypeReference visitSingleProperty(
+                                                com.fern.ir.model.types.SingleUnionTypeProperty singleProperty) {
+                                            return singleProperty.getType();
+                                        }
+
+                                        @Override
+                                        public com.fern.ir.model.types.TypeReference visitNoProperties() {
+                                            throw new RuntimeException("Cannot traverse union variant with no properties");
+                                        }
+
+                                        @Override
+                                        public com.fern.ir.model.types.TypeReference _visitUnknown(Object unknownType) {
+                                            throw new RuntimeException("Unknown variant shape");
+                                        }
+                                    });
+
+                            GetSnippetOutput result = variantTypeRef.visit(new NestedPropertySnippetGenerator(
+                                    variantTypeRef,
+                                    propertyPath,
+                                    previousWasOptional,
+                                    currentOptional,
+                                    previousProperty,
+                                    previousTypeReference,
+                                    clientGeneratorContext));
+
+                            return result;
+                        } catch (Exception e) {
+                            variantErrors.add("[Variant " + variantIndex + " (" +
+                                    variant.getDiscriminantValue().getWireValue() + ")]: " + e.getMessage());
+                            variantIndex++;
+                        }
+                    }
+
+                    throw new RuntimeException("Cannot create snippet with discriminated union - all variants failed:\n" +
+                            String.join("\n", variantErrors));
                 }
 
                 @Override
                 public GetSnippetOutput visitUndiscriminatedUnion(
                         UndiscriminatedUnionTypeDeclaration undiscriminatedUnion) {
-                    throw new RuntimeException("Cannot create a snippet with an undiscriminated union");
+                    List<String> variantErrors = new ArrayList<>();
+                    int variantIndex = 0;
+
+                    for (UndiscriminatedUnionMember member : undiscriminatedUnion.getMembers()) {
+                        try {
+                            com.fern.ir.model.types.TypeReference variantType = member.getType();
+                            GetSnippetOutput result = variantType.visit(new NestedPropertySnippetGenerator(
+                                    variantType,
+                                    propertyPath,
+                                    previousWasOptional,
+                                    currentOptional,
+                                    previousProperty,
+                                    previousTypeReference,
+                                    clientGeneratorContext));
+
+                            return result;
+                        } catch (Exception e) {
+                            variantErrors.add("[Variant " + variantIndex + "]: " + e.getMessage());
+                            variantIndex++;
+                        }
+                    }
+
+                    throw new RuntimeException("Cannot create snippet with undiscriminated union - all variants failed:\n" +
+                            String.join("\n", variantErrors));
                 }
 
                 @Override

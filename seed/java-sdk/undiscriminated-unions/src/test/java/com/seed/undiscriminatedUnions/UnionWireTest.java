@@ -12,6 +12,7 @@ import com.seed.undiscriminatedUnions.resources.union.types.Request;
 import com.seed.undiscriminatedUnions.resources.union.types.UnionWithDuplicateTypes;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
@@ -151,11 +152,13 @@ public class UnionWireTest {
             .setBody("true"));
         Boolean response = client.union().updateMetadata(
             MetadataUnion.of(
-                new HashMap<String, Object>() {{
-                    put("string", new 
-                    HashMap<String, Object>() {{put("key", "value");
-                    }});
-                }}
+                Optional.of(
+                    new HashMap<String, Object>() {{
+                        put("string", new 
+                        HashMap<String, Object>() {{put("key", "value");
+                        }});
+                    }}
+                )
             )
         );
         RecordedRequest request = server.takeRequest();
@@ -230,11 +233,13 @@ public class UnionWireTest {
                 .builder()
                 .union(
                     MetadataUnion.of(
-                        new HashMap<String, Object>() {{
-                            put("union", new 
-                            HashMap<String, Object>() {{put("key", "value");
-                            }});
-                        }}
+                        Optional.of(
+                            new HashMap<String, Object>() {{
+                                put("string", new 
+                                HashMap<String, Object>() {{put("key", "value");
+                                }});
+                            }}
+                        )
                     )
                 )
                 .build()
@@ -247,7 +252,7 @@ public class UnionWireTest {
         String expectedRequestBody = ""
             + "{\n"
             + "  \"union\": {\n"
-            + "    \"union\": {\n"
+            + "    \"string\": {\n"
             + "      \"key\": \"value\"\n"
             + "    }\n"
             + "  }\n"

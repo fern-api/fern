@@ -313,6 +313,5 @@ allowedFailures:
   - path-parameters
   - query-parameters
   - streaming
-  - undiscriminated-unions
 
   - java-pagination-deep-cursor-path:wire-tests
