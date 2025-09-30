@@ -25,6 +25,8 @@ export * from "./ApiConfigurationV2Schema";
 export * from "./ApiConfigurationV2SpecsSchema";
 export * from "./BaseApiSettingsSchema";
 export * from "./OpenApiSettingsSchema";
+export * from "./ResolveAliases";
+export * from "./ResolveAliasesSchema";
 export * from "./FormParameterEncoding";
 export * from "./OpenApiExampleGenerationSchema";
 export * from "./RequestOrResponseExampleGenerationSchema";
