@@ -17,10 +17,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  package-seed-tests:
+  run-seed-test:
     runs-on: ubuntu-latest
-    # CHRISM - tempo
-    if: false
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       matrix:
@@ -48,7 +46,7 @@ jobs:
             php-sdk,
             swift-sdk,
             rust-model,
-            rust-sdk
+            rust-sdk,
           ]
     steps:
       - name: Checkout repo
@@ -97,32 +95,7 @@ jobs:
   build-test-packages:
     runs-on: ubuntu-latest
     if: always()
-    # CHRISM - tempo
-    # needs: [package-seed-tests]
-    # outputs:
-    #   ruby-model: ${{ steps.set-test-matrix.outputs.ruby-model-test-matrix }}
-    # ruby-sdk: ${{ steps.output-packages.outputs.ruby-sdk-packages }}
-    #   ruby-sdk-v2: ${{ steps.set-test-matrix.outputs.ruby-sdk-v2-test-matrix }}
-    # pydantic: ${{ steps.output-packages.outputs.pydantic-packages }}
-    #   python-sdk: ${{ steps.set-test-matrix.outputs.python-sdk-test-matrix }}
-    #   fastapi: ${{ steps.set-test-matrix.outputs.fastapi-test-matrix }}
-    #   openapi: ${{ steps.set-test-matrix.outputs.openapi-test-matrix }}
-    #   postman: ${{ steps.set-test-matrix.outputs.postman-test-matrix }}
-    #   java-sdk: ${{ steps.set-test-matrix.outputs.java-sdk-test-matrix }}
-    #   java-model: ${{ steps.set-test-matrix.outputs.java-model-test-matrix }}
-    #   java-spring: ${{ steps.set-test-matrix.outputs.java-spring-test-matrix }}
-    #   ts-sdk: ${{ steps.set-test-matrix.outputs.ts-sdk-test-matrix }}
-    #   ts-express: ${{ steps.set-test-matrix.outputs.ts-express-test-matrix }}
-    #   go-fiber: ${{ steps.set-test-matrix.outputs.go-fiber-test-matrix }}
-    #   go-model: ${{ steps.set-test-matrix.outputs.go-model-test-matrix }}
-    #   go-sdk: ${{ steps.set-test-matrix.outputs.go-sdk-test-matrix }}
-    #   csharp-model: ${{ steps.set-test-matrix.outputs.csharp-model-test-matrix }}
-    #   csharp-sdk: ${{ steps.set-test-matrix.outputs.csharp-sdk-test-matrix }}
-    #   php-model: ${{ steps.set-test-matrix.outputs.php-model-test-matrix }}
-    #   php-sdk: ${{ steps.set-test-matrix.outputs.php-sdk-test-matrix }}
-    #   swift-sdk: ${{ steps.set-test-matrix.outputs.swift-sdk-test-matrix }}
-    #   rust-model: ${{ steps.set-test-matrix.outputs.rust-model-test-matrix }}
-    #   rust-sdk: ${{ steps.set-test-matrix.outputs.rust-sdk-test-matrix }}
+    needs: [run-seed-test]
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       matrix:
@@ -150,15 +123,9 @@ jobs:
             php-sdk,
             swift-sdk,
             rust-model,
-            rust-sdk
+            rust-sdk,
           ]
-    # needs: [package-seed-tests]
     steps:
-      # - name: Checkout repo
-      #   uses: actions/checkout@v4
-      #   with:
-      #     token: ${{ secrets.FERN_GITHUB_PAT }}
-
       - name: Make artifacts directory
         shell: bash
         run: |
@@ -169,13 +136,9 @@ jobs:
         with:
           path: ./artifacts
           name: ${{ matrix.sdk-name }}-seed-test-log.txt
-          run-id: 18111300631 #CHRISM - temporary for testing, artifact ID = 4132496421
           github-token: ${{ secrets.FERN_GITHUB_PAT }}
           repository: ${{ github.repository }}
           merge-multiple: true
-      # - name: Echo contents of file
-      #   run: |
-      #     echo "Contents of file: $(cat artifacts/${{ matrix.sdk-name }}-seed-test-log.txt)"
 
       - name: Package Seed Tests
         id: package-tests
@@ -205,7 +168,6 @@ jobs:
     if: always()
     needs: [build-test-packages]
     steps:
-      # CHRISM - checked out on main?
       - name: Checkout repo
         uses: actions/checkout@v4
 
@@ -214,7 +176,6 @@ jobs:
         with:
           path: ./artifacts
           pattern: "*-seed-packages.json"
-          # run-id: 18111300631 #CHRISM - temporary for testing, artifact ID = 4132496421
           merge-multiple: true
 
       - name: Check and Make Directory
