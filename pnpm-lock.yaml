@@ -1576,6 +1576,9 @@ importers:
       '@fern-api/ruby-ast':
         specifier: workspace:*
         version: link:../ast
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
