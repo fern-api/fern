@@ -5,9 +5,8 @@ package stream
 import (
 	json "encoding/json"
 	fmt "fmt"
-	big "math/big"
-
 	internal "github.com/fern-api/stream-go/v2/internal"
+	big "math/big"
 )
 
 var (

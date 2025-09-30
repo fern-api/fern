@@ -13,6 +13,10 @@
 <dd>
 
 ```go
+request := &fern.CreatePaymentRequest{
+        Amount: 1,
+        Currency: fern.CurrencyUsd,
+    }
 client.Payment.Create(
         context.TODO(),
         request,

@@ -34,7 +34,6 @@ export interface ApiDefinitionSettingsSchema {
      * Defaults to true.
      */
     "wrap-references-to-nullable-in-optional"?: boolean;
-
     /**
      * If true, the converter will coerce nullable schemas to optional.
      * If false, the converter will keep nullable schemas as nullable.

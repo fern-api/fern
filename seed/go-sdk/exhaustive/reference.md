@@ -13,6 +13,10 @@
 <dd>
 
 ```go
+request := []string{
+        "string",
+        "string",
+    }
 client.Endpoints.Container.GetAndReturnListOfPrimitives(
         context.TODO(),
         request,
@@ -57,6 +61,14 @@ client.Endpoints.Container.GetAndReturnListOfPrimitives(
 <dd>
 
 ```go
+request := []*types.ObjectWithRequiredField{
+        &types.ObjectWithRequiredField{
+            String: "string",
+        },
+        &types.ObjectWithRequiredField{
+            String: "string",
+        },
+    }
 client.Endpoints.Container.GetAndReturnListOfObjects(
         context.TODO(),
         request,
@@ -101,6 +113,9 @@ client.Endpoints.Container.GetAndReturnListOfObjects(
 <dd>
 
 ```go
+request := []string{
+        "string",
+    }
 client.Endpoints.Container.GetAndReturnSetOfPrimitives(
         context.TODO(),
         request,
@@ -145,6 +160,11 @@ client.Endpoints.Container.GetAndReturnSetOfPrimitives(
 <dd>
 
 ```go
+request := []*types.ObjectWithRequiredField{
+        &types.ObjectWithRequiredField{
+            String: "string",
+        },
+    }
 client.Endpoints.Container.GetAndReturnSetOfObjects(
         context.TODO(),
         request,
@@ -189,6 +209,9 @@ client.Endpoints.Container.GetAndReturnSetOfObjects(
 <dd>
 
 ```go
+request := map[string]string{
+        "string": "string",
+    }
 client.Endpoints.Container.GetAndReturnMapPrimToPrim(
         context.TODO(),
         request,
@@ -233,6 +256,11 @@ client.Endpoints.Container.GetAndReturnMapPrimToPrim(
 <dd>
 
 ```go
+request := map[string]*types.ObjectWithRequiredField{
+        "string": &types.ObjectWithRequiredField{
+            String: "string",
+        },
+    }
 client.Endpoints.Container.GetAndReturnMapOfPrimToObject(
         context.TODO(),
         request,
@@ -277,6 +305,9 @@ client.Endpoints.Container.GetAndReturnMapOfPrimToObject(
 <dd>
 
 ```go
+request := &types.ObjectWithRequiredField{
+        String: "string",
+    }
 client.Endpoints.Container.GetAndReturnOptional(
         context.TODO(),
         request,
@@ -322,6 +353,52 @@ client.Endpoints.Container.GetAndReturnOptional(
 <dd>
 
 ```go
+request := &types.ObjectWithOptionalField{
+        String: fern.String(
+            "string",
+        ),
+        Integer: fern.Int(
+            1,
+        ),
+        Long: fern.Int64(
+            1000000,
+        ),
+        Double: fern.Float64(
+            1.1,
+        ),
+        Bool: fern.Bool(
+            true,
+        ),
+        Datetime: fern.Time(
+            fern.MustParseDateTime(
+                "2024-01-15T09:30:00Z",
+            ),
+        ),
+        Date: fern.Time(
+            fern.MustParseDateTime(
+                "2023-01-15",
+            ),
+        ),
+        Uuid: fern.UUID(
+            uuid.MustParse(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+        ),
+        Base64: []byte("SGVsbG8gd29ybGQh"),
+        List: []string{
+            "list",
+            "list",
+        },
+        Set: []string{
+            "set",
+        },
+        Map: map[int]string{
+            1: "map",
+        },
+        Bigint: fern.String(
+            "1000000",
+        ),
+    }
 client.Endpoints.ContentType.PostJsonPatchContentType(
         context.TODO(),
         request,
@@ -366,6 +443,52 @@ client.Endpoints.ContentType.PostJsonPatchContentType(
 <dd>
 
 ```go
+request := &types.ObjectWithOptionalField{
+        String: fern.String(
+            "string",
+        ),
+        Integer: fern.Int(
+            1,
+        ),
+        Long: fern.Int64(
+            1000000,
+        ),
+        Double: fern.Float64(
+            1.1,
+        ),
+        Bool: fern.Bool(
+            true,
+        ),
+        Datetime: fern.Time(
+            fern.MustParseDateTime(
+                "2024-01-15T09:30:00Z",
+            ),
+        ),
+        Date: fern.Time(
+            fern.MustParseDateTime(
+                "2023-01-15",
+            ),
+        ),
+        Uuid: fern.UUID(
+            uuid.MustParse(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+        ),
+        Base64: []byte("SGVsbG8gd29ybGQh"),
+        List: []string{
+            "list",
+            "list",
+        },
+        Set: []string{
+            "set",
+        },
+        Map: map[int]string{
+            1: "map",
+        },
+        Bigint: fern.String(
+            "1000000",
+        ),
+    }
 client.Endpoints.ContentType.PostJsonPatchContentWithCharsetType(
         context.TODO(),
         request,
@@ -500,6 +623,9 @@ client.Endpoints.HttpMethods.TestGet(
 <dd>
 
 ```go
+request := &types.ObjectWithRequiredField{
+        String: "string",
+    }
 client.Endpoints.HttpMethods.TestPost(
         context.TODO(),
         request,
@@ -544,6 +670,9 @@ client.Endpoints.HttpMethods.TestPost(
 <dd>
 
 ```go
+request := &types.ObjectWithRequiredField{
+        String: "string",
+    }
 client.Endpoints.HttpMethods.TestPut(
         context.TODO(),
         "id",
@@ -597,6 +726,52 @@ client.Endpoints.HttpMethods.TestPut(
 <dd>
 
 ```go
+request := &types.ObjectWithOptionalField{
+        String: fern.String(
+            "string",
+        ),
+        Integer: fern.Int(
+            1,
+        ),
+        Long: fern.Int64(
+            1000000,
+        ),
+        Double: fern.Float64(
+            1.1,
+        ),
+        Bool: fern.Bool(
+            true,
+        ),
+        Datetime: fern.Time(
+            fern.MustParseDateTime(
+                "2024-01-15T09:30:00Z",
+            ),
+        ),
+        Date: fern.Time(
+            fern.MustParseDateTime(
+                "2023-01-15",
+            ),
+        ),
+        Uuid: fern.UUID(
+            uuid.MustParse(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+        ),
+        Base64: []byte("SGVsbG8gd29ybGQh"),
+        List: []string{
+            "list",
+            "list",
+        },
+        Set: []string{
+            "set",
+        },
+        Map: map[int]string{
+            1: "map",
+        },
+        Bigint: fern.String(
+            "1000000",
+        ),
+    }
 client.Endpoints.HttpMethods.TestPatch(
         context.TODO(),
         "id",
@@ -695,6 +870,52 @@ client.Endpoints.HttpMethods.TestDelete(
 <dd>
 
 ```go
+request := &types.ObjectWithOptionalField{
+        String: fern.String(
+            "string",
+        ),
+        Integer: fern.Int(
+            1,
+        ),
+        Long: fern.Int64(
+            1000000,
+        ),
+        Double: fern.Float64(
+            1.1,
+        ),
+        Bool: fern.Bool(
+            true,
+        ),
+        Datetime: fern.Time(
+            fern.MustParseDateTime(
+                "2024-01-15T09:30:00Z",
+            ),
+        ),
+        Date: fern.Time(
+            fern.MustParseDateTime(
+                "2023-01-15",
+            ),
+        ),
+        Uuid: fern.UUID(
+            uuid.MustParse(
+                "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            ),
+        ),
+        Base64: []byte("SGVsbG8gd29ybGQh"),
+        List: []string{
+            "list",
+            "list",
+        },
+        Set: []string{
+            "set",
+        },
+        Map: map[int]string{
+            1: "map",
+        },
+        Bigint: fern.String(
+            "1000000",
+        ),
+    }
 client.Endpoints.Object.GetAndReturnWithOptionalField(
         context.TODO(),
         request,
@@ -739,6 +960,9 @@ client.Endpoints.Object.GetAndReturnWithOptionalField(
 <dd>
 
 ```go
+request := &types.ObjectWithRequiredField{
+        String: "string",
+    }
 client.Endpoints.Object.GetAndReturnWithRequiredField(
         context.TODO(),
         request,
@@ -783,6 +1007,13 @@ client.Endpoints.Object.GetAndReturnWithRequiredField(
 <dd>
 
 ```go
+request := &types.ObjectWithMapOfMap{
+        Map: map[string]map[string]string{
+            "map": map[string]string{
+                "map": "map",
+            },
+        },
+    }
 client.Endpoints.Object.GetAndReturnWithMapOfMap(
         context.TODO(),
         request,
@@ -827,6 +1058,57 @@ client.Endpoints.Object.GetAndReturnWithMapOfMap(
 <dd>
 
 ```go
+request := &types.NestedObjectWithOptionalField{
+        String: fern.String(
+            "string",
+        ),
+        NestedObject: &types.ObjectWithOptionalField{
+            String: fern.String(
+                "string",
+            ),
+            Integer: fern.Int(
+                1,
+            ),
+            Long: fern.Int64(
+                1000000,
+            ),
+            Double: fern.Float64(
+                1.1,
+            ),
+            Bool: fern.Bool(
+                true,
+            ),
+            Datetime: fern.Time(
+                fern.MustParseDateTime(
+                    "2024-01-15T09:30:00Z",
+                ),
+            ),
+            Date: fern.Time(
+                fern.MustParseDateTime(
+                    "2023-01-15",
+                ),
+            ),
+            Uuid: fern.UUID(
+                uuid.MustParse(
+                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                ),
+            ),
+            Base64: []byte("SGVsbG8gd29ybGQh"),
+            List: []string{
+                "list",
+                "list",
+            },
+            Set: []string{
+                "set",
+            },
+            Map: map[int]string{
+                1: "map",
+            },
+            Bigint: fern.String(
+                "1000000",
+            ),
+        },
+    }
 client.Endpoints.Object.GetAndReturnNestedWithOptionalField(
         context.TODO(),
         request,
@@ -871,6 +1153,55 @@ client.Endpoints.Object.GetAndReturnNestedWithOptionalField(
 <dd>
 
 ```go
+request := &types.NestedObjectWithRequiredField{
+        String: "string",
+        NestedObject: &types.ObjectWithOptionalField{
+            String: fern.String(
+                "string",
+            ),
+            Integer: fern.Int(
+                1,
+            ),
+            Long: fern.Int64(
+                1000000,
+            ),
+            Double: fern.Float64(
+                1.1,
+            ),
+            Bool: fern.Bool(
+                true,
+            ),
+            Datetime: fern.Time(
+                fern.MustParseDateTime(
+                    "2024-01-15T09:30:00Z",
+                ),
+            ),
+            Date: fern.Time(
+                fern.MustParseDateTime(
+                    "2023-01-15",
+                ),
+            ),
+            Uuid: fern.UUID(
+                uuid.MustParse(
+                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                ),
+            ),
+            Base64: []byte("SGVsbG8gd29ybGQh"),
+            List: []string{
+                "list",
+                "list",
+            },
+            Set: []string{
+                "set",
+            },
+            Map: map[int]string{
+                1: "map",
+            },
+            Bigint: fern.String(
+                "1000000",
+            ),
+        },
+    }
 client.Endpoints.Object.GetAndReturnNestedWithRequiredField(
         context.TODO(),
         "string",
@@ -924,6 +1255,106 @@ client.Endpoints.Object.GetAndReturnNestedWithRequiredField(
 <dd>
 
 ```go
+request := []*types.NestedObjectWithRequiredField{
+        &types.NestedObjectWithRequiredField{
+            String: "string",
+            NestedObject: &types.ObjectWithOptionalField{
+                String: fern.String(
+                    "string",
+                ),
+                Integer: fern.Int(
+                    1,
+                ),
+                Long: fern.Int64(
+                    1000000,
+                ),
+                Double: fern.Float64(
+                    1.1,
+                ),
+                Bool: fern.Bool(
+                    true,
+                ),
+                Datetime: fern.Time(
+                    fern.MustParseDateTime(
+                        "2024-01-15T09:30:00Z",
+                    ),
+                ),
+                Date: fern.Time(
+                    fern.MustParseDateTime(
+                        "2023-01-15",
+                    ),
+                ),
+                Uuid: fern.UUID(
+                    uuid.MustParse(
+                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    ),
+                ),
+                Base64: []byte("SGVsbG8gd29ybGQh"),
+                List: []string{
+                    "list",
+                    "list",
+                },
+                Set: []string{
+                    "set",
+                },
+                Map: map[int]string{
+                    1: "map",
+                },
+                Bigint: fern.String(
+                    "1000000",
+                ),
+            },
+        },
+        &types.NestedObjectWithRequiredField{
+            String: "string",
+            NestedObject: &types.ObjectWithOptionalField{
+                String: fern.String(
+                    "string",
+                ),
+                Integer: fern.Int(
+                    1,
+                ),
+                Long: fern.Int64(
+                    1000000,
+                ),
+                Double: fern.Float64(
+                    1.1,
+                ),
+                Bool: fern.Bool(
+                    true,
+                ),
+                Datetime: fern.Time(
+                    fern.MustParseDateTime(
+                        "2024-01-15T09:30:00Z",
+                    ),
+                ),
+                Date: fern.Time(
+                    fern.MustParseDateTime(
+                        "2023-01-15",
+                    ),
+                ),
+                Uuid: fern.UUID(
+                    uuid.MustParse(
+                        "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    ),
+                ),
+                Base64: []byte("SGVsbG8gd29ybGQh"),
+                List: []string{
+                    "list",
+                    "list",
+                },
+                Set: []string{
+                    "set",
+                },
+                Map: map[int]string{
+                    1: "map",
+                },
+                Bigint: fern.String(
+                    "1000000",
+                ),
+            },
+        },
+    }
 client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsList(
         context.TODO(),
         request,
@@ -1099,6 +1530,10 @@ GET with query param
 <dd>
 
 ```go
+request := &endpoints.GetWithQuery{
+        Query: "query",
+        Number: 1,
+    }
 client.Endpoints.Params.GetWithQuery(
         context.TODO(),
         request,
@@ -1165,6 +1600,10 @@ GET with multiple of same query param
 <dd>
 
 ```go
+request := &endpoints.GetWithQuery{
+        Query: "query",
+        Number: 1,
+    }
 client.Endpoints.Params.GetWithQuery(
         context.TODO(),
         request,
@@ -1231,6 +1670,9 @@ GET with path and query params
 <dd>
 
 ```go
+request := &endpoints.GetWithPathAndQuery{
+        Query: "query",
+    }
 client.Endpoints.Params.GetWithPathAndQuery(
         context.TODO(),
         "param",
@@ -1298,6 +1740,9 @@ GET with path and query params
 <dd>
 
 ```go
+request := &endpoints.GetWithPathAndQuery{
+        Query: "query",
+    }
 client.Endpoints.Params.GetWithPathAndQuery(
         context.TODO(),
         "param",
@@ -1928,6 +2373,12 @@ client.Endpoints.Put.Add(
 <dd>
 
 ```go
+request := &types.Animal{
+        Dog: &types.Dog{
+            Name: "name",
+            LikesToWoof: true,
+        },
+    }
 client.Endpoints.Union.GetAndReturnUnion(
         context.TODO(),
         request,
@@ -2100,6 +2551,56 @@ POST with custom object in request body, response is an object
 <dd>
 
 ```go
+request := &fern.PostWithObjectBody{
+        String: "string",
+        Integer: 1,
+        NestedObject: &types.ObjectWithOptionalField{
+            String: fern.String(
+                "string",
+            ),
+            Integer: fern.Int(
+                1,
+            ),
+            Long: fern.Int64(
+                1000000,
+            ),
+            Double: fern.Float64(
+                1.1,
+            ),
+            Bool: fern.Bool(
+                true,
+            ),
+            Datetime: fern.Time(
+                fern.MustParseDateTime(
+                    "2024-01-15T09:30:00Z",
+                ),
+            ),
+            Date: fern.Time(
+                fern.MustParseDateTime(
+                    "2023-01-15",
+                ),
+            ),
+            Uuid: fern.UUID(
+                uuid.MustParse(
+                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                ),
+            ),
+            Base64: []byte("SGVsbG8gd29ybGQh"),
+            List: []string{
+                "list",
+                "list",
+            },
+            Set: []string{
+                "set",
+            },
+            Map: map[int]string{
+                1: "map",
+            },
+            Bigint: fern.String(
+                "1000000",
+            ),
+        },
+    }
 client.InlinedRequests.PostWithObjectBodyandResponse(
         context.TODO(),
         request,
@@ -2175,6 +2676,9 @@ POST request with no auth
 <dd>
 
 ```go
+request := map[string]any{
+        "key": "value",
+    }
 client.NoAuth.PostWithNoAuth(
         context.TODO(),
         request,
@@ -2277,6 +2781,11 @@ client.NoReqBody.PostWithNoRequestBody(
 <dd>
 
 ```go
+request := &fern.ReqWithHeaders{
+        XTestServiceHeader: "X-TEST-SERVICE-HEADER",
+        XTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
+        Body: "string",
+    }
 client.ReqWithHeaders.GetWithCustomHeader(
         context.TODO(),
         request,

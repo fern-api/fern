@@ -97,7 +97,6 @@ types:
     type: optional<double>
     examples:
       - value: hello
-      - value: null
       - value: 3.0
   LiteralAlias:
     type: literal<"hello">

@@ -10,6 +10,34 @@ type ImportPath = string;
 // according to Go conventions.
 const INVALID_GO_IDENTIFIER_TOKEN = /[^0-9a-zA-Z_]/g;
 
+const RESERVED_KEYWORDS = [
+    "break",
+    "case",
+    "chan",
+    "const",
+    "continue",
+    "default",
+    "defer",
+    "else",
+    "fallthrough",
+    "for",
+    "func",
+    "go",
+    "goto",
+    "if",
+    "import",
+    "interface",
+    "map",
+    "package",
+    "range",
+    "return",
+    "select",
+    "struct",
+    "switch",
+    "type",
+    "var"
+];
+
 export declare namespace Writer {
     interface Args {
         /* The package name that is being written to */
@@ -82,6 +110,10 @@ export class Writer extends AbstractWriter {
         return alias;
     }
 
+    private isValidAlias(alias: string): boolean {
+        return !RESERVED_KEYWORDS.includes(alias);
+    }
+
     /**
      * Creates a new valid alias from the given string. Removes all
      * characters not included in the Go identifier grammar.
@@ -94,6 +126,10 @@ export class Writer extends AbstractWriter {
         if (split[0] == null) {
             return s;
         }
-        return split.map((part) => part.replace(INVALID_GO_IDENTIFIER_TOKEN, "")).join("");
+        const possibleAlias = split.map((part) => part.replace(INVALID_GO_IDENTIFIER_TOKEN, "")).join("");
+        if (this.isValidAlias(possibleAlias)) {
+            return possibleAlias;
+        }
+        return "_" + possibleAlias;
     }
 }

@@ -1,0 +1,4 @@
+display-name: Required nullable example
+error-discrimination:
+  strategy: status-code
+name: api

@@ -1,0 +1,539 @@
+{
+  "title": "Inlined path parameters",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "Returns an array alias",
+      "audiences": [],
+      "operationId": "GetAliasArray",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetAliasArrayRequest",
+      "response": {
+        "description": "Array alias response",
+        "schema": {
+          "description": "Alias for array of strings",
+          "value": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "AliasArrayItem",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "generatedName": "AliasArray",
+          "groupName": [],
+          "type": "array"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "GET",
+      "path": "/alias/array",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "value": {
+                    "value": "string",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              ],
+              "type": "array"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Returns an object alias",
+      "audiences": [],
+      "operationId": "GetAliasObject",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetAliasObjectRequest",
+      "response": {
+        "description": "Object alias response",
+        "schema": {
+          "generatedName": "GetAliasObjectResponse",
+          "schema": "AliasObject",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "GET",
+      "path": "/alias/object",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "foo": {
+                  "value": {
+                    "value": "foo",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "bar": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Returns a string alias",
+      "audiences": [],
+      "operationId": "GetAliasString",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetAliasStringRequest",
+      "response": {
+        "description": "String alias response",
+        "schema": {
+          "description": "Alias for string",
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "AliasString",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "GET",
+      "path": "/alias/string",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Returns an optional string alias",
+      "audiences": [],
+      "operationId": "GetAliasOptionalString",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetAliasOptionalStringRequest",
+      "response": {
+        "description": "Optional string alias response",
+        "schema": {
+          "generatedName": "AliasOptionalString",
+          "description": "Alias for optional string",
+          "value": {
+            "description": "Alias for optional string",
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "AliasOptionalString",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "groupName": [],
+          "type": "nullable"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "GET",
+      "path": "/alias/optional-string",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Returns an optional object alias",
+      "audiences": [],
+      "operationId": "GetAliasOptionalObject",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetAliasOptionalObjectRequest",
+      "response": {
+        "description": "Optional object alias response",
+        "schema": {
+          "generatedName": "GetAliasOptionalObjectResponse",
+          "value": {
+            "generatedName": "GetAliasOptionalObjectResponse",
+            "schema": "AliasOptionalObject",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          },
+          "type": "nullable"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "GET",
+      "path": "/alias/optional-object",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "foo": {
+                  "value": {
+                    "value": "foo",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Returns a don't resolve me alias",
+      "audiences": [],
+      "operationId": "GetDontResolveMe",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetDontResolveMeRequest",
+      "response": {
+        "description": "Don't resolve me alias response",
+        "schema": {
+          "generatedName": "GetDontResolveMeResponse",
+          "schema": "DontResolveMe",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "GET",
+      "path": "/alias/dont-resolve-me",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "value": {
+                "value": "string",
+                "type": "string"
+              },
+              "type": "primitive"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "AliasArray": {
+        "description": "Alias for array of strings",
+        "value": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "AliasArrayItem",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "generatedName": "AliasArray",
+        "groupName": [],
+        "type": "array"
+      },
+      "AliasObject": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "aliasObjectFoo",
+            "key": "foo",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "AliasObjectFoo",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "aliasObjectBar",
+            "key": "bar",
+            "schema": {
+              "schema": {
+                "type": "int"
+              },
+              "generatedName": "AliasObjectBar",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "description": "Alias for an object",
+        "generatedName": "AliasObject",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "AliasString": {
+        "description": "Alias for string",
+        "schema": {
+          "type": "string"
+        },
+        "generatedName": "AliasString",
+        "groupName": [],
+        "type": "primitive"
+      },
+      "AliasOptionalString": {
+        "generatedName": "AliasOptionalString",
+        "description": "Alias for optional string",
+        "value": {
+          "description": "Alias for optional string",
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "AliasOptionalString",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "groupName": [],
+        "type": "nullable"
+      },
+      "AliasOptionalObject": {
+        "generatedName": "AliasOptionalObject",
+        "description": "Alias for optional object",
+        "value": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "aliasOptionalObjectFoo",
+              "key": "foo",
+              "schema": {
+                "generatedName": "aliasOptionalObjectFoo",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "AliasOptionalObjectFoo",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "description": "Alias for optional object",
+          "generatedName": "AliasOptionalObject",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "groupName": [],
+        "type": "nullable"
+      },
+      "DontResolveMe": {
+        "description": "Don't resolve me",
+        "schema": {
+          "type": "string"
+        },
+        "generatedName": "DontResolveMe",
+        "groupName": [],
+        "type": "primitive"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}
