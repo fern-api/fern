@@ -359,7 +359,15 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             // Tests
             AsIsFiles.TestHelper,
             AsIsFiles.TestCursorItemIterator,
-            AsIsFiles.TestOffsetItemIterator
+            AsIsFiles.TestOffsetItemIterator,
+            AsIsFiles.TestFormData,
+            AsIsFiles.TestArrayType,
+            AsIsFiles.TestBooleanType,
+            AsIsFiles.TestEnumType,
+            AsIsFiles.TestHashType,
+            AsIsFiles.TestModelType,
+            AsIsFiles.TestUnionType,
+            AsIsFiles.TestTypeUtils
         ];
 
         return files;

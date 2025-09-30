@@ -50,7 +50,15 @@ export const AsIsFiles = {
     // Test files
     TestHelper: "test/test_helper.Template.rb",
     TestCursorItemIterator: "test/unit/internal/iterators/test_cursor_item_iterator.Template.rb",
-    TestOffsetItemIterator: "test/unit/internal/iterators/test_offset_item_iterator.Template.rb"
+    TestOffsetItemIterator: "test/unit/internal/iterators/test_offset_item_iterator.Template.rb",
+    TestFormData: "test/unit/internal/multipart/test_form_data.Template.rb",
+    TestArrayType: "test/unit/internal/types/test_array.Template.rb",
+    TestBooleanType: "test/unit/internal/types/test_boolean.Template.rb",
+    TestEnumType: "test/unit/internal/types/test_enum.Template.rb",
+    TestHashType: "test/unit/internal/types/test_hash.Template.rb",
+    TestModelType: "test/unit/internal/types/test_model.Template.rb",
+    TestUnionType: "test/unit/internal/types/test_union.Template.rb",
+    TestTypeUtils: "test/unit/internal/types/test_utils.Template.rb"
 } as const;
 
 export function topologicalCompareAsIsFiles(fileA: string, fileB: string): number {
