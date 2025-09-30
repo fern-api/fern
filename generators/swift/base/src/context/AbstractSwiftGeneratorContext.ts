@@ -132,6 +132,10 @@ export abstract class AbstractSwiftGeneratorContext<
         return RelativeFilePath.of("Schemas");
     }
 
+    public get hasTests(): boolean {
+        return !!this.customConfig.enableWireTests;
+    }
+
     public getTypeDeclarationOrThrow(typeId: TypeId): TypeDeclaration {
         const typeDeclaration = this.ir.types[typeId];
         assertDefined(typeDeclaration, `Type declaration with the id '${typeId}' not found`);
