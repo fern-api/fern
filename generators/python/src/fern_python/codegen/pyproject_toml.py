@@ -23,6 +23,7 @@ from fern.generator_exec import (
 
 DEFAULT_UV_VERSION = "0.0.1"
 
+
 @dataclass(frozen=True)
 class PyProjectTomlPackageConfig:
     include: str
@@ -117,8 +118,6 @@ class PyProjectToml:
             if self._user_defined_toml is not None:
                 content += "\n"
                 content += self._user_defined_toml
-
-
 
         with open(os.path.join(self._path, "pyproject.toml"), "w") as f:
             f.write(content)
@@ -235,7 +234,7 @@ packages = [
             # Get dependencies from the dependency manager
             dependencies = []
             dev_dependencies = []
-            
+
             # Map main dependencies
             for dep in self.dependency_manager.get_dependencies():
                 if dep.name == "python":
@@ -246,7 +245,7 @@ packages = [
                     version = f">={dep.version}"
                 dep_str = f"{dep.name}{version}"
                 dependencies.append(dep_str)
-            
+
             # Map dev dependencies
             for dep in self.dependency_manager.get_dev_dependencies():
                 compatibility = dep.compatibility
@@ -255,7 +254,7 @@ packages = [
                     version = f">={dep.version}"
                 dep_str = f"{dep.name}{version}"
                 dev_dependencies.append(dep_str)
-            
+
             # Initialize metadata
             description = ""
             authors: List[str] = []
@@ -275,7 +274,7 @@ packages = [
                 "Typing :: Typed",
             ]
             license_evaluated = ""
-            
+
             # Apply pypi metadata if available
             if self.pypi_metadata is not None:
                 description = (
@@ -357,7 +356,7 @@ version = "{self.version or DEFAULT_UV_VERSION}"
 description = "{description}"
 authors = {authors_str}
 packages = [
-    {{ include = "{self.package.include}", from = "{self.package._from or 'src'}"}}
+    {{ include = "{self.package.include}", from = "{self.package._from or "src"}"}}
 ]
 
 [build-system]
@@ -381,7 +380,7 @@ build-backend = "poetry.core.masonry.api"
             # Get dependencies from the dependency manager
             dependencies = []
             dev_dependencies = []
-            
+
             # Map main dependencies
             for dep in self.dependency_manager.get_dependencies():
                 if dep.name == "python":
@@ -392,7 +391,7 @@ build-backend = "poetry.core.masonry.api"
                     version = f">={dep.version}"
                 dep_str = f"{dep.name}{version}"
                 dependencies.append(dep_str)
-            
+
             # Map dev dependencies
             for dep in self.dependency_manager.get_dev_dependencies():
                 compatibility = dep.compatibility
@@ -401,7 +400,7 @@ build-backend = "poetry.core.masonry.api"
                     version = f">={dep.version}"
                 dep_str = f"{dep.name}{version}"
                 dev_dependencies.append(dep_str)
-            
+
             # Initialize metadata
             description = ""
             authors: List[str] = []
@@ -421,7 +420,7 @@ build-backend = "poetry.core.masonry.api"
                 "Typing :: Typed",
             ]
             license_evaluated = ""
-            
+
             # Apply pypi metadata if available
             if self.pypi_metadata is not None:
                 description = (
