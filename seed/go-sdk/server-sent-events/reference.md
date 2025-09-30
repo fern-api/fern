@@ -13,6 +13,9 @@
 <dd>
 
 ```go
+request := &fern.StreamCompletionRequest{
+        Query: "query",
+    }
 client.Completions.Stream(
         context.TODO(),
         request,

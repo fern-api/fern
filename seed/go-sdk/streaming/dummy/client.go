@@ -49,7 +49,7 @@ func (c *Client) GenerateStream(
 		c.options.ToHeader(),
 		options.ToHeader(),
 	)
-	streamer := internal.NewStreamer[v2.StreamResponse](c.caller)
+	streamer := v2.NewStreamer[v2.StreamResponse](c.caller)
 	return streamer.Stream(
 		ctx,
 		&internal.StreamParams{
@@ -61,6 +61,7 @@ func (c *Client) GenerateStream(
 			QueryParameters: options.QueryParameters,
 			Client:          options.HTTPClient,
 			Request:         request,
+			ErrorDecoder:    internal.NewErrorDecoder(v2.ErrorCodes),
 		},
 	)
 }

@@ -13,6 +13,13 @@
 <dd>
 
 ```go
+request := &fern.GetTokenRequest{
+        ClientId: "my_oauth_app_123",
+        ClientSecret: "sk_live_abcdef123456789",
+        Scope: fern.String(
+            "read:users",
+        ),
+    }
 client.Auth.GetTokenWithClientCredentials(
         context.TODO(),
         request,
@@ -89,6 +96,14 @@ client.Auth.GetTokenWithClientCredentials(
 <dd>
 
 ```go
+request := &fern.RefreshTokenRequest{
+        ClientId: "my_oauth_app_123",
+        ClientSecret: "sk_live_abcdef123456789",
+        RefreshToken: "refresh_token",
+        Scope: fern.String(
+            "read:users",
+        ),
+    }
 client.Auth.RefreshToken(
         context.TODO(),
         request,
