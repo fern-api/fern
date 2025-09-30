@@ -98,7 +98,7 @@ export async function loadProjectFromDirectory({
                 ` › ${APIS_DIRECTORY}/\n` +
                 ` › ${DEFINITION_DIRECTORY}/\n` +
                 ` › ${OPENAPI_DIRECTORY}/\n` +
-                ` › ${ASYNCAPI_DIRECTORY}/\n\n` +
+                ` › ${ASYNCAPI_DIRECTORY}/\n` +
                 `For more information:\n` +
                 ` › SDK project structure: https://buildwithfern.com/learn/api-definitions/overview/project-structure\n` +
                 ` › Docs project structure: https://buildwithfern.com/learn/docs/getting-started/project-structure`
