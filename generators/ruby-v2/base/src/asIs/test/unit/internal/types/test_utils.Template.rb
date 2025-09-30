@@ -173,8 +173,6 @@ describe <%= gem_namespace %>::Internal::Types::Utils do
       UnionArray = -> { <%= gem_namespace %>::Internal::Types::Array[TestUtils::U] }
 
       it "coerces an array of literals" do
-        skip "TODO: Fix me!"
-
         assert_equal %w[a b c], Utils.coerce(StringArray, %w[a b c])
         assert_equal ["1", "2.0", "true"], Utils.coerce(StringArray, [1, 2.0, true])
         assert_equal ["1", "2.0", "true"], Utils.coerce(StringArray, Set.new([1, 2.0, true]))
@@ -194,8 +192,6 @@ describe <%= gem_namespace %>::Internal::Types::Utils do
       end
 
       it "returns given value if not an array" do
-        skip "TODO: Fix me!"
-
         assert_equal 1, Utils.coerce(StringArray, 1)
       end
     end
