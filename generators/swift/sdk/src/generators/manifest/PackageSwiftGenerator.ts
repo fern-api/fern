@@ -102,7 +102,7 @@ export class PackageSwiftGenerator {
                                                     value: swift.Expression.arrayLiteral({
                                                         elements: [
                                                             swift.Expression.stringLiteral(
-                                                                this.sdkGeneratorContext.targetName
+                                                                this.sdkGeneratorContext.srcTargetName
                                                             )
                                                         ]
                                                     })
@@ -130,7 +130,7 @@ export class PackageSwiftGenerator {
                                                 swift.functionArgument({
                                                     label: "name",
                                                     value: swift.Expression.stringLiteral(
-                                                        this.sdkGeneratorContext.targetName
+                                                        this.sdkGeneratorContext.srcTargetName
                                                     )
                                                 }),
                                                 swift.functionArgument({
