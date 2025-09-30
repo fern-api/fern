@@ -452,7 +452,7 @@ export class RootClientGenerator {
             if (defaultEnvironment != null) {
                 return swift.Expression.memberAccess({
                     target: swift.Expression.reference(
-                        this.sdkGeneratorContext.project.symbolRegistry.getEnvironmentSymbolOrThrow()
+                        this.sdkGeneratorContext.project.srcSymbolRegistry.getEnvironmentSymbolOrThrow()
                     ),
                     memberName: `${defaultEnvironment.name.camelCase.unsafeName}.rawValue`
                 });
