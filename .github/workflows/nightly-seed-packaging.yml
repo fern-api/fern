@@ -3,7 +3,7 @@ name: Nightly Seed Packaging
 on:
   # Runs every night at 5:00 AM UTC (1:00 AM ET)
   schedule:
-    - cron: '0 5 * * *'
+    - cron: "0 5 * * *"
   # CHRISM - temporary for testing
   push:
     branches:
@@ -16,11 +16,11 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-jobs:  
+jobs:
   package-seed-tests:
     runs-on: ubuntu-latest
     # CHRISM - tempo
-    if: false 
+    if: false
     strategy:
       fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
       matrix:
@@ -58,11 +58,11 @@ jobs:
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
-            github_token: ${{ github.token }}
+          github_token: ${{ github.token }}
 
       - uses: actions/setup-go@v5
         with:
-            go-version: "stable"
+          go-version: "stable"
 
       - name: Install protoc-gen-openapi
         shell: bash
@@ -71,7 +71,7 @@ jobs:
       - name: Build seed
         shell: bash
         run: |
-            pnpm seed:build
+          pnpm seed:build
 
       - name: Save seed test log to file
         id: save-seed-test-log-to-file
@@ -86,7 +86,7 @@ jobs:
           if-no-files-found: error
           retention-days: 1
 
-      - name: Echo info for this run    
+      - name: Echo info for this run
         run: |
           echo "Artifact name: ${{ matrix.sdk-name }}-seed-test-log.txt"
           echo "GitHub event name: ${{ github.event_name }}"
@@ -101,9 +101,9 @@ jobs:
     # needs: [package-seed-tests]
     # outputs:
     #   ruby-model: ${{ steps.set-test-matrix.outputs.ruby-model-test-matrix }}
-      # ruby-sdk: ${{ steps.output-packages.outputs.ruby-sdk-packages }}
+    # ruby-sdk: ${{ steps.output-packages.outputs.ruby-sdk-packages }}
     #   ruby-sdk-v2: ${{ steps.set-test-matrix.outputs.ruby-sdk-v2-test-matrix }}
-      # pydantic: ${{ steps.output-packages.outputs.pydantic-packages }}
+    # pydantic: ${{ steps.output-packages.outputs.pydantic-packages }}
     #   python-sdk: ${{ steps.set-test-matrix.outputs.python-sdk-test-matrix }}
     #   fastapi: ${{ steps.set-test-matrix.outputs.fastapi-test-matrix }}
     #   openapi: ${{ steps.set-test-matrix.outputs.openapi-test-matrix }}
@@ -154,52 +154,52 @@ jobs:
           ]
     # needs: [package-seed-tests]
     steps:
-        # - name: Checkout repo
-        #   uses: actions/checkout@v4
-        #   with:
-        #     token: ${{ secrets.FERN_GITHUB_PAT }}
+      # - name: Checkout repo
+      #   uses: actions/checkout@v4
+      #   with:
+      #     token: ${{ secrets.FERN_GITHUB_PAT }}
 
-        - name: Make artifacts directory
-          shell: bash
-          run: |
-            mkdir -p artifacts
+      - name: Make artifacts directory
+        shell: bash
+        run: |
+          mkdir -p artifacts
 
-        - name: Download package file artifact
-          uses: actions/download-artifact@v5
-          with:
-              path: ./artifacts
-              name: ${{ matrix.sdk-name }}-seed-test-log.txt
-              run-id: 18111300631 #CHRISM - temporary for testing, artifact ID = 4132496421
-              github-token: ${{ secrets.FERN_GITHUB_PAT }}
-              repository: ${{ github.repository }}
-              merge-multiple: true
-        # - name: Echo contents of file
-        #   run: |
-        #     echo "Contents of file: $(cat artifacts/${{ matrix.sdk-name }}-seed-test-log.txt)"
+      - name: Download package file artifact
+        uses: actions/download-artifact@v5
+        with:
+          path: ./artifacts
+          name: ${{ matrix.sdk-name }}-seed-test-log.txt
+          run-id: 18111300631 #CHRISM - temporary for testing, artifact ID = 4132496421
+          github-token: ${{ secrets.FERN_GITHUB_PAT }}
+          repository: ${{ github.repository }}
+          merge-multiple: true
+      # - name: Echo contents of file
+      #   run: |
+      #     echo "Contents of file: $(cat artifacts/${{ matrix.sdk-name }}-seed-test-log.txt)"
 
-        - name: Package Seed Tests
-          id: package-tests
-          uses: fern-api/package-seed-test@mallinson/packaging-setup
-          with:
-            seed-generator-alias: ${{ matrix.sdk-name }}
-            max-runner-count: 10 #CHRISM - move to setting for everyone to use
-            split-tests-cutoff-time-in-seconds: 9600 # Roughly 10 minutes (across 16 batches, but will depend on concurrency runners)
-            seed-test-log-file-path: artifacts/${{ matrix.sdk-name }}-seed-test-log.txt
+      - name: Package Seed Tests
+        id: package-tests
+        uses: fern-api/package-seed-test@mallinson/packaging-setup
+        with:
+          seed-generator-alias: ${{ matrix.sdk-name }}
+          max-runner-count: 10 #CHRISM - move to setting for everyone to use
+          split-tests-cutoff-time-in-seconds: 9600 # Roughly 10 minutes (across 16 batches, but will depend on concurrency runners)
+          seed-test-log-file-path: artifacts/${{ matrix.sdk-name }}-seed-test-log.txt
 
-        - name: Create Seed Packages File
-          id: create-seed-packages-file
-          run: |
-              BASH_VAR='${{ steps.package-tests.outputs.json-file-contents }}'
-              echo "$BASH_VAR" > "${{ matrix.sdk-name }}-seed-packages.json"
+      - name: Create Seed Packages File
+        id: create-seed-packages-file
+        run: |
+          BASH_VAR='${{ steps.package-tests.outputs.json-file-contents }}'
+          echo "$BASH_VAR" > "${{ matrix.sdk-name }}-seed-packages.json"
 
-        - name: Upload Seed Packages File as Artifact
-          uses: actions/upload-artifact@v4
-          with:
-            name: ${{ matrix.sdk-name }}-seed-packages.json
-            path: ${{ matrix.sdk-name }}-seed-packages.json
-            if-no-files-found: error
-            retention-days: 1
-            
+      - name: Upload Seed Packages File as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.sdk-name }}-seed-packages.json
+          path: ${{ matrix.sdk-name }}-seed-packages.json
+          if-no-files-found: error
+          retention-days: 1
+
   pr-package-files:
     runs-on: ubuntu-latest
     if: always()
@@ -225,7 +225,7 @@ jobs:
 
       - name: Overwrite Repo Package Files
         run: |
-          cp -f artifacts/*-seed-packages.json .github/workflow-resource-files/seed-packages/      
+          cp -f artifacts/*-seed-packages.json .github/workflow-resource-files/seed-packages/
 
       # Create PR, approve and set to merge per generator
       - name: Create Pull Request
