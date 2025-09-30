@@ -311,7 +311,7 @@ packages = [
             python_version = ">=3.8"  # Default
             for dep in self.dependency_manager.get_dependencies():
                 if dep.name == "python":
-                    python_version = dep.version_specifier.replace("^", ">=").replace("~", ">=")
+                    python_version = dep.version.replace("^", ">=").replace("~", ">=")
                     break
 
             # Format authors for Poetry v2 format
@@ -457,7 +457,7 @@ build-backend = "poetry.core.masonry.api"
             python_version = ">=3.8"  # Default
             for dep in self.dependency_manager.get_dependencies():
                 if dep.name == "python":
-                    python_version = dep.version_specifier.replace("^", ">=").replace("~", ">=")
+                    python_version = dep.version.replace("^", ">=").replace("~", ">=")
                     break
 
             # Format authors for UV format
