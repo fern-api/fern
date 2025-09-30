@@ -202,7 +202,7 @@ jobs:
 
       - name: Lint the package files
         run: |
-          pnpm prettier --write .github/workflow-resource-files/seed-packages/**
+          prettier --write .github/workflow-resource-files/seed-packages/**
 
       # Create PR, approve and set to merge per generator
       - name: Create Pull Request
