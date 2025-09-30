@@ -13,7 +13,8 @@ import {
     isOptionalType,
     isUnknownType,
     isUuidType,
-    typeSupportsHashAndEq
+    typeSupportsHashAndEq,
+    typeSupportsPartialEq
 } from "./primitiveTypeUtils";
 
 /**
@@ -46,6 +47,85 @@ export function hasCollectionFields(properties: (ObjectProperty | InlinedRequest
         const typeRef = isOptionalType(prop.valueType) ? getInnerTypeFromOptional(prop.valueType) : prop.valueType;
         return isCollectionType(typeRef);
     });
+}
+
+export function hasHashMapFields(properties: (ObjectProperty | InlinedRequestBodyProperty)[]): boolean {
+    return properties.some((prop) => {
+        const typeRef = isOptionalType(prop.valueType) ? getInnerTypeFromOptional(prop.valueType) : prop.valueType;
+        return hasHashMapInType(typeRef);
+    });
+}
+
+export function hasHashSetFields(properties: (ObjectProperty | InlinedRequestBodyProperty)[]): boolean {
+    return properties.some((prop) => {
+        const typeRef = isOptionalType(prop.valueType) ? getInnerTypeFromOptional(prop.valueType) : prop.valueType;
+        return hasHashSetInType(typeRef);
+    });
+}
+
+export function hasBigIntFields(properties: (ObjectProperty | InlinedRequestBodyProperty)[]): boolean {
+    return properties.some((prop) => {
+        const typeRef = isOptionalType(prop.valueType) ? getInnerTypeFromOptional(prop.valueType) : prop.valueType;
+        return hasBigIntInType(typeRef);
+    });
+}
+
+function hasHashMapInType(typeRef: any): boolean {
+    if (!typeRef || typeof typeRef !== "object") return false;
+
+    if (typeRef.type === "container") {
+        return typeRef.container._visit({
+            map: () => true,
+            optional: (innerType: any) => hasHashMapInType(innerType),
+            nullable: (innerType: any) => hasHashMapInType(innerType),
+            list: (innerType: any) => hasHashMapInType(innerType),
+            set: () => false,
+            literal: () => false,
+            _other: () => false
+        });
+    }
+
+    return false;
+}
+
+function hasHashSetInType(typeRef: any): boolean {
+    if (!typeRef || typeof typeRef !== "object") return false;
+
+    if (typeRef.type === "container") {
+        return typeRef.container._visit({
+            set: () => true,
+            optional: (innerType: any) => hasHashSetInType(innerType),
+            nullable: (innerType: any) => hasHashSetInType(innerType),
+            list: (innerType: any) => hasHashSetInType(innerType),
+            map: () => false,
+            literal: () => false,
+            _other: () => false
+        });
+    }
+
+    return false;
+}
+
+function hasBigIntInType(typeRef: any): boolean {
+    if (!typeRef || typeof typeRef !== "object") return false;
+
+    if (typeRef.type === "primitive") {
+        return typeRef.primitive.v1 === "bigInteger";
+    }
+
+    if (typeRef.type === "container") {
+        return typeRef.container._visit({
+            optional: (innerType: any) => hasBigIntInType(innerType),
+            nullable: (innerType: any) => hasBigIntInType(innerType),
+            list: (innerType: any) => hasBigIntInType(innerType),
+            set: (innerType: any) => hasBigIntInType(innerType),
+            map: (mapType: any) => hasBigIntInType(mapType.keyType) || hasBigIntInType(mapType.valueType),
+            literal: () => false,
+            _other: () => false
+        });
+    }
+
+    return false;
 }
 
 export function hasUuidFields(properties: (ObjectProperty | InlinedRequestBodyProperty)[]): boolean {
@@ -129,8 +209,9 @@ export function canDerivePartialEq(
 ): boolean {
     // PartialEq is useful for testing and comparisons
     // Include it unless there are fields that can't support it
+    // Use the PartialEq-specific function instead of the Hash/Eq function
     return properties.every((property) => {
-        return typeSupportsHashAndEq(property.valueType, context);
+        return typeSupportsPartialEq(property.valueType, context);
     });
 }
 
