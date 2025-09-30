@@ -24,7 +24,7 @@ export class SourceSymbolRegistry {
 
     private constructor(reservedSymbolNames: string[]) {
         this.registry = new SymbolRegistry({
-            reservedSymbolNames: reservedSymbolNames
+            reservedSymbolNames
         });
         this.requestsRegistry = new SymbolRegistry({ reservedSymbolNames: [] });
     }
