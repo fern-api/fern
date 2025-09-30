@@ -200,7 +200,7 @@ export function validateTypeReferenceExample({
                 );
             },
             optional: (itemType) => {
-                if (typeof example === "undefined") {
+                if (example == null) {
                     return [];
                 }
                 return validateTypeReferenceExample({

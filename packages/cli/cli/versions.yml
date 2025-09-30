@@ -1,10 +1,10 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Allow `null` examples for nullable properties, parameters, and types.
+        Allow `null` examples for nullable/optional properties, parameters, and types.
       type: fix
   irVersion: 60
-  createdAt: "2025-09-29"
+  createdAt: "2025-09-30"
   version: 0.83.1
 
 - changelogEntry:
