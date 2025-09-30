@@ -54,14 +54,23 @@ describe <%= gem_namespace %>::Internal::Types::Model do
       assert_equal "example", ExampleWithDefaults.fields[:type].default
     end
 
-    it "defines the accessors" do
+    it "defines getters" do
       assert_respond_to @example, :name
       assert_respond_to @example, :rating
+
+      assert_equal "Inception", @example.name
+      assert_equal 4, @example.rating
     end
 
-    it "defines the setters" do
+    it "defines setters" do
       assert_respond_to @example, :name=
       assert_respond_to @example, :rating=
+
+      @example.name = "Inception 2"
+      @example.rating = 5
+
+      assert_equal "Inception 2", @example.name
+      assert_equal 5, @example.rating
     end
   end
 
