@@ -143,7 +143,7 @@ export function validateUnionExample({
     const { [singlePropertyKey]: singlePropertyExample, ...extraProperties } = nonDiscriminantPropertyExamples;
 
     const violations: ExampleViolation[] = [];
-    if (singlePropertyExample == null) {
+    if (typeof singlePropertyExample === "undefined") {
         violations.push({
             message: `Missing property "${singlePropertyKey}"`
         });

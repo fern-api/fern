@@ -24,6 +24,17 @@ export function convertContainerToJsonSchema({
                 additionalProperties: convertTypeReferenceToJsonSchema({ typeReference: container.valueType, context })
             };
         case "optional":
+            if (container.optional.type === "container" && container.optional.container.type === "nullable") {
+                return {
+                    oneOf: [
+                        convertTypeReferenceToJsonSchema({
+                            typeReference: container.optional.container.nullable,
+                            context
+                        }),
+                        { type: "null" }
+                    ]
+                };
+            }
             return {
                 oneOf: [
                     convertTypeReferenceToJsonSchema({ typeReference: container.optional, context }),

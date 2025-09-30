@@ -30,8 +30,11 @@ export class EnumGenerator extends FileGenerator<RubyFile, ModelCustomConfigSche
         enumModule.addStatement(ruby.codeblock(`extend ${this.context.getRootModuleName()}::Internal::Types::Enum`));
 
         for (const enumValue of this.enumDeclaration.values) {
+            const originalStringValue = enumValue.name.wireValue;
+            const escapedStringLiteral = originalStringValue.replaceAll("\\", "\\\\").replaceAll('"', '\\"');
+
             enumModule.addStatement(
-                ruby.codeblock(`${enumValue.name.name.screamingSnakeCase.safeName} = "${enumValue.name.wireValue}"`)
+                ruby.codeblock(`${enumValue.name.name.screamingSnakeCase.safeName} = "${escapedStringLiteral}"`)
             );
         }
 

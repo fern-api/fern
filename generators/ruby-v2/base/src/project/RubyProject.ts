@@ -124,7 +124,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
         return new File(
             this.getAsIsOutputFilename(filename),
-            this.getAsIsOutputDirectory(),
+            this.getAsIsOutputDirectory(filename),
             replaceTemplate({
                 contents,
                 variables: getTemplateVariables({
@@ -134,8 +134,12 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         );
     }
 
-    public getAsIsOutputDirectory(): RelativeFilePath {
-        return RelativeFilePath.of(`lib/${this.context.getRootFolderName()}`);
+    public getAsIsOutputDirectory(templateFileName: string): RelativeFilePath {
+        if (templateFileName.startsWith(`test/`)) {
+            return RelativeFilePath.of("");
+        } else {
+            return RelativeFilePath.of(`lib/${this.context.getRootFolderName()}`);
+        }
     }
 
     public getAsIsOutputFilename(templateFileName: string): string {
@@ -154,7 +158,9 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
     }
 
     public getCoreAbsoluteFilePaths(): AbsoluteFilePath[] {
-        return this.coreFiles.map((file) => this.filePathFromRubyFile(file));
+        return this.coreFiles
+            .filter((file) => !(file.directory == "" && file.filename.startsWith("test/")))
+            .map((file) => this.filePathFromRubyFile(file));
     }
 
     public getRawAbsoluteFilePaths(): AbsoluteFilePath[] {
@@ -495,9 +501,12 @@ class ModuleFile {
         const coreFiles = this.context.getCoreAsIsFiles();
         coreFiles.sort((a, b) => topologicalCompareAsIsFiles(a, b));
         coreFiles.forEach((filename) => {
+            if (filename.startsWith("test/")) {
+                return;
+            }
             const absoluteFilePath = join(
                 this.project.absolutePathToOutputDirectory,
-                this.project.getAsIsOutputDirectory(),
+                this.project.getAsIsOutputDirectory(filename),
                 RelativeFilePath.of(this.project.getAsIsOutputFilename(filename))
             );
             relativeImportPaths.add(relative(this.filePath, absoluteFilePath));
