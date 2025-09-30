@@ -314,28 +314,30 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): ruby.MethodInvocation {
-        return ruby.invokeMethod({
+        const invokeMethodArgs: ruby.MethodInvocation.Args = {
             on: ruby.codeblock(CLIENT_VAR_NAME),
             method: this.getMethod({ endpoint }),
-            arguments_: this.getMethodArgs({ endpoint, snippet })
-        });
-    }
+            arguments_: []
+        };
 
-    private getMethodArgs({
-        endpoint,
-        snippet
-    }: {
-        endpoint: FernIr.dynamic.Endpoint;
-        snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): ruby.AstNode[] {
         switch (endpoint.request.type) {
             case "inlined":
-                return [this.getMethodArgsForInlinedRequest({ request: endpoint.request, snippet })];
+                invokeMethodArgs.keywordArguments = this.getMethodArgsForInlinedRequest({
+                    request: endpoint.request,
+                    snippet
+                });
+                break;
             case "body":
-                return this.getMethodArgsForBodyRequest({ request: endpoint.request, snippet });
+                invokeMethodArgs.arguments_ = this.getMethodArgsForBodyRequest({
+                    request: endpoint.request,
+                    snippet
+                });
+                break;
             default:
                 assertNever(endpoint.request);
         }
+
+        return ruby.invokeMethod(invokeMethodArgs);
     }
 
     private getMethodArgsForInlinedRequest({
@@ -344,7 +346,7 @@ export class EndpointSnippetGenerator {
     }: {
         request: FernIr.dynamic.InlinedRequest;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): ruby.AstNode {
+    }): ruby.KeywordArgument[] {
         const args: ruby.KeywordArgument[] = [];
 
         args.push(
@@ -384,12 +386,7 @@ export class EndpointSnippetGenerator {
             }
         }
 
-        return ruby.TypeLiteral.hash(
-            args.map((arg) => ({
-                key: ruby.TypeLiteral.string(arg.name),
-                value: arg.value
-            }))
-        );
+        return args;
     }
 
     private getNamedParameterArgs({
