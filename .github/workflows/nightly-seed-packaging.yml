@@ -1,4 +1,4 @@
-name: Nightly Seed Packaging
+name: Nightly Seed Grouping
 
 on:
   # Runs every night at 5:00 AM UTC (1:00 AM ET)
@@ -17,6 +17,12 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # CHRISM
+  # setup:
+  # runs-on: ubuntu-latest
+  #   splitTestsCutoffTimeInSecondsInput
+  #   addPackageForLeftoversInput
+
   run-seed-test:
     runs-on: ubuntu-latest
     # CHRISM - temp
@@ -51,7 +57,7 @@ jobs:
             rust-sdk,
           ]
     steps:
-      - name: Checkout repo
+      - name: Checkout Repo
         uses: actions/checkout@v4
       - name: Install
         uses: ./.github/actions/install
@@ -68,17 +74,17 @@ jobs:
         shell: bash
         run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
-      - name: Build seed
+      - name: Build Seed
         shell: bash
         run: |
           pnpm seed:build
 
-      - name: Save seed test log to file
+      - name: Save Seed Test Log to File
         id: save-seed-test-log-to-file
         run: |
           pnpm seed:local test --generator ${{ matrix.sdk-name }} --parallel 16 --allow-unexpected-failures > ${{ matrix.sdk-name }}-seed-test-log.txt
 
-      - name: Upload seed test log as artifact
+      - name: Upload Seed Test Log as Artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.sdk-name }}-seed-test-log.txt
@@ -86,7 +92,7 @@ jobs:
           if-no-files-found: error
           retention-days: 1
 
-      - name: Echo info for this run
+      - name: Echo Info for This Run
         run: |
           echo "Artifact name: ${{ matrix.sdk-name }}-seed-test-log.txt"
           echo "GitHub event name: ${{ github.event_name }}"
@@ -95,7 +101,7 @@ jobs:
           echo "GitHub workflow run ID: ${{ github.run_id }}"
 
   # Always trigger this stage. Failing jobs for a generator will continue to fail and won't PR any changes
-  build-test-packages:
+  build-seed-groups:
     runs-on: ubuntu-latest
     if: always()
     # CHRISM - temp
@@ -135,7 +141,7 @@ jobs:
         run: |
           mkdir -p artifacts
 
-      - name: Download package file artifact
+      - name: Download Seed Group File Artifact
         uses: actions/download-artifact@v5
         with:
           path: ./artifacts
@@ -145,62 +151,59 @@ jobs:
           repository: ${{ github.repository }}
           merge-multiple: true
 
-      - name: Package Seed Tests
-        id: package-tests
+      - name: Group Seed Tests
+        id: group-seed-tests
         uses: fern-api/package-seed-test@mallinson/packaging-setup # CHRISM - set to tag
         with:
-          seed-generator-alias: ${{ matrix.sdk-name }}
-          number-of-packages: 10
-          add-package-for-leftovers: true
-          split-tests-cutoff-time-in-seconds: 30000 # Determined by inspection to be a sweet spot. Difficult to map this to real time when including parallel runners and concurrent fixtures.
+          number-of-groups: 10
           seed-test-log-file-path: artifacts/${{ matrix.sdk-name }}-seed-test-log.txt
 
-      - name: Create Seed Packages File
-        id: create-seed-packages-file
+      - name: Create Seed Group Files
+        id: create-seed-group-files
         run: |
-          BASH_VAR='${{ steps.package-tests.outputs.json-file-contents }}'
-          echo "$BASH_VAR" > "${{ matrix.sdk-name }}-seed-packages.json"
+          BASH_VAR='${{ steps.group-seed-tests.outputs.json-file-contents }}'
+          echo "$BASH_VAR" > "${{ matrix.sdk-name }}-seed-groups.json"
 
-      - name: Upload Seed Packages File as Artifact
+      - name: Upload Seed Group File as Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.sdk-name }}-seed-packages.json
-          path: ${{ matrix.sdk-name }}-seed-packages.json
+          name: ${{ matrix.sdk-name }}-seed-groups.json
+          path: ${{ matrix.sdk-name }}-seed-groups.json
           if-no-files-found: error
           retention-days: 1
 
-  pr-package-files:
+  pr-seed-group-files:
     runs-on: ubuntu-latest
     if: always()
-    needs: [build-test-packages]
+    needs: [build-seed-groups]
     steps:
-      - name: Checkout repo
+      - name: Checkout Repo
         uses: actions/checkout@v4
 
-      - name: Download package file artifact
+      - name: Download Seed Group File Artifacts
         uses: actions/download-artifact@v5
         with:
           path: ./artifacts
-          pattern: "*-seed-packages.json"
+          pattern: "*-seed-groups.json"
           merge-multiple: true
 
       - name: Check and Make Directory
         run: |
-          if [ ! -d ".github/workflow-resource-files/seed-packages" ]; then
-            mkdir -p .github/workflow-resource-files/seed-packages
+          if [ ! -d ".github/workflow-resource-files/seed-groups" ]; then
+            mkdir -p .github/workflow-resource-files/seed-groups
           fi
 
-      - name: Overwrite Repo Package Files
+      - name: Overwrite Repo Seed Group Files
         run: |
-          cp -f artifacts/*-seed-packages.json .github/workflow-resource-files/seed-packages/
+          cp -f artifacts/*-seed-groups.json .github/workflow-resource-files/seed-groups/
 
       # Setup our linting tools
       - name: Install and Setup Dev Env
         uses: ./.github/actions/install
 
-      - name: Lint the package files
+      - name: Lint the Seed Group Files
         run: |
-          pnpm format:fix ./.github/workflow-resource-files/seed-packages/
+          pnpm format:fix ./.github/workflow-resource-files/seed-groups/
 
       # Create PR, approve and set to merge per generator
       - name: Create Pull Request
@@ -208,13 +211,13 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
-          commit-message: "chore(internal): update seed test packages"
-          title: "chore(internal): update seed test packages"
-          branch: update-seed-test-packages
-          body: "Auto-generated PR, triggered by nightly-seed-packaging workflow with: ${{ github.event_name }} from branch: ${{ github.ref_name }}.\nGitHub workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          commit-message: "chore(internal): Update seed group files"
+          title: "chore(internal): Update seed group files"
+          branch: update-seed-group-files
+          body: "Auto-generated PR, triggered by nightly-seed-grouping workflow with: ${{ github.event_name }} from branch: ${{ github.ref_name }}.\nGitHub workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           delete-branch: true
           add-paths: |
-            .github/workflow-resource-files/seed-packages/**
+            .github/workflow-resource-files/seed-groups/**
           labels: |
             seed
 
@@ -222,7 +225,7 @@ jobs:
         if: steps.cpr.outputs.pull-request-operation != 'created'
         shell: bash
         run: |
-          echo "PR was not created, likely due to no diff for seed test package file"
+          echo "PR was not created, likely due to no diff for seed group file"
 
       - name: Log PR Creation Details
         if: steps.cpr.outputs.pull-request-operation == 'created'
