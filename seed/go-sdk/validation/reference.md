@@ -12,6 +12,12 @@
 <dd>
 
 ```go
+request := &fern.CreateRequest{
+        Decimal: 2.2,
+        Even: 100,
+        Name: "fern",
+        Shape: fern.ShapeSquare,
+    }
 client.Create(
         context.TODO(),
         request,
@@ -80,6 +86,11 @@ client.Create(
 <dd>
 
 ```go
+request := &fern.GetRequest{
+        Decimal: 2.2,
+        Even: 100,
+        Name: "fern",
+    }
 client.Get(
         context.TODO(),
         request,
