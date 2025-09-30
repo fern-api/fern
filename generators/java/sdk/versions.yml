@@ -1,3 +1,21 @@
+- version: 3.8.0
+  changelogEntry:
+    - summary: |
+        Add `getResponse()` method to `BasePage` for accessing pagination metadata like cursor tokens.
+        This enables stateless pagination by providing access to the full API response object.
+
+        Usage example:
+        ```java
+        SyncPagingIterable<User> users = client.users().list();
+        users.getResponse().ifPresent(response -> {
+            String cursor = response.getNext();
+            // Use cursor for stateless pagination
+        });
+        ```
+      type: feat
+  createdAt: "2025-09-29"
+  irVersion: 60
+
 - version: 3.7.0
   changelogEntry:
     - summary: |

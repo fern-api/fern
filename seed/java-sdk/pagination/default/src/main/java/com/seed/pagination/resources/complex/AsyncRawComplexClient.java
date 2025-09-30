@@ -94,15 +94,16 @@ public class AsyncRawComplexClient {
                                 .build();
                         List<Conversation> result = parsedResponse.getConversations();
                         future.complete(new SeedPaginationHttpResponse<>(
-                                new SyncPagingIterable<Conversation>(startingAfter.isPresent(), result, () -> {
-                                    try {
-                                        return search(index, nextRequest, requestOptions)
-                                                .get()
-                                                .body();
-                                    } catch (InterruptedException | ExecutionException e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                }),
+                                new SyncPagingIterable<Conversation>(
+                                        startingAfter.isPresent(), result, parsedResponse, () -> {
+                                            try {
+                                                return search(index, nextRequest, requestOptions)
+                                                        .get()
+                                                        .body();
+                                            } catch (InterruptedException | ExecutionException e) {
+                                                throw new RuntimeException(e);
+                                            }
+                                        }),
                                 response));
                         return;
                     }
