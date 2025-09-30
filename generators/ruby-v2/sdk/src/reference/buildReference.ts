@@ -234,5 +234,5 @@ function isRootServiceId({ context, serviceId }: { context: SdkGeneratorContext;
 }
 
 function getSectionTitle({ service }: { service: HttpService }): string {
-    return service.displayName ?? service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName).join(" ");
+    return service.displayName ?? service.name.fernFilepath.allParts.map((part) => part.pascalCase.safeName).join(" ");
 }

@@ -1,5 +1,5 @@
 # Reference
-## imdb
+## Imdb
 <details><summary><code>client.imdb.create_movie(request) -> String</code></summary>
 <dl>
 <dd>
