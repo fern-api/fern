@@ -3,8 +3,10 @@ import {
     APIS_DIRECTORY,
     ASYNCAPI_DIRECTORY,
     DEFINITION_DIRECTORY,
+    DOCS_CONFIGURATION_FILENAME,
     FERN_DIRECTORY,
     GENERATORS_CONFIGURATION_FILENAME,
+    GENERATORS_CONFIGURATION_FILENAME_ALTERNATIVE,
     generatorsYml,
     getFernDirectory,
     loadProjectConfig,
@@ -69,6 +71,9 @@ export async function loadProjectFromDirectory({
         (await doesPathExist(
             join(absolutePathToFernDirectory, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME))
         )) ||
+        (await doesPathExist(
+            join(absolutePathToFernDirectory, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME_ALTERNATIVE))
+        )) ||
         (await doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(OPENAPI_DIRECTORY)))) ||
         (await doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(ASYNCAPI_DIRECTORY))))
     ) {
@@ -82,10 +87,28 @@ export async function loadProjectFromDirectory({
         });
     }
 
+    const docsWorkspaces = await loadDocsWorkspace({ fernDirectory: absolutePathToFernDirectory, context });
+
+    if (apiWorkspaces.length === 0 && docsWorkspaces == null) {
+        return context.failAndThrow(
+            `No SDK specifications or docs specifications found. Please ensure one of the following .yml (not .yaml) files is present:\n` +
+                ` › ${GENERATORS_CONFIGURATION_FILENAME}\n` +
+                ` › ${DOCS_CONFIGURATION_FILENAME}\n` +
+                `Or one of the following directories:\n` +
+                ` › ${APIS_DIRECTORY}/\n` +
+                ` › ${DEFINITION_DIRECTORY}/\n` +
+                ` › ${OPENAPI_DIRECTORY}/\n` +
+                ` › ${ASYNCAPI_DIRECTORY}/\n\n` +
+                `For more information:\n` +
+                ` › SDK project structure: https://buildwithfern.com/learn/api-definitions/overview/project-structure\n` +
+                ` › Docs project structure: https://buildwithfern.com/learn/docs/getting-started/project-structure`
+        );
+    }
+
     return {
         config: await loadProjectConfig({ directory: absolutePathToFernDirectory, context }),
         apiWorkspaces,
-        docsWorkspaces: await loadDocsWorkspace({ fernDirectory: absolutePathToFernDirectory, context }),
+        docsWorkspaces,
         loadAPIWorkspace: (name: string | undefined): AbstractAPIWorkspace<unknown> | undefined => {
             if (name == null) {
                 return apiWorkspaces[0];
