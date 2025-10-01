@@ -290,7 +290,7 @@ httpx = "^0.24.0"
                     deps.append(f'{name} = ">={dep.version}"')
                 else:  # EXACT
                     # Check if version already contains a specifier
-                    if dep.version.startswith(("==", ">=", "<=", "~=", "!=")):
+                    if dep.version.startswith(("==", ">=", "<=", "~=", "!=", "^")):
                         deps.append(f'{name} = "{dep.version}"')
                     else:
                         deps.append(f'{name} = "=={dep.version}"')
@@ -315,7 +315,7 @@ httpx = "^0.24.0"
                     version = f">={dep.version}"
                 else:  # EXACT
                     # Check if version already contains a specifier
-                    if dep.version.startswith(('==', '>=', '<=', '~=', '!=')):
+                    if dep.version.startswith(('==', '>=', '<=', '~=', '!=', '^')):
                         version = dep.version
                     else:
                         version = f"=={dep.version}"
