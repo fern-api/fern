@@ -91,25 +91,10 @@ class PyProjectToml:
             f.write(content)
 
     def _generate_optional_dependencies(self) -> str:
-        """Generate [project.optional-dependencies] section combining dev dependencies and extras"""
+        """Generate [project.optional-dependencies] section for extras only"""
         optional_deps = {}
 
-        # Add dev dependencies as 'dev' group
-        dev_deps = []
-        for dep in self._dependency_manager.get_dev_dependencies():
-            if dep.compatibility == DependencyCompatibility.GREATER_THAN_OR_EQUAL:
-                dev_deps.append(f'{dep.name}>={dep.version}')
-            else:  # EXACT
-                # Check if version already contains a specifier
-                if dep.version.startswith(('==', '>=', '<=', '~=', '!=')):
-                    dev_deps.append(f'{dep.name}{dep.version}')
-                else:
-                    dev_deps.append(f'{dep.name}=={dep.version}')
-
-        if dev_deps:
-            optional_deps['dev'] = dev_deps
-
-        # Add extras
+        # Add extras only (dev dependencies are handled in Poetry section)
         for key, vals in self._extras.items():
             optional_deps[key] = vals
 
@@ -139,9 +124,9 @@ class PyProjectToml:
 
         def to_string(self) -> str:
             description = ""
-            authors = []
-            keywords = []
-            project_urls = []
+            authors: List[dict] = []
+            keywords: List[str] = []
+            project_urls: List[str] = []
             classifiers = [
                 "Intended Audience :: Developers",
                 "Programming Language :: Python",
@@ -236,7 +221,7 @@ include = ["{self.package.include}*"]
         def to_string(self) -> str:
             description = ""
             if self.pypi_metadata is not None:
-                description = self.pypi_metadata.description
+                description = self.pypi_metadata.description or ""
 
             authors = []
             if self.pypi_metadata is not None and self.pypi_metadata.authors is not None:
