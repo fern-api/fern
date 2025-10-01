@@ -158,12 +158,15 @@ class PyProjectToml:
                 if self.pypi_metadata.homepage_link is not None:
                     project_urls.append(f"Homepage = '{self.pypi_metadata.homepage_link}'")
 
+            license_field = ""
             if self.license_ is not None:
                 if self.license_.get_as_union().type == "basic":
                     license_id = cast(BasicLicense, self.license_.get_as_union()).id
                     if license_id == LicenseId.MIT:
+                        license_field = '\nlicense = {text = "MIT"}'
                         classifiers.append("License :: OSI Approved :: MIT License")
                     elif license_id == LicenseId.APACHE_2:
+                        license_field = '\nlicense = {text = "Apache-2.0"}'
                         classifiers.append("License :: OSI Approved :: Apache Software License")
 
             if self.github_output_mode is not None:
@@ -181,7 +184,7 @@ name = "{self.name}" """
             s += f"""
 description = "{description}"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.8"{license_field}
 """
 
             if self.package._from is not None:
