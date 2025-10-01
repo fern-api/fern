@@ -355,9 +355,25 @@ export function namedTypeSupportsPartialEq(
             typeSupportsPartialEq(member.type, context, analysisStack)
         );
     } else if (typeDeclaration.shape.type === "object") {
-        result = typeDeclaration.shape.properties.every((property: ObjectProperty) =>
+        // Check both properties and extended types
+        const propertiesSupport = typeDeclaration.shape.properties.every((property: ObjectProperty) =>
             typeSupportsPartialEq(property.valueType, context, analysisStack)
         );
+        const extendsSupport = typeDeclaration.shape.extends.every((parentType) =>
+            namedTypeSupportsPartialEq(
+                {
+                    name: parentType.name,
+                    typeId: parentType.typeId,
+                    default: undefined,
+                    inline: undefined,
+                    fernFilepath: parentType.fernFilepath,
+                    displayName: parentType.name.originalName
+                },
+                context,
+                analysisStack
+            )
+        );
+        result = propertiesSupport && extendsSupport;
     } else if (typeDeclaration.shape.type === "alias") {
         result = typeSupportsPartialEq(typeDeclaration.shape.aliasOf, context, analysisStack);
     }
@@ -397,9 +413,25 @@ export function namedTypeSupportsHashAndEq(
             return false; // Prevent infinite recursion
         }
         analysisStack.add(namedType.typeId);
-        const result = typeDeclaration.shape.properties.every((property: ObjectProperty) =>
+        // Check both properties and extended types
+        const propertiesSupport = typeDeclaration.shape.properties.every((property: ObjectProperty) =>
             typeSupportsHashAndEq(property.valueType, context, analysisStack)
         );
+        const extendsSupport = typeDeclaration.shape.extends.every((parentType) =>
+            namedTypeSupportsHashAndEq(
+                {
+                    name: parentType.name,
+                    typeId: parentType.typeId,
+                    default: undefined,
+                    inline: undefined,
+                    fernFilepath: parentType.fernFilepath,
+                    displayName: parentType.name.originalName
+                },
+                context,
+                analysisStack
+            )
+        );
+        const result = propertiesSupport && extendsSupport;
         analysisStack.delete(namedType.typeId);
         return result;
     } else if (typeDeclaration.shape.type === "alias") {
