@@ -946,6 +946,7 @@
       "subpackage_user"
     ]
   },
+  "authSchemes": {},
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

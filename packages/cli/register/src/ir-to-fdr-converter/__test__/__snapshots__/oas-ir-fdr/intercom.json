@@ -51252,6 +51252,7 @@
     "type": "bearerAuth",
     "tokenName": "token"
   },
+  "authSchemes": {},
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

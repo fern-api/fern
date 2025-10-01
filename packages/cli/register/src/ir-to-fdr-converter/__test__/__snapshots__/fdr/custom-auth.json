@@ -211,6 +211,7 @@
     "headerWireValue": "X-API-KEY",
     "nameOverride": "CustomAuthScheme"
   },
+  "authSchemes": {},
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

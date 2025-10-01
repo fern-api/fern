@@ -213,6 +213,7 @@
     "passwordName": "accessToken",
     "usernameName": "username"
   },
+  "authSchemes": {},
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

@@ -83121,6 +83121,7 @@
     "passwordName": "password",
     "usernameName": "username"
   },
+  "authSchemes": {},
   "snippetsConfiguration": {},
   "globalHeaders": []
 }

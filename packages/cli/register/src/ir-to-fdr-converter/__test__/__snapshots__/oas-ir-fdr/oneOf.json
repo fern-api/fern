@@ -529,6 +529,7 @@
       "subpackage_oneOfService"
     ]
   },
+  "authSchemes": {},
   "snippetsConfiguration": {},
   "globalHeaders": []
 }
