@@ -7,12 +7,6 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Set, cast
 
-from fern_python.codegen.ast.dependency.dependency import (
-    Dependency,
-    DependencyCompatibility,
-)
-from fern_python.codegen.dependency_manager import DependencyManager
-
 from fern.generator_exec import (
     BasicLicense,
     GithubOutputMode,
@@ -20,6 +14,12 @@ from fern.generator_exec import (
     LicenseId,
     PypiMetadata,
 )
+
+from fern_python.codegen.ast.dependency.dependency import (
+    Dependency,
+    DependencyCompatibility,
+)
+from fern_python.codegen.dependency_manager import DependencyManager
 
 
 @dataclass(frozen=True)
@@ -80,7 +80,7 @@ class PyProjectToml:
         for block in blocks:
             content += block.to_string()
 
-        # Handle optional dependencies (dev dependencies + extras)
+        # Handle optional dependencies (extras only - dev dependencies are in Poetry section)
         content += self._generate_optional_dependencies()
 
         if self._user_defined_toml is not None:
@@ -182,18 +182,18 @@ name = "{self.name}" """
 description = "{description}"
 readme = "README.md"
 requires-python = ">=3.8"
-dependencies = []"""
+"""
 
             if self.package._from is not None:
                 s += f"""
 [tool.setuptools.packages.find]
 where = ["{self.package._from}"]
-include = ["{self.package.include}*"]
+include = ["{self.package.include}"]
 """
             else:
                 s += f"""
 [tool.setuptools.packages.find]
-include = ["{self.package.include}*"]
+include = ["{self.package.include}"]
 """
 
             if authors:
