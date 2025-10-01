@@ -1,3 +1,13 @@
+- version: 3.8.2
+  changelogEntry:
+    - summary: |
+        Fix local file system generation to use proper Gradle directory structure (src/main/java).
+        Source files are now correctly placed at src/main/java/com/package instead of com/package
+        at the root.
+      type: fix
+  createdAt: "2025-10-01"
+  irVersion: 60
+
 - version: 3.8.1
   changelogEntry:
     - summary: |
