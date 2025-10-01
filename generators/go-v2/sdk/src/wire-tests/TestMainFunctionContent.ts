@@ -1,16 +1,5 @@
-package wiremock
-
-import (
-	"context"
-	"fmt"
-	"os"
-	"testing"
-
-	gowiremock "github.com/wiremock/go-wiremock"
-	wiremocktestcontainersgo "github.com/wiremock/wiremock-testcontainers-go"
-)
-
-// Global test fixtures
+export const TEST_MAIN_FUNCTION_CONTENT = `
+// TestMain sets up shared test fixtures for all tests in this package// Global test fixtures
 var (
 	WireMockContainer *wiremocktestcontainersgo.WireMockContainer
 	WireMockBaseURL   string
@@ -27,7 +16,7 @@ func TestMain(m *testing.M) {
 		wiremocktestcontainersgo.WithImage("docker.io/wiremock/wiremock:3.9.1"),
 	)
 	if err != nil {
-		fmt.Printf("Failed to start WireMock container: %v\n", err)
+		fmt.Printf("Failed to start WireMock container: %v\\n", err)
 		os.Exit(1)
 	}
 
@@ -38,7 +27,7 @@ func TestMain(m *testing.M) {
 	// Get the base URL
 	baseURL, err := container.Endpoint(ctx, "")
 	if err != nil {
-		fmt.Printf("Failed to get WireMock container endpoint: %v\n", err)
+		fmt.Printf("Failed to get WireMock container endpoint: %v\\n", err)
 		os.Exit(1)
 	}
 	WireMockBaseURL = "http://" + baseURL
@@ -54,3 +43,13 @@ func TestMain(m *testing.M) {
 	// Exit with the same code as the tests
 	os.Exit(code)
 }
+`;
+
+export const TEST_MAIN_FUNCTION_IMPORTS = [
+    "context",
+    "fmt",
+    "os",
+    "testing",
+    "github.com/wiremock/go-wiremock",
+    "github.com/wiremock/wiremock-testcontainers-go"
+];
