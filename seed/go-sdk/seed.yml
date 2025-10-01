@@ -27,6 +27,9 @@ test:
 language: go
 generatorType: SDK
 defaultOutputMode: github
+defaultCustomConfig:
+  # wire tests cannot be run in seed containers due to docker-in-docker issues
+  enableWireTests: false
 fixtures:
   examples:
     - outputFolder: no-custom-config
@@ -95,16 +98,13 @@ fixtures:
       customConfig:
         useReaderForBytesRequest: true
   imdb:
-    - outputFolder: with-wiremock-tests
-      customConfig:
-        enableWireTests: true
     - outputFolder: no-custom-config
       customConfig: null
     - outputFolder: package-path
       customConfig:
         packagePath: inhereplease
     - outputFolder: deep-package-path
-      customConfig:
+      customConfig: 
         packagePath: all/the/way/in/here/please
   undiscriminated-unions:
     - outputFolder: no-custom-config
@@ -155,9 +155,6 @@ fixtures:
   path-parameters:
     - outputFolder: no-custom-config
       customConfig: null
-    - outputFolder: with-wire-tests
-      customConfig:
-        enableWireTests: true
     - outputFolder: v0
       customConfig:
         alwaysSendRequiredProperties: false
