@@ -197,7 +197,7 @@ jobs:
     needs: [get-all-test-matrices]
     strategy:
       fail-fast: false # Let all tests run, even if some fail
-      max-parallel: 10 # Limit the number of runners for this job to 10
+      max-parallel: 11 # Limit the number of runners for this job to 10
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.python-sdk) }}
     # CHRISM - temp
