@@ -38,7 +38,6 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
 
     public async persist({ tidy }: { tidy?: boolean } = {}): Promise<void> {
         this.context.logger.debug(`Writing go files to ${this.absolutePathToOutputDirectory}`);
-        // hotfix: disable go.mod generation after inverting overwrite order of generator execution so v2 wins
         await this.writeGoMod();
         await this.writeInternalFiles();
         await this.writeRootAsIsFiles();
@@ -143,29 +142,6 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
             filenames: this.context.getRootAsIsFiles(),
             getPackageName: () => this.context.getRootPackageName(),
             getImportPath: () => this.getRootImportPath()
-        });
-    }
-
-    public async writeSharedTestFiles(): Promise<AbsoluteFilePath> {
-        const sharedTestFiles = await Promise.all(
-            this.context.getTestAsIsFiles().map(async (filename) => {
-                const dirname = path.dirname(filename);
-                // For test files, we typically use the root package name if they're at root level
-                const packageName = dirname === "." || dirname === "" ? this.context.getRootPackageName() : "test";
-
-                return await this.createAsIsFile({
-                    filename,
-                    templateVariables: {
-                        PackageName: packageName,
-                        RootImportPath: this.getRootImportPath()
-                    }
-                });
-            })
-        );
-
-        return await this.createGoDirectory({
-            absolutePathToDirectory: this.absolutePathToOutputDirectory,
-            files: sharedTestFiles
         });
     }
 
