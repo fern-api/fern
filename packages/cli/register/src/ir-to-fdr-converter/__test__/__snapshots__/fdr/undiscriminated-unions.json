@@ -649,16 +649,25 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
+              "requestBody": {
+                "string": {
+                  "key": "value"
+                }
+              },
               "requestBodyV3": {
-                "type": "json"
+                "type": "json",
+                "value": {
+                  "string": {
+                    "key": "value"
+                  }
+                }
               },
               "responseStatusCode": 200,
               "responseBody": true,
               "responseBodyV3": {
                 "type": "json",
                 "value": true
-              },
-              "codeSamples": []
+              }
             }
           ]
         },
@@ -716,18 +725,29 @@
               "pathParameters": {},
               "queryParameters": {},
               "headers": {},
-              "requestBody": {},
+              "requestBody": {
+                "union": {
+                  "string": {
+                    "key": "value"
+                  }
+                }
+              },
               "requestBodyV3": {
                 "type": "json",
-                "value": {}
+                "value": {
+                  "union": {
+                    "string": {
+                      "key": "value"
+                    }
+                  }
+                }
               },
               "responseStatusCode": 200,
               "responseBody": true,
               "responseBodyV3": {
                 "type": "json",
                 "value": true
-              },
-              "codeSamples": []
+              }
             }
           ]
         },

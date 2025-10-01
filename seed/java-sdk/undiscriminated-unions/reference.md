@@ -82,11 +82,13 @@ client.union().getMetadata();
 ```java
 client.union().updateMetadata(
     MetadataUnion.of(
-        new HashMap<String, Object>() {{
-            put("string", new 
-            HashMap<String, Object>() {{put("key", "value");
-            }});
-        }}
+        Optional.of(
+            new HashMap<String, Object>() {{
+                put("string", new 
+                HashMap<String, Object>() {{put("key", "value");
+                }});
+            }}
+        )
     )
 );
 ```
@@ -133,11 +135,13 @@ client.union().call(
         .builder()
         .union(
             MetadataUnion.of(
-                new HashMap<String, Object>() {{
-                    put("union", new 
-                    HashMap<String, Object>() {{put("key", "value");
-                    }});
-                }}
+                Optional.of(
+                    new HashMap<String, Object>() {{
+                        put("string", new 
+                        HashMap<String, Object>() {{put("key", "value");
+                        }});
+                    }}
+                )
             )
         )
         .build()

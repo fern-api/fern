@@ -147,7 +147,7 @@ async fn main() {
         .call(
             &Request {
                 union: Some(MetadataUnion::OptionalMetadata(OptionalMetadata(Some(
-                    HashMap::from([("union".to_string(), serde_json::json!({"key":"value"}))]),
+                    HashMap::from([("string".to_string(), serde_json::json!({"key":"value"}))]),
                 )))),
             },
             None,

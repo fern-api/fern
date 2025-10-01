@@ -64,7 +64,7 @@ describe("Union", () => {
     test("call", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedUndiscriminatedUnionsClient({ environment: server.baseUrl });
-        const rawRequestBody = { union: { union: { key: "value" } } };
+        const rawRequestBody = { union: { string: { key: "value" } } };
         const rawResponseBody = true;
         server
             .mockEndpoint()
@@ -77,7 +77,7 @@ describe("Union", () => {
 
         const response = await client.union.call({
             union: {
-                union: {
+                string: {
                     key: "value",
                 },
             },

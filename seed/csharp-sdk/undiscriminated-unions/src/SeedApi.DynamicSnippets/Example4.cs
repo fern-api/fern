@@ -12,13 +12,11 @@ public class Example4
             }
         );
 
-        await client.Union.CallAsync(
-            new Request{
-                Union = new Dictionary<string, object>(){
-                    ["union"] = new Dictionary<string, object>() {
-                        ["key"] = "value",
-                    },
-                }
+        await client.Union.UpdateMetadataAsync(
+            new Dictionary<string, object>(){
+                ["string"] = new Dictionary<string, object>() {
+                    ["key"] = "value",
+                },
             }
         );
     }

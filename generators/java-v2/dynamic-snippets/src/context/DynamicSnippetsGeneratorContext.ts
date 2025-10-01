@@ -30,7 +30,7 @@ const RESERVED_NAMES = new Set([
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation;
-    public customConfig: BaseJavaCustomConfigSchema | undefined;
+    public customConfig: BaseJavaCustomConfigSchema;
     public dynamicTypeMapper: DynamicTypeMapper;
     public dynamicTypeLiteralMapper: DynamicTypeLiteralMapper;
     public filePropertyMapper: FilePropertyMapper;
@@ -46,8 +46,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }) {
         super({ ir, config, options });
         this.ir = ir;
-        this.customConfig =
-            config.customConfig != null ? (config.customConfig as BaseJavaCustomConfigSchema) : undefined;
+        this.customConfig = BaseJavaCustomConfigSchema.parse(config.customConfig ?? {});
         this.dynamicTypeMapper = new DynamicTypeMapper({ context: this });
         this.dynamicTypeLiteralMapper = new DynamicTypeLiteralMapper({ context: this });
         this.filePropertyMapper = new FilePropertyMapper({ context: this });
