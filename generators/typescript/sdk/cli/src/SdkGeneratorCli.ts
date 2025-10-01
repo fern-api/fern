@@ -102,7 +102,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 "Incompatible configuration: noSerdeLayer cannot be false while experimentalGenerateReadWriteOnlyTypes is true."
             );
         }
-        const isUsingVitest = parsed?.testFramework ?? "vitest" === "vitest";
+        const isUsingVitest = (parsed?.testFramework ?? "vitest") === "vitest";
         if (isUsingVitest) {
             if (parsed?.useBigInt) {
                 logger.error(
