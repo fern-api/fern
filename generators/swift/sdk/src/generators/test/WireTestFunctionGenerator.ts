@@ -138,7 +138,16 @@ export class WireTestFunctionGenerator {
         const endpointSnippetRequest = convertDynamicEndpointSnippetRequest(dynamicEndpointExample);
         return this.endpointSnippetGenerator.generateRootClientInitializationStatement({
             auth: this.dynamicEndpoint.auth,
-            snippet: endpointSnippetRequest
+            snippet: endpointSnippetRequest,
+            additionalArgs: [
+                swift.functionArgument({
+                    label: "urlSession",
+                    value: swift.Expression.memberAccess({
+                        target: swift.Expression.reference("stub"),
+                        memberName: "urlSession"
+                    })
+                })
+            ]
         });
     }
 
