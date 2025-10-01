@@ -1,5 +1,5 @@
 use chrono::NaiveDate;
-use seed_examples::{ClientConfig, ExamplesClient, Movie, MovieId, Tag};
+use seed_examples::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]

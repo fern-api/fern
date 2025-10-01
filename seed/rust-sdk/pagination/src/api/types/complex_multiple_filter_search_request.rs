@@ -2,7 +2,7 @@ use crate::complex_multiple_filter_search_request_operator::MultipleFilterSearch
 use crate::complex_multiple_filter_search_request_value::MultipleFilterSearchRequestValue;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct MultipleFilterSearchRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub operator: Option<MultipleFilterSearchRequestOperator>,

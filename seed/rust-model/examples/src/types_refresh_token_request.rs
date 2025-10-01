@@ -2,5 +2,5 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct RefreshTokenRequest {
-    pub ttl: i32,
+    pub ttl: i64,
 }

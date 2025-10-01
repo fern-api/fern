@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_response_property::{ClientConfig, ResponsePropertyClient};
+use seed_response_property::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -47,7 +47,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_response_property::{ClientConfig, ResponsePropertyClient};
+use seed_response_property::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -81,7 +81,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_response_property::{ClientConfig, ResponsePropertyClient};
+use seed_response_property::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -115,7 +115,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_response_property::{ClientConfig, ResponsePropertyClient};
+use seed_response_property::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -149,7 +149,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_response_property::{ClientConfig, ResponsePropertyClient};
+use seed_response_property::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -183,7 +183,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_response_property::{ClientConfig, ResponsePropertyClient};
+use seed_response_property::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -217,7 +217,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_response_property::{ClientConfig, ResponsePropertyClient};
+use seed_response_property::prelude::*;
 
 #[tokio::main]
 async fn main() {

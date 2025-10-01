@@ -1,4 +1,4 @@
-use seed_pagination::{ClientConfig, ListWithExtendedResultsQueryRequest, PaginationClient};
+use seed_pagination::prelude::*;
 use uuid::Uuid;
 
 #[tokio::main]

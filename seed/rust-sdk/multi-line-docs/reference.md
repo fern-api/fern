@@ -28,7 +28,7 @@ This endpoint is used to retrieve a user.
 <dd>
 
 ```rust
-use seed_multi_line_docs::{ClientConfig, MultiLineDocsClient};
+use seed_multi_line_docs::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -95,7 +95,7 @@ This endpoint is used to create a new user.
 <dd>
 
 ```rust
-use seed_multi_line_docs::{ClientConfig, CreateUserRequest, MultiLineDocsClient};
+use seed_multi_line_docs::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

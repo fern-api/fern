@@ -5,9 +5,9 @@ use chrono::{DateTime, Utc};
 use std::collections::HashMap;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct SearchQueryRequest {
-    pub limit: i32,
+    pub limit: i64,
     pub id: String,
     pub date: String,
     pub deadline: DateTime<Utc>,

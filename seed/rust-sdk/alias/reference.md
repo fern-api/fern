@@ -12,7 +12,7 @@
 <dd>
 
 ```rust
-use seed_alias::{AliasClient, ClientConfig};
+use seed_alias::prelude::*;
 
 #[tokio::main]
 async fn main() {

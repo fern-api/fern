@@ -1,4 +1,4 @@
-use seed_inferred_auth_implicit_no_expiry::{ClientConfig, InferredAuthImplicitNoExpiryClient};
+use seed_inferred_auth_implicit_no_expiry::prelude::*;
 
 #[tokio::main]
 async fn main() {

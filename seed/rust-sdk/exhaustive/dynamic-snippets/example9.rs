@@ -1,4 +1,4 @@
-use seed_exhaustive::{ClientConfig, ExhaustiveClient, WeatherReport};
+use seed_exhaustive::prelude::*;
 
 #[tokio::main]
 async fn main() {

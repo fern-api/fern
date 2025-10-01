@@ -1,4 +1,4 @@
-use seed_audiences::{AudiencesClient, ClientConfig};
+use seed_audiences::prelude::*;
 
 #[tokio::main]
 async fn main() {

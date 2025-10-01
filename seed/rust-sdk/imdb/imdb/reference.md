@@ -27,7 +27,7 @@ Add a movie to the database using the movies/* /... path.
 <dd>
 
 ```rust
-use seed_api::{ApiClient, ClientConfig, CreateMovieRequest};
+use seed_api::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -72,7 +72,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_api::{ApiClient, ClientConfig};
+use seed_api::prelude::*;
 
 #[tokio::main]
 async fn main() {

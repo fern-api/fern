@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_variables::{ClientConfig, VariablesClient};
+use seed_variables::prelude::*;
 
 #[tokio::main]
 async fn main() {

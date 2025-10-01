@@ -12,7 +12,7 @@
 <dd>
 
 ```rust
-use seed_examples::{ClientConfig, ExamplesClient};
+use seed_examples::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -49,7 +49,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_examples::{ClientConfig, ExamplesClient};
+use seed_examples::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -85,7 +85,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_examples::{ClientConfig, ExamplesClient};
+use seed_examples::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -155,7 +155,7 @@ This endpoint returns a file by its name.
 <dd>
 
 ```rust
-use seed_examples::{ClientConfig, ExamplesClient};
+use seed_examples::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -224,7 +224,7 @@ This endpoint checks the health of a resource.
 <dd>
 
 ```rust
-use seed_examples::{ClientConfig, ExamplesClient};
+use seed_examples::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -292,7 +292,7 @@ This endpoint checks the health of the service.
 <dd>
 
 ```rust
-use seed_examples::{ClientConfig, ExamplesClient};
+use seed_examples::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -328,7 +328,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_examples::{ClientConfig, ExamplesClient};
+use seed_examples::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -382,7 +382,7 @@ async fn main() {
 
 ```rust
 use chrono::NaiveDate;
-use seed_examples::{ClientConfig, ExamplesClient, Movie, MovieId, Tag};
+use seed_examples::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
@@ -448,7 +448,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_examples::{ClientConfig, ExamplesClient, GetMetadataQueryRequest};
+use seed_examples::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -517,11 +517,7 @@ async fn main() {
 
 ```rust
 use chrono::{DateTime, NaiveDate, Utc};
-use seed_examples::{
-    Actor, Actress, BasicType, BigEntity, CastMember, ClientConfig, ComplexType, Data, Directory,
-    Entity, EventInfo, ExamplesClient, Exception, ExceptionInfo, ExtendedMovie, File, Metadata,
-    Migration, MigrationStatus, Moment, MovieId, Node, StuntDouble, Tag, Test, Tree, Type,
-};
+use seed_examples::prelude::*;
 use std::collections::{HashMap, HashSet};
 use uuid::Uuid;
 
@@ -768,7 +764,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_examples::{ClientConfig, ExamplesClient};
+use seed_examples::prelude::*;
 
 #[tokio::main]
 async fn main() {

@@ -11,7 +11,7 @@ use crate::submission_invalid_request_response::InvalidRequestResponse;
 use crate::submission_finished_response::FinishedResponse;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum CodeExecutionUpdate {
         BuildingExecutor {

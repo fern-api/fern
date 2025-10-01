@@ -1,6 +1,4 @@
-use seed_oauth_client_credentials_with_variables::{
-    ClientConfig, OauthClientCredentialsWithVariablesClient,
-};
+use seed_oauth_client_credentials_with_variables::prelude::*;
 
 #[tokio::main]
 async fn main() {

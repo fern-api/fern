@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_inferred_auth_explicit::{ClientConfig, GetTokenRequest, InferredAuthExplicitClient};
+use seed_inferred_auth_explicit::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -108,7 +108,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_inferred_auth_explicit::{ClientConfig, InferredAuthExplicitClient, RefreshTokenRequest};
+use seed_inferred_auth_explicit::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -213,7 +213,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_inferred_auth_explicit::{ClientConfig, InferredAuthExplicitClient};
+use seed_inferred_auth_explicit::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -248,7 +248,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_inferred_auth_explicit::{ClientConfig, InferredAuthExplicitClient};
+use seed_inferred_auth_explicit::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -283,7 +283,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_inferred_auth_explicit::{ClientConfig, InferredAuthExplicitClient};
+use seed_inferred_auth_explicit::prelude::*;
 
 #[tokio::main]
 async fn main() {

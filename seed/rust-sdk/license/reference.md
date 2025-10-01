@@ -12,7 +12,7 @@
 <dd>
 
 ```rust
-use seed_license::{ClientConfig, LicenseClient};
+use seed_license::prelude::*;
 
 #[tokio::main]
 async fn main() {

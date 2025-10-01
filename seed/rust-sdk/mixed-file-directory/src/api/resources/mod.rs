@@ -18,5 +18,5 @@ impl MixedFileDirectoryClient {
     }
 }
 
-pub use organization::*;
-pub use user::*;
+pub use organization::OrganizationClient;
+pub use user::UserClient;

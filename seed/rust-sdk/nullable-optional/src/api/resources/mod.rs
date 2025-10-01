@@ -15,4 +15,4 @@ impl NullableOptionalClient {
     }
 }
 
-pub use nullable_optional::*;
+pub use nullable_optional::NullableOptionalClient;

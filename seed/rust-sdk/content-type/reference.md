@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_content_types::{ClientConfig, ContentTypesClient, PatchProxyRequest};
+use seed_content_types::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -97,7 +97,7 @@ This endpoint demonstrates the distinction between:
 <dd>
 
 ```rust
-use seed_content_types::{ClientConfig, ContentTypesClient, PatchComplexRequest};
+use seed_content_types::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]
@@ -266,7 +266,7 @@ This should trigger the NPE issue when optional fields aren't initialized.
 <dd>
 
 ```rust
-use seed_content_types::{ClientConfig, ContentTypesClient, NamedMixedPatchRequest};
+use seed_content_types::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -368,7 +368,7 @@ This endpoint should:
 <dd>
 
 ```rust
-use seed_content_types::{ClientConfig, ContentTypesClient, OptionalMergePatchRequest};
+use seed_content_types::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -476,7 +476,7 @@ Regular PATCH endpoint without merge-patch semantics
 <dd>
 
 ```rust
-use seed_content_types::{ClientConfig, ContentTypesClient, RegularPatchRequest};
+use seed_content_types::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

@@ -1,8 +1,4 @@
-use seed_undiscriminated_unions::{
-    ClientConfig, MetadataUnion, NamedMetadata, OptionalMetadata, Request,
-    UndiscriminatedUnionsClient,
-};
-use std::collections::HashMap;
+use seed_undiscriminated_unions::prelude::*;
 
 #[tokio::main]
 async fn main() {

@@ -1,4 +1,4 @@
-use seed_path_parameters::{ClientConfig, PathParametersClient, UpdateUserRequest};
+use seed_path_parameters::prelude::*;
 use std::collections::{HashMap, HashSet};
 
 #[tokio::main]

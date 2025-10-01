@@ -13,7 +13,7 @@
 <dd>
 
 ```rust
-use seed_version::{ClientConfig, VersionClient};
+use seed_version::prelude::*;
 
 #[tokio::main]
 async fn main() {

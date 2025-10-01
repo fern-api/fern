@@ -1,4 +1,4 @@
-use seed_streaming::{ClientConfig, GenerateStreamRequest, StreamingClient};
+use seed_streaming::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
