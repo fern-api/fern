@@ -8,9 +8,12 @@ export type EndpointSnippetRequest = Omit<dynamic.EndpointSnippetRequest, "baseU
  * The @fern-api/dynamic-ir-sdk doesn't include the serialization layer, so the casing
  * convention doesn't match.
  */
-export function convertDynamicEndpointSnippetRequest(request: dynamic.EndpointSnippetRequest): EndpointSnippetRequest {
+export function convertDynamicEndpointSnippetRequest(
+    request: dynamic.EndpointSnippetRequest,
+    { baseUrlFallback }: { baseUrlFallback?: string } = {}
+): EndpointSnippetRequest {
     return {
         ...request,
-        baseURL: request.baseUrl ?? "https://api.fern.com"
+        baseURL: request.baseUrl ?? baseUrlFallback
     };
 }
