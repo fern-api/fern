@@ -45,7 +45,6 @@ types:
       text: {}
       bytes: {}
 
-
   BodyRequest:
     properties:
       pathParameters: optional<list<types.NamedParameter>>
