@@ -175,7 +175,7 @@ export class ExportsManager {
         }
     }
 
-    private addExportDeclarationForDirectory({
+    public addExportDeclarationForDirectory({
         directory,
         moduleSpecifierToExport,
         exportDeclaration,
@@ -184,7 +184,7 @@ export class ExportsManager {
         directory: Directory | PathToDirectory;
         moduleSpecifierToExport: ModuleSpecifier;
         exportDeclaration: ExportDeclaration | undefined;
-        addExportTypeModifier: boolean | undefined;
+        addExportTypeModifier?: boolean | undefined;
     }): void {
         const pathToDirectory = typeof directory === "string" ? directory : directory.getPath();
         const exportsForDirectory = (this.exports[pathToDirectory] ??= {});

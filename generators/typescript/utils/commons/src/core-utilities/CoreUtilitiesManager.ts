@@ -51,6 +51,12 @@ export class CoreUtilitiesManager {
     private readonly relativeTestPath: string;
     private readonly generateEndpointMetadata: boolean;
 
+    public hasCoreExports(): boolean {
+        // core/exports.ts will exist if any utility with an exports.ts file is used;
+        // currently these are: file, pagination
+        return this.referencedCoreUtilities["pagination"] != null || this.referencedCoreUtilities["file"] != null;
+    }
+
     constructor({
         streamType,
         formDataSupport,
