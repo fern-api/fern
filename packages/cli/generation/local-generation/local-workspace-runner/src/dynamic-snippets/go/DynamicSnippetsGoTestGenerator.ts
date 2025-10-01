@@ -21,7 +21,7 @@ export class DynamicSnippetsGoTestGenerator {
         //       that is actually of the latest version in the workspace.
         //       (regardless of version that the dynamic IR is being asked for in the language-specific generator)
         //       This appears to have been always an additive change, so this hasn't broken anything
-        //       In v61 we're adding support for more types for the response, which is a mutation of the interface.
+        //       In v60.6 we're adding support for more types for the response, which is a mutation of the interface.
         //       This really shouldn't break the language-specific dynamic code generator, because there was never
         //       a need to check the `type` of the response.
         //       In order to not force a version bump of the language-specific dynamic code generator,
