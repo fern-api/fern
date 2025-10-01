@@ -847,7 +847,10 @@ function convertV2HttpEndpointExample({
     return {
         name: shouldUseExampleName ? exampleName : undefined,
         description: "",
-        path: ir.environments == null ? addPlaceholderSchemeAndHost(example.request?.endpoint.path ?? "") : (example.request?.endpoint.path ?? ""),
+        path:
+            ir.environments == null
+                ? addPlaceholderSchemeAndHost(example.request?.endpoint.path ?? "")
+                : (example.request?.endpoint.path ?? ""),
         pathParameters: example.request?.pathParameters ?? {},
         queryParameters: example.request?.queryParameters ?? {},
         headers: example.request?.headers ?? {},
