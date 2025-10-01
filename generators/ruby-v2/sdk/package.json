@@ -50,7 +50,7 @@
     "@fern-api/ruby-base": "workspace:*",
     "@fern-api/ruby-dynamic-snippets": "workspace:*",
     "@fern-api/ruby-model": "workspace:*",
-    "@fern-fern/generator-cli-sdk": "0.1.1",
+    "@fern-fern/generator-cli-sdk": "^0.1.5",
     "@fern-fern/generator-exec-sdk": "^0.0.1045",
     "@fern-fern/ir-sdk": "^59.7.0",
     "@types/lodash-es": "^4.17.12",
