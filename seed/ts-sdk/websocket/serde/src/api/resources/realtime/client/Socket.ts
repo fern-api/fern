@@ -81,7 +81,7 @@ export class RealtimeSocket {
      * });
      * ```
      */
-    public on<T extends keyof RealtimeSocket.EventHandlers>(event: T, callback: RealtimeSocket.EventHandlers[T]) {
+    public on<T extends keyof RealtimeSocket.EventHandlers>(event: T, callback: RealtimeSocket.EventHandlers[T]): void {
         this.eventHandlers[event] = callback;
     }
 

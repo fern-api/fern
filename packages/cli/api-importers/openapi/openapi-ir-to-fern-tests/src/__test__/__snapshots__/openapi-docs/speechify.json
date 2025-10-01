@@ -952,7 +952,11 @@ types:
           "base-path": "",
           "endpoints": {
             "CreateAPIKey": {
-              "auth": true,
+              "auth": [
+                {
+                  "userAuth": [],
+                },
+              ],
               "docs": "Create a new API key for the logged in user",
               "examples": [
                 {
@@ -984,7 +988,11 @@ types:
               },
             },
             "DeleteAPIKey": {
-              "auth": true,
+              "auth": [
+                {
+                  "userAuth": [],
+                },
+              ],
               "docs": "Deletes the given API key for the logged in user",
               "examples": [
                 {
@@ -1013,7 +1021,11 @@ types:
               },
             },
             "ListAPIKeys": {
-              "auth": true,
+              "auth": [
+                {
+                  "userAuth": [],
+                },
+              ],
               "docs": "Fetches all the API keys for the logged in user",
               "examples": [
                 {
@@ -1047,7 +1059,11 @@ types:
               },
             },
             "UpdateApiKey": {
-              "auth": true,
+              "auth": [
+                {
+                  "userAuth": [],
+                },
+              ],
               "docs": "Update API key name for the logged in user",
               "examples": [
                 {
@@ -1108,7 +1124,8 @@ service:
     ListAPIKeys:
       path: /v1/token
       method: GET
-      auth: true
+      auth:
+        - userAuth: []
       docs: Fetches all the API keys for the logged in user
       source:
         openapi: ../openapi.json
@@ -1130,7 +1147,8 @@ service:
     CreateAPIKey:
       path: /v1/token
       method: POST
-      auth: true
+      auth:
+        - userAuth: []
       docs: Create a new API key for the logged in user
       source:
         openapi: ../openapi.json
@@ -1154,7 +1172,8 @@ service:
     DeleteAPIKey:
       path: /v1/token/{id}
       method: DELETE
-      auth: true
+      auth:
+        - userAuth: []
       docs: Deletes the given API key for the logged in user
       source:
         openapi: ../openapi.json
@@ -1172,7 +1191,8 @@ service:
     UpdateApiKey:
       path: /v1/token/{id}
       method: PATCH
-      auth: true
+      auth:
+        - userAuth: []
       docs: Update API key name for the logged in user
       source:
         openapi: ../openapi.json
@@ -1219,7 +1239,11 @@ service:
           "base-path": "",
           "endpoints": {
             "ExperimentalStreamCreate": {
-              "auth": true,
+              "auth": [
+                {
+                  "bearerAuth": [],
+                },
+              ],
               "docs": "Gets the stream speech for the given input",
               "errors": [
                 "root.ExperimentalStreamCreateRequestBadRequestError",
@@ -1292,7 +1316,11 @@ simba-turbo ModelTurbo",
               },
             },
             "GetSpeech": {
-              "auth": true,
+              "auth": [
+                {
+                  "bearerAuth": [],
+                },
+              ],
               "docs": "Gets the speech data for the given input",
               "errors": [
                 "root.GetSpeechRequestBadRequestError",
@@ -1385,7 +1413,11 @@ simba-turbo ModelTurbo",
               },
             },
             "GetStream": {
-              "auth": true,
+              "auth": [
+                {
+                  "bearerAuth": [],
+                },
+              ],
               "docs": "Gets the stream speech for the given input",
               "errors": [
                 "root.GetStreamRequestBadRequestError",
@@ -1704,7 +1736,8 @@ service:
     ExperimentalStreamCreate:
       path: /experimental/audio/stream
       method: POST
-      auth: true
+      auth:
+        - bearerAuth: []
       docs: Gets the stream speech for the given input
       source:
         openapi: ../openapi.json
@@ -1776,7 +1809,8 @@ service:
     GetSpeech:
       path: /v1/audio/speech
       method: POST
-      auth: true
+      auth:
+        - bearerAuth: []
       docs: Gets the speech data for the given input
       source:
         openapi: ../openapi.json
@@ -1867,7 +1901,8 @@ service:
     GetStream:
       path: /v1/audio/stream
       method: POST
-      auth: true
+      auth:
+        - bearerAuth: []
       docs: Gets the stream speech for the given input
       source:
         openapi: ../openapi.json
@@ -1955,7 +1990,11 @@ service:
           "base-path": "",
           "endpoints": {
             "CreateAccessToken": {
-              "auth": true,
+              "auth": [
+                {
+                  "bearerAuth": [],
+                },
+              ],
               "docs": "Create a new API token for the logged in user",
               "errors": [
                 "root.CreateAccessTokenRequestBadRequestError",
@@ -2088,7 +2127,8 @@ service:
     CreateAccessToken:
       path: /v1/auth/token
       method: POST
-      auth: true
+      auth:
+        - bearerAuth: []
       docs: Create a new API token for the logged in user
       source:
         openapi: ../openapi.json
@@ -2141,7 +2181,11 @@ service:
           "base-path": "",
           "endpoints": {
             "CreateVoice": {
-              "auth": true,
+              "auth": [
+                {
+                  "bearerAuth": [],
+                },
+              ],
               "docs": "Create a personal (cloned) voice for the user",
               "errors": [
                 "root.CreateVoiceRequestBadRequestError",
@@ -2214,7 +2258,11 @@ This should include the fullName and email of the consenting individual.",
               },
             },
             "DeleteVoice": {
-              "auth": true,
+              "auth": [
+                {
+                  "bearerAuth": [],
+                },
+              ],
               "docs": "Delete a personal (cloned) voice",
               "errors": [
                 "root.DeleteVoiceRequestBadRequestError",
@@ -2248,7 +2296,11 @@ This should include the fullName and email of the consenting individual.",
               },
             },
             "GetVoices": {
-              "auth": true,
+              "auth": [
+                {
+                  "bearerAuth": [],
+                },
+              ],
               "docs": "Gets the list of voices available for the user",
               "errors": [
                 "root.GetVoicesRequestNotFoundError",
@@ -2306,7 +2358,8 @@ service:
     GetVoices:
       path: /v1/voices
       method: GET
-      auth: true
+      auth:
+        - bearerAuth: []
       docs: Gets the list of voices available for the user
       source:
         openapi: ../openapi.json
@@ -2335,7 +2388,8 @@ service:
     CreateVoice:
       path: /v1/voices
       method: POST
-      auth: true
+      auth:
+        - bearerAuth: []
       docs: Create a personal (cloned) voice for the user
       source:
         openapi: ../openapi.json
@@ -2389,7 +2443,8 @@ service:
     DeleteVoice:
       path: /v1/voices/{id}
       method: DELETE
-      auth: true
+      auth:
+        - bearerAuth: []
       docs: Delete a personal (cloned) voice
       source:
         openapi: ../openapi.json

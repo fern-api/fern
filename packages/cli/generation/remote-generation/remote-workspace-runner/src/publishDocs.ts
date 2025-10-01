@@ -46,8 +46,7 @@ export async function publishDocs({
     preview,
     editThisPage,
     isPrivate = false,
-    disableTemplates = false,
-    disableDynamicSnippets = false
+    disableTemplates = false
 }: {
     token: FernToken;
     organization: string;
@@ -61,7 +60,6 @@ export async function publishDocs({
     editThisPage: docsYml.RawSchemas.FernDocsConfig.EditThisPageConfig | undefined;
     isPrivate: boolean | undefined;
     disableTemplates: boolean | undefined;
-    disableDynamicSnippets: boolean | undefined;
 }): Promise<void> {
     const fdr = createFdrService({ token: token.value });
     const authConfig: CjsFdrSdk.docs.v2.write.AuthConfig = isPrivate
@@ -71,6 +69,8 @@ export async function publishDocs({
     let docsRegistrationId: string | undefined;
     let urlToOutput = customDomains[0] ?? domain;
     const basePath = parseBasePath(domain);
+    const useDynamicSnippets = docsWorkspace.config.experimental?.dynamicSnippets;
+    const disableSnippetGen = preview || useDynamicSnippets;
     const resolver = new DocsDefinitionResolver(
         domain,
         docsWorkspace,
@@ -172,7 +172,7 @@ export async function publishDocs({
 
             // create dynamic IR + metadata for each generator language
             let dynamicIRsByLanguage: Record<string, DynamicIr> | undefined;
-            if (!disableDynamicSnippets) {
+            if (useDynamicSnippets) {
                 dynamicIRsByLanguage = await generateLanguageSpecificDynamicIRs({
                     workspace,
                     organization,
@@ -184,10 +184,7 @@ export async function publishDocs({
             const response = await fdr.api.v1.register.registerApiDefinition({
                 orgId: CjsFdrSdk.OrgId(organization),
                 apiId: CjsFdrSdk.ApiId(ir.apiName.originalName),
-                definition: {
-                    ...apiDefinition,
-                    snippetsConfiguration: preview ? undefined : apiDefinition.snippetsConfiguration
-                },
+                definition: apiDefinition,
                 definitionV2: undefined,
                 dynamicIRs: dynamicIRsByLanguage
             });
@@ -204,42 +201,6 @@ export async function publishDocs({
                     });
                 }
 
-                return response.body.apiDefinitionId;
-            } else {
-                switch (response.error.error) {
-                    case "UnauthorizedError":
-                    case "UserNotInOrgError": {
-                        return context.failAndThrow(
-                            "You do not have permissions to register the docs. Reach out to support@buildwithfern.com"
-                        );
-                    }
-                    default:
-                        if (apiName != null) {
-                            return context.failAndThrow(
-                                `Failed to publish docs because API definition (${apiName}) could not be uploaded. Please contact support@buildwithfern.com\n ${JSON.stringify(response.error)}`
-                            );
-                        } else {
-                            return context.failAndThrow(
-                                `Failed to publish docs because API definition could not be uploaded. Please contact support@buildwithfern.com\n ${JSON.stringify(response.error)}`
-                            );
-                        }
-                }
-            }
-        },
-        async ({ api, snippetsConfig, apiName }) => {
-            api.snippetsConfiguration = snippetsConfig;
-            const response = await fdr.api.v1.register.registerApiDefinition({
-                orgId: CjsFdrSdk.OrgId(organization),
-                apiId: CjsFdrSdk.ApiId(apiName ?? api.id),
-                definition: undefined,
-                definitionV2: {
-                    ...api,
-                    snippetsConfiguration: preview ? undefined : api.snippetsConfiguration
-                }
-            });
-
-            if (response.ok) {
-                context.logger.debug(`Registered API Definition ${response.body.apiDefinitionId}`);
                 return response.body.apiDefinitionId;
             } else {
                 switch (response.error.error) {
@@ -318,7 +279,9 @@ async function uploadFiles(
                     const mimeType = mime.lookup(absoluteFilePath);
                     await axios.put(uploadUrl, await readFile(absoluteFilePath), {
                         headers: {
-                            "Content-Type": mimeType === false ? "application/octet-stream" : mimeType
+                            "Content-Type": mimeType === false ? "application/octet-stream" : mimeType,
+                            // Set max cache control for S3 uploads
+                            "Cache-Control": "public, max-age=31536000, immutable"
                         }
                     });
                 } catch (e) {
@@ -510,6 +473,19 @@ async function generateLanguageSpecificDynamicIRs({
                     }
                 }
             }
+        }
+    }
+
+    for (const [language, packageName] of Object.entries(snippetConfiguration)) {
+        if (language && packageName && !Object.keys(languageSpecificIRs).includes(language)) {
+            context.logger.warn();
+            context.logger.warn(
+                `Failed to upload ${language} SDK snippets because of unknown package \`${packageName}\`.`
+            );
+            context.logger.warn(
+                `Please make sure your ${workspace.workspaceName ? `${workspace.workspaceName}/` : ""}generators.yml has a generator that publishes a ${packageName} package.`
+            );
+            context.logger.warn();
         }
     }
 

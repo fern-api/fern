@@ -10,7 +10,7 @@
           "base-path": "",
           "endpoints": {
             "defaultAndValidationRules": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Default and validation rules",
               "docs": undefined,
               "examples": [
@@ -198,7 +198,6 @@ service:
     defaultAndValidationRules:
       path: /example
       method: GET
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: Default and validation rules

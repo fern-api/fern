@@ -21,6 +21,8 @@ public class AsyncSeedVariablesClientBuilder {
 
     private OkHttpClient httpClient;
 
+    private String rootVariable;
+
     public AsyncSeedVariablesClientBuilder url(String url) {
         this.environment = Environment.custom(url);
         return this;
@@ -64,7 +66,7 @@ public class AsyncSeedVariablesClientBuilder {
     }
 
     public AsyncSeedVariablesClientBuilder rootVariable(String rootVariable) {
-        clientOptionsBuilder.rootVariable(rootVariable);
+        this.rootVariable = rootVariable;
         return this;
     }
 
@@ -98,7 +100,11 @@ public class AsyncSeedVariablesClientBuilder {
      *
      * @param builder The ClientOptions.Builder to configure
      */
-    protected void setVariables(ClientOptions.Builder builder) {}
+    protected void setVariables(ClientOptions.Builder builder) {
+        if (this.rootVariable != null) {
+            builder.rootVariable(this.rootVariable);
+        }
+    }
 
     /**
      * Sets the request timeout configuration.

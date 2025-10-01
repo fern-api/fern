@@ -16,7 +16,7 @@
           "base-path": "",
           "endpoints": {
             "get": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -40,7 +40,7 @@
               },
             },
             "get_all": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -133,7 +133,6 @@ service:
     get:
       path: /user
       method: GET
-      auth: false
       source:
         openapi: ../openapi.yml
       response:
@@ -147,7 +146,6 @@ service:
     get_all:
       path: /users
       method: GET
-      auth: false
       source:
         openapi: ../openapi.yml
       response:

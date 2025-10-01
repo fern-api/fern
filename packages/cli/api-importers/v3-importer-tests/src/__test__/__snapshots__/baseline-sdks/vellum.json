@@ -24,6 +24,7 @@
     "requirement": "ALL",
     "schemes": [
       {
+        "key": "apiKeyAuth",
         "name": {
           "name": {
             "originalName": "apiKey",
@@ -24873,6 +24874,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Base",
           "method": "GET",
@@ -25161,6 +25167,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Base",
           "method": "POST",
@@ -25695,6 +25706,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Base",
           "method": "GET",
@@ -26046,6 +26062,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Documents",
           "method": "POST",
@@ -26600,6 +26621,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Base",
           "method": "GET",
@@ -26827,6 +26853,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Base",
           "method": "POST",
@@ -27190,6 +27221,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Base",
           "method": "POST",
@@ -27795,6 +27831,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Base",
           "method": "POST",
@@ -28264,6 +28305,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Base",
           "method": "DELETE",
@@ -28596,6 +28642,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Base",
           "method": "POST",
@@ -29051,6 +29102,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Base",
           "method": "DELETE",
@@ -29347,6 +29403,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Predict",
           "method": "POST",
@@ -30003,6 +30064,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Predict",
           "method": "POST",
@@ -30446,6 +30512,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Predict",
           "method": "POST",
@@ -30966,6 +31037,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Predict",
           "method": "POST",
@@ -31485,6 +31561,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Predict",
           "method": "POST",
@@ -31956,6 +32037,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "apiKeyAuth": []
+            }
+          ],
           "idempotent": false,
           "baseUrl": "Predict",
           "method": "POST",

@@ -1379,7 +1379,8 @@
                             "type": "named",
                             "value": "type_:Operand"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -1411,7 +1412,8 @@
                                 "value": "type_:Operand"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -1440,7 +1442,8 @@
                             "type": "named",
                             "value": "type_:ColorOrOperand"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -1472,7 +1475,8 @@
                                 "value": "type_:ColorOrOperand"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "body": null,
@@ -1655,7 +1659,8 @@
                                 "type": "named",
                                 "value": "type_:Operand"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -1687,7 +1692,8 @@
                                     "value": "type_:Operand"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -1716,7 +1722,8 @@
                                 "type": "named",
                                 "value": "type_:ColorOrOperand"
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         },
                         {
                             "name": {
@@ -1748,7 +1755,8 @@
                                     "value": "type_:ColorOrOperand"
                                 }
                             },
-                            "propertyAccess": null
+                            "propertyAccess": null,
+                            "variable": null
                         }
                     ]
                 },
@@ -1862,7 +1870,8 @@
                             "type": "named",
                             "value": "type_:Operand"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -1891,7 +1900,8 @@
                             "type": "named",
                             "value": "type_:ColorOrOperand"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "body": null
@@ -2066,7 +2076,8 @@
                             "type": "named",
                             "value": "type_:Operand"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -2098,7 +2109,8 @@
                                 "value": "type_:Operand"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -2127,7 +2139,8 @@
                             "type": "named",
                             "value": "type_:ColorOrOperand"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -2159,7 +2172,8 @@
                                 "value": "type_:ColorOrOperand"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "headers": [],
@@ -2342,7 +2356,8 @@
                                 "value": "type_:Operand"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -2377,7 +2392,8 @@
                                 }
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -2409,7 +2425,8 @@
                                 "value": "type_:ColorOrOperand"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -2444,7 +2461,8 @@
                                 }
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "headers": [],
@@ -2462,5 +2480,6 @@
     },
     "pathParameters": [],
     "environments": null,
+    "variables": null,
     "generatorConfig": null
 }

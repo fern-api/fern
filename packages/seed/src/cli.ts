@@ -70,8 +70,7 @@ function addTestCommand(cli: Argv) {
                 .option("fixture", {
                     type: "array",
                     string: true,
-                    default: FIXTURES,
-                    choices: FIXTURES,
+                    // default: FIXTURES,
                     demandOption: false,
                     description: "Runs on all fixtures if not provided"
                 })
@@ -129,6 +128,34 @@ function addTestCommand(cli: Argv) {
                 }
                 let testRunner: TestRunner;
                 let scriptRunner: ScriptRunner;
+
+                // If no fixtures passed in, use all available fixtures (without output folders)
+                if (argv.fixture == null) {
+                    argv.fixture = await getAvailableFixtures(generator, false);
+                }
+
+                // Get both formats of fixtures and check if the fixtures passed in are of one of the two formats allowed
+                const availableFixtures = await getAvailableFixtures(generator, false);
+                const availableFixturesWithOutputFolders = await getAvailableFixtures(generator, true);
+
+                for (const fixture of argv.fixture) {
+                    if (!availableFixtures.includes(fixture) && !availableFixturesWithOutputFolders.includes(fixture)) {
+                        throw new Error(
+                            `Fixture ${fixture} not found. Please make sure that it is a valid fixture for the generator ${generator.workspaceName}.`
+                        );
+                    }
+                }
+
+                // Verify if there are multiple fixtures passed in or a fixture has a colon separated output folder, that
+                // the flag for the output folder is not also used
+                if (
+                    (argv.fixture.length > 1 || argv.fixture.some((fixture) => fixture.includes(":"))) &&
+                    argv.outputFolder != null
+                ) {
+                    throw new Error(
+                        `Output folder cannot be specified if multiple fixtures are passed in or if the fixture is passed in with colon separated output folders.`
+                    );
+                }
 
                 if (argv.local) {
                     if (generator.workspaceConfig.test.local == null) {
@@ -316,35 +343,43 @@ function addGetAvailableFixturesCommand(cli: Argv) {
                 );
             }
 
-            // Get all available fixtures
-            const availableFixtures = FIXTURES.filter((fixture) => {
-                const matchingPrefix = LANGUAGE_SPECIFIC_FIXTURE_PREFIXES.filter((prefix) =>
-                    fixture.startsWith(prefix)
-                )[0];
-                return matchingPrefix == null || generator.workspaceName.startsWith(matchingPrefix);
-            });
+            const availableFixtures = await getAvailableFixtures(generator, argv["include-subfolders"]);
 
-            if (argv["include-subfolders"]) {
-                // Add fixtures that have subfolders with their subfoldered version
-                const allOptions: string[] = [];
-                for (const fixture of availableFixtures) {
-                    const config = generator.workspaceConfig.fixtures?.[fixture];
-                    if (config != null && config.length > 0) {
-                        // This fixture has subfolders, add to map as fixture:outputFolder
-                        for (const outputFolder of config.map((c) => c.outputFolder)) {
-                            allOptions.push(`${fixture}:${outputFolder}`);
-                        }
-                    } else {
-                        // This fixture has no subfolders, keep as is
-                        allOptions.push(fixture);
-                    }
-                }
-                console.log(JSON.stringify({ fixtures: allOptions }, null, 2));
-            } else {
-                console.log(JSON.stringify({ fixtures: availableFixtures }, null, 2));
-            }
+            // Note: HAVE to log the output for CI to pick it up
+            console.log(JSON.stringify({ fixtures: availableFixtures }, null, 2));
         }
     );
+}
+
+async function getAvailableFixtures(generator: GeneratorWorkspace, withOutputFolders: boolean) {
+    // Get all available fixtures
+    const availableFixtures = FIXTURES.filter((fixture) => {
+        const matchingPrefix = LANGUAGE_SPECIFIC_FIXTURE_PREFIXES.filter((prefix) => fixture.startsWith(prefix))[0];
+        return matchingPrefix == null || generator.workspaceName.startsWith(matchingPrefix);
+    });
+
+    // Optionally, include output folders in format fixture:outputFolder (note: this will replace the fixture name without the output folder)
+    if (withOutputFolders) {
+        // Add fixtures that have subfolders with their subfoldered version
+        const allOptions: string[] = [];
+        for (const fixture of availableFixtures) {
+            const config = generator.workspaceConfig.fixtures?.[fixture];
+            if (config != null && config.length > 0) {
+                // This fixture has subfolders, add to map as fixture:outputFolder
+                for (const outputFolder of config.map((c) => c.outputFolder)) {
+                    allOptions.push(`${fixture}:${outputFolder}`);
+                }
+            } else {
+                // This fixture has no subfolders, keep as is
+                allOptions.push(fixture);
+            }
+        }
+        // Return map with output folders
+        return allOptions;
+    }
+
+    // Don't include subfolders, return the original fixtures
+    return availableFixtures;
 }
 
 function addPublishCommands(cli: Argv) {

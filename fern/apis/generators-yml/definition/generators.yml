@@ -167,6 +167,18 @@ types:
       idiomatic-request-names:
         type: optional<boolean>
         docs: Whether to use idiomatic request names for endpoints (e.g. ListUsersRequest instead of UsersListRequest). Defaults to true.
+      wrap-references-to-nullable-in-optional:
+        type: optional<boolean>
+        docs: |
+          If true, the converter will wrap references to nullable schemas in optional.
+          If false, the converter will wrap references to nullable schemas in nullable.
+          Defaults to true.
+      coerce-optional-schemas-to-nullable:
+        type: optional<boolean>
+        docs: |
+          If true, the converter will coerce nullable schemas to optional.
+          If false, the converter will keep nullable schemas as nullable.
+          Defaults to true.
 
   UnionSettingsSchema:
     enum:
@@ -260,6 +272,19 @@ types:
       optional-additional-properties: optional<boolean>
       coerce-enums-to-literals: optional<boolean>
       idiomatic-request-names: optional<boolean>
+      wrap-references-to-nullable-in-optional:
+        type: optional<boolean>
+        docs: |
+          If true, the converter will convert nullable schemas to optional nullable.
+          If false, the converter will convert nullable schemas to required nullable.
+          Defaults to true.
+        default: true
+      coerce-optional-schemas-to-nullable:
+        type: optional<boolean>
+        docs: |
+          If true, the converter will coerce nullable schemas to optional.
+          If false, the converter will keep nullable schemas as nullable.
+          Defaults to true.
 
   OpenAPISettingsSchema:
     extends:
@@ -319,12 +344,30 @@ types:
           Whether to inline allOf schemas. If false, allOf schemas will be 
           extended in the code generation.
         default: false
+      resolve-aliases:
+        type: optional<ResolveAliases>
+        docs: |
+          Whether to resolve aliases and inline them if possible.
+          If provided, all aliases will be resolved except for the ones in the except array.
+          Defaults to false, meaning that no aliases will be resolved.
       group-multi-api-environments:
         type: optional<boolean>
         docs: |
           If true, automatically group multiple APIs with matching environments into unified environments with multiple base URLs.
           This is useful for organizations with multiple APIs deployed to the same set of environments.
         default: false
+
+  ResolveAliases:
+    discriminated: false
+    union:
+      - boolean
+      - ResolveAliasesSchema
+
+  ResolveAliasesSchema:
+    properties:
+      except:
+        type: optional<list<string>>
+        docs: Names of alias types to exclude from resolving.
 
   FormParameterEncoding:
     enum:

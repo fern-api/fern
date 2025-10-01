@@ -5,7 +5,7 @@ import {
     loadGeneratorsConfiguration,
     OPENAPI_DIRECTORY
 } from "@fern-api/configuration-loader";
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, isPathEmpty, join, RelativeFilePath } from "@fern-api/fs-utils";
 import {
     ConjureWorkspace,
     LazyFernWorkspace,
@@ -101,7 +101,10 @@ export async function loadSingleNamespaceAPIWorkspace({
                     typeDatesAsStrings: definition.settings?.typeDatesAsStrings ?? false,
                     preserveSingleSchemaOneOf: definition.settings?.preserveSingleSchemaOneOf ?? false,
                     inlineAllOfSchemas: definition.settings?.inlineAllOfSchemas ?? false,
-                    groupMultiApiEnvironments: definition.settings?.groupMultiApiEnvironments ?? false
+                    resolveAliases: definition.settings?.resolveAliases ?? false,
+                    groupMultiApiEnvironments: definition.settings?.groupMultiApiEnvironments ?? false,
+                    wrapReferencesToNullableInOptional: definition.settings?.wrapReferencesToNullableInOptional ?? true,
+                    coerceOptionalSchemasToNullable: definition.settings?.coerceOptionalSchemasToNullable ?? true
                 }
             });
             continue;
@@ -174,7 +177,10 @@ export async function loadSingleNamespaceAPIWorkspace({
                 typeDatesAsStrings: definition.settings?.typeDatesAsStrings ?? false,
                 preserveSingleSchemaOneOf: definition.settings?.preserveSingleSchemaOneOf ?? false,
                 inlineAllOfSchemas: definition.settings?.inlineAllOfSchemas ?? false,
-                groupMultiApiEnvironments: definition.settings?.groupMultiApiEnvironments ?? false
+                resolveAliases: definition.settings?.resolveAliases ?? false,
+                groupMultiApiEnvironments: definition.settings?.groupMultiApiEnvironments ?? false,
+                wrapReferencesToNullableInOptional: definition.settings?.wrapReferencesToNullableInOptional ?? true,
+                coerceOptionalSchemasToNullable: definition.settings?.coerceOptionalSchemasToNullable ?? true
             },
             source: {
                 type: "openapi",
@@ -314,6 +320,12 @@ export async function loadAPIWorkspace({
             didSucceed: true,
             workspace: fernWorkspace
         };
+    }
+
+    // check if directory is empty
+    if (await isPathEmpty(join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY)))) {
+        const apiFolderName = absolutePathToWorkspace.split("/").pop();
+        context.logger.warn(`Detected empty API definiton: ${apiFolderName}. Remove to resolve error.`);
     }
 
     return {

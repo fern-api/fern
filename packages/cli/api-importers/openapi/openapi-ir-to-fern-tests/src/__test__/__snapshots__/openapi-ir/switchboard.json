@@ -74,13 +74,35 @@
       "servers": [],
       "description": "Auth and redirect sessions by ID",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/auth",
       "examples": [
         {
           "pathParameters": [],
           "queryParameters": [],
-          "headers": [],
+          "headers": [
+            {
+              "name": "x-session-id",
+              "value": {
+                "value": {
+                  "value": "x-session-id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "x-call-type",
+              "value": {
+                "value": {
+                  "value": "x-call-type",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "codeSamples": [],
           "type": "full"
         }
@@ -152,6 +174,7 @@
       "servers": [],
       "description": "Get extensions, searching by name",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/extensions",
       "examples": [
@@ -382,6 +405,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/extensions",
       "examples": [
@@ -595,6 +619,7 @@
       "servers": [],
       "description": "Delete an extension by ID",
       "authed": false,
+      "security": [],
       "method": "DELETE",
       "path": "/extensions",
       "examples": [
@@ -734,6 +759,7 @@
       "servers": [],
       "description": "Get an extension by ID",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/extensions/{id}",
       "examples": [
@@ -993,6 +1019,7 @@
       "servers": [],
       "description": "Get profiles, searching by name or tags",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/profiles",
       "examples": [
@@ -1236,6 +1263,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/profiles",
       "examples": [
@@ -1489,6 +1517,7 @@
       "servers": [],
       "description": "Delete profiles matching query",
       "authed": false,
+      "security": [],
       "method": "DELETE",
       "path": "/profiles",
       "examples": [
@@ -1627,6 +1656,7 @@
       "servers": [],
       "description": "Get a profile by ID",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/profiles/{id}",
       "examples": [
@@ -2026,12 +2056,20 @@
       "servers": [],
       "description": "Get a list of sessions by ID",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/sessions",
       "examples": [
         {
           "pathParameters": [],
           "queryParameters": [
+            {
+              "name": "status",
+              "value": {
+                "value": "awaiting_capacity",
+                "type": "enum"
+              }
+            },
             {
               "name": "offset",
               "value": {
@@ -2352,6 +2390,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/sessions",
       "examples": [
@@ -2726,6 +2765,7 @@
       "servers": [],
       "description": "Get a session by ID",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/sessions/{id}",
       "examples": [
@@ -3031,6 +3071,7 @@
       "servers": [],
       "description": "Ends a session by ID. If a given session id does not exist within the organization, it is ignored.",
       "authed": false,
+      "security": [],
       "method": "DELETE",
       "path": "/sessions/{id}",
       "examples": [
@@ -3327,6 +3368,7 @@
       "servers": [],
       "description": "Get a session event stream for a given session ID",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/sessions/{id}/events",
       "examples": [
@@ -3564,6 +3606,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/sessions/{sessionId}/windows/{windowId}/get-window-info",
       "examples": [
@@ -3591,6 +3634,26 @@
             }
           ],
           "queryParameters": [
+            {
+              "name": "includeNavigationBar",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "disableResize",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
             {
               "name": "Screen resolution",
               "value": {
@@ -3841,6 +3904,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/sessions/{sessionId}/windows/{windowId}/prompt-content",
       "examples": [
@@ -4128,6 +4192,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/sessions/{sessionId}/windows/{windowId}/scrape-content",
       "examples": [
@@ -4453,6 +4518,7 @@
       "errors": {},
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/sessions/{sessionId}/windows/{windowId}/summarize-content",
       "examples": [

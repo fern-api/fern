@@ -78,7 +78,7 @@
           "base-path": "",
           "endpoints": {
             "get": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -123,7 +123,7 @@
               },
             },
             "get_stream": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -184,7 +184,6 @@ service:
     get_stream:
       path: /user/{userId}
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       request:
@@ -211,7 +210,6 @@ service:
     get:
       path: /user/{userId}
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       request:

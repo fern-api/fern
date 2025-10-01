@@ -12,6 +12,7 @@ import (
 
 	"github.com/fern-api/fern-go/internal/coordinator"
 	"github.com/fern-api/fern-go/internal/fern/ir"
+	"github.com/fern-api/fern-go/internal/fern/ir/common"
 	"github.com/fern-api/fern-go/internal/gospec"
 	"golang.org/x/tools/go/ast/astutil"
 )
@@ -40,7 +41,7 @@ type fileWriter struct {
 	exportAllRequestsAtRoot      bool
 	unionVersion                 UnionVersion
 	scope                        *gospec.Scope
-	types                        map[ir.TypeId]*ir.TypeDeclaration
+	types                        map[common.TypeId]*ir.TypeDeclaration
 	errors                       map[ir.ErrorId]*ir.ErrorDeclaration
 	coordinator                  *coordinator.Client
 	snippetWriter                *SnippetWriter
@@ -60,7 +61,7 @@ func newFileWriter(
 	gettersPassByValue bool,
 	exportAllRequestsAtRoot bool,
 	unionVersion UnionVersion,
-	types map[ir.TypeId]*ir.TypeDeclaration,
+	types map[common.TypeId]*ir.TypeDeclaration,
 	errors map[ir.ErrorId]*ir.ErrorDeclaration,
 	coordinator *coordinator.Client,
 ) *fileWriter {
@@ -211,6 +212,10 @@ func (f *fileWriter) WriteSetterMethods(typeName string, propertyNames []string,
 		// Use safe name for parameter to avoid reserved keywords
 		paramName := propertySafeNames[i]
 		propertyType := propertyTypes[i]
+
+		if receiver == paramName {
+			receiver = fmt.Sprintf("_%s", setterName)
+		}
 
 		f.P("// ", setterName, " sets the ", propertyName, " field and marks it as non-optional;")
 		f.P("// ", "this prevents an empty or null value for this field from being omitted during serialization.")

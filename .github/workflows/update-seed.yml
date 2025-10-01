@@ -37,40 +37,115 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       skip-scripts: ${{ steps.set-update-options.outputs.skip-scripts }}
-      create-artifacts: ${{ steps.set-update-options.outputs.create-artifacts }}
-      create-pr: ${{ steps.set-update-options.outputs.create-pr }}
+      update-by-push: ${{ steps.set-update-options.outputs.update-by-push }}
+      update-by-pr: ${{ steps.set-update-options.outputs.update-by-pr }}
     steps:
-      # Apply by commit for PR to main, apply by PR for push to main or workflow_dispatch
+      # Apply by direct push for PRs to main, apply by PR for push to main or workflow_dispatch
       - name: Set update options
         id: set-update-options
         shell: bash
         run: |
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
             echo "skip-scripts=true" >> $GITHUB_OUTPUT
-            echo "create-artifacts=true" >> $GITHUB_OUTPUT
-            echo "create-pr=false" >> $GITHUB_OUTPUT
+            echo "update-by-push=true" >> $GITHUB_OUTPUT
+            echo "update-by-pr=false" >> $GITHUB_OUTPUT
           else
             echo "skip-scripts=false" >> $GITHUB_OUTPUT
-            echo "create-artifacts=false" >> $GITHUB_OUTPUT
-            echo "create-pr=true" >> $GITHUB_OUTPUT
+            echo "update-by-push=false" >> $GITHUB_OUTPUT
+            echo "update-by-pr=true" >> $GITHUB_OUTPUT
           fi
   changes:
     if: github.repository == 'fern-api/fern'
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        generator-name: [seed, ruby, ruby-v2, openapi, python, postman, java, typescript, go, csharp, php, swift, rust]
+        include:
+          - files: |
+              .github/actions/cached-seed/action.yaml
+              .github/actions/check-for-changed-files/action.yaml
+              .github/actions/install/action.yaml
+              .github/workflows/seed.yml
+              packages/seed/
+              packages/ir-sdk/fern/apis/
+              packages/cli/generation/ir-generator/
+              test-definitions/
+              test-definitions-openapi/
+            generator-name: seed
+          - files: |
+              generators/ruby/
+              seed/ruby-sdk/
+              seed/ruby-model/
+            generator-name: ruby
+          - files: |
+              generators/ruby-v2/
+              seed/ruby-sdk-v2/
+            generator-name: ruby-v2
+          - files: |
+              generators/openapi/
+              seed/openapi/
+            generator-name: openapi
+          - files: |
+              generators/python/
+              seed/pydantic/
+              seed/pydantic-v2/
+              seed/python-sdk/
+              seed/fastapi/
+            generator-name: python
+          - files: |
+              generators/postman/
+              seed/postman/
+            generator-name: postman
+          - files: |
+              generators/java/
+              seed/java-sdk/
+              seed/java-model/
+              seed/java-spring/
+            generator-name: java
+          - files: |
+              generators/typescript/
+              seed/ts-sdk/
+              seed/ts-express/
+            generator-name: typescript
+          - files: |
+              generators/go/
+              seed/go-sdk/
+              seed/go-model/
+              seed/go-fiber/
+            generator-name: go
+          - files: |
+              generators/csharp/
+              seed/csharp-sdk/
+              seed/csharp-model/
+            generator-name: csharp
+          - files: |
+              generators/php/
+              seed/php-sdk/
+              seed/php-model/
+            generator-name: php
+          - files: |
+              generators/swift/
+              seed/swift-sdk/
+            generator-name: swift
+          - files: |
+              generators/rust/
+              seed/rust-model/
+              seed/rust-sdk/
+            generator-name: rust
     outputs:
-      seed: ${{ github.event_name == 'workflow_dispatch' ||  steps.get-generator-changes.outputs.seed }}
-      ruby: ${{ steps.get-generator-changes.outputs.ruby }}
-      ruby-v2: ${{ steps.get-generator-changes.outputs.ruby-v2 }}
-      openapi: ${{ steps.get-generator-changes.outputs.openapi }}
-      python: ${{ steps.get-generator-changes.outputs.python }}
-      postman: ${{ steps.get-generator-changes.outputs.postman }}
-      java: ${{ steps.get-generator-changes.outputs.java }}
-      typescript: ${{ steps.get-generator-changes.outputs.typescript }}
-      go: ${{ steps.get-generator-changes.outputs.go }}
-      csharp: ${{ steps.get-generator-changes.outputs.csharp }}
-      php: ${{ steps.get-generator-changes.outputs.php }}
-      swift: ${{ steps.get-generator-changes.outputs.swift }}
-      rust: ${{ steps.get-generator-changes.outputs.rust }}
+      seed: ${{ github.event_name == 'workflow_dispatch' ||  steps.set-output.outputs.seed-changes }}
+      ruby: ${{ steps.set-output.outputs.ruby-changes }}
+      ruby-v2: ${{ steps.set-output.outputs.ruby-v2-changes }}
+      openapi: ${{ steps.set-output.outputs.openapi-changes }}
+      python: ${{ steps.set-output.outputs.python-changes }}
+      postman: ${{ steps.set-output.outputs.postman-changes }}
+      java: ${{ steps.set-output.outputs.java-changes }}
+      typescript: ${{ steps.set-output.outputs.typescript-changes }}
+      go: ${{ steps.set-output.outputs.go-changes }}
+      csharp: ${{ steps.set-output.outputs.csharp-changes }}
+      php: ${{ steps.set-output.outputs.php-changes }}
+      swift: ${{ steps.set-output.outputs.swift-changes }}
+      rust: ${{ steps.set-output.outputs.rust-changes }}
 
     steps:
       - if: github.event_name != 'workflow_dispatch'
@@ -79,548 +154,942 @@ jobs:
         with:
           # Get sufficient history to check for changes
           fetch-depth: 200
-      - if: github.event_name != 'workflow_dispatch'
-        name: Get generator changes
+          sparse-checkout: |
+            ${{ matrix.files }}
+            .github/
+
+      - name: Get generator changes for ${{ matrix.generator-name }}
         id: get-generator-changes
-        uses: ./.github/actions/get-generator-changes
+        uses: ./.github/actions/check-for-changed-files
+        with:
+          files: ${{ matrix.files }}
+
+      - name: Set output
+        id: set-output
+        run: |
+          echo "${{ matrix.generator-name }}-changes=${{ steps.get-generator-changes.outputs.any_changed }}" >> $GITHUB_OUTPUT
+
+  get-all-test-matrices:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        sdk-name:
+          [
+            ruby-model,
+            ruby-sdk,
+            ruby-sdk-v2,
+            pydantic,
+            python-sdk,
+            fastapi,
+            openapi,
+            postman,
+            java-sdk,
+            java-model,
+            java-spring,
+            ts-sdk,
+            ts-express,
+            go-fiber,
+            go-model,
+            go-sdk,
+            csharp-model,
+            csharp-sdk,
+            php-model,
+            php-sdk,
+            swift-sdk,
+            rust-model,
+            rust-sdk
+          ]
+    outputs:
+      ruby-model: ${{ steps.set-test-matrix.outputs.ruby-model-test-matrix }}
+      ruby-sdk: ${{ steps.set-test-matrix.outputs.ruby-sdk-test-matrix }}
+      ruby-sdk-v2: ${{ steps.set-test-matrix.outputs.ruby-sdk-v2-test-matrix }}
+      pydantic: ${{ steps.set-test-matrix.outputs.pydantic-test-matrix }}
+      python-sdk: ${{ steps.set-test-matrix.outputs.python-sdk-test-matrix }}
+      fastapi: ${{ steps.set-test-matrix.outputs.fastapi-test-matrix }}
+      openapi: ${{ steps.set-test-matrix.outputs.openapi-test-matrix }}
+      postman: ${{ steps.set-test-matrix.outputs.postman-test-matrix }}
+      java-sdk: ${{ steps.set-test-matrix.outputs.java-sdk-test-matrix }}
+      java-model: ${{ steps.set-test-matrix.outputs.java-model-test-matrix }}
+      java-spring: ${{ steps.set-test-matrix.outputs.java-spring-test-matrix }}
+      ts-sdk: ${{ steps.set-test-matrix.outputs.ts-sdk-test-matrix }}
+      ts-express: ${{ steps.set-test-matrix.outputs.ts-express-test-matrix }}
+      go-fiber: ${{ steps.set-test-matrix.outputs.go-fiber-test-matrix }}
+      go-model: ${{ steps.set-test-matrix.outputs.go-model-test-matrix }}
+      go-sdk: ${{ steps.set-test-matrix.outputs.go-sdk-test-matrix }}
+      csharp-model: ${{ steps.set-test-matrix.outputs.csharp-model-test-matrix }}
+      csharp-sdk: ${{ steps.set-test-matrix.outputs.csharp-sdk-test-matrix }}
+      php-model: ${{ steps.set-test-matrix.outputs.php-model-test-matrix }}
+      php-sdk: ${{ steps.set-test-matrix.outputs.php-sdk-test-matrix }}
+      swift-sdk: ${{ steps.set-test-matrix.outputs.swift-sdk-test-matrix }}
+      rust-model: ${{ steps.set-test-matrix.outputs.rust-model-test-matrix }}
+      rust-sdk: ${{ steps.set-test-matrix.outputs.rust-sdk-test-matrix }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Get test matrix
+        id: get-test-matrix
+        uses: ./.github/actions/get-test-matrix
+        with:
+          sdk-name: ${{ matrix.sdk-name }}
+          package-amount: 10
+
+      - name: Set test matrix for ${{ matrix.sdk-name }}
+        id: set-test-matrix
+        run: |
+          if [[ "${{ steps.get-test-matrix.outputs.split-tests }}" == "true" ]]; then
+              BASH_VAR='${{ steps.get-test-matrix.outputs.test-matrix }}'
+              echo "${{ matrix.sdk-name }}-test-matrix=$BASH_VAR" >> $GITHUB_OUTPUT
+
+              # Echo the data to command line for visibility
+              echo "Packaged data for ${{ matrix.sdk-name }}-test-matrix:"
+              echo "$BASH_VAR" | jq .
+          else
+            echo "Set empty json matrix, which will run all tests on a single runner"
+            BASH_VAR='[{"fixtures":["all"]}]'
+            echo "${{ matrix.sdk-name }}-test-matrix=$BASH_VAR" >> $GITHUB_OUTPUT
+
+            # Echo the data to command line for visibility
+            echo "Packaged data for ${{ matrix.sdk-name }}-test-matrix:"
+            echo "$BASH_VAR" | jq .
+          fi
 
   ruby-model-seed-update:
-    needs: [changes, setup]
+    needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
-    runs-on: Seed
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
+      max-parallel: 10 # Limit the number of runners for this job to 10
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ruby-model) }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
           generator-name: ruby-model
           generator-path: generators/ruby
-          language-name: ruby
           allow-unexpected-failures: true
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   ruby-sdk-seed-update:
-    needs: [changes, setup]
+    needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.ruby == 'true' ||  needs.changes.outputs.seed == 'true' }}
-    runs-on: Seed
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
+      max-parallel: 10 # Limit the number of runners for this job to 10
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ruby-sdk) }}
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
           generator-name: ruby-sdk
           generator-path: generators/ruby
-          language-name: ruby
           allow-unexpected-failures: true
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   ruby-sdk-v2-seed-update:
-    needs: [changes, setup]
+    needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.ruby-v2 == 'true' ||  needs.changes.outputs.seed == 'true' }}
-    runs-on: Seed
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
+      max-parallel: 10 # Limit the number of runners for this job to 10
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ruby-sdk-v2) }}
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
           generator-name: ruby-sdk-v2
           generator-path: generators/ruby-v2
-          language-name: ruby
           allow-unexpected-failures: true
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
-  pydantic-model-seed-update:
-    needs: [changes, setup]
+  pydantic-seed-update:
+    needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
-    runs-on: Seed
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
+      max-parallel: 10 # Limit the number of runners for this job to 10
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.pydantic) }}
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
           generator-name: pydantic
           generator-path: generators/python
-          language-name: python
           allow-unexpected-failures: true
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   python-sdk-seed-update:
-    needs: [changes, setup]
+    needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
-    runs-on: Seed
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
+      max-parallel: 10 # Limit the number of runners for this job to 10
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.python-sdk) }}
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
           generator-name: python-sdk
           generator-path: generators/python
-          language-name: python
           allow-unexpected-failures: true
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   fastapi-seed-update:
-    needs: [changes, setup]
+    needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
-    runs-on: Seed
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
+      max-parallel: 10 # Limit the number of runners for this job to 10
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.fastapi) }}
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
           generator-name: fastapi
           generator-path: generators/python
-          language-name: python
           allow-unexpected-failures: true
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   openapi-seed-update:
-    needs: [changes, setup]
+    needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.openapi == 'true' ||  needs.changes.outputs.seed == 'true' }}
-    runs-on: Seed
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
+      max-parallel: 10 # Limit the number of runners for this job to 10
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.openapi) }}
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
           generator-name: openapi
           generator-path: generators/openapi
-          language-name: openapi
           allow-unexpected-failures: true
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   postman-seed-update:
-    needs: [changes, setup]
+    needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.postman == 'true' ||  needs.changes.outputs.seed == 'true' }}
-    runs-on: Seed
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
+      max-parallel: 10 # Limit the number of runners for this job to 10
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.postman) }}
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
           generator-name: postman
           generator-path: generators/postman
-          language-name: postman
           allow-unexpected-failures: true
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   java-sdk-seed-update:
-    needs: [changes, setup]
+    needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
-    runs-on: Seed
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
+      max-parallel: 10 # Limit the number of runners for this job to 10
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-sdk) }}
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
           generator-name: java-sdk
           generator-path: generators/java
-          language-name: java
           allow-unexpected-failures: true
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   java-model-seed-update:
-    needs: [changes, setup]
+    needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
-    runs-on: Seed
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
+      max-parallel: 10 # Limit the number of runners for this job to 10
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-model) }}
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
           generator-name: java-model
           generator-path: generators/java
-          language-name: java
           allow-unexpected-failures: true
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   java-spring-seed-update:
-    needs: [changes, setup]
+    needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.java == 'true' ||  needs.changes.outputs.seed == 'true' }}
-    runs-on: Seed
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
+      max-parallel: 10 # Limit the number of runners for this job to 10
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.java-spring) }}
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
           generator-name: java-spring
           generator-path: generators/java
-          language-name: java
           allow-unexpected-failures: true
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   typescript-sdk-seed-update:
-    needs: [changes, setup]
+    needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
-    runs-on: Seed
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
+      max-parallel: 10 # Limit the number of runners for this job to 10
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ts-sdk) }}
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
           generator-name: ts-sdk
           generator-path: generators/typescript
-          language-name: typescript
           allow-unexpected-failures: true
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   typescript-express-seed-update:
-    needs: [changes, setup]
+    needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.typescript == 'true' ||  needs.changes.outputs.seed == 'true' }}
-    runs-on: Seed
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
+      max-parallel: 10 # Limit the number of runners for this job to 10
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.ts-express) }}
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
           generator-name: ts-express
           generator-path: generators/typescript
-          language-name: typescript
           allow-unexpected-failures: true
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   go-fiber-seed-update:
-    needs: [changes, setup]
+    needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
-    runs-on: Seed
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
+      max-parallel: 10 # Limit the number of runners for this job to 10
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-fiber) }}
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
           generator-name: go-fiber
           generator-path: generators/go
-          language-name: go
           allow-unexpected-failures: true
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   go-model-seed-update:
-    needs: [changes, setup]
+    needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
-    runs-on: Seed
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
+      max-parallel: 10 # Limit the number of runners for this job to 10
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-model) }}
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
           generator-name: go-model
           generator-path: generators/go
-          language-name: go
           allow-unexpected-failures: true
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   go-sdk-seed-update:
-    needs: [changes, setup]
+    needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.go == 'true' ||  needs.changes.outputs.seed == 'true' }}
-    runs-on: Seed
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
+      max-parallel: 10 # Limit the number of runners for this job to 10
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.go-sdk) }}
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
           generator-name: go-sdk
           generator-path: generators/go
-          language-name: go
           allow-unexpected-failures: true
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   csharp-model-seed-update:
-    needs: [changes, setup]
+    needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
-    runs-on: Seed
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
+      max-parallel: 10 # Limit the number of runners for this job to 10
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.csharp-model) }}
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
           generator-name: csharp-model
           generator-path: generators/csharp
-          language-name: csharp
           allow-unexpected-failures: true
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   csharp-sdk-seed-update:
-    needs: [changes, setup]
+    needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
-    runs-on: Seed
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
+      max-parallel: 10 # Limit the number of runners for this job to 10
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.csharp-sdk) }}
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
           generator-name: csharp-sdk
           generator-path: generators/csharp
-          language-name: csharp
           allow-unexpected-failures: true
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   php-model-seed-update:
-    needs: [changes, setup]
+    needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true' }}
-    runs-on: Seed
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
+      max-parallel: 10 # Limit the number of runners for this job to 10
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.php-model) }}
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
           generator-name: php-model
           generator-path: generators/php
-          language-name: php
           allow-unexpected-failures: true
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   php-sdk-seed-update:
-    needs: [changes, setup]
+    needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.php == 'true' ||  needs.changes.outputs.seed == 'true' }}
-    runs-on: Seed
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
+      max-parallel: 10 # Limit the number of runners for this job to 10
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.php-sdk) }}
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
           generator-name: php-sdk
           generator-path: generators/php
-          language-name: php
           allow-unexpected-failures: true
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   swift-sdk-seed-update:
-    needs: [changes, setup]
+    needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.swift == 'true' ||  needs.changes.outputs.seed == 'true' }}
-    runs-on: Seed
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
+      max-parallel: 10 # Limit the number of runners for this job to 10
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.swift-sdk) }}
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
           generator-name: swift-sdk
           generator-path: generators/swift
-          language-name: swift
           allow-unexpected-failures: true
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   rust-model-seed-update:
-    needs: [changes, setup]
+    needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true' }}
-    runs-on: Seed
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
+      max-parallel: 10 # Limit the number of runners for this job to 10
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.rust-model) }}
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
 
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
           generator-name: rust-model
           generator-path: generators/rust
-          language-name: rust
           allow-unexpected-failures: true
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   rust-sdk-seed-update:
-    needs: [changes, setup]
+    needs: [changes, setup, get-all-test-matrices]
     if: ${{ needs.changes.outputs.rust == 'true' ||  needs.changes.outputs.seed == 'true' }}
-    runs-on: Seed
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # Let all tests run for debug, won't end up applying changes with a failure
+      max-parallel: 10 # Limit the number of runners for this job to 10
+      matrix:
+        include: ${{ fromJSON(needs.get-all-test-matrices.outputs.rust-sdk) }}
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
 
+      # Format for seed tests
+      - name: JSON to String
+        id: json-to-string
+        run: |
+          json_data='${{toJson(matrix.fixtures)}}'
+          # Convert JSON array to space-separated string
+          string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
+          echo "Generated string: '$string_result'"
+          echo "as-string=$string_result" >> $GITHUB_OUTPUT
+
       - name: Update seed
         uses: ./.github/actions/auto-update-seed
         with:
           generator-name: rust-sdk
           generator-path: generators/rust
-          language-name: rust
           allow-unexpected-failures: true
+          fixtures-to-run: ${{ steps.json-to-string.outputs.as-string }}
+          index: ${{ strategy.job-index }}
           skip-scripts: ${{ needs.setup.outputs.skip-scripts }}
-          create-artifacts: ${{ needs.setup.outputs.create-artifacts }}
-          create-pr: ${{ needs.setup.outputs.create-pr }}
-          secret-fern-github-pat: ${{ secrets.FERN_GITHUB_PAT }}
-          secret-pr-bot-gh-pat: ${{ secrets.PR_BOT_GH_PAT }}
 
   # Use always() to ensure this runs even if stages from needs are skipped.
   # Add check back to make sure it doesn't run for failures or cancellations.
-  commit-seed-changes:
+  commit-seed-changes-by-push:
     outputs:
       has-patches: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES }}
     if: >-
-      ${{ 
-        always() && needs.setup.outputs.create-artifacts == 'true' &&
+      ${{
+        always() && needs.setup.outputs.update-by-push == 'true' &&
         !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
       }}
     needs:
@@ -630,7 +1099,7 @@ jobs:
         ruby-model-seed-update,
         ruby-sdk-seed-update,
         ruby-sdk-v2-seed-update,
-        pydantic-model-seed-update,
+        pydantic-seed-update,
         python-sdk-seed-update,
         fastapi-seed-update,
         openapi-seed-update,
@@ -651,7 +1120,7 @@ jobs:
         rust-model-seed-update,
         rust-sdk-seed-update
       ]
-    runs-on: Seed
+    runs-on: ubuntu-latest
     steps:
       - name: Extract branch name
         id: extract_branch
@@ -690,6 +1159,7 @@ jobs:
         shell: bash
         id: get-number-of-patches
         run: |
+          # Apply all patches together for single commit
           file_count=$(find ./artifacts -type f -name "*.patch" | wc -l)
           echo "Number of patches downloaded: $file_count"
           if [ "$file_count" -gt 0 ]; then
@@ -719,18 +1189,226 @@ jobs:
           fetch: false
           message: "Automated update of seed files"
 
+  # Verify that the branch is the default branch (running for push to main)
+  commit-seed-changes-by-pr:
+    if: >-
+      ${{
+        always() &&
+        github.ref == format('refs/heads/{0}', github.event.repository.default_branch) &&
+        needs.setup.outputs.update-by-pr == 'true' &&
+        !contains(needs.*.result, 'failure') && 
+        !contains(needs.*.result, 'cancelled')
+      }}
+    needs:
+      [
+        changes,
+        setup,
+        ruby-model-seed-update,
+        ruby-sdk-seed-update,
+        ruby-sdk-v2-seed-update,
+        pydantic-seed-update,
+        python-sdk-seed-update,
+        fastapi-seed-update,
+        openapi-seed-update,
+        postman-seed-update,
+        java-sdk-seed-update,
+        java-model-seed-update,
+        java-spring-seed-update,
+        typescript-sdk-seed-update,
+        typescript-express-seed-update,
+        go-fiber-seed-update,
+        go-model-seed-update,
+        go-sdk-seed-update,
+        csharp-model-seed-update,
+        csharp-sdk-seed-update,
+        php-model-seed-update,
+        php-sdk-seed-update,
+        swift-sdk-seed-update,
+        rust-model-seed-update,
+        rust-sdk-seed-update
+      ]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        sdk-name:
+          [
+            ruby-model,
+            ruby-sdk,
+            ruby-sdk-v2,
+            pydantic,
+            python-sdk,
+            fastapi,
+            openapi,
+            postman,
+            java-sdk,
+            java-model,
+            java-spring,
+            ts-sdk,
+            ts-express,
+            go-fiber,
+            go-model,
+            go-sdk,
+            csharp-model,
+            csharp-sdk,
+            php-model,
+            php-sdk,
+            swift-sdk,
+            rust-model,
+            rust-sdk
+          ]
+        include:
+          - language-name: ruby
+            sdk-name: ruby-model
+          - language-name: ruby
+            sdk-name: ruby-sdk
+          - language-name: ruby
+            sdk-name: ruby-sdk-v2
+          - language-name: python
+            sdk-name: pydantic
+          - language-name: python
+            sdk-name: python-sdk
+          - language-name: python
+            sdk-name: fastapi
+          - language-name: openapi
+            sdk-name: openapi
+          - language-name: postman
+            sdk-name: postman
+          - language-name: java
+            sdk-name: java-sdk
+          - language-name: java
+            sdk-name: java-model
+          - language-name: java
+            sdk-name: java-spring
+          - language-name: typescript
+            sdk-name: ts-sdk
+          - language-name: typescript
+            sdk-name: ts-express
+          - language-name: go
+            sdk-name: go-fiber
+          - language-name: go
+            sdk-name: go-model
+          - language-name: go
+            sdk-name: go-sdk
+          - language-name: csharp
+            sdk-name: csharp-model
+          - language-name: csharp
+            sdk-name: csharp-sdk
+          - language-name: php
+            sdk-name: php-model
+          - language-name: php
+            sdk-name: php-sdk
+          - language-name: swift
+            sdk-name: swift-sdk
+          - language-name: rust
+            sdk-name: rust-model
+          - language-name: rust
+            sdk-name: rust-sdk
+    steps:
+      # Can checkout detached head here since changes will be PR'd
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+
+      - name: Create artifacts downloads directory
+        shell: bash
+        run: |
+          DIRECTORY=artifacts
+          if [ ! -d "$DIRECTORY" ]; then
+            echo "'$DIRECTORY' does NOT exist, creating it now."
+            mkdir $DIRECTORY
+          else
+            echo "WARNING: Directory '$DIRECTORY' already exists. Not an immediate error but could cause a problem downstream."
+          fi
+
+      # Merge-multiple is set so all patches are downloaded into the same folder. Otherwise
+      # they are subfoldered into folders that match *.patch pattern and cause errors downstream
+      - name: Download patches
+        uses: actions/download-artifact@v5
+        with:
+          path: ./artifacts
+          merge-multiple: true
+
+      - name: Get number of patches
+        shell: bash
+        id: get-number-of-patches
+        run: |
+          # Apply patches per generator for multiple, separate, PRs
+          file_count=$(find ./artifacts -type f -name "${{ matrix.sdk-name }}-*.patch" | wc -l)
+          echo "Number of patches downloaded: $file_count"
+          if [ "$file_count" -gt 0 ]; then
+            echo "HAS_PATCHES=true" >> $GITHUB_OUTPUT
+          else
+            echo "HAS_PATCHES=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Display content of a folder
+        run: |
+          echo "Content of 'artifacts' folder:"
+          ls -R artifacts/
+
+      - name: Apply patches
+        shell: bash
+        if: ${{ steps.get-number-of-patches.outputs.HAS_PATCHES == 'true' }}
+        run: |
+          git apply artifacts/${{ matrix.sdk-name }}-*.patch
+
+      # Create PR, approve and set to merge per generator
+      - name: Create Pull Request
+        if: steps.get-number-of-patches.outputs.HAS_PATCHES == 'true'
+        id: cpr
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+          commit-message: "chore(${{ matrix.language-name }}): update ${{ matrix.sdk-name }} seed"
+          title: "chore(${{ matrix.language-name }}): update ${{ matrix.sdk-name }} seed"
+          branch: update-${{ matrix.sdk-name }}-seed
+          body: "Auto-generated PR, triggered by GitHub event: ${{ github.event_name }} from branch: ${{ github.ref_name }}.\nGitHub workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          delete-branch: true
+          labels: |
+            seed
+            language/${{ matrix.language-name }}
+
+      - name: Log PR Creation Failure
+        if: steps.cpr.outputs.pull-request-operation != 'created'
+        shell: bash
+        run: |
+          echo "PR was not created, likely due to no diff for the generated seed output"
+
+      - name: Log PR Creation Details
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        shell: bash
+        run: |
+          echo "PR Created: ${{ steps.cpr.outputs.pull-request-url }}"
+
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
+
+      - name: Approve PR
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: ./.github/actions/auto-approve
+        with:
+          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+
   # Use always() to ensure this runs even if stages from needs are skipped.
   # Add check back to make sure it doesn't run for failures or cancellations.
-  # Only trigger if there are no new patches (seed is up to date)
+  # Only trigger if there are no new patches (seed is up to date) and workflow
+  # is adding changes by commit (not by PR)
   trigger-seed-snapshot-tests:
-    needs: [commit-seed-changes, changes, setup]
+    needs: [commit-seed-changes-by-push, changes, setup]
     if: >-
       ${{ 
-        always() && needs.setup.outputs.create-artifacts == 'true' &&
-        needs.commit-seed-changes.outputs.has-patches == 'false' &&
+        always() && needs.setup.outputs.update-by-push == 'true' &&
+        needs.commit-seed-changes-by-push.outputs.has-patches == 'false' &&
         !contains(needs.*.result, 'failure') && !contains(needs.*.result, 'cancelled')
       }}
-    runs-on: Seed
+    runs-on: ubuntu-latest
     steps:
       # Note: this will trigger to the default branch of the repo, not the PR branch
       - name: Trigger seed tests

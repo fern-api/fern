@@ -66,14 +66,16 @@ jobs:
             usePnpm
                 ? `
 
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10`
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4`
                 : ""
         }
 
+      - name: Install dependencies
+        run: ${packageManager} install
+
       - name: Compile
-        run: ${packageManager} && ${packageManager} build
+        run: ${packageManager} build
 ${getTestJob({ config, packageManager })}`;
     // First condition is for resilience in the event that Fiddle isn't upgraded to include the new flag
     if (
@@ -81,6 +83,7 @@ ${getTestJob({ config, packageManager })}`;
         publishInfo?.shouldGeneratePublishWorkflow === true
     ) {
         const access = isPackagePrivate ? "restricted" : "public";
+        const secretsVarName = publishInfo.tokenEnvironmentVariable?.toString() || "NPM_TOKEN";
         workflowYaml += `
   publish:
     needs: [ compile, test ]
@@ -89,17 +92,20 @@ ${getTestJob({ config, packageManager })}`;
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+
       - name: Set up node
         uses: actions/setup-node@v3${
             usePnpm
                 ? `
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10`
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4`
                 : ""
         }
+
       - name: Install dependencies
         run: ${packageManager} install
+
       - name: Build
         run: ${packageManager} build
 
@@ -114,7 +120,7 @@ ${getTestJob({ config, packageManager })}`;
             npm publish --access ${access}
           fi
         env:
-          NPM_TOKEN: \${{ secrets.${publishInfo.tokenEnvironmentVariable} }}`;
+          NPM_TOKEN: \${{ secrets.${secretsVarName} }}`;
     }
 
     if (publishToJsr) {
@@ -136,9 +142,8 @@ ${getTestJob({ config, packageManager })}`;
             usePnpm
                 ? `
 
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10`
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4`
                 : ""
         }
       
@@ -163,32 +168,6 @@ function getTestJob({
     packageManager: "pnpm" | "yarn";
 }): string {
     const usePnpm = packageManager === "pnpm";
-    //     if (config.writeUnitTests) {
-    //         return `
-    //   test:
-    //     runs-on: ubuntu-latest
-
-    //     steps:
-    //       - name: Checkout repo
-    //         uses: actions/checkout@v4
-
-    //       - name: Set up node
-    //         uses: actions/setup-node@v3${
-    //       usePnpm
-    //           ? `
-    // - uses: pnpm/action-setup@v4
-    //   with:
-    //     version: 10`
-    //           : ""
-    //   }
-
-    //       - name: Test
-    //         run: |
-    //           ${packageManager}
-    //           ${packageManager} fern test --command='jest --env=node'
-    //           ${packageManager} fern test --command='jest --env=jsdom'
-    // `;
-    //     } else {
     return `
   test:
     runs-on: ubuntu-latest
@@ -202,14 +181,16 @@ function getTestJob({
             usePnpm
                 ? `
                 
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 10`
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4`
                 : ""
         }
 
-      - name: Compile
-        run: ${packageManager} && ${packageManager} test    
+      - name: Install dependencies
+        run: ${packageManager} install
+
+      - name: Test
+        run: ${packageManager} test
 `;
     // }
 }

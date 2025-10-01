@@ -43,13 +43,16 @@ export class OpenAPIWorkspace extends BaseOpenAPIWorkspaceSync {
             generatorsConfiguration,
             respectReadonlySchemas: spec.settings?.respectReadonlySchemas,
             respectNullableSchemas: spec.settings?.respectNullableSchemas,
+            wrapReferencesToNullableInOptional: spec.settings?.wrapReferencesToNullableInOptional,
+            coerceOptionalSchemasToNullable: spec.settings?.coerceOptionalSchemasToNullable,
             onlyIncludeReferencedSchemas: spec.settings?.onlyIncludeReferencedSchemas,
             inlinePathParameters: spec.settings?.inlinePathParameters,
             objectQueryParameters: spec.settings?.objectQueryParameters,
             exampleGeneration: spec.settings?.exampleGeneration,
             useBytesForBinaryResponse: spec.settings?.useBytesForBinaryResponse,
             respectForwardCompatibleEnums: spec.settings?.respectForwardCompatibleEnums,
-            inlineAllOfSchemas: spec.settings?.inlineAllOfSchemas
+            inlineAllOfSchemas: spec.settings?.inlineAllOfSchemas,
+            resolveAliases: spec.settings?.resolveAliases
         });
         this.spec = spec;
         this.loader = new InMemoryOpenAPILoader();

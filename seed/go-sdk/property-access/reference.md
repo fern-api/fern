@@ -12,20 +12,21 @@
 <dd>
 
 ```go
+request := &fern.User{
+        Id: "id",
+        Email: "email",
+        Password: "password",
+        Profile: &fern.UserProfile{
+            Name: "name",
+            Verification: &fern.UserProfileVerification{
+                Verified: "verified",
+            },
+            Ssn: "ssn",
+        },
+    }
 client.CreateUser(
         context.TODO(),
-        &fern.User{
-            Id: "id",
-            Email: "email",
-            Password: "password",
-            Profile: &fern.UserProfile{
-                Name: "name",
-                Verification: &fern.UserProfileVerification{
-                    Verified: "verified",
-                },
-                Ssn: "ssn",
-            },
-        },
+        request,
     )
 }
 ```

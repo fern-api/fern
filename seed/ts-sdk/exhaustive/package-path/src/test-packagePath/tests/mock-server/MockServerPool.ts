@@ -1,8 +1,8 @@
 import { setupServer } from "msw/node";
 
-import { fromJson, toJson } from "../../core/json.js";
-import { MockServer } from "./MockServer.js";
-import { randomBaseUrl } from "./randomBaseUrl.js";
+import { fromJson, toJson } from "../../core/json";
+import { MockServer } from "./MockServer";
+import { randomBaseUrl } from "./randomBaseUrl";
 
 const mswServer = setupServer();
 interface MockServerOptions {

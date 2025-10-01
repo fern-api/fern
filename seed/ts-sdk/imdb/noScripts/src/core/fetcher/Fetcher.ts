@@ -1,6 +1,8 @@
 import { toJson } from "../json.js";
 import { APIResponse } from "./APIResponse.js";
 import { createRequestUrl } from "./createRequestUrl.js";
+import { EndpointMetadata } from "./EndpointMetadata.js";
+import { EndpointSupplier } from "./EndpointSupplier.js";
 import { getErrorResponseBody } from "./getErrorResponseBody.js";
 import { getFetchFn } from "./getFetchFn.js";
 import { getRequestBody } from "./getRequestBody.js";
@@ -8,7 +10,6 @@ import { getResponseBody } from "./getResponseBody.js";
 import { makeRequest } from "./makeRequest.js";
 import { abortRawResponse, toRawResponse, unknownRawResponse } from "./RawResponse.js";
 import { requestWithRetries } from "./requestWithRetries.js";
-import { Supplier } from "./Supplier.js";
 
 export type FetchFunction = <R = unknown>(args: Fetcher.Args) => Promise<APIResponse<R, Fetcher.Error>>;
 
@@ -17,7 +18,7 @@ export declare namespace Fetcher {
         url: string;
         method: string;
         contentType?: string;
-        headers?: Record<string, string | Supplier<string | null | undefined> | null | undefined>;
+        headers?: Record<string, string | EndpointSupplier<string | null | undefined> | null | undefined>;
         queryParameters?: Record<string, unknown>;
         body?: unknown;
         timeoutMs?: number;
@@ -27,6 +28,7 @@ export declare namespace Fetcher {
         requestType?: "json" | "file" | "bytes";
         responseType?: "json" | "blob" | "sse" | "streaming" | "text" | "arrayBuffer" | "binary-response";
         duplex?: "half";
+        endpointMetadata?: EndpointMetadata;
     }
 
     export type Error = FailedStatusCodeError | NonJsonError | TimeoutError | UnknownError;
@@ -64,7 +66,7 @@ async function getHeaders(args: Fetcher.Args): Promise<Record<string, string>> {
     }
 
     for (const [key, value] of Object.entries(args.headers)) {
-        const result = await Supplier.get(value);
+        const result = await EndpointSupplier.get(value, { endpointMetadata: args.endpointMetadata ?? {} });
         if (typeof result === "string") {
             newHeaders[key] = result;
             continue;

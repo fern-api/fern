@@ -1,10 +1,12 @@
-use seed_exhaustive::{ClientConfig, ExhaustiveClient, PutRequest};
+use seed_exhaustive::{ClientConfig, ExhaustiveClient};
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
-        api_key: Some("<token>".to_string()),
+        base_url: "https://api.fern.com".to_string(),
+        token: Some("<token>".to_string()),
+        ..Default::default()
     };
     let client = ExhaustiveClient::new(config).expect("Failed to build client");
-    client.endpoints_put_add("id", PutRequest {}).await;
+    client.endpoints.put.add(&"id".to_string(), None).await;
 }

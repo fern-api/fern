@@ -34,6 +34,8 @@ import {
     getTypeFromTypeReference,
     getValidationFromTypeReference
 } from "./utils/getTypeFromTypeReference";
+import { wrapTypeReferenceAsNullable } from "./utils/wrapTypeReferenceAsNullable";
+import { wrapTypeReferenceAsOptional } from "./utils/wrapTypeReferenceAsOptional";
 
 const MIN_INT_32 = -2147483648;
 const MAX_INT_32 = 2147483647;
@@ -467,12 +469,18 @@ export function buildReferenceTypeReference({
         type: schemaName
     });
 
-    const type = resolvedSchema.type === "nullable" ? `optional<${typeWithPrefix}>` : typeWithPrefix;
+    let type = typeWithPrefix;
+    if (resolvedSchema.type === "nullable") {
+        type = context.wrapReferencesToNullableInOptional ? `optional<${type}>` : `nullable<${type}>`;
+    }
+    if (resolvedSchema.type === "optional" && !type.startsWith("optional<")) {
+        type = `optional<${type}>`;
+    }
     if (schema.description == null && displayName == null) {
         return type;
     }
     return {
-        type: resolvedSchema.type === "nullable" ? `optional<${typeWithPrefix}>` : typeWithPrefix,
+        type,
         ...(schema.description != null ? { docs: schema.description } : {}),
         ...(schema.availability != null ? { availability: convertAvailability(schema.availability) } : {})
     };
@@ -528,6 +536,7 @@ export function buildMapTypeReference({
     declarationDepth: number;
 }): RawSchemas.TypeReferenceSchema {
     const keyTypeReference = buildPrimitiveTypeReference(schema.key);
+
     const valueTypeReference = buildTypeReference({
         schema: schema.value,
         fileContainingReference,
@@ -594,7 +603,7 @@ export function buildNullableTypeReference({
     const itemDocs = getDocsFromTypeReference(itemTypeReference);
     const itemDefault = getDefaultFromTypeReference(itemTypeReference);
     const itemValidation = getValidationFromTypeReference(itemTypeReference);
-    const type = itemType.startsWith("nullable<") ? itemType : `nullable<${itemType}>`;
+    const type = wrapTypeReferenceAsNullable(itemType);
     if (
         schema.availability == null &&
         schema.description == null &&
@@ -603,14 +612,14 @@ export function buildNullableTypeReference({
         itemValidation == null &&
         schema.title == null
     ) {
-        return wrapOptionalIfNotAlready({
-            typeReference: type,
-            itemType
-        });
+        return type;
     }
-    const result: RawSchemas.TypeReferenceSchema = {
-        type
-    };
+    const result: RawSchemas.TypeReferenceSchema =
+        typeof type === "string"
+            ? {
+                  type
+              }
+            : type;
     if (schema.description != null || itemDocs != null) {
         result.docs = schema.description ?? itemDocs;
     }
@@ -625,10 +634,7 @@ export function buildNullableTypeReference({
     }
 
     // Nullable schemas are always treated as optional.
-    return wrapOptionalIfNotAlready({
-        typeReference: result,
-        itemType
-    });
+    return result;
 }
 
 export function buildOptionalTypeReference({
@@ -658,7 +664,7 @@ export function buildOptionalTypeReference({
     const itemDocs = getDocsFromTypeReference(itemTypeReference);
     const itemDefault = getDefaultFromTypeReference(itemTypeReference);
     const itemValidation = getValidationFromTypeReference(itemTypeReference);
-    const type = itemType.startsWith("optional<") ? itemType : `optional<${itemType}>`;
+    const type = wrapTypeReferenceAsOptional(itemType);
     if (
         schema.availability == null &&
         schema.description == null &&
@@ -669,9 +675,12 @@ export function buildOptionalTypeReference({
     ) {
         return type;
     }
-    const result: RawSchemas.TypeReferenceSchema = {
-        type
-    };
+    const result: RawSchemas.TypeReferenceSchema =
+        typeof type === "string"
+            ? {
+                  type
+              }
+            : type;
     if (schema.description != null || itemDocs != null) {
         result.docs = schema.description ?? itemDocs;
     }
@@ -884,23 +893,4 @@ function getDisplayName(schema: Schema): string | undefined {
         unknown: (s) => undefined,
         _other: () => undefined
     });
-}
-
-function wrapOptionalIfNotAlready({
-    typeReference,
-    itemType
-}: {
-    typeReference: RawSchemas.TypeReferenceSchema;
-    itemType: string;
-}): RawSchemas.TypeReferenceSchema {
-    if (itemType.startsWith("optional<")) {
-        return typeReference;
-    }
-    if (typeof typeReference === "string") {
-        return `optional<${typeReference}>`;
-    }
-    return {
-        ...typeReference,
-        type: `optional<${typeReference.type}>`
-    };
 }

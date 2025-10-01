@@ -134,7 +134,9 @@ public final class NonVoidFunctionSignature {
         @JsonSetter(value = "parameters", nulls = Nulls.SKIP)
         public _FinalStage parameters(List<Parameter> parameters) {
             this.parameters.clear();
-            this.parameters.addAll(parameters);
+            if (parameters != null) {
+                this.parameters.addAll(parameters);
+            }
             return this;
         }
 

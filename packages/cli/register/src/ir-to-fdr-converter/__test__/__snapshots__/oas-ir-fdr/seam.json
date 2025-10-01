@@ -556,7 +556,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt0"
+      "displayName": "LockingDoor"
     },
     "ActionAttemptOneOf1Status": {
       "name": "ActionAttemptOneOf1Status",
@@ -642,7 +642,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt1"
+      "displayName": "LockingDoorSucceeded"
     },
     "ActionAttemptOneOf2Status": {
       "name": "ActionAttemptOneOf2Status",
@@ -747,7 +747,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt2"
+      "displayName": "LockingDoorFailed"
     },
     "ActionAttemptOneOf3Status": {
       "name": "ActionAttemptOneOf3Status",
@@ -831,7 +831,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt3"
+      "displayName": "UnlockingDoor"
     },
     "ActionAttemptOneOf4Status": {
       "name": "ActionAttemptOneOf4Status",
@@ -917,7 +917,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt4"
+      "displayName": "UnlockingDoorSucceeded"
     },
     "ActionAttemptOneOf5Status": {
       "name": "ActionAttemptOneOf5Status",
@@ -1022,7 +1022,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt5"
+      "displayName": "UnlockingDoorFailed"
     },
     "ActionAttemptOneOf6Status": {
       "name": "ActionAttemptOneOf6Status",
@@ -1106,7 +1106,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt6"
+      "displayName": "ResettingSandboxWorkspace"
     },
     "ActionAttemptOneOf7Status": {
       "name": "ActionAttemptOneOf7Status",
@@ -1192,7 +1192,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt7"
+      "displayName": "ResettingSandboxWorkspaceSucceeded"
     },
     "ActionAttemptOneOf8Status": {
       "name": "ActionAttemptOneOf8Status",
@@ -1297,7 +1297,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt8"
+      "displayName": "ResettingSandboxWorkspaceFailed"
     },
     "ActionAttemptOneOf9Status": {
       "name": "ActionAttemptOneOf9Status",
@@ -1381,7 +1381,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt9"
+      "displayName": "SettingHvacCool"
     },
     "ActionAttemptOneOf10Status": {
       "name": "ActionAttemptOneOf10Status",
@@ -1467,7 +1467,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt10"
+      "displayName": "SettingHvacCoolSucceeded"
     },
     "ActionAttemptOneOf11Status": {
       "name": "ActionAttemptOneOf11Status",
@@ -1572,7 +1572,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt11"
+      "displayName": "SettingHvacCoolFailed"
     },
     "ActionAttemptOneOf12Status": {
       "name": "ActionAttemptOneOf12Status",
@@ -1656,7 +1656,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt12"
+      "displayName": "SettingHvacHeatMode"
     },
     "ActionAttemptOneOf13Status": {
       "name": "ActionAttemptOneOf13Status",
@@ -1742,7 +1742,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt13"
+      "displayName": "SettingHvacHeatMode"
     },
     "ActionAttemptOneOf14Status": {
       "name": "ActionAttemptOneOf14Status",
@@ -1847,7 +1847,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt14"
+      "displayName": "SettingHvacHeatMode"
     },
     "ActionAttemptOneOf15Status": {
       "name": "ActionAttemptOneOf15Status",
@@ -1931,7 +1931,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt15"
+      "displayName": "SettingHvacHeatcoolMode"
     },
     "ActionAttemptOneOf16Status": {
       "name": "ActionAttemptOneOf16Status",
@@ -2017,7 +2017,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt16"
+      "displayName": "SettingHvacHeatcoolMode"
     },
     "ActionAttemptOneOf17Status": {
       "name": "ActionAttemptOneOf17Status",
@@ -2122,7 +2122,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt17"
+      "displayName": "SettingHeatcoolModeFailed"
     },
     "ActionAttemptOneOf18Status": {
       "name": "ActionAttemptOneOf18Status",
@@ -2206,7 +2206,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt18"
+      "displayName": "SettingFanMode"
     },
     "ActionAttemptOneOf19Status": {
       "name": "ActionAttemptOneOf19Status",
@@ -2292,7 +2292,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt19"
+      "displayName": "SettingFanModeSucceeded"
     },
     "ActionAttemptOneOf20Status": {
       "name": "ActionAttemptOneOf20Status",
@@ -2397,7 +2397,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt20"
+      "displayName": "SettingFanModeFailed"
     },
     "ActionAttemptOneOf21Status": {
       "name": "ActionAttemptOneOf21Status",
@@ -2481,7 +2481,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt21"
+      "displayName": "TurningHvac"
     },
     "ActionAttemptOneOf22Status": {
       "name": "ActionAttemptOneOf22Status",
@@ -2567,7 +2567,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt22"
+      "displayName": "TurningHvacSucceeded"
     },
     "ActionAttemptOneOf23Status": {
       "name": "ActionAttemptOneOf23Status",
@@ -2672,7 +2672,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt23"
+      "displayName": "TurningHvacFailed"
     },
     "ActionAttemptOneOf24Status": {
       "name": "ActionAttemptOneOf24Status",
@@ -2755,7 +2755,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt24"
+      "displayName": "ActionType"
     },
     "ActionAttemptOneOf25Status": {
       "name": "ActionAttemptOneOf25Status",
@@ -2837,7 +2837,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt25"
+      "displayName": "ActionType"
     },
     "ActionAttemptOneOf26Status": {
       "name": "ActionAttemptOneOf26Status",
@@ -2941,7 +2941,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt26"
+      "displayName": "ActionType"
     },
     "ActionAttemptOneOf27Status": {
       "name": "ActionAttemptOneOf27Status",
@@ -3024,7 +3024,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt27"
+      "displayName": "ActionType"
     },
     "ActionAttemptOneOf28Status": {
       "name": "ActionAttemptOneOf28Status",
@@ -3106,7 +3106,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt28"
+      "displayName": "ActionType"
     },
     "ActionAttemptOneOf29Status": {
       "name": "ActionAttemptOneOf29Status",
@@ -3210,7 +3210,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt29"
+      "displayName": "ActionType"
     },
     "ActionAttemptOneOf30Status": {
       "name": "ActionAttemptOneOf30Status",
@@ -3293,7 +3293,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt30"
+      "displayName": "ActionType"
     },
     "ActionAttemptOneOf31Status": {
       "name": "ActionAttemptOneOf31Status",
@@ -3375,7 +3375,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt31"
+      "displayName": "ActionType"
     },
     "ActionAttemptOneOf32Status": {
       "name": "ActionAttemptOneOf32Status",
@@ -3479,7 +3479,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt32"
+      "displayName": "ActionType"
     },
     "ActionAttemptOneOf33Status": {
       "name": "ActionAttemptOneOf33Status",
@@ -3562,7 +3562,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt33"
+      "displayName": "ActionType"
     },
     "ActionAttemptOneOf34Status": {
       "name": "ActionAttemptOneOf34Status",
@@ -3644,7 +3644,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt34"
+      "displayName": "ActionType"
     },
     "ActionAttemptOneOf35Status": {
       "name": "ActionAttemptOneOf35Status",
@@ -3748,7 +3748,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt35"
+      "displayName": "ActionType"
     },
     "ActionAttemptOneOf36Status": {
       "name": "ActionAttemptOneOf36Status",
@@ -3831,7 +3831,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt36"
+      "displayName": "ActionType"
     },
     "ActionAttemptOneOf37Status": {
       "name": "ActionAttemptOneOf37Status",
@@ -3913,7 +3913,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt37"
+      "displayName": "ActionType"
     },
     "ActionAttemptOneOf38Status": {
       "name": "ActionAttemptOneOf38Status",
@@ -4017,7 +4017,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt38"
+      "displayName": "ActionType"
     },
     "ActionAttemptOneOf39Status": {
       "name": "ActionAttemptOneOf39Status",
@@ -4100,7 +4100,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt39"
+      "displayName": "ActionType"
     },
     "ActionAttemptOneOf40Status": {
       "name": "ActionAttemptOneOf40Status",
@@ -4182,7 +4182,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt40"
+      "displayName": "ActionType"
     },
     "ActionAttemptOneOf41Status": {
       "name": "ActionAttemptOneOf41Status",
@@ -4286,7 +4286,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt41"
+      "displayName": "ActionType"
     },
     "ActionAttemptOneOf42Status": {
       "name": "ActionAttemptOneOf42Status",
@@ -4369,7 +4369,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt42"
+      "displayName": "ActionType"
     },
     "ActionAttemptOneOf43Status": {
       "name": "ActionAttemptOneOf43Status",
@@ -4451,7 +4451,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt43"
+      "displayName": "ActionType"
     },
     "ActionAttemptOneOf44Status": {
       "name": "ActionAttemptOneOf44Status",
@@ -4555,7 +4555,7 @@
           }
         ]
       },
-      "displayName": "ActionAttempt44"
+      "displayName": "ActionType"
     },
     "action_attempt": {
       "name": "action_attempt",
@@ -4569,7 +4569,7 @@
               "type": "id",
               "value": "ActionAttempt0"
             },
-            "displayName": "ActionAttempt0"
+            "displayName": "LockingDoor"
           },
           {
             "typeName": "ActionAttempt1",
@@ -4578,7 +4578,7 @@
               "type": "id",
               "value": "ActionAttempt1"
             },
-            "displayName": "ActionAttempt1"
+            "displayName": "LockingDoorSucceeded"
           },
           {
             "typeName": "ActionAttempt2",
@@ -4587,7 +4587,7 @@
               "type": "id",
               "value": "ActionAttempt2"
             },
-            "displayName": "ActionAttempt2"
+            "displayName": "LockingDoorFailed"
           },
           {
             "typeName": "ActionAttempt3",
@@ -4596,7 +4596,7 @@
               "type": "id",
               "value": "ActionAttempt3"
             },
-            "displayName": "ActionAttempt3"
+            "displayName": "UnlockingDoor"
           },
           {
             "typeName": "ActionAttempt4",
@@ -4605,7 +4605,7 @@
               "type": "id",
               "value": "ActionAttempt4"
             },
-            "displayName": "ActionAttempt4"
+            "displayName": "UnlockingDoorSucceeded"
           },
           {
             "typeName": "ActionAttempt5",
@@ -4614,7 +4614,7 @@
               "type": "id",
               "value": "ActionAttempt5"
             },
-            "displayName": "ActionAttempt5"
+            "displayName": "UnlockingDoorFailed"
           },
           {
             "typeName": "ActionAttempt6",
@@ -4623,7 +4623,7 @@
               "type": "id",
               "value": "ActionAttempt6"
             },
-            "displayName": "ActionAttempt6"
+            "displayName": "ResettingSandboxWorkspace"
           },
           {
             "typeName": "ActionAttempt7",
@@ -4632,7 +4632,7 @@
               "type": "id",
               "value": "ActionAttempt7"
             },
-            "displayName": "ActionAttempt7"
+            "displayName": "ResettingSandboxWorkspaceSucceeded"
           },
           {
             "typeName": "ActionAttempt8",
@@ -4641,7 +4641,7 @@
               "type": "id",
               "value": "ActionAttempt8"
             },
-            "displayName": "ActionAttempt8"
+            "displayName": "ResettingSandboxWorkspaceFailed"
           },
           {
             "typeName": "ActionAttempt9",
@@ -4650,7 +4650,7 @@
               "type": "id",
               "value": "ActionAttempt9"
             },
-            "displayName": "ActionAttempt9"
+            "displayName": "SettingHvacCool"
           },
           {
             "typeName": "ActionAttempt10",
@@ -4659,7 +4659,7 @@
               "type": "id",
               "value": "ActionAttempt10"
             },
-            "displayName": "ActionAttempt10"
+            "displayName": "SettingHvacCoolSucceeded"
           },
           {
             "typeName": "ActionAttempt11",
@@ -4668,7 +4668,7 @@
               "type": "id",
               "value": "ActionAttempt11"
             },
-            "displayName": "ActionAttempt11"
+            "displayName": "SettingHvacCoolFailed"
           },
           {
             "typeName": "ActionAttempt12",
@@ -4677,7 +4677,7 @@
               "type": "id",
               "value": "ActionAttempt12"
             },
-            "displayName": "ActionAttempt12"
+            "displayName": "SettingHvacHeatMode"
           },
           {
             "typeName": "ActionAttempt13",
@@ -4686,7 +4686,7 @@
               "type": "id",
               "value": "ActionAttempt13"
             },
-            "displayName": "ActionAttempt13"
+            "displayName": "SettingHvacHeatMode"
           },
           {
             "typeName": "ActionAttempt14",
@@ -4695,7 +4695,7 @@
               "type": "id",
               "value": "ActionAttempt14"
             },
-            "displayName": "ActionAttempt14"
+            "displayName": "SettingHvacHeatMode"
           },
           {
             "typeName": "ActionAttempt15",
@@ -4704,7 +4704,7 @@
               "type": "id",
               "value": "ActionAttempt15"
             },
-            "displayName": "ActionAttempt15"
+            "displayName": "SettingHvacHeatcoolMode"
           },
           {
             "typeName": "ActionAttempt16",
@@ -4713,7 +4713,7 @@
               "type": "id",
               "value": "ActionAttempt16"
             },
-            "displayName": "ActionAttempt16"
+            "displayName": "SettingHvacHeatcoolMode"
           },
           {
             "typeName": "ActionAttempt17",
@@ -4722,7 +4722,7 @@
               "type": "id",
               "value": "ActionAttempt17"
             },
-            "displayName": "ActionAttempt17"
+            "displayName": "SettingHeatcoolModeFailed"
           },
           {
             "typeName": "ActionAttempt18",
@@ -4731,7 +4731,7 @@
               "type": "id",
               "value": "ActionAttempt18"
             },
-            "displayName": "ActionAttempt18"
+            "displayName": "SettingFanMode"
           },
           {
             "typeName": "ActionAttempt19",
@@ -4740,7 +4740,7 @@
               "type": "id",
               "value": "ActionAttempt19"
             },
-            "displayName": "ActionAttempt19"
+            "displayName": "SettingFanModeSucceeded"
           },
           {
             "typeName": "ActionAttempt20",
@@ -4749,7 +4749,7 @@
               "type": "id",
               "value": "ActionAttempt20"
             },
-            "displayName": "ActionAttempt20"
+            "displayName": "SettingFanModeFailed"
           },
           {
             "typeName": "ActionAttempt21",
@@ -4758,7 +4758,7 @@
               "type": "id",
               "value": "ActionAttempt21"
             },
-            "displayName": "ActionAttempt21"
+            "displayName": "TurningHvac"
           },
           {
             "typeName": "ActionAttempt22",
@@ -4767,7 +4767,7 @@
               "type": "id",
               "value": "ActionAttempt22"
             },
-            "displayName": "ActionAttempt22"
+            "displayName": "TurningHvacSucceeded"
           },
           {
             "typeName": "ActionAttempt23",
@@ -4776,7 +4776,7 @@
               "type": "id",
               "value": "ActionAttempt23"
             },
-            "displayName": "ActionAttempt23"
+            "displayName": "TurningHvacFailed"
           },
           {
             "typeName": "ActionAttempt24",
@@ -4784,7 +4784,7 @@
               "type": "id",
               "value": "ActionAttempt24"
             },
-            "displayName": "ActionAttempt24"
+            "displayName": "ActionType"
           },
           {
             "typeName": "ActionAttempt25",
@@ -4792,7 +4792,7 @@
               "type": "id",
               "value": "ActionAttempt25"
             },
-            "displayName": "ActionAttempt25"
+            "displayName": "ActionType"
           },
           {
             "typeName": "ActionAttempt26",
@@ -4800,7 +4800,7 @@
               "type": "id",
               "value": "ActionAttempt26"
             },
-            "displayName": "ActionAttempt26"
+            "displayName": "ActionType"
           },
           {
             "typeName": "ActionAttempt27",
@@ -4808,7 +4808,7 @@
               "type": "id",
               "value": "ActionAttempt27"
             },
-            "displayName": "ActionAttempt27"
+            "displayName": "ActionType"
           },
           {
             "typeName": "ActionAttempt28",
@@ -4816,7 +4816,7 @@
               "type": "id",
               "value": "ActionAttempt28"
             },
-            "displayName": "ActionAttempt28"
+            "displayName": "ActionType"
           },
           {
             "typeName": "ActionAttempt29",
@@ -4824,7 +4824,7 @@
               "type": "id",
               "value": "ActionAttempt29"
             },
-            "displayName": "ActionAttempt29"
+            "displayName": "ActionType"
           },
           {
             "typeName": "ActionAttempt30",
@@ -4832,7 +4832,7 @@
               "type": "id",
               "value": "ActionAttempt30"
             },
-            "displayName": "ActionAttempt30"
+            "displayName": "ActionType"
           },
           {
             "typeName": "ActionAttempt31",
@@ -4840,7 +4840,7 @@
               "type": "id",
               "value": "ActionAttempt31"
             },
-            "displayName": "ActionAttempt31"
+            "displayName": "ActionType"
           },
           {
             "typeName": "ActionAttempt32",
@@ -4848,7 +4848,7 @@
               "type": "id",
               "value": "ActionAttempt32"
             },
-            "displayName": "ActionAttempt32"
+            "displayName": "ActionType"
           },
           {
             "typeName": "ActionAttempt33",
@@ -4856,7 +4856,7 @@
               "type": "id",
               "value": "ActionAttempt33"
             },
-            "displayName": "ActionAttempt33"
+            "displayName": "ActionType"
           },
           {
             "typeName": "ActionAttempt34",
@@ -4864,7 +4864,7 @@
               "type": "id",
               "value": "ActionAttempt34"
             },
-            "displayName": "ActionAttempt34"
+            "displayName": "ActionType"
           },
           {
             "typeName": "ActionAttempt35",
@@ -4872,7 +4872,7 @@
               "type": "id",
               "value": "ActionAttempt35"
             },
-            "displayName": "ActionAttempt35"
+            "displayName": "ActionType"
           },
           {
             "typeName": "ActionAttempt36",
@@ -4880,7 +4880,7 @@
               "type": "id",
               "value": "ActionAttempt36"
             },
-            "displayName": "ActionAttempt36"
+            "displayName": "ActionType"
           },
           {
             "typeName": "ActionAttempt37",
@@ -4888,7 +4888,7 @@
               "type": "id",
               "value": "ActionAttempt37"
             },
-            "displayName": "ActionAttempt37"
+            "displayName": "ActionType"
           },
           {
             "typeName": "ActionAttempt38",
@@ -4896,7 +4896,7 @@
               "type": "id",
               "value": "ActionAttempt38"
             },
-            "displayName": "ActionAttempt38"
+            "displayName": "ActionType"
           },
           {
             "typeName": "ActionAttempt39",
@@ -4904,7 +4904,7 @@
               "type": "id",
               "value": "ActionAttempt39"
             },
-            "displayName": "ActionAttempt39"
+            "displayName": "ActionType"
           },
           {
             "typeName": "ActionAttempt40",
@@ -4912,7 +4912,7 @@
               "type": "id",
               "value": "ActionAttempt40"
             },
-            "displayName": "ActionAttempt40"
+            "displayName": "ActionType"
           },
           {
             "typeName": "ActionAttempt41",
@@ -4920,7 +4920,7 @@
               "type": "id",
               "value": "ActionAttempt41"
             },
-            "displayName": "ActionAttempt41"
+            "displayName": "ActionType"
           },
           {
             "typeName": "ActionAttempt42",
@@ -4928,7 +4928,7 @@
               "type": "id",
               "value": "ActionAttempt42"
             },
-            "displayName": "ActionAttempt42"
+            "displayName": "ActionType"
           },
           {
             "typeName": "ActionAttempt43",
@@ -4936,7 +4936,7 @@
               "type": "id",
               "value": "ActionAttempt43"
             },
-            "displayName": "ActionAttempt43"
+            "displayName": "ActionType"
           },
           {
             "typeName": "ActionAttempt44",
@@ -4944,7 +4944,7 @@
               "type": "id",
               "value": "ActionAttempt44"
             },
-            "displayName": "ActionAttempt44"
+            "displayName": "ActionType"
           }
         ]
       }
@@ -5830,8 +5830,7 @@
             "value": "tedee_lock"
           }
         ]
-      },
-      "displayName": "DeviceDeviceType0"
+      }
     },
     "DeviceDeviceType1": {
       "name": "DeviceDeviceType1",
@@ -5845,8 +5844,7 @@
             "value": "minut_sensor"
           }
         ]
-      },
-      "displayName": "DeviceDeviceType1"
+      }
     },
     "DeviceDeviceType2": {
       "name": "DeviceDeviceType2",
@@ -5863,8 +5861,7 @@
             "value": "honeywell_resideo_thermostat"
           }
         ]
-      },
-      "displayName": "DeviceDeviceType2"
+      }
     },
     "DeviceDeviceType3": {
       "name": "DeviceDeviceType3",
@@ -5878,8 +5875,7 @@
             "value": "android_phone"
           }
         ]
-      },
-      "displayName": "DeviceDeviceType3"
+      }
     },
     "DeviceDeviceType": {
       "description": "Type of the device.",
@@ -5892,32 +5888,28 @@
             "type": {
               "type": "id",
               "value": "DeviceDeviceType0"
-            },
-            "displayName": "DeviceDeviceType0"
+            }
           },
           {
             "typeName": "DeviceDeviceType1",
             "type": {
               "type": "id",
               "value": "DeviceDeviceType1"
-            },
-            "displayName": "DeviceDeviceType1"
+            }
           },
           {
             "typeName": "DeviceDeviceType2",
             "type": {
               "type": "id",
               "value": "DeviceDeviceType2"
-            },
-            "displayName": "DeviceDeviceType2"
+            }
           },
           {
             "typeName": "DeviceDeviceType3",
             "type": {
               "type": "id",
               "value": "DeviceDeviceType3"
-            },
-            "displayName": "DeviceDeviceType3"
+            }
           }
         ]
       }
@@ -7551,7 +7543,7 @@
           }
         ]
       },
-      "displayName": "DeviceOneOf0CodeConstraintsItems0"
+      "displayName": "ConstraintType"
     },
     "DeviceOneOf0CodeConstraintsItemsOneOf1ConstraintType": {
       "name": "DeviceOneOf0CodeConstraintsItemsOneOf1ConstraintType",
@@ -7606,7 +7598,7 @@
           }
         ]
       },
-      "displayName": "DeviceOneOf0CodeConstraintsItems1"
+      "displayName": "ConstraintType"
     },
     "DeviceOneOf0CodeConstraintsItems": {
       "name": "DeviceOneOf0CodeConstraintsItems",
@@ -7619,7 +7611,7 @@
               "type": "id",
               "value": "DeviceOneOf0CodeConstraintsItems0"
             },
-            "displayName": "DeviceOneOf0CodeConstraintsItems0"
+            "displayName": "ConstraintType"
           },
           {
             "typeName": "DeviceOneOf0CodeConstraintsItems1",
@@ -7627,7 +7619,7 @@
               "type": "id",
               "value": "DeviceOneOf0CodeConstraintsItems1"
             },
-            "displayName": "DeviceOneOf0CodeConstraintsItems1"
+            "displayName": "ConstraintType"
           }
         ]
       }
@@ -8819,7 +8811,7 @@
           }
         ]
       },
-      "displayName": "Device0"
+      "displayName": "ActiveClimateSettingSchedule"
     },
     "DeviceOneOf1AugustMetadata": {
       "name": "DeviceOneOf1AugustMetadata",
@@ -10424,7 +10416,7 @@
           }
         ]
       },
-      "displayName": "DeviceOneOf1CodeConstraintsItems0"
+      "displayName": "ConstraintType"
     },
     "DeviceOneOf1CodeConstraintsItemsOneOf1ConstraintType": {
       "name": "DeviceOneOf1CodeConstraintsItemsOneOf1ConstraintType",
@@ -10479,7 +10471,7 @@
           }
         ]
       },
-      "displayName": "DeviceOneOf1CodeConstraintsItems1"
+      "displayName": "ConstraintType"
     },
     "DeviceOneOf1CodeConstraintsItems": {
       "name": "DeviceOneOf1CodeConstraintsItems",
@@ -10492,7 +10484,7 @@
               "type": "id",
               "value": "DeviceOneOf1CodeConstraintsItems0"
             },
-            "displayName": "DeviceOneOf1CodeConstraintsItems0"
+            "displayName": "ConstraintType"
           },
           {
             "typeName": "DeviceOneOf1CodeConstraintsItems1",
@@ -10500,7 +10492,7 @@
               "type": "id",
               "value": "DeviceOneOf1CodeConstraintsItems1"
             },
-            "displayName": "DeviceOneOf1CodeConstraintsItems1"
+            "displayName": "ConstraintType"
           }
         ]
       }
@@ -11620,7 +11612,7 @@
           }
         ]
       },
-      "displayName": "Device1"
+      "displayName": "ActiveClimateSettingSchedule"
     },
     "DeviceOneOf2AugustMetadata": {
       "name": "DeviceOneOf2AugustMetadata",
@@ -13225,7 +13217,7 @@
           }
         ]
       },
-      "displayName": "DeviceOneOf2CodeConstraintsItems0"
+      "displayName": "ConstraintType"
     },
     "DeviceOneOf2CodeConstraintsItemsOneOf1ConstraintType": {
       "name": "DeviceOneOf2CodeConstraintsItemsOneOf1ConstraintType",
@@ -13280,7 +13272,7 @@
           }
         ]
       },
-      "displayName": "DeviceOneOf2CodeConstraintsItems1"
+      "displayName": "ConstraintType"
     },
     "DeviceOneOf2CodeConstraintsItems": {
       "name": "DeviceOneOf2CodeConstraintsItems",
@@ -13293,7 +13285,7 @@
               "type": "id",
               "value": "DeviceOneOf2CodeConstraintsItems0"
             },
-            "displayName": "DeviceOneOf2CodeConstraintsItems0"
+            "displayName": "ConstraintType"
           },
           {
             "typeName": "DeviceOneOf2CodeConstraintsItems1",
@@ -13301,7 +13293,7 @@
               "type": "id",
               "value": "DeviceOneOf2CodeConstraintsItems1"
             },
-            "displayName": "DeviceOneOf2CodeConstraintsItems1"
+            "displayName": "ConstraintType"
           }
         ]
       }
@@ -14421,7 +14413,7 @@
           }
         ]
       },
-      "displayName": "Device2"
+      "displayName": "ActiveClimateSettingSchedule"
     },
     "Device": {
       "name": "Device",
@@ -14434,7 +14426,7 @@
               "type": "id",
               "value": "Device0"
             },
-            "displayName": "Device0"
+            "displayName": "ActiveClimateSettingSchedule"
           },
           {
             "typeName": "Device1",
@@ -14442,7 +14434,7 @@
               "type": "id",
               "value": "Device1"
             },
-            "displayName": "Device1"
+            "displayName": "ActiveClimateSettingSchedule"
           },
           {
             "typeName": "Device2",
@@ -14450,7 +14442,7 @@
               "type": "id",
               "value": "Device2"
             },
-            "displayName": "Device2"
+            "displayName": "ActiveClimateSettingSchedule"
           }
         ]
       }
@@ -14898,8 +14890,7 @@
             "value": "tedee_lock"
           }
         ]
-      },
-      "displayName": "UnmanagedDeviceDeviceType0"
+      }
     },
     "UnmanagedDeviceDeviceType1": {
       "name": "UnmanagedDeviceDeviceType1",
@@ -14913,8 +14904,7 @@
             "value": "minut_sensor"
           }
         ]
-      },
-      "displayName": "UnmanagedDeviceDeviceType1"
+      }
     },
     "UnmanagedDeviceDeviceType2": {
       "name": "UnmanagedDeviceDeviceType2",
@@ -14931,8 +14921,7 @@
             "value": "honeywell_resideo_thermostat"
           }
         ]
-      },
-      "displayName": "UnmanagedDeviceDeviceType2"
+      }
     },
     "UnmanagedDeviceDeviceType3": {
       "name": "UnmanagedDeviceDeviceType3",
@@ -14946,8 +14935,7 @@
             "value": "android_phone"
           }
         ]
-      },
-      "displayName": "UnmanagedDeviceDeviceType3"
+      }
     },
     "UnmanagedDeviceDeviceType": {
       "description": "Type of the device.",
@@ -14960,32 +14948,28 @@
             "type": {
               "type": "id",
               "value": "UnmanagedDeviceDeviceType0"
-            },
-            "displayName": "UnmanagedDeviceDeviceType0"
+            }
           },
           {
             "typeName": "UnmanagedDeviceDeviceType1",
             "type": {
               "type": "id",
               "value": "UnmanagedDeviceDeviceType1"
-            },
-            "displayName": "UnmanagedDeviceDeviceType1"
+            }
           },
           {
             "typeName": "UnmanagedDeviceDeviceType2",
             "type": {
               "type": "id",
               "value": "UnmanagedDeviceDeviceType2"
-            },
-            "displayName": "UnmanagedDeviceDeviceType2"
+            }
           },
           {
             "typeName": "UnmanagedDeviceDeviceType3",
             "type": {
               "type": "id",
               "value": "UnmanagedDeviceDeviceType3"
-            },
-            "displayName": "UnmanagedDeviceDeviceType3"
+            }
           }
         ]
       }
@@ -16279,7 +16263,7 @@
           }
         ]
       },
-      "displayName": "AcsSystemErrorsItems0"
+      "displayName": "ErrorCode"
     },
     "AcsSystemErrorsItemsOneOf1ErrorCode": {
       "name": "AcsSystemErrorsItemsOneOf1ErrorCode",
@@ -16325,7 +16309,7 @@
           }
         ]
       },
-      "displayName": "AcsSystemErrorsItems1"
+      "displayName": "ErrorCode"
     },
     "AcsSystemErrorsItems": {
       "name": "AcsSystemErrorsItems",
@@ -16338,7 +16322,7 @@
               "type": "id",
               "value": "AcsSystemErrorsItems0"
             },
-            "displayName": "AcsSystemErrorsItems0"
+            "displayName": "ErrorCode"
           },
           {
             "typeName": "AcsSystemErrorsItems1",
@@ -16346,7 +16330,7 @@
               "type": "id",
               "value": "AcsSystemErrorsItems1"
             },
-            "displayName": "AcsSystemErrorsItems1"
+            "displayName": "ErrorCode"
           }
         ]
       }
@@ -19306,7 +19290,7 @@
           }
         ]
       },
-      "displayName": "ConnectedAccountsGetRequest0"
+      "displayName": "ConnectedAccountId"
     },
     "ConnectedAccountsGetRequest1": {
       "name": "ConnectedAccountsGetRequest1",
@@ -19326,7 +19310,7 @@
           }
         ]
       },
-      "displayName": "ConnectedAccountsGetRequest1"
+      "displayName": "Email"
     },
     "connected_accounts_get_Request": {
       "name": "connected_accounts_get_Request",
@@ -19339,7 +19323,7 @@
               "type": "id",
               "value": "ConnectedAccountsGetRequest0"
             },
-            "displayName": "ConnectedAccountsGetRequest0"
+            "displayName": "ConnectedAccountId"
           },
           {
             "typeName": "ConnectedAccountsGetRequest1",
@@ -19347,7 +19331,7 @@
               "type": "id",
               "value": "ConnectedAccountsGetRequest1"
             },
-            "displayName": "ConnectedAccountsGetRequest1"
+            "displayName": "Email"
           }
         ]
       }
@@ -19615,8 +19599,7 @@
             "value": "tedee_lock"
           }
         ]
-      },
-      "displayName": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceType0"
+      }
     },
     "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceType1": {
       "name": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceType1",
@@ -19630,8 +19613,7 @@
             "value": "minut_sensor"
           }
         ]
-      },
-      "displayName": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceType1"
+      }
     },
     "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceType2": {
       "name": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceType2",
@@ -19648,8 +19630,7 @@
             "value": "honeywell_resideo_thermostat"
           }
         ]
-      },
-      "displayName": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceType2"
+      }
     },
     "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceType3": {
       "name": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceType3",
@@ -19663,8 +19644,7 @@
             "value": "android_phone"
           }
         ]
-      },
-      "displayName": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceType3"
+      }
     },
     "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceType": {
       "name": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceType",
@@ -19676,32 +19656,28 @@
             "type": {
               "type": "id",
               "value": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceType0"
-            },
-            "displayName": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceType0"
+            }
           },
           {
             "typeName": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceType1",
             "type": {
               "type": "id",
               "value": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceType1"
-            },
-            "displayName": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceType1"
+            }
           },
           {
             "typeName": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceType2",
             "type": {
               "type": "id",
               "value": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceType2"
-            },
-            "displayName": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceType2"
+            }
           },
           {
             "typeName": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceType3",
             "type": {
               "type": "id",
               "value": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceType3"
-            },
-            "displayName": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceType3"
+            }
           }
         ]
       }
@@ -19790,8 +19766,7 @@
             "value": "tedee_lock"
           }
         ]
-      },
-      "displayName": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems0"
+      }
     },
     "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems1": {
       "name": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems1",
@@ -19805,8 +19780,7 @@
             "value": "minut_sensor"
           }
         ]
-      },
-      "displayName": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems1"
+      }
     },
     "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems2": {
       "name": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems2",
@@ -19823,8 +19797,7 @@
             "value": "honeywell_resideo_thermostat"
           }
         ]
-      },
-      "displayName": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems2"
+      }
     },
     "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems3": {
       "name": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems3",
@@ -19838,8 +19811,7 @@
             "value": "android_phone"
           }
         ]
-      },
-      "displayName": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems3"
+      }
     },
     "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems": {
       "name": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems",
@@ -19851,32 +19823,28 @@
             "type": {
               "type": "id",
               "value": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems0"
-            },
-            "displayName": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems0"
+            }
           },
           {
             "typeName": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems1",
             "type": {
               "type": "id",
               "value": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems1"
-            },
-            "displayName": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems1"
+            }
           },
           {
             "typeName": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems2",
             "type": {
               "type": "id",
               "value": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems2"
-            },
-            "displayName": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems2"
+            }
           },
           {
             "typeName": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems3",
             "type": {
               "type": "id",
               "value": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems3"
-            },
-            "displayName": "DevicesListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems3"
+            }
           }
         ]
       }
@@ -20800,8 +20768,7 @@
             "value": "tedee_lock"
           }
         ]
-      },
-      "displayName": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceType0"
+      }
     },
     "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceType1": {
       "name": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceType1",
@@ -20815,8 +20782,7 @@
             "value": "minut_sensor"
           }
         ]
-      },
-      "displayName": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceType1"
+      }
     },
     "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceType2": {
       "name": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceType2",
@@ -20833,8 +20799,7 @@
             "value": "honeywell_resideo_thermostat"
           }
         ]
-      },
-      "displayName": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceType2"
+      }
     },
     "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceType3": {
       "name": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceType3",
@@ -20848,8 +20813,7 @@
             "value": "android_phone"
           }
         ]
-      },
-      "displayName": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceType3"
+      }
     },
     "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceType": {
       "name": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceType",
@@ -20861,32 +20825,28 @@
             "type": {
               "type": "id",
               "value": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceType0"
-            },
-            "displayName": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceType0"
+            }
           },
           {
             "typeName": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceType1",
             "type": {
               "type": "id",
               "value": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceType1"
-            },
-            "displayName": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceType1"
+            }
           },
           {
             "typeName": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceType2",
             "type": {
               "type": "id",
               "value": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceType2"
-            },
-            "displayName": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceType2"
+            }
           },
           {
             "typeName": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceType3",
             "type": {
               "type": "id",
               "value": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceType3"
-            },
-            "displayName": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceType3"
+            }
           }
         ]
       }
@@ -20975,8 +20935,7 @@
             "value": "tedee_lock"
           }
         ]
-      },
-      "displayName": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems0"
+      }
     },
     "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems1": {
       "name": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems1",
@@ -20990,8 +20949,7 @@
             "value": "minut_sensor"
           }
         ]
-      },
-      "displayName": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems1"
+      }
     },
     "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems2": {
       "name": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems2",
@@ -21008,8 +20966,7 @@
             "value": "honeywell_resideo_thermostat"
           }
         ]
-      },
-      "displayName": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems2"
+      }
     },
     "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems3": {
       "name": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems3",
@@ -21023,8 +20980,7 @@
             "value": "android_phone"
           }
         ]
-      },
-      "displayName": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems3"
+      }
     },
     "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems": {
       "name": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems",
@@ -21036,32 +20992,28 @@
             "type": {
               "type": "id",
               "value": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems0"
-            },
-            "displayName": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems0"
+            }
           },
           {
             "typeName": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems1",
             "type": {
               "type": "id",
               "value": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems1"
-            },
-            "displayName": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems1"
+            }
           },
           {
             "typeName": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems2",
             "type": {
               "type": "id",
               "value": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems2"
-            },
-            "displayName": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems2"
+            }
           },
           {
             "typeName": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems3",
             "type": {
               "type": "id",
               "value": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems3"
-            },
-            "displayName": "LocksListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems3"
+            }
           }
         ]
       }
@@ -21629,8 +21581,7 @@
             "value": "tedee_lock"
           }
         ]
-      },
-      "displayName": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceType0"
+      }
     },
     "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceType1": {
       "name": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceType1",
@@ -21644,8 +21595,7 @@
             "value": "minut_sensor"
           }
         ]
-      },
-      "displayName": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceType1"
+      }
     },
     "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceType2": {
       "name": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceType2",
@@ -21662,8 +21612,7 @@
             "value": "honeywell_resideo_thermostat"
           }
         ]
-      },
-      "displayName": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceType2"
+      }
     },
     "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceType3": {
       "name": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceType3",
@@ -21677,8 +21626,7 @@
             "value": "android_phone"
           }
         ]
-      },
-      "displayName": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceType3"
+      }
     },
     "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceType": {
       "name": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceType",
@@ -21690,32 +21638,28 @@
             "type": {
               "type": "id",
               "value": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceType0"
-            },
-            "displayName": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceType0"
+            }
           },
           {
             "typeName": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceType1",
             "type": {
               "type": "id",
               "value": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceType1"
-            },
-            "displayName": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceType1"
+            }
           },
           {
             "typeName": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceType2",
             "type": {
               "type": "id",
               "value": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceType2"
-            },
-            "displayName": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceType2"
+            }
           },
           {
             "typeName": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceType3",
             "type": {
               "type": "id",
               "value": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceType3"
-            },
-            "displayName": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceType3"
+            }
           }
         ]
       }
@@ -21804,8 +21748,7 @@
             "value": "tedee_lock"
           }
         ]
-      },
-      "displayName": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems0"
+      }
     },
     "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems1": {
       "name": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems1",
@@ -21819,8 +21762,7 @@
             "value": "minut_sensor"
           }
         ]
-      },
-      "displayName": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems1"
+      }
     },
     "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems2": {
       "name": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems2",
@@ -21837,8 +21779,7 @@
             "value": "honeywell_resideo_thermostat"
           }
         ]
-      },
-      "displayName": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems2"
+      }
     },
     "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems3": {
       "name": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems3",
@@ -21852,8 +21793,7 @@
             "value": "android_phone"
           }
         ]
-      },
-      "displayName": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems3"
+      }
     },
     "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems": {
       "name": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems",
@@ -21865,32 +21805,28 @@
             "type": {
               "type": "id",
               "value": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems0"
-            },
-            "displayName": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems0"
+            }
           },
           {
             "typeName": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems1",
             "type": {
               "type": "id",
               "value": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems1"
-            },
-            "displayName": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems1"
+            }
           },
           {
             "typeName": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems2",
             "type": {
               "type": "id",
               "value": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems2"
-            },
-            "displayName": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems2"
+            }
           },
           {
             "typeName": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems3",
             "type": {
               "type": "id",
               "value": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems3"
-            },
-            "displayName": "ThermostatsListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems3"
+            }
           }
         ]
       }
@@ -22413,7 +22349,7 @@
           }
         ]
       },
-      "displayName": "UserIdentitiesGetRequest0"
+      "displayName": "UserIdentityId"
     },
     "UserIdentitiesGetRequest1": {
       "name": "UserIdentitiesGetRequest1",
@@ -22432,7 +22368,7 @@
           }
         ]
       },
-      "displayName": "UserIdentitiesGetRequest1"
+      "displayName": "UserIdentityKey"
     },
     "user_identities_get_Request": {
       "name": "user_identities_get_Request",
@@ -22445,7 +22381,7 @@
               "type": "id",
               "value": "UserIdentitiesGetRequest0"
             },
-            "displayName": "UserIdentitiesGetRequest0"
+            "displayName": "UserIdentityId"
           },
           {
             "typeName": "UserIdentitiesGetRequest1",
@@ -22453,7 +22389,7 @@
               "type": "id",
               "value": "UserIdentitiesGetRequest1"
             },
-            "displayName": "UserIdentitiesGetRequest1"
+            "displayName": "UserIdentityKey"
           }
         ]
       }
@@ -23470,7 +23406,7 @@
           }
         ]
       },
-      "displayName": "AcsCredentialsListRequest0"
+      "displayName": "AcsUserId"
     },
     "AcsCredentialsListRequest1": {
       "name": "AcsCredentialsListRequest1",
@@ -23502,7 +23438,7 @@
           }
         ]
       },
-      "displayName": "AcsCredentialsListRequest1"
+      "displayName": "AcsSystemId"
     },
     "AcsCredentialsListRequest2": {
       "name": "AcsCredentialsListRequest2",
@@ -23544,7 +23480,7 @@
           }
         ]
       },
-      "displayName": "AcsCredentialsListRequest2"
+      "displayName": "AcsUserId"
     },
     "AcsCredentialsListRequest3": {
       "name": "AcsCredentialsListRequest3",
@@ -23576,7 +23512,7 @@
           }
         ]
       },
-      "displayName": "AcsCredentialsListRequest3"
+      "displayName": "UserIdentityId"
     },
     "acs_credentials_list_Request": {
       "name": "acs_credentials_list_Request",
@@ -23589,7 +23525,7 @@
               "type": "id",
               "value": "AcsCredentialsListRequest0"
             },
-            "displayName": "AcsCredentialsListRequest0"
+            "displayName": "AcsUserId"
           },
           {
             "typeName": "AcsCredentialsListRequest1",
@@ -23597,7 +23533,7 @@
               "type": "id",
               "value": "AcsCredentialsListRequest1"
             },
-            "displayName": "AcsCredentialsListRequest1"
+            "displayName": "AcsSystemId"
           },
           {
             "typeName": "AcsCredentialsListRequest2",
@@ -23605,7 +23541,7 @@
               "type": "id",
               "value": "AcsCredentialsListRequest2"
             },
-            "displayName": "AcsCredentialsListRequest2"
+            "displayName": "AcsUserId"
           },
           {
             "typeName": "AcsCredentialsListRequest3",
@@ -23613,7 +23549,7 @@
               "type": "id",
               "value": "AcsCredentialsListRequest3"
             },
-            "displayName": "AcsCredentialsListRequest3"
+            "displayName": "UserIdentityId"
           }
         ]
       }
@@ -24364,8 +24300,7 @@
             "value": "tedee_lock"
           }
         ]
-      },
-      "displayName": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceType0"
+      }
     },
     "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceType1": {
       "name": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceType1",
@@ -24379,8 +24314,7 @@
             "value": "minut_sensor"
           }
         ]
-      },
-      "displayName": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceType1"
+      }
     },
     "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceType2": {
       "name": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceType2",
@@ -24397,8 +24331,7 @@
             "value": "honeywell_resideo_thermostat"
           }
         ]
-      },
-      "displayName": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceType2"
+      }
     },
     "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceType3": {
       "name": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceType3",
@@ -24412,8 +24345,7 @@
             "value": "android_phone"
           }
         ]
-      },
-      "displayName": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceType3"
+      }
     },
     "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceType": {
       "name": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceType",
@@ -24425,32 +24357,28 @@
             "type": {
               "type": "id",
               "value": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceType0"
-            },
-            "displayName": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceType0"
+            }
           },
           {
             "typeName": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceType1",
             "type": {
               "type": "id",
               "value": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceType1"
-            },
-            "displayName": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceType1"
+            }
           },
           {
             "typeName": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceType2",
             "type": {
               "type": "id",
               "value": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceType2"
-            },
-            "displayName": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceType2"
+            }
           },
           {
             "typeName": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceType3",
             "type": {
               "type": "id",
               "value": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceType3"
-            },
-            "displayName": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceType3"
+            }
           }
         ]
       }
@@ -24539,8 +24467,7 @@
             "value": "tedee_lock"
           }
         ]
-      },
-      "displayName": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems0"
+      }
     },
     "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems1": {
       "name": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems1",
@@ -24554,8 +24481,7 @@
             "value": "minut_sensor"
           }
         ]
-      },
-      "displayName": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems1"
+      }
     },
     "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems2": {
       "name": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems2",
@@ -24572,8 +24498,7 @@
             "value": "honeywell_resideo_thermostat"
           }
         ]
-      },
-      "displayName": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems2"
+      }
     },
     "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems3": {
       "name": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems3",
@@ -24587,8 +24512,7 @@
             "value": "android_phone"
           }
         ]
-      },
-      "displayName": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems3"
+      }
     },
     "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems": {
       "name": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems",
@@ -24600,32 +24524,28 @@
             "type": {
               "type": "id",
               "value": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems0"
-            },
-            "displayName": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems0"
+            }
           },
           {
             "typeName": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems1",
             "type": {
               "type": "id",
               "value": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems1"
-            },
-            "displayName": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems1"
+            }
           },
           {
             "typeName": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems2",
             "type": {
               "type": "id",
               "value": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems2"
-            },
-            "displayName": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems2"
+            }
           },
           {
             "typeName": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems3",
             "type": {
               "type": "id",
               "value": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems3"
-            },
-            "displayName": "DevicesUnmanagedListPostRequestBodyContentApplicationJsonSchemaDeviceTypesItems3"
+            }
           }
         ]
       }

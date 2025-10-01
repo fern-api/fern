@@ -1,13 +1,21 @@
-use seed_package_yml::{ClientConfig, PackageYmlClient};
+use seed_package_yml::{ClientConfig, EchoRequest, PackageYmlClient};
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        base_url: "https://api.fern.com".to_string(),
+        ..Default::default()
+    };
     let client = PackageYmlClient::new(config).expect("Failed to build client");
     client
         .echo(
-            "id-ksfd9c1",
-            serde_json::json!({"name":"Hello world!","size":20}),
+            &"id-ksfd9c1".to_string(),
+            &EchoRequest {
+                name: "Hello world!".to_string(),
+                size: 20,
+            },
+            None,
         )
         .await;
 }

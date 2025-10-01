@@ -10460,7 +10460,7 @@ types:
           "display-name": "artifacts",
           "endpoints": {
             "locate": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Gets the download URL for the artifact.",
               "errors": [
                 "root.ArtifactsLocateRequestBadRequestError",
@@ -10506,7 +10506,7 @@ types:
               },
             },
             "prepare": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Creates an artifact and generates an upload URL for its data.
 ",
               "errors": [
@@ -10578,7 +10578,6 @@ service:
     locate:
       path: /artifacts.locate
       method: GET
-      auth: true
       docs: Gets the download URL for the artifact.
       source:
         openapi: ../openapi.yml
@@ -10610,7 +10609,6 @@ service:
     prepare:
       path: /artifacts.prepare
       method: POST
-      auth: true
       docs: |
         Creates an artifact and generates an upload URL for its data.
       source:
@@ -10663,7 +10661,7 @@ docs: Artifact (file) management APIs.
           "display-name": "auth-connection",
           "endpoints": {
             "dev-org-auth-connections-create": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Creates a new enterprise authentication connection for a Dev
 organization. This authentication connection will not be enabled by
 default for the organization and the user will need to explicitly
@@ -10682,6 +10680,7 @@ enterprise connections can be created by an organization.
               "examples": [
                 {
                   "request": {
+                    "display_name": null,
                     "type": "google_apps",
                   },
                   "response": {
@@ -10718,7 +10717,7 @@ enterprise connections can be created by an organization.
               },
             },
             "dev-org-auth-connections-delete": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Deletes an authentication connection. Only enterprise connections which
 are explicitly set up for a Dev organization can be deleted. Default
 connections can not be deleted using this method.
@@ -10762,7 +10761,7 @@ connections can not be deleted using this method.
               },
             },
             "dev-org-auth-connections-get": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Retrieves the details for an authentication connection.",
               "errors": [
                 "root.DevOrgAuthConnectionsGetRequestBadRequestError",
@@ -10815,7 +10814,7 @@ connections can not be deleted using this method.
               },
             },
             "dev-org-auth-connections-list": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Lists all the authentication connections available for a Dev
 organization. This list will include both social and enterprise
 connections which are either available by default or are explicitly
@@ -10861,7 +10860,7 @@ created by the user.
               },
             },
             "dev-org-auth-connections-toggle": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Enable or disable an authentication connection for a Dev organization.
 Currently, only 1 authentication connection can be enabled at a time.
 When a new authentication connection is enabled, the connection which
@@ -10910,7 +10909,7 @@ disabled.
               },
             },
             "dev-org-auth-connections-update": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Updates an authentication connection.",
               "errors": [
                 "root.DevOrgAuthConnectionsUpdateRequestBadRequestError",
@@ -10924,6 +10923,7 @@ disabled.
               "examples": [
                 {
                   "request": {
+                    "display_name": null,
                     "id": "string",
                     "type": "google_apps",
                   },
@@ -10975,7 +10975,6 @@ service:
     dev-org-auth-connections-create:
       path: /dev-orgs.auth-connections.create
       method: POST
-      auth: true
       docs: |
         Creates a new enterprise authentication connection for a Dev
         organization. This authentication connection will not be enabled by
@@ -11003,6 +11002,7 @@ service:
       examples:
         - request:
             type: google_apps
+            display_name: null
           response:
             body:
               auth_connection:
@@ -11016,7 +11016,6 @@ service:
     dev-org-auth-connections-delete:
       path: /dev-orgs.auth-connections.delete
       method: POST
-      auth: true
       docs: |
         Deletes an authentication connection. Only enterprise connections which
         are explicitly set up for a Dev organization can be deleted. Default
@@ -11045,7 +11044,6 @@ service:
     dev-org-auth-connections-get:
       path: /dev-orgs.auth-connections.get
       method: GET
-      auth: true
       docs: Retrieves the details for an authentication connection.
       source:
         openapi: ../openapi.yml
@@ -11083,7 +11081,6 @@ service:
     dev-org-auth-connections-list:
       path: /dev-orgs.auth-connections.list
       method: GET
-      auth: true
       docs: |
         Lists all the authentication connections available for a Dev
         organization. This list will include both social and enterprise
@@ -11116,7 +11113,6 @@ service:
     dev-org-auth-connections-toggle:
       path: /dev-orgs.auth-connections.toggle
       method: POST
-      auth: true
       docs: |
         Enable or disable an authentication connection for a Dev organization.
         Currently, only 1 authentication connection can be enabled at a time.
@@ -11149,7 +11145,6 @@ service:
     dev-org-auth-connections-update:
       path: /dev-orgs.auth-connections.update
       method: POST
-      auth: true
       docs: Updates an authentication connection.
       source:
         openapi: ../openapi.yml
@@ -11172,6 +11167,7 @@ service:
       examples:
         - request:
             type: google_apps
+            display_name: null
             id: string
           response:
             body:
@@ -11202,7 +11198,7 @@ docs: Auth Connections of DevOrg.
           "display-name": "auth-tokens",
           "endpoints": {
             "create": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Creates a JWT corresponding to the requested token type for the
 authenticated user.
 ",
@@ -11299,7 +11295,7 @@ requesting an application access token (AAT).
               },
             },
             "delete": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Revokes the token that matches the given token ID issued under the
 given Dev organization.
 ",
@@ -11343,7 +11339,7 @@ JTI claim of the token in the authorization header.
               },
             },
             "get": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Gets the token metadata corresponding to the given token ID under the
 given Dev organization.
 ",
@@ -11430,7 +11426,7 @@ given Dev organization.
               },
             },
             "list": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Gets the token metadata for all the tokens corresponding to the given
 token type issued for a given subject.
 ",
@@ -11445,6 +11441,11 @@ token type issued for a given subject.
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "client_id": "client_id",
+                    "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
+                    "subject": "subject",
+                  },
                   "response": {
                     "body": {
                       "tokens": [
@@ -11514,7 +11515,7 @@ subject.
               },
             },
             "selfDelete": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Revokes all the tokens that matches the given token type created by the
 authenticated user.
 ",
@@ -11554,7 +11555,7 @@ authenticated user.
               },
             },
             "update": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Updates token metadata of a token issued under a given Dev
 organization.
 ",
@@ -11666,7 +11667,6 @@ service:
     create:
       path: /auth-tokens.create
       method: POST
-      auth: true
       docs: |
         Creates a JWT corresponding to the requested token type for the
         authenticated user.
@@ -11743,7 +11743,6 @@ service:
     delete:
       path: /auth-tokens.delete
       method: POST
-      auth: true
       docs: |
         Revokes the token that matches the given token ID issued under the
         given Dev organization.
@@ -11777,7 +11776,6 @@ service:
     get:
       path: /auth-tokens.get
       method: GET
-      auth: true
       docs: |
         Gets the token metadata corresponding to the given token ID under the
         given Dev organization.
@@ -11844,7 +11842,6 @@ service:
     list:
       path: /auth-tokens.list
       method: GET
-      auth: true
       docs: |
         Gets the token metadata for all the tokens corresponding to the given
         token type issued for a given subject.
@@ -11882,7 +11879,11 @@ service:
         - root.AuthTokensListRequestInternalServerError
         - root.AuthTokensListRequestServiceUnavailableError
       examples:
-        - response:
+        - query-parameters:
+            client_id: client_id
+            requested_token_type: urn:devrev:params:oauth:token-type:aat
+            subject: subject
+          response:
             body:
               tokens:
                 - created_by:
@@ -11907,7 +11908,6 @@ service:
     selfDelete:
       path: /auth-tokens.self.delete
       method: POST
-      auth: true
       docs: |
         Revokes all the tokens that matches the given token type created by the
         authenticated user.
@@ -11933,7 +11933,6 @@ service:
     update:
       path: /auth-tokens.update
       method: POST
-      auth: true
       docs: |
         Updates token metadata of a token issued under a given Dev
         organization.
@@ -12023,7 +12022,7 @@ docs: Security token interactions.
           "display-name": "dev-users",
           "endpoints": {
             "list": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Lists users within your organization.",
               "errors": [
                 "root.DevUsersListRequestBadRequestError",
@@ -12035,6 +12034,11 @@ docs: Security token interactions.
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "limit": 1,
+                    "mode": "after",
+                  },
                   "response": {
                     "body": {
                       "dev_users": [
@@ -12125,7 +12129,7 @@ used.
               },
             },
             "self": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Gets the authenticated user's information.",
               "errors": [
                 "root.DevUsersSelfRequestBadRequestError",
@@ -12216,7 +12220,6 @@ service:
     list:
       path: /dev-users.list
       method: GET
-      auth: true
       docs: Lists users within your organization.
       source:
         openapi: ../openapi.yml
@@ -12264,7 +12267,11 @@ service:
         - root.DevUsersListRequestInternalServerError
         - root.DevUsersListRequestServiceUnavailableError
       examples:
-        - response:
+        - query-parameters:
+            cursor: cursor
+            limit: 1
+            mode: after
+          response:
             body:
               dev_users:
                 - created_by:
@@ -12292,7 +12299,6 @@ service:
     self:
       path: /dev-users.self
       method: GET
-      auth: true
       docs: Gets the authenticated user's information.
       source:
         openapi: ../openapi.yml
@@ -12365,7 +12371,7 @@ docs: Dev user interactions.
           "display-name": "parts",
           "endpoints": {
             "create": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Creates new [part](https://devrev.ai/docs/product/parts).",
               "errors": [
                 "root.PartsCreateRequestBadRequestError",
@@ -12378,6 +12384,7 @@ docs: Dev user interactions.
               "examples": [
                 {
                   "request": {
+                    "description": null,
                     "name": "string",
                     "owned_by": [
                       "don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>",
@@ -12464,7 +12471,7 @@ docs: Dev user interactions.
               },
             },
             "delete": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Deletes a [part](https://devrev.ai/docs/product/parts).",
               "errors": [
                 "root.PartsDeleteRequestBadRequestError",
@@ -12515,7 +12522,7 @@ docs: Dev user interactions.
               },
             },
             "get": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Gets a [part's](https://devrev.ai/docs/product/parts) information.
 ",
               "errors": [
@@ -12612,7 +12619,7 @@ docs: Dev user interactions.
               },
             },
             "list": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Lists a collection of [parts](https://devrev.ai/docs/product/parts).
 ",
               "errors": [
@@ -12625,6 +12632,11 @@ docs: Dev user interactions.
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "limit": 1,
+                    "mode": "after",
+                  },
                   "response": {
                     "body": {
                       "next_cursor": "next_cursor",
@@ -12726,7 +12738,7 @@ used.
               },
             },
             "update": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Updates a [part's](https://devrev.ai/docs/product/parts) information.
 ",
               "errors": [
@@ -12741,8 +12753,11 @@ used.
               "examples": [
                 {
                   "request": {
+                    "description": null,
                     "id": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
                     "key": "value",
+                    "name": null,
+                    "owned_by": null,
                     "type": "capability",
                   },
                   "response": {
@@ -12836,7 +12851,6 @@ service:
     create:
       path: /parts.create
       method: POST
-      auth: true
       docs: Creates new [part](https://devrev.ai/docs/product/parts).
       source:
         openapi: ../openapi.yml
@@ -12860,6 +12874,7 @@ service:
             parent_part:
               - don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>
             type: capability
+            description: null
             name: string
             owned_by:
               - don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>
@@ -12905,7 +12920,6 @@ service:
     delete:
       path: /parts.delete
       method: POST
-      auth: true
       docs: Deletes a [part](https://devrev.ai/docs/product/parts).
       source:
         openapi: ../openapi.yml
@@ -12938,7 +12952,6 @@ service:
     get:
       path: /parts.get
       method: GET
-      auth: true
       docs: |
         Gets a [part's](https://devrev.ai/docs/product/parts) information.
       source:
@@ -13006,7 +13019,6 @@ service:
     list:
       path: /parts.list
       method: GET
-      auth: true
       docs: |
         Lists a collection of [parts](https://devrev.ai/docs/product/parts).
       source:
@@ -13058,7 +13070,11 @@ service:
         - root.PartsListRequestInternalServerError
         - root.PartsListRequestServiceUnavailableError
       examples:
-        - response:
+        - query-parameters:
+            cursor: cursor
+            limit: 1
+            mode: after
+          response:
             body:
               next_cursor: next_cursor
               parts:
@@ -13088,7 +13104,6 @@ service:
     update:
       path: /parts.update
       method: POST
-      auth: true
       docs: |
         Updates a [part's](https://devrev.ai/docs/product/parts) information.
       source:
@@ -13113,7 +13128,10 @@ service:
         - request:
             key: value
             type: capability
+            description: null
             id: don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>
+            name: null
+            owned_by: null
           response:
             body:
               part:
@@ -13172,7 +13190,7 @@ docs: DevRev part interactions.
           "display-name": "rev-orgs",
           "endpoints": {
             "create": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Creates a Rev organization in the authenticated user's Dev
 organization.
 ",
@@ -13279,7 +13297,7 @@ records.
               },
             },
             "delete": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Deletes the Rev organization.",
               "errors": [
                 "root.RevOrgsDeleteRequestBadRequestError",
@@ -13330,7 +13348,7 @@ records.
               },
             },
             "get": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Retrieves the Rev organization's information.",
               "errors": [
                 "root.RevOrgsGetRequestBadRequestError",
@@ -13408,7 +13426,7 @@ records.
               },
             },
             "list": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Gets the list of Rev organizations' information belonging to the
 authenticated user's Dev Organization which the user is also authorized
 to access.
@@ -13424,6 +13442,15 @@ to access.
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "created_date.after": "2024-01-15T09:30:00Z",
+                    "created_date.before": "2024-01-15T09:30:00Z",
+                    "cursor": "cursor",
+                    "limit": 1,
+                    "mode": "after",
+                    "modified_date.after": "2024-01-15T09:30:00Z",
+                    "modified_date.before": "2024-01-15T09:30:00Z",
+                  },
                   "response": {
                     "body": {
                       "next_cursor": "next_cursor",
@@ -13526,7 +13553,7 @@ them.
               },
             },
             "update": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Updates the Rev organization's information.",
               "errors": [
                 "root.RevOrgsUpdateRequestBadRequestError",
@@ -13650,7 +13677,6 @@ service:
     create:
       path: /rev-orgs.create
       method: POST
-      auth: true
       docs: |
         Creates a Rev organization in the authenticated user's Dev
         organization.
@@ -13732,7 +13758,6 @@ service:
     delete:
       path: /rev-orgs.delete
       method: POST
-      auth: true
       docs: Deletes the Rev organization.
       source:
         openapi: ../openapi.yml
@@ -13765,7 +13790,6 @@ service:
     get:
       path: /rev-orgs.get
       method: GET
-      auth: true
       docs: Retrieves the Rev organization's information.
       source:
         openapi: ../openapi.yml
@@ -13824,7 +13848,6 @@ service:
     list:
       path: /rev-orgs.list
       method: GET
-      auth: true
       docs: |
         Gets the list of Rev organizations' information belonging to the
         authenticated user's Dev Organization which the user is also authorized
@@ -13897,7 +13920,15 @@ service:
         - root.RevOrgsListRequestInternalServerError
         - root.RevOrgsListRequestServiceUnavailableError
       examples:
-        - response:
+        - query-parameters:
+            created_date.after: '2024-01-15T09:30:00Z'
+            created_date.before: '2024-01-15T09:30:00Z'
+            cursor: cursor
+            limit: 1
+            mode: after
+            modified_date.after: '2024-01-15T09:30:00Z'
+            modified_date.before: '2024-01-15T09:30:00Z'
+          response:
             body:
               next_cursor: next_cursor
               prev_cursor: prev_cursor
@@ -13919,7 +13950,6 @@ service:
     update:
       path: /rev-orgs.update
       method: POST
-      auth: true
       docs: Updates the Rev organization's information.
       source:
         openapi: ../openapi.yml
@@ -14019,7 +14049,7 @@ docs: Rev organization interactions.
           "display-name": "tags",
           "endpoints": {
             "create": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Creates a new tag, which is used to create associations between objects
 and a logical concept denoted by the tag's name.
 ",
@@ -14116,7 +14146,7 @@ permitted.
               },
             },
             "delete": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Deletes a tag.",
               "errors": [
                 "root.TagsDeleteRequestBadRequestError",
@@ -14167,7 +14197,7 @@ permitted.
               },
             },
             "get": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Gets a tag's information.",
               "errors": [
                 "root.TagsGetRequestBadRequestError",
@@ -14246,7 +14276,7 @@ permitted.
               },
             },
             "list": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Lists the available tags.",
               "errors": [
                 "root.TagsListRequestBadRequestError",
@@ -14258,6 +14288,11 @@ permitted.
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "limit": 1,
+                    "mode": "after",
+                  },
                   "response": {
                     "body": {
                       "next_cursor": "next_cursor",
@@ -14321,7 +14356,7 @@ used.
               },
             },
             "update": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Updates a tag's information.",
               "errors": [
                 "root.TagsUpdateRequestBadRequestError",
@@ -14433,7 +14468,6 @@ service:
     create:
       path: /tags.create
       method: POST
-      auth: true
       docs: |
         Creates a new tag, which is used to create associations between objects
         and a logical concept denoted by the tag's name.
@@ -14504,7 +14538,6 @@ service:
     delete:
       path: /tags.delete
       method: POST
-      auth: true
       docs: Deletes a tag.
       source:
         openapi: ../openapi.yml
@@ -14537,7 +14570,6 @@ service:
     get:
       path: /tags.get
       method: GET
-      auth: true
       docs: Gets a tag's information.
       source:
         openapi: ../openapi.yml
@@ -14596,7 +14628,6 @@ service:
     list:
       path: /tags.list
       method: GET
-      auth: true
       docs: Lists the available tags.
       source:
         openapi: ../openapi.yml
@@ -14630,7 +14661,11 @@ service:
         - root.TagsListRequestInternalServerError
         - root.TagsListRequestServiceUnavailableError
       examples:
-        - response:
+        - query-parameters:
+            cursor: cursor
+            limit: 1
+            mode: after
+          response:
             body:
               next_cursor: next_cursor
               prev_cursor: prev_cursor
@@ -14652,7 +14687,6 @@ service:
     update:
       path: /tags.update
       method: POST
-      auth: true
       docs: Updates a tag's information.
       source:
         openapi: ../openapi.yml
@@ -14739,7 +14773,7 @@ docs: DevRev tag interactions.
           "display-name": "timeline-entries",
           "endpoints": {
             "create": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Creates a new entry on an object's timeline.",
               "errors": [
                 "root.TimelineEntriesCreateRequestBadRequestError",
@@ -14754,6 +14788,7 @@ docs: DevRev tag interactions.
                   "request": {
                     "object": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
                     "type": "timeline_comment",
+                    "visibility": null,
                   },
                   "response": {
                     "body": {
@@ -14821,7 +14856,7 @@ docs: DevRev tag interactions.
               },
             },
             "get": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Gets an entry on an object's timeline.",
               "errors": [
                 "root.TimelineEntriesGetRequestBadRequestError",
@@ -14906,7 +14941,7 @@ docs: DevRev tag interactions.
               },
             },
             "list": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Lists the timeline entries for an object.",
               "errors": [
                 "root.TimelineEntriesListRequestBadRequestError",
@@ -14920,6 +14955,9 @@ docs: DevRev tag interactions.
               "examples": [
                 {
                   "query-parameters": {
+                    "cursor": "cursor",
+                    "limit": 1,
+                    "mode": "after",
                     "object": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
                   },
                   "response": {
@@ -14997,7 +15035,7 @@ used.
               },
             },
             "update": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Updates an entry on an object's timeline.",
               "errors": [
                 "root.TimelineEntriesUpdateRequestBadRequestError",
@@ -15093,7 +15131,6 @@ service:
     create:
       path: /timeline-entries.create
       method: POST
-      auth: true
       docs: Creates a new entry on an object's timeline.
       source:
         openapi: ../openapi.yml
@@ -15116,6 +15153,7 @@ service:
         - request:
             type: timeline_comment
             object: don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>
+            visibility: null
           response:
             body:
               timeline_entry:
@@ -15153,7 +15191,6 @@ service:
     get:
       path: /timeline-entries.get
       method: GET
-      auth: true
       docs: Gets an entry on an object's timeline.
       source:
         openapi: ../openapi.yml
@@ -15215,7 +15252,6 @@ service:
     list:
       path: /timeline-entries.list
       method: GET
-      auth: true
       docs: Lists the timeline entries for an object.
       source:
         openapi: ../openapi.yml
@@ -15257,6 +15293,9 @@ service:
       examples:
         - query-parameters:
             object: don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>
+            cursor: cursor
+            limit: 1
+            mode: after
           response:
             body:
               next_cursor: next_cursor
@@ -15282,7 +15321,6 @@ service:
     update:
       path: /timeline-entries.update
       method: POST
-      auth: true
       docs: Updates an entry on an object's timeline.
       source:
         openapi: ../openapi.yml
@@ -15358,7 +15396,7 @@ docs: APIs to manage timeline entries for objects.
           "display-name": "webhooks",
           "endpoints": {
             "create": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Creates a new webhook target.",
               "errors": [
                 "root.WebhooksCreateRequestBadRequestError",
@@ -15461,7 +15499,7 @@ response.
               },
             },
             "delete": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Deletes the requested webhook.",
               "errors": [
                 "root.WebhooksDeleteRequestBadRequestError",
@@ -15512,7 +15550,7 @@ response.
               },
             },
             "get": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Gets the requested webhook's information.",
               "errors": [
                 "root.WebhooksGetRequestBadRequestError",
@@ -15592,7 +15630,7 @@ response.
               },
             },
             "list": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Lists the webhooks.",
               "errors": [
                 "root.WebhooksListRequestBadRequestError",
@@ -15645,7 +15683,7 @@ response.
               },
             },
             "update": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Updates the requested webhook.",
               "errors": [
                 "root.WebhooksUpdateRequestBadRequestError",
@@ -15773,7 +15811,6 @@ service:
     create:
       path: /webhooks.create
       method: POST
-      auth: true
       docs: Creates a new webhook target.
       source:
         openapi: ../openapi.yml
@@ -15850,7 +15887,6 @@ service:
     delete:
       path: /webhooks.delete
       method: POST
-      auth: true
       docs: Deletes the requested webhook.
       source:
         openapi: ../openapi.yml
@@ -15883,7 +15919,6 @@ service:
     get:
       path: /webhooks.get
       method: GET
-      auth: true
       docs: Gets the requested webhook's information.
       source:
         openapi: ../openapi.yml
@@ -15943,7 +15978,6 @@ service:
     list:
       path: /webhooks.list
       method: GET
-      auth: true
       docs: Lists the webhooks.
       source:
         openapi: ../openapi.yml
@@ -15980,7 +16014,6 @@ service:
     update:
       path: /webhooks.update
       method: POST
-      auth: true
       docs: Updates the requested webhook.
       source:
         openapi: ../openapi.yml
@@ -16088,7 +16121,7 @@ docs: Webhook event APIs.
           "display-name": "works",
           "endpoints": {
             "create": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Creates new work ([issue](https://devrev.ai/docs/product/build),
 [ticket](https://devrev.ai/docs/product/support)) item.
 ",
@@ -16104,14 +16137,19 @@ docs: Webhook event APIs.
                 {
                   "request": {
                     "applies_to_part": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
+                    "artifacts": null,
+                    "body": null,
                     "owned_by": [
                       "don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>",
                     ],
+                    "reported_by": null,
+                    "stage": null,
                     "tags": [
                       {
                         "id": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
                       },
                     ],
+                    "target_close_date": null,
                     "title": "string",
                     "type": "issue",
                   },
@@ -16209,7 +16247,7 @@ docs: Webhook event APIs.
               },
             },
             "delete": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Deletes a work item.",
               "errors": [
                 "root.WorksDeleteRequestBadRequestError",
@@ -16260,7 +16298,7 @@ docs: Webhook event APIs.
               },
             },
             "export": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Exports a collection of work items.",
               "errors": [
                 "root.WorksExportRequestBadRequestError",
@@ -16272,6 +16310,9 @@ docs: Webhook event APIs.
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "first": 1,
+                  },
                   "response": {
                     "body": {
                       "works": [
@@ -16404,7 +16445,7 @@ organizations.
               },
             },
             "get": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Gets a work item's information.",
               "errors": [
                 "root.WorksGetRequestBadRequestError",
@@ -16517,7 +16558,7 @@ organizations.
               },
             },
             "list": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Lists a collection of work items.",
               "errors": [
                 "root.WorksListRequestBadRequestError",
@@ -16529,6 +16570,11 @@ organizations.
               ],
               "examples": [
                 {
+                  "query-parameters": {
+                    "cursor": "cursor",
+                    "limit": 1,
+                    "mode": "after",
+                  },
                   "response": {
                     "body": {
                       "next_cursor": "next_cursor",
@@ -16674,7 +16720,7 @@ organizations.
               },
             },
             "update": {
-              "auth": true,
+              "auth": undefined,
               "docs": "Updates a work item's information.",
               "errors": [
                 "root.WorksUpdateRequestBadRequestError",
@@ -16689,7 +16735,15 @@ organizations.
                 {
                   "request": {
                     "applies_to_part": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
+                    "artifacts": null,
+                    "body": null,
                     "id": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>",
+                    "owned_by": null,
+                    "reported_by": null,
+                    "stage": null,
+                    "tags": null,
+                    "target_close_date": null,
+                    "title": null,
                     "type": "issue",
                   },
                   "response": {
@@ -16800,7 +16854,6 @@ service:
     create:
       path: /works.create
       method: POST
-      auth: true
       docs: |
         Creates new work ([issue](https://devrev.ai/docs/product/build),
         [ticket](https://devrev.ai/docs/product/support)) item.
@@ -16825,10 +16878,15 @@ service:
         - request:
             type: issue
             applies_to_part: don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>
+            artifacts: null
+            body: null
             owned_by:
               - don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>
+            reported_by: null
+            stage: null
             tags:
               - id: don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>
+            target_close_date: null
             title: string
           response:
             body:
@@ -16884,7 +16942,6 @@ service:
     delete:
       path: /works.delete
       method: POST
-      auth: true
       docs: Deletes a work item.
       source:
         openapi: ../openapi.yml
@@ -16917,7 +16974,6 @@ service:
     export:
       path: /works.export
       method: GET
-      auth: true
       docs: Exports a collection of work items.
       source:
         openapi: ../openapi.yml
@@ -16984,7 +17040,9 @@ service:
         - root.WorksExportRequestInternalServerError
         - root.WorksExportRequestServiceUnavailableError
       examples:
-        - response:
+        - query-parameters:
+            first: 1
+          response:
             body:
               works:
                 - created_by:
@@ -17023,7 +17081,6 @@ service:
     get:
       path: /works.get
       method: GET
-      auth: true
       docs: Gets a work item's information.
       source:
         openapi: ../openapi.yml
@@ -17102,7 +17159,6 @@ service:
     list:
       path: /works.list
       method: GET
-      auth: true
       docs: Lists a collection of work items.
       source:
         openapi: ../openapi.yml
@@ -17178,7 +17234,11 @@ service:
         - root.WorksListRequestInternalServerError
         - root.WorksListRequestServiceUnavailableError
       examples:
-        - response:
+        - query-parameters:
+            cursor: cursor
+            limit: 1
+            mode: after
+          response:
             body:
               next_cursor: next_cursor
               prev_cursor: prev_cursor
@@ -17219,7 +17279,6 @@ service:
     update:
       path: /works.update
       method: POST
-      auth: true
       docs: Updates a work item's information.
       source:
         openapi: ../openapi.yml
@@ -17243,7 +17302,15 @@ service:
         - request:
             type: issue
             applies_to_part: don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>
+            artifacts: null
+            body: null
             id: don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>
+            owned_by: null
+            reported_by: null
+            stage: null
+            tags: null
+            target_close_date: null
+            title: null
           response:
             body:
               work:

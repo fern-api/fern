@@ -299,12 +299,74 @@
       "servers": [],
       "description": " Lists all existing interactions. Results can be filtered by encounter status and patient identifier.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/interactions/",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "sort",
+              "value": {
+                "value": {
+                  "value": "sort",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "direction",
+              "value": {
+                "value": {
+                  "value": "direction",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "pageSize",
+              "value": {
+                "value": {
+                  "value": 1000000,
+                  "type": "int64"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "index",
+              "value": {
+                "value": {
+                  "value": 1000000,
+                  "type": "int64"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "encounterStatus",
+              "value": {
+                "value": {
+                  "value": "encounterStatus",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "patient",
+              "value": {
+                "value": {
+                  "value": "patient",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "Tenant-Name",
@@ -615,6 +677,7 @@
       "servers": [],
       "description": " Creates a new interaction.",
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/interactions/",
       "examples": [
@@ -828,6 +891,7 @@
       "servers": [],
       "description": " Retrieves a previously recorded interaction by its unique identifier (interaction ID).",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/interactions/{id}",
       "examples": [
@@ -1133,6 +1197,7 @@
       "servers": [],
       "description": " Deletes an existing interaction.",
       "authed": false,
+      "security": [],
       "method": "DELETE",
       "path": "/interactions/{id}",
       "examples": [
@@ -1341,6 +1406,7 @@
       "servers": [],
       "description": " Modifies an existing interaction by updating specific fields without overwriting the entire record.",
       "authed": false,
+      "security": [],
       "method": "PATCH",
       "path": "/interactions/{id}",
       "examples": [
@@ -1700,6 +1766,7 @@
       "servers": [],
       "description": " Retrieve a list of recordings for a given interaction.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/interactions/{id}/recordings/",
       "examples": [
@@ -1943,6 +2010,7 @@
       "servers": [],
       "description": " Upload a recording for a given interaction. There is a maximum limit of 60 minutes in length and 150MB in size for recordings.",
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/interactions/{id}/recordings/",
       "examples": [],
@@ -2160,6 +2228,7 @@
       "servers": [],
       "description": " Retrieve a specific recording for a given interaction.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/interactions/{id}/recordings/{recordingId}",
       "examples": [],
@@ -2362,6 +2431,7 @@
       "servers": [],
       "description": " Delete a specific recording for a given interaction.",
       "authed": false,
+      "security": [],
       "method": "DELETE",
       "path": "/interactions/{id}/recordings/{recordingId}",
       "examples": [
@@ -2752,6 +2822,7 @@
       "servers": [],
       "description": " Retrieves a list of transcripts for a given interaction.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/interactions/{id}/transcripts/",
       "examples": [
@@ -2768,7 +2839,58 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "sort",
+              "value": {
+                "value": {
+                  "value": "sort",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "direction",
+              "value": {
+                "value": {
+                  "value": "direction",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "pageSize",
+              "value": {
+                "value": {
+                  "value": 1000000,
+                  "type": "int64"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "index",
+              "value": {
+                "value": {
+                  "value": 1000000,
+                  "type": "int64"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "full",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "Tenant-Name",
@@ -3043,6 +3165,7 @@
       "servers": [],
       "description": " Creates a new transcript for an interaction.",
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/interactions/{id}/transcripts/",
       "examples": [
@@ -3407,6 +3530,7 @@
       "servers": [],
       "description": " Retrieves the transcript for a specific interaction.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/interactions/{id}/transcripts/{transcriptId}",
       "examples": [
@@ -3755,6 +3879,7 @@
       "servers": [],
       "description": " Deletes a specific transcript associated with an interaction.",
       "authed": false,
+      "security": [],
       "method": "DELETE",
       "path": "/interactions/{id}/transcripts/{transcriptId}",
       "examples": [
@@ -3910,6 +4035,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/factgroups/",
       "examples": [
@@ -4080,6 +4206,7 @@
       "servers": [],
       "description": " Retrieves a list of facts for a given interaction.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/interactions/{id}/facts/",
       "examples": [
@@ -4319,6 +4446,7 @@
       "servers": [],
       "description": " Adds new facts to an interaction.",
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/interactions/{id}/facts/",
       "examples": [
@@ -4571,6 +4699,7 @@
       "servers": [],
       "description": " Updates multiple facts associated with an interaction. If the interaction `status = \"in progress\"`, the updated facts will be sent to the client over WebSocket.",
       "authed": false,
+      "security": [],
       "method": "PATCH",
       "path": "/interactions/{id}/facts/",
       "examples": [
@@ -4840,6 +4969,7 @@
       "servers": [],
       "description": " Updates an existing fact within a specific interaction. If the interaction `status = \"in progress\"`, the updated fact will be sent to the client via WebSocket. To discard a fact, simply set `discarded = true`.",
       "authed": false,
+      "security": [],
       "method": "PATCH",
       "path": "/interactions/{id}/facts/{factId}",
       "examples": [
@@ -5142,6 +5272,7 @@
       "servers": [],
       "description": " List Documents",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/interactions/{id}/documents/",
       "examples": [
@@ -5452,6 +5583,7 @@
       "servers": [],
       "description": " Generate Document.",
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/interactions/{id}/documents/",
       "examples": [
@@ -5896,6 +6028,7 @@
       "servers": [],
       "description": " Get Document.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/interactions/{id}/documents/{documentId}",
       "examples": [
@@ -5922,7 +6055,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "context",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "Tenant-Name",
@@ -6246,6 +6390,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "DELETE",
       "path": "/interactions/{id}/documents/{documentId}",
       "examples": [
@@ -6530,6 +6675,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "PATCH",
       "path": "/interactions/{id}/documents/{documentId}",
       "examples": [
@@ -6847,12 +6993,34 @@
       "servers": [],
       "description": " Retrieves a list of template sections with optional filters for organization and language.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/templateSections/",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "org",
+              "value": {
+                "value": {
+                  "value": "org",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "lang",
+              "value": {
+                "value": {
+                  "value": "lang",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "Tenant-Name",
@@ -7127,12 +7295,44 @@
       "servers": [],
       "description": " Retrieves a list of templates with optional filters for organization, language, and status.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/templates/",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "org",
+              "value": {
+                "value": {
+                  "value": "org",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "lang",
+              "value": {
+                "value": {
+                  "value": "lang",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "templateStatus",
+              "value": {
+                "value": {
+                  "value": "templateStatus",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [
             {
               "name": "Tenant-Name",
@@ -7352,6 +7552,7 @@
       "servers": [],
       "description": " Retrieves template by key.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/templates/{key}",
       "examples": [
@@ -7658,6 +7859,7 @@
       "servers": [],
       "description": " Get all codes associated with an interaction.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/interactions/{id}/codes/",
       "examples": [
@@ -7980,6 +8182,7 @@
       "servers": [],
       "description": " Generate Codes.",
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/interactions/{id}/codes/",
       "examples": [
@@ -8305,6 +8508,7 @@
       "servers": [],
       "description": " Mark provided codes as selected.",
       "authed": false,
+      "security": [],
       "method": "PUT",
       "path": "/interactions/{id}/codes/",
       "examples": [

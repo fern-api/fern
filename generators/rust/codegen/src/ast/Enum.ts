@@ -1,5 +1,6 @@
 import { AstNode } from "./AstNode";
 import { Attribute } from "./Attribute";
+import { DocComment } from "./DocComment";
 import { EnumVariant } from "./EnumVariant";
 import { Visibility } from "./types";
 import { writeVisibility } from "./utils/writeVisibility";
@@ -11,6 +12,7 @@ export declare namespace Enum {
         visibility?: Visibility;
         attributes?: Attribute[];
         variants: EnumVariant[];
+        docs?: DocComment;
     }
 }
 
@@ -19,16 +21,23 @@ export class Enum extends AstNode {
     public readonly visibility?: Visibility;
     public readonly attributes?: Attribute[];
     public readonly variants: EnumVariant[];
+    public readonly docs?: DocComment;
 
-    public constructor({ name, visibility, attributes, variants }: Enum.Args) {
+    public constructor({ name, visibility, attributes, variants, docs }: Enum.Args) {
         super();
         this.name = name;
         this.visibility = visibility;
         this.attributes = attributes;
         this.variants = variants;
+        this.docs = docs;
     }
 
     public write(writer: Writer): void {
+        // Write documentation first
+        if (this.docs) {
+            this.docs.write(writer);
+        }
+
         // Write attributes above the enum
         if (this.attributes && this.attributes.length > 0) {
             this.attributes.forEach((attribute) => {

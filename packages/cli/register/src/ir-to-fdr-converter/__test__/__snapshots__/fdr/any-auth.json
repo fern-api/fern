@@ -288,6 +288,76 @@
               "codeSamples": []
             }
           ]
+        },
+        {
+          "auth": true,
+          "method": "GET",
+          "id": "getAdmins",
+          "originalEndpointId": "endpoint_user.getAdmins",
+          "name": "Get Admins",
+          "path": {
+            "pathParameters": [],
+            "parts": [
+              {
+                "type": "literal",
+                "value": ""
+              },
+              {
+                "type": "literal",
+                "value": "/admins"
+              }
+            ]
+          },
+          "queryParameters": [],
+          "headers": [],
+          "requestsV2": {},
+          "response": {
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "list",
+                "itemType": {
+                  "type": "id",
+                  "value": "type_user:User"
+                }
+              }
+            }
+          },
+          "responsesV2": {},
+          "errorsV2": [],
+          "examples": [
+            {
+              "path": "/admins",
+              "pathParameters": {},
+              "queryParameters": {},
+              "headers": {},
+              "responseStatusCode": 200,
+              "responseBody": [
+                {
+                  "id": "id",
+                  "name": "name"
+                },
+                {
+                  "id": "id",
+                  "name": "name"
+                }
+              ],
+              "responseBodyV3": {
+                "type": "json",
+                "value": [
+                  {
+                    "id": "id",
+                    "name": "name"
+                  },
+                  {
+                    "id": "id",
+                    "name": "name"
+                  }
+                ]
+              },
+              "codeSamples": []
+            }
+          ]
         }
       ],
       "webhooks": [],

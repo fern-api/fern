@@ -307,7 +307,7 @@
             "safeName": "GetExampleResponse2003"
           }
         },
-        "displayName": "GetExampleResponse2003"
+        "displayName": "Message"
       },
       "shape": {
         "properties": [
@@ -491,7 +491,7 @@
                 }
               },
               "typeId": "GetExampleResponse2003",
-              "displayName": "GetExampleResponse2003",
+              "displayName": "Message",
               "inline": false,
               "type": "named"
             }

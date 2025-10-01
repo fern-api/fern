@@ -9,8 +9,7 @@
             "value": "asc"
           }
         ]
-      },
-      "displayName": "OrderByDirection0"
+      }
     },
     "OrderByDirection1": {
       "name": "OrderByDirection1",
@@ -21,8 +20,7 @@
             "value": "desc"
           }
         ]
-      },
-      "displayName": "OrderByDirection1"
+      }
     },
     "OrderByDirection2": {
       "name": "OrderByDirection2",
@@ -33,8 +31,7 @@
             "value": "ASC"
           }
         ]
-      },
-      "displayName": "OrderByDirection2"
+      }
     },
     "OrderByDirection3": {
       "name": "OrderByDirection3",
@@ -45,8 +42,7 @@
             "value": "DESC"
           }
         ]
-      },
-      "displayName": "OrderByDirection3"
+      }
     },
     "OrderByDirection": {
       "name": "OrderByDirection",
@@ -58,32 +54,28 @@
             "type": {
               "type": "id",
               "value": "OrderByDirection0"
-            },
-            "displayName": "OrderByDirection0"
+            }
           },
           {
             "typeName": "OrderByDirection1",
             "type": {
               "type": "id",
               "value": "OrderByDirection1"
-            },
-            "displayName": "OrderByDirection1"
+            }
           },
           {
             "typeName": "OrderByDirection2",
             "type": {
               "type": "id",
               "value": "OrderByDirection2"
-            },
-            "displayName": "OrderByDirection2"
+            }
           },
           {
             "typeName": "OrderByDirection3",
             "type": {
               "type": "id",
               "value": "OrderByDirection3"
-            },
-            "displayName": "OrderByDirection3"
+            }
           }
         ]
       }
@@ -126,8 +118,7 @@
             "value": "OrderByDirection"
           }
         }
-      },
-      "displayName": "SeekPaginationDir1"
+      }
     },
     "SeekPaginationDir": {
       "name": "SeekPaginationDir",
@@ -147,8 +138,7 @@
             "type": {
               "type": "id",
               "value": "SeekPaginationDir1"
-            },
-            "displayName": "SeekPaginationDir1"
+            }
           }
         ]
       }
@@ -7025,7 +7015,7 @@
           }
         ]
       },
-      "displayName": "IssueTriggersGetParametersDisabledAt1"
+      "displayName": "Gt"
     },
     "IssueTriggersGetParametersDisabledAt": {
       "description": "Date when the issue trigger was disabled",
@@ -7047,7 +7037,7 @@
               "type": "id",
               "value": "IssueTriggersGetParametersDisabledAt1"
             },
-            "displayName": "IssueTriggersGetParametersDisabledAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -7064,8 +7054,7 @@
             "value": "type"
           }
         ]
-      },
-      "displayName": "IssueTriggersGetParametersOrderBy0"
+      }
     },
     "IssueTriggersGetParametersOrderBySchemaOneOf1Items": {
       "name": "IssueTriggersGetParametersOrderBySchemaOneOf1Items",
@@ -7092,8 +7081,7 @@
             "value": "IssueTriggersGetParametersOrderBySchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "IssueTriggersGetParametersOrderBy1"
+      }
     },
     "IssueTriggersGetParametersOrderBy": {
       "description": "Sort key(s)",
@@ -7106,16 +7094,14 @@
             "type": {
               "type": "id",
               "value": "IssueTriggersGetParametersOrderBy0"
-            },
-            "displayName": "IssueTriggersGetParametersOrderBy0"
+            }
           },
           {
             "typeName": "IssueTriggersGetParametersOrderBy1",
             "type": {
               "type": "id",
               "value": "IssueTriggersGetParametersOrderBy1"
-            },
-            "displayName": "IssueTriggersGetParametersOrderBy1"
+            }
           }
         ]
       }
@@ -7132,8 +7118,7 @@
             "value": "desc"
           }
         ]
-      },
-      "displayName": "IssueTriggersGetParametersDir0"
+      }
     },
     "IssueTriggersGetParametersDirSchemaOneOf1Items": {
       "name": "IssueTriggersGetParametersDirSchemaOneOf1Items",
@@ -7160,8 +7145,7 @@
             "value": "IssueTriggersGetParametersDirSchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "IssueTriggersGetParametersDir1"
+      }
     },
     "IssueTriggersGetParametersDir": {
       "description": "Sort direction",
@@ -7174,16 +7158,14 @@
             "type": {
               "type": "id",
               "value": "IssueTriggersGetParametersDir0"
-            },
-            "displayName": "IssueTriggersGetParametersDir0"
+            }
           },
           {
             "typeName": "IssueTriggersGetParametersDir1",
             "type": {
               "type": "id",
               "value": "IssueTriggersGetParametersDir1"
-            },
-            "displayName": "IssueTriggersGetParametersDir1"
+            }
           }
         ]
       }
@@ -7327,8 +7309,7 @@
             "value": "created_at"
           }
         ]
-      },
-      "displayName": "AttemptsGetParametersOrderBy0"
+      }
     },
     "AttemptsGetParametersOrderBySchemaOneOf1Items": {
       "name": "AttemptsGetParametersOrderBySchemaOneOf1Items",
@@ -7352,8 +7333,7 @@
             "value": "AttemptsGetParametersOrderBySchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "AttemptsGetParametersOrderBy1"
+      }
     },
     "AttemptsGetParametersOrderBy": {
       "description": "Sort key(s)",
@@ -7366,16 +7346,14 @@
             "type": {
               "type": "id",
               "value": "AttemptsGetParametersOrderBy0"
-            },
-            "displayName": "AttemptsGetParametersOrderBy0"
+            }
           },
           {
             "typeName": "AttemptsGetParametersOrderBy1",
             "type": {
               "type": "id",
               "value": "AttemptsGetParametersOrderBy1"
-            },
-            "displayName": "AttemptsGetParametersOrderBy1"
+            }
           }
         ]
       }
@@ -7392,8 +7370,7 @@
             "value": "desc"
           }
         ]
-      },
-      "displayName": "AttemptsGetParametersDir0"
+      }
     },
     "AttemptsGetParametersDirSchemaOneOf1Items": {
       "name": "AttemptsGetParametersDirSchemaOneOf1Items",
@@ -7420,8 +7397,7 @@
             "value": "AttemptsGetParametersDirSchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "AttemptsGetParametersDir1"
+      }
     },
     "AttemptsGetParametersDir": {
       "description": "Sort direction",
@@ -7434,16 +7410,14 @@
             "type": {
               "type": "id",
               "value": "AttemptsGetParametersDir0"
-            },
-            "displayName": "AttemptsGetParametersDir0"
+            }
           },
           {
             "typeName": "AttemptsGetParametersDir1",
             "type": {
               "type": "id",
               "value": "AttemptsGetParametersDir1"
-            },
-            "displayName": "AttemptsGetParametersDir1"
+            }
           }
         ]
       }
@@ -7689,7 +7663,7 @@
           }
         ]
       },
-      "displayName": "BookmarksGetParametersLastUsedAt1"
+      "displayName": "Gt"
     },
     "BookmarksGetParametersLastUsedAt": {
       "description": "Filter by last used date",
@@ -7712,7 +7686,7 @@
               "type": "id",
               "value": "BookmarksGetParametersLastUsedAt1"
             },
-            "displayName": "BookmarksGetParametersLastUsedAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -7726,8 +7700,7 @@
             "value": "created_at"
           }
         ]
-      },
-      "displayName": "BookmarksGetParametersOrderBy0"
+      }
     },
     "BookmarksGetParametersOrderBySchemaOneOf1Items": {
       "name": "BookmarksGetParametersOrderBySchemaOneOf1Items",
@@ -7751,8 +7724,7 @@
             "value": "BookmarksGetParametersOrderBySchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "BookmarksGetParametersOrderBy1"
+      }
     },
     "BookmarksGetParametersOrderBy": {
       "description": "Sort key(s)",
@@ -7765,16 +7737,14 @@
             "type": {
               "type": "id",
               "value": "BookmarksGetParametersOrderBy0"
-            },
-            "displayName": "BookmarksGetParametersOrderBy0"
+            }
           },
           {
             "typeName": "BookmarksGetParametersOrderBy1",
             "type": {
               "type": "id",
               "value": "BookmarksGetParametersOrderBy1"
-            },
-            "displayName": "BookmarksGetParametersOrderBy1"
+            }
           }
         ]
       }
@@ -7791,8 +7761,7 @@
             "value": "desc"
           }
         ]
-      },
-      "displayName": "BookmarksGetParametersDir0"
+      }
     },
     "BookmarksGetParametersDirSchemaOneOf1Items": {
       "name": "BookmarksGetParametersDirSchemaOneOf1Items",
@@ -7819,8 +7788,7 @@
             "value": "BookmarksGetParametersDirSchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "BookmarksGetParametersDir1"
+      }
     },
     "BookmarksGetParametersDir": {
       "description": "Sort direction",
@@ -7833,16 +7801,14 @@
             "type": {
               "type": "id",
               "value": "BookmarksGetParametersDir0"
-            },
-            "displayName": "BookmarksGetParametersDir0"
+            }
           },
           {
             "typeName": "BookmarksGetParametersDir1",
             "type": {
               "type": "id",
               "value": "BookmarksGetParametersDir1"
-            },
-            "displayName": "BookmarksGetParametersDir1"
+            }
           }
         ]
       }
@@ -7982,7 +7948,7 @@
           }
         ]
       },
-      "displayName": "DestinationsGetParametersName1"
+      "displayName": "Gt"
     },
     "DestinationsGetParametersName": {
       "description": "The destination name",
@@ -8006,7 +7972,7 @@
               "type": "id",
               "value": "DestinationsGetParametersName1"
             },
-            "displayName": "DestinationsGetParametersName1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -8091,7 +8057,7 @@
           }
         ]
       },
-      "displayName": "DestinationsGetParametersArchivedAt1"
+      "displayName": "Gt"
     },
     "DestinationsGetParametersArchivedAt": {
       "description": "Date the destination was archived",
@@ -8113,7 +8079,7 @@
               "type": "id",
               "value": "DestinationsGetParametersArchivedAt1"
             },
-            "displayName": "DestinationsGetParametersArchivedAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -8168,7 +8134,7 @@
           }
         ]
       },
-      "displayName": "DestinationsGetParametersCliPath1"
+      "displayName": "Any"
     },
     "DestinationsGetParametersCliPath": {
       "description": "Path for the CLI destination",
@@ -8191,7 +8157,7 @@
               "type": "id",
               "value": "DestinationsGetParametersCliPath1"
             },
-            "displayName": "DestinationsGetParametersCliPath1"
+            "displayName": "Any"
           },
           {
             "type": {
@@ -8217,8 +8183,7 @@
             "value": "created_at"
           }
         ]
-      },
-      "displayName": "DestinationsGetParametersOrderBy0"
+      }
     },
     "DestinationsGetParametersOrderBySchemaOneOf1Items": {
       "name": "DestinationsGetParametersOrderBySchemaOneOf1Items",
@@ -8242,8 +8207,7 @@
             "value": "DestinationsGetParametersOrderBySchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "DestinationsGetParametersOrderBy1"
+      }
     },
     "DestinationsGetParametersOrderBy": {
       "description": "Sort key(s)",
@@ -8256,16 +8220,14 @@
             "type": {
               "type": "id",
               "value": "DestinationsGetParametersOrderBy0"
-            },
-            "displayName": "DestinationsGetParametersOrderBy0"
+            }
           },
           {
             "typeName": "DestinationsGetParametersOrderBy1",
             "type": {
               "type": "id",
               "value": "DestinationsGetParametersOrderBy1"
-            },
-            "displayName": "DestinationsGetParametersOrderBy1"
+            }
           }
         ]
       }
@@ -8282,8 +8244,7 @@
             "value": "desc"
           }
         ]
-      },
-      "displayName": "DestinationsGetParametersDir0"
+      }
     },
     "DestinationsGetParametersDirSchemaOneOf1Items": {
       "name": "DestinationsGetParametersDirSchemaOneOf1Items",
@@ -8310,8 +8271,7 @@
             "value": "DestinationsGetParametersDirSchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "DestinationsGetParametersDir1"
+      }
     },
     "DestinationsGetParametersDir": {
       "description": "Sort direction",
@@ -8324,16 +8284,14 @@
             "type": {
               "type": "id",
               "value": "DestinationsGetParametersDir0"
-            },
-            "displayName": "DestinationsGetParametersDir0"
+            }
           },
           {
             "typeName": "DestinationsGetParametersDir1",
             "type": {
               "type": "id",
               "value": "DestinationsGetParametersDir1"
-            },
-            "displayName": "DestinationsGetParametersDir1"
+            }
           }
         ]
       }
@@ -8434,8 +8392,7 @@
             "value": "EventStatus"
           }
         }
-      },
-      "displayName": "EventsGetParametersStatus1"
+      }
     },
     "EventsGetParametersStatus": {
       "description": "Lifecyle status of the event",
@@ -8456,8 +8413,7 @@
             "type": {
               "type": "id",
               "value": "EventsGetParametersStatus1"
-            },
-            "displayName": "EventsGetParametersStatus1"
+            }
           }
         ]
       }
@@ -8669,7 +8625,7 @@
           }
         ]
       },
-      "displayName": "EventsGetParametersAttempts1"
+      "displayName": "Gt"
     },
     "EventsGetParametersAttempts": {
       "description": "Filter by number of attempts",
@@ -8692,7 +8648,7 @@
               "type": "id",
               "value": "EventsGetParametersAttempts1"
             },
-            "displayName": "EventsGetParametersAttempts1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -8787,7 +8743,7 @@
           }
         ]
       },
-      "displayName": "EventsGetParametersResponseStatus1"
+      "displayName": "Gt"
     },
     "EventsGetParametersResponseStatus": {
       "description": "Filter by HTTP response status code",
@@ -8811,7 +8767,7 @@
               "type": "id",
               "value": "EventsGetParametersResponseStatus1"
             },
-            "displayName": "EventsGetParametersResponseStatus1"
+            "displayName": "Gt"
           },
           {
             "type": {
@@ -8897,7 +8853,7 @@
           }
         ]
       },
-      "displayName": "EventsGetParametersSuccessfulAt1"
+      "displayName": "Gt"
     },
     "EventsGetParametersSuccessfulAt": {
       "description": "Filter by `successful_at` date using a date operator",
@@ -8919,7 +8875,7 @@
               "type": "id",
               "value": "EventsGetParametersSuccessfulAt1"
             },
-            "displayName": "EventsGetParametersSuccessfulAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -8992,7 +8948,7 @@
           }
         ]
       },
-      "displayName": "EventsGetParametersCreatedAt1"
+      "displayName": "Gt"
     },
     "EventsGetParametersCreatedAt": {
       "description": "Filter by `created_at` date using a date operator",
@@ -9014,7 +8970,7 @@
               "type": "id",
               "value": "EventsGetParametersCreatedAt1"
             },
-            "displayName": "EventsGetParametersCreatedAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -9068,7 +9024,7 @@
           }
         ]
       },
-      "displayName": "EventsGetParametersCliId1"
+      "displayName": "Any"
     },
     "EventsGetParametersCliId": {
       "description": "Filter by CLI IDs. `?[any]=true` operator for any CLI.",
@@ -9090,7 +9046,7 @@
               "type": "id",
               "value": "EventsGetParametersCliId1"
             },
-            "displayName": "EventsGetParametersCliId1"
+            "displayName": "Any"
           },
           {
             "type": {
@@ -9201,7 +9157,7 @@
           }
         ]
       },
-      "displayName": "EventsGetParametersLastAttemptAt1"
+      "displayName": "Gt"
     },
     "EventsGetParametersLastAttemptAt": {
       "description": "Filter by `last_attempt_at` date using a date operator",
@@ -9223,7 +9179,7 @@
               "type": "id",
               "value": "EventsGetParametersLastAttemptAt1"
             },
-            "displayName": "EventsGetParametersLastAttemptAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -9406,8 +9362,7 @@
             "value": "created_at"
           }
         ]
-      },
-      "displayName": "EventsGetParametersOrderBy0"
+      }
     },
     "EventsGetParametersOrderBySchemaOneOf1Items": {
       "name": "EventsGetParametersOrderBySchemaOneOf1Items",
@@ -9437,8 +9392,7 @@
             "value": "EventsGetParametersOrderBySchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "EventsGetParametersOrderBy1"
+      }
     },
     "EventsGetParametersOrderBy": {
       "description": "Sort key(s)",
@@ -9451,16 +9405,14 @@
             "type": {
               "type": "id",
               "value": "EventsGetParametersOrderBy0"
-            },
-            "displayName": "EventsGetParametersOrderBy0"
+            }
           },
           {
             "typeName": "EventsGetParametersOrderBy1",
             "type": {
               "type": "id",
               "value": "EventsGetParametersOrderBy1"
-            },
-            "displayName": "EventsGetParametersOrderBy1"
+            }
           }
         ]
       }
@@ -9477,8 +9429,7 @@
             "value": "desc"
           }
         ]
-      },
-      "displayName": "EventsGetParametersDir0"
+      }
     },
     "EventsGetParametersDirSchemaOneOf1Items": {
       "name": "EventsGetParametersDirSchemaOneOf1Items",
@@ -9505,8 +9456,7 @@
             "value": "EventsGetParametersDirSchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "EventsGetParametersDir1"
+      }
     },
     "EventsGetParametersDir": {
       "description": "Sort direction",
@@ -9519,16 +9469,14 @@
             "type": {
               "type": "id",
               "value": "EventsGetParametersDir0"
-            },
-            "displayName": "EventsGetParametersDir0"
+            }
           },
           {
             "typeName": "EventsGetParametersDir1",
             "type": {
               "type": "id",
               "value": "EventsGetParametersDir1"
-            },
-            "displayName": "EventsGetParametersDir1"
+            }
           }
         ]
       }
@@ -9613,7 +9561,7 @@
           }
         ]
       },
-      "displayName": "BulkEventsRetryGetParametersCancelledAt1"
+      "displayName": "Gt"
     },
     "BulkEventsRetryGetParametersCancelledAt": {
       "description": "Filter by date the bulk retry was cancelled",
@@ -9635,7 +9583,7 @@
               "type": "id",
               "value": "BulkEventsRetryGetParametersCancelledAt1"
             },
-            "displayName": "BulkEventsRetryGetParametersCancelledAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -9720,7 +9668,7 @@
           }
         ]
       },
-      "displayName": "BulkEventsRetryGetParametersCompletedAt1"
+      "displayName": "Gt"
     },
     "BulkEventsRetryGetParametersCompletedAt": {
       "description": "Filter by date the bulk retry completed",
@@ -9742,7 +9690,7 @@
               "type": "id",
               "value": "BulkEventsRetryGetParametersCompletedAt1"
             },
-            "displayName": "BulkEventsRetryGetParametersCompletedAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -9827,7 +9775,7 @@
           }
         ]
       },
-      "displayName": "BulkEventsRetryGetParametersCreatedAt1"
+      "displayName": "Gt"
     },
     "BulkEventsRetryGetParametersCreatedAt": {
       "description": "Filter by date the bulk retry was created",
@@ -9849,7 +9797,7 @@
               "type": "id",
               "value": "BulkEventsRetryGetParametersCreatedAt1"
             },
-            "displayName": "BulkEventsRetryGetParametersCreatedAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -9927,8 +9875,7 @@
             "value": "EventStatus"
           }
         }
-      },
-      "displayName": "BulkEventsRetryGetParametersQuerySchemaStatus1"
+      }
     },
     "BulkEventsRetryGetParametersQuerySchemaStatus": {
       "description": "Lifecyle status of the event",
@@ -9949,8 +9896,7 @@
             "type": {
               "type": "id",
               "value": "BulkEventsRetryGetParametersQuerySchemaStatus1"
-            },
-            "displayName": "BulkEventsRetryGetParametersQuerySchemaStatus1"
+            }
           }
         ]
       }
@@ -10162,7 +10108,7 @@
           }
         ]
       },
-      "displayName": "BulkEventsRetryGetParametersQuerySchemaAttempts1"
+      "displayName": "Gt"
     },
     "BulkEventsRetryGetParametersQuerySchemaAttempts": {
       "description": "Filter by number of attempts",
@@ -10185,7 +10131,7 @@
               "type": "id",
               "value": "BulkEventsRetryGetParametersQuerySchemaAttempts1"
             },
-            "displayName": "BulkEventsRetryGetParametersQuerySchemaAttempts1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -10280,7 +10226,7 @@
           }
         ]
       },
-      "displayName": "BulkEventsRetryGetParametersQuerySchemaResponseStatus1"
+      "displayName": "Gt"
     },
     "BulkEventsRetryGetParametersQuerySchemaResponseStatus": {
       "description": "Filter by HTTP response status code",
@@ -10304,7 +10250,7 @@
               "type": "id",
               "value": "BulkEventsRetryGetParametersQuerySchemaResponseStatus1"
             },
-            "displayName": "BulkEventsRetryGetParametersQuerySchemaResponseStatus1"
+            "displayName": "Gt"
           },
           {
             "type": {
@@ -10390,7 +10336,7 @@
           }
         ]
       },
-      "displayName": "BulkEventsRetryGetParametersQuerySchemaSuccessfulAt1"
+      "displayName": "Gt"
     },
     "BulkEventsRetryGetParametersQuerySchemaSuccessfulAt": {
       "description": "Filter by `successful_at` date using a date operator",
@@ -10412,7 +10358,7 @@
               "type": "id",
               "value": "BulkEventsRetryGetParametersQuerySchemaSuccessfulAt1"
             },
-            "displayName": "BulkEventsRetryGetParametersQuerySchemaSuccessfulAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -10485,7 +10431,7 @@
           }
         ]
       },
-      "displayName": "BulkEventsRetryGetParametersQuerySchemaCreatedAt1"
+      "displayName": "Gt"
     },
     "BulkEventsRetryGetParametersQuerySchemaCreatedAt": {
       "description": "Filter by `created_at` date using a date operator",
@@ -10507,7 +10453,7 @@
               "type": "id",
               "value": "BulkEventsRetryGetParametersQuerySchemaCreatedAt1"
             },
-            "displayName": "BulkEventsRetryGetParametersQuerySchemaCreatedAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -10561,7 +10507,7 @@
           }
         ]
       },
-      "displayName": "BulkEventsRetryGetParametersQuerySchemaCliId1"
+      "displayName": "Any"
     },
     "BulkEventsRetryGetParametersQuerySchemaCliId": {
       "description": "Filter by CLI IDs. `?[any]=true` operator for any CLI.",
@@ -10583,7 +10529,7 @@
               "type": "id",
               "value": "BulkEventsRetryGetParametersQuerySchemaCliId1"
             },
-            "displayName": "BulkEventsRetryGetParametersQuerySchemaCliId1"
+            "displayName": "Any"
           },
           {
             "type": {
@@ -10694,7 +10640,7 @@
           }
         ]
       },
-      "displayName": "BulkEventsRetryGetParametersQuerySchemaLastAttemptAt1"
+      "displayName": "Gt"
     },
     "BulkEventsRetryGetParametersQuerySchemaLastAttemptAt": {
       "description": "Filter by `last_attempt_at` date using a date operator",
@@ -10716,7 +10662,7 @@
               "type": "id",
               "value": "BulkEventsRetryGetParametersQuerySchemaLastAttemptAt1"
             },
-            "displayName": "BulkEventsRetryGetParametersQuerySchemaLastAttemptAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -10899,8 +10845,7 @@
             "value": "created_at"
           }
         ]
-      },
-      "displayName": "BulkEventsRetryGetParametersQuerySchemaOrderBy0"
+      }
     },
     "BulkEventsRetryGetParametersQuerySchemaOrderByOneOf1Items": {
       "name": "BulkEventsRetryGetParametersQuerySchemaOrderByOneOf1Items",
@@ -10930,8 +10875,7 @@
             "value": "BulkEventsRetryGetParametersQuerySchemaOrderByOneOf1Items"
           }
         }
-      },
-      "displayName": "BulkEventsRetryGetParametersQuerySchemaOrderBy1"
+      }
     },
     "BulkEventsRetryGetParametersQuerySchemaOrderBy": {
       "description": "Sort key(s)",
@@ -10944,16 +10888,14 @@
             "type": {
               "type": "id",
               "value": "BulkEventsRetryGetParametersQuerySchemaOrderBy0"
-            },
-            "displayName": "BulkEventsRetryGetParametersQuerySchemaOrderBy0"
+            }
           },
           {
             "typeName": "BulkEventsRetryGetParametersQuerySchemaOrderBy1",
             "type": {
               "type": "id",
               "value": "BulkEventsRetryGetParametersQuerySchemaOrderBy1"
-            },
-            "displayName": "BulkEventsRetryGetParametersQuerySchemaOrderBy1"
+            }
           }
         ]
       }
@@ -10970,8 +10912,7 @@
             "value": "desc"
           }
         ]
-      },
-      "displayName": "BulkEventsRetryGetParametersQuerySchemaDir0"
+      }
     },
     "BulkEventsRetryGetParametersQuerySchemaDirOneOf1Items": {
       "name": "BulkEventsRetryGetParametersQuerySchemaDirOneOf1Items",
@@ -10998,8 +10939,7 @@
             "value": "BulkEventsRetryGetParametersQuerySchemaDirOneOf1Items"
           }
         }
-      },
-      "displayName": "BulkEventsRetryGetParametersQuerySchemaDir1"
+      }
     },
     "BulkEventsRetryGetParametersQuerySchemaDir": {
       "description": "Sort direction",
@@ -11012,16 +10952,14 @@
             "type": {
               "type": "id",
               "value": "BulkEventsRetryGetParametersQuerySchemaDir0"
-            },
-            "displayName": "BulkEventsRetryGetParametersQuerySchemaDir0"
+            }
           },
           {
             "typeName": "BulkEventsRetryGetParametersQuerySchemaDir1",
             "type": {
               "type": "id",
               "value": "BulkEventsRetryGetParametersQuerySchemaDir1"
-            },
-            "displayName": "BulkEventsRetryGetParametersQuerySchemaDir1"
+            }
           }
         ]
       }
@@ -11353,8 +11291,7 @@
             "value": "created_at"
           }
         ]
-      },
-      "displayName": "BulkEventsRetryGetParametersOrderBy0"
+      }
     },
     "BulkEventsRetryGetParametersOrderBySchemaOneOf1Items": {
       "name": "BulkEventsRetryGetParametersOrderBySchemaOneOf1Items",
@@ -11378,8 +11315,7 @@
             "value": "BulkEventsRetryGetParametersOrderBySchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "BulkEventsRetryGetParametersOrderBy1"
+      }
     },
     "BulkEventsRetryGetParametersOrderBy": {
       "description": "Sort key(s)",
@@ -11392,16 +11328,14 @@
             "type": {
               "type": "id",
               "value": "BulkEventsRetryGetParametersOrderBy0"
-            },
-            "displayName": "BulkEventsRetryGetParametersOrderBy0"
+            }
           },
           {
             "typeName": "BulkEventsRetryGetParametersOrderBy1",
             "type": {
               "type": "id",
               "value": "BulkEventsRetryGetParametersOrderBy1"
-            },
-            "displayName": "BulkEventsRetryGetParametersOrderBy1"
+            }
           }
         ]
       }
@@ -11418,8 +11352,7 @@
             "value": "desc"
           }
         ]
-      },
-      "displayName": "BulkEventsRetryGetParametersDir0"
+      }
     },
     "BulkEventsRetryGetParametersDirSchemaOneOf1Items": {
       "name": "BulkEventsRetryGetParametersDirSchemaOneOf1Items",
@@ -11446,8 +11379,7 @@
             "value": "BulkEventsRetryGetParametersDirSchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "BulkEventsRetryGetParametersDir1"
+      }
     },
     "BulkEventsRetryGetParametersDir": {
       "description": "Sort direction",
@@ -11460,16 +11392,14 @@
             "type": {
               "type": "id",
               "value": "BulkEventsRetryGetParametersDir0"
-            },
-            "displayName": "BulkEventsRetryGetParametersDir0"
+            }
           },
           {
             "typeName": "BulkEventsRetryGetParametersDir1",
             "type": {
               "type": "id",
               "value": "BulkEventsRetryGetParametersDir1"
-            },
-            "displayName": "BulkEventsRetryGetParametersDir1"
+            }
           }
         ]
       }
@@ -11516,8 +11446,7 @@
             "value": "EventStatus"
           }
         }
-      },
-      "displayName": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryStatus1"
+      }
     },
     "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryStatus": {
       "description": "Lifecyle status of the event",
@@ -11538,8 +11467,7 @@
             "type": {
               "type": "id",
               "value": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryStatus1"
-            },
-            "displayName": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryStatus1"
+            }
           }
         ]
       }
@@ -11751,7 +11679,7 @@
           }
         ]
       },
-      "displayName": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryAttempts1"
+      "displayName": "Gt"
     },
     "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryAttempts": {
       "description": "Filter by number of attempts",
@@ -11774,7 +11702,7 @@
               "type": "id",
               "value": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryAttempts1"
             },
-            "displayName": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryAttempts1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -11869,7 +11797,7 @@
           }
         ]
       },
-      "displayName": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryResponseStatus1"
+      "displayName": "Gt"
     },
     "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryResponseStatus": {
       "description": "Filter by HTTP response status code",
@@ -11893,7 +11821,7 @@
               "type": "id",
               "value": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryResponseStatus1"
             },
-            "displayName": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryResponseStatus1"
+            "displayName": "Gt"
           },
           {
             "type": {
@@ -11979,7 +11907,7 @@
           }
         ]
       },
-      "displayName": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQuerySuccessfulAt1"
+      "displayName": "Gt"
     },
     "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQuerySuccessfulAt": {
       "description": "Filter by `successful_at` date using a date operator",
@@ -12001,7 +11929,7 @@
               "type": "id",
               "value": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQuerySuccessfulAt1"
             },
-            "displayName": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQuerySuccessfulAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -12074,7 +12002,7 @@
           }
         ]
       },
-      "displayName": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryCreatedAt1"
+      "displayName": "Gt"
     },
     "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryCreatedAt": {
       "description": "Filter by `created_at` date using a date operator",
@@ -12096,7 +12024,7 @@
               "type": "id",
               "value": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryCreatedAt1"
             },
-            "displayName": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryCreatedAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -12150,7 +12078,7 @@
           }
         ]
       },
-      "displayName": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryCliId1"
+      "displayName": "Any"
     },
     "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryCliId": {
       "description": "Filter by CLI IDs. `?[any]=true` operator for any CLI.",
@@ -12172,7 +12100,7 @@
               "type": "id",
               "value": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryCliId1"
             },
-            "displayName": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryCliId1"
+            "displayName": "Any"
           },
           {
             "type": {
@@ -12283,7 +12211,7 @@
           }
         ]
       },
-      "displayName": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryLastAttemptAt1"
+      "displayName": "Gt"
     },
     "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryLastAttemptAt": {
       "description": "Filter by `last_attempt_at` date using a date operator",
@@ -12305,7 +12233,7 @@
               "type": "id",
               "value": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryLastAttemptAt1"
             },
-            "displayName": "BulkEventsRetryPostRequestBodyContentApplicationJsonSchemaQueryLastAttemptAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -12745,8 +12673,7 @@
             "value": "EventStatus"
           }
         }
-      },
-      "displayName": "BulkEventsRetryPlanGetParametersQuerySchemaStatus1"
+      }
     },
     "BulkEventsRetryPlanGetParametersQuerySchemaStatus": {
       "description": "Lifecyle status of the event",
@@ -12767,8 +12694,7 @@
             "type": {
               "type": "id",
               "value": "BulkEventsRetryPlanGetParametersQuerySchemaStatus1"
-            },
-            "displayName": "BulkEventsRetryPlanGetParametersQuerySchemaStatus1"
+            }
           }
         ]
       }
@@ -12980,7 +12906,7 @@
           }
         ]
       },
-      "displayName": "BulkEventsRetryPlanGetParametersQuerySchemaAttempts1"
+      "displayName": "Gt"
     },
     "BulkEventsRetryPlanGetParametersQuerySchemaAttempts": {
       "description": "Filter by number of attempts",
@@ -13003,7 +12929,7 @@
               "type": "id",
               "value": "BulkEventsRetryPlanGetParametersQuerySchemaAttempts1"
             },
-            "displayName": "BulkEventsRetryPlanGetParametersQuerySchemaAttempts1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -13098,7 +13024,7 @@
           }
         ]
       },
-      "displayName": "BulkEventsRetryPlanGetParametersQuerySchemaResponseStatus1"
+      "displayName": "Gt"
     },
     "BulkEventsRetryPlanGetParametersQuerySchemaResponseStatus": {
       "description": "Filter by HTTP response status code",
@@ -13122,7 +13048,7 @@
               "type": "id",
               "value": "BulkEventsRetryPlanGetParametersQuerySchemaResponseStatus1"
             },
-            "displayName": "BulkEventsRetryPlanGetParametersQuerySchemaResponseStatus1"
+            "displayName": "Gt"
           },
           {
             "type": {
@@ -13208,7 +13134,7 @@
           }
         ]
       },
-      "displayName": "BulkEventsRetryPlanGetParametersQuerySchemaSuccessfulAt1"
+      "displayName": "Gt"
     },
     "BulkEventsRetryPlanGetParametersQuerySchemaSuccessfulAt": {
       "description": "Filter by `successful_at` date using a date operator",
@@ -13230,7 +13156,7 @@
               "type": "id",
               "value": "BulkEventsRetryPlanGetParametersQuerySchemaSuccessfulAt1"
             },
-            "displayName": "BulkEventsRetryPlanGetParametersQuerySchemaSuccessfulAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -13303,7 +13229,7 @@
           }
         ]
       },
-      "displayName": "BulkEventsRetryPlanGetParametersQuerySchemaCreatedAt1"
+      "displayName": "Gt"
     },
     "BulkEventsRetryPlanGetParametersQuerySchemaCreatedAt": {
       "description": "Filter by `created_at` date using a date operator",
@@ -13325,7 +13251,7 @@
               "type": "id",
               "value": "BulkEventsRetryPlanGetParametersQuerySchemaCreatedAt1"
             },
-            "displayName": "BulkEventsRetryPlanGetParametersQuerySchemaCreatedAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -13379,7 +13305,7 @@
           }
         ]
       },
-      "displayName": "BulkEventsRetryPlanGetParametersQuerySchemaCliId1"
+      "displayName": "Any"
     },
     "BulkEventsRetryPlanGetParametersQuerySchemaCliId": {
       "description": "Filter by CLI IDs. `?[any]=true` operator for any CLI.",
@@ -13401,7 +13327,7 @@
               "type": "id",
               "value": "BulkEventsRetryPlanGetParametersQuerySchemaCliId1"
             },
-            "displayName": "BulkEventsRetryPlanGetParametersQuerySchemaCliId1"
+            "displayName": "Any"
           },
           {
             "type": {
@@ -13512,7 +13438,7 @@
           }
         ]
       },
-      "displayName": "BulkEventsRetryPlanGetParametersQuerySchemaLastAttemptAt1"
+      "displayName": "Gt"
     },
     "BulkEventsRetryPlanGetParametersQuerySchemaLastAttemptAt": {
       "description": "Filter by `last_attempt_at` date using a date operator",
@@ -13534,7 +13460,7 @@
               "type": "id",
               "value": "BulkEventsRetryPlanGetParametersQuerySchemaLastAttemptAt1"
             },
-            "displayName": "BulkEventsRetryPlanGetParametersQuerySchemaLastAttemptAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -14012,7 +13938,7 @@
           }
         ]
       },
-      "displayName": "BulkIgnoredEventsRetryGetParametersCancelledAt1"
+      "displayName": "Gt"
     },
     "BulkIgnoredEventsRetryGetParametersCancelledAt": {
       "description": "Filter by date the bulk retry was cancelled",
@@ -14034,7 +13960,7 @@
               "type": "id",
               "value": "BulkIgnoredEventsRetryGetParametersCancelledAt1"
             },
-            "displayName": "BulkIgnoredEventsRetryGetParametersCancelledAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -14119,7 +14045,7 @@
           }
         ]
       },
-      "displayName": "BulkIgnoredEventsRetryGetParametersCompletedAt1"
+      "displayName": "Gt"
     },
     "BulkIgnoredEventsRetryGetParametersCompletedAt": {
       "description": "Filter by date the bulk retry completed",
@@ -14141,7 +14067,7 @@
               "type": "id",
               "value": "BulkIgnoredEventsRetryGetParametersCompletedAt1"
             },
-            "displayName": "BulkIgnoredEventsRetryGetParametersCompletedAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -14226,7 +14152,7 @@
           }
         ]
       },
-      "displayName": "BulkIgnoredEventsRetryGetParametersCreatedAt1"
+      "displayName": "Gt"
     },
     "BulkIgnoredEventsRetryGetParametersCreatedAt": {
       "description": "Filter by date the bulk retry was created",
@@ -14248,7 +14174,7 @@
               "type": "id",
               "value": "BulkIgnoredEventsRetryGetParametersCreatedAt1"
             },
-            "displayName": "BulkIgnoredEventsRetryGetParametersCreatedAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -14399,8 +14325,7 @@
             "value": "created_at"
           }
         ]
-      },
-      "displayName": "BulkIgnoredEventsRetryGetParametersOrderBy0"
+      }
     },
     "BulkIgnoredEventsRetryGetParametersOrderBySchemaOneOf1Items": {
       "name": "BulkIgnoredEventsRetryGetParametersOrderBySchemaOneOf1Items",
@@ -14424,8 +14349,7 @@
             "value": "BulkIgnoredEventsRetryGetParametersOrderBySchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "BulkIgnoredEventsRetryGetParametersOrderBy1"
+      }
     },
     "BulkIgnoredEventsRetryGetParametersOrderBy": {
       "description": "Sort key(s)",
@@ -14438,16 +14362,14 @@
             "type": {
               "type": "id",
               "value": "BulkIgnoredEventsRetryGetParametersOrderBy0"
-            },
-            "displayName": "BulkIgnoredEventsRetryGetParametersOrderBy0"
+            }
           },
           {
             "typeName": "BulkIgnoredEventsRetryGetParametersOrderBy1",
             "type": {
               "type": "id",
               "value": "BulkIgnoredEventsRetryGetParametersOrderBy1"
-            },
-            "displayName": "BulkIgnoredEventsRetryGetParametersOrderBy1"
+            }
           }
         ]
       }
@@ -14464,8 +14386,7 @@
             "value": "desc"
           }
         ]
-      },
-      "displayName": "BulkIgnoredEventsRetryGetParametersDir0"
+      }
     },
     "BulkIgnoredEventsRetryGetParametersDirSchemaOneOf1Items": {
       "name": "BulkIgnoredEventsRetryGetParametersDirSchemaOneOf1Items",
@@ -14492,8 +14413,7 @@
             "value": "BulkIgnoredEventsRetryGetParametersDirSchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "BulkIgnoredEventsRetryGetParametersDir1"
+      }
     },
     "BulkIgnoredEventsRetryGetParametersDir": {
       "description": "Sort direction",
@@ -14506,16 +14426,14 @@
             "type": {
               "type": "id",
               "value": "BulkIgnoredEventsRetryGetParametersDir0"
-            },
-            "displayName": "BulkIgnoredEventsRetryGetParametersDir0"
+            }
           },
           {
             "typeName": "BulkIgnoredEventsRetryGetParametersDir1",
             "type": {
               "type": "id",
               "value": "BulkIgnoredEventsRetryGetParametersDir1"
-            },
-            "displayName": "BulkIgnoredEventsRetryGetParametersDir1"
+            }
           }
         ]
       }
@@ -14908,7 +14826,7 @@
           }
         ]
       },
-      "displayName": "IssuesGetParametersType0"
+      "displayName": "IssueType"
     },
     "IssuesGetParametersTypeSchemaOneOf1Items": {
       "description": "Issue type",
@@ -14939,8 +14857,7 @@
             "value": "IssuesGetParametersTypeSchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "IssuesGetParametersType1"
+      }
     },
     "IssuesGetParametersType": {
       "description": "Filter by Issue types",
@@ -14955,15 +14872,14 @@
               "type": "id",
               "value": "IssuesGetParametersType0"
             },
-            "displayName": "IssuesGetParametersType0"
+            "displayName": "IssueType"
           },
           {
             "typeName": "IssuesGetParametersType1",
             "type": {
               "type": "id",
               "value": "IssuesGetParametersType1"
-            },
-            "displayName": "IssuesGetParametersType1"
+            }
           }
         ]
       }
@@ -14988,7 +14904,7 @@
           }
         ]
       },
-      "displayName": "IssuesGetParametersStatus0"
+      "displayName": "IssueStatus"
     },
     "IssuesGetParametersStatusSchemaOneOf1Items": {
       "description": "Issue status",
@@ -15022,8 +14938,7 @@
             "value": "IssuesGetParametersStatusSchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "IssuesGetParametersStatus1"
+      }
     },
     "IssuesGetParametersStatus": {
       "description": "Filter by Issue statuses",
@@ -15038,15 +14953,14 @@
               "type": "id",
               "value": "IssuesGetParametersStatus0"
             },
-            "displayName": "IssuesGetParametersStatus0"
+            "displayName": "IssueStatus"
           },
           {
             "typeName": "IssuesGetParametersStatus1",
             "type": {
               "type": "id",
               "value": "IssuesGetParametersStatus1"
-            },
-            "displayName": "IssuesGetParametersStatus1"
+            }
           }
         ]
       }
@@ -15145,8 +15059,7 @@
             "value": "AttemptErrorCodes"
           }
         }
-      },
-      "displayName": "IssuesGetParametersAggregationKeysSchemaErrorCode1"
+      }
     },
     "IssuesGetParametersAggregationKeysSchemaErrorCode": {
       "name": "IssuesGetParametersAggregationKeysSchemaErrorCode",
@@ -15166,8 +15079,7 @@
             "type": {
               "type": "id",
               "value": "IssuesGetParametersAggregationKeysSchemaErrorCode1"
-            },
-            "displayName": "IssuesGetParametersAggregationKeysSchemaErrorCode1"
+            }
           }
         ]
       }
@@ -15292,7 +15204,7 @@
           }
         ]
       },
-      "displayName": "IssuesGetParametersCreatedAt1"
+      "displayName": "Gt"
     },
     "IssuesGetParametersCreatedAt": {
       "description": "Filter by created dates",
@@ -15314,7 +15226,7 @@
               "type": "id",
               "value": "IssuesGetParametersCreatedAt1"
             },
-            "displayName": "IssuesGetParametersCreatedAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -15399,7 +15311,7 @@
           }
         ]
       },
-      "displayName": "IssuesGetParametersFirstSeenAt1"
+      "displayName": "Gt"
     },
     "IssuesGetParametersFirstSeenAt": {
       "description": "Filter by first seen dates",
@@ -15421,7 +15333,7 @@
               "type": "id",
               "value": "IssuesGetParametersFirstSeenAt1"
             },
-            "displayName": "IssuesGetParametersFirstSeenAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -15506,7 +15418,7 @@
           }
         ]
       },
-      "displayName": "IssuesGetParametersLastSeenAt1"
+      "displayName": "Gt"
     },
     "IssuesGetParametersLastSeenAt": {
       "description": "Filter by last seen dates",
@@ -15528,7 +15440,7 @@
               "type": "id",
               "value": "IssuesGetParametersLastSeenAt1"
             },
-            "displayName": "IssuesGetParametersLastSeenAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -15613,7 +15525,7 @@
           }
         ]
       },
-      "displayName": "IssuesGetParametersDismissedAt1"
+      "displayName": "Gt"
     },
     "IssuesGetParametersDismissedAt": {
       "description": "Filter by dismissed dates",
@@ -15635,7 +15547,7 @@
               "type": "id",
               "value": "IssuesGetParametersDismissedAt1"
             },
-            "displayName": "IssuesGetParametersDismissedAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -15661,8 +15573,7 @@
             "value": "status"
           }
         ]
-      },
-      "displayName": "IssuesGetParametersOrderBy0"
+      }
     },
     "IssuesGetParametersOrderBySchemaOneOf1Items": {
       "name": "IssuesGetParametersOrderBySchemaOneOf1Items",
@@ -15698,8 +15609,7 @@
             "value": "IssuesGetParametersOrderBySchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "IssuesGetParametersOrderBy1"
+      }
     },
     "IssuesGetParametersOrderBy": {
       "description": "Sort key(s)",
@@ -15712,16 +15622,14 @@
             "type": {
               "type": "id",
               "value": "IssuesGetParametersOrderBy0"
-            },
-            "displayName": "IssuesGetParametersOrderBy0"
+            }
           },
           {
             "typeName": "IssuesGetParametersOrderBy1",
             "type": {
               "type": "id",
               "value": "IssuesGetParametersOrderBy1"
-            },
-            "displayName": "IssuesGetParametersOrderBy1"
+            }
           }
         ]
       }
@@ -15738,8 +15646,7 @@
             "value": "desc"
           }
         ]
-      },
-      "displayName": "IssuesGetParametersDir0"
+      }
     },
     "IssuesGetParametersDirSchemaOneOf1Items": {
       "name": "IssuesGetParametersDirSchemaOneOf1Items",
@@ -15766,8 +15673,7 @@
             "value": "IssuesGetParametersDirSchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "IssuesGetParametersDir1"
+      }
     },
     "IssuesGetParametersDir": {
       "description": "Sort direction",
@@ -15780,16 +15686,14 @@
             "type": {
               "type": "id",
               "value": "IssuesGetParametersDir0"
-            },
-            "displayName": "IssuesGetParametersDir0"
+            }
           },
           {
             "typeName": "IssuesGetParametersDir1",
             "type": {
               "type": "id",
               "value": "IssuesGetParametersDir1"
-            },
-            "displayName": "IssuesGetParametersDir1"
+            }
           }
         ]
       }
@@ -15872,7 +15776,7 @@
           }
         ]
       },
-      "displayName": "IssuesCountGetParametersType0"
+      "displayName": "IssueType"
     },
     "IssuesCountGetParametersTypeSchemaOneOf1Items": {
       "description": "Issue type",
@@ -15903,8 +15807,7 @@
             "value": "IssuesCountGetParametersTypeSchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "IssuesCountGetParametersType1"
+      }
     },
     "IssuesCountGetParametersType": {
       "description": "Filter by Issue types",
@@ -15919,15 +15822,14 @@
               "type": "id",
               "value": "IssuesCountGetParametersType0"
             },
-            "displayName": "IssuesCountGetParametersType0"
+            "displayName": "IssueType"
           },
           {
             "typeName": "IssuesCountGetParametersType1",
             "type": {
               "type": "id",
               "value": "IssuesCountGetParametersType1"
-            },
-            "displayName": "IssuesCountGetParametersType1"
+            }
           }
         ]
       }
@@ -15952,7 +15854,7 @@
           }
         ]
       },
-      "displayName": "IssuesCountGetParametersStatus0"
+      "displayName": "IssueStatus"
     },
     "IssuesCountGetParametersStatusSchemaOneOf1Items": {
       "description": "Issue status",
@@ -15986,8 +15888,7 @@
             "value": "IssuesCountGetParametersStatusSchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "IssuesCountGetParametersStatus1"
+      }
     },
     "IssuesCountGetParametersStatus": {
       "description": "Filter by Issue statuses",
@@ -16002,15 +15903,14 @@
               "type": "id",
               "value": "IssuesCountGetParametersStatus0"
             },
-            "displayName": "IssuesCountGetParametersStatus0"
+            "displayName": "IssueStatus"
           },
           {
             "typeName": "IssuesCountGetParametersStatus1",
             "type": {
               "type": "id",
               "value": "IssuesCountGetParametersStatus1"
-            },
-            "displayName": "IssuesCountGetParametersStatus1"
+            }
           }
         ]
       }
@@ -16109,8 +16009,7 @@
             "value": "AttemptErrorCodes"
           }
         }
-      },
-      "displayName": "IssuesCountGetParametersAggregationKeysSchemaErrorCode1"
+      }
     },
     "IssuesCountGetParametersAggregationKeysSchemaErrorCode": {
       "name": "IssuesCountGetParametersAggregationKeysSchemaErrorCode",
@@ -16130,8 +16029,7 @@
             "type": {
               "type": "id",
               "value": "IssuesCountGetParametersAggregationKeysSchemaErrorCode1"
-            },
-            "displayName": "IssuesCountGetParametersAggregationKeysSchemaErrorCode1"
+            }
           }
         ]
       }
@@ -16256,7 +16154,7 @@
           }
         ]
       },
-      "displayName": "IssuesCountGetParametersCreatedAt1"
+      "displayName": "Gt"
     },
     "IssuesCountGetParametersCreatedAt": {
       "description": "Filter by created dates",
@@ -16278,7 +16176,7 @@
               "type": "id",
               "value": "IssuesCountGetParametersCreatedAt1"
             },
-            "displayName": "IssuesCountGetParametersCreatedAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -16363,7 +16261,7 @@
           }
         ]
       },
-      "displayName": "IssuesCountGetParametersFirstSeenAt1"
+      "displayName": "Gt"
     },
     "IssuesCountGetParametersFirstSeenAt": {
       "description": "Filter by first seen dates",
@@ -16385,7 +16283,7 @@
               "type": "id",
               "value": "IssuesCountGetParametersFirstSeenAt1"
             },
-            "displayName": "IssuesCountGetParametersFirstSeenAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -16470,7 +16368,7 @@
           }
         ]
       },
-      "displayName": "IssuesCountGetParametersLastSeenAt1"
+      "displayName": "Gt"
     },
     "IssuesCountGetParametersLastSeenAt": {
       "description": "Filter by last seen dates",
@@ -16492,7 +16390,7 @@
               "type": "id",
               "value": "IssuesCountGetParametersLastSeenAt1"
             },
-            "displayName": "IssuesCountGetParametersLastSeenAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -16577,7 +16475,7 @@
           }
         ]
       },
-      "displayName": "IssuesCountGetParametersDismissedAt1"
+      "displayName": "Gt"
     },
     "IssuesCountGetParametersDismissedAt": {
       "description": "Filter by dismissed dates",
@@ -16599,7 +16497,7 @@
               "type": "id",
               "value": "IssuesCountGetParametersDismissedAt1"
             },
-            "displayName": "IssuesCountGetParametersDismissedAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -16625,8 +16523,7 @@
             "value": "status"
           }
         ]
-      },
-      "displayName": "IssuesCountGetParametersOrderBy0"
+      }
     },
     "IssuesCountGetParametersOrderBySchemaOneOf1Items": {
       "name": "IssuesCountGetParametersOrderBySchemaOneOf1Items",
@@ -16662,8 +16559,7 @@
             "value": "IssuesCountGetParametersOrderBySchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "IssuesCountGetParametersOrderBy1"
+      }
     },
     "IssuesCountGetParametersOrderBy": {
       "description": "Sort key(s)",
@@ -16676,16 +16572,14 @@
             "type": {
               "type": "id",
               "value": "IssuesCountGetParametersOrderBy0"
-            },
-            "displayName": "IssuesCountGetParametersOrderBy0"
+            }
           },
           {
             "typeName": "IssuesCountGetParametersOrderBy1",
             "type": {
               "type": "id",
               "value": "IssuesCountGetParametersOrderBy1"
-            },
-            "displayName": "IssuesCountGetParametersOrderBy1"
+            }
           }
         ]
       }
@@ -16702,8 +16596,7 @@
             "value": "desc"
           }
         ]
-      },
-      "displayName": "IssuesCountGetParametersDir0"
+      }
     },
     "IssuesCountGetParametersDirSchemaOneOf1Items": {
       "name": "IssuesCountGetParametersDirSchemaOneOf1Items",
@@ -16730,8 +16623,7 @@
             "value": "IssuesCountGetParametersDirSchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "IssuesCountGetParametersDir1"
+      }
     },
     "IssuesCountGetParametersDir": {
       "description": "Sort direction",
@@ -16744,16 +16636,14 @@
             "type": {
               "type": "id",
               "value": "IssuesCountGetParametersDir0"
-            },
-            "displayName": "IssuesCountGetParametersDir0"
+            }
           },
           {
             "typeName": "IssuesCountGetParametersDir1",
             "type": {
               "type": "id",
               "value": "IssuesCountGetParametersDir1"
-            },
-            "displayName": "IssuesCountGetParametersDir1"
+            }
           }
         ]
       }
@@ -16894,7 +16784,7 @@
           }
         ]
       },
-      "displayName": "RequestsGetParametersRejectionCause1"
+      "displayName": "Gt"
     },
     "RequestsGetParametersRejectionCause2": {
       "name": "RequestsGetParametersRejectionCause2",
@@ -16907,8 +16797,7 @@
             "value": "RequestRejectionCause"
           }
         }
-      },
-      "displayName": "RequestsGetParametersRejectionCause2"
+      }
     },
     "RequestsGetParametersRejectionCause": {
       "description": "Filter by rejection cause",
@@ -16930,15 +16819,14 @@
               "type": "id",
               "value": "RequestsGetParametersRejectionCause1"
             },
-            "displayName": "RequestsGetParametersRejectionCause1"
+            "displayName": "Gt"
           },
           {
             "typeName": "RequestsGetParametersRejectionCause2",
             "type": {
               "type": "id",
               "value": "RequestsGetParametersRejectionCause2"
-            },
-            "displayName": "RequestsGetParametersRejectionCause2"
+            }
           }
         ]
       }
@@ -17028,7 +16916,7 @@
           }
         ]
       },
-      "displayName": "RequestsGetParametersIgnoredCount1"
+      "displayName": "Gt"
     },
     "RequestsGetParametersIgnoredCount": {
       "name": "RequestsGetParametersIgnoredCount",
@@ -17050,7 +16938,7 @@
               "type": "id",
               "value": "RequestsGetParametersIgnoredCount1"
             },
-            "displayName": "RequestsGetParametersIgnoredCount1"
+            "displayName": "Gt"
           },
           {
             "type": {
@@ -17152,7 +17040,7 @@
           }
         ]
       },
-      "displayName": "RequestsGetParametersEventsCount1"
+      "displayName": "Gt"
     },
     "RequestsGetParametersEventsCount": {
       "name": "RequestsGetParametersEventsCount",
@@ -17174,7 +17062,7 @@
               "type": "id",
               "value": "RequestsGetParametersEventsCount1"
             },
-            "displayName": "RequestsGetParametersEventsCount1"
+            "displayName": "Gt"
           },
           {
             "type": {
@@ -17383,7 +17271,7 @@
           }
         ]
       },
-      "displayName": "RequestsGetParametersCreatedAt1"
+      "displayName": "Gt"
     },
     "RequestsGetParametersCreatedAt": {
       "name": "RequestsGetParametersCreatedAt",
@@ -17404,7 +17292,7 @@
               "type": "id",
               "value": "RequestsGetParametersCreatedAt1"
             },
-            "displayName": "RequestsGetParametersCreatedAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -17477,7 +17365,7 @@
           }
         ]
       },
-      "displayName": "RequestsGetParametersIngestedAt1"
+      "displayName": "Gt"
     },
     "RequestsGetParametersIngestedAt": {
       "name": "RequestsGetParametersIngestedAt",
@@ -17498,7 +17386,7 @@
               "type": "id",
               "value": "RequestsGetParametersIngestedAt1"
             },
-            "displayName": "RequestsGetParametersIngestedAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -17555,8 +17443,7 @@
             "value": "created_at"
           }
         ]
-      },
-      "displayName": "RequestsGetParametersOrderBy0"
+      }
     },
     "RequestsGetParametersOrderBySchemaOneOf1Items": {
       "name": "RequestsGetParametersOrderBySchemaOneOf1Items",
@@ -17583,8 +17470,7 @@
             "value": "RequestsGetParametersOrderBySchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "RequestsGetParametersOrderBy1"
+      }
     },
     "RequestsGetParametersOrderBy": {
       "description": "Sort key(s)",
@@ -17597,16 +17483,14 @@
             "type": {
               "type": "id",
               "value": "RequestsGetParametersOrderBy0"
-            },
-            "displayName": "RequestsGetParametersOrderBy0"
+            }
           },
           {
             "typeName": "RequestsGetParametersOrderBy1",
             "type": {
               "type": "id",
               "value": "RequestsGetParametersOrderBy1"
-            },
-            "displayName": "RequestsGetParametersOrderBy1"
+            }
           }
         ]
       }
@@ -17623,8 +17507,7 @@
             "value": "desc"
           }
         ]
-      },
-      "displayName": "RequestsGetParametersDir0"
+      }
     },
     "RequestsGetParametersDirSchemaOneOf1Items": {
       "name": "RequestsGetParametersDirSchemaOneOf1Items",
@@ -17651,8 +17534,7 @@
             "value": "RequestsGetParametersDirSchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "RequestsGetParametersDir1"
+      }
     },
     "RequestsGetParametersDir": {
       "description": "Sort direction",
@@ -17665,16 +17547,14 @@
             "type": {
               "type": "id",
               "value": "RequestsGetParametersDir0"
-            },
-            "displayName": "RequestsGetParametersDir0"
+            }
           },
           {
             "typeName": "RequestsGetParametersDir1",
             "type": {
               "type": "id",
               "value": "RequestsGetParametersDir1"
-            },
-            "displayName": "RequestsGetParametersDir1"
+            }
           }
         ]
       }
@@ -17721,8 +17601,7 @@
             "value": "EventStatus"
           }
         }
-      },
-      "displayName": "RequestsIdEventsGetParametersStatus1"
+      }
     },
     "RequestsIdEventsGetParametersStatus": {
       "description": "Lifecyle status of the event",
@@ -17743,8 +17622,7 @@
             "type": {
               "type": "id",
               "value": "RequestsIdEventsGetParametersStatus1"
-            },
-            "displayName": "RequestsIdEventsGetParametersStatus1"
+            }
           }
         ]
       }
@@ -17956,7 +17834,7 @@
           }
         ]
       },
-      "displayName": "RequestsIdEventsGetParametersAttempts1"
+      "displayName": "Gt"
     },
     "RequestsIdEventsGetParametersAttempts": {
       "description": "Filter by number of attempts",
@@ -17979,7 +17857,7 @@
               "type": "id",
               "value": "RequestsIdEventsGetParametersAttempts1"
             },
-            "displayName": "RequestsIdEventsGetParametersAttempts1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -18074,7 +17952,7 @@
           }
         ]
       },
-      "displayName": "RequestsIdEventsGetParametersResponseStatus1"
+      "displayName": "Gt"
     },
     "RequestsIdEventsGetParametersResponseStatus": {
       "description": "Filter by HTTP response status code",
@@ -18098,7 +17976,7 @@
               "type": "id",
               "value": "RequestsIdEventsGetParametersResponseStatus1"
             },
-            "displayName": "RequestsIdEventsGetParametersResponseStatus1"
+            "displayName": "Gt"
           },
           {
             "type": {
@@ -18184,7 +18062,7 @@
           }
         ]
       },
-      "displayName": "RequestsIdEventsGetParametersSuccessfulAt1"
+      "displayName": "Gt"
     },
     "RequestsIdEventsGetParametersSuccessfulAt": {
       "description": "Filter by `successful_at` date using a date operator",
@@ -18206,7 +18084,7 @@
               "type": "id",
               "value": "RequestsIdEventsGetParametersSuccessfulAt1"
             },
-            "displayName": "RequestsIdEventsGetParametersSuccessfulAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -18279,7 +18157,7 @@
           }
         ]
       },
-      "displayName": "RequestsIdEventsGetParametersCreatedAt1"
+      "displayName": "Gt"
     },
     "RequestsIdEventsGetParametersCreatedAt": {
       "description": "Filter by `created_at` date using a date operator",
@@ -18301,7 +18179,7 @@
               "type": "id",
               "value": "RequestsIdEventsGetParametersCreatedAt1"
             },
-            "displayName": "RequestsIdEventsGetParametersCreatedAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -18355,7 +18233,7 @@
           }
         ]
       },
-      "displayName": "RequestsIdEventsGetParametersCliId1"
+      "displayName": "Any"
     },
     "RequestsIdEventsGetParametersCliId": {
       "description": "Filter by CLI IDs. `?[any]=true` operator for any CLI.",
@@ -18377,7 +18255,7 @@
               "type": "id",
               "value": "RequestsIdEventsGetParametersCliId1"
             },
-            "displayName": "RequestsIdEventsGetParametersCliId1"
+            "displayName": "Any"
           },
           {
             "type": {
@@ -18488,7 +18366,7 @@
           }
         ]
       },
-      "displayName": "RequestsIdEventsGetParametersLastAttemptAt1"
+      "displayName": "Gt"
     },
     "RequestsIdEventsGetParametersLastAttemptAt": {
       "description": "Filter by `last_attempt_at` date using a date operator",
@@ -18510,7 +18388,7 @@
               "type": "id",
               "value": "RequestsIdEventsGetParametersLastAttemptAt1"
             },
-            "displayName": "RequestsIdEventsGetParametersLastAttemptAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -18693,8 +18571,7 @@
             "value": "created_at"
           }
         ]
-      },
-      "displayName": "RequestsIdEventsGetParametersOrderBy0"
+      }
     },
     "RequestsIdEventsGetParametersOrderBySchemaOneOf1Items": {
       "name": "RequestsIdEventsGetParametersOrderBySchemaOneOf1Items",
@@ -18724,8 +18601,7 @@
             "value": "RequestsIdEventsGetParametersOrderBySchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "RequestsIdEventsGetParametersOrderBy1"
+      }
     },
     "RequestsIdEventsGetParametersOrderBy": {
       "description": "Sort key(s)",
@@ -18738,16 +18614,14 @@
             "type": {
               "type": "id",
               "value": "RequestsIdEventsGetParametersOrderBy0"
-            },
-            "displayName": "RequestsIdEventsGetParametersOrderBy0"
+            }
           },
           {
             "typeName": "RequestsIdEventsGetParametersOrderBy1",
             "type": {
               "type": "id",
               "value": "RequestsIdEventsGetParametersOrderBy1"
-            },
-            "displayName": "RequestsIdEventsGetParametersOrderBy1"
+            }
           }
         ]
       }
@@ -18764,8 +18638,7 @@
             "value": "desc"
           }
         ]
-      },
-      "displayName": "RequestsIdEventsGetParametersDir0"
+      }
     },
     "RequestsIdEventsGetParametersDirSchemaOneOf1Items": {
       "name": "RequestsIdEventsGetParametersDirSchemaOneOf1Items",
@@ -18792,8 +18665,7 @@
             "value": "RequestsIdEventsGetParametersDirSchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "RequestsIdEventsGetParametersDir1"
+      }
     },
     "RequestsIdEventsGetParametersDir": {
       "description": "Sort direction",
@@ -18806,16 +18678,14 @@
             "type": {
               "type": "id",
               "value": "RequestsIdEventsGetParametersDir0"
-            },
-            "displayName": "RequestsIdEventsGetParametersDir0"
+            }
           },
           {
             "typeName": "RequestsIdEventsGetParametersDir1",
             "type": {
               "type": "id",
               "value": "RequestsIdEventsGetParametersDir1"
-            },
-            "displayName": "RequestsIdEventsGetParametersDir1"
+            }
           }
         ]
       }
@@ -18860,8 +18730,7 @@
             "value": "created_at"
           }
         ]
-      },
-      "displayName": "RequestsIdIgnoredEventsGetParametersOrderBy0"
+      }
     },
     "RequestsIdIgnoredEventsGetParametersOrderBySchemaOneOf1Items": {
       "name": "RequestsIdIgnoredEventsGetParametersOrderBySchemaOneOf1Items",
@@ -18885,8 +18754,7 @@
             "value": "RequestsIdIgnoredEventsGetParametersOrderBySchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "RequestsIdIgnoredEventsGetParametersOrderBy1"
+      }
     },
     "RequestsIdIgnoredEventsGetParametersOrderBy": {
       "description": "Sort key(s)",
@@ -18899,16 +18767,14 @@
             "type": {
               "type": "id",
               "value": "RequestsIdIgnoredEventsGetParametersOrderBy0"
-            },
-            "displayName": "RequestsIdIgnoredEventsGetParametersOrderBy0"
+            }
           },
           {
             "typeName": "RequestsIdIgnoredEventsGetParametersOrderBy1",
             "type": {
               "type": "id",
               "value": "RequestsIdIgnoredEventsGetParametersOrderBy1"
-            },
-            "displayName": "RequestsIdIgnoredEventsGetParametersOrderBy1"
+            }
           }
         ]
       }
@@ -18925,8 +18791,7 @@
             "value": "desc"
           }
         ]
-      },
-      "displayName": "RequestsIdIgnoredEventsGetParametersDir0"
+      }
     },
     "RequestsIdIgnoredEventsGetParametersDirSchemaOneOf1Items": {
       "name": "RequestsIdIgnoredEventsGetParametersDirSchemaOneOf1Items",
@@ -18953,8 +18818,7 @@
             "value": "RequestsIdIgnoredEventsGetParametersDirSchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "RequestsIdIgnoredEventsGetParametersDir1"
+      }
     },
     "RequestsIdIgnoredEventsGetParametersDir": {
       "description": "Sort direction",
@@ -18967,16 +18831,14 @@
             "type": {
               "type": "id",
               "value": "RequestsIdIgnoredEventsGetParametersDir0"
-            },
-            "displayName": "RequestsIdIgnoredEventsGetParametersDir0"
+            }
           },
           {
             "typeName": "RequestsIdIgnoredEventsGetParametersDir1",
             "type": {
               "type": "id",
               "value": "RequestsIdIgnoredEventsGetParametersDir1"
-            },
-            "displayName": "RequestsIdIgnoredEventsGetParametersDir1"
+            }
           }
         ]
       }
@@ -19061,7 +18923,7 @@
           }
         ]
       },
-      "displayName": "BulkRequestsRetryGetParametersCancelledAt1"
+      "displayName": "Gt"
     },
     "BulkRequestsRetryGetParametersCancelledAt": {
       "description": "Filter by date the bulk retry was cancelled",
@@ -19083,7 +18945,7 @@
               "type": "id",
               "value": "BulkRequestsRetryGetParametersCancelledAt1"
             },
-            "displayName": "BulkRequestsRetryGetParametersCancelledAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -19168,7 +19030,7 @@
           }
         ]
       },
-      "displayName": "BulkRequestsRetryGetParametersCompletedAt1"
+      "displayName": "Gt"
     },
     "BulkRequestsRetryGetParametersCompletedAt": {
       "description": "Filter by date the bulk retry completed",
@@ -19190,7 +19052,7 @@
               "type": "id",
               "value": "BulkRequestsRetryGetParametersCompletedAt1"
             },
-            "displayName": "BulkRequestsRetryGetParametersCompletedAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -19275,7 +19137,7 @@
           }
         ]
       },
-      "displayName": "BulkRequestsRetryGetParametersCreatedAt1"
+      "displayName": "Gt"
     },
     "BulkRequestsRetryGetParametersCreatedAt": {
       "description": "Filter by date the bulk retry was created",
@@ -19297,7 +19159,7 @@
               "type": "id",
               "value": "BulkRequestsRetryGetParametersCreatedAt1"
             },
-            "displayName": "BulkRequestsRetryGetParametersCreatedAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -19448,7 +19310,7 @@
           }
         ]
       },
-      "displayName": "BulkRequestsRetryGetParametersQuerySchemaRejectionCause1"
+      "displayName": "Gt"
     },
     "BulkRequestsRetryGetParametersQuerySchemaRejectionCause2": {
       "name": "BulkRequestsRetryGetParametersQuerySchemaRejectionCause2",
@@ -19461,8 +19323,7 @@
             "value": "RequestRejectionCause"
           }
         }
-      },
-      "displayName": "BulkRequestsRetryGetParametersQuerySchemaRejectionCause2"
+      }
     },
     "BulkRequestsRetryGetParametersQuerySchemaRejectionCause": {
       "description": "Filter by rejection cause",
@@ -19484,15 +19345,14 @@
               "type": "id",
               "value": "BulkRequestsRetryGetParametersQuerySchemaRejectionCause1"
             },
-            "displayName": "BulkRequestsRetryGetParametersQuerySchemaRejectionCause1"
+            "displayName": "Gt"
           },
           {
             "typeName": "BulkRequestsRetryGetParametersQuerySchemaRejectionCause2",
             "type": {
               "type": "id",
               "value": "BulkRequestsRetryGetParametersQuerySchemaRejectionCause2"
-            },
-            "displayName": "BulkRequestsRetryGetParametersQuerySchemaRejectionCause2"
+            }
           }
         ]
       }
@@ -19582,7 +19442,7 @@
           }
         ]
       },
-      "displayName": "BulkRequestsRetryGetParametersQuerySchemaIgnoredCount1"
+      "displayName": "Gt"
     },
     "BulkRequestsRetryGetParametersQuerySchemaIgnoredCount": {
       "name": "BulkRequestsRetryGetParametersQuerySchemaIgnoredCount",
@@ -19604,7 +19464,7 @@
               "type": "id",
               "value": "BulkRequestsRetryGetParametersQuerySchemaIgnoredCount1"
             },
-            "displayName": "BulkRequestsRetryGetParametersQuerySchemaIgnoredCount1"
+            "displayName": "Gt"
           },
           {
             "type": {
@@ -19706,7 +19566,7 @@
           }
         ]
       },
-      "displayName": "BulkRequestsRetryGetParametersQuerySchemaEventsCount1"
+      "displayName": "Gt"
     },
     "BulkRequestsRetryGetParametersQuerySchemaEventsCount": {
       "name": "BulkRequestsRetryGetParametersQuerySchemaEventsCount",
@@ -19728,7 +19588,7 @@
               "type": "id",
               "value": "BulkRequestsRetryGetParametersQuerySchemaEventsCount1"
             },
-            "displayName": "BulkRequestsRetryGetParametersQuerySchemaEventsCount1"
+            "displayName": "Gt"
           },
           {
             "type": {
@@ -19937,7 +19797,7 @@
           }
         ]
       },
-      "displayName": "BulkRequestsRetryGetParametersQuerySchemaCreatedAt1"
+      "displayName": "Gt"
     },
     "BulkRequestsRetryGetParametersQuerySchemaCreatedAt": {
       "name": "BulkRequestsRetryGetParametersQuerySchemaCreatedAt",
@@ -19958,7 +19818,7 @@
               "type": "id",
               "value": "BulkRequestsRetryGetParametersQuerySchemaCreatedAt1"
             },
-            "displayName": "BulkRequestsRetryGetParametersQuerySchemaCreatedAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -20031,7 +19891,7 @@
           }
         ]
       },
-      "displayName": "BulkRequestsRetryGetParametersQuerySchemaIngestedAt1"
+      "displayName": "Gt"
     },
     "BulkRequestsRetryGetParametersQuerySchemaIngestedAt": {
       "name": "BulkRequestsRetryGetParametersQuerySchemaIngestedAt",
@@ -20052,7 +19912,7 @@
               "type": "id",
               "value": "BulkRequestsRetryGetParametersQuerySchemaIngestedAt1"
             },
-            "displayName": "BulkRequestsRetryGetParametersQuerySchemaIngestedAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -20109,8 +19969,7 @@
             "value": "created_at"
           }
         ]
-      },
-      "displayName": "BulkRequestsRetryGetParametersQuerySchemaOrderBy0"
+      }
     },
     "BulkRequestsRetryGetParametersQuerySchemaOrderByOneOf1Items": {
       "name": "BulkRequestsRetryGetParametersQuerySchemaOrderByOneOf1Items",
@@ -20137,8 +19996,7 @@
             "value": "BulkRequestsRetryGetParametersQuerySchemaOrderByOneOf1Items"
           }
         }
-      },
-      "displayName": "BulkRequestsRetryGetParametersQuerySchemaOrderBy1"
+      }
     },
     "BulkRequestsRetryGetParametersQuerySchemaOrderBy": {
       "description": "Sort key(s)",
@@ -20151,16 +20009,14 @@
             "type": {
               "type": "id",
               "value": "BulkRequestsRetryGetParametersQuerySchemaOrderBy0"
-            },
-            "displayName": "BulkRequestsRetryGetParametersQuerySchemaOrderBy0"
+            }
           },
           {
             "typeName": "BulkRequestsRetryGetParametersQuerySchemaOrderBy1",
             "type": {
               "type": "id",
               "value": "BulkRequestsRetryGetParametersQuerySchemaOrderBy1"
-            },
-            "displayName": "BulkRequestsRetryGetParametersQuerySchemaOrderBy1"
+            }
           }
         ]
       }
@@ -20177,8 +20033,7 @@
             "value": "desc"
           }
         ]
-      },
-      "displayName": "BulkRequestsRetryGetParametersQuerySchemaDir0"
+      }
     },
     "BulkRequestsRetryGetParametersQuerySchemaDirOneOf1Items": {
       "name": "BulkRequestsRetryGetParametersQuerySchemaDirOneOf1Items",
@@ -20205,8 +20060,7 @@
             "value": "BulkRequestsRetryGetParametersQuerySchemaDirOneOf1Items"
           }
         }
-      },
-      "displayName": "BulkRequestsRetryGetParametersQuerySchemaDir1"
+      }
     },
     "BulkRequestsRetryGetParametersQuerySchemaDir": {
       "description": "Sort direction",
@@ -20219,16 +20073,14 @@
             "type": {
               "type": "id",
               "value": "BulkRequestsRetryGetParametersQuerySchemaDir0"
-            },
-            "displayName": "BulkRequestsRetryGetParametersQuerySchemaDir0"
+            }
           },
           {
             "typeName": "BulkRequestsRetryGetParametersQuerySchemaDir1",
             "type": {
               "type": "id",
               "value": "BulkRequestsRetryGetParametersQuerySchemaDir1"
-            },
-            "displayName": "BulkRequestsRetryGetParametersQuerySchemaDir1"
+            }
           }
         ]
       }
@@ -20482,8 +20334,7 @@
             "value": "created_at"
           }
         ]
-      },
-      "displayName": "BulkRequestsRetryGetParametersOrderBy0"
+      }
     },
     "BulkRequestsRetryGetParametersOrderBySchemaOneOf1Items": {
       "name": "BulkRequestsRetryGetParametersOrderBySchemaOneOf1Items",
@@ -20507,8 +20358,7 @@
             "value": "BulkRequestsRetryGetParametersOrderBySchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "BulkRequestsRetryGetParametersOrderBy1"
+      }
     },
     "BulkRequestsRetryGetParametersOrderBy": {
       "description": "Sort key(s)",
@@ -20521,16 +20371,14 @@
             "type": {
               "type": "id",
               "value": "BulkRequestsRetryGetParametersOrderBy0"
-            },
-            "displayName": "BulkRequestsRetryGetParametersOrderBy0"
+            }
           },
           {
             "typeName": "BulkRequestsRetryGetParametersOrderBy1",
             "type": {
               "type": "id",
               "value": "BulkRequestsRetryGetParametersOrderBy1"
-            },
-            "displayName": "BulkRequestsRetryGetParametersOrderBy1"
+            }
           }
         ]
       }
@@ -20547,8 +20395,7 @@
             "value": "desc"
           }
         ]
-      },
-      "displayName": "BulkRequestsRetryGetParametersDir0"
+      }
     },
     "BulkRequestsRetryGetParametersDirSchemaOneOf1Items": {
       "name": "BulkRequestsRetryGetParametersDirSchemaOneOf1Items",
@@ -20575,8 +20422,7 @@
             "value": "BulkRequestsRetryGetParametersDirSchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "BulkRequestsRetryGetParametersDir1"
+      }
     },
     "BulkRequestsRetryGetParametersDir": {
       "description": "Sort direction",
@@ -20589,16 +20435,14 @@
             "type": {
               "type": "id",
               "value": "BulkRequestsRetryGetParametersDir0"
-            },
-            "displayName": "BulkRequestsRetryGetParametersDir0"
+            }
           },
           {
             "typeName": "BulkRequestsRetryGetParametersDir1",
             "type": {
               "type": "id",
               "value": "BulkRequestsRetryGetParametersDir1"
-            },
-            "displayName": "BulkRequestsRetryGetParametersDir1"
+            }
           }
         ]
       }
@@ -20718,7 +20562,7 @@
           }
         ]
       },
-      "displayName": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryRejectionCause1"
+      "displayName": "Gt"
     },
     "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryRejectionCause2": {
       "name": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryRejectionCause2",
@@ -20731,8 +20575,7 @@
             "value": "RequestRejectionCause"
           }
         }
-      },
-      "displayName": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryRejectionCause2"
+      }
     },
     "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryRejectionCause": {
       "description": "Filter by rejection cause",
@@ -20754,15 +20597,14 @@
               "type": "id",
               "value": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryRejectionCause1"
             },
-            "displayName": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryRejectionCause1"
+            "displayName": "Gt"
           },
           {
             "typeName": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryRejectionCause2",
             "type": {
               "type": "id",
               "value": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryRejectionCause2"
-            },
-            "displayName": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryRejectionCause2"
+            }
           }
         ]
       }
@@ -20852,7 +20694,7 @@
           }
         ]
       },
-      "displayName": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryIgnoredCount1"
+      "displayName": "Gt"
     },
     "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryIgnoredCount": {
       "name": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryIgnoredCount",
@@ -20874,7 +20716,7 @@
               "type": "id",
               "value": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryIgnoredCount1"
             },
-            "displayName": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryIgnoredCount1"
+            "displayName": "Gt"
           },
           {
             "type": {
@@ -20976,7 +20818,7 @@
           }
         ]
       },
-      "displayName": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryEventsCount1"
+      "displayName": "Gt"
     },
     "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryEventsCount": {
       "name": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryEventsCount",
@@ -20998,7 +20840,7 @@
               "type": "id",
               "value": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryEventsCount1"
             },
-            "displayName": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryEventsCount1"
+            "displayName": "Gt"
           },
           {
             "type": {
@@ -21207,7 +21049,7 @@
           }
         ]
       },
-      "displayName": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryCreatedAt1"
+      "displayName": "Gt"
     },
     "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryCreatedAt": {
       "name": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryCreatedAt",
@@ -21228,7 +21070,7 @@
               "type": "id",
               "value": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryCreatedAt1"
             },
-            "displayName": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryCreatedAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -21301,7 +21143,7 @@
           }
         ]
       },
-      "displayName": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryIngestedAt1"
+      "displayName": "Gt"
     },
     "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryIngestedAt": {
       "name": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryIngestedAt",
@@ -21322,7 +21164,7 @@
               "type": "id",
               "value": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryIngestedAt1"
             },
-            "displayName": "BulkRequestsRetryPostRequestBodyContentApplicationJsonSchemaQueryIngestedAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -21636,7 +21478,7 @@
           }
         ]
       },
-      "displayName": "BulkRequestsRetryPlanGetParametersQuerySchemaRejectionCause1"
+      "displayName": "Gt"
     },
     "BulkRequestsRetryPlanGetParametersQuerySchemaRejectionCause2": {
       "name": "BulkRequestsRetryPlanGetParametersQuerySchemaRejectionCause2",
@@ -21649,8 +21491,7 @@
             "value": "RequestRejectionCause"
           }
         }
-      },
-      "displayName": "BulkRequestsRetryPlanGetParametersQuerySchemaRejectionCause2"
+      }
     },
     "BulkRequestsRetryPlanGetParametersQuerySchemaRejectionCause": {
       "description": "Filter by rejection cause",
@@ -21672,15 +21513,14 @@
               "type": "id",
               "value": "BulkRequestsRetryPlanGetParametersQuerySchemaRejectionCause1"
             },
-            "displayName": "BulkRequestsRetryPlanGetParametersQuerySchemaRejectionCause1"
+            "displayName": "Gt"
           },
           {
             "typeName": "BulkRequestsRetryPlanGetParametersQuerySchemaRejectionCause2",
             "type": {
               "type": "id",
               "value": "BulkRequestsRetryPlanGetParametersQuerySchemaRejectionCause2"
-            },
-            "displayName": "BulkRequestsRetryPlanGetParametersQuerySchemaRejectionCause2"
+            }
           }
         ]
       }
@@ -21770,7 +21610,7 @@
           }
         ]
       },
-      "displayName": "BulkRequestsRetryPlanGetParametersQuerySchemaIgnoredCount1"
+      "displayName": "Gt"
     },
     "BulkRequestsRetryPlanGetParametersQuerySchemaIgnoredCount": {
       "name": "BulkRequestsRetryPlanGetParametersQuerySchemaIgnoredCount",
@@ -21792,7 +21632,7 @@
               "type": "id",
               "value": "BulkRequestsRetryPlanGetParametersQuerySchemaIgnoredCount1"
             },
-            "displayName": "BulkRequestsRetryPlanGetParametersQuerySchemaIgnoredCount1"
+            "displayName": "Gt"
           },
           {
             "type": {
@@ -21894,7 +21734,7 @@
           }
         ]
       },
-      "displayName": "BulkRequestsRetryPlanGetParametersQuerySchemaEventsCount1"
+      "displayName": "Gt"
     },
     "BulkRequestsRetryPlanGetParametersQuerySchemaEventsCount": {
       "name": "BulkRequestsRetryPlanGetParametersQuerySchemaEventsCount",
@@ -21916,7 +21756,7 @@
               "type": "id",
               "value": "BulkRequestsRetryPlanGetParametersQuerySchemaEventsCount1"
             },
-            "displayName": "BulkRequestsRetryPlanGetParametersQuerySchemaEventsCount1"
+            "displayName": "Gt"
           },
           {
             "type": {
@@ -22125,7 +21965,7 @@
           }
         ]
       },
-      "displayName": "BulkRequestsRetryPlanGetParametersQuerySchemaCreatedAt1"
+      "displayName": "Gt"
     },
     "BulkRequestsRetryPlanGetParametersQuerySchemaCreatedAt": {
       "name": "BulkRequestsRetryPlanGetParametersQuerySchemaCreatedAt",
@@ -22146,7 +21986,7 @@
               "type": "id",
               "value": "BulkRequestsRetryPlanGetParametersQuerySchemaCreatedAt1"
             },
-            "displayName": "BulkRequestsRetryPlanGetParametersQuerySchemaCreatedAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -22219,7 +22059,7 @@
           }
         ]
       },
-      "displayName": "BulkRequestsRetryPlanGetParametersQuerySchemaIngestedAt1"
+      "displayName": "Gt"
     },
     "BulkRequestsRetryPlanGetParametersQuerySchemaIngestedAt": {
       "name": "BulkRequestsRetryPlanGetParametersQuerySchemaIngestedAt",
@@ -22240,7 +22080,7 @@
               "type": "id",
               "value": "BulkRequestsRetryPlanGetParametersQuerySchemaIngestedAt1"
             },
-            "displayName": "BulkRequestsRetryPlanGetParametersQuerySchemaIngestedAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -22498,8 +22338,7 @@
             }
           }
         ]
-      },
-      "displayName": "RulesetsGetParametersName0"
+      }
     },
     "RulesetsGetParametersNameSchemaOneOf1Gt": {
       "name": "RulesetsGetParametersNameSchemaOneOf1Gt",
@@ -22726,7 +22565,7 @@
           }
         ]
       },
-      "displayName": "RulesetsGetParametersName1"
+      "displayName": "Gt"
     },
     "RulesetsGetParametersName": {
       "description": "The ruleset name",
@@ -22739,8 +22578,7 @@
             "type": {
               "type": "id",
               "value": "RulesetsGetParametersName0"
-            },
-            "displayName": "RulesetsGetParametersName0"
+            }
           },
           {
             "typeName": "RulesetsGetParametersName1",
@@ -22748,7 +22586,7 @@
               "type": "id",
               "value": "RulesetsGetParametersName1"
             },
-            "displayName": "RulesetsGetParametersName1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -22833,7 +22671,7 @@
           }
         ]
       },
-      "displayName": "RulesetsGetParametersArchivedAt1"
+      "displayName": "Gt"
     },
     "RulesetsGetParametersArchivedAt": {
       "description": "Date the ruleset was archived",
@@ -22855,7 +22693,7 @@
               "type": "id",
               "value": "RulesetsGetParametersArchivedAt1"
             },
-            "displayName": "RulesetsGetParametersArchivedAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -22869,8 +22707,7 @@
             "value": "created_at"
           }
         ]
-      },
-      "displayName": "RulesetsGetParametersOrderBy0"
+      }
     },
     "RulesetsGetParametersOrderBySchemaOneOf1Items": {
       "name": "RulesetsGetParametersOrderBySchemaOneOf1Items",
@@ -22894,8 +22731,7 @@
             "value": "RulesetsGetParametersOrderBySchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "RulesetsGetParametersOrderBy1"
+      }
     },
     "RulesetsGetParametersOrderBy": {
       "description": "Sort key(s)",
@@ -22908,16 +22744,14 @@
             "type": {
               "type": "id",
               "value": "RulesetsGetParametersOrderBy0"
-            },
-            "displayName": "RulesetsGetParametersOrderBy0"
+            }
           },
           {
             "typeName": "RulesetsGetParametersOrderBy1",
             "type": {
               "type": "id",
               "value": "RulesetsGetParametersOrderBy1"
-            },
-            "displayName": "RulesetsGetParametersOrderBy1"
+            }
           }
         ]
       }
@@ -22934,8 +22768,7 @@
             "value": "desc"
           }
         ]
-      },
-      "displayName": "RulesetsGetParametersDir0"
+      }
     },
     "RulesetsGetParametersDirSchemaOneOf1Items": {
       "name": "RulesetsGetParametersDirSchemaOneOf1Items",
@@ -22962,8 +22795,7 @@
             "value": "RulesetsGetParametersDirSchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "RulesetsGetParametersDir1"
+      }
     },
     "RulesetsGetParametersDir": {
       "description": "Sort direction",
@@ -22976,16 +22808,14 @@
             "type": {
               "type": "id",
               "value": "RulesetsGetParametersDir0"
-            },
-            "displayName": "RulesetsGetParametersDir0"
+            }
           },
           {
             "typeName": "RulesetsGetParametersDir1",
             "type": {
               "type": "id",
               "value": "RulesetsGetParametersDir1"
-            },
-            "displayName": "RulesetsGetParametersDir1"
+            }
           }
         ]
       }
@@ -23110,7 +22940,7 @@
           }
         ]
       },
-      "displayName": "SourcesGetParametersName1"
+      "displayName": "Gt"
     },
     "SourcesGetParametersName": {
       "description": "The source name",
@@ -23134,7 +22964,7 @@
               "type": "id",
               "value": "SourcesGetParametersName1"
             },
-            "displayName": "SourcesGetParametersName1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -23219,7 +23049,7 @@
           }
         ]
       },
-      "displayName": "SourcesGetParametersArchivedAt1"
+      "displayName": "Gt"
     },
     "SourcesGetParametersArchivedAt": {
       "description": "Date the source was archived",
@@ -23241,7 +23071,7 @@
               "type": "id",
               "value": "SourcesGetParametersArchivedAt1"
             },
-            "displayName": "SourcesGetParametersArchivedAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -23266,7 +23096,7 @@
           }
         ]
       },
-      "displayName": "SourcesGetParametersIntegrationId1"
+      "displayName": "Any"
     },
     "SourcesGetParametersIntegrationId": {
       "description": "Filter by integration IDs",
@@ -23288,7 +23118,7 @@
               "type": "id",
               "value": "SourcesGetParametersIntegrationId1"
             },
-            "displayName": "SourcesGetParametersIntegrationId1"
+            "displayName": "Any"
           }
         ]
       }
@@ -23302,8 +23132,7 @@
             "value": "created_at"
           }
         ]
-      },
-      "displayName": "SourcesGetParametersOrderBy0"
+      }
     },
     "SourcesGetParametersOrderBySchemaOneOf1Items": {
       "name": "SourcesGetParametersOrderBySchemaOneOf1Items",
@@ -23327,8 +23156,7 @@
             "value": "SourcesGetParametersOrderBySchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "SourcesGetParametersOrderBy1"
+      }
     },
     "SourcesGetParametersOrderBy": {
       "description": "Sort key(s)",
@@ -23341,16 +23169,14 @@
             "type": {
               "type": "id",
               "value": "SourcesGetParametersOrderBy0"
-            },
-            "displayName": "SourcesGetParametersOrderBy0"
+            }
           },
           {
             "typeName": "SourcesGetParametersOrderBy1",
             "type": {
               "type": "id",
               "value": "SourcesGetParametersOrderBy1"
-            },
-            "displayName": "SourcesGetParametersOrderBy1"
+            }
           }
         ]
       }
@@ -23367,8 +23193,7 @@
             "value": "desc"
           }
         ]
-      },
-      "displayName": "SourcesGetParametersDir0"
+      }
     },
     "SourcesGetParametersDirSchemaOneOf1Items": {
       "name": "SourcesGetParametersDirSchemaOneOf1Items",
@@ -23395,8 +23220,7 @@
             "value": "SourcesGetParametersDirSchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "SourcesGetParametersDir1"
+      }
     },
     "SourcesGetParametersDir": {
       "description": "Sort direction",
@@ -23409,16 +23233,14 @@
             "type": {
               "type": "id",
               "value": "SourcesGetParametersDir0"
-            },
-            "displayName": "SourcesGetParametersDir0"
+            }
           },
           {
             "typeName": "SourcesGetParametersDir1",
             "type": {
               "type": "id",
               "value": "SourcesGetParametersDir1"
-            },
-            "displayName": "SourcesGetParametersDir1"
+            }
           }
         ]
       }
@@ -23494,8 +23316,7 @@
             "value": "created_at"
           }
         ]
-      },
-      "displayName": "TransformationsGetParametersOrderBy0"
+      }
     },
     "TransformationsGetParametersOrderBySchemaOneOf1Items": {
       "name": "TransformationsGetParametersOrderBySchemaOneOf1Items",
@@ -23519,8 +23340,7 @@
             "value": "TransformationsGetParametersOrderBySchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "TransformationsGetParametersOrderBy1"
+      }
     },
     "TransformationsGetParametersOrderBy": {
       "description": "Sort key(s)",
@@ -23533,16 +23353,14 @@
             "type": {
               "type": "id",
               "value": "TransformationsGetParametersOrderBy0"
-            },
-            "displayName": "TransformationsGetParametersOrderBy0"
+            }
           },
           {
             "typeName": "TransformationsGetParametersOrderBy1",
             "type": {
               "type": "id",
               "value": "TransformationsGetParametersOrderBy1"
-            },
-            "displayName": "TransformationsGetParametersOrderBy1"
+            }
           }
         ]
       }
@@ -23559,8 +23377,7 @@
             "value": "desc"
           }
         ]
-      },
-      "displayName": "TransformationsGetParametersDir0"
+      }
     },
     "TransformationsGetParametersDirSchemaOneOf1Items": {
       "name": "TransformationsGetParametersDirSchemaOneOf1Items",
@@ -23587,8 +23404,7 @@
             "value": "TransformationsGetParametersDirSchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "TransformationsGetParametersDir1"
+      }
     },
     "TransformationsGetParametersDir": {
       "description": "Sort direction",
@@ -23601,16 +23417,14 @@
             "type": {
               "type": "id",
               "value": "TransformationsGetParametersDir0"
-            },
-            "displayName": "TransformationsGetParametersDir0"
+            }
           },
           {
             "typeName": "TransformationsGetParametersDir1",
             "type": {
               "type": "id",
               "value": "TransformationsGetParametersDir1"
-            },
-            "displayName": "TransformationsGetParametersDir1"
+            }
           }
         ]
       }
@@ -23793,8 +23607,7 @@
             "value": "fatal"
           }
         ]
-      },
-      "displayName": "TransformationsIdExecutionsGetParametersLogLevel0"
+      }
     },
     "TransformationsIdExecutionsGetParametersLogLevelSchemaOneOf1Items": {
       "name": "TransformationsIdExecutionsGetParametersLogLevelSchemaOneOf1Items",
@@ -23830,8 +23643,7 @@
             "value": "TransformationsIdExecutionsGetParametersLogLevelSchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "TransformationsIdExecutionsGetParametersLogLevel1"
+      }
     },
     "TransformationsIdExecutionsGetParametersLogLevel": {
       "description": "Log level of the execution",
@@ -23844,16 +23656,14 @@
             "type": {
               "type": "id",
               "value": "TransformationsIdExecutionsGetParametersLogLevel0"
-            },
-            "displayName": "TransformationsIdExecutionsGetParametersLogLevel0"
+            }
           },
           {
             "typeName": "TransformationsIdExecutionsGetParametersLogLevel1",
             "type": {
               "type": "id",
               "value": "TransformationsIdExecutionsGetParametersLogLevel1"
-            },
-            "displayName": "TransformationsIdExecutionsGetParametersLogLevel1"
+            }
           }
         ]
       }
@@ -23986,7 +23796,7 @@
           }
         ]
       },
-      "displayName": "TransformationsIdExecutionsGetParametersCreatedAt1"
+      "displayName": "Gt"
     },
     "TransformationsIdExecutionsGetParametersCreatedAt": {
       "description": "ISO date of the transformation's execution",
@@ -24008,7 +23818,7 @@
               "type": "id",
               "value": "TransformationsIdExecutionsGetParametersCreatedAt1"
             },
-            "displayName": "TransformationsIdExecutionsGetParametersCreatedAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -24022,8 +23832,7 @@
             "value": "created_at"
           }
         ]
-      },
-      "displayName": "TransformationsIdExecutionsGetParametersOrderBy0"
+      }
     },
     "TransformationsIdExecutionsGetParametersOrderBySchemaOneOf1Items": {
       "name": "TransformationsIdExecutionsGetParametersOrderBySchemaOneOf1Items",
@@ -24047,8 +23856,7 @@
             "value": "TransformationsIdExecutionsGetParametersOrderBySchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "TransformationsIdExecutionsGetParametersOrderBy1"
+      }
     },
     "TransformationsIdExecutionsGetParametersOrderBy": {
       "description": "Sort key(s)",
@@ -24061,16 +23869,14 @@
             "type": {
               "type": "id",
               "value": "TransformationsIdExecutionsGetParametersOrderBy0"
-            },
-            "displayName": "TransformationsIdExecutionsGetParametersOrderBy0"
+            }
           },
           {
             "typeName": "TransformationsIdExecutionsGetParametersOrderBy1",
             "type": {
               "type": "id",
               "value": "TransformationsIdExecutionsGetParametersOrderBy1"
-            },
-            "displayName": "TransformationsIdExecutionsGetParametersOrderBy1"
+            }
           }
         ]
       }
@@ -24087,8 +23893,7 @@
             "value": "desc"
           }
         ]
-      },
-      "displayName": "TransformationsIdExecutionsGetParametersDir0"
+      }
     },
     "TransformationsIdExecutionsGetParametersDirSchemaOneOf1Items": {
       "name": "TransformationsIdExecutionsGetParametersDirSchemaOneOf1Items",
@@ -24115,8 +23920,7 @@
             "value": "TransformationsIdExecutionsGetParametersDirSchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "TransformationsIdExecutionsGetParametersDir1"
+      }
     },
     "TransformationsIdExecutionsGetParametersDir": {
       "description": "Sort direction",
@@ -24129,16 +23933,14 @@
             "type": {
               "type": "id",
               "value": "TransformationsIdExecutionsGetParametersDir0"
-            },
-            "displayName": "TransformationsIdExecutionsGetParametersDir0"
+            }
           },
           {
             "typeName": "TransformationsIdExecutionsGetParametersDir1",
             "type": {
               "type": "id",
               "value": "TransformationsIdExecutionsGetParametersDir1"
-            },
-            "displayName": "TransformationsIdExecutionsGetParametersDir1"
+            }
           }
         ]
       }
@@ -24263,7 +24065,7 @@
           }
         ]
       },
-      "displayName": "WebhooksGetParametersName1"
+      "displayName": "Gt"
     },
     "WebhooksGetParametersName": {
       "description": "Filter by connection name",
@@ -24287,7 +24089,7 @@
               "type": "id",
               "value": "WebhooksGetParametersName1"
             },
-            "displayName": "WebhooksGetParametersName1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -24432,7 +24234,7 @@
           }
         ]
       },
-      "displayName": "WebhooksGetParametersArchivedAt1"
+      "displayName": "Gt"
     },
     "WebhooksGetParametersArchivedAt": {
       "description": "Date the connection was archived",
@@ -24454,7 +24256,7 @@
               "type": "id",
               "value": "WebhooksGetParametersArchivedAt1"
             },
-            "displayName": "WebhooksGetParametersArchivedAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -24539,7 +24341,7 @@
           }
         ]
       },
-      "displayName": "WebhooksGetParametersPausedAt1"
+      "displayName": "Gt"
     },
     "WebhooksGetParametersPausedAt": {
       "description": "Date the connection was paused",
@@ -24561,7 +24363,7 @@
               "type": "id",
               "value": "WebhooksGetParametersPausedAt1"
             },
-            "displayName": "WebhooksGetParametersPausedAt1"
+            "displayName": "Gt"
           }
         ]
       }
@@ -24575,8 +24377,7 @@
             "value": "created_at"
           }
         ]
-      },
-      "displayName": "WebhooksGetParametersOrderBy0"
+      }
     },
     "WebhooksGetParametersOrderBySchemaOneOf1Items": {
       "name": "WebhooksGetParametersOrderBySchemaOneOf1Items",
@@ -24600,8 +24401,7 @@
             "value": "WebhooksGetParametersOrderBySchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "WebhooksGetParametersOrderBy1"
+      }
     },
     "WebhooksGetParametersOrderBy": {
       "description": "Sort key(s)",
@@ -24614,16 +24414,14 @@
             "type": {
               "type": "id",
               "value": "WebhooksGetParametersOrderBy0"
-            },
-            "displayName": "WebhooksGetParametersOrderBy0"
+            }
           },
           {
             "typeName": "WebhooksGetParametersOrderBy1",
             "type": {
               "type": "id",
               "value": "WebhooksGetParametersOrderBy1"
-            },
-            "displayName": "WebhooksGetParametersOrderBy1"
+            }
           }
         ]
       }
@@ -24640,8 +24438,7 @@
             "value": "desc"
           }
         ]
-      },
-      "displayName": "WebhooksGetParametersDir0"
+      }
     },
     "WebhooksGetParametersDirSchemaOneOf1Items": {
       "name": "WebhooksGetParametersDirSchemaOneOf1Items",
@@ -24668,8 +24465,7 @@
             "value": "WebhooksGetParametersDirSchemaOneOf1Items"
           }
         }
-      },
-      "displayName": "WebhooksGetParametersDir1"
+      }
     },
     "WebhooksGetParametersDir": {
       "description": "Sort direction",
@@ -24682,16 +24478,14 @@
             "type": {
               "type": "id",
               "value": "WebhooksGetParametersDir0"
-            },
-            "displayName": "WebhooksGetParametersDir0"
+            }
           },
           {
             "typeName": "WebhooksGetParametersDir1",
             "type": {
               "type": "id",
               "value": "WebhooksGetParametersDir1"
-            },
-            "displayName": "WebhooksGetParametersDir1"
+            }
           }
         ]
       }

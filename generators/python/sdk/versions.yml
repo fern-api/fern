@@ -1,5 +1,67 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+
+- version: 4.30.3
+  changelogEntry:
+    - summary: |
+        Upgrade generator-cli dependency to fix local generation handling of .fernignore files.
+      type: fix
+  createdAt: "2025-09-29"
+  irVersion: 60
+
+- version: 4.30.2
+  changelogEntry:
+    - summary: Fix enum generation to properly escape quotes and backslashes in enum values.
+      type: fix
+  createdAt: "2025-09-27"
+  irVersion: 60
+
+- version: 4.30.1
+  changelogEntry:
+    - summary: Fix sdk `v1_on_v2` export of non-existent `IS_PYDANTIC_V2` variable.
+      type: fix
+  createdAt: "2025-09-25"
+  irVersion: 60
+
+- version: 4.30.0
+  changelogEntry:
+    - summary: |
+        Add support for PR mode for self-hosted/local sdk generation
+      type: feat
+  createdAt: "2025-09-25"
+  irVersion: 60
+
+- version: 4.29.2
+  changelogEntry:
+    - summary: Added a note to the README on constructing Async httpx objects to pass into main Async clients.
+      type: chore
+  createdAt: "2025-09-23"
+  irVersion: 59
+
+- version: 4.29.2-rc0
+  changelogEntry:
+    - summary: |
+        Exports in init files always reference the submodule instead of the current module.
+        This should fix infinite recursion in libraries that inspect getattr, like freezegun.
+      type: fix
+  createdAt: "2025-09-22"
+  irVersion: 59
+
+- version: 4.29.1
+  changelogEntry:
+    - summary: Fixes issue where colliding classes were not lazily imported correctly.
+      type: fix
+  createdAt: "2025-09-18"
+  irVersion: 59
+
+- version: 4.29.0
+  changelogEntry:
+    - summary: |
+        Add support for custom sections in the README.md via customSections config option
+      type: feat
+  createdAt: "2025-09-18"
+  irVersion: 59
+
 - version: 4.28.5
   changelogEntry:
     - summary: |
@@ -243,7 +305,7 @@
     - summary: |
         Lazily validate model serialization to reduce memory consumption. Pydantic 2.11.0 introduced an issue where the model_serializer 
         decorator set to wrap mode forced it to eagerly do schema validation at import time. Because we had this decorator on the UniversalBaseModel,
-        it would try to validate the schemas of all the Model types at import time. This caused massive memory spikes for more complex SDKs, upto 2.6GB
+        it would try to validate the schemas of all the Model types at import time. This caused massive memory spikes for more complex SDKs, up to 2.6GB
         in some cases. This change essentially accomplishes the same logic of wrapping the serialization process and modifying the serialization
         structure of datetime fields. The difference is that we manually wrap, so we're able to defer model validation until runtime, drastically
         reducing our memory consumption.

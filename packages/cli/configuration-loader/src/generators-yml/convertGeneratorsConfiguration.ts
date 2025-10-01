@@ -29,7 +29,10 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     typeDatesAsStrings: undefined,
     preserveSingleSchemaOneOf: undefined,
     inlineAllOfSchemas: undefined,
-    groupMultiApiEnvironments: undefined
+    resolveAliases: undefined,
+    groupMultiApiEnvironments: undefined,
+    wrapReferencesToNullableInOptional: undefined,
+    coerceOptionalSchemasToNullable: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -84,6 +87,8 @@ function parseDeprecatedApiDefinitionSettingsSchema(
         shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1",
         asyncApiMessageNaming: settings?.["message-naming"],
         respectNullableSchemas: settings?.["respect-nullable-schemas"] ?? true,
+        wrapReferencesToNullableInOptional: settings?.["wrap-references-to-nullable-in-optional"],
+        coerceOptionalSchemasToNullable: settings?.["coerce-optional-schemas-to-nullable"],
         onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"],
         inlinePathParameters: settings?.["inline-path-parameters"] ?? true,
         shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"] ?? true
@@ -109,6 +114,7 @@ function parseOpenApiDefinitionSettingsSchema(
         typeDatesAsStrings: settings?.["type-dates-as-strings"] ?? false,
         preserveSingleSchemaOneOf: settings?.["preserve-single-schema-oneof"],
         inlineAllOfSchemas: settings?.["inline-all-of-schemas"],
+        resolveAliases: settings?.["resolve-aliases"],
         groupMultiApiEnvironments: settings?.["group-multi-api-environments"]
     };
 }
@@ -131,7 +137,9 @@ function parseBaseApiDefinitionSettingsSchema(
         shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"] ?? true,
         shouldUseOptionalAdditionalProperties: settings?.["optional-additional-properties"] ?? true,
         coerceEnumsToLiterals: settings?.["coerce-enums-to-literals"],
-        respectNullableSchemas: settings?.["respect-nullable-schemas"] ?? true
+        respectNullableSchemas: settings?.["respect-nullable-schemas"] ?? true,
+        wrapReferencesToNullableInOptional: settings?.["wrap-references-to-nullable-in-optional"],
+        coerceOptionalSchemasToNullable: settings?.["coerce-optional-schemas-to-nullable"]
     };
 }
 

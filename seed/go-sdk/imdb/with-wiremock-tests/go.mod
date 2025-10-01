@@ -4,11 +4,14 @@ go 1.21
 
 toolchain go1.23.8
 
+require github.com/google/uuid v1.6.0
+
+require github.com/stretchr/testify v1.9.0
+
 require (
-	github.com/google/uuid v1.6.0
-	github.com/stretchr/testify v1.9.0
-	github.com/wiremock/go-wiremock v1.13.0
+	github.com/wiremock/go-wiremock v1.14.0
 	github.com/wiremock/wiremock-testcontainers-go v1.0.0-alpha-9
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
 require (
@@ -63,5 +66,4 @@ require (
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20230731190214-cbb8c96f2d6d // indirect
 	google.golang.org/grpc v1.58.3 // indirect
 	google.golang.org/protobuf v1.33.0 // indirect
-	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

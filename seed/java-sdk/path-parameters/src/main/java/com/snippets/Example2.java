@@ -11,6 +11,7 @@ public class Example2 {
             .build();
 
         client.organizations().searchOrganizations(
+            "tenant_id",
             "organization_id",
             SearchOrganizationsRequest
                 .builder()

@@ -29,10 +29,10 @@ export declare namespace PatchComplexRequest {
         active?: boolean | null;
         metadata?: Record<string, unknown> | null;
         tags?: string[] | null;
-        email?: (string | null) | null;
-        nickname?: (string | null) | null;
-        bio?: (string | null) | null;
-        profileImageUrl?: (string | null) | null;
-        settings?: (Record<string, unknown> | null) | null;
+        email?: (string | null | undefined) | null;
+        nickname?: (string | null | undefined) | null;
+        bio?: (string | null | undefined) | null;
+        profileImageUrl?: (string | null | undefined) | null;
+        settings?: (Record<string, unknown> | null | undefined) | null;
     }
 }

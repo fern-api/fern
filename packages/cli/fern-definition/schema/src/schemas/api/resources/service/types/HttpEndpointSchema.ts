@@ -10,7 +10,7 @@ export interface HttpEndpointSchema extends FernDefinition.WithDisplayName, Fern
     path: string;
     url?: string;
     "path-parameters"?: Record<string, FernDefinition.HttpPathParameterSchema>;
-    auth?: boolean;
+    auth?: FernDefinition.HttpEndpointAuth;
     idempotent?: boolean;
     "stream-condition"?: string;
     request?: FernDefinition.HttpRequest;
@@ -21,4 +21,5 @@ export interface HttpEndpointSchema extends FernDefinition.WithDisplayName, Fern
     pagination?: FernDefinition.Pagination;
     transport?: FernDefinition.ServiceTransport;
     source?: FernDefinition.SourceSchema;
+    retries?: FernDefinition.RetriesConfiguration;
 }

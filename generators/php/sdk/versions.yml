@@ -1,4 +1,28 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.17.1
+  changelogEntry:
+    - summary: |
+        Upgrade generator-cli dependency to fix local generation handling of .fernignore files.
+      type: fix
+  createdAt: "2025-09-29"
+  irVersion: 59
+
+- version: 1.17.0
+  changelogEntry:
+    - summary: |
+        Add support for custom sections in the README.md via `customSections` config option.
+      type: feat
+  createdAt: "2025-09-21"
+  irVersion: 59
+
+- version: 1.16.10
+  changelogEntry:
+    - summary: |
+        Boolean request values encoded as 'true' or 'false' instead of '1' or '0'.
+      type: fix
+  createdAt: "2025-09-19"
+  irVersion: 58
+
 - version: 1.16.9
   changelogEntry:
     - summary: |

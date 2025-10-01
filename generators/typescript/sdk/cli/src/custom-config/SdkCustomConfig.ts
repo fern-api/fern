@@ -49,4 +49,7 @@ export interface SdkCustomConfig {
     generateReadWriteOnlyTypes: boolean;
     flattenRequestParameters: boolean | undefined;
     exportAllRequestsAtRoot: boolean | undefined;
+    testFramework: "jest" | "vitest";
+    consolidateTypeFiles: boolean | undefined;
+    generateEndpointMetadata: boolean | undefined;
 }

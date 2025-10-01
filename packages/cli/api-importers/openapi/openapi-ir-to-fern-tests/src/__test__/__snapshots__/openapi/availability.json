@@ -10,15 +10,27 @@
           "base-path": "",
           "endpoints": {
             "getCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParam": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
+                  "headers": {
+                    "X-Active-Header": "X-Active-Header",
+                    "X-Deprecated-Header": "X-Deprecated-Header",
+                    "X-Deprecated-Ref-Header": "X-Deprecated-Ref-Header",
+                    "x-fern-availability_header": "x-fern-availability_header",
+                  },
                   "path-parameters": {
                     "active_id": "active_id",
                     "deprecated_ref_id": "deprecated_ref_id",
                     "id": "id",
                     "x-fern-availability_path_param": "x-fern-availability_path_param",
+                  },
+                  "query-parameters": {
+                    "active_lang": "active_lang",
+                    "deprecated_lang": "deprecated_lang",
+                    "deprecated_ref_lang": "deprecated_ref_lang",
+                    "x-fern-availability_query_param": "x-fern-availability_query_param",
                   },
                   "response": {
                     "body": {
@@ -100,7 +112,7 @@
               },
             },
             "postSuccessInlineBetaBody": {
-              "auth": false,
+              "auth": undefined,
               "availability": "pre-release",
               "docs": undefined,
               "examples": [
@@ -138,7 +150,7 @@
               },
             },
             "postSuccessInlineObjectDeprecation": {
-              "auth": false,
+              "auth": undefined,
               "availability": "deprecated",
               "docs": undefined,
               "examples": [
@@ -176,7 +188,7 @@
               },
             },
             "postSuccessInlinePropertyDeprecation": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -217,7 +229,7 @@
               },
             },
             "postSuccessRef": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -295,7 +307,6 @@
       path: >-
         /collection/{id}/{active_id}/{deprecated_ref_id}/{x-fern-availability_path_param}
       method: GET
-      auth: false
       source:
         openapi: ../openapi.yml
       request:
@@ -355,13 +366,22 @@
             active_id: active_id
             deprecated_ref_id: deprecated_ref_id
             x-fern-availability_path_param: x-fern-availability_path_param
+          query-parameters:
+            deprecated_lang: deprecated_lang
+            active_lang: active_lang
+            deprecated_ref_lang: deprecated_ref_lang
+            x-fern-availability_query_param: x-fern-availability_query_param
+          headers:
+            X-Deprecated-Header: X-Deprecated-Header
+            X-Active-Header: X-Active-Header
+            X-Deprecated-Ref-Header: X-Deprecated-Ref-Header
+            x-fern-availability_header: x-fern-availability_header
           response:
             body:
               fine_setting: true
     postSuccessRef:
       path: /success-ref
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       request:
@@ -385,7 +405,6 @@
     postSuccessInlinePropertyDeprecation:
       path: /success-inline-property-deprecation
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       request:
@@ -409,7 +428,6 @@
     postSuccessInlineObjectDeprecation:
       path: /success-inline-object-deprecation
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       request:
@@ -431,7 +449,6 @@
     postSuccessInlineBetaBody:
       path: /success-inline-beta-body
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       request:

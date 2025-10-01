@@ -24,6 +24,7 @@
     "requirement": "ALL",
     "schemes": [
       {
+        "key": "bearerAuth",
         "name": {
           "name": {
             "originalName": "apiKey",
@@ -6918,6 +6919,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -7422,6 +7428,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -8088,6 +8099,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -8797,6 +8813,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -9197,6 +9218,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "userAuth": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -9281,6 +9307,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "userAuth": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -9359,6 +9390,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "userAuth": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -9549,6 +9585,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "userAuth": []
+            }
+          ],
           "idempotent": false,
           "method": "PATCH",
           "path": {
@@ -9849,6 +9890,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -9990,6 +10036,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -10352,6 +10403,11 @@
             }
           },
           "auth": true,
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {

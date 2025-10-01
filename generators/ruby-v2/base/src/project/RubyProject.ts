@@ -39,7 +39,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         await this.createTestFiles();
         await this.createVersionFile();
         await this.createModuleFile();
-        await this.createRubocoopFile();
+        await this.createRuboCopFile();
     }
 
     private async createGemspecfile(): Promise<void> {
@@ -75,11 +75,11 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         );
     }
 
-    private async createRubocoopFile(): Promise<void> {
-        const rubocoopFile = new RubocopFile({ context: this.context });
+    private async createRuboCopFile(): Promise<void> {
+        const ruboCopFile = new RubocopFile({ context: this.context });
         await writeFile(
             join(this.absolutePathToOutputDirectory, RelativeFilePath.of(RUBOCOP_FILENAME)),
-            await rubocoopFile.toString()
+            await ruboCopFile.toString()
         );
     }
 
@@ -124,7 +124,7 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
         return new File(
             this.getAsIsOutputFilename(filename),
-            this.getAsIsOutputDirectory(),
+            this.getAsIsOutputDirectory(filename),
             replaceTemplate({
                 contents,
                 variables: getTemplateVariables({
@@ -134,8 +134,12 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
         );
     }
 
-    public getAsIsOutputDirectory(): RelativeFilePath {
-        return RelativeFilePath.of(`lib/${this.context.getRootFolderName()}`);
+    public getAsIsOutputDirectory(templateFileName: string): RelativeFilePath {
+        if (templateFileName.startsWith(`test/`)) {
+            return RelativeFilePath.of("");
+        } else {
+            return RelativeFilePath.of(`lib/${this.context.getRootFolderName()}`);
+        }
     }
 
     public getAsIsOutputFilename(templateFileName: string): string {
@@ -154,7 +158,9 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
     }
 
     public getCoreAbsoluteFilePaths(): AbsoluteFilePath[] {
-        return this.coreFiles.map((file) => this.filePathFromRubyFile(file));
+        return this.coreFiles
+            .filter((file) => !(file.directory == "" && file.filename.startsWith("test/")))
+            .map((file) => this.filePathFromRubyFile(file));
     }
 
     public getRawAbsoluteFilePaths(): AbsoluteFilePath[] {
@@ -398,7 +404,7 @@ class CustomTestFile {
 
             # This test is run via command line: rake customtest
             describe "Custom Test" do
-                it "Defalt" do
+                it "Default" do
                     refute false
                 end
             end
@@ -495,9 +501,12 @@ class ModuleFile {
         const coreFiles = this.context.getCoreAsIsFiles();
         coreFiles.sort((a, b) => topologicalCompareAsIsFiles(a, b));
         coreFiles.forEach((filename) => {
+            if (filename.startsWith("test/")) {
+                return;
+            }
             const absoluteFilePath = join(
                 this.project.absolutePathToOutputDirectory,
-                this.project.getAsIsOutputDirectory(),
+                this.project.getAsIsOutputDirectory(filename),
                 RelativeFilePath.of(this.project.getAsIsOutputFilename(filename))
             );
             relativeImportPaths.add(relative(this.filePath, absoluteFilePath));

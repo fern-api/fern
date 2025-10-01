@@ -7,28 +7,31 @@ public final class ServiceClient: Sendable {
         self.httpClient = HTTPClient(config: config)
     }
 
-    public func post(request: any Codable, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func post(request: Requests.MyRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/",
-            body: request,
+            contentType: .multipartFormData,
+            body: request.asMultipartFormData(),
             requestOptions: requestOptions
         )
     }
 
-    public func justFile(request: any Codable, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func justFile(request: Requests.JustFileRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/just-file",
-            body: request,
+            contentType: .multipartFormData,
+            body: request.asMultipartFormData(),
             requestOptions: requestOptions
         )
     }
 
-    public func justFileWithQueryParams(maybeString: String? = nil, integer: Int, maybeInteger: Int? = nil, listOfStrings: String, optionalListOfStrings: String? = nil, request: any Codable, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func justFileWithQueryParams(maybeString: String? = nil, integer: Int, maybeInteger: Int? = nil, listOfStrings: String, optionalListOfStrings: String? = nil, request: Requests.JustFileWithQueryParamsRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/just-file-with-query-params",
+            contentType: .multipartFormData,
             queryParams: [
                 "maybeString": maybeString.map { .string($0) }, 
                 "integer": .int(integer), 
@@ -36,53 +39,58 @@ public final class ServiceClient: Sendable {
                 "listOfStrings": .string(listOfStrings), 
                 "optionalListOfStrings": optionalListOfStrings.map { .string($0) }
             ],
-            body: request,
+            body: request.asMultipartFormData(),
             requestOptions: requestOptions
         )
     }
 
-    public func withContentType(request: any Codable, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func withContentType(request: Requests.WithContentTypeRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/with-content-type",
-            body: request,
+            contentType: .multipartFormData,
+            body: request.asMultipartFormData(),
             requestOptions: requestOptions
         )
     }
 
-    public func withFormEncoding(request: any Codable, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func withFormEncoding(request: Requests.WithFormEncodingRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/with-form-encoding",
-            body: request,
+            contentType: .multipartFormData,
+            body: request.asMultipartFormData(),
             requestOptions: requestOptions
         )
     }
 
-    public func withFormEncodedContainers(request: any Codable, requestOptions: RequestOptions? = nil) async throws -> Void {
+    public func withFormEncodedContainers(request: Requests.MyOtherRequest, requestOptions: RequestOptions? = nil) async throws -> Void {
         return try await httpClient.performRequest(
             method: .post,
             path: "/",
-            body: request,
+            contentType: .multipartFormData,
+            body: request.asMultipartFormData(),
             requestOptions: requestOptions
         )
     }
 
-    public func optionalArgs(request: any Codable, requestOptions: RequestOptions? = nil) async throws -> String {
+    public func optionalArgs(request: Requests.OptionalArgsRequest, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .post,
             path: "/optional-args",
-            body: request,
+            contentType: .multipartFormData,
+            body: request.asMultipartFormData(),
             requestOptions: requestOptions,
             responseType: String.self
         )
     }
 
-    public func withInlineType(request: any Codable, requestOptions: RequestOptions? = nil) async throws -> String {
+    public func withInlineType(request: Requests.InlineTypeRequest, requestOptions: RequestOptions? = nil) async throws -> String {
         return try await httpClient.performRequest(
             method: .post,
             path: "/inline-type",
-            body: request,
+            contentType: .multipartFormData,
+            body: request.asMultipartFormData(),
             requestOptions: requestOptions,
             responseType: String.self
         )

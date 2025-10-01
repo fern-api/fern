@@ -24,6 +24,7 @@
     "requirement": "ALL",
     "schemes": [
       {
+        "key": "APIKeyHeader",
         "name": {
           "name": {
             "originalName": "apiKey",
@@ -27391,6 +27392,11 @@
           },
           "displayName": "Retrieve a transaction",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -27673,6 +27679,11 @@
           },
           "displayName": "Deletes a transaction",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -27919,6 +27930,11 @@
           },
           "displayName": "List all transactions",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -28346,6 +28362,11 @@
           },
           "displayName": "Synchronously enrich transactions",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -28607,6 +28628,11 @@
           },
           "displayName": "Assign a transaction to an account holder",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -29015,6 +29041,11 @@
           },
           "displayName": "List all batches",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -29460,6 +29491,11 @@
           },
           "displayName": "Submit a batch of transactions",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -29720,6 +29756,11 @@
           },
           "displayName": "Retrieve a batch",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -30002,6 +30043,11 @@
           },
           "displayName": "Retrieve the results of a batch",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -30346,6 +30392,11 @@
           },
           "displayName": "List all bank statements",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -30791,6 +30842,11 @@
           },
           "displayName": "Submit a bank statement PDF",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -31016,6 +31072,11 @@
           },
           "displayName": "Retrieve a bank statement",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -31297,6 +31358,11 @@
           },
           "displayName": "Deletes a bank statement",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -31543,6 +31609,11 @@
           },
           "displayName": "Quickly extract account holder, institution and first account",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -31825,6 +31896,11 @@
           },
           "displayName": "Retrieve the extraction results",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -32168,6 +32244,11 @@
           },
           "displayName": "Retrieve an account holder.",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -32450,6 +32531,11 @@
           },
           "displayName": "Deletes an account holder and their transactions",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -32695,6 +32781,11 @@
           },
           "displayName": "List all account holders.",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -33070,6 +33161,11 @@
           },
           "displayName": "Create an account holder.",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -33501,6 +33597,11 @@
           },
           "displayName": "Find recurring groups in a transaction history",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -33851,6 +33952,11 @@
           },
           "displayName": "List all webhooks",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -33959,6 +34065,11 @@
           },
           "displayName": "Create a webhook",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -34350,6 +34461,11 @@
           },
           "displayName": "Retrieve a webhook",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -34604,6 +34720,11 @@
           },
           "displayName": "Delete a webhook",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -34850,6 +34971,11 @@
           },
           "displayName": "Update a webhook",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "PATCH",
           "path": {
@@ -35441,6 +35567,11 @@
           },
           "displayName": "Get the current personalization ruleset.",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -35549,6 +35680,11 @@
           },
           "displayName": "Set the personalization ruleset.",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -35774,6 +35910,11 @@
           },
           "displayName": "Append a rule.",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -35999,6 +36140,11 @@
           },
           "displayName": "Delete a rule.",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -36257,6 +36403,11 @@
           },
           "displayName": "Modify an existing rule.",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "PATCH",
           "path": {
@@ -36608,6 +36759,11 @@
           },
           "displayName": "List all reports",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -37053,6 +37209,11 @@
           },
           "displayName": "Create a report",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -37376,6 +37537,11 @@
           },
           "displayName": "Retrieve a report",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -37658,6 +37824,11 @@
           },
           "displayName": "Delete a report",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -37965,6 +38136,11 @@
           },
           "displayName": "Retrieve category set",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -38255,6 +38431,11 @@
           },
           "displayName": "Set a custom set of categories",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -38576,6 +38757,11 @@
           },
           "displayName": "Reset category set to original values",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -38927,6 +39113,11 @@
           },
           "displayName": "Searches for an entity",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -39309,6 +39500,11 @@
           },
           "displayName": "Retrieve an entity",
           "auth": true,
+          "security": [
+            {
+              "APIKeyHeader": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {

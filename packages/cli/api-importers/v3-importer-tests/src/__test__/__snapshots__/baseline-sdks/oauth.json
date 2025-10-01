@@ -24,6 +24,7 @@
     "requirement": "ALL",
     "schemes": [
       {
+        "key": "BearerAuthScheme",
         "token": {
           "originalName": "token",
           "camelCase": {
@@ -1612,6 +1613,7 @@
     "endpoints": {
       "endpoint_auth.get-token": {
         "auth": {
+          "key": "BearerAuthScheme",
           "token": {
             "originalName": "token",
             "camelCase": {

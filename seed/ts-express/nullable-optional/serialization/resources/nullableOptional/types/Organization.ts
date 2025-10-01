@@ -20,7 +20,7 @@ export declare namespace Organization {
     export interface Raw {
         id: string;
         name: string;
-        domain: string | null;
+        domain?: string | null;
         employeeCount?: number | null;
     }
 }

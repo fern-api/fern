@@ -130,7 +130,8 @@ export class ExpressGenerator {
             formDataSupport: "Node16",
             fetchSupport: "node-fetch",
             relativePackagePath: this.getRelativePackagePath(),
-            relativeTestPath: this.getRelativeTestPath()
+            relativeTestPath: this.getRelativeTestPath(),
+            generateEndpointMetadata: false
         });
 
         this.project = new Project({
@@ -291,7 +292,8 @@ export class ExpressGenerator {
             outputJsr: false,
             exportSerde: false,
             useLegacyExports: true,
-            packageManager: this.config.packageManager
+            packageManager: this.config.packageManager,
+            testPath: this.getRelativeTestPath()
         });
     }
 

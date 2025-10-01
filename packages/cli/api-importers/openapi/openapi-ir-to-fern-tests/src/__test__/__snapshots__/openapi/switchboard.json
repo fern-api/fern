@@ -1043,11 +1043,16 @@ types:
           "base-path": "",
           "endpoints": {
             "andRedirect": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Auth and redirect sessions",
               "docs": "Auth and redirect sessions by ID",
               "examples": [
-                {},
+                {
+                  "headers": {
+                    "x-call-type": "x-call-type",
+                    "x-session-id": "x-session-id",
+                  },
+                },
               ],
               "method": "GET",
               "pagination": undefined,
@@ -1084,7 +1089,6 @@ types:
     andRedirect:
       path: /auth
       method: GET
-      auth: false
       docs: Auth and redirect sessions by ID
       source:
         openapi: ../openapi.yml
@@ -1101,7 +1105,9 @@ types:
             name: callType
             docs: call type, e.g. CHROMEDRIVER_EXTERNAL
       examples:
-        - {}
+        - headers:
+            x-session-id: x-session-id
+            x-call-type: x-call-type
   source:
     openapi: ../openapi.yml
 ",
@@ -1120,7 +1126,7 @@ types:
               "audiences": [
                 "beta",
               ],
-              "auth": false,
+              "auth": undefined,
               "display-name": "Delete extensions matching name query",
               "docs": "Delete an extension by ID",
               "examples": [
@@ -1150,7 +1156,7 @@ types:
               "audiences": [
                 "beta",
               ],
-              "auth": false,
+              "auth": undefined,
               "display-name": "Get extensions",
               "docs": "Get extensions, searching by name",
               "examples": [
@@ -1218,7 +1224,7 @@ types:
               "audiences": [
                 "beta",
               ],
-              "auth": false,
+              "auth": undefined,
               "display-name": "Get an extension",
               "docs": "Get an extension by ID",
               "errors": [
@@ -1289,7 +1295,7 @@ types:
               "audiences": [
                 "beta",
               ],
-              "auth": false,
+              "auth": undefined,
               "display-name": "Create an extension",
               "docs": undefined,
               "examples": [
@@ -1372,7 +1378,6 @@ service:
     get:
       path: /extensions
       method: GET
-      auth: false
       docs: Get extensions, searching by name
       source:
         openapi: ../openapi.yml
@@ -1414,7 +1419,6 @@ service:
     post:
       path: /extensions
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: Create an extension
@@ -1457,7 +1461,6 @@ service:
     delete:
       path: /extensions
       method: DELETE
-      auth: false
       docs: Delete an extension by ID
       source:
         openapi: ../openapi.yml
@@ -1476,7 +1479,6 @@ service:
     getById:
       path: /extensions/{id}
       method: GET
-      auth: false
       docs: Get an extension by ID
       source:
         openapi: ../openapi.yml
@@ -1537,7 +1539,7 @@ service:
               "audiences": [
                 "public",
               ],
-              "auth": false,
+              "auth": undefined,
               "display-name": "Delete profiles matching query",
               "docs": "Delete profiles matching query",
               "examples": [
@@ -1572,7 +1574,7 @@ service:
               "audiences": [
                 "public",
               ],
-              "auth": false,
+              "auth": undefined,
               "display-name": "Get profiles",
               "docs": "Get profiles, searching by name or tags",
               "examples": [
@@ -1648,7 +1650,7 @@ service:
               "audiences": [
                 "public",
               ],
-              "auth": false,
+              "auth": undefined,
               "display-name": "Get a profile",
               "docs": "Get a profile by ID",
               "errors": [
@@ -1722,7 +1724,7 @@ service:
               "audiences": [
                 "beta",
               ],
-              "auth": false,
+              "auth": undefined,
               "display-name": "Create a profile",
               "docs": undefined,
               "examples": [
@@ -1818,7 +1820,6 @@ service:
     get:
       path: /profiles
       method: GET
-      auth: false
       docs: Get profiles, searching by name or tags
       source:
         openapi: ../openapi.yml
@@ -1868,7 +1869,6 @@ service:
     post:
       path: /profiles
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: Create a profile
@@ -1919,7 +1919,6 @@ service:
     delete:
       path: /profiles
       method: DELETE
-      auth: false
       docs: Delete profiles matching query
       source:
         openapi: ../openapi.yml
@@ -1944,7 +1943,6 @@ service:
     getById:
       path: /profiles/{id}
       method: GET
-      auth: false
       docs: Get a profile by ID
       source:
         openapi: ../openapi.yml
@@ -2007,7 +2005,7 @@ service:
               "audiences": [
                 "public",
               ],
-              "auth": false,
+              "auth": undefined,
               "display-name": "Get a session event stream",
               "docs": "Get a session event stream for a given session ID",
               "errors": [
@@ -2065,7 +2063,7 @@ service:
               "audiences": [
                 "public",
               ],
-              "auth": false,
+              "auth": undefined,
               "display-name": "Get info for a session",
               "docs": "Get a session by ID",
               "errors": [
@@ -2154,7 +2152,7 @@ service:
               "audiences": [
                 "public",
               ],
-              "auth": false,
+              "auth": undefined,
               "display-name": "Get a list of sessions",
               "docs": "Get a list of sessions by ID",
               "errors": [
@@ -2167,6 +2165,7 @@ service:
                   "query-parameters": {
                     "limit": 10,
                     "offset": 1,
+                    "status": "awaiting_capacity",
                   },
                   "response": {
                     "body": {
@@ -2259,7 +2258,7 @@ service:
               "audiences": [
                 "public",
               ],
-              "auth": false,
+              "auth": undefined,
               "display-name": "Create a session",
               "docs": undefined,
               "examples": [
@@ -2347,7 +2346,7 @@ service:
               "audiences": [
                 "public",
               ],
-              "auth": false,
+              "auth": undefined,
               "display-name": "Ends a session",
               "docs": "Ends a session by ID. If a given session id does not exist within the organization, it is ignored.",
               "examples": [
@@ -2505,7 +2504,6 @@ service:
     list:
       path: /sessions
       method: GET
-      auth: false
       docs: Get a list of sessions by ID
       source:
         openapi: ../openapi.yml
@@ -2538,6 +2536,7 @@ service:
         - root.InternalServerError
       examples:
         - query-parameters:
+            status: awaiting_capacity
             offset: 1
             limit: 10
           response:
@@ -2577,7 +2576,6 @@ service:
     post:
       path: /sessions
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: Create a session
@@ -2634,7 +2632,6 @@ service:
     getinfo:
       path: /sessions/{id}
       method: GET
-      auth: false
       docs: Get a session by ID
       source:
         openapi: ../openapi.yml
@@ -2695,7 +2692,6 @@ service:
     terminate:
       path: /sessions/{id}
       method: DELETE
-      auth: false
       docs: >-
         Ends a session by ID. If a given session id does not exist within the
         organization, it is ignored.
@@ -2716,7 +2712,6 @@ service:
     events:
       path: /sessions/{id}/events
       method: GET
-      auth: false
       docs: Get a session event stream for a given session ID
       source:
         openapi: ../openapi.yml
@@ -2770,7 +2765,7 @@ service:
               "audiences": [
                 "public",
               ],
-              "auth": false,
+              "auth": undefined,
               "display-name": "Get information about a browser window in a session",
               "docs": undefined,
               "examples": [
@@ -2781,6 +2776,8 @@ service:
                   },
                   "query-parameters": {
                     "Screen resolution": "1920x1080",
+                    "disableResize": true,
+                    "includeNavigationBar": true,
                   },
                   "response": {
                     "body": {
@@ -2857,7 +2854,7 @@ service:
               "audiences": [
                 "public",
               ],
-              "auth": false,
+              "auth": undefined,
               "display-name": "Submit a prompt about the content in a specific browser window.",
               "docs": undefined,
               "examples": [
@@ -2956,7 +2953,7 @@ service:
               "audiences": [
                 "public",
               ],
-              "auth": false,
+              "auth": undefined,
               "display-name": "Scrape a window",
               "docs": undefined,
               "examples": [
@@ -3040,7 +3037,7 @@ service:
               "audiences": [
                 "public",
               ],
-              "auth": false,
+              "auth": undefined,
               "display-name": "Get a summary of content in a browser window",
               "docs": undefined,
               "examples": [
@@ -3143,7 +3140,6 @@ service:
     get-window-info:
       path: /sessions/{sessionId}/windows/{windowId}/get-window-info
       method: GET
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: Get information about a browser window in a session
@@ -3182,6 +3178,8 @@ service:
             sessionId: 6aac6f73-bd89-4a76-ab32-5a6c422e8b0b
             windowId: 7334da2a-91b0-42c5-6156-76a5eba87430
           query-parameters:
+            includeNavigationBar: true
+            disableResize: true
             Screen resolution: 1920x1080
           response:
             body:
@@ -3206,7 +3204,6 @@ service:
     prompt-content:
       path: /sessions/{sessionId}/windows/{windowId}/prompt-content
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: Submit a prompt about the content in a specific browser window.
@@ -3272,7 +3269,6 @@ service:
     scrape-content:
       path: /sessions/{sessionId}/windows/{windowId}/scrape-content
       method: GET
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: Scrape a window
@@ -3326,7 +3322,6 @@ service:
     summarize-content:
       path: /sessions/{sessionId}/windows/{windowId}/summarize-content
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: Get a summary of content in a browser window

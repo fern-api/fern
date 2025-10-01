@@ -42,6 +42,33 @@ fixtures:
       outputFolder: with-custom-config
     - customConfig: null
       outputFolder: no-custom-config
+  examples:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        customReadmeSections:
+          - title: "Override Section"
+            content: "Override Content"
+          - title: "Generator Invocation Custom Section"
+            content: "Generator Invocation Custom Content for {{ gitUrl }}:{{ minVersion }}"
+      readmeConfig:
+        apiName: "CustomName"
+        disabledSections:
+          - apiReference
+        bannerLink: https://www.fernapi.com
+        apiReferenceLink: https://www.docs.fernapi.com
+        defaultEndpoint: POST /movie
+        customSections:
+          - title: "Base Readme Custom Section"
+            language: swift
+            content: "Base Readme Custom Content for {{ gitUrl }}:{{ minVersion }}"
+          - title: "Override Section"
+            language: swift
+            content: "Base Content"
+        features:
+          timeouts:
+            - GET /movie/{movieId}
+      outputFolder: readme-config
   pagination:
     - customConfig: null
       outputFolder: no-custom-config
@@ -71,7 +98,8 @@ allowedFailures:
   - content-type
   - cross-package-type-names
   - enum
-  - examples
+  - examples:no-custom-config
+  - examples:readme-config
   - exhaustive
   - http-head
   - inferred-auth-explicit
@@ -84,6 +112,7 @@ allowedFailures:
   - multi-url-environment-no-default
   - nullable
   - nullable-optional
+  - oauth-client-credentials-with-variables
   - pagination:no-custom-config
   - pagination:custom-pager
   - pagination:custom-pager-with-exception-handler
@@ -101,6 +130,7 @@ allowedFailures:
   - undiscriminated-unions
   - unions
   - validation
+  - variables
   - websocket-bearer-auth
   - websocket-inferred-auth
   - property-access

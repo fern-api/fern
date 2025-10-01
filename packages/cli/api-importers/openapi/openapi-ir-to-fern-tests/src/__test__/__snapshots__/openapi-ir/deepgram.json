@@ -1934,6 +1934,11 @@
       "servers": [],
       "description": "Transcribe audio using Deepgram's speech-to-text API",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/v1/listen",
       "examples": [],
@@ -2367,6 +2372,11 @@
       "servers": [],
       "description": "Analyze text content using Deepgram's text analysis API",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/v1/read",
       "examples": [
@@ -2379,6 +2389,80 @@
                 "value": {
                   "value": "https://example.com",
                   "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "callback_method",
+              "value": {
+                "value": "POST",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "custom_topic",
+              "value": {
+                "value": {
+                  "value": "custom_topic",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "custom_topic_mode",
+              "value": {
+                "value": "extended",
+                "type": "enum"
+              }
+            },
+            {
+              "name": "intents",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "read_language",
+              "value": {
+                "value": {
+                  "value": "en",
+                  "type": "string"
+                },
+                "type": "literal"
+              }
+            },
+            {
+              "name": "sentiment",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "read_summarize",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "topics",
+              "value": {
+                "value": {
+                  "value": true,
+                  "type": "boolean"
                 },
                 "type": "primitive"
               }
@@ -3264,6 +3348,11 @@
       "servers": [],
       "description": "Convert text into natural-sounding speech using Deepgram's TTS API",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/v1/speak",
       "examples": [],
@@ -3545,6 +3634,11 @@
       "servers": [],
       "description": "Retrieves basic information about the projects associated with the API key",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/v1/projects",
       "examples": [
@@ -4244,6 +4338,11 @@
       "servers": [],
       "description": "Retrieves information about the specified project",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/v1/projects/{project_id}",
       "examples": [
@@ -4262,6 +4361,16 @@
           ],
           "queryParameters": [
             {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
               "name": "start",
               "value": {
                 "value": {
@@ -4277,6 +4386,16 @@
                 "value": {
                   "value": "2024-07-31T00:00:00",
                   "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
                 },
                 "type": "primitive"
               }
@@ -4322,23 +4441,6 @@
         "Management API"
       ],
       "pathParameters": [
-        {
-          "description": "The unique identifier of the project",
-          "name": "project_id",
-          "schema": {
-            "schema": {
-              "example": "123456-7890-1234-5678-901234",
-              "type": "string"
-            },
-            "generatedName": "DeleteProjectRequestProjectId",
-            "groupName": [],
-            "type": "primitive"
-          },
-          "source": {
-            "file": "../openapi.yml",
-            "type": "openapi"
-          }
-        },
         {
           "description": "The unique identifier of the project",
           "name": "project_id",
@@ -4874,21 +4976,16 @@
       "servers": [],
       "description": "Deletes the specified project",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "DELETE",
       "path": "/v1/projects/{project_id}",
       "examples": [
         {
           "pathParameters": [
-            {
-              "name": "project_id",
-              "value": {
-                "value": {
-                  "value": "123456-7890-1234-5678-901234",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
             {
               "name": "project_id",
               "value": {
@@ -4934,23 +5031,6 @@
         "Management API"
       ],
       "pathParameters": [
-        {
-          "description": "The unique identifier of the project",
-          "name": "project_id",
-          "schema": {
-            "schema": {
-              "example": "123456-7890-1234-5678-901234",
-              "type": "string"
-            },
-            "generatedName": "UpdateProjectRequestProjectId",
-            "groupName": [],
-            "type": "primitive"
-          },
-          "source": {
-            "file": "../openapi.yml",
-            "type": "openapi"
-          }
-        },
         {
           "description": "The unique identifier of the project",
           "name": "project_id",
@@ -5505,21 +5585,16 @@
       "servers": [],
       "description": "Updates the name or other properties of an existing project",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "PATCH",
       "path": "/v1/projects/{project_id}",
       "examples": [
         {
           "pathParameters": [
-            {
-              "name": "project_id",
-              "value": {
-                "value": {
-                  "value": "123456-7890-1234-5678-901234",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
             {
               "name": "project_id",
               "value": {
@@ -6216,6 +6291,11 @@
       "servers": [],
       "description": "Generates a list of outstanding balances for the specified project",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/v1/projects/{project_id}/balances",
       "examples": [
@@ -6919,6 +6999,11 @@
       "servers": [],
       "description": "Retrieves details about the specified balance",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/v1/projects/{project_id}/balances/{balance_id}",
       "examples": [
@@ -7256,6 +7341,11 @@
       "servers": [],
       "description": "Returns metadata on all the latest models that a specific project has access to, including non-public models",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/v1/projects/{project_id}/models",
       "examples": [
@@ -7655,6 +7745,11 @@
       "servers": [],
       "description": "Returns metadata for a specific model",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/v1/projects/{project_id}/models/{model_id}",
       "examples": [
@@ -7788,23 +7883,6 @@
         "Management API"
       ],
       "pathParameters": [
-        {
-          "description": "The unique identifier of the project",
-          "name": "project_id",
-          "schema": {
-            "schema": {
-              "example": "123456-7890-1234-5678-901234",
-              "type": "string"
-            },
-            "generatedName": "ListProjectKeysRequestProjectId",
-            "groupName": [],
-            "type": "primitive"
-          },
-          "source": {
-            "file": "../openapi.yml",
-            "type": "openapi"
-          }
-        },
         {
           "description": "The unique identifier of the project",
           "name": "project_id",
@@ -8206,21 +8284,16 @@
       "servers": [],
       "description": "Retrieves all API keys associated with the specified project",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/v1/projects/{project_id}/keys",
       "examples": [
         {
           "pathParameters": [
-            {
-              "name": "project_id",
-              "value": {
-                "value": {
-                  "value": "123456-7890-1234-5678-901234",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
             {
               "name": "project_id",
               "value": {
@@ -8273,23 +8346,6 @@
         "Management API"
       ],
       "pathParameters": [
-        {
-          "description": "The unique identifier of the project",
-          "name": "project_id",
-          "schema": {
-            "schema": {
-              "example": "123456-7890-1234-5678-901234",
-              "type": "string"
-            },
-            "generatedName": "CreateProjectKeyRequestProjectId",
-            "groupName": [],
-            "type": "primitive"
-          },
-          "source": {
-            "file": "../openapi.yml",
-            "type": "openapi"
-          }
-        },
         {
           "description": "The unique identifier of the project",
           "name": "project_id",
@@ -8680,21 +8736,16 @@
       "servers": [],
       "description": "Creates a new API key with specified settings for the project",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/v1/projects/{project_id}/keys",
       "examples": [
         {
           "pathParameters": [
-            {
-              "name": "project_id",
-              "value": {
-                "value": {
-                  "value": "123456-7890-1234-5678-901234",
-                  "type": "string"
-                },
-                "type": "primitive"
-              }
-            },
             {
               "name": "project_id",
               "value": {
@@ -9202,6 +9253,11 @@
       "servers": [],
       "description": "Retrieves information about a specified API key",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/v1/projects/{project_id}/keys/{key_id}",
       "examples": [
@@ -9738,6 +9794,11 @@
       "servers": [],
       "description": "Deletes an API key for a specific project",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "DELETE",
       "path": "/v1/projects/{project_id}/keys/{key_id}",
       "examples": [
@@ -10224,6 +10285,11 @@
       "servers": [],
       "description": "Retrieves a list of account objects for a specific project",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/v1/projects/{project_id}/members",
       "examples": [
@@ -10697,6 +10763,11 @@
       "servers": [],
       "description": "Removes a member from the project using their unique member ID",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "DELETE",
       "path": "/v1/projects/{project_id}/members/{member_id}",
       "examples": [
@@ -11175,6 +11246,11 @@
       "servers": [],
       "description": "Retrieves a list of scopes for a specific member",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/v1/projects/{project_id}/members/{member_id}/scopes",
       "examples": [
@@ -11672,6 +11748,11 @@
       "servers": [],
       "description": "Updates the scopes for a specific member",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "PUT",
       "path": "/v1/projects/{project_id}/members/{member_id}/scopes",
       "examples": [
@@ -11863,6 +11944,11 @@
       "servers": [],
       "description": "Generates a list of invites for a specific project",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/v1/projects/{project_id}/invites",
       "examples": [
@@ -12399,6 +12485,11 @@
       "servers": [],
       "description": "Generates an invite for a specific project",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/v1/projects/{project_id}/invites",
       "examples": [
@@ -12935,6 +13026,11 @@
       "servers": [],
       "description": "Deletes an invite for a specific project",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "DELETE",
       "path": "/v1/projects/{project_id}/invites/{email}",
       "examples": [
@@ -13445,6 +13541,11 @@
       "servers": [],
       "description": "Removes the authenticated account from the specific project",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "DELETE",
       "path": "/v1/projects/{project_id}/leave",
       "examples": [
@@ -14163,6 +14264,11 @@
       "servers": [],
       "description": "Generates a list of requests for a specific project",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/v1/projects/{project_id}/requests",
       "examples": [
@@ -14196,6 +14302,26 @@
                 "value": {
                   "value": "2024-07-31T00:00:00",
                   "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "page",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
                 },
                 "type": "primitive"
               }
@@ -14416,6 +14542,11 @@
       "servers": [],
       "description": "Retrieves a specific request for a specific project",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/v1/projects/{project_id}/requests/{request_id}",
       "examples": [
@@ -15346,6 +15477,11 @@
       "servers": [],
       "description": "Retrieves the usage for a specific project",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/v1/projects/{project_id}/usage",
       "examples": [
@@ -15381,6 +15517,13 @@
                   "type": "datetime"
                 },
                 "type": "primitive"
+              }
+            },
+            {
+              "name": "project_filters",
+              "value": {
+                "value": "alternatives.yml",
+                "type": "enum"
               }
             }
           ],
@@ -16106,6 +16249,11 @@
       "servers": [],
       "description": "Lists the features, models, tags, languages, and processing method used for requests in the specified project",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/v1/projects/{project_id}/usage/fields",
       "examples": [
@@ -17545,6 +17693,11 @@
       "servers": [],
       "description": "Returns the breakdown of usage for a specific project. Supports the following filter options:\n- &accessor={accessor_id} - The public API key accessor used\n- &deployment={deployment} - The deployment type used\n- &endpoint={endpoint} - The endpoint used\n- &feature_set={feature_set} - The collection of features used\n- &model={model_id} - The model used\n- &method={method} - The processing method used\n- &tags={tag} - Any tags used\n",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/v1/projects/{project_id}/usage/breakdown",
       "examples": [
@@ -17580,6 +17733,13 @@
                   "type": "datetime"
                 },
                 "type": "primitive"
+              }
+            },
+            {
+              "name": "project_filters",
+              "value": {
+                "value": "alternatives.yml",
+                "type": "enum"
               }
             }
           ],
@@ -18103,6 +18263,11 @@
       "servers": [],
       "description": "Returns the original purchased amount on an order transaction",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/v1/projects/{project_id}/purchases",
       "examples": [
@@ -18126,6 +18291,16 @@
                 "value": {
                   "value": "2024-07-01T00:00:00",
                   "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "limit",
+              "value": {
+                "value": {
+                  "value": 1,
+                  "type": "int"
                 },
                 "type": "primitive"
               }
@@ -18898,6 +19073,11 @@
       "servers": [],
       "description": "Returns metadata on all the latest public models",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/v1/models",
       "examples": [
@@ -19781,6 +19961,11 @@
       "servers": [],
       "description": "Returns metadata for a specific model",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/v1/models/{model_id}",
       "examples": [
@@ -20469,6 +20654,11 @@
       "servers": [],
       "description": "Lists sets of distribution credentials for the specified project",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/v1/projects/{project_id}/self-hosted/distribution/credentials",
       "examples": [
@@ -20741,6 +20931,11 @@
       "servers": [],
       "description": "Creates a set of distribution credentials for the specified project",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/v1/projects/{project_id}/self-hosted/distribution/credentials",
       "examples": [],
@@ -21313,6 +21508,11 @@
       "servers": [],
       "description": "Returns a set of distribution credentials for the specified project",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "GET",
       "path": "/v1/projects/{project_id}/self-hosted/distribution/credentials/{distribution_credentials_id}",
       "examples": [
@@ -21993,6 +22193,11 @@
       "servers": [],
       "description": "Deletes a set of distribution credentials for the specified project",
       "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        }
+      ],
       "method": "DELETE",
       "path": "/v1/projects/{project_id}/self-hosted/distribution/credentials/{distribution_credentials_id}",
       "examples": [

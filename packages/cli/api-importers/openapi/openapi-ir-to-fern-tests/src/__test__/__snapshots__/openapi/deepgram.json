@@ -4644,7 +4644,11 @@ channel:
           "display-name": "Management API",
           "endpoints": {
             "createProjectInvite": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "Create a Project Invite",
               "docs": "Generates an invite for a specific project",
               "errors": [
@@ -4706,7 +4710,11 @@ channel:
               },
             },
             "createProjectKey": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "Create a Project Key",
               "docs": "Creates a new API key with specified settings for the project",
               "errors": [
@@ -4760,7 +4768,11 @@ channel:
               },
             },
             "createSelfHostedDistCreds": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "Create a Project Self-Hosted Distribution Credential",
               "docs": "Creates a set of distribution credentials for the specified project",
               "method": "POST",
@@ -4806,7 +4818,11 @@ channel:
               },
             },
             "deleteProject": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "Delete a Project",
               "docs": "Deletes the specified project",
               "errors": [
@@ -4848,7 +4864,11 @@ channel:
               },
             },
             "deleteProjectInvite": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "Delete a Project Invite",
               "docs": "Deletes an invite for a specific project",
               "errors": [
@@ -4896,7 +4916,11 @@ channel:
               },
             },
             "deleteProjectKey": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "Deletes an API key for a specific project",
               "docs": "Deletes an API key for a specific project",
               "errors": [
@@ -4942,7 +4966,11 @@ channel:
               },
             },
             "deleteProjectLeave": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "Leave a Project",
               "docs": "Removes the authenticated account from the specific project",
               "errors": [
@@ -4985,7 +5013,11 @@ channel:
               },
             },
             "deleteProjectMember": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "Delete a Project Member",
               "docs": "Removes a member from the project using their unique member ID",
               "errors": [
@@ -5031,7 +5063,11 @@ channel:
               },
             },
             "deleteSelfHostedDistCreds": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "Delete a Project Self-Hosted Distribution Credential",
               "docs": "Deletes a set of distribution credentials for the specified project",
               "errors": [
@@ -5090,7 +5126,11 @@ channel:
               },
             },
             "getModel": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "Returns metadata for a specific model",
               "docs": "Returns metadata for a specific model",
               "errors": [
@@ -5141,7 +5181,11 @@ channel:
               },
             },
             "getProject": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "Get a Project",
               "docs": "Retrieves information about the specified project",
               "errors": [
@@ -5156,6 +5200,8 @@ channel:
                   },
                   "query-parameters": {
                     "end": "2024-07-31T00:00:00Z",
+                    "limit": 1,
+                    "page": 1,
                     "start": "2024-07-01T00:00:00Z",
                   },
                   "response": {
@@ -5214,7 +5260,11 @@ channel:
               },
             },
             "getProjectBalance": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "Get a Project Balance",
               "docs": "Retrieves details about the specified balance",
               "errors": [
@@ -5264,7 +5314,11 @@ channel:
               },
             },
             "getProjectBalances": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "Get Project Balances",
               "docs": "Generates a list of outstanding balances for the specified project",
               "errors": [
@@ -5313,7 +5367,11 @@ channel:
               },
             },
             "getProjectKey": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "Get a Project Key",
               "docs": "Retrieves information about a specified API key",
               "errors": [
@@ -5371,7 +5429,11 @@ channel:
               },
             },
             "getProjectModel": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "Get a Project Model",
               "docs": "Returns metadata for a specific model",
               "errors": [
@@ -5429,7 +5491,11 @@ channel:
               },
             },
             "getProjectRequest": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "Get a Project Request",
               "docs": "Retrieves a specific request for a specific project",
               "examples": [
@@ -5483,7 +5549,11 @@ channel:
               },
             },
             "getProjectUsage": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "Get Project Usage",
               "docs": "Retrieves the usage for a specific project",
               "errors": [
@@ -5499,6 +5569,7 @@ channel:
                   },
                   "query-parameters": {
                     "end": "2024-07-31T00:00:00Z",
+                    "project_filters": "alternatives.yml",
                     "start": "2024-07-01T00:00:00Z",
                   },
                   "response": {
@@ -5549,7 +5620,11 @@ channel:
               },
             },
             "getProjectUsageBreakdown": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "Get Project Usage Breakdown",
               "docs": "Returns the breakdown of usage for a specific project. Supports the following filter options:
 - &accessor={accessor_id} - The public API key accessor used
@@ -5572,6 +5647,7 @@ channel:
                   },
                   "query-parameters": {
                     "end": "2024-07-31T00:00:00Z",
+                    "project_filters": "alternatives.yml",
                     "start": "2024-07-01T00:00:00Z",
                   },
                   "response": {
@@ -5637,7 +5713,11 @@ channel:
               },
             },
             "getSelfHostedCredentials": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "Get a Project Self-Hosted Distribution Credential",
               "docs": "Returns a set of distribution credentials for the specified project",
               "errors": [
@@ -5696,7 +5776,11 @@ channel:
               },
             },
             "listModels": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "List Project Models",
               "docs": "Returns metadata on all the latest public models",
               "errors": [
@@ -5770,7 +5854,11 @@ channel:
               },
             },
             "listProjectInvites": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "List Project Invites",
               "docs": "Generates a list of invites for a specific project",
               "examples": [
@@ -5812,7 +5900,11 @@ channel:
               },
             },
             "listProjectKeys": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "List Project Keys",
               "docs": "Retrieves all API keys associated with the specified project",
               "errors": [
@@ -5857,7 +5949,11 @@ channel:
               },
             },
             "listProjectMemberScopes": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "List Project Member Scopes",
               "docs": "Retrieves a list of scopes for a specific member",
               "errors": [
@@ -5905,7 +6001,11 @@ channel:
               },
             },
             "listProjectMembers": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "List Project Members",
               "docs": "Retrieves a list of account objects for a specific project",
               "errors": [
@@ -5950,7 +6050,11 @@ channel:
               },
             },
             "listProjectModels": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "Returns metadata on all the latest models",
               "docs": "Returns metadata on all the latest models that a specific project has access to, including non-public models",
               "errors": [
@@ -6023,7 +6127,11 @@ channel:
               },
             },
             "listProjectPurchases": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "List Project Purchases",
               "docs": "Returns the original purchased amount on an order transaction",
               "errors": [
@@ -6035,6 +6143,7 @@ channel:
                     "project_id": "123456-7890-1234-5678-901234",
                   },
                   "query-parameters": {
+                    "limit": 1,
                     "start": "2024-07-01T00:00:00Z",
                   },
                   "response": {
@@ -6093,7 +6202,11 @@ channel:
               },
             },
             "listProjectRequests": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "List Project Requests",
               "docs": "Generates a list of requests for a specific project",
               "errors": [
@@ -6108,6 +6221,8 @@ channel:
                   },
                   "query-parameters": {
                     "end": "2024-07-31T00:00:00Z",
+                    "limit": 1,
+                    "page": 1,
                     "start": "2024-07-01T00:00:00Z",
                   },
                   "response": {
@@ -6181,7 +6296,11 @@ channel:
               },
             },
             "listProjectUsageFields": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "List Project Usage Fields",
               "docs": "Lists the features, models, tags, languages, and processing method used for requests in the specified project",
               "errors": [
@@ -6258,7 +6377,11 @@ channel:
               },
             },
             "listProjects": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "List Projects",
               "docs": "Retrieves basic information about the projects associated with the API key",
               "errors": [
@@ -6291,7 +6414,11 @@ channel:
               },
             },
             "listSelfHostedDistCreds": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "List Project Self-Hosted Distribution Credentials",
               "docs": "Lists sets of distribution credentials for the specified project",
               "errors": [
@@ -6349,7 +6476,11 @@ channel:
               },
             },
             "updateProject": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "Update a Project",
               "docs": "Updates the name or other properties of an existing project",
               "errors": [
@@ -6405,7 +6536,11 @@ channel:
               },
             },
             "updateProjectMemberScopes": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "Update Project Member Scopes",
               "docs": "Updates the scopes for a specific member",
               "errors": [
@@ -8621,7 +8756,8 @@ service:
     listProjects:
       path: /v1/projects
       method: GET
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: >-
         Retrieves basic information about the projects associated with the API
         key
@@ -8643,7 +8779,8 @@ service:
     getProject:
       path: /v1/projects/{project_id}
       method: GET
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: Retrieves information about the specified project
       source:
         openapi: ../openapi.yml
@@ -8689,8 +8826,10 @@ service:
         - path-parameters:
             project_id: 123456-7890-1234-5678-901234
           query-parameters:
+            limit: 1
             start: '2024-07-01T00:00:00Z'
             end: '2024-07-31T00:00:00Z'
+            page: 1
           response:
             body:
               project_id: project_id
@@ -8698,7 +8837,8 @@ service:
     deleteProject:
       path: /v1/projects/{project_id}
       method: DELETE
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: Deletes the specified project
       source:
         openapi: ../openapi.yml
@@ -8726,7 +8866,8 @@ service:
     updateProject:
       path: /v1/projects/{project_id}
       method: PATCH
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: Updates the name or other properties of an existing project
       source:
         openapi: ../openapi.yml
@@ -8762,7 +8903,8 @@ service:
     getProjectBalances:
       path: /v1/projects/{project_id}/balances
       method: GET
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: Generates a list of outstanding balances for the specified project
       source:
         openapi: ../openapi.yml
@@ -8794,7 +8936,8 @@ service:
     getProjectBalance:
       path: /v1/projects/{project_id}/balances/{balance_id}
       method: GET
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: Retrieves details about the specified balance
       source:
         openapi: ../openapi.yml
@@ -8829,7 +8972,8 @@ service:
     listProjectModels:
       path: /v1/projects/{project_id}/models
       method: GET
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: >-
         Returns metadata on all the latest models that a specific project has
         access to, including non-public models
@@ -8877,7 +9021,8 @@ service:
     getProjectModel:
       path: /v1/projects/{project_id}/models/{model_id}
       method: GET
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: Returns metadata for a specific model
       source:
         openapi: ../openapi.yml
@@ -8917,7 +9062,8 @@ service:
     listProjectKeys:
       path: /v1/projects/{project_id}/keys
       method: GET
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: Retrieves all API keys associated with the specified project
       source:
         openapi: ../openapi.yml
@@ -8945,7 +9091,8 @@ service:
     createProjectKey:
       path: /v1/projects/{project_id}/keys
       method: POST
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: Creates a new API key with specified settings for the project
       source:
         openapi: ../openapi.yml
@@ -8982,7 +9129,8 @@ service:
     getProjectKey:
       path: /v1/projects/{project_id}/keys/{key_id}
       method: GET
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: Retrieves information about a specified API key
       source:
         openapi: ../openapi.yml
@@ -9022,7 +9170,8 @@ service:
     deleteProjectKey:
       path: /v1/projects/{project_id}/keys/{key_id}
       method: DELETE
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: Deletes an API key for a specific project
       source:
         openapi: ../openapi.yml
@@ -9053,7 +9202,8 @@ service:
     listProjectMembers:
       path: /v1/projects/{project_id}/members
       method: GET
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: Retrieves a list of account objects for a specific project
       source:
         openapi: ../openapi.yml
@@ -9081,7 +9231,8 @@ service:
     deleteProjectMember:
       path: /v1/projects/{project_id}/members/{member_id}
       method: DELETE
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: Removes a member from the project using their unique member ID
       source:
         openapi: ../openapi.yml
@@ -9112,7 +9263,8 @@ service:
     listProjectMemberScopes:
       path: /v1/projects/{project_id}/members/{member_id}/scopes
       method: GET
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: Retrieves a list of scopes for a specific member
       source:
         openapi: ../openapi.yml
@@ -9144,7 +9296,8 @@ service:
     updateProjectMemberScopes:
       path: /v1/projects/{project_id}/members/{member_id}/scopes
       method: PUT
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: Updates the scopes for a specific member
       source:
         openapi: ../openapi.yml
@@ -9183,7 +9336,8 @@ service:
     listProjectInvites:
       path: /v1/projects/{project_id}/invites
       method: GET
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: Generates a list of invites for a specific project
       source:
         openapi: ../openapi.yml
@@ -9209,7 +9363,8 @@ service:
     createProjectInvite:
       path: /v1/projects/{project_id}/invites
       method: POST
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: Generates an invite for a specific project
       source:
         openapi: ../openapi.yml
@@ -9250,7 +9405,8 @@ service:
     deleteProjectInvite:
       path: /v1/projects/{project_id}/invites/{email}
       method: DELETE
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: Deletes an invite for a specific project
       source:
         openapi: ../openapi.yml
@@ -9283,7 +9439,8 @@ service:
     deleteProjectLeave:
       path: /v1/projects/{project_id}/leave
       method: DELETE
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: Removes the authenticated account from the specific project
       source:
         openapi: ../openapi.yml
@@ -9312,7 +9469,8 @@ service:
     listProjectRequests:
       path: /v1/projects/{project_id}/requests
       method: GET
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: Generates a list of requests for a specific project
       source:
         openapi: ../openapi.yml
@@ -9360,6 +9518,8 @@ service:
           query-parameters:
             start: '2024-07-01T00:00:00Z'
             end: '2024-07-31T00:00:00Z'
+            limit: 1
+            page: 1
           response:
             body:
               page: 1
@@ -9378,7 +9538,8 @@ service:
     getProjectRequest:
       path: /v1/projects/{project_id}/requests/{request_id}
       method: GET
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: Retrieves a specific request for a specific project
       source:
         openapi: ../openapi.yml
@@ -9416,7 +9577,8 @@ service:
     getProjectUsage:
       path: /v1/projects/{project_id}/usage
       method: GET
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: Retrieves the usage for a specific project
       source:
         openapi: ../openapi.yml
@@ -9456,6 +9618,7 @@ service:
           query-parameters:
             start: '2024-07-01T00:00:00Z'
             end: '2024-07-31T00:00:00Z'
+            project_filters: alternatives.yml
           response:
             body:
               start: '2024-10-16'
@@ -9466,7 +9629,8 @@ service:
     listProjectUsageFields:
       path: /v1/projects/{project_id}/usage/fields
       method: GET
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: >-
         Lists the features, models, tags, languages, and processing method used
         for requests in the specified project
@@ -9525,7 +9689,8 @@ service:
     getProjectUsageBreakdown:
       path: /v1/projects/{project_id}/usage/breakdown
       method: GET
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: >
         Returns the breakdown of usage for a specific project. Supports the
         following filter options:
@@ -9580,6 +9745,7 @@ service:
           query-parameters:
             start: '2024-07-01T00:00:00Z'
             end: '2024-07-31T00:00:00Z'
+            project_filters: alternatives.yml
           response:
             body:
               start: '2025-01-16'
@@ -9601,7 +9767,8 @@ service:
     listProjectPurchases:
       path: /v1/projects/{project_id}/purchases
       method: GET
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: Returns the original purchased amount on an order transaction
       source:
         openapi: ../openapi.yml
@@ -9636,6 +9803,7 @@ service:
             project_id: 123456-7890-1234-5678-901234
           query-parameters:
             start: '2024-07-01T00:00:00Z'
+            limit: 1
           response:
             body:
               orders:
@@ -9648,7 +9816,8 @@ service:
     listModels:
       path: /v1/models
       method: GET
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: Returns metadata on all the latest public models
       source:
         openapi: ../openapi.yml
@@ -9699,7 +9868,8 @@ service:
     getModel:
       path: /v1/models/{model_id}
       method: GET
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: Returns metadata for a specific model
       source:
         openapi: ../openapi.yml
@@ -9735,7 +9905,8 @@ service:
     listSelfHostedDistCreds:
       path: /v1/projects/{project_id}/self-hosted/distribution/credentials
       method: GET
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: Lists sets of distribution credentials for the specified project
       source:
         openapi: ../openapi.yml
@@ -9773,7 +9944,8 @@ service:
     createSelfHostedDistCreds:
       path: /v1/projects/{project_id}/self-hosted/distribution/credentials
       method: POST
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: Creates a set of distribution credentials for the specified project
       source:
         openapi: ../openapi.yml
@@ -9806,7 +9978,8 @@ service:
       path: >-
         /v1/projects/{project_id}/self-hosted/distribution/credentials/{distribution_credentials_id}
       method: GET
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: Returns a set of distribution credentials for the specified project
       source:
         openapi: ../openapi.yml
@@ -9848,7 +10021,8 @@ service:
       path: >-
         /v1/projects/{project_id}/self-hosted/distribution/credentials/{distribution_credentials_id}
       method: DELETE
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: Deletes a set of distribution credentials for the specified project
       source:
         openapi: ../openapi.yml
@@ -10430,7 +10604,11 @@ channel:
           "display-name": "Speech to Text",
           "endpoints": {
             "listen": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "Transcribe and analyze pre-recorded audio",
               "docs": "Transcribe audio using Deepgram's speech-to-text API",
               "errors": [
@@ -11140,7 +11318,8 @@ service:
     listen:
       path: /v1/listen
       method: POST
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: Transcribe audio using Deepgram's speech-to-text API
       source:
         openapi: ../openapi.yml
@@ -11356,7 +11535,11 @@ docs: Power your apps with world-class speech recognition
           "display-name": "Text Intelligence",
           "endpoints": {
             "TextRead": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "Analyze text content",
               "docs": "Analyze text content using Deepgram's text analysis API",
               "errors": [
@@ -11366,6 +11549,14 @@ docs: Power your apps with world-class speech recognition
                 {
                   "query-parameters": {
                     "callback": "https://example.com",
+                    "callback_method": "POST",
+                    "custom_topic": "custom_topic",
+                    "custom_topic_mode": "extended",
+                    "intents": true,
+                    "read_language": "en",
+                    "read_summarize": true,
+                    "sentiment": true,
+                    "topics": true,
                   },
                   "request": {
                     "url": "url",
@@ -11516,7 +11707,8 @@ service:
     TextRead:
       path: /v1/read
       method: POST
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: Analyze text content using Deepgram's text analysis API
       source:
         openapi: ../openapi.yml
@@ -11578,6 +11770,14 @@ service:
       examples:
         - query-parameters:
             callback: https://example.com
+            callback_method: POST
+            custom_topic: custom_topic
+            custom_topic_mode: extended
+            intents: true
+            read_language: en
+            sentiment: true
+            read_summarize: true
+            topics: true
           request:
             url: url
           response:
@@ -11624,7 +11824,11 @@ docs: Analyze the content of text sources
           "display-name": "Text to Speech",
           "endpoints": {
             "speak": {
-              "auth": true,
+              "auth": [
+                {
+                  "ApiKeyAuth": [],
+                },
+              ],
               "display-name": "Text to Speech transformation",
               "docs": "Convert text into natural-sounding speech using Deepgram's TTS API",
               "errors": [
@@ -11845,7 +12049,8 @@ service:
     speak:
       path: /v1/speak
       method: POST
-      auth: true
+      auth:
+        - ApiKeyAuth: []
       docs: Convert text into natural-sounding speech using Deepgram's TTS API
       source:
         openapi: ../openapi.yml

@@ -10,14 +10,14 @@
           "base-path": "",
           "endpoints": {
             "chat": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Start a chat",
               "docs": "Create a chat while specifying the default retrieval parameters used by the prompt.",
               "examples": [
                 {
                   "headers": {
-                    "Request-Timeout": "[object Object]",
-                    "Request-Timeout-Millis": "[object Object]",
+                    "Request-Timeout": 1,
+                    "Request-Timeout-Millis": 1,
                   },
                   "request": {
                     "query": "How can I use the Vectara platform?",
@@ -64,14 +64,14 @@
               },
             },
             "chat_stream": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Start a chat",
               "docs": "Create a chat while specifying the default retrieval parameters used by the prompt.",
               "examples": [
                 {
                   "headers": {
-                    "Request-Timeout": "[object Object]",
-                    "Request-Timeout-Millis": "[object Object]",
+                    "Request-Timeout": 1,
+                    "Request-Timeout-Millis": 1,
                   },
                   "request": {
                     "query": "How can I use the Vectara platform?",
@@ -166,7 +166,6 @@
     chat_stream:
       path: /v2/chats
       method: POST
-      auth: false
       docs: >-
         Create a chat while specifying the default retrieval parameters used by
         the prompt.
@@ -190,8 +189,8 @@
         format: json
       examples:
         - headers:
-            Request-Timeout: '[object Object]'
-            Request-Timeout-Millis: '[object Object]'
+            Request-Timeout: 1
+            Request-Timeout-Millis: 1
           request:
             query: How can I use the Vectara platform?
             stream_response: true
@@ -201,7 +200,6 @@
     chat:
       path: /v2/chats
       method: POST
-      auth: false
       docs: >-
         Create a chat while specifying the default retrieval parameters used by
         the prompt.
@@ -225,8 +223,8 @@
         status-code: 200
       examples:
         - headers:
-            Request-Timeout: '[object Object]'
-            Request-Timeout-Millis: '[object Object]'
+            Request-Timeout: 1
+            Request-Timeout-Millis: 1
           request:
             query: How can I use the Vectara platform?
             stream_response: false

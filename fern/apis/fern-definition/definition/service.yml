@@ -5,6 +5,7 @@ imports:
   pagination: pagination.yml
   source: source.yml
   variables: variables.yml
+  auth: auth.yml
 
 types:
   HttpServiceSchema:
@@ -42,7 +43,7 @@ types:
       path: string
       url: optional<string>
       path-parameters: optional<map<string, HttpPathParameterSchema>>
-      auth: optional<boolean>
+      auth: optional<HttpEndpointAuth>
       idempotent: optional<boolean>
       stream-condition: optional<string>
       request: optional<HttpRequest>
@@ -53,6 +54,32 @@ types:
       pagination: optional<Pagination>
       transport: optional<ServiceTransport>
       source: optional<source.SourceSchema>
+      retries: optional<RetriesConfiguration>
+
+  HttpEndpointAuth:
+    discriminated: false
+    union:
+      - boolean
+      - HttpEndpointSecurity
+
+  HttpEndpointSecurity:
+    type: list<HttpEndpointSecurityItem>
+    docs: |
+      A list of auth scheme collections. 
+      To satisfy the security requirements, the caller must satisfy at least one collection of schemes.
+
+  HttpEndpointSecurityItem:
+    type: map<auth.AuthSchemeKey, list<auth.AuthScope>>
+    docs: A collection of auth schemes that all need to be satisfied for the endpoint.
+
+  RetriesConfiguration:
+    discriminated: false
+    union:
+      - RetriesDisabledSchema
+
+  RetriesDisabledSchema:
+    properties:
+      disabled: optional<boolean>
 
   HttpMethodSchema:
     enum:

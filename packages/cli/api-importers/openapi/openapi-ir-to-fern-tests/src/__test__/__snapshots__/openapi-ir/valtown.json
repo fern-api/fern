@@ -189,6 +189,7 @@
       "servers": [],
       "description": "Search for vals across the platform",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/v1/search/vals",
       "examples": [
@@ -432,6 +433,7 @@
       "servers": [],
       "description": "Get basic details about a user, given their username",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/v1/alias/{username}",
       "examples": [
@@ -963,6 +965,7 @@
       "servers": [],
       "description": "Get a val",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/v1/alias/{username}/{val_name}",
       "examples": [
@@ -1358,6 +1361,7 @@
       "servers": [],
       "description": "Get profile information for the current user",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/v1/me",
       "examples": [
@@ -1554,6 +1558,7 @@
       "servers": [],
       "description": "Get vals liked by the current user",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/v1/me/likes",
       "examples": [
@@ -2194,6 +2199,7 @@
       "servers": [],
       "description": "Get comments related to current user, either given or received",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/v1/me/comments",
       "examples": [
@@ -2216,6 +2222,26 @@
                 "value": {
                   "value": 1,
                   "type": "int"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "since",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "until",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
                 },
                 "type": "primitive"
               }
@@ -2265,6 +2291,9 @@
                                 "type": "string"
                               },
                               "type": "primitive"
+                            },
+                            "username": {
+                              "type": "null"
                             }
                           },
                           "type": "object"
@@ -2295,6 +2324,9 @@
                             "privacy": {
                               "value": "public",
                               "type": "enum"
+                            },
+                            "author": {
+                              "type": "null"
                             }
                           },
                           "type": "object"
@@ -2707,6 +2739,7 @@
       "servers": [],
       "description": "Get vals that depend on any of the user's vals",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/v1/me/references",
       "examples": [
@@ -2732,6 +2765,26 @@
                 },
                 "type": "primitive"
               }
+            },
+            {
+              "name": "since",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
+            },
+            {
+              "name": "until",
+              "value": {
+                "value": {
+                  "value": "2024-01-15T09:30:00Z",
+                  "type": "datetime"
+                },
+                "type": "primitive"
+              }
             }
           ],
           "headers": [],
@@ -2751,6 +2804,12 @@
                               },
                               "type": "primitive"
                             },
+                            "username": {
+                              "type": "null"
+                            },
+                            "author_id": {
+                              "type": "null"
+                            },
                             "name": {
                               "value": {
                                 "value": "name",
@@ -2769,6 +2828,12 @@
                                 "type": "string"
                               },
                               "type": "primitive"
+                            },
+                            "username": {
+                              "type": "null"
+                            },
+                            "author_id": {
+                              "type": "null"
                             },
                             "name": {
                               "value": {
@@ -2966,12 +3031,24 @@
       "servers": [],
       "description": "List blobs in your account",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/v1/blob",
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "prefix",
+              "value": {
+                "value": {
+                  "value": "prefix",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -3058,6 +3135,7 @@
       "servers": [],
       "description": "Get a blob’s contents.",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/v1/blob/{key}",
       "examples": [],
@@ -3119,6 +3197,11 @@
       "servers": [],
       "description": "Store data in blob storage",
       "authed": true,
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/v1/blob/{key}",
       "examples": [
@@ -3186,6 +3269,11 @@
       "servers": [],
       "description": "Delete a blob",
       "authed": true,
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
       "method": "DELETE",
       "path": "/v1/blob/{key}",
       "examples": [
@@ -3263,6 +3351,7 @@
       "servers": [],
       "description": "Get basic information about a user",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/v1/users/{user_id}",
       "examples": [
@@ -3476,6 +3565,7 @@
       "servers": [],
       "description": "List a user's vals",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/v1/users/{user_id}/vals",
       "examples": [
@@ -3942,6 +4032,11 @@
       "servers": [],
       "description": "Execute a single SQLite statement and return results",
       "authed": true,
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/v1/sqlite/execute",
       "examples": [
@@ -4487,6 +4582,11 @@
       "servers": [],
       "description": "Execute a batch of SQLite statements and return results for all of them",
       "authed": true,
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/v1/sqlite/batch",
       "examples": [
@@ -4833,6 +4933,7 @@
       "servers": [],
       "description": "Run JavaScript or TypeScript without saving it permanently as a val",
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/v1/eval",
       "examples": [
@@ -5125,6 +5226,7 @@
       "servers": [],
       "description": "Run JavaScript or TypeScript without saving it permanently as a val",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/v1/eval/{code}",
       "examples": [
@@ -5141,7 +5243,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "args",
+              "value": {
+                "value": {
+                  "value": "args",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "response": {
             "value": {
@@ -5216,6 +5329,7 @@
       "servers": [],
       "description": "Run a val, specify any parameters in a querystring",
       "authed": false,
+      "security": [],
       "availability": "Deprecated",
       "method": "GET",
       "path": "/v1/run/{valname}",
@@ -5233,7 +5347,18 @@
               }
             }
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "args",
+              "value": {
+                "value": {
+                  "value": "args",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
           "headers": [],
           "codeSamples": [],
           "type": "full"
@@ -5329,6 +5454,7 @@
       "servers": [],
       "description": "Run a val, with arguments in the request body",
       "authed": false,
+      "security": [],
       "availability": "Deprecated",
       "method": "POST",
       "path": "/v1/run/{valname}",
@@ -6450,6 +6576,11 @@
       "servers": [],
       "description": "Send emails",
       "authed": true,
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/v1/email",
       "examples": [
@@ -6716,6 +6847,11 @@
       "servers": [],
       "description": "Create a new val",
       "authed": true,
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/v1/vals",
       "examples": [
@@ -6977,6 +7113,11 @@
       "servers": [],
       "description": "Run an existing val or create a new one",
       "authed": true,
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
       "method": "PUT",
       "path": "/v1/vals",
       "examples": [
@@ -7063,6 +7204,7 @@
       "servers": [],
       "description": "Get a val by id",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/v1/vals/{val_id}",
       "examples": [
@@ -7411,6 +7553,11 @@
       "servers": [],
       "description": "Update an existing val",
       "authed": true,
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
       "method": "PUT",
       "path": "/v1/vals/{val_id}",
       "examples": [
@@ -7531,6 +7678,11 @@
       "servers": [],
       "description": "Delete a val",
       "authed": true,
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
       "method": "DELETE",
       "path": "/v1/vals/{val_id}",
       "examples": [
@@ -7741,6 +7893,7 @@
       "servers": [],
       "description": "List versions of a val",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/v1/vals/{val_id}/versions",
       "examples": [
@@ -8081,6 +8234,11 @@
       "servers": [],
       "description": "Create a new version of a val",
       "authed": true,
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/v1/vals/{val_id}/versions",
       "examples": [
@@ -8379,6 +8537,7 @@
       "servers": [],
       "description": "Get a specific version of a val",
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/v1/vals/{val_id}/versions/{version}",
       "examples": [
@@ -8630,6 +8789,11 @@
       "servers": [],
       "description": "Delete a specific version of a val",
       "authed": true,
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
       "method": "DELETE",
       "path": "/v1/vals/{val_id}/versions/{version}",
       "examples": [
@@ -8784,6 +8948,11 @@
       "servers": [],
       "description": "Cancel a running val",
       "authed": true,
+      "security": [
+        {
+          "bearerAuth": []
+        }
+      ],
       "method": "POST",
       "path": "/v1/vals/{val_id}/evaluations/{evaluation_id}/cancel",
       "examples": [

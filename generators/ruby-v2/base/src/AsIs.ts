@@ -11,6 +11,13 @@ export const AsIsFiles = {
     ErrorsConstraint: "internal/errors/constraint_error.Template.rb",
     ErrorsType: "internal/errors/type_error.Template.rb",
 
+    // Iterator classes
+    ItemIterator: "internal/iterators/item_iterator.Template.rb",
+    CursorItemIterator: "internal/iterators/cursor_item_iterator.Template.rb",
+    OffsetItemIterator: "internal/iterators/offset_item_iterator.Template.rb",
+    CursorPageIterator: "internal/iterators/cursor_page_iterator.Template.rb",
+    OffsetPageIterator: "internal/iterators/offset_page_iterator.Template.rb",
+
     // HTTP
     HttpBaseRequest: "internal/http/base_request.Template.rb",
     HttpRawClient: "internal/http/raw_client.Template.rb",
@@ -38,7 +45,19 @@ export const AsIsFiles = {
     TypesType: "internal/types/type.Template.rb",
     TypesUnion: "internal/types/union.Template.rb",
     TypesUnknown: "internal/types/unknown.Template.rb",
-    TypesUtils: "internal/types/utils.Template.rb"
+    TypesUtils: "internal/types/utils.Template.rb",
+
+    // Test files
+    TestHelper: "test/test_helper.Template.rb",
+    TestCursorItemIterator: "test/unit/internal/iterators/test_cursor_item_iterator.Template.rb",
+    TestOffsetItemIterator: "test/unit/internal/iterators/test_offset_item_iterator.Template.rb",
+    TestArrayType: "test/unit/internal/types/test_array.Template.rb",
+    TestBooleanType: "test/unit/internal/types/test_boolean.Template.rb",
+    TestEnumType: "test/unit/internal/types/test_enum.Template.rb",
+    TestHashType: "test/unit/internal/types/test_hash.Template.rb",
+    TestModelType: "test/unit/internal/types/test_model.Template.rb",
+    TestUnionType: "test/unit/internal/types/test_union.Template.rb",
+    TestTypeUtils: "test/unit/internal/types/test_utils.Template.rb"
 } as const;
 
 export function topologicalCompareAsIsFiles(fileA: string, fileB: string): number {
@@ -78,5 +97,10 @@ const asIsTopoValue = {
     [AsIsFiles.ClientError]: 22,
     [AsIsFiles.RedirectError]: 23,
     [AsIsFiles.ServerError]: 24,
-    [AsIsFiles.TimeoutError]: 25
+    [AsIsFiles.TimeoutError]: 25,
+    [AsIsFiles.ItemIterator]: 26,
+    [AsIsFiles.CursorItemIterator]: 27,
+    [AsIsFiles.OffsetItemIterator]: 28,
+    [AsIsFiles.CursorPageIterator]: 29,
+    [AsIsFiles.OffsetPageIterator]: 30
 };

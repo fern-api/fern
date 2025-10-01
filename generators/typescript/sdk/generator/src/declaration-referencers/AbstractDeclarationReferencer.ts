@@ -14,16 +14,23 @@ export declare namespace AbstractDeclarationReferencer {
     export interface Init {
         namespaceExport: string;
         containingDirectory: ExportedDirectory[];
+        consolidateTypeFiles?: boolean;
     }
 }
 
 export abstract class AbstractDeclarationReferencer<Name = never> implements DeclarationReferencer<Name> {
     public readonly namespaceExport: string;
     protected containingDirectory: ExportedDirectory[];
+    protected consolidateTypeFiles: boolean;
 
-    constructor({ namespaceExport, containingDirectory }: AbstractDeclarationReferencer.Init) {
+    constructor({
+        namespaceExport,
+        containingDirectory,
+        consolidateTypeFiles = false
+    }: AbstractDeclarationReferencer.Init) {
         this.namespaceExport = namespaceExport;
         this.containingDirectory = containingDirectory;
+        this.consolidateTypeFiles = consolidateTypeFiles;
     }
 
     public abstract getExportedFilepath(name: Name): ExportedFilePath;

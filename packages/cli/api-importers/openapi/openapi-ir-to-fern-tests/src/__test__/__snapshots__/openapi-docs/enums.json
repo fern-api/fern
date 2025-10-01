@@ -10,7 +10,7 @@
           "base-path": "",
           "endpoints": {
             "getExample": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Get Example",
               "docs": undefined,
               "examples": [
@@ -89,7 +89,6 @@
     getExample:
       path: /example
       method: GET
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: Get Example

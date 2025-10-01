@@ -10,7 +10,7 @@
           "base-path": "",
           "endpoints": {
             "get_user": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -65,7 +65,6 @@
     get_user:
       path: /user/{id}
       method: GET
-      auth: false
       source:
         openapi: ../openapi.yml
       request:

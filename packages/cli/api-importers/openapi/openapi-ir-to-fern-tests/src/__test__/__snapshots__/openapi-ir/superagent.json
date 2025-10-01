@@ -37,6 +37,11 @@
       "servers": [],
       "description": "List all agents",
       "authed": true,
+      "security": [
+        {
+          "JWTBearer": []
+        }
+      ],
       "method": "GET",
       "path": "/api/v1/agents",
       "examples": [
@@ -148,6 +153,11 @@
       "servers": [],
       "description": "Create a new agent",
       "authed": true,
+      "security": [
+        {
+          "JWTBearer": []
+        }
+      ],
       "method": "POST",
       "path": "/api/v1/agents",
       "examples": [
@@ -276,6 +286,11 @@
       "servers": [],
       "description": "Get a specific agent",
       "authed": true,
+      "security": [
+        {
+          "JWTBearer": []
+        }
+      ],
       "method": "GET",
       "path": "/api/v1/agents/{agentId}",
       "examples": [
@@ -396,6 +411,11 @@
       "servers": [],
       "description": "Delete a specific agent",
       "authed": true,
+      "security": [
+        {
+          "JWTBearer": []
+        }
+      ],
       "method": "DELETE",
       "path": "/api/v1/agents/{agentId}",
       "examples": [
@@ -544,6 +564,11 @@
       "servers": [],
       "description": "Patch a specific agent",
       "authed": true,
+      "security": [
+        {
+          "JWTBearer": []
+        }
+      ],
       "method": "PATCH",
       "path": "/api/v1/agents/{agentId}",
       "examples": [
@@ -704,6 +729,11 @@
       "servers": [],
       "description": "Invoke a specific agent",
       "authed": true,
+      "security": [
+        {
+          "APIKeyHeader": []
+        }
+      ],
       "method": "POST",
       "path": "/api/v1/agents/{agentId}/predict",
       "examples": [
@@ -851,6 +881,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/api/v1/auth/sign-in",
       "examples": [
@@ -980,6 +1011,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "POST",
       "path": "/api/v1/auth/sign-up",
       "examples": [
@@ -1064,6 +1096,11 @@
       "errors": {},
       "servers": [],
       "authed": true,
+      "security": [
+        {
+          "JWTBearer": []
+        }
+      ],
       "method": "GET",
       "path": "/api/v1/users/me",
       "examples": [
@@ -1172,6 +1209,7 @@
       },
       "servers": [],
       "authed": false,
+      "security": [],
       "method": "GET",
       "path": "/api/v1/users/{userId}",
       "examples": [
@@ -1249,6 +1287,11 @@
       "servers": [],
       "description": "List all API tokens",
       "authed": true,
+      "security": [
+        {
+          "JWTBearer": []
+        }
+      ],
       "method": "GET",
       "path": "/api/v1/api-tokens",
       "examples": [
@@ -1360,6 +1403,11 @@
       "servers": [],
       "description": "Create a new API token",
       "authed": true,
+      "security": [
+        {
+          "JWTBearer": []
+        }
+      ],
       "method": "POST",
       "path": "/api/v1/api-tokens",
       "examples": [
@@ -1481,6 +1529,11 @@
       "servers": [],
       "description": "Get a specific API token",
       "authed": true,
+      "security": [
+        {
+          "JWTBearer": []
+        }
+      ],
       "method": "GET",
       "path": "/api/v1/api-tokens/{tokenId}",
       "examples": [
@@ -1601,6 +1654,11 @@
       "servers": [],
       "description": "Delete a specific API token",
       "authed": true,
+      "security": [
+        {
+          "JWTBearer": []
+        }
+      ],
       "method": "DELETE",
       "path": "/api/v1/api-tokens/{tokenId}",
       "examples": [
@@ -1678,6 +1736,11 @@
       "servers": [],
       "description": "List all documents",
       "authed": true,
+      "security": [
+        {
+          "JWTBearer": []
+        }
+      ],
       "method": "GET",
       "path": "/api/v1/documents",
       "examples": [
@@ -1789,6 +1852,11 @@
       "servers": [],
       "description": "Create a new document",
       "authed": true,
+      "security": [
+        {
+          "JWTBearer": []
+        }
+      ],
       "method": "POST",
       "path": "/api/v1/documents",
       "examples": [
@@ -1924,6 +1992,11 @@
       "servers": [],
       "description": "Get a specific document",
       "authed": true,
+      "security": [
+        {
+          "JWTBearer": []
+        }
+      ],
       "method": "GET",
       "path": "/api/v1/documents/{documentId}",
       "examples": [
@@ -2044,6 +2117,11 @@
       "servers": [],
       "description": "Delete a specific document",
       "authed": true,
+      "security": [
+        {
+          "JWTBearer": []
+        }
+      ],
       "method": "DELETE",
       "path": "/api/v1/documents/{documentId}",
       "examples": [
@@ -2121,6 +2199,11 @@
       "servers": [],
       "description": "List all prompts",
       "authed": true,
+      "security": [
+        {
+          "JWTBearer": []
+        }
+      ],
       "method": "GET",
       "path": "/api/v1/prompts",
       "examples": [
@@ -2232,6 +2315,11 @@
       "servers": [],
       "description": "Create a new prompt",
       "authed": true,
+      "security": [
+        {
+          "JWTBearer": []
+        }
+      ],
       "method": "POST",
       "path": "/api/v1/prompts",
       "examples": [
@@ -2364,6 +2452,11 @@
       "servers": [],
       "description": "Get a specific prompt",
       "authed": true,
+      "security": [
+        {
+          "JWTBearer": []
+        }
+      ],
       "method": "GET",
       "path": "/api/v1/prompts/{promptId}",
       "examples": [
@@ -2484,6 +2577,11 @@
       "servers": [],
       "description": "Delete a specific prompt",
       "authed": true,
+      "security": [
+        {
+          "JWTBearer": []
+        }
+      ],
       "method": "DELETE",
       "path": "/api/v1/prompts/{promptId}",
       "examples": [
@@ -2632,6 +2730,11 @@
       "servers": [],
       "description": "Patch a specific prompt",
       "authed": true,
+      "security": [
+        {
+          "JWTBearer": []
+        }
+      ],
       "method": "PATCH",
       "path": "/api/v1/prompts/{promptId}",
       "examples": [
@@ -2730,6 +2833,11 @@
       "servers": [],
       "description": "List all tools",
       "authed": true,
+      "security": [
+        {
+          "JWTBearer": []
+        }
+      ],
       "method": "GET",
       "path": "/api/v1/tools",
       "examples": [
@@ -2841,6 +2949,11 @@
       "servers": [],
       "description": "Create a new tool",
       "authed": true,
+      "security": [
+        {
+          "JWTBearer": []
+        }
+      ],
       "method": "POST",
       "path": "/api/v1/tools",
       "examples": [
@@ -2969,6 +3082,11 @@
       "servers": [],
       "description": "Get a specific tool",
       "authed": true,
+      "security": [
+        {
+          "JWTBearer": []
+        }
+      ],
       "method": "GET",
       "path": "/api/v1/tools/{toolId}",
       "examples": [
@@ -3089,6 +3207,11 @@
       "servers": [],
       "description": "Delete a specific tool",
       "authed": true,
+      "security": [
+        {
+          "JWTBearer": []
+        }
+      ],
       "method": "DELETE",
       "path": "/api/v1/tools/{toolId}",
       "examples": [
@@ -3166,6 +3289,11 @@
       "servers": [],
       "description": "List all agent traces",
       "authed": true,
+      "security": [
+        {
+          "JWTBearer": []
+        }
+      ],
       "method": "GET",
       "path": "/api/v1/traces",
       "examples": [

@@ -7720,7 +7720,24 @@ We return one of the following enum values:
   - `UNCATEGORIZED`
   - `null`
 ",
+<<<<<<< HEAD
             "type": "optional<nullable<string>>",
+=======
+            "enum": [
+              "CHECKING_ACCOUNT",
+              "CREDIT_CARD",
+              "INVESTMENT_ACCOUNT",
+              "LOAN_ACCOUNT",
+              "PENSION_FUND_ACCOUNT",
+              "RECEIVABLES_ACCOUNT",
+              "SAVINGS_ACCOUNT",
+              "UNCATEGORIZED",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+>>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
           },
           "EnumBankAccountHolderTypeOfpi": {
             "docs": "The type of bank account. Can be either `INDIVIDUAL` or `BUSINESS`.",
@@ -7809,7 +7826,65 @@ We return one of the following enum values:
   - `Withdrawal & ATM`
   - `null`
 ",
+<<<<<<< HEAD
             "type": "optional<nullable<string>>",
+=======
+            "enum": [
+              {
+                "name": "BillsUtilities",
+                "value": "Bills & Utilities",
+              },
+              {
+                "name": "CreditsLoans",
+                "value": "Credits & Loans",
+              },
+              "Deposits",
+              {
+                "name": "FeesCharges",
+                "value": "Fees & Charges",
+              },
+              {
+                "name": "FoodGroceries",
+                "value": "Food & Groceries",
+              },
+              {
+                "name": "HomeLife",
+                "value": "Home & Life",
+              },
+              {
+                "name": "IncomePayments",
+                "value": "Income & Payments",
+              },
+              "Insurance",
+              {
+                "name": "InvestmentsSavings",
+                "value": "Investments & Savings",
+              },
+              {
+                "name": "OnlinePlatformsLeisure",
+                "value": "Online Platforms & Leisure",
+              },
+              {
+                "name": "PersonalShopping",
+                "value": "Personal Shopping",
+              },
+              "Taxes",
+              "Transfers",
+              {
+                "name": "TransportTravel",
+                "value": "Transport & Travel",
+              },
+              "Unknown",
+              {
+                "name": "WithdrawalAtm",
+                "value": "Withdrawal & ATM",
+              },
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+>>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
           },
           "EnumCategorizationTransactionSubcategory": {
             "docs": "The transactions subcategory. For more info about this feature, check our [Transaction categorization](https://developers.belvo.com/docs/banking#categorizing-transactions) article. 
@@ -7894,7 +7969,216 @@ We return one of the following enum values:
   - `Taxis & Rideshares`
   - `Other`
   - `null`",
+<<<<<<< HEAD
             "type": "optional<nullable<string>>",
+=======
+            "enum": [
+              {
+                "name": "ElectricityEnergy",
+                "value": "Electricity & Energy",
+              },
+              "Rent",
+              "Telecommunications",
+              "Water",
+              "Auto",
+              {
+                "name": "CreditCard",
+                "value": "Credit Card",
+              },
+              "Instalment",
+              {
+                "name": "InterestCharges",
+                "value": "Interest & Charges",
+              },
+              "Mortgage",
+              {
+                "name": "PayAdvance",
+                "value": "Pay Advance",
+              },
+              "Personal",
+              "Adjustments",
+              {
+                "name": "BankFees",
+                "value": "Bank Fees",
+              },
+              "Chargeback",
+              "Refund",
+              {
+                "name": "BlockedBalances",
+                "value": "Blocked Balances",
+              },
+              "Alimony",
+              {
+                "name": "AlcoholTobacco",
+                "value": "Alcohol & Tobacco",
+              },
+              {
+                "name": "BakeryCoffee",
+                "value": "Bakery & Coffee",
+              },
+              {
+                "name": "BarsNightclubs",
+                "value": "Bars & Nightclubs",
+              },
+              {
+                "name": "ConvenienceStore",
+                "value": "Convenience Store",
+              },
+              "Delivery",
+              "Groceries",
+              "Restaurants",
+              "Education",
+              {
+                "name": "GymsFitness",
+                "value": "Gyms & Fitness",
+              },
+              {
+                "name": "HairBeauty",
+                "value": "Hair & Beauty",
+              },
+              "Health",
+              {
+                "name": "HomeDecorAppliances",
+                "value": "Home Decor & Appliances",
+              },
+              {
+                "name": "LaundryDryCleaning",
+                "value": "Laundry & Dry Cleaning",
+              },
+              "Pharmacies",
+              {
+                "name": "ProfessionalServices",
+                "value": "Professional Services",
+              },
+              {
+                "name": "VeterinaryServices",
+                "value": "Veterinary Services",
+              },
+              "Freelance",
+              "Interest",
+              "Retirement",
+              "Salary",
+              "Government",
+              {
+                "name": "HomeInsurance",
+                "value": "Home Insurance",
+              },
+              {
+                "name": "AutoInsurance",
+                "value": "Auto Insurance",
+              },
+              {
+                "name": "HealthLifeInsurance",
+                "value": "Health & Life Insurance",
+              },
+              "Savings",
+              {
+                "name": "FixedIncome",
+                "value": "Fixed income",
+              },
+              "Equity",
+              {
+                "name": "InvestmentFunds",
+                "value": "Investment Funds",
+              },
+              "Derivatives",
+              "Cryptocurrencies",
+              {
+                "name": "AppsSoftwareAndCloudServices",
+                "value": "Apps, Software and Cloud Services",
+              },
+              {
+                "name": "EventsParksAndMuseums",
+                "value": "Events, Parks and Museums",
+              },
+              "Gambling",
+              "Gaming",
+              "Lottery",
+              {
+                "name": "MovieAudio",
+                "value": "Movie & Audio",
+              },
+              {
+                "name": "BooksNews",
+                "value": "Books & News",
+              },
+              {
+                "name": "ClothingAccessories",
+                "value": "Clothing & Accessories",
+              },
+              {
+                "name": "DepartmentStore",
+                "value": "Department Store",
+              },
+              "Electronics",
+              {
+                "name": "ECommerce",
+                "value": "E-commerce",
+              },
+              "Gifts",
+              {
+                "name": "OfficeSupplies",
+                "value": "Office Supplies",
+              },
+              {
+                "name": "PetSupplies",
+                "value": "Pet Supplies",
+              },
+              {
+                "name": "AutoTaxFees",
+                "value": "Auto Tax & Fees",
+              },
+              "Donation",
+              {
+                "name": "GovernmentFees",
+                "value": "Government Fees",
+              },
+              {
+                "name": "IncomeTax",
+                "value": "Income Tax",
+              },
+              {
+                "name": "RealEstateTaxFees",
+                "value": "Real Estate Tax & Fees",
+              },
+              {
+                "name": "TaxReturn",
+                "value": "Tax Return",
+              },
+              "Accommodation",
+              {
+                "name": "AutoExpenses",
+                "value": "Auto Expenses",
+              },
+              {
+                "name": "AutoRental",
+                "value": "Auto Rental",
+              },
+              "Flights",
+              "Gas",
+              {
+                "name": "MileagePrograms",
+                "value": "Mileage Programs",
+              },
+              {
+                "name": "ParkingTolls",
+                "value": "Parking & Tolls",
+              },
+              {
+                "name": "PublicTransit",
+                "value": "Public Transit",
+              },
+              {
+                "name": "TaxisRideshares",
+                "value": "Taxis & Rideshares",
+              },
+              "Other",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+>>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
           },
           "EnumCategorizationTransactionType": {
             "docs": "The direction of the transaction.
@@ -8279,7 +8563,21 @@ For DIAN Colombia, we return one of the following values:
   - `Crédito`
   - `null`
 ",
+<<<<<<< HEAD
             "type": "optional<nullable<string>>",
+=======
+            "enum": [
+              "Contado",
+              {
+                "name": "Credito",
+                "value": "Crédito",
+              },
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+>>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
           },
           "EnumInvoiceSatInvoiceType": {
             "docs": "The fiscal institution's classification of the invoice.
@@ -8312,13 +8610,36 @@ For Mexico's SAT, we return one of the following values:
 
 - 🇲🇽 Mexico [SAT catalog reference article](https://developers.belvo.com/docs/sat-catalogs#payment-method). For Mexico, we return `PUE`, `PIP`, `PPD`, or `null`.
 ",
+<<<<<<< HEAD
             "type": "optional<nullable<string>>",
+=======
+            "enum": [
+              "PUE",
+              "PIP",
+              "PPD",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+>>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
           },
           "EnumInvoiceType": {
             "docs": "The direction of the invoice (from the perspective of the Link owner).
 - `OUTFLOW` indicates a sent invoice. - `INFLOW` indicates a received invoice.
 ",
+<<<<<<< HEAD
             "type": "optional<nullable<string>>",
+=======
+            "enum": [
+              "OUTFLOW",
+              "INFLOW",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+>>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
           },
           "EnumLinkAccessModeRequest": {
             "default": "recurrent",
@@ -8346,7 +8667,18 @@ We return one of the following enum values:
   - `recurrent`
   - `null`
 ",
+<<<<<<< HEAD
             "type": "optional<nullable<string>>",
+=======
+            "enum": [
+              "single",
+              "recurrent",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+>>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
           },
           "EnumLinkRefreshRate": {
             "default": "7d",
@@ -8359,7 +8691,36 @@ We return one of the following enum values:
   - `30d` (once a month)
   - `null` (for single links)
 ",
+<<<<<<< HEAD
             "type": "optional<nullable<string>>",
+=======
+            "enum": [
+              {
+                "name": "SixH",
+                "value": "6h",
+              },
+              {
+                "name": "TwelveH",
+                "value": "12h",
+              },
+              {
+                "name": "TwentyFourH",
+                "value": "24h",
+              },
+              {
+                "name": "SevenD",
+                "value": "7d",
+              },
+              {
+                "name": "ThirtyD",
+                "value": "30d",
+              },
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+>>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
           },
           "EnumLinkStatus": {
             "docs": "The current status of the link. For more information, see our [Link](https://developers.belvo.com/docs/links-and-institutions#links) article in the devportal.
@@ -8566,7 +8927,22 @@ We return one of the following values:
   - `ELO_DEBIT`
   - `null`
 ",
+<<<<<<< HEAD
             "type": "optional<nullable<string>>",
+=======
+            "enum": [
+              "VISA_CREDIT",
+              "VISA_DEBIT",
+              "MASTERCARD_CREDIT",
+              "MASTERCARD_DEBIT",
+              "ELO_CREDIT",
+              "ELO_DEBIT",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+>>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
           },
           "EnumRecurringExpenseCategory": {
             "docs": "The transaction category for the recurring expense. For more information on the available categories, please see our [Transaction categorization documentation](https://developers.belvo.com/docs/banking#categorizing-transactions).
@@ -8691,7 +9067,20 @@ We return one of the following values:
   - `null`: No bill status was identified.
   
 ℹ️ Note: Some banks consider CLOSED as PAID.",
+<<<<<<< HEAD
             "type": "optional<nullable<string>>",
+=======
+            "enum": [
+              "PAID",
+              "CLOSED",
+              "OPEN",
+              "FUTURE",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+>>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
           },
           "EnumTransactionCategory": {
             "docs": "The name of the category to which this transaction belongs.
@@ -8722,7 +9111,65 @@ We return one of the following enum values:
 
   \* For clients not using our Transaction Categorization product, we return `null` instead.
 ",
+<<<<<<< HEAD
             "type": "optional<nullable<string>>",
+=======
+            "enum": [
+              {
+                "name": "BillsUtilities",
+                "value": "Bills & Utilities",
+              },
+              {
+                "name": "CreditsLoans",
+                "value": "Credits & Loans",
+              },
+              "Deposits",
+              {
+                "name": "FeesCharges",
+                "value": "Fees & Charges",
+              },
+              {
+                "name": "FoodGroceries",
+                "value": "Food & Groceries",
+              },
+              {
+                "name": "HomeLife",
+                "value": "Home & Life",
+              },
+              {
+                "name": "IncomePayments",
+                "value": "Income & Payments",
+              },
+              "Insurance",
+              {
+                "name": "InvestmentsSavings",
+                "value": "Investments & Savings",
+              },
+              {
+                "name": "OnlinePlatformsLeisure",
+                "value": "Online Platforms & Leisure",
+              },
+              {
+                "name": "PersonalShopping",
+                "value": "Personal Shopping",
+              },
+              "Taxes",
+              "Transfers",
+              {
+                "name": "TransportTravel",
+                "value": "Transport & Travel",
+              },
+              "Unknown",
+              {
+                "name": "WithdrawalAtm",
+                "value": "Withdrawal & ATM",
+              },
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+>>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
           },
           "EnumTransactionStatus": {
             "docs": "The status of the transaction. We return one of the following values:
@@ -8732,7 +9179,19 @@ We return one of the following enum values:
   - `UNCATEGORIZED`
   - `null`
 ",
+<<<<<<< HEAD
             "type": "optional<nullable<string>>",
+=======
+            "enum": [
+              "PENDING",
+              "PROCESSED",
+              "UNCATEGORIZED",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+>>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
           },
           "EnumTransactionSubcategory": {
             "docs": "The transactions subcategory.
@@ -8821,7 +9280,216 @@ We return one of the following enum values:
   - `Taxis & Rideshares`
   - `Other`
   - `null`",
+<<<<<<< HEAD
             "type": "optional<nullable<string>>",
+=======
+            "enum": [
+              {
+                "name": "ElectricityEnergy",
+                "value": "Electricity & Energy",
+              },
+              "Rent",
+              "Telecommunications",
+              "Water",
+              "Auto",
+              {
+                "name": "CreditCard",
+                "value": "Credit Card",
+              },
+              "Instalment",
+              {
+                "name": "InterestCharges",
+                "value": "Interest & Charges",
+              },
+              "Mortgage",
+              {
+                "name": "PayAdvance",
+                "value": "Pay Advance",
+              },
+              "Personal",
+              "Adjustments",
+              {
+                "name": "BankFees",
+                "value": "Bank Fees",
+              },
+              "Chargeback",
+              "Refund",
+              {
+                "name": "BlockedBalances",
+                "value": "Blocked Balances",
+              },
+              "Alimony",
+              {
+                "name": "AlcoholTobacco",
+                "value": "Alcohol & Tobacco",
+              },
+              {
+                "name": "BakeryCoffee",
+                "value": "Bakery & Coffee",
+              },
+              {
+                "name": "BarsNightclubs",
+                "value": "Bars & Nightclubs",
+              },
+              {
+                "name": "ConvenienceStore",
+                "value": "Convenience Store",
+              },
+              "Delivery",
+              "Groceries",
+              "Restaurants",
+              "Education",
+              {
+                "name": "GymsFitness",
+                "value": "Gyms & Fitness",
+              },
+              {
+                "name": "HairBeauty",
+                "value": "Hair & Beauty",
+              },
+              "Health",
+              {
+                "name": "HomeDecorAppliances",
+                "value": "Home Decor & Appliances",
+              },
+              {
+                "name": "LaundryDryCleaning",
+                "value": "Laundry & Dry Cleaning",
+              },
+              "Pharmacies",
+              {
+                "name": "ProfessionalServices",
+                "value": "Professional Services",
+              },
+              {
+                "name": "VeterinaryServices",
+                "value": "Veterinary Services",
+              },
+              "Freelance",
+              "Interest",
+              "Retirement",
+              "Salary",
+              "Government",
+              {
+                "name": "HomeInsurance",
+                "value": "Home Insurance",
+              },
+              {
+                "name": "AutoInsurance",
+                "value": "Auto Insurance",
+              },
+              {
+                "name": "HealthLifeInsurance",
+                "value": "Health & Life Insurance",
+              },
+              "Savings",
+              {
+                "name": "FixedIncome",
+                "value": "Fixed income",
+              },
+              "Equity",
+              {
+                "name": "InvestmentFunds",
+                "value": "Investment Funds",
+              },
+              "Derivatives",
+              "Cryptocurrencies",
+              {
+                "name": "AppsSoftwareAndCloudServices",
+                "value": "Apps, Software and Cloud Services",
+              },
+              {
+                "name": "EventsParksAndMuseums",
+                "value": "Events, Parks and Museums",
+              },
+              "Gambling",
+              "Gaming",
+              "Lottery",
+              {
+                "name": "MovieAudio",
+                "value": "Movie & Audio",
+              },
+              {
+                "name": "BooksNews",
+                "value": "Books & News",
+              },
+              {
+                "name": "ClothingAccessories",
+                "value": "Clothing & Accessories",
+              },
+              {
+                "name": "DepartmentStore",
+                "value": "Department Store",
+              },
+              "Electronics",
+              {
+                "name": "ECommerce",
+                "value": "E-commerce",
+              },
+              "Gifts",
+              {
+                "name": "OfficeSupplies",
+                "value": "Office Supplies",
+              },
+              {
+                "name": "PetSupplies",
+                "value": "Pet Supplies",
+              },
+              {
+                "name": "AutoTaxFees",
+                "value": "Auto Tax & Fees",
+              },
+              "Donation",
+              {
+                "name": "GovernmentFees",
+                "value": "Government Fees",
+              },
+              {
+                "name": "IncomeTax",
+                "value": "Income Tax",
+              },
+              {
+                "name": "RealEstateTaxFees",
+                "value": "Real Estate Tax & Fees",
+              },
+              {
+                "name": "TaxReturn",
+                "value": "Tax Return",
+              },
+              "Accommodation",
+              {
+                "name": "AutoExpenses",
+                "value": "Auto Expenses",
+              },
+              {
+                "name": "AutoRental",
+                "value": "Auto Rental",
+              },
+              "Flights",
+              "Gas",
+              {
+                "name": "MileagePrograms",
+                "value": "Mileage Programs",
+              },
+              {
+                "name": "ParkingTolls",
+                "value": "Parking & Tolls",
+              },
+              {
+                "name": "PublicTransit",
+                "value": "Public Transit",
+              },
+              {
+                "name": "TaxisRideshares",
+                "value": "Taxis & Rideshares",
+              },
+              "Other",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+>>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
           },
           "EnumTransactionType": {
             "docs": "The direction of the transaction:
@@ -8829,7 +9497,18 @@ We return one of the following enum values:
 - `OUTFLOW` indicates money going out of the account.
 - `null` when no information was present regarding the direction of the transaction.
 ",
+<<<<<<< HEAD
             "type": "optional<nullable<string>>",
+=======
+            "enum": [
+              "OUTFLOW",
+              "INFLOW",
+            ],
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+>>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
           },
           "EquityStatementBusiness": {
             "docs": "Object containing the general fiscal situation of the taxpayer.",
@@ -19580,7 +20259,13 @@ types:
     source:
       openapi: ../openapi.yml
   EnumLinkAccessModeResponse:
+<<<<<<< HEAD
     type: optional<nullable<string>>
+=======
+    enum:
+      - single
+      - recurrent
+>>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
     docs: >
       The link type.
 
@@ -19592,6 +20277,8 @@ types:
         - `single`
         - `recurrent`
         - `null`
+    source:
+      openapi: ../openapi.yml
   EnumLinkStatus:
     enum:
       - valid
@@ -19611,7 +20298,21 @@ types:
     source:
       openapi: ../openapi.yml
   EnumLinkRefreshRate:
+<<<<<<< HEAD
     type: optional<nullable<string>>
+=======
+    enum:
+      - value: 6h
+        name: SixH
+      - value: 12h
+        name: TwelveH
+      - value: 24h
+        name: TwentyFourH
+      - value: 7d
+        name: SevenD
+      - value: 30d
+        name: ThirtyD
+>>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
     docs: >
       The update refresh rate for the recurrent link. For more information,
       check out our [recurrent link
@@ -19626,6 +20327,8 @@ types:
         - `30d` (once a month)
         - `null` (for single links)
     default: 7d
+    source:
+      openapi: ../openapi.yml
   Link:
     properties:
       id:
@@ -20348,7 +21051,19 @@ types:
     source:
       openapi: ../openapi.yml
   EnumAccountCategory:
+<<<<<<< HEAD
     type: optional<nullable<string>>
+=======
+    enum:
+      - CHECKING_ACCOUNT
+      - CREDIT_CARD
+      - INVESTMENT_ACCOUNT
+      - LOAN_ACCOUNT
+      - PENSION_FUND_ACCOUNT
+      - RECEIVABLES_ACCOUNT
+      - SAVINGS_ACCOUNT
+      - UNCATEGORIZED
+>>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
     docs: |
       The type of account.
       We return one of the following enum values:
@@ -20361,6 +21076,8 @@ types:
         - `SAVINGS_ACCOUNT`
         - `UNCATEGORIZED`
         - `null`
+    source:
+      openapi: ../openapi.yml
   AccountsBalance:
     docs: |
       Details regarding the current and available balances for the account.
@@ -20917,7 +21634,38 @@ types:
     source:
       openapi: ../openapi.yml
   EnumTransactionCategory:
+<<<<<<< HEAD
     type: optional<nullable<string>>
+=======
+    enum:
+      - value: Bills & Utilities
+        name: BillsUtilities
+      - value: Credits & Loans
+        name: CreditsLoans
+      - Deposits
+      - value: Fees & Charges
+        name: FeesCharges
+      - value: Food & Groceries
+        name: FoodGroceries
+      - value: Home & Life
+        name: HomeLife
+      - value: Income & Payments
+        name: IncomePayments
+      - Insurance
+      - value: Investments & Savings
+        name: InvestmentsSavings
+      - value: Online Platforms & Leisure
+        name: OnlinePlatformsLeisure
+      - value: Personal Shopping
+        name: PersonalShopping
+      - Taxes
+      - Transfers
+      - value: Transport & Travel
+        name: TransportTravel
+      - Unknown
+      - value: Withdrawal & ATM
+        name: WithdrawalAtm
+>>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
     docs: >
       The name of the category to which this transaction belongs.
 
@@ -20954,8 +21702,132 @@ types:
 
 
         \* For clients not using our Transaction Categorization product, we return `null` instead.
+    source:
+      openapi: ../openapi.yml
   EnumTransactionSubcategory:
+<<<<<<< HEAD
     type: optional<nullable<string>>
+=======
+    enum:
+      - value: Electricity & Energy
+        name: ElectricityEnergy
+      - Rent
+      - Telecommunications
+      - Water
+      - Auto
+      - value: Credit Card
+        name: CreditCard
+      - Instalment
+      - value: Interest & Charges
+        name: InterestCharges
+      - Mortgage
+      - value: Pay Advance
+        name: PayAdvance
+      - Personal
+      - Adjustments
+      - value: Bank Fees
+        name: BankFees
+      - Chargeback
+      - Refund
+      - value: Blocked Balances
+        name: BlockedBalances
+      - Alimony
+      - value: Alcohol & Tobacco
+        name: AlcoholTobacco
+      - value: Bakery & Coffee
+        name: BakeryCoffee
+      - value: Bars & Nightclubs
+        name: BarsNightclubs
+      - value: Convenience Store
+        name: ConvenienceStore
+      - Delivery
+      - Groceries
+      - Restaurants
+      - Education
+      - value: Gyms & Fitness
+        name: GymsFitness
+      - value: Hair & Beauty
+        name: HairBeauty
+      - Health
+      - value: Home Decor & Appliances
+        name: HomeDecorAppliances
+      - value: Laundry & Dry Cleaning
+        name: LaundryDryCleaning
+      - Pharmacies
+      - value: Professional Services
+        name: ProfessionalServices
+      - value: Veterinary Services
+        name: VeterinaryServices
+      - Freelance
+      - Interest
+      - Retirement
+      - Salary
+      - Government
+      - value: Home Insurance
+        name: HomeInsurance
+      - value: Auto Insurance
+        name: AutoInsurance
+      - value: Health & Life Insurance
+        name: HealthLifeInsurance
+      - Savings
+      - value: Fixed income
+        name: FixedIncome
+      - Equity
+      - value: Investment Funds
+        name: InvestmentFunds
+      - Derivatives
+      - Cryptocurrencies
+      - value: Apps, Software and Cloud Services
+        name: AppsSoftwareAndCloudServices
+      - value: Events, Parks and Museums
+        name: EventsParksAndMuseums
+      - Gambling
+      - Gaming
+      - Lottery
+      - value: Movie & Audio
+        name: MovieAudio
+      - value: Books & News
+        name: BooksNews
+      - value: Clothing & Accessories
+        name: ClothingAccessories
+      - value: Department Store
+        name: DepartmentStore
+      - Electronics
+      - value: E-commerce
+        name: ECommerce
+      - Gifts
+      - value: Office Supplies
+        name: OfficeSupplies
+      - value: Pet Supplies
+        name: PetSupplies
+      - value: Auto Tax & Fees
+        name: AutoTaxFees
+      - Donation
+      - value: Government Fees
+        name: GovernmentFees
+      - value: Income Tax
+        name: IncomeTax
+      - value: Real Estate Tax & Fees
+        name: RealEstateTaxFees
+      - value: Tax Return
+        name: TaxReturn
+      - Accommodation
+      - value: Auto Expenses
+        name: AutoExpenses
+      - value: Auto Rental
+        name: AutoRental
+      - Flights
+      - Gas
+      - value: Mileage Programs
+        name: MileagePrograms
+      - value: Parking & Tolls
+        name: ParkingTolls
+      - value: Public Transit
+        name: PublicTransit
+      - value: Taxis & Rideshares
+        name: TaxisRideshares
+      - Other
+>>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
     docs: |-
       The transactions subcategory.
 
@@ -21043,8 +21915,16 @@ types:
         - `Taxis & Rideshares`
         - `Other`
         - `null`
+    source:
+      openapi: ../openapi.yml
   EnumTransactionType:
+<<<<<<< HEAD
     type: optional<nullable<string>>
+=======
+    enum:
+      - OUTFLOW
+      - INFLOW
+>>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
     docs: >
       The direction of the transaction:
 
@@ -21054,8 +21934,17 @@ types:
 
       - `null` when no information was present regarding the direction of the
       transaction.
+    source:
+      openapi: ../openapi.yml
   EnumTransactionStatus:
+<<<<<<< HEAD
     type: optional<nullable<string>>
+=======
+    enum:
+      - PENDING
+      - PROCESSED
+      - UNCATEGORIZED
+>>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
     docs: |
       The status of the transaction. We return one of the following values:
 
@@ -21063,8 +21952,18 @@ types:
         - `PROCESSED`
         - `UNCATEGORIZED`
         - `null`
+    source:
+      openapi: ../openapi.yml
   EnumTransactionBillStatus:
+<<<<<<< HEAD
     type: optional<nullable<string>>
+=======
+    enum:
+      - PAID
+      - CLOSED
+      - OPEN
+      - FUTURE
+>>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
     docs: |-
       The status of the bill that the transaction appears on. Can be one of:
 
@@ -21075,6 +21974,8 @@ types:
         - `null`: No bill status was identified.
         
       ℹ️ Note: Some banks consider CLOSED as PAID.
+    source:
+      openapi: ../openapi.yml
   TransactionCreditCardData:
     docs: Additional data provided by the institution for credit card transactions.
     properties:
@@ -21662,14 +22563,29 @@ types:
     source:
       openapi: ../openapi.yml
   EnumInvoiceType:
+<<<<<<< HEAD
     type: optional<nullable<string>>
+=======
+    enum:
+      - OUTFLOW
+      - INFLOW
+>>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
     docs: >
       The direction of the invoice (from the perspective of the Link owner).
 
       - `OUTFLOW` indicates a sent invoice. - `INFLOW` indicates a received
       invoice.
+    source:
+      openapi: ../openapi.yml
   EnumInvoiceSatPaymentMethod:
+<<<<<<< HEAD
     type: optional<nullable<string>>
+=======
+    enum:
+      - PUE
+      - PIP
+      - PPD
+>>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
     docs: >
       The payment method code used for this invoice, as defined by the legal
       entity of the country.
@@ -21678,6 +22594,8 @@ types:
       - 🇲🇽 Mexico [SAT catalog reference
       article](https://developers.belvo.com/docs/sat-catalogs#payment-method).
       For Mexico, we return `PUE`, `PIP`, `PPD`, or `null`.
+    source:
+      openapi: ../openapi.yml
   InvoiceDetailRetainedTaxSat:
     properties:
       collected_at:
@@ -22262,7 +23180,14 @@ types:
     source:
       openapi: ../openapi.yml
   EnumInvoiceDianPaymentMethod:
+<<<<<<< HEAD
     type: optional<nullable<string>>
+=======
+    enum:
+      - Contado
+      - value: Crédito
+        name: Credito
+>>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
     docs: >
       The payment method used for this invoice, as defined by the legal entity
       of the country.
@@ -22273,6 +23198,8 @@ types:
         - `Contado`
         - `Crédito`
         - `null`
+    source:
+      openapi: ../openapi.yml
   InvoiceDetailDian:
     properties:
       description:
@@ -24531,7 +25458,17 @@ types:
     source:
       openapi: ../openapi.yml
   EnumReceivableTransactionType:
+<<<<<<< HEAD
     type: optional<nullable<string>>
+=======
+    enum:
+      - VISA_CREDIT
+      - VISA_DEBIT
+      - MASTERCARD_CREDIT
+      - MASTERCARD_DEBIT
+      - ELO_CREDIT
+      - ELO_DEBIT
+>>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
     docs: >
       The type of transaction. For example, whether the transaction was a
       `VISA_DEBIT` or a `MASTERCARD_CREDIT`.
@@ -24546,6 +25483,8 @@ types:
         - `ELO_CREDIT`
         - `ELO_DEBIT`
         - `null`
+    source:
+      openapi: ../openapi.yml
   EnumReceivableTransactionFeeType:
     type: optional<nullable<literal<"TRANSACTION_FEE">>>
     docs: >-
@@ -26295,7 +27234,38 @@ types:
     source:
       openapi: ../openapi.yml
   EnumCategorizationTransactionCategory:
+<<<<<<< HEAD
     type: optional<nullable<string>>
+=======
+    enum:
+      - value: Bills & Utilities
+        name: BillsUtilities
+      - value: Credits & Loans
+        name: CreditsLoans
+      - Deposits
+      - value: Fees & Charges
+        name: FeesCharges
+      - value: Food & Groceries
+        name: FoodGroceries
+      - value: Home & Life
+        name: HomeLife
+      - value: Income & Payments
+        name: IncomePayments
+      - Insurance
+      - value: Investments & Savings
+        name: InvestmentsSavings
+      - value: Online Platforms & Leisure
+        name: OnlinePlatformsLeisure
+      - value: Personal Shopping
+        name: PersonalShopping
+      - Taxes
+      - Transfers
+      - value: Transport & Travel
+        name: TransportTravel
+      - Unknown
+      - value: Withdrawal & ATM
+        name: WithdrawalAtm
+>>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
     docs: >
       The name of the category to which this transaction belongs. For more info
       about this feature, check our [Transaction
@@ -26322,8 +27292,132 @@ types:
         - `Unknown`
         - `Withdrawal & ATM`
         - `null`
+    source:
+      openapi: ../openapi.yml
   EnumCategorizationTransactionSubcategory:
+<<<<<<< HEAD
     type: optional<nullable<string>>
+=======
+    enum:
+      - value: Electricity & Energy
+        name: ElectricityEnergy
+      - Rent
+      - Telecommunications
+      - Water
+      - Auto
+      - value: Credit Card
+        name: CreditCard
+      - Instalment
+      - value: Interest & Charges
+        name: InterestCharges
+      - Mortgage
+      - value: Pay Advance
+        name: PayAdvance
+      - Personal
+      - Adjustments
+      - value: Bank Fees
+        name: BankFees
+      - Chargeback
+      - Refund
+      - value: Blocked Balances
+        name: BlockedBalances
+      - Alimony
+      - value: Alcohol & Tobacco
+        name: AlcoholTobacco
+      - value: Bakery & Coffee
+        name: BakeryCoffee
+      - value: Bars & Nightclubs
+        name: BarsNightclubs
+      - value: Convenience Store
+        name: ConvenienceStore
+      - Delivery
+      - Groceries
+      - Restaurants
+      - Education
+      - value: Gyms & Fitness
+        name: GymsFitness
+      - value: Hair & Beauty
+        name: HairBeauty
+      - Health
+      - value: Home Decor & Appliances
+        name: HomeDecorAppliances
+      - value: Laundry & Dry Cleaning
+        name: LaundryDryCleaning
+      - Pharmacies
+      - value: Professional Services
+        name: ProfessionalServices
+      - value: Veterinary Services
+        name: VeterinaryServices
+      - Freelance
+      - Interest
+      - Retirement
+      - Salary
+      - Government
+      - value: Home Insurance
+        name: HomeInsurance
+      - value: Auto Insurance
+        name: AutoInsurance
+      - value: Health & Life Insurance
+        name: HealthLifeInsurance
+      - Savings
+      - value: Fixed income
+        name: FixedIncome
+      - Equity
+      - value: Investment Funds
+        name: InvestmentFunds
+      - Derivatives
+      - Cryptocurrencies
+      - value: Apps, Software and Cloud Services
+        name: AppsSoftwareAndCloudServices
+      - value: Events, Parks and Museums
+        name: EventsParksAndMuseums
+      - Gambling
+      - Gaming
+      - Lottery
+      - value: Movie & Audio
+        name: MovieAudio
+      - value: Books & News
+        name: BooksNews
+      - value: Clothing & Accessories
+        name: ClothingAccessories
+      - value: Department Store
+        name: DepartmentStore
+      - Electronics
+      - value: E-commerce
+        name: ECommerce
+      - Gifts
+      - value: Office Supplies
+        name: OfficeSupplies
+      - value: Pet Supplies
+        name: PetSupplies
+      - value: Auto Tax & Fees
+        name: AutoTaxFees
+      - Donation
+      - value: Government Fees
+        name: GovernmentFees
+      - value: Income Tax
+        name: IncomeTax
+      - value: Real Estate Tax & Fees
+        name: RealEstateTaxFees
+      - value: Tax Return
+        name: TaxReturn
+      - Accommodation
+      - value: Auto Expenses
+        name: AutoExpenses
+      - value: Auto Rental
+        name: AutoRental
+      - Flights
+      - Gas
+      - value: Mileage Programs
+        name: MileagePrograms
+      - value: Parking & Tolls
+        name: ParkingTolls
+      - value: Public Transit
+        name: PublicTransit
+      - value: Taxis & Rideshares
+        name: TaxisRideshares
+      - Other
+>>>>>>> 2c20b7a50f31eeb130cb31a606f233dcf4a02ddf
     docs: >-
       The transactions subcategory. For more info about this feature, check our
       [Transaction
@@ -26411,6 +27505,8 @@ types:
         - `Taxis & Rideshares`
         - `Other`
         - `null`
+    source:
+      openapi: ../openapi.yml
   CategorizationMerchantData:
     docs: |
       Additional data regarding the merchant involved in the transaction.
@@ -29329,7 +30425,7 @@ client.accounts.list(params: {
           "display-name": "Accounts",
           "endpoints": {
             "DestroyAccount": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete an account",
               "docs": "Delete a specific account and all associated transactions, as well as owners, from your Belvo account.",
               "errors": [
@@ -29435,7 +30531,7 @@ client.connect()
               },
             },
             "DetailAccount": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get an account's details",
               "docs": "Get the details of a specific account.
 
@@ -29581,6 +30677,7 @@ client.connect()
                         "interest_rates": [
                           {
                             "name": "jurosEfetivo",
+                            "type": null,
                             "value": 7.85,
                           },
                         ],
@@ -29731,6 +30828,7 @@ client.connect()
                         "interest_rates": [
                           {
                             "name": "jurosEfetivo",
+                            "type": null,
                             "value": 7.85,
                           },
                         ],
@@ -30068,6 +31166,7 @@ client.connect()
                         "interest_rates": [
                           {
                             "name": "jurosEfetivo",
+                            "type": null,
                             "value": 7.85,
                           },
                         ],
@@ -30218,6 +31317,7 @@ client.connect()
                         "interest_rates": [
                           {
                             "name": "jurosEfetivo",
+                            "type": null,
                             "value": 7.85,
                           },
                         ],
@@ -30277,7 +31377,7 @@ client.connect()
               },
             },
             "ListAccounts": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all accounts",
               "docs": "Get a paginated list of all existing accounts in your Belvo account. By default, we return up to 100 results per page.",
               "errors": [
@@ -30438,6 +31538,7 @@ client.connect()
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
                             "contract_end_date": "2027-10-01",
+                            "interest_rates": null,
                             "monthly_payment": 1000,
                             "outstanding_balance": 182000,
                             "principal": 192000,
@@ -30649,7 +31750,7 @@ client.connect()
               },
             },
             "PatchAccounts": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Complete an accounts request",
               "docs": "Used to resume an Account retrieve session that was paused because an MFA token was required by the institution.
 
@@ -30809,14 +31910,12 @@ client.connect()
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
                           "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
+                            null,
                           ],
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
+                              "type": null,
                               "value": 7.85,
                             },
                           ],
@@ -30979,14 +32078,12 @@ client.connect()
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
                           "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
+                            null,
                           ],
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
+                              "type": null,
                               "value": 7.85,
                             },
                           ],
@@ -31356,14 +32453,12 @@ client.connect()
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
                           "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
+                            null,
                           ],
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
+                              "type": null,
                               "value": 7.85,
                             },
                           ],
@@ -31526,14 +32621,12 @@ client.connect()
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
                           "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
+                            null,
                           ],
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
+                              "type": null,
                               "value": 7.85,
                             },
                           ],
@@ -31590,7 +32683,7 @@ client.connect()
               },
             },
             "RetrieveAccounts": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve accounts for a link",
               "docs": "Retrieve accounts from an existing link.
 
@@ -31741,14 +32834,12 @@ client.connect()
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
                           "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
+                            null,
                           ],
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
+                              "type": null,
                               "value": 7.85,
                             },
                           ],
@@ -31902,14 +32993,12 @@ client.connect()
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
                           "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
+                            null,
                           ],
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
+                              "type": null,
                               "value": 7.85,
                             },
                           ],
@@ -32261,14 +33350,12 @@ client.connect()
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
                           "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
+                            null,
                           ],
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
+                              "type": null,
                               "value": 7.85,
                             },
                           ],
@@ -32422,14 +33509,12 @@ client.connect()
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
                           "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
+                            null,
                           ],
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
+                              "type": null,
                               "value": 7.85,
                             },
                           ],
@@ -32500,7 +33585,6 @@ service:
     ListAccounts:
       path: /api/accounts/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all existing accounts in your Belvo account. By
         default, we return up to 100 results per page.
@@ -32795,6 +33879,7 @@ service:
                     principal: 192000
                     outstanding_balance: 182000
                     monthly_payment: 1000
+                    interest_rates: null
                     contract_end_date: '2027-10-01'
                   funds_data:
                     - collected_at: '2020-04-23T21:32:55Z'
@@ -32871,7 +33956,6 @@ service:
     RetrieveAccounts:
       path: /api/accounts/
       method: POST
-      auth: true
       docs: |-
         Retrieve accounts from an existing link.
 
@@ -32967,10 +34051,10 @@ service:
                   monthly_payment: 1000
                   interest_rates:
                     - name: jurosEfetivo
+                      type: null
                       value: 7.85
                   fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
+                    - null
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -33098,10 +34182,10 @@ service:
                   monthly_payment: 1000
                   interest_rates:
                     - name: jurosEfetivo
+                      type: null
                       value: 7.85
                   fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
+                    - null
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -33361,10 +34445,10 @@ service:
                   monthly_payment: 1000
                   interest_rates:
                     - name: jurosEfetivo
+                      type: null
                       value: 7.85
                   fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
+                    - null
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -33513,10 +34597,10 @@ service:
                   monthly_payment: 1000
                   interest_rates:
                     - name: jurosEfetivo
+                      type: null
                       value: 7.85
                   fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
+                    - null
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -33601,7 +34685,6 @@ service:
     PatchAccounts:
       path: /api/accounts/
       method: PATCH
-      auth: true
       docs: >-
         Used to resume an Account retrieve session that was paused because an
         MFA token was required by the institution.
@@ -33699,10 +34782,10 @@ service:
                   monthly_payment: 1000
                   interest_rates:
                     - name: jurosEfetivo
+                      type: null
                       value: 7.85
                   fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
+                    - null
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -33839,10 +34922,10 @@ service:
                   monthly_payment: 1000
                   interest_rates:
                     - name: jurosEfetivo
+                      type: null
                       value: 7.85
                   fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
+                    - null
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -34120,10 +35203,10 @@ service:
                   monthly_payment: 1000
                   interest_rates:
                     - name: jurosEfetivo
+                      type: null
                       value: 7.85
                   fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
+                    - null
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -34281,10 +35364,10 @@ service:
                   monthly_payment: 1000
                   interest_rates:
                     - name: jurosEfetivo
+                      type: null
                       value: 7.85
                   fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
+                    - null
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -34377,7 +35460,6 @@ service:
     DetailAccount:
       path: /api/accounts/{id}/
       method: GET
-      auth: true
       docs: |-
         Get the details of a specific account.
 
@@ -34472,6 +35554,7 @@ service:
                 monthly_payment: 1000
                 interest_rates:
                   - name: jurosEfetivo
+                    type: null
                     value: 7.85
                 fees:
                   - type: OPERATION_FEE
@@ -34594,6 +35677,7 @@ service:
                 monthly_payment: 1000
                 interest_rates:
                   - name: jurosEfetivo
+                    type: null
                     value: 7.85
                 fees:
                   - type: OPERATION_FEE
@@ -34839,6 +35923,7 @@ service:
                 monthly_payment: 1000
                 interest_rates:
                   - name: jurosEfetivo
+                    type: null
                     value: 7.85
                 fees:
                   - type: OPERATION_FEE
@@ -34982,6 +36067,7 @@ service:
                 monthly_payment: 1000
                 interest_rates:
                   - name: jurosEfetivo
+                    type: null
                     value: 7.85
                 fees:
                   - type: OPERATION_FEE
@@ -35061,7 +36147,6 @@ service:
     DestroyAccount:
       path: /api/accounts/{id}/
       method: DELETE
-      auth: true
       docs: >-
         Delete a specific account and all associated transactions, as well as
         owners, from your Belvo account.
@@ -35384,7 +36469,7 @@ client.balances.list(params: {
           "display-name": "Balances",
           "endpoints": {
             "DestroyBalance": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete a balance",
               "docs": "Delete a specific balance from your Belvo account.",
               "errors": [
@@ -35490,7 +36575,7 @@ client.connect()
               },
             },
             "DetailBalance": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get a balance's details",
               "docs": "Get the details of a specific balance.",
               "errors": [
@@ -35620,14 +36705,12 @@ client.connect()
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
                           "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
+                            null,
                           ],
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
+                              "type": null,
                               "value": 7.85,
                             },
                           ],
@@ -35691,7 +36774,7 @@ client.connect()
               },
             },
             "ListBalances": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all balances",
               "docs": "Get a paginated list of all existing balances in your Belvo account. By default, we return up to 100 results per page.",
               "errors": [
@@ -35820,6 +36903,7 @@ client.connect()
                             "category": "CHECKING_ACCOUNT",
                             "collected_at": "2022-06-17T03:20:41Z",
                             "created_at": "2021-10-27T16:18:15Z",
+                            "credit_data": null,
                             "currency": "BRL",
                             "id": "26428311-7108-40b8-a22b-c310187dd005",
                             "institution": {
@@ -35828,13 +36912,7 @@ client.connect()
                             },
                             "last_accessed_at": "2021-03-09T10:28:40Z",
                             "link": "b834e69b-1aa4-465d-969c-07c886a4fbed",
-                            "loan_data": {
-                              "collected_at": "2022-02-09T08:45:50Z",
-                              "contract_end_date": "2027-10-01",
-                              "monthly_payment": 1000,
-                              "outstanding_balance": 182000,
-                              "principal": 192000,
-                            },
+                            "loan_data": null,
                             "name": "Erebor Gold",
                             "number": "7889044-1",
                             "public_identification_name": "AGENCY/ACCOUNT",
@@ -36009,7 +37087,7 @@ client.connect()
               },
             },
             "PatchBalances": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Complete a balances request",
               "docs": "Used to resume a Balance retrieve session that was paused because an MFA token was required by the institution.",
               "errors": [
@@ -36157,6 +37235,7 @@ client.connect()
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
                             "contract_end_date": "2027-10-01",
+                            "interest_rates": null,
                             "monthly_payment": 1000,
                             "outstanding_balance": 182000,
                             "principal": 192000,
@@ -36209,7 +37288,7 @@ client.connect()
               },
             },
             "RetrieveBalances": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve balances for a link",
               "docs": "Retrieve balances from one or more accounts for a specific link within a specified date range.",
               "errors": [
@@ -36359,6 +37438,7 @@ client.connect()
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
                             "contract_end_date": "2027-10-01",
+                            "interest_rates": null,
                             "monthly_payment": 1000,
                             "outstanding_balance": 182000,
                             "principal": 192000,
@@ -36484,7 +37564,6 @@ service:
     ListBalances:
       path: /api/balances/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all existing balances in your Belvo account. By
         default, we return up to 100 results per page.
@@ -36698,12 +37777,8 @@ service:
                     public_identification_name: AGENCY/ACCOUNT
                     public_identification_value: 0009/7889044-1
                     last_accessed_at: '2021-03-09T10:28:40Z'
-                    loan_data:
-                      collected_at: '2022-02-09T08:45:50Z'
-                      principal: 192000
-                      outstanding_balance: 182000
-                      monthly_payment: 1000
-                      contract_end_date: '2027-10-01'
+                    credit_data: null
+                    loan_data: null
                   value_date: '2022-04-04'
                   balance: 4.25
           code-samples:
@@ -36774,7 +37849,6 @@ service:
     RetrieveBalances:
       path: /api/balances/
       method: POST
-      auth: true
       docs: >-
         Retrieve balances from one or more accounts for a specific link within a
         specified date range.
@@ -36902,6 +37976,7 @@ service:
                     principal: 192000
                     outstanding_balance: 182000
                     monthly_payment: 1000
+                    interest_rates: null
                     contract_end_date: '2027-10-01'
                   funds_data:
                     - collected_at: '2020-04-23T21:32:55Z'
@@ -36995,7 +38070,6 @@ service:
     PatchBalances:
       path: /api/balances/
       method: PATCH
-      auth: true
       docs: >-
         Used to resume a Balance retrieve session that was paused because an MFA
         token was required by the institution.
@@ -37075,6 +38149,7 @@ service:
                     principal: 192000
                     outstanding_balance: 182000
                     monthly_payment: 1000
+                    interest_rates: null
                     contract_end_date: '2027-10-01'
                   funds_data:
                     - collected_at: '2020-04-23T21:32:55Z'
@@ -37167,7 +38242,6 @@ service:
     DetailBalance:
       path: /api/balances/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific balance.
       source:
         openapi: ../openapi.yml
@@ -37249,10 +38323,10 @@ service:
                   monthly_payment: 1000
                   interest_rates:
                     - name: jurosEfetivo
+                      type: null
                       value: 7.85
                   fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
+                    - null
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -37332,7 +38406,6 @@ service:
     DestroyBalance:
       path: /api/balances/{id}/
       method: DELETE
-      auth: true
       docs: Delete a specific balance from your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -37570,7 +38643,7 @@ docs: >-
           "display-name": "Bank Accounts",
           "endpoints": {
             "CreateBankAccount": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create a new bank account",
               "docs": "Create a new bank account from which to send or request funds.",
               "errors": [
@@ -37723,7 +38796,7 @@ docs: >-
               },
             },
             "DetailBankAccount": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get details about a bank account",
               "docs": "Get the details about a specific bank account",
               "errors": [
@@ -37838,7 +38911,7 @@ docs: >-
               },
             },
             "ListBankAccount": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all bank accounts",
               "docs": "List all bank accounts associated with your Belvo account.",
               "errors": [
@@ -38131,7 +39204,6 @@ service:
     ListBankAccount:
       path: /payments/bank-accounts/
       method: GET
-      auth: true
       docs: List all bank accounts associated with your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -38313,7 +39385,6 @@ service:
     CreateBankAccount:
       path: /payments/bank-accounts/
       method: POST
-      auth: true
       docs: Create a new bank account from which to send or request funds.
       source:
         openapi: ../openapi.yml
@@ -38423,7 +39494,6 @@ service:
     DetailBankAccount:
       path: /payments/bank-accounts/{id}/
       method: GET
-      auth: true
       docs: Get the details about a specific bank account
       source:
         openapi: ../openapi.yml
@@ -38553,7 +39623,7 @@ types:
           "display-name": "Categorization",
           "endpoints": {
             "CategorizeTransactions": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Categorize transactions",
               "docs": "Send through your raw transaction data and receive enriched information for each of your transactions.
 
@@ -38684,7 +39754,6 @@ service:
     CategorizeTransactions:
       path: /api/categorization/
       method: POST
-      auth: true
       docs: >-
         Send through your raw transaction data and receive enriched information
         for each of your transactions.
@@ -38811,7 +39880,7 @@ docs: >-
           "display-name": "Customers",
           "endpoints": {
             "CreateCustomer": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create a new customer",
               "docs": "Create a new customer to send or request funds.",
               "errors": [
@@ -38918,7 +39987,7 @@ docs: >-
               },
             },
             "DetailCustomer": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get details about a customer",
               "docs": "Get the details about a specific customer",
               "errors": [
@@ -39012,7 +40081,7 @@ docs: >-
               },
             },
             "ListCustomers": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all customers",
               "docs": "List all customers associated with your Belvo account.",
               "errors": [
@@ -39298,7 +40367,6 @@ service:
     ListCustomers:
       path: /payments/customers/
       method: GET
-      auth: true
       docs: List all customers associated with your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -39485,7 +40553,6 @@ service:
     CreateCustomer:
       path: /payments/customers/
       method: POST
-      auth: true
       docs: Create a new customer to send or request funds.
       source:
         openapi: ../openapi.yml
@@ -39570,7 +40637,6 @@ service:
     DetailCustomer:
       path: /payments/customers/{id}/
       method: GET
-      auth: true
       docs: Get the details about a specific customer
       source:
         openapi: ../openapi.yml
@@ -39694,7 +40760,7 @@ At the moment, the employment records resource is available for:
           "display-name": "Employment Records",
           "endpoints": {
             "DestroyEmploymentRecord": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete an employment record",
               "docs": "Delete a specific employment record from your Belvo account.",
               "errors": [
@@ -39725,7 +40791,7 @@ At the moment, the employment records resource is available for:
               },
             },
             "DetailEmploymentRecord": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get an employment record's details",
               "docs": "Get the details of a specific employment record.",
               "errors": [
@@ -39832,7 +40898,7 @@ At the moment, the employment records resource is available for:
               },
             },
             "ListEmploymentRecords": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all employment records",
               "docs": "Get a paginated list of all existing employment records in your Belvo account. By default, we return up to 100 results per page.",
               "errors": [
@@ -39929,7 +40995,7 @@ At the moment, the employment records resource is available for:
               },
             },
             "RetrieveEmploymentRecordDetails": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve employment record details",
               "docs": "Retrieve employment record details for an individual.
 ",
@@ -40069,7 +41135,6 @@ service:
     ListEmploymentRecords:
       path: /api/employment-records/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all existing employment records in your Belvo
         account. By default, we return up to 100 results per page.
@@ -40150,7 +41215,6 @@ service:
     RetrieveEmploymentRecordDetails:
       path: /api/employment-records/
       method: POST
-      auth: true
       docs: |
         Retrieve employment record details for an individual.
       source:
@@ -40252,7 +41316,6 @@ service:
     DetailEmploymentRecord:
       path: /api/employment-records/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific employment record.
       source:
         openapi: ../openapi.yml
@@ -40338,7 +41401,6 @@ service:
     DestroyEmploymentRecord:
       path: /api/employment-records/{id}/
       method: DELETE
-      auth: true
       docs: Delete a specific employment record from your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -40378,7 +41440,7 @@ docs: "# Employment Records\n\nOur employment records\_resource lets you get a c
           "display-name": "Income Verification",
           "endpoints": {
             "VerifyIncome": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Verify incomes",
               "docs": "Send through your raw data and receive enriched information for each of your user's income streams.
 
@@ -40552,7 +41614,6 @@ service:
     VerifyIncome:
       path: /api/enrich/incomes/
       method: POST
-      auth: true
       docs: >-
         Send through your raw data and receive enriched information for each of
         your user's income streams.
@@ -40780,7 +41841,7 @@ client.incomes.list(params: {
           "display-name": "Incomes",
           "endpoints": {
             "DestroyIncomes": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete an income",
               "docs": "Delete a specific income from your Belvo account.",
               "errors": [
@@ -40886,7 +41947,7 @@ client.connect()
               },
             },
             "DetailIncome": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get an income's details",
               "docs": "Get the details of a specific income.",
               "errors": [
@@ -41035,7 +42096,7 @@ client.connect()
               },
             },
             "ListIncomes": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all incomes",
               "docs": "Get a paginated list of all incomes in your Belvo account. By default, we return up to 100 results per page.",
               "errors": [
@@ -41234,7 +42295,7 @@ client.connect()
               },
             },
             "PatchIncomes": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Complete an incomes request",
               "docs": "Used to resume an Income retrieve session that was paused because an MFA token was required by the institution.",
               "errors": [
@@ -41400,7 +42461,7 @@ client.connect()
               },
             },
             "RetrieveIncome": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve incomes for a link",
               "docs": "Retrieve income insights for <b>checking and savings accounts</b> from a specific link. You can receive insights for a period of up to 365 days, depending on the transaction history available for each [bank](https://developers.belvo.com/docs/institution).",
               "errors": [
@@ -41646,7 +42707,6 @@ service:
     ListIncomes:
       path: /api/incomes/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all incomes in your Belvo account. By default,
         we return up to 100 results per page.
@@ -41822,7 +42882,6 @@ service:
     RetrieveIncome:
       path: /api/incomes/
       method: POST
-      auth: true
       docs: >-
         Retrieve income insights for <b>checking and savings accounts</b> from a
         specific link. You can receive insights for a period of up to 365 days,
@@ -42031,7 +43090,6 @@ service:
     PatchIncomes:
       path: /api/incomes/
       method: PATCH
-      auth: true
       docs: >-
         Used to resume an Income retrieve session that was paused because an MFA
         token was required by the institution.
@@ -42177,7 +43235,6 @@ service:
     DetailIncome:
       path: /api/incomes/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific income.
       source:
         openapi: ../openapi.yml
@@ -42302,7 +43359,6 @@ service:
     DestroyIncomes:
       path: /api/incomes/{id}/
       method: DELETE
-      auth: true
       docs: Delete a specific income from your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -42509,7 +43565,7 @@ You can see a complete list of institutions by either consulting our [Institutio
           "display-name": "Institutions",
           "endpoints": {
             "DetailInstitution": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get an institution's details",
               "docs": "Get the details of a specific institution.",
               "errors": [
@@ -42685,7 +43741,7 @@ client.connect()
               },
             },
             "ListInstitutions": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all institutions",
               "docs": "Get a paginated list of all the institutions currently supported by Belvo. By default, we return up to 100 results per page.",
               "errors": [
@@ -42773,6 +43829,7 @@ client.connect()
                     "country_code__in": "CO,BR",
                     "display_name": "Erebor Bank",
                     "fields": "link,balance,account",
+                    "name": "name",
                     "name__in": "erebor_br_retail,gotham_co_business",
                     "omit": "link,balance",
                     "page": 1,
@@ -42936,7 +43993,6 @@ service:
     ListInstitutions:
       path: /api/institutions/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all the institutions currently supported by
         Belvo. By default, we return up to 100 results per page.
@@ -43033,6 +44089,7 @@ service:
             country_code: MX
             country_code__in: CO,BR
             display_name: Erebor Bank
+            name: name
             name__in: erebor_br_retail,gotham_co_business
             resources__allin: ACCOUNTS,OWNERS,TRANSACTIONS
             status: healthy
@@ -43150,7 +44207,6 @@ service:
     DetailInstitution:
       path: /api/institutions/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific institution.
       source:
         openapi: ../openapi.yml
@@ -43374,7 +44430,7 @@ client. investments_portfolio.list(params: {
           "display-name": "Investment Portfolios",
           "endpoints": {
             "DestroyPortfolio": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete a portfolio",
               "docs": "Delete a specific investment portfolio and all associated instruments, transactions, and owners from your Belvo account.",
               "errors": [
@@ -43471,7 +44527,7 @@ client.connect()
               },
             },
             "DetailPortfolio": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get a portfolio's details",
               "docs": "Get the details of a specific portfolio.",
               "errors": [
@@ -43567,18 +44623,11 @@ client.connect()
                           "balance_net": 99.09,
                           "currency": "USD",
                           "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 123.09,
-                            },
+                            null,
                           ],
                           "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                           "interest_rates": [
-                            {
-                              "index": "CDI",
-                              "type": "yearly",
-                              "value": 11.31,
-                            },
+                            null,
                           ],
                           "name": "CBD DIGITAL ESPECIAL",
                           "open_date": "2021-08-10",
@@ -43592,10 +44641,7 @@ client.connect()
                           ],
                           "quantity": 27.46,
                           "redemption_conditions": [
-                            {
-                              "type": "due_date",
-                              "value": "12-02-2023",
-                            },
+                            null,
                           ],
                           "subtype": "CBD",
                           "type": "BOND",
@@ -43639,7 +44685,7 @@ client.connect()
               },
             },
             "ListPortfolio": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all portfolios",
               "docs": "Get a paginated list of all the existing portfolios (and their instruments) in your Belvo account. By default, we return up to 100 results per page.",
               "errors": [
@@ -43715,8 +44761,14 @@ client.connect()
                     },
                   ],
                   "query-parameters": {
+                    "created_at__gt": "created_at__gt",
+                    "created_at__gte": "created_at__gte",
+                    "created_at__lt": "created_at__lt",
+                    "created_at__lte": "created_at__lte",
+                    "created_at__range": "created_at__range",
                     "fields": "link,balance,account",
                     "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                    "link__in": "link__in",
                     "omit": "link,balance",
                     "page": 1,
                     "page_size": 100,
@@ -43734,26 +44786,7 @@ client.connect()
                           "currency": "BRL",
                           "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                           "instruments": [
-                            {
-                              "average_acquisition_price": 10.01,
-                              "balance_gross": 100.09,
-                              "balance_net": 99.09,
-                              "currency": "USD",
-                              "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                              "name": "CBD DIGITAL ESPECIAL",
-                              "open_date": "2021-08-10",
-                              "price": 10.41,
-                              "profit": 3.08,
-                              "public_id": [
-                                {
-                                  "type": "isin",
-                                  "value": "435-3354.3333",
-                                },
-                              ],
-                              "quantity": 27.46,
-                              "subtype": "CBD",
-                              "type": "BOND",
-                            },
+                            null,
                           ],
                           "name": "Investimento",
                           "type": "FIXED_INCOME",
@@ -43827,7 +44860,7 @@ client.connect()
               },
             },
             "PatchPortfolio": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Complete a portfolios request",
               "docs": "Used to resume a portfolio retrieve session that was paused because an MFA token was required by the institution.",
               "errors": [
@@ -43934,18 +44967,11 @@ client.connect()
                           "balance_net": 99.09,
                           "currency": "USD",
                           "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 123.09,
-                            },
+                            null,
                           ],
                           "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                           "interest_rates": [
-                            {
-                              "index": "CDI",
-                              "type": "yearly",
-                              "value": 11.31,
-                            },
+                            null,
                           ],
                           "name": "CBD DIGITAL ESPECIAL",
                           "open_date": "2021-08-10",
@@ -43959,10 +44985,7 @@ client.connect()
                           ],
                           "quantity": 27.46,
                           "redemption_conditions": [
-                            {
-                              "type": "due_date",
-                              "value": "12-02-2023",
-                            },
+                            null,
                           ],
                           "subtype": "CBD",
                           "type": "BOND",
@@ -44002,7 +45025,7 @@ client.connect()
               },
             },
             "RetrievePortfolio": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve portfolios for a link",
               "docs": "Retrieve all portfolios for an existing link.",
               "errors": [
@@ -44102,18 +45125,11 @@ client.connect()
                           "balance_net": 99.09,
                           "currency": "USD",
                           "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 123.09,
-                            },
+                            null,
                           ],
                           "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                           "interest_rates": [
-                            {
-                              "index": "CDI",
-                              "type": "yearly",
-                              "value": 11.31,
-                            },
+                            null,
                           ],
                           "name": "CBD DIGITAL ESPECIAL",
                           "open_date": "2021-08-10",
@@ -44127,10 +45143,7 @@ client.connect()
                           ],
                           "quantity": 27.46,
                           "redemption_conditions": [
-                            {
-                              "type": "due_date",
-                              "value": "12-02-2023",
-                            },
+                            null,
                           ],
                           "subtype": "CBD",
                           "type": "BOND",
@@ -44184,7 +45197,6 @@ service:
     ListPortfolio:
       path: /investments/portfolios/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all the existing portfolios (and their
         instruments) in your Belvo account. By default, we return up to 100
@@ -44255,6 +45267,12 @@ service:
             omit: link,balance
             fields: link,balance,account
             link: 8848bd0c-9c7e-4f53-a732-ec896b11d4c4
+            created_at__gt: created_at__gt
+            created_at__gte: created_at__gte
+            created_at__lt: created_at__lt
+            created_at__lte: created_at__lte
+            created_at__range: created_at__range
+            link__in: link__in
           response:
             body:
               count: 130
@@ -44269,21 +45287,7 @@ service:
                   balance_net: 77370.69
                   currency: BRL
                   instruments:
-                    - id: 30cb4806-6e00-48a4-91c9-ca55968576c8
-                      public_id:
-                        - type: isin
-                          value: 435-3354.3333
-                      type: BOND
-                      subtype: CBD
-                      name: CBD DIGITAL ESPECIAL
-                      currency: USD
-                      price: 10.41
-                      quantity: 27.46
-                      balance_gross: 100.09
-                      balance_net: 99.09
-                      average_acquisition_price: 10.01
-                      profit: 3.08
-                      open_date: '2021-08-10'
+                    - null
           code-samples:
             - name: Belvo Python SDK
               language: python
@@ -44349,7 +45353,6 @@ service:
     RetrievePortfolio:
       path: /investments/portfolios/
       method: POST
-      auth: true
       docs: Retrieve all portfolios for an existing link.
       source:
         openapi: ../openapi.yml
@@ -44414,15 +45417,11 @@ service:
                   profit: 3.08
                   open_date: '2021-08-10'
                   redemption_conditions:
-                    - type: due_date
-                      value: 12-02-2023
+                    - null
                   fees:
-                    - type: OPERATION_FEE
-                      value: 123.09
+                    - null
                   interest_rates:
-                    - type: yearly
-                      value: 11.31
-                      index: CDI
+                    - null
           code-samples:
             - name: Belvo Python SDK
               language: python
@@ -44488,7 +45487,6 @@ service:
     PatchPortfolio:
       path: /investments/portfolios/
       method: PATCH
-      auth: true
       docs: >-
         Used to resume a portfolio retrieve session that was paused because an
         MFA token was required by the institution.
@@ -44556,15 +45554,11 @@ service:
                   profit: 3.08
                   open_date: '2021-08-10'
                   redemption_conditions:
-                    - type: due_date
-                      value: 12-02-2023
+                    - null
                   fees:
-                    - type: OPERATION_FEE
-                      value: 123.09
+                    - null
                   interest_rates:
-                    - type: yearly
-                      value: 11.31
-                      index: CDI
+                    - null
           code-samples:
             - name: Belvo Python SDK
               language: python
@@ -44636,7 +45630,6 @@ service:
     DetailPortfolio:
       path: /investments/portfolios/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific portfolio.
       source:
         openapi: ../openapi.yml
@@ -44701,15 +45694,11 @@ service:
                   profit: 3.08
                   open_date: '2021-08-10'
                   redemption_conditions:
-                    - type: due_date
-                      value: 12-02-2023
+                    - null
                   fees:
-                    - type: OPERATION_FEE
-                      value: 123.09
+                    - null
                   interest_rates:
-                    - type: yearly
-                      value: 11.31
-                      index: CDI
+                    - null
           code-samples:
             - name: Belvo Python SDK
               language: python
@@ -44778,7 +45767,6 @@ service:
     DestroyPortfolio:
       path: /investments/portfolios/{id}/
       method: DELETE
-      auth: true
       docs: >-
         Delete a specific investment portfolio and all associated instruments,
         transactions, and owners from your Belvo account.
@@ -45036,7 +46024,7 @@ client.invoices.list(params: {
           "display-name": "Invoices",
           "endpoints": {
             "DestroyInvoice": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete an invoice",
               "docs": "Delete a specific invoice from your Belvo account.",
               "errors": [
@@ -45143,7 +46131,7 @@ client.connect()
               },
             },
             "DetailInvoice": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get an invoice's details",
               "docs": "Get the details of a specific invoice.",
               "errors": [
@@ -46102,7 +47090,7 @@ client.connect()
               },
             },
             "ListInvoices": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all invoices",
               "docs": "Get a paginated list of all existing invoices in your Belvo account. By default, we return 100 results per page.",
               "errors": [
@@ -47342,7 +48330,7 @@ client.connect()
               },
             },
             "PatchInvoices": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Complete an invoices request",
               "docs": "Used to resume an Invoice retrieve session that was paused because an MFA token was required by the institution.",
               "errors": [
@@ -47533,7 +48521,7 @@ client.connect()
                         "subtotal_amount": 400,
                         "tax_amount": 64,
                         "total_amount": 454,
-                        "type": "INFLOW",
+                        "type": "OUTFLOW",
                         "usage": "P01",
                         "version": "3.3",
                         "warnings": {
@@ -47574,7 +48562,7 @@ client.connect()
               },
             },
             "RetrieveInvoices": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve invoices for a link",
               "docs": "Retrieve invoice information from a specific fiscal link.
 <div style="background-color:#f4f6f8; border-left: 6px solid #0663F9;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px"> <strong>Info: </strong> You can ask for up to **one** year (365 days) of invoices per request. If you need invoices for more than one year, just make another request. </div>
@@ -48746,7 +49734,6 @@ service:
     ListInvoices:
       path: /api/invoices/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all existing invoices in your Belvo account. By
         default, we return 100 results per page.
@@ -49838,7 +50825,6 @@ service:
     RetrieveInvoices:
       path: /api/invoices/
       method: POST
-      auth: true
       docs: >
         Retrieve invoice information from a specific fiscal link.
 
@@ -50779,7 +51765,6 @@ service:
     PatchInvoices:
       path: /api/invoices/
       method: PATCH
-      auth: true
       docs: >-
         Used to resume an Invoice retrieve session that was paused because an
         MFA token was required by the institution.
@@ -50832,7 +51817,7 @@ service:
                 invoice_date: '2019-12-01'
                 status: Vigente
                 invoice_type: Egreso
-                type: INFLOW
+                type: OUTFLOW
                 sender_id: AAA111111AA11
                 sender_name: ACME CORP
                 sender_tax_fraud_status: NO_TAX_FRAUD_STATUS
@@ -50984,7 +51969,6 @@ service:
     DetailInvoice:
       path: /api/invoices/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific invoice.
       source:
         openapi: ../openapi.yml
@@ -51789,7 +52773,6 @@ service:
     DestroyInvoice:
       path: /api/invoices/{id}/
       method: DELETE
-      auth: true
       docs: Delete a specific invoice from your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -52056,7 +53039,7 @@ For single links, you have to perform POST calls to an institution **every time*
           "display-name": "Links",
           "endpoints": {
             "ChangeLinkAccessMode": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Change a link's access mode",
               "docs": "Change a link's access mode from `single` to `recurrent` or from `recurrent` to single.
 ℹ️ **Note**: When you change a link from `single`` to `recurrent`, they will only be updated the next day at the scheduled interval.",
@@ -52081,7 +53064,7 @@ For single links, you have to perform POST calls to an institution **every time*
                   },
                   "response": {
                     "body": {
-                      "access_mode": "recurrent",
+                      "access_mode": "single",
                       "created_at": "2022-02-09T08:45:50Z",
                       "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
                       "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
@@ -52089,7 +53072,7 @@ For single links, you have to perform POST calls to an institution **every time*
                       "institution": "erebor_mx_retail",
                       "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                       "last_accessed_at": "2019-09-27T13:02:03Z",
-                      "refresh_rate": "7d",
+                      "refresh_rate": "6h",
                       "status": "valid",
                     },
                   },
@@ -52134,7 +53117,7 @@ For single links, you have to perform POST calls to an institution **every time*
               },
             },
             "DestroyLink": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete a link",
               "docs": "Delete a specific link and all associated accounts, transactions, and owners from your Belvo account.
 # Deleting links in batches
@@ -52247,7 +53230,7 @@ client.connect()
               },
             },
             "DetailLink": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get a link's details",
               "docs": "Get the details of a specific link.",
               "errors": [
@@ -52338,7 +53321,7 @@ client.connect()
                   },
                   "response": {
                     "body": {
-                      "access_mode": "recurrent",
+                      "access_mode": "single",
                       "created_at": "2022-02-09T08:45:50Z",
                       "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
                       "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
@@ -52346,7 +53329,7 @@ client.connect()
                       "institution": "erebor_mx_retail",
                       "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                       "last_accessed_at": "2019-09-27T13:02:03Z",
-                      "refresh_rate": "7d",
+                      "refresh_rate": "6h",
                       "status": "valid",
                     },
                   },
@@ -52384,7 +53367,7 @@ client.connect()
               },
             },
             "ListLinks": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all links",
               "docs": "Get a paginated list of all the existing links in your Belvo account. By default, we return up to 100 results per page.",
               "errors": [
@@ -52499,7 +53482,7 @@ client.connect()
                       "previous": "previous",
                       "results": [
                         {
-                          "access_mode": "recurrent",
+                          "access_mode": "single",
                           "created_at": "2022-02-09T08:45:50Z",
                           "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
                           "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
@@ -52507,7 +53490,7 @@ client.connect()
                           "institution": "erebor_mx_retail",
                           "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                           "last_accessed_at": "2019-09-27T13:02:03Z",
-                          "refresh_rate": "7d",
+                          "refresh_rate": "6h",
                           "status": "valid",
                         },
                       ],
@@ -52636,7 +53619,7 @@ client.connect()
               },
             },
             "PatchLinks": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Complete a links request",
               "docs": "Used to resume a Link register session that was paused because an MFA token was required by the institution.",
               "errors": [
@@ -52747,7 +53730,7 @@ client.connect()
                   },
                   "response": {
                     "body": {
-                      "access_mode": "recurrent",
+                      "access_mode": "single",
                       "created_at": "2022-02-09T08:45:50Z",
                       "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
                       "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
@@ -52755,7 +53738,7 @@ client.connect()
                       "institution": "erebor_mx_retail",
                       "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                       "last_accessed_at": "2019-09-27T13:02:03Z",
-                      "refresh_rate": "7d",
+                      "refresh_rate": "6h",
                       "status": "valid",
                     },
                   },
@@ -52789,7 +53772,7 @@ client.connect()
               },
             },
             "RegisterLink": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Register a new link",
               "docs": "Register a new link with your Belvo account.
 
@@ -52905,7 +53888,7 @@ client.connect()
                   },
                   "response": {
                     "body": {
-                      "access_mode": "recurrent",
+                      "access_mode": "single",
                       "created_at": "2022-02-09T08:45:50Z",
                       "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
                       "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
@@ -52913,7 +53896,7 @@ client.connect()
                       "institution": "erebor_mx_retail",
                       "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                       "last_accessed_at": "2019-09-27T13:02:03Z",
-                      "refresh_rate": "7d",
+                      "refresh_rate": "6h",
                       "status": "valid",
                     },
                   },
@@ -53088,7 +54071,7 @@ For a list of standards codes, see the table below.
               },
             },
             "UpdateLink": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Update a link's credentials",
               "docs": "Update the credentials of a specific link. If the successfully updated link is a recurrent one, we automatically trigger an update of the link. If we find fresh data, you'll [receive historical update](https://developers.belvo.com/docs/webhooks) webhooks.
 <div style="background-color:#f4f6f8; border-left: 6px solid #4CAF50;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px"> <strong>Note: </strong> We recommend using our <a href="https://developers.belvo.com/docs/connect-widget" target="_blank">Connect Widget</a> to handle updating <code>invalid</code> or <code>token_required</code> links. </div>
@@ -53193,7 +54176,7 @@ client.connect()
                   },
                   "response": {
                     "body": {
-                      "access_mode": "recurrent",
+                      "access_mode": "single",
                       "created_at": "2022-02-09T08:45:50Z",
                       "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
                       "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
@@ -53201,7 +54184,7 @@ client.connect()
                       "institution": "erebor_mx_retail",
                       "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
                       "last_accessed_at": "2019-09-27T13:02:03Z",
-                      "refresh_rate": "7d",
+                      "refresh_rate": "6h",
                       "status": "valid",
                     },
                   },
@@ -53334,7 +54317,6 @@ service:
     ListLinks:
       path: /api/links/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all the existing links in your Belvo account. By
         default, we return up to 100 results per page.
@@ -53499,14 +54481,14 @@ service:
               results:
                 - id: 30cb4806-6e00-48a4-91c9-ca55968576c8
                   institution: erebor_mx_retail
-                  access_mode: recurrent
+                  access_mode: single
                   last_accessed_at: '2019-09-27T13:02:03Z'
                   created_at: '2022-02-09T08:45:50Z'
                   external_id: 56ab5706-6e00-48a4-91c9-ca55968678d9
                   institution_user_id: sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=
                   status: valid
                   created_by: bcef7f35-67f2-4b19-b009-cb38795faf09
-                  refresh_rate: 7d
+                  refresh_rate: 6h
           code-samples:
             - language: cURL
               code: |
@@ -53575,7 +54557,6 @@ service:
     RegisterLink:
       path: /api/links/
       method: POST
-      auth: true
       docs: >
         Register a new link with your Belvo account.
 
@@ -53840,14 +54821,14 @@ service:
             body:
               id: 30cb4806-6e00-48a4-91c9-ca55968576c8
               institution: erebor_mx_retail
-              access_mode: recurrent
+              access_mode: single
               last_accessed_at: '2019-09-27T13:02:03Z'
               created_at: '2022-02-09T08:45:50Z'
               external_id: 56ab5706-6e00-48a4-91c9-ca55968678d9
               institution_user_id: sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=
               status: valid
               created_by: bcef7f35-67f2-4b19-b009-cb38795faf09
-              refresh_rate: 7d
+              refresh_rate: 6h
           code-samples:
             - language: cURL
               code: |
@@ -53930,7 +54911,6 @@ service:
     PatchLinks:
       path: /api/links/
       method: PATCH
-      auth: true
       docs: >-
         Used to resume a Link register session that was paused because an MFA
         token was required by the institution.
@@ -53976,14 +54956,14 @@ service:
             body:
               id: 30cb4806-6e00-48a4-91c9-ca55968576c8
               institution: erebor_mx_retail
-              access_mode: recurrent
+              access_mode: single
               last_accessed_at: '2019-09-27T13:02:03Z'
               created_at: '2022-02-09T08:45:50Z'
               external_id: 56ab5706-6e00-48a4-91c9-ca55968678d9
               institution_user_id: sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=
               status: valid
               created_by: bcef7f35-67f2-4b19-b009-cb38795faf09
-              refresh_rate: 7d
+              refresh_rate: 6h
           code-samples:
             - language: cURL
               code: |
@@ -54066,7 +55046,6 @@ service:
     DetailLink:
       path: /api/links/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific link.
       source:
         openapi: ../openapi.yml
@@ -54109,14 +55088,14 @@ service:
             body:
               id: 30cb4806-6e00-48a4-91c9-ca55968576c8
               institution: erebor_mx_retail
-              access_mode: recurrent
+              access_mode: single
               last_accessed_at: '2019-09-27T13:02:03Z'
               created_at: '2022-02-09T08:45:50Z'
               external_id: 56ab5706-6e00-48a4-91c9-ca55968678d9
               institution_user_id: sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=
               status: valid
               created_by: bcef7f35-67f2-4b19-b009-cb38795faf09
-              refresh_rate: 7d
+              refresh_rate: 6h
           code-samples:
             - language: cURL
               code: |
@@ -54182,7 +55161,6 @@ service:
     UpdateLink:
       path: /api/links/{id}/
       method: PUT
-      auth: true
       docs: >
         Update the credentials of a specific link. If the successfully updated
         link is a recurrent one, we automatically trigger an update of the link.
@@ -54329,14 +55307,14 @@ service:
             body:
               id: 30cb4806-6e00-48a4-91c9-ca55968576c8
               institution: erebor_mx_retail
-              access_mode: recurrent
+              access_mode: single
               last_accessed_at: '2019-09-27T13:02:03Z'
               created_at: '2022-02-09T08:45:50Z'
               external_id: 56ab5706-6e00-48a4-91c9-ca55968678d9
               institution_user_id: sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=
               status: valid
               created_by: bcef7f35-67f2-4b19-b009-cb38795faf09
-              refresh_rate: 7d
+              refresh_rate: 6h
           code-samples:
             - language: cURL
               code: |
@@ -54408,7 +55386,6 @@ service:
     DestroyLink:
       path: /api/links/{id}/
       method: DELETE
-      auth: true
       docs: >-
         Delete a specific link and all associated accounts, transactions, and
         owners from your Belvo account.
@@ -54503,7 +55480,6 @@ service:
     ChangeLinkAccessMode:
       path: /api/links/{id}/
       method: PATCH
-      auth: true
       docs: >-
         Change a link's access mode from `single` to `recurrent` or from
         `recurrent` to single.
@@ -54560,14 +55536,14 @@ service:
             body:
               id: 30cb4806-6e00-48a4-91c9-ca55968576c8
               institution: erebor_mx_retail
-              access_mode: recurrent
+              access_mode: single
               last_accessed_at: '2019-09-27T13:02:03Z'
               created_at: '2022-02-09T08:45:50Z'
               external_id: 56ab5706-6e00-48a4-91c9-ca55968678d9
               institution_user_id: sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=
               status: valid
               created_by: bcef7f35-67f2-4b19-b009-cb38795faf09
-              refresh_rate: 7d
+              refresh_rate: 6h
   source:
     openapi: ../openapi.yml
   display-name: Links
@@ -54697,7 +55673,7 @@ client.owners.list(params: {
           "display-name": "Owners",
           "endpoints": {
             "DestroyOwner": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete an owner",
               "docs": "Delete a specific owner from your Belvo account.",
               "errors": [
@@ -54803,7 +55779,7 @@ client.connect()
               },
             },
             "DetailOwner": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get an owner's details",
               "docs": "Get the details of a specific owner.",
               "errors": [
@@ -54945,7 +55921,7 @@ Cancun, COL 10447",
               },
             },
             "ListOwners": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all owners",
               "docs": "Get a paginated list of all existing owners in your Belvo account. We return up to 100 results per page.",
               "errors": [
@@ -55161,7 +56137,7 @@ Cancun, COL 10447",
               },
             },
             "PatchOwners": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Complete an owners request",
               "docs": "Used to resume an Owner retrieve session that was paused because an MFA token was required by the institution.",
               "errors": [
@@ -55322,7 +56298,7 @@ Cancun, COL 10447",
               },
             },
             "RetrieveOwners": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve owners for a link",
               "docs": "Retrieve owner information from a specific link.",
               "errors": [
@@ -55488,7 +56464,6 @@ service:
     ListOwners:
       path: /api/owners/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all existing owners in your Belvo account. We
         return up to 100 results per page.
@@ -55688,7 +56663,6 @@ service:
     RetrieveOwners:
       path: /api/owners/
       method: POST
-      auth: true
       docs: Retrieve owner information from a specific link.
       source:
         openapi: ../openapi.yml
@@ -55819,7 +56793,6 @@ service:
     PatchOwners:
       path: /api/owners/
       method: PATCH
-      auth: true
       docs: >-
         Used to resume an Owner retrieve session that was paused because an MFA
         token was required by the institution.
@@ -55961,7 +56934,6 @@ service:
     DetailOwner:
       path: /api/owners/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific owner.
       source:
         openapi: ../openapi.yml
@@ -56082,7 +57054,6 @@ service:
     DestroyOwner:
       path: /api/owners/{id}/
       method: DELETE
-      auth: true
       docs: Delete a specific owner from your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -56263,7 +57234,7 @@ docs: >-
           "display-name": "Payment Institutions",
           "endpoints": {
             "DetailPaymentInstitution": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get details about a payment institution",
               "docs": "Get the details about a specific payment institution",
               "errors": [
@@ -56335,7 +57306,7 @@ docs: >-
               },
             },
             "ListPaymentInstitutions": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all payment institutions",
               "docs": "List all available payment institutions.",
               "errors": [
@@ -56458,7 +57429,6 @@ service:
     ListPaymentInstitutions:
       path: /payments/institutions/
       method: GET
-      auth: true
       docs: List all available payment institutions.
       source:
         openapi: ../openapi.yml
@@ -56546,7 +57516,6 @@ service:
     DetailPaymentInstitution:
       path: /payments/institutions/{id}/
       method: GET
-      auth: true
       docs: Get the details about a specific payment institution
       source:
         openapi: ../openapi.yml
@@ -56626,7 +57595,7 @@ A payment intent captures all payment information (such as the amount to be char
           "display-name": "Payment Intents",
           "endpoints": {
             "CreatePaymentIntent": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create a new payment intent",
               "docs": "Create a payment intent.",
               "errors": [
@@ -56787,7 +57756,7 @@ A payment intent captures all payment information (such as the amount to be char
               },
             },
             "DetailPaymentIntent": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get details about a payment intent",
               "docs": "Get the details about a specific payment intent.",
               "errors": [
@@ -56895,7 +57864,7 @@ A payment intent captures all payment information (such as the amount to be char
               },
             },
             "ListPaymentIntents": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all payment intents",
               "docs": "List all payment intents associated with your Belvo account.",
               "errors": [
@@ -57070,7 +58039,7 @@ A payment intent captures all payment information (such as the amount to be char
               },
             },
             "PatchPaymentIntent": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Complete a payment intent",
               "docs": "Complete a new payment intent.
 
@@ -57239,7 +58208,6 @@ service:
     ListPaymentIntents:
       path: /payments/payment-intents/
       method: GET
-      auth: true
       docs: List all payment intents associated with your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -57383,7 +58351,6 @@ service:
     CreatePaymentIntent:
       path: /payments/payment-intents/
       method: POST
-      auth: true
       docs: Create a payment intent.
       source:
         openapi: ../openapi.yml
@@ -57516,7 +58483,6 @@ service:
     DetailPaymentIntent:
       path: /payments/payment-intents/{id}/
       method: GET
-      auth: true
       docs: Get the details about a specific payment intent.
       source:
         openapi: ../openapi.yml
@@ -57600,7 +58566,6 @@ service:
     PatchPaymentIntent:
       path: /payments/payment-intents/{id}/
       method: PATCH
-      auth: true
       docs: >-
         Complete a new payment intent.
 
@@ -57757,7 +58722,7 @@ types:
           "display-name": "Payment Links",
           "endpoints": {
             "CreatePaymentlink": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Create a payment link",
               "docs": "Create a new payment link to start a hosted-widget payment.",
               "errors": [
@@ -57855,7 +58820,7 @@ types:
               },
             },
             "DetailCreatePaymentlink": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get details about a payment link",
               "docs": "Get the details about a payment link.",
               "errors": [
@@ -57947,7 +58912,7 @@ types:
               },
             },
             "ListPaymentLinks": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all payment links",
               "docs": "List all payment links associated with your Belvo account. By default, we return up to 100 results per page.",
               "errors": [
@@ -57962,9 +58927,11 @@ types:
                     "created_at__lt": "2022-09-15",
                     "created_at__lte": "2022-09-15",
                     "created_at__range": "2022-09-15,2022-09-20",
+                    "ordering": "created_at",
                     "page": 1,
                     "page_size": 100,
                     "search": "trai",
+                    "status": "ACTIVE",
                   },
                   "response": {
                     "body": {
@@ -58203,7 +59170,6 @@ service:
     ListPaymentLinks:
       path: /payments/payment-links/
       method: GET
-      auth: true
       docs: >-
         List all payment links associated with your Belvo account. By default,
         we return up to 100 results per page.
@@ -58293,6 +59259,8 @@ service:
             created_at__lt: '2022-09-15'
             created_at__lte: '2022-09-15'
             created_at__range: 2022-09-15,2022-09-20
+            status: ACTIVE
+            ordering: created_at
             search: trai
           response:
             body:
@@ -58317,7 +59285,6 @@ service:
     CreatePaymentlink:
       path: /payments/payment-links/
       method: POST
-      auth: true
       docs: Create a new payment link to start a hosted-widget payment.
       source:
         openapi: ../openapi.yml
@@ -58392,7 +59359,6 @@ service:
     DetailCreatePaymentlink:
       path: /payments/payment-links/{access_token}/
       method: GET
-      auth: true
       docs: Get the details about a payment link.
       source:
         openapi: ../openapi.yml
@@ -58488,7 +59454,7 @@ You can use the Payment Transactions resource in order to get useful information
           "display-name": "Payment Transactions",
           "endpoints": {
             "DetailPaymentTransactions": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get details about a payment transaction",
               "docs": "Get the details about a specific payment transaction.",
               "errors": [
@@ -58541,7 +59507,7 @@ You can use the Payment Transactions resource in order to get useful information
               },
             },
             "ListPaymentTransactions": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all payment transactions",
               "docs": "List all payment transactions associated with your Belvo account.",
               "errors": [
@@ -58724,7 +59690,6 @@ service:
     ListPaymentTransactions:
       path: /payments/transactions/
       method: GET
-      auth: true
       docs: List all payment transactions associated with your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -58869,7 +59834,6 @@ service:
     DetailPaymentTransactions:
       path: /payments/transactions/{id}/
       method: GET
-      auth: true
       docs: Get the details about a specific payment transaction.
       source:
         openapi: ../openapi.yml
@@ -58932,7 +59896,7 @@ docs: >
           "display-name": "Payment Webhooks",
           "endpoints": {
             "DeletePaymentWebhooks": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete a payment webhook",
               "docs": "Delete a specific payment webhook from your Belvo account.",
               "errors": [
@@ -58963,7 +59927,7 @@ docs: >
               },
             },
             "DetailPaymentWebhooks": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get details about a payment webhook",
               "docs": "Get the details about a specific payment webhook.",
               "errors": [
@@ -59012,7 +59976,7 @@ docs: >
               },
             },
             "ListPaymentWebhooks": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all payment webhooks",
               "docs": "List all payment webhooks associated with your Belvo account.",
               "errors": [
@@ -59055,7 +60019,7 @@ docs: >
               },
             },
             "RegisterPaymentWebhook": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Register a new payment webhook",
               "docs": "Register a new payments webhook for your Belvo account.
 ",
@@ -59146,7 +60110,6 @@ service:
     ListPaymentWebhooks:
       path: /payments/webhooks/
       method: GET
-      auth: true
       docs: List all payment webhooks associated with your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -59175,7 +60138,6 @@ service:
     RegisterPaymentWebhook:
       path: /payments/webhooks/
       method: POST
-      auth: true
       docs: |
         Register a new payments webhook for your Belvo account.
       source:
@@ -59232,7 +60194,6 @@ service:
     DetailPaymentWebhooks:
       path: /payments/webhooks/{id}/
       method: GET
-      auth: true
       docs: Get the details about a specific payment webhook.
       source:
         openapi: ../openapi.yml
@@ -59266,7 +60227,6 @@ service:
     DeletePaymentWebhooks:
       path: /payments/webhooks/{id}/
       method: DELETE
-      auth: true
       docs: Delete a specific payment webhook from your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -59313,7 +60273,7 @@ docs: >+
           "display-name": "Receivable Transactions",
           "endpoints": {
             "DestroyReceivableTransaction": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete a receivable transaction",
               "docs": "Delete a specific receivable transaction from your Belvo account.",
               "errors": [
@@ -59344,7 +60304,7 @@ docs: >+
               },
             },
             "DetailReceivableTransaction": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get a receivable transaction's details",
               "docs": "Get the details of a specific receivable transaction.",
               "errors": [
@@ -59387,7 +60347,7 @@ docs: >+
                         "total": 2,
                       },
                       "status": "APPROVED",
-                      "type": "MASTERCARD_CREDIT",
+                      "type": "VISA_CREDIT",
                       "value_date": "2022-01-16",
                       "value_hour": "19:47",
                     },
@@ -59426,7 +60386,7 @@ docs: >+
               },
             },
             "ListReceivableTransactions": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all receivable transactions",
               "docs": "Get a paginated list of all the existing receivable transactions in your Belvo account. We return up to 100 results per page.",
               "errors": [
@@ -59473,6 +60433,7 @@ docs: >+
                           "currency": "BRL",
                           "fees": [
                             {
+                              "type": null,
                               "value": 2.21,
                             },
                           ],
@@ -59485,7 +60446,7 @@ docs: >+
                             "total": 2,
                           },
                           "status": "APPROVED",
-                          "type": "MASTERCARD_CREDIT",
+                          "type": "VISA_CREDIT",
                           "value_date": "2022-01-16",
                           "value_hour": "19:47",
                         },
@@ -59617,7 +60578,7 @@ docs: >+
               },
             },
             "RetrieveReceivableTransactions": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve receivable transactions for a link",
               "docs": "Retrieve all receivable transactions for an existing link.",
               "errors": [
@@ -59664,7 +60625,7 @@ docs: >+
                         "total": 2,
                       },
                       "status": "APPROVED",
-                      "type": "MASTERCARD_CREDIT",
+                      "type": "VISA_CREDIT",
                       "value_date": "2022-01-16",
                       "value_hour": "19:47",
                     },
@@ -59762,7 +60723,6 @@ service:
     ListReceivableTransactions:
       path: /receivables/transactions/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all the existing receivable transactions in your
         Belvo account. We return up to 100 results per page.
@@ -59935,11 +60895,12 @@ service:
                   value_date: '2022-01-16'
                   institution_transaction_id: '134532345'
                   currency: BRL
-                  type: MASTERCARD_CREDIT
+                  type: VISA_CREDIT
                   gross_amount: 106.7
                   net_amount: 104.58
                   fees:
-                    - value: 2.21
+                    - type: null
+                      value: 2.21
                   status: APPROVED
                   number_of_installments:
                     paid: 1
@@ -59947,7 +60908,6 @@ service:
     RetrieveReceivableTransactions:
       path: /receivables/transactions/
       method: POST
-      auth: true
       docs: Retrieve all receivable transactions for an existing link.
       source:
         openapi: ../openapi.yml
@@ -60042,7 +61002,7 @@ service:
               value_date: '2022-01-16'
               institution_transaction_id: '134532345'
               currency: BRL
-              type: MASTERCARD_CREDIT
+              type: VISA_CREDIT
               gross_amount: 106.7
               net_amount: 104.58
               fees:
@@ -60055,7 +61015,6 @@ service:
     DetailReceivableTransaction:
       path: /receivables/transactions/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific receivable transaction.
       source:
         openapi: ../openapi.yml
@@ -60108,7 +61067,7 @@ service:
               value_date: '2022-01-16'
               institution_transaction_id: '134532345'
               currency: BRL
-              type: MASTERCARD_CREDIT
+              type: VISA_CREDIT
               gross_amount: 106.7
               net_amount: 104.58
               fees:
@@ -60121,7 +61080,6 @@ service:
     DestroyReceivableTransaction:
       path: /receivables/transactions/{id}/
       method: DELETE
-      auth: true
       docs: Delete a specific receivable transaction from your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -60209,7 +61167,7 @@ client. recurring_expenses.list(params: {
           "display-name": "Recurring Expenses",
           "endpoints": {
             "DestroyRecurringExpense": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete a recurring expense",
               "docs": "Delete a specific recurring expense from your Belvo account.",
               "errors": [
@@ -60306,7 +61264,7 @@ client.connect()
               },
             },
             "DetailRecurringExpense": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get a recurring expense's details",
               "docs": "Get the details of a specific recurring expense.",
               "errors": [
@@ -60423,6 +61381,7 @@ client.connect()
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
                             "contract_end_date": "2027-10-01",
+                            "interest_rates": null,
                             "monthly_payment": 1000,
                             "outstanding_balance": 182000,
                             "principal": 192000,
@@ -60491,7 +61450,7 @@ client.connect()
               },
             },
             "ListRecurringExpenses": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all recurring expenses",
               "docs": "Get a paginated list of all recurring expenses in your Belvo account. By default, we return up to 100 results per page.",
               "errors": [
@@ -60590,19 +61549,14 @@ client.connect()
                               "current": 5874.13,
                             },
                             "balance_type": "ASSET",
-                            "category": "CHECKING_ACCOUNT",
+                            "category": null,
                             "collected_at": "2019-09-27T13:01:41Z",
                             "created_at": "2022-02-09T08:45:50Z",
+                            "credit_data": null,
                             "currency": "MXN",
                             "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
                             "last_accessed_at": "2021-03-09T10:28:40Z",
-                            "loan_data": {
-                              "collected_at": "2022-02-09T08:45:50Z",
-                              "contract_end_date": "2027-10-01",
-                              "monthly_payment": 1000,
-                              "outstanding_balance": 182000,
-                              "principal": 192000,
-                            },
+                            "loan_data": null,
                             "name": "Cuenta Perfiles- M.N. - MXN-666",
                             "number": "4057068115181",
                             "public_identification_name": "CLABE",
@@ -60618,11 +61572,7 @@ client.connect()
                           "name": "Netflix",
                           "payment_type": "SUBSCRIPTION",
                           "transactions": [
-                            {
-                              "amount": 2145.45,
-                              "description": "Netflix.com/march",
-                              "value_date": "2019-10-23",
-                            },
+                            null,
                           ],
                         },
                       ],
@@ -60717,7 +61667,7 @@ client.connect()
               },
             },
             "PatchRecurringExpenses": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Complete a recurring expenses request",
               "docs": "Used to resume an Recurring Expenses retrieve session that was paused because an MFA token was required by the institution.",
               "errors": [
@@ -60846,6 +61796,7 @@ client.connect()
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
                             "contract_end_date": "2027-10-01",
+                            "interest_rates": null,
                             "monthly_payment": 1000,
                             "outstanding_balance": 182000,
                             "principal": 192000,
@@ -60910,7 +61861,7 @@ client.connect()
               },
             },
             "RetrieveRecurringExpenses": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve recurring expenses for a link",
               "docs": "Retrieve recurring expense insights for <b>checking and savings accounts</b> from a specific link. You can receive insights for a period of up to 365 days, depending on the transaction history available for each [bank](https://developers.belvo.com/docs/institution).",
               "errors": [
@@ -61032,6 +61983,7 @@ client.connect()
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
                             "contract_end_date": "2027-10-01",
+                            "interest_rates": null,
                             "monthly_payment": 1000,
                             "outstanding_balance": 182000,
                             "principal": 192000,
@@ -61163,7 +62115,6 @@ service:
     ListRecurringExpenses:
       path: /api/recurring-expenses/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all recurring expenses in your Belvo account. By
         default, we return up to 100 results per page.
@@ -61268,7 +62219,7 @@ service:
                     id: 0d3ffb69-f83b-456e-ad8e-208d0998d71d
                     collected_at: '2019-09-27T13:01:41Z'
                     created_at: '2022-02-09T08:45:50Z'
-                    category: CHECKING_ACCOUNT
+                    category: null
                     balance_type: ASSET
                     type: Cuentas de efectivo
                     name: Cuenta Perfiles- M.N. - MXN-666
@@ -61279,17 +62230,11 @@ service:
                     public_identification_name: CLABE
                     public_identification_value: '150194683119900273'
                     last_accessed_at: '2021-03-09T10:28:40Z'
-                    loan_data:
-                      collected_at: '2022-02-09T08:45:50Z'
-                      principal: 192000
-                      outstanding_balance: 182000
-                      monthly_payment: 1000
-                      contract_end_date: '2027-10-01'
+                    credit_data: null
+                    loan_data: null
                   name: Netflix
                   transactions:
-                    - amount: 2145.45
-                      description: Netflix.com/march
-                      value_date: '2019-10-23'
+                    - null
                   frequency: MONTHLY
                   average_transaction_amount: 32.9
                   median_transaction_amount: 32.9
@@ -61361,7 +62306,6 @@ service:
     RetrieveRecurringExpenses:
       path: /api/recurring-expenses/
       method: POST
-      auth: true
       docs: >-
         Retrieve recurring expense insights for <b>checking and savings
         accounts</b> from a specific link. You can receive insights for a period
@@ -61485,6 +62429,7 @@ service:
                     principal: 192000
                     outstanding_balance: 182000
                     monthly_payment: 1000
+                    interest_rates: null
                     contract_end_date: '2027-10-01'
                   funds_data:
                     - collected_at: '2020-04-23T21:32:55Z'
@@ -61569,7 +62514,6 @@ service:
     PatchRecurringExpenses:
       path: /api/recurring-expenses/
       method: PATCH
-      auth: true
       docs: >-
         Used to resume an Recurring Expenses retrieve session that was paused
         because an MFA token was required by the institution.
@@ -61646,6 +62590,7 @@ service:
                     principal: 192000
                     outstanding_balance: 182000
                     monthly_payment: 1000
+                    interest_rates: null
                     contract_end_date: '2027-10-01'
                   funds_data:
                     - collected_at: '2020-04-23T21:32:55Z'
@@ -61736,7 +62681,6 @@ service:
     DetailRecurringExpense:
       path: /api/recurring-expenses/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific recurring expense.
       source:
         openapi: ../openapi.yml
@@ -61811,6 +62755,7 @@ service:
                     principal: 192000
                     outstanding_balance: 182000
                     monthly_payment: 1000
+                    interest_rates: null
                     contract_end_date: '2027-10-01'
                   funds_data:
                     - collected_at: '2020-04-23T21:32:55Z'
@@ -61893,7 +62838,6 @@ service:
     DestroyRecurringExpense:
       path: /api/recurring-expenses/{id}/
       method: DELETE
-      auth: true
       docs: Delete a specific recurring expense from your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -62098,7 +63042,7 @@ client. risk_insights.list(params: {
           "display-name": "Risk Insights",
           "endpoints": {
             "DestroyRiskInsights": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete a risk insight",
               "docs": "Delete a specific risk insight from your Belvo account.",
               "errors": [
@@ -62206,7 +63150,7 @@ client.connect()
               },
             },
             "DetailRiskInsights": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get a risk insight's details",
               "docs": "Get the details of a specific risk insight.",
               "errors": [
@@ -62412,7 +63356,7 @@ client.connect()
               },
             },
             "ListRiskInsights": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all risk insights",
               "docs": "Get a paginated list of all risk insight analyses in your Belvo account. By default, we return up to 100 results per page.",
               "errors": [
@@ -62665,7 +63609,7 @@ client.connect()
               },
             },
             "PatchRiskInsights": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Complete a risk insights request",
               "docs": "Used to resume an Risk insights retrieve session that was paused because an MFA token was required by the institution.",
               "errors": [
@@ -62888,7 +63832,7 @@ client.connect()
               },
             },
             "RetrieveRiskInsights": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve risk insights for a link",
               "docs": "Request the risk insights for a given link ID.
 
@@ -63118,7 +64062,6 @@ service:
     ListRiskInsights:
       path: /api/risk-insights/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all risk insight analyses in your Belvo account.
         By default, we return up to 100 results per page.
@@ -63343,7 +64286,6 @@ service:
     RetrieveRiskInsights:
       path: /api/risk-insights/
       method: POST
-      auth: true
       docs: >-
         Request the risk insights for a given link ID.
 
@@ -63537,7 +64479,6 @@ service:
     PatchRiskInsights:
       path: /api/risk-insights/
       method: PATCH
-      auth: true
       docs: >-
         Used to resume an Risk insights retrieve session that was paused because
         an MFA token was required by the institution.
@@ -63736,7 +64677,6 @@ service:
     DetailRiskInsights:
       path: /api/risk-insights/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific risk insight.
       source:
         openapi: ../openapi.yml
@@ -63914,7 +64854,6 @@ service:
     DestroyRiskInsights:
       path: /api/risk-insights/{id}/
       method: DELETE
-      auth: true
       docs: Delete a specific risk insight from your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -64118,7 +65057,7 @@ If you have entered your credentials correctly, you will receive a **201 Respons
           "display-name": "Secret Keys",
           "endpoints": {
             "CreateSecretKeys": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Request API keys",
               "docs": "Request API keys to use with Belvo's Payments API.
 
@@ -64162,7 +65101,7 @@ For example:
               },
             },
             "ListSecretKeys": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all secret keys",
               "docs": "Get a paginated list of all existing secret keys in your Belvo account. We return up to 100 results per page.
 
@@ -64217,7 +65156,6 @@ service:
     ListSecretKeys:
       path: /payments/secret-keys/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all existing secret keys in your Belvo account.
         We return up to 100 results per page.
@@ -64247,7 +65185,6 @@ service:
     CreateSecretKeys:
       path: /payments/secret-keys/
       method: POST
-      auth: true
       docs: >
         Request API keys to use with Belvo's Payments API.
 
@@ -64393,7 +65330,7 @@ client.tax_compliance_status.list(params: {
           "display-name": "Tax compliance status",
           "endpoints": {
             "DestroyTaxComplianceStatus": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete a tax compliance status",
               "docs": "Delete a specific Tax compliance status from your Belvo account.",
               "errors": [
@@ -64499,7 +65436,7 @@ client.connect()
               },
             },
             "DetailTaxComplianceStatus": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get a tax compliance status's details",
               "docs": "Get the details of a specific Tax compliance status.",
               "errors": [
@@ -64633,7 +65570,7 @@ client.connect()
               },
             },
             "ListTaxComplianceStatus": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all tax compliance statuses",
               "docs": "Get a paginated list of all existing Tax compliance statuses in your Belvo account. By default, we return up to 100 results per page.",
               "errors": [
@@ -64839,7 +65776,7 @@ client.connect()
               },
             },
             "RetrieveTaxComplianceStatus": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve tax compliance statuses for a link",
               "docs": "Retrieve the Tax compliance status information for a specific fiscal link.",
               "errors": [
@@ -65021,7 +65958,6 @@ service:
     ListTaxComplianceStatus:
       path: /api/tax-compliance-status/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all existing Tax compliance statuses in your
         Belvo account. By default, we return up to 100 results per page.
@@ -65212,7 +66148,6 @@ service:
     RetrieveTaxComplianceStatus:
       path: /api/tax-compliance-status/
       method: POST
-      auth: true
       docs: >-
         Retrieve the Tax compliance status information for a specific fiscal
         link.
@@ -65359,7 +66294,6 @@ service:
     DetailTaxComplianceStatus:
       path: /api/tax-compliance-status/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific Tax compliance status.
       source:
         openapi: ../openapi.yml
@@ -65474,7 +66408,6 @@ service:
     DestroyTaxComplianceStatus:
       path: /api/tax-compliance-status/{id}/
       method: DELETE
-      auth: true
       docs: Delete a specific Tax compliance status from your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -65675,7 +66608,7 @@ At the moment, the Tax Declaration resource is available for:
           "display-name": "Tax declarations",
           "endpoints": {
             "DestroyTaxDeclaration": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete a tax declration",
               "docs": "Delete a specific Tax declaration from your Belvo account.",
               "errors": [
@@ -65781,7 +66714,7 @@ client.connect()
               },
             },
             "DetailTaxDeclaration": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get a tax declaration's details",
               "docs": "Get the details of a specific Tax declaration.",
               "errors": [
@@ -65981,7 +66914,7 @@ client.connect()
               },
             },
             "ListTaxDeclarations": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all tax declarations",
               "docs": "Get a paginated list of all existing tax declarations in your Belvo account. By default, we return up to 100 results per page.",
               "errors": [
@@ -66285,7 +67218,7 @@ client.connect()
               },
             },
             "RetrieveTaxDeclarations": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve tax declarations for a link",
               "docs": "Retrieve tax declaration information for a specific fiscal link.",
               "errors": [
@@ -66622,7 +67555,6 @@ service:
     ListTaxDeclarations:
       path: /api/tax-declarations/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all existing tax declarations in your Belvo
         account. By default, we return up to 100 results per page.
@@ -66894,7 +67826,6 @@ service:
     RetrieveTaxDeclarations:
       path: /api/tax-declarations/
       method: POST
-      auth: true
       docs: Retrieve tax declaration information for a specific fiscal link.
       source:
         openapi: ../openapi.yml
@@ -67118,7 +68049,6 @@ service:
     DetailTaxDeclaration:
       path: /api/tax-declarations/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific Tax declaration.
       source:
         openapi: ../openapi.yml
@@ -67291,7 +68221,6 @@ service:
     DestroyTaxDeclaration:
       path: /api/tax-declarations/{id}/
       method: DELETE
-      auth: true
       docs: Delete a specific Tax declaration from your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -67459,7 +68388,7 @@ client.tax_retentions.list(params: {
           "display-name": "Tax retentions",
           "endpoints": {
             "DestroyTaxRetention": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete a tax retention",
               "docs": "Delete a specific tax retention from your Belvo account.",
               "errors": [
@@ -67490,7 +68419,7 @@ client.tax_retentions.list(params: {
               },
             },
             "DetailTaxRetentions": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get a tax retention's details",
               "docs": "Get the details of a specific tax retention.",
               "errors": [
@@ -67572,7 +68501,7 @@ client.tax_retentions.list(params: {
               },
             },
             "ListTaxRetentions": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all tax retentions",
               "docs": "Get a paginated list of all existing tax retentions in your Belvo account. We return up to 100 results per page.",
               "errors": [
@@ -67615,6 +68544,7 @@ client.tax_retentions.list(params: {
                           "retention_breakdown": [
                             {
                               "base_amount": 0.03,
+                              "payment_status": null,
                               "retained_amount": 0,
                               "tax_type": "01",
                             },
@@ -67715,7 +68645,7 @@ client.tax_retentions.list(params: {
               },
             },
             "RetrieveTaxRetentions": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve tax retentions for a link",
               "docs": "Retrieve tax retention information from a specific link. The maximum number of tax retentions that can be returned for a period is 500.",
               "errors": [
@@ -67754,6 +68684,7 @@ client.tax_retentions.list(params: {
                         "retention_breakdown": [
                           {
                             "base_amount": 0.03,
+                            "payment_status": null,
                             "retained_amount": 0,
                             "tax_type": "01",
                           },
@@ -67867,7 +68798,6 @@ service:
     ListTaxRetentions:
       path: /api/tax-retentions/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all existing tax retentions in your Belvo
         account. We return up to 100 results per page.
@@ -67996,11 +68926,11 @@ service:
                     - base_amount: 0.03
                       tax_type: '01'
                       retained_amount: 0
+                      payment_status: null
                   xml: '=XML-STRING='
     RetrieveTaxRetentions:
       path: /api/tax-retentions/
       method: POST
-      auth: true
       docs: >-
         Retrieve tax retention information from a specific link. The maximum
         number of tax retentions that can be returned for a period is 500.
@@ -68114,11 +69044,11 @@ service:
                   - base_amount: 0.03
                     tax_type: '01'
                     retained_amount: 0
+                    payment_status: null
                 xml: '=XML-STRING='
     DetailTaxRetentions:
       path: /api/tax-retentions/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific tax retention.
       source:
         openapi: ../openapi.yml
@@ -68187,7 +69117,6 @@ service:
     DestroyTaxRetention:
       path: /api/tax-retentions/{id}/
       method: DELETE
-      auth: true
       docs: Delete a specific tax retention from your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -68384,7 +69313,7 @@ client.tax_returns.list(params: {
           "display-name": "Tax returns",
           "endpoints": {
             "DestroyTaxReturn": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete a tax return",
               "docs": "Delete a specific tax return from your Belvo account.",
               "errors": [
@@ -68490,7 +69419,7 @@ client.connect()
               },
             },
             "DetailTaxReturn": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get a tax return's details",
               "docs": "Get the details of a specific tax return.",
               "errors": [
@@ -69911,7 +70840,7 @@ client.connect()
               },
             },
             "ListTaxReturns": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all tax returns",
               "docs": "Get a paginated list of all existing tax returns in your Belvo account. By default, we return up to 100 results per page. The results will include a mix of both monthly and yearly tax returns.",
               "errors": [
@@ -71209,7 +72138,7 @@ client.connect()
               },
             },
             "RetrieveTaxReturns": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve tax returns for a link",
               "docs": "Retrieve tax return information for a specific fiscal link.",
               "errors": [
@@ -73120,7 +74049,6 @@ service:
     ListTaxReturns:
       path: /api/tax-returns/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all existing tax returns in your Belvo account.
         By default, we return up to 100 results per page. The results will
@@ -73381,6 +74309,7 @@ service:
                       - rfc_retenedor: ABC444444A00
                         monto_retenciones: 46000
                         retenciones_isr: 4600
+                  dividendos: {}
                   datos_informativos:
                     credito_fiscal_autorizado_proyectos_investigacion_desarrollo: 0
                     credito_fiscal_autorizado_proyectos_apoyo_deporte_alto_rendimiento: 0
@@ -73392,7 +74321,6 @@ service:
                     saldo_credito_fiscal_anteriores_produccion_distribucion_cinematografica: 0
                   pdf: '=PDF-STRING='
                   receipt_pdf: '=PDF-STRING='
-                  dividendos: {}
                   type: yearly
               previous:
                 key: value
@@ -73494,6 +74422,7 @@ service:
                 - id: 0d3ffb69-f83b-456e-ad8e-208d0998d71d
                   collected_at: '2022-02-09T08:45:50Z'
                   created_at: '2022-02-09T08:46:20Z'
+                  informacion_general: {}
                   isr:
                     tipo: PFAE
                     determinacion:
@@ -73533,7 +74462,6 @@ service:
                   pdf: '===PDF_BINARY===='
                   receipt_pdf: '===PDF_BINARY===='
                   type: monthly
-                  informacion_general: {}
               previous:
                 key: value
           code-samples:
@@ -73634,6 +74562,7 @@ service:
                 - id: 0d3ffb69-f83b-456e-ad8e-208d0998d71d
                   collected_at: '2022-02-09T08:45:50Z'
                   created_at: '2022-02-09T08:46:20Z'
+                  informacion_general: {}
                   isr:
                     tipo: PFAE
                     determinacion:
@@ -73681,7 +74610,6 @@ service:
                   pdf: '===PDF_BINARY===='
                   receipt_pdf: '===PDF_BINARY===='
                   type: monthly
-                  informacion_general: {}
               previous:
                 key: value
           code-samples:
@@ -74206,7 +75134,6 @@ service:
     RetrieveTaxReturns:
       path: /api/tax-returns/
       method: POST
-      auth: true
       docs: Retrieve tax return information for a specific fiscal link.
       source:
         openapi: ../openapi.yml
@@ -75671,7 +76598,6 @@ service:
     DetailTaxReturn:
       path: /api/tax-returns/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific tax return.
       source:
         openapi: ../openapi.yml
@@ -76766,7 +77692,6 @@ service:
     DestroyTaxReturn:
       path: /api/tax-returns/{id}/
       method: DELETE
-      auth: true
       docs: Delete a specific tax return from your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -77011,7 +77936,7 @@ client.tax_status.list(params: {
           "display-name": "Tax status",
           "endpoints": {
             "DestroyTaxStatus": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete a tax status",
               "docs": "Delete a specific tax status from your Belvo account.",
               "errors": [
@@ -77117,7 +78042,7 @@ client.connect()
               },
             },
             "DetailTaxStatus": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get a tax status's details",
               "docs": "Get the details of a specific tax status.",
               "errors": [
@@ -77460,7 +78385,7 @@ client.connect()
               },
             },
             "ListTaxStatus": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all tax statuses",
               "docs": "Get a paginated list of all existing tax status in your Belvo account. By default, we return up to 100 results per page.",
               "errors": [
@@ -77611,6 +78536,7 @@ client.connect()
                           "place_and_date_of_issuance": "BUENAVENTURA, CIUDAD DE MEXICO A 22 DE FEBRERO DE 2021",
                           "regimes": [
                             {
+                              "end_date": null,
                               "initial_date": "2003-01-01",
                               "regimen": "Régimen de Sueldos y Salarios e Ingresos Asimilados a Salarios",
                             },
@@ -77777,6 +78703,7 @@ client.connect()
                           "place_and_date_of_issuance": "BUENAVENTURA, CIUDAD DE MEXICO A 22 DE FEBRERO DE 2021",
                           "regimes": [
                             {
+                              "end_date": null,
                               "initial_date": "2003-01-01",
                               "regimen": "Régimen General de Ley Personas Morales",
                             },
@@ -77886,7 +78813,7 @@ client.connect()
               },
             },
             "RetrieveTaxStatus": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve tax statuses for a link",
               "docs": "Retrieve tax status information for a specific fiscal link.",
               "errors": [
@@ -78323,7 +79250,6 @@ service:
     ListTaxStatus:
       path: /api/tax-status/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all existing tax status in your Belvo account.
         By default, we return up to 100 results per page.
@@ -78475,7 +79401,8 @@ service:
                       order: '1'
                       percentage: '100'
                   regimes:
-                    - initial_date: '2003-01-01'
+                    - end_date: null
+                      initial_date: '2003-01-01'
                       regimen: >-
                         Régimen de Sueldos y Salarios e Ingresos Asimilados a
                         Salarios
@@ -78611,7 +79538,8 @@ service:
                       order: '1'
                       percentage: '100'
                   regimes:
-                    - initial_date: '2003-01-01'
+                    - end_date: null
+                      initial_date: '2003-01-01'
                       regimen: Régimen General de Ley Personas Morales
                   obligations:
                     - obligation: Declaración informativa de IVA con la anual de ISR
@@ -78693,7 +79621,6 @@ service:
     RetrieveTaxStatus:
       path: /api/tax-status/
       method: POST
-      auth: true
       docs: Retrieve tax status information for a specific fiscal link.
       source:
         openapi: ../openapi.yml
@@ -79020,7 +79947,6 @@ service:
     DetailTaxStatus:
       path: /api/tax-status/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific tax status.
       source:
         openapi: ../openapi.yml
@@ -79305,7 +80231,6 @@ service:
     DestroyTaxStatus:
       path: /api/tax-status/{id}/
       method: DELETE
-      auth: true
       docs: Delete a specific tax status from your Belvo account.
       source:
         openapi: ../openapi.yml
@@ -79561,7 +80486,7 @@ client.transactions.list(params: {
           "display-name": "Transactions",
           "endpoints": {
             "DestroyTransaction": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Delete a transaction",
               "docs": "Delete a specific transaction from your Belvo account.",
               "errors": [
@@ -79667,7 +80592,7 @@ client.connect()
               },
             },
             "DetailTransaction": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Get a transaction's details",
               "docs": "Get the details of a specific transaction.",
               "errors": [
@@ -79797,14 +80722,12 @@ client.connect()
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
                           "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
+                            null,
                           ],
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
+                              "type": null,
                               "value": 7.85,
                             },
                           ],
@@ -79982,14 +80905,12 @@ client.connect()
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
                           "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
+                            null,
                           ],
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
+                              "type": null,
                               "value": 7.85,
                             },
                           ],
@@ -80162,14 +81083,12 @@ client.connect()
                           "contract_number": "890ASLDJF87SD00",
                           "contract_start_date": "2020-03-01",
                           "fees": [
-                            {
-                              "type": "OPERATION_FEE",
-                              "value": 5.6,
-                            },
+                            null,
                           ],
                           "interest_rates": [
                             {
                               "name": "jurosEfetivo",
+                              "type": null,
                               "value": 7.85,
                             },
                           ],
@@ -80258,7 +81177,7 @@ client.connect()
               },
             },
             "ListTransactions": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "List all transactions",
               "docs": "Get a paginated list of all existing transactions in your Belvo account. By default, we return up to 100 results per page.",
               "errors": [
@@ -80417,6 +81336,7 @@ client.connect()
                             "category": "CHECKING_ACCOUNT",
                             "collected_at": "2022-02-09T08:45:50Z",
                             "created_at": "2022-02-09T08:46:20Z",
+                            "credit_data": null,
                             "currency": "MXN",
                             "id": "02589c41-ba22-4d44-8558-8111cc751318",
                             "institution": {
@@ -80425,13 +81345,7 @@ client.connect()
                             },
                             "last_accessed_at": "2021-03-09T10:28:40Z",
                             "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                            "loan_data": {
-                              "collected_at": "2022-02-09T08:45:50Z",
-                              "contract_end_date": "2027-10-01",
-                              "monthly_payment": 1000,
-                              "outstanding_balance": 182000,
-                              "principal": 192000,
-                            },
+                            "loan_data": null,
                             "name": "CUENTA NARANJA LITE +",
                             "number": "996685090015",
                             "public_identification_name": "CLABE",
@@ -80616,6 +81530,7 @@ client.connect()
                             "category": "SAVINGS_ACCOUNT",
                             "collected_at": "2022-02-09T08:45:50Z",
                             "created_at": "2022-02-09T08:46:20Z",
+                            "credit_data": null,
                             "currency": "MXN",
                             "id": "02589c41-ba22-4d44-8558-8111cc751318",
                             "institution": {
@@ -80624,13 +81539,7 @@ client.connect()
                             },
                             "last_accessed_at": "2021-03-09T10:28:40Z",
                             "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                            "loan_data": {
-                              "collected_at": "2022-02-09T08:45:50Z",
-                              "contract_end_date": "2027-10-01",
-                              "monthly_payment": 1000,
-                              "outstanding_balance": 182000,
-                              "principal": 192000,
-                            },
+                            "loan_data": null,
                             "name": "Mi ahorro Erebor",
                             "number": "997468860036",
                             "public_identification_name": "CLABE",
@@ -80832,13 +81741,7 @@ client.connect()
                             },
                             "last_accessed_at": "2021-03-09T10:28:40Z",
                             "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
-                            "loan_data": {
-                              "collected_at": "2022-02-09T08:45:50Z",
-                              "contract_end_date": "2027-10-01",
-                              "monthly_payment": 1000,
-                              "outstanding_balance": 182000,
-                              "principal": 192000,
-                            },
+                            "loan_data": null,
                             "name": "Erebor Gold",
                             "number": "4057068115181",
                             "public_identification_name": "CLABE",
@@ -81156,7 +82059,7 @@ client.connect()
               },
             },
             "PatchTransactions": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Complete a transactions request",
               "docs": "Used to resume a Transaction retrieve session that was paused because an MFA token was required by the institution.",
               "errors": [
@@ -81304,6 +82207,7 @@ client.connect()
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
                             "contract_end_date": "2027-10-01",
+                            "interest_rates": null,
                             "monthly_payment": 1000,
                             "outstanding_balance": 182000,
                             "principal": 192000,
@@ -81489,6 +82393,7 @@ client.connect()
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
                             "contract_end_date": "2027-10-01",
+                            "interest_rates": null,
                             "monthly_payment": 1000,
                             "outstanding_balance": 182000,
                             "principal": 192000,
@@ -81669,6 +82574,7 @@ client.connect()
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
                             "contract_end_date": "2027-10-01",
+                            "interest_rates": null,
                             "monthly_payment": 1000,
                             "outstanding_balance": 182000,
                             "principal": 192000,
@@ -81746,7 +82652,7 @@ client.connect()
               },
             },
             "RetrieveTransactions": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve transactions for a link",
               "docs": "Retrieve transactions for one or more accounts from a specific link.
 <div style="background-color:#f4f6f8; border-left: 6px solid #0663F9;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px"> <strong>Info: </strong> When retrieving transactions, it is important to understand that the available transaction data ranges depend on each institution. <br><br>
@@ -81902,6 +82808,7 @@ client.connect()
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
                             "contract_end_date": "2027-10-01",
+                            "interest_rates": null,
                             "monthly_payment": 1000,
                             "outstanding_balance": 182000,
                             "principal": 192000,
@@ -82092,6 +82999,7 @@ client.connect()
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
                             "contract_end_date": "2027-10-01",
+                            "interest_rates": null,
                             "monthly_payment": 1000,
                             "outstanding_balance": 182000,
                             "principal": 192000,
@@ -82277,6 +83185,7 @@ client.connect()
                           "loan_data": {
                             "collected_at": "2022-02-09T08:45:50Z",
                             "contract_end_date": "2027-10-01",
+                            "interest_rates": null,
                             "monthly_payment": 1000,
                             "outstanding_balance": 182000,
                             "principal": 192000,
@@ -82354,7 +83263,7 @@ client.connect()
               },
             },
             "RetrieveTransactions_async": {
-              "auth": true,
+              "auth": undefined,
               "display-name": "Retrieve transactions for a link",
               "docs": "Retrieve transactions for one or more accounts from a specific link.
 <div style="background-color:#f4f6f8; border-left: 6px solid #0663F9;padding: 12px;margin-left: 25px; border-radius: 4px; margin-right: 25px"> <strong>Info: </strong> When retrieving transactions, it is important to understand that the available transaction data ranges depend on each institution. <br><br>
@@ -82530,7 +83439,6 @@ service:
     ListTransactions:
       path: /api/transactions/
       method: GET
-      auth: true
       docs: >-
         Get a paginated list of all existing transactions in your Belvo account.
         By default, we return up to 100 results per page.
@@ -82928,12 +83836,8 @@ service:
                     public_identification_name: CLABE
                     public_identification_value: '058597000010485108'
                     last_accessed_at: '2021-03-09T10:28:40Z'
-                    loan_data:
-                      collected_at: '2022-02-09T08:45:50Z'
-                      principal: 192000
-                      outstanding_balance: 182000
-                      monthly_payment: 1000
-                      contract_end_date: '2027-10-01'
+                    credit_data: null
+                    loan_data: null
                   collected_at: '2022-07-20T22:09:33Z'
                   created_at: '2022-07-20T22:09:35Z'
                   value_date: '2022-07-11'
@@ -83105,12 +84009,8 @@ service:
                     public_identification_name: CLABE
                     public_identification_value: '058597000011543422'
                     last_accessed_at: '2021-03-09T10:28:40Z'
-                    loan_data:
-                      collected_at: '2022-02-09T08:45:50Z'
-                      principal: 192000
-                      outstanding_balance: 182000
-                      monthly_payment: 1000
-                      contract_end_date: '2027-10-01'
+                    credit_data: null
+                    loan_data: null
                   collected_at: '2022-07-20T22:09:33Z'
                   created_at: '2022-07-20T22:09:35Z'
                   value_date: '2022-07-11'
@@ -83290,12 +84190,7 @@ service:
                       minimum_payment: 2400
                       no_interest_payment: 37390.83
                       interest_rate: 4
-                    loan_data:
-                      collected_at: '2022-02-09T08:45:50Z'
-                      principal: 192000
-                      outstanding_balance: 182000
-                      monthly_payment: 1000
-                      contract_end_date: '2027-10-01'
+                    loan_data: null
                   collected_at: '2022-02-09T08:45:50Z'
                   created_at: '2022-02-09T08:45:50Z'
                   value_date: '2019-10-23'
@@ -83386,7 +84281,6 @@ service:
     RetrieveTransactions:
       path: /api/transactions/
       method: POST
-      auth: true
       docs: >
         Retrieve transactions for one or more accounts from a specific link.
 
@@ -83479,6 +84373,7 @@ service:
                     principal: 192000
                     outstanding_balance: 182000
                     monthly_payment: 1000
+                    interest_rates: null
                     contract_end_date: '2027-10-01'
                   funds_data:
                     - collected_at: '2020-04-23T21:32:55Z'
@@ -83639,6 +84534,7 @@ service:
                     principal: 192000
                     outstanding_balance: 182000
                     monthly_payment: 1000
+                    interest_rates: null
                     contract_end_date: '2027-10-01'
                   funds_data:
                     - collected_at: '2020-04-23T21:32:55Z'
@@ -83799,6 +84695,7 @@ service:
                     principal: 192000
                     outstanding_balance: 182000
                     monthly_payment: 1000
+                    interest_rates: null
                     contract_end_date: '2027-10-01'
                   receivables_data:
                     current: 2193.83
@@ -83915,7 +84812,6 @@ service:
     RetrieveTransactions_async:
       path: /api/transactions/
       method: POST
-      auth: true
       docs: >
         Retrieve transactions for one or more accounts from a specific link.
 
@@ -84065,7 +84961,6 @@ service:
     PatchTransactions:
       path: /api/transactions/
       method: PATCH
-      auth: true
       docs: >-
         Used to resume a Transaction retrieve session that was paused because an
         MFA token was required by the institution.
@@ -84146,6 +85041,7 @@ service:
                     principal: 192000
                     outstanding_balance: 182000
                     monthly_payment: 1000
+                    interest_rates: null
                     contract_end_date: '2027-10-01'
                   funds_data:
                     - collected_at: '2020-04-23T21:32:55Z'
@@ -84301,6 +85197,7 @@ service:
                     principal: 192000
                     outstanding_balance: 182000
                     monthly_payment: 1000
+                    interest_rates: null
                     contract_end_date: '2027-10-01'
                   funds_data:
                     - collected_at: '2020-04-23T21:32:55Z'
@@ -84456,6 +85353,7 @@ service:
                     principal: 192000
                     outstanding_balance: 182000
                     monthly_payment: 1000
+                    interest_rates: null
                     contract_end_date: '2027-10-01'
                   receivables_data:
                     current: 2193.83
@@ -84568,7 +85466,6 @@ service:
     DetailTransaction:
       path: /api/transactions/{id}/
       method: GET
-      auth: true
       docs: Get the details of a specific transaction.
       source:
         openapi: ../openapi.yml
@@ -84651,10 +85548,10 @@ service:
                   monthly_payment: 1000
                   interest_rates:
                     - name: jurosEfetivo
+                      type: null
                       value: 7.85
                   fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
+                    - null
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -84802,10 +85699,10 @@ service:
                   monthly_payment: 1000
                   interest_rates:
                     - name: jurosEfetivo
+                      type: null
                       value: 7.85
                   fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
+                    - null
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -84953,10 +85850,10 @@ service:
                   monthly_payment: 1000
                   interest_rates:
                     - name: jurosEfetivo
+                      type: null
                       value: 7.85
                   fees:
-                    - type: OPERATION_FEE
-                      value: 5.6
+                    - null
                   number_of_installments_total: 60
                   number_of_installments_outstanding: 48
                   contract_start_date: '2020-03-01'
@@ -85056,7 +85953,6 @@ service:
     DestroyTransaction:
       path: /api/transactions/{id}/
       method: DELETE
-      auth: true
       docs: Delete a specific transaction from your Belvo account.
       source:
         openapi: ../openapi.yml

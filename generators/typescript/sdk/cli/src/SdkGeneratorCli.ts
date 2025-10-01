@@ -4,7 +4,13 @@ import { Logger } from "@fern-api/logger";
 import { getNamespaceExport } from "@fern-api/typescript-base";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
-import { fixImportsForEsm, NpmPackage, PersistedTypescriptProject, writeTemplateFiles } from "@fern-typescript/commons";
+import {
+    convertJestImportsToVitest,
+    fixImportsForEsm,
+    NpmPackage,
+    PersistedTypescriptProject,
+    writeTemplateFiles
+} from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { SdkGenerator } from "@fern-typescript/sdk-generator";
 
@@ -73,10 +79,13 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             packagePath: parsed?.packagePath,
             omitFernHeaders: parsed?.omitFernHeaders ?? false,
             useDefaultRequestParameterValues: parsed?.useDefaultRequestParameterValues ?? false,
-            packageManager: parsed?.packageManager ?? "yarn",
+            packageManager: parsed?.packageManager ?? "pnpm",
             generateReadWriteOnlyTypes: parsed?.experimentalGenerateReadWriteOnlyTypes ?? false,
             flattenRequestParameters: parsed?.flattenRequestParameters ?? false,
-            exportAllRequestsAtRoot: parsed?.exportAllRequestsAtRoot ?? false
+            exportAllRequestsAtRoot: parsed?.exportAllRequestsAtRoot ?? false,
+            testFramework: parsed?.testFramework ?? "vitest",
+            consolidateTypeFiles: parsed?.consolidateTypeFiles ?? false,
+            generateEndpointMetadata: parsed?.generateEndpointMetadata ?? false
         };
 
         if (parsed?.noSerdeLayer === false && typeof parsed?.enableInlineTypes === "undefined") {
@@ -187,7 +196,10 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 packageManager: customConfig.packageManager,
                 generateReadWriteOnlyTypes: customConfig.generateReadWriteOnlyTypes,
                 flattenRequestParameters: customConfig.flattenRequestParameters ?? false,
-                exportAllRequestsAtRoot: customConfig.exportAllRequestsAtRoot ?? false
+                exportAllRequestsAtRoot: customConfig.exportAllRequestsAtRoot ?? false,
+                testFramework: customConfig.testFramework,
+                consolidateTypeFiles: customConfig.consolidateTypeFiles ?? false,
+                generateEndpointMetadata: customConfig.generateEndpointMetadata ?? false
             }
         });
         const typescriptProject = await sdkGenerator.generate();
@@ -222,6 +234,12 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         const customConfig = this.customConfigWithOverrides(_customConfig);
         if (customConfig.useLegacyExports === false) {
             await fixImportsForEsm(persistedTypescriptProject.getRootDirectory());
+        }
+        if (customConfig.testFramework === "vitest") {
+            await convertJestImportsToVitest(
+                persistedTypescriptProject.getRootDirectory(),
+                persistedTypescriptProject.getTestDirectory()
+            );
         }
     }
 

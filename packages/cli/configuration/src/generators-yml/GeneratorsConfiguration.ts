@@ -73,7 +73,10 @@ export interface APIDefinitionSettings {
     typeDatesAsStrings: boolean | undefined;
     preserveSingleSchemaOneOf: boolean | undefined;
     inlineAllOfSchemas: boolean | undefined;
+    resolveAliases: generatorsYml.ResolveAliases | undefined;
     groupMultiApiEnvironments: boolean | undefined;
+    wrapReferencesToNullableInOptional: boolean | undefined;
+    coerceOptionalSchemasToNullable: boolean | undefined;
 }
 
 export interface APIDefinitionLocation {

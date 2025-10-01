@@ -1,4 +1,8 @@
-import { generatorsYml } from "@fern-api/configuration";
+import {
+    GENERATORS_CONFIGURATION_FILENAME,
+    GENERATORS_CONFIGURATION_FILENAME_ALTERNATIVE,
+    generatorsYml
+} from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
@@ -72,8 +76,8 @@ export async function getPathToGeneratorsConfiguration({
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
 }): Promise<AbsoluteFilePath | undefined> {
-    const ymlPath = join(absolutePathToWorkspace, RelativeFilePath.of("generators.yml"));
-    const yamlPath = join(absolutePathToWorkspace, RelativeFilePath.of("generators.yaml"));
+    const ymlPath = join(absolutePathToWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME));
+    const yamlPath = join(absolutePathToWorkspace, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME_ALTERNATIVE));
 
     if (await doesPathExist(ymlPath)) {
         return ymlPath;

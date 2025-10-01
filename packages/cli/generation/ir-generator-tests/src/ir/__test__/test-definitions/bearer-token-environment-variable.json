@@ -48,6 +48,7 @@
                     }
                 },
                 "tokenEnvVar": "COURIER_API_KEY",
+                "key": "Bearer",
                 "docs": null
             }
         ],
@@ -185,6 +186,11 @@
                     },
                     "displayName": null,
                     "auth": true,
+                    "security": [
+                        {
+                            "Bearer": []
+                        }
+                    ],
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -270,6 +276,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": "GET request with custom api key"
                 }
@@ -351,7 +358,8 @@
                         "value": "1.0.0"
                     }
                 },
-                "propertyAccess": null
+                "propertyAccess": null,
+                "variable": null
             }
         ],
         "endpoints": {
@@ -459,6 +467,7 @@
         },
         "pathParameters": [],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,

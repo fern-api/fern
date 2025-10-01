@@ -10,11 +10,15 @@
           "base-path": "",
           "endpoints": {
             "list": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List",
               "docs": "",
               "examples": [
                 {
+                  "query-parameters": {
+                    "limit": 1,
+                    "pageNumber": 1,
+                  },
                   "response": {
                     "body": {
                       "meta": {
@@ -108,7 +112,6 @@
     list:
       path: /list
       method: GET
-      auth: false
       docs: ''
       source:
         openapi: ../openapi.yml
@@ -123,7 +126,10 @@
         type: UsersResponse
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            pageNumber: 1
+            limit: 1
+          response:
             body:
               meta:
                 hasMore: true

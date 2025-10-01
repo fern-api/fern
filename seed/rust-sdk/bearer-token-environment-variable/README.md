@@ -30,10 +30,11 @@ use seed_bearer_token_environment_variable::{BearerTokenEnvironmentVariableClien
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
-        api_key: Some("<token>".to_string()),
+        token: Some("<token>".to_string()),
+        ..Default::default()
     };
     let client = BearerTokenEnvironmentVariableClient::new(config).expect("Failed to build client");
-    client.service_get_with_bearer_token().await;
+    client.service.get_with_bearer_token(None).await;
 }
 ```
 

@@ -3339,6 +3339,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -3819,6 +3820,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 },
@@ -3845,6 +3847,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -5009,6 +5012,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 },
@@ -5035,6 +5039,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -5251,7 +5256,286 @@
                     },
                     "v2Responses": null,
                     "errors": [],
-                    "userSpecifiedExamples": [],
+                    "userSpecifiedExamples": [
+                        {
+                            "example": {
+                                "id": "4c9d6ef0",
+                                "name": null,
+                                "url": "/metadata",
+                                "rootPathParameters": [],
+                                "endpointPathParameters": [],
+                                "servicePathParameters": [],
+                                "endpointHeaders": [],
+                                "serviceHeaders": [],
+                                "queryParameters": [],
+                                "request": {
+                                    "type": "reference",
+                                    "shape": {
+                                        "type": "named",
+                                        "typeName": {
+                                            "typeId": "type_union:MetadataUnion",
+                                            "fernFilepath": {
+                                                "allParts": [
+                                                    {
+                                                        "originalName": "union",
+                                                        "camelCase": {
+                                                            "unsafeName": "union",
+                                                            "safeName": "union"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "union",
+                                                            "safeName": "union"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "UNION",
+                                                            "safeName": "UNION"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Union",
+                                                            "safeName": "Union"
+                                                        }
+                                                    }
+                                                ],
+                                                "packagePath": [],
+                                                "file": {
+                                                    "originalName": "union",
+                                                    "camelCase": {
+                                                        "unsafeName": "union",
+                                                        "safeName": "union"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "union",
+                                                        "safeName": "union"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "UNION",
+                                                        "safeName": "UNION"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Union",
+                                                        "safeName": "Union"
+                                                    }
+                                                }
+                                            },
+                                            "name": {
+                                                "originalName": "MetadataUnion",
+                                                "camelCase": {
+                                                    "unsafeName": "metadataUnion",
+                                                    "safeName": "metadataUnion"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "metadata_union",
+                                                    "safeName": "metadata_union"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "METADATA_UNION",
+                                                    "safeName": "METADATA_UNION"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "MetadataUnion",
+                                                    "safeName": "MetadataUnion"
+                                                }
+                                            },
+                                            "displayName": null
+                                        },
+                                        "shape": {
+                                            "type": "undiscriminatedUnion",
+                                            "index": 0,
+                                            "singleUnionType": {
+                                                "shape": {
+                                                    "type": "named",
+                                                    "typeName": {
+                                                        "typeId": "type_union:OptionalMetadata",
+                                                        "fernFilepath": {
+                                                            "allParts": [
+                                                                {
+                                                                    "originalName": "union",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "union",
+                                                                        "safeName": "union"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "union",
+                                                                        "safeName": "union"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "UNION",
+                                                                        "safeName": "UNION"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Union",
+                                                                        "safeName": "Union"
+                                                                    }
+                                                                }
+                                                            ],
+                                                            "packagePath": [],
+                                                            "file": {
+                                                                "originalName": "union",
+                                                                "camelCase": {
+                                                                    "unsafeName": "union",
+                                                                    "safeName": "union"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "union",
+                                                                    "safeName": "union"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "UNION",
+                                                                    "safeName": "UNION"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Union",
+                                                                    "safeName": "Union"
+                                                                }
+                                                            }
+                                                        },
+                                                        "name": {
+                                                            "originalName": "OptionalMetadata",
+                                                            "camelCase": {
+                                                                "unsafeName": "optionalMetadata",
+                                                                "safeName": "optionalMetadata"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "optional_metadata",
+                                                                "safeName": "optional_metadata"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "OPTIONAL_METADATA",
+                                                                "safeName": "OPTIONAL_METADATA"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "OptionalMetadata",
+                                                                "safeName": "OptionalMetadata"
+                                                            }
+                                                        },
+                                                        "displayName": null
+                                                    },
+                                                    "shape": {
+                                                        "type": "alias",
+                                                        "value": {
+                                                            "shape": {
+                                                                "type": "container",
+                                                                "container": {
+                                                                    "type": "optional",
+                                                                    "optional": {
+                                                                        "shape": {
+                                                                            "type": "container",
+                                                                            "container": {
+                                                                                "type": "map",
+                                                                                "map": [
+                                                                                    {
+                                                                                        "key": {
+                                                                                            "shape": {
+                                                                                                "type": "primitive",
+                                                                                                "primitive": {
+                                                                                                    "type": "string",
+                                                                                                    "string": {
+                                                                                                        "original": "string"
+                                                                                                    }
+                                                                                                }
+                                                                                            },
+                                                                                            "jsonExample": "string"
+                                                                                        },
+                                                                                        "value": {
+                                                                                            "shape": {
+                                                                                                "type": "unknown",
+                                                                                                "unknown": {
+                                                                                                    "key": "value"
+                                                                                                }
+                                                                                            },
+                                                                                            "jsonExample": {
+                                                                                                "key": "value"
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                ],
+                                                                                "keyType": {
+                                                                                    "_type": "primitive",
+                                                                                    "primitive": {
+                                                                                        "v1": "STRING",
+                                                                                        "v2": {
+                                                                                            "type": "string",
+                                                                                            "default": null,
+                                                                                            "validation": null
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "valueType": {
+                                                                                    "_type": "unknown"
+                                                                                }
+                                                                            }
+                                                                        },
+                                                                        "jsonExample": {
+                                                                            "string": {
+                                                                                "key": "value"
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "valueType": {
+                                                                        "_type": "container",
+                                                                        "container": {
+                                                                            "_type": "map",
+                                                                            "keyType": {
+                                                                                "_type": "primitive",
+                                                                                "primitive": {
+                                                                                    "v1": "STRING",
+                                                                                    "v2": {
+                                                                                        "type": "string",
+                                                                                        "default": null,
+                                                                                        "validation": null
+                                                                                    }
+                                                                                }
+                                                                            },
+                                                                            "valueType": {
+                                                                                "_type": "unknown"
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            },
+                                                            "jsonExample": {
+                                                                "string": {
+                                                                    "key": "value"
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": {
+                                                    "string": {
+                                                        "key": "value"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": {
+                                        "string": {
+                                            "key": "value"
+                                        }
+                                    }
+                                },
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "boolean",
+                                                    "boolean": true
+                                                }
+                                            },
+                                            "jsonExample": true
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            },
+                            "codeSamples": null
+                        }
+                    ],
                     "autogeneratedExamples": [
                         {
                             "example": {
@@ -5468,6 +5752,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 },
@@ -5494,6 +5779,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -5710,7 +5996,542 @@
                     },
                     "v2Responses": null,
                     "errors": [],
-                    "userSpecifiedExamples": [],
+                    "userSpecifiedExamples": [
+                        {
+                            "example": {
+                                "id": "c735035b",
+                                "name": null,
+                                "url": "/call",
+                                "rootPathParameters": [],
+                                "endpointPathParameters": [],
+                                "servicePathParameters": [],
+                                "endpointHeaders": [],
+                                "serviceHeaders": [],
+                                "queryParameters": [],
+                                "request": {
+                                    "type": "reference",
+                                    "shape": {
+                                        "type": "named",
+                                        "typeName": {
+                                            "typeId": "type_union:Request",
+                                            "fernFilepath": {
+                                                "allParts": [
+                                                    {
+                                                        "originalName": "union",
+                                                        "camelCase": {
+                                                            "unsafeName": "union",
+                                                            "safeName": "union"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "union",
+                                                            "safeName": "union"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "UNION",
+                                                            "safeName": "UNION"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Union",
+                                                            "safeName": "Union"
+                                                        }
+                                                    }
+                                                ],
+                                                "packagePath": [],
+                                                "file": {
+                                                    "originalName": "union",
+                                                    "camelCase": {
+                                                        "unsafeName": "union",
+                                                        "safeName": "union"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "union",
+                                                        "safeName": "union"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "UNION",
+                                                        "safeName": "UNION"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Union",
+                                                        "safeName": "Union"
+                                                    }
+                                                }
+                                            },
+                                            "name": {
+                                                "originalName": "Request",
+                                                "camelCase": {
+                                                    "unsafeName": "request",
+                                                    "safeName": "request"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "request",
+                                                    "safeName": "request"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "REQUEST",
+                                                    "safeName": "REQUEST"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Request",
+                                                    "safeName": "Request"
+                                                }
+                                            },
+                                            "displayName": null
+                                        },
+                                        "shape": {
+                                            "type": "object",
+                                            "properties": [
+                                                {
+                                                    "name": {
+                                                        "name": {
+                                                            "originalName": "union",
+                                                            "camelCase": {
+                                                                "unsafeName": "union",
+                                                                "safeName": "union"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "union",
+                                                                "safeName": "union"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "UNION",
+                                                                "safeName": "UNION"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Union",
+                                                                "safeName": "Union"
+                                                            }
+                                                        },
+                                                        "wireValue": "union"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "container",
+                                                            "container": {
+                                                                "type": "optional",
+                                                                "optional": {
+                                                                    "shape": {
+                                                                        "type": "named",
+                                                                        "typeName": {
+                                                                            "typeId": "type_union:MetadataUnion",
+                                                                            "fernFilepath": {
+                                                                                "allParts": [
+                                                                                    {
+                                                                                        "originalName": "union",
+                                                                                        "camelCase": {
+                                                                                            "unsafeName": "union",
+                                                                                            "safeName": "union"
+                                                                                        },
+                                                                                        "snakeCase": {
+                                                                                            "unsafeName": "union",
+                                                                                            "safeName": "union"
+                                                                                        },
+                                                                                        "screamingSnakeCase": {
+                                                                                            "unsafeName": "UNION",
+                                                                                            "safeName": "UNION"
+                                                                                        },
+                                                                                        "pascalCase": {
+                                                                                            "unsafeName": "Union",
+                                                                                            "safeName": "Union"
+                                                                                        }
+                                                                                    }
+                                                                                ],
+                                                                                "packagePath": [],
+                                                                                "file": {
+                                                                                    "originalName": "union",
+                                                                                    "camelCase": {
+                                                                                        "unsafeName": "union",
+                                                                                        "safeName": "union"
+                                                                                    },
+                                                                                    "snakeCase": {
+                                                                                        "unsafeName": "union",
+                                                                                        "safeName": "union"
+                                                                                    },
+                                                                                    "screamingSnakeCase": {
+                                                                                        "unsafeName": "UNION",
+                                                                                        "safeName": "UNION"
+                                                                                    },
+                                                                                    "pascalCase": {
+                                                                                        "unsafeName": "Union",
+                                                                                        "safeName": "Union"
+                                                                                    }
+                                                                                }
+                                                                            },
+                                                                            "name": {
+                                                                                "originalName": "MetadataUnion",
+                                                                                "camelCase": {
+                                                                                    "unsafeName": "metadataUnion",
+                                                                                    "safeName": "metadataUnion"
+                                                                                },
+                                                                                "snakeCase": {
+                                                                                    "unsafeName": "metadata_union",
+                                                                                    "safeName": "metadata_union"
+                                                                                },
+                                                                                "screamingSnakeCase": {
+                                                                                    "unsafeName": "METADATA_UNION",
+                                                                                    "safeName": "METADATA_UNION"
+                                                                                },
+                                                                                "pascalCase": {
+                                                                                    "unsafeName": "MetadataUnion",
+                                                                                    "safeName": "MetadataUnion"
+                                                                                }
+                                                                            },
+                                                                            "displayName": null
+                                                                        },
+                                                                        "shape": {
+                                                                            "type": "undiscriminatedUnion",
+                                                                            "index": 0,
+                                                                            "singleUnionType": {
+                                                                                "shape": {
+                                                                                    "type": "named",
+                                                                                    "typeName": {
+                                                                                        "typeId": "type_union:OptionalMetadata",
+                                                                                        "fernFilepath": {
+                                                                                            "allParts": [
+                                                                                                {
+                                                                                                    "originalName": "union",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "union",
+                                                                                                        "safeName": "union"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "union",
+                                                                                                        "safeName": "union"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "UNION",
+                                                                                                        "safeName": "UNION"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "Union",
+                                                                                                        "safeName": "Union"
+                                                                                                    }
+                                                                                                }
+                                                                                            ],
+                                                                                            "packagePath": [],
+                                                                                            "file": {
+                                                                                                "originalName": "union",
+                                                                                                "camelCase": {
+                                                                                                    "unsafeName": "union",
+                                                                                                    "safeName": "union"
+                                                                                                },
+                                                                                                "snakeCase": {
+                                                                                                    "unsafeName": "union",
+                                                                                                    "safeName": "union"
+                                                                                                },
+                                                                                                "screamingSnakeCase": {
+                                                                                                    "unsafeName": "UNION",
+                                                                                                    "safeName": "UNION"
+                                                                                                },
+                                                                                                "pascalCase": {
+                                                                                                    "unsafeName": "Union",
+                                                                                                    "safeName": "Union"
+                                                                                                }
+                                                                                            }
+                                                                                        },
+                                                                                        "name": {
+                                                                                            "originalName": "OptionalMetadata",
+                                                                                            "camelCase": {
+                                                                                                "unsafeName": "optionalMetadata",
+                                                                                                "safeName": "optionalMetadata"
+                                                                                            },
+                                                                                            "snakeCase": {
+                                                                                                "unsafeName": "optional_metadata",
+                                                                                                "safeName": "optional_metadata"
+                                                                                            },
+                                                                                            "screamingSnakeCase": {
+                                                                                                "unsafeName": "OPTIONAL_METADATA",
+                                                                                                "safeName": "OPTIONAL_METADATA"
+                                                                                            },
+                                                                                            "pascalCase": {
+                                                                                                "unsafeName": "OptionalMetadata",
+                                                                                                "safeName": "OptionalMetadata"
+                                                                                            }
+                                                                                        },
+                                                                                        "displayName": null
+                                                                                    },
+                                                                                    "shape": {
+                                                                                        "type": "alias",
+                                                                                        "value": {
+                                                                                            "shape": {
+                                                                                                "type": "container",
+                                                                                                "container": {
+                                                                                                    "type": "optional",
+                                                                                                    "optional": {
+                                                                                                        "shape": {
+                                                                                                            "type": "container",
+                                                                                                            "container": {
+                                                                                                                "type": "map",
+                                                                                                                "map": [
+                                                                                                                    {
+                                                                                                                        "key": {
+                                                                                                                            "shape": {
+                                                                                                                                "type": "primitive",
+                                                                                                                                "primitive": {
+                                                                                                                                    "type": "string",
+                                                                                                                                    "string": {
+                                                                                                                                        "original": "string"
+                                                                                                                                    }
+                                                                                                                                }
+                                                                                                                            },
+                                                                                                                            "jsonExample": "string"
+                                                                                                                        },
+                                                                                                                        "value": {
+                                                                                                                            "shape": {
+                                                                                                                                "type": "unknown",
+                                                                                                                                "unknown": {
+                                                                                                                                    "key": "value"
+                                                                                                                                }
+                                                                                                                            },
+                                                                                                                            "jsonExample": {
+                                                                                                                                "key": "value"
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                ],
+                                                                                                                "keyType": {
+                                                                                                                    "_type": "primitive",
+                                                                                                                    "primitive": {
+                                                                                                                        "v1": "STRING",
+                                                                                                                        "v2": {
+                                                                                                                            "type": "string",
+                                                                                                                            "default": null,
+                                                                                                                            "validation": null
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                },
+                                                                                                                "valueType": {
+                                                                                                                    "_type": "unknown"
+                                                                                                                }
+                                                                                                            }
+                                                                                                        },
+                                                                                                        "jsonExample": {
+                                                                                                            "string": {
+                                                                                                                "key": "value"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    },
+                                                                                                    "valueType": {
+                                                                                                        "_type": "container",
+                                                                                                        "container": {
+                                                                                                            "_type": "map",
+                                                                                                            "keyType": {
+                                                                                                                "_type": "primitive",
+                                                                                                                "primitive": {
+                                                                                                                    "v1": "STRING",
+                                                                                                                    "v2": {
+                                                                                                                        "type": "string",
+                                                                                                                        "default": null,
+                                                                                                                        "validation": null
+                                                                                                                    }
+                                                                                                                }
+                                                                                                            },
+                                                                                                            "valueType": {
+                                                                                                                "_type": "unknown"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    }
+                                                                                                }
+                                                                                            },
+                                                                                            "jsonExample": {
+                                                                                                "string": {
+                                                                                                    "key": "value"
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "jsonExample": {
+                                                                                    "string": {
+                                                                                        "key": "value"
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "jsonExample": {
+                                                                        "string": {
+                                                                            "key": "value"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "valueType": {
+                                                                    "_type": "named",
+                                                                    "name": {
+                                                                        "originalName": "MetadataUnion",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "metadataUnion",
+                                                                            "safeName": "metadataUnion"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "metadata_union",
+                                                                            "safeName": "metadata_union"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "METADATA_UNION",
+                                                                            "safeName": "METADATA_UNION"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "MetadataUnion",
+                                                                            "safeName": "MetadataUnion"
+                                                                        }
+                                                                    },
+                                                                    "fernFilepath": {
+                                                                        "allParts": [
+                                                                            {
+                                                                                "originalName": "union",
+                                                                                "camelCase": {
+                                                                                    "unsafeName": "union",
+                                                                                    "safeName": "union"
+                                                                                },
+                                                                                "snakeCase": {
+                                                                                    "unsafeName": "union",
+                                                                                    "safeName": "union"
+                                                                                },
+                                                                                "screamingSnakeCase": {
+                                                                                    "unsafeName": "UNION",
+                                                                                    "safeName": "UNION"
+                                                                                },
+                                                                                "pascalCase": {
+                                                                                    "unsafeName": "Union",
+                                                                                    "safeName": "Union"
+                                                                                }
+                                                                            }
+                                                                        ],
+                                                                        "packagePath": [],
+                                                                        "file": {
+                                                                            "originalName": "union",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "union",
+                                                                                "safeName": "union"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "union",
+                                                                                "safeName": "union"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "UNION",
+                                                                                "safeName": "UNION"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Union",
+                                                                                "safeName": "Union"
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "displayName": null,
+                                                                    "typeId": "type_union:MetadataUnion",
+                                                                    "default": null,
+                                                                    "inline": null
+                                                                }
+                                                            }
+                                                        },
+                                                        "jsonExample": {
+                                                            "string": {
+                                                                "key": "value"
+                                                            }
+                                                        }
+                                                    },
+                                                    "originalTypeDeclaration": {
+                                                        "typeId": "type_union:Request",
+                                                        "fernFilepath": {
+                                                            "allParts": [
+                                                                {
+                                                                    "originalName": "union",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "union",
+                                                                        "safeName": "union"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "union",
+                                                                        "safeName": "union"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "UNION",
+                                                                        "safeName": "UNION"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Union",
+                                                                        "safeName": "Union"
+                                                                    }
+                                                                }
+                                                            ],
+                                                            "packagePath": [],
+                                                            "file": {
+                                                                "originalName": "union",
+                                                                "camelCase": {
+                                                                    "unsafeName": "union",
+                                                                    "safeName": "union"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "union",
+                                                                    "safeName": "union"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "UNION",
+                                                                    "safeName": "UNION"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Union",
+                                                                    "safeName": "Union"
+                                                                }
+                                                            }
+                                                        },
+                                                        "name": {
+                                                            "originalName": "Request",
+                                                            "camelCase": {
+                                                                "unsafeName": "request",
+                                                                "safeName": "request"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "request",
+                                                                "safeName": "request"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "REQUEST",
+                                                                "safeName": "REQUEST"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Request",
+                                                                "safeName": "Request"
+                                                            }
+                                                        },
+                                                        "displayName": null
+                                                    },
+                                                    "propertyAccess": null
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "jsonExample": {
+                                        "union": {
+                                            "string": {
+                                                "key": "value"
+                                            }
+                                        }
+                                    }
+                                },
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "boolean",
+                                                    "boolean": true
+                                                }
+                                            },
+                                            "jsonExample": true
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            },
+                            "codeSamples": null
+                        }
+                    ],
                     "autogeneratedExamples": [
                         {
                             "example": {
@@ -5995,6 +6816,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 },
@@ -6021,6 +6843,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -6501,6 +7324,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 },
@@ -6527,6 +7351,7 @@
                     },
                     "displayName": null,
                     "auth": false,
+                    "security": null,
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -6873,6 +7698,7 @@
                     "v2Examples": null,
                     "source": null,
                     "audiences": null,
+                    "retries": null,
                     "availability": null,
                     "docs": null
                 }
@@ -7039,7 +7865,8 @@
                                 "value": "type_union:MetadataUnion"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -7141,7 +7968,8 @@
                                 "value": "type_union:MyUnion"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -7778,7 +8606,8 @@
                             "type": "primitive",
                             "value": "STRING"
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     },
                     {
                         "name": {
@@ -7813,7 +8642,8 @@
                                 "type": "unknown"
                             }
                         },
-                        "propertyAccess": null
+                        "propertyAccess": null,
+                        "variable": null
                     }
                 ],
                 "additionalProperties": false
@@ -8839,6 +9669,7 @@
         },
         "pathParameters": [],
         "environments": null,
+        "variables": null,
         "generatorConfig": null
     },
     "audiences": null,

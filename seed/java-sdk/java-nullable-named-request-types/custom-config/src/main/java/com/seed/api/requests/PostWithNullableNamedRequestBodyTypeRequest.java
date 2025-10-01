@@ -5,12 +5,15 @@ package com.seed.api.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.seed.api.core.Nullable;
+import com.seed.api.core.NullableNonemptyFilter;
 import com.seed.api.core.ObjectMappers;
 import com.seed.api.types.NullableObject;
 import java.util.HashMap;
@@ -31,8 +34,17 @@ public final class PostWithNullableNamedRequestBodyTypeRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("body")
+    @JsonIgnore
     public Optional<NullableObject> getBody() {
+        if (body == null) {
+            return Optional.empty();
+        }
+        return body;
+    }
+
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("body")
+    private Optional<NullableObject> _getBody() {
         return body;
     }
 
@@ -88,6 +100,17 @@ public final class PostWithNullableNamedRequestBodyTypeRequest {
 
         public Builder body(NullableObject body) {
             this.body = Optional.ofNullable(body);
+            return this;
+        }
+
+        public Builder body(Nullable<NullableObject> body) {
+            if (body.isNull()) {
+                this.body = null;
+            } else if (body.isEmpty()) {
+                this.body = Optional.empty();
+            } else {
+                this.body = Optional.of(body.get());
+            }
             return this;
         }
 

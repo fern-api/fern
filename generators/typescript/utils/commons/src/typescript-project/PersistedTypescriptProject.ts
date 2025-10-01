@@ -29,10 +29,6 @@ export class PersistedTypescriptProject {
     private buildCommand: string[];
     private formatCommand: string[];
 
-    private hasGeneratedLockfile = false;
-    private hasFormatted = false;
-    private hasBuilt = false;
-
     private runScripts;
 
     constructor({
@@ -63,12 +59,12 @@ export class PersistedTypescriptProject {
         return this.directory;
     }
 
+    public getTestDirectory(): RelativeFilePath {
+        return this.testDirectory;
+    }
+
     public async generateLockfile(logger: Logger): Promise<void> {
         if (!this.runScripts) {
-            return;
-        }
-
-        if (this.hasGeneratedLockfile) {
             return;
         }
 
@@ -90,16 +86,35 @@ export class PersistedTypescriptProject {
                       PNPM_FROZEN_LOCKFILE: "false"
                   }
               }));
-
-        this.hasGeneratedLockfile = true;
     }
 
-    public async format(logger: Logger): Promise<void> {
+    public async installDependencies(logger: Logger): Promise<void> {
         if (!this.runScripts) {
             return;
         }
 
-        if (this.hasFormatted) {
+        const pm = createLoggingExecutable(this.packageManager, {
+            cwd: this.directory,
+            logger
+        });
+
+        await (this.packageManager === "yarn"
+            ? pm(["install", "--ignore-scripts", "--prefer-offline"], {
+                  env: {
+                      // set enableImmutableInstalls=false so we can modify yarn.lock, even when in CI
+                      YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
+                  }
+              })
+            : pm(["install", "--ignore-scripts", "--prefer-offline"], {
+                  env: {
+                      // allow modifying pnpm-lock.yaml, even when in CI
+                      PNPM_FROZEN_LOCKFILE: "false"
+                  }
+              }));
+    }
+
+    public async format(logger: Logger): Promise<void> {
+        if (!this.runScripts) {
             return;
         }
 
@@ -108,16 +123,10 @@ export class PersistedTypescriptProject {
             logger
         });
         await pm(this.formatCommand);
-
-        this.hasFormatted = true;
     }
 
     public async build(logger: Logger): Promise<void> {
         if (!this.runScripts) {
-            return;
-        }
-
-        if (this.hasBuilt) {
             return;
         }
 
@@ -126,8 +135,6 @@ export class PersistedTypescriptProject {
             logger
         });
         await pm(this.buildCommand);
-
-        this.hasBuilt = true;
     }
 
     public async copyProjectTo({
@@ -155,8 +162,6 @@ export class PersistedTypescriptProject {
         unzipOutput?: boolean;
         logger: Logger;
     }): Promise<void> {
-        await this.build(logger);
-
         const npm = createLoggingExecutable("npm", {
             cwd: this.directory,
             logger
@@ -217,7 +222,6 @@ export class PersistedTypescriptProject {
         unzipOutput?: boolean;
         logger: Logger;
     }): Promise<void> {
-        await this.build(logger);
         await this.zipDirectoryContents(join(this.directory, this.distDirectory), {
             logger,
             destinationPath,
@@ -268,8 +272,6 @@ export class PersistedTypescriptProject {
         dryRun: boolean;
         shouldTolerateRepublish: boolean;
     }): Promise<void> {
-        await this.build(logger);
-
         const npm = createLoggingExecutable("npm", {
             cwd: this.directory,
             logger
@@ -278,23 +280,20 @@ export class PersistedTypescriptProject {
         const parsedRegistryUrl = new URL(publishInfo.registryUrl);
         const registryUrlWithoutProtocol = urlJoin(parsedRegistryUrl.hostname, parsedRegistryUrl.pathname);
 
-        // intentionally not writing these to the project config with `--location project`,
-        // so the registry url and token aren't persisted
-        await npm(["config", "set", "registry", publishInfo.registryUrl], {
-            secrets: [publishInfo.registryUrl]
-        });
         await npm(["config", "set", `//${registryUrlWithoutProtocol}:_authToken`, publishInfo.token], {
             secrets: [registryUrlWithoutProtocol, publishInfo.token]
         });
 
-        const publishCommand = ["publish"];
+        const publishCommand = ["publish", "--registry", publishInfo.registryUrl];
         if (dryRun) {
             publishCommand.push("--dry-run");
         }
         if (shouldTolerateRepublish) {
             publishCommand.push("--tolerate-republish");
         }
-        await npm(publishCommand);
+        await npm(publishCommand, {
+            secrets: [publishInfo.registryUrl]
+        });
     }
 
     public async deleteGitIgnoredFiles(logger: Logger): Promise<void> {

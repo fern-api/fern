@@ -22,14 +22,7 @@
     "activated": {
       "oneOf": [
         {
-          "oneOf": [
-            {
-              "type": "boolean"
-            },
-            {
-              "type": "null"
-            }
-          ]
+          "type": "boolean"
         },
         {
           "type": "null"
@@ -46,14 +39,7 @@
           "additionalProperties": {
             "oneOf": [
               {
-                "oneOf": [
-                  {
-                    "type": "string"
-                  },
-                  {
-                    "type": "null"
-                  }
-                ]
+                "type": "string"
               },
               {
                 "type": "null"

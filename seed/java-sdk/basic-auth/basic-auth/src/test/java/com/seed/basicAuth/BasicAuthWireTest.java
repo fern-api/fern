@@ -3,6 +3,7 @@ package com.seed.basicAuth;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.basicAuth.SeedBasicAuthClient;
+import com.seed.basicAuth.core.ObjectMappers;
 import java.util.HashMap;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
@@ -15,14 +16,14 @@ import org.junit.jupiter.api.Test;
 public class BasicAuthWireTest {
     private MockWebServer server;
     private SeedBasicAuthClient client;
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private ObjectMapper objectMapper = ObjectMappers.JSON_MAPPER;
     @BeforeEach
     public void setup() throws Exception {
         server = new MockWebServer();
         server.start();
         client = SeedBasicAuthClient.builder()
             .url(server.url("/").toString())
-            .username("testuser").password("testpass")
+            .credentials("testuser", "testpass")
             .build();
     }
     @AfterEach

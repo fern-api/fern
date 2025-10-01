@@ -16,9 +16,9 @@ export interface DynamicIntermediateRepresentation {
      * of the primary IR.
      */
     version: "1.0.0";
-    types: Record<FernIr.TypeId, FernIr.dynamic.NamedType>;
-    endpoints: Record<FernIr.EndpointId, FernIr.dynamic.Endpoint>;
-    environments: FernIr.EnvironmentsConfig | undefined;
+    types: Record<FernIr.dynamic.TypeId, FernIr.dynamic.NamedType>;
+    endpoints: Record<FernIr.dynamic.EndpointId, FernIr.dynamic.Endpoint>;
+    environments: FernIr.dynamic.EnvironmentsConfig | undefined;
     /**
      * The headers that are required on every request. These headers
      * are typically included in the SDK's client constructor.
@@ -30,5 +30,10 @@ export interface DynamicIntermediateRepresentation {
      * constructor.
      */
     pathParameters: FernIr.dynamic.NamedParameter[] | undefined;
+    /**
+     * Variables that are configured at the client level and can be
+     * referenced in path parameters and other contexts.
+     */
+    variables: FernIr.dynamic.VariableDeclaration[] | undefined;
     generatorConfig: FernIr.dynamic.GeneratorConfig | undefined;
 }

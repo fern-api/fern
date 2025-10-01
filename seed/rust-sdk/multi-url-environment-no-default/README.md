@@ -28,15 +28,23 @@ Instantiate and use the client with the following:
 use seed_multi_url_environment_no_default::{
     BootInstanceRequest, ClientConfig, MultiUrlEnvironmentNoDefaultClient,
 };
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
     let config = ClientConfig {
-        api_key: Some("<token>".to_string()),
+        token: Some("<token>".to_string()),
+        ..Default::default()
     };
     let client = MultiUrlEnvironmentNoDefaultClient::new(config).expect("Failed to build client");
     client
-        .ec_2_boot_instance(BootInstanceRequest { size: "size" })
+        .ec_2
+        .boot_instance(
+            &BootInstanceRequest {
+                size: "size".to_string(),
+            },
+            None,
+        )
         .await;
 }
 ```

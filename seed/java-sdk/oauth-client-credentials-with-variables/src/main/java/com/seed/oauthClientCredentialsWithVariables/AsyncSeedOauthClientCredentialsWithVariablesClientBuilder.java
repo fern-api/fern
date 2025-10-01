@@ -27,6 +27,8 @@ public class AsyncSeedOauthClientCredentialsWithVariablesClientBuilder {
 
     private OkHttpClient httpClient;
 
+    private String rootVariable;
+
     /**
      * Sets clientId
      */
@@ -86,7 +88,7 @@ public class AsyncSeedOauthClientCredentialsWithVariablesClientBuilder {
     }
 
     public AsyncSeedOauthClientCredentialsWithVariablesClientBuilder rootVariable(String rootVariable) {
-        clientOptionsBuilder.rootVariable(rootVariable);
+        this.rootVariable = rootVariable;
         return this;
     }
 
@@ -132,8 +134,12 @@ public class AsyncSeedOauthClientCredentialsWithVariablesClientBuilder {
      */
     protected void setAuthentication(ClientOptions.Builder builder) {
         if (this.clientId != null && this.clientSecret != null) {
-            AuthClient authClient = new AuthClient(
-                    ClientOptions.builder().environment(this.environment).build());
+            ClientOptions.Builder authClientOptionsBuilder =
+                    ClientOptions.builder().environment(this.environment);
+            if (this.rootVariable != null) {
+                authClientOptionsBuilder.rootVariable(this.rootVariable);
+            }
+            AuthClient authClient = new AuthClient(authClientOptionsBuilder.build());
             OAuthTokenSupplier oAuthTokenSupplier =
                     new OAuthTokenSupplier(this.clientId, this.clientSecret, authClient);
             builder.addHeader("Authorization", oAuthTokenSupplier);
@@ -146,7 +152,11 @@ public class AsyncSeedOauthClientCredentialsWithVariablesClientBuilder {
      *
      * @param builder The ClientOptions.Builder to configure
      */
-    protected void setVariables(ClientOptions.Builder builder) {}
+    protected void setVariables(ClientOptions.Builder builder) {
+        if (this.rootVariable != null) {
+            builder.rootVariable(this.rootVariable);
+        }
+    }
 
     /**
      * Sets the request timeout configuration.

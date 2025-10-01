@@ -31,6 +31,7 @@ export class TestClassBuilder {
             writer.addImport("org.junit.jupiter.api.AfterEach");
             writer.addImport("org.junit.jupiter.api.BeforeEach");
             writer.addImport("org.junit.jupiter.api.Test");
+            writer.addImport(`${this.context.getRootPackageName()}.core.ObjectMappers`);
 
             // Add any additional imports collected from snippets and type resolution
             if (additionalImports) {
@@ -44,7 +45,7 @@ export class TestClassBuilder {
 
             writer.writeLine("private MockWebServer server;");
             writer.writeLine(`private ${clientClassName} client;`);
-            writer.writeLine("private ObjectMapper objectMapper = new ObjectMapper();");
+            writer.writeLine("private ObjectMapper objectMapper = ObjectMappers.JSON_MAPPER;");
 
             writer.writeLine("@BeforeEach");
             writer.writeLine("public void setup() throws Exception {");
@@ -170,10 +171,13 @@ export class TestClassBuilder {
             case "bearer":
                 return '.token("test-token")';
             case "basic":
-                return '.username("testuser").password("testpass")';
+                return '.credentials("testuser", "testpass")';
             case "header": {
-                const headerName = scheme.name?.name?.originalName || "X-API-Key";
-                return `.apiKey("test-api-key") // For header: ${headerName}`;
+                if (scheme.name?.name?.camelCase?.unsafeName) {
+                    const methodName = scheme.name.name.camelCase.unsafeName;
+                    return `.${methodName}("test-api-key")`;
+                }
+                return '.apiKey("test-api-key")';
             }
             case "oauth":
                 return '.token("oauth-test-token")';

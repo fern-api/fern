@@ -132,6 +132,16 @@
         }
       ]
     },
+    "page-actions": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/docs.PageActionsConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "experimental": {
       "oneOf": [
         {
@@ -2608,6 +2618,52 @@
       },
       "additionalProperties": false
     },
+    "docs.PageActionsConfig": {
+      "type": "object",
+      "properties": {
+        "chatgpt": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "claude": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "vscode": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "cursor": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "docs.ExperimentalConfig": {
       "type": "object",
       "properties": {
@@ -2645,6 +2701,16 @@
           ]
         },
         "openapi-parser-v3": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "dynamic-snippets": {
           "oneOf": [
             {
               "type": "boolean"

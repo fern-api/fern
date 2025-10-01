@@ -4,7 +4,7 @@ use crate::commons_singly_linked_list_value::SinglyLinkedListValue;
 use crate::commons_doubly_linked_list_value::DoublyLinkedListValue;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(tag = "type")]
 pub enum VariableValue {
         IntegerValue {

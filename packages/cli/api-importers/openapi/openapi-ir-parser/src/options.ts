@@ -40,6 +40,8 @@ export interface ParseOpenAPIOptions {
     respectForwardCompatibleEnums: boolean;
     /* Whether or not to inline allOf schemas. */
     inlineAllOfSchemas: boolean;
+    /* Whether to resolve aliases. If provided, all aliases will be resolved except for the ones in the except array. */
+    resolveAliases: generatorsYml.ResolveAliases;
 
     /* The filter to apply to the OpenAPI document. */
     filter: generatorsYml.OpenApiFilterSchema | undefined;
@@ -71,6 +73,9 @@ export interface ParseOpenAPIOptions {
      * This is useful for organizations with multiple APIs deployed to the same set of environments.
      */
     groupMultiApiEnvironments: boolean;
+
+    wrapReferencesToNullableInOptional: boolean;
+    coerceOptionalSchemasToNullable: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -98,7 +103,10 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     typeDatesAsStrings: false,
     preserveSingleSchemaOneOf: false,
     inlineAllOfSchemas: false,
-    groupMultiApiEnvironments: false
+    resolveAliases: false,
+    groupMultiApiEnvironments: false,
+    wrapReferencesToNullableInOptional: true,
+    coerceOptionalSchemasToNullable: true
 };
 
 export function getParseOptions({
@@ -184,9 +192,19 @@ export function getParseOptions({
             overrides?.inlineAllOfSchemas ??
             options?.inlineAllOfSchemas ??
             DEFAULT_PARSE_OPENAPI_SETTINGS.inlineAllOfSchemas,
+        resolveAliases:
+            overrides?.resolveAliases ?? options?.resolveAliases ?? DEFAULT_PARSE_OPENAPI_SETTINGS.resolveAliases,
         groupMultiApiEnvironments:
             overrides?.groupMultiApiEnvironments ??
             options?.groupMultiApiEnvironments ??
-            DEFAULT_PARSE_OPENAPI_SETTINGS.groupMultiApiEnvironments
+            DEFAULT_PARSE_OPENAPI_SETTINGS.groupMultiApiEnvironments,
+        wrapReferencesToNullableInOptional:
+            overrides?.wrapReferencesToNullableInOptional ??
+            options?.wrapReferencesToNullableInOptional ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.wrapReferencesToNullableInOptional,
+        coerceOptionalSchemasToNullable:
+            overrides?.coerceOptionalSchemasToNullable ??
+            options?.coerceOptionalSchemasToNullable ??
+            DEFAULT_PARSE_OPENAPI_SETTINGS.coerceOptionalSchemasToNullable
     };
 }

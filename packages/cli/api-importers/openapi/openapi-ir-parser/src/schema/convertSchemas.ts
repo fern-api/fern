@@ -47,8 +47,56 @@ import { isReferenceObject } from "./utils/isReferenceObject";
 export const SCHEMA_REFERENCE_PREFIX = "#/components/schemas/";
 export const SCHEMA_INLINE_REFERENCE_PREFIX = "#/components/responses/";
 
+function isInlinable(
+    schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject,
+    context: SchemaParserContext
+): boolean {
+    const resolvedSchema = isReferenceObject(schema) ? context.resolveSchemaReference(schema) : schema;
+
+    // Attempt to inline what are effectively primitives, or boxed primitive types
+    switch (resolvedSchema.type) {
+        case "boolean":
+        case "number":
+        case "string":
+        case "integer":
+            return true;
+        case "array":
+            return isInlinable(resolvedSchema.items, context);
+        case "object":
+            return false;
+        case undefined:
+            return false;
+        default:
+            // TODO(thomas): Handle null literal and type array that is not a SchemaObject and return to the promised land of assertNever
+            // return assertNever(resolvedSchema);
+            context.logger.warn("Unhandled schema type. Will not inline this schema", JSON.stringify(resolvedSchema));
+            return false;
+    }
+}
+
+function shouldResolveAlias(
+    schemaId: string,
+    schema: OpenAPIV3.ReferenceObject,
+    context: SchemaParserContext
+): boolean {
+    if (context.options.resolveAliases) {
+        // If resolveAliases is an object or true, we should check further
+        if (
+            typeof context.options.resolveAliases === "object" &&
+            context.options.resolveAliases.except?.includes(schemaId)
+        ) {
+            // If the schema is in the except list, we should not resolve it
+            return false;
+        }
+
+        return isInlinable(schema, context);
+    }
+    return false;
+}
+
 export function convertSchema(
     schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject,
+    wrapAsOptional: boolean,
     wrapAsNullable: boolean,
     context: SchemaParserContext,
     breadcrumbs: string[],
@@ -63,17 +111,45 @@ export function convertSchema(
     if (isReferenceObject(schema)) {
         const schemaId = getSchemaIdFromReference(schema);
         if (schemaId != null) {
+            if (shouldResolveAlias(schemaId, schema, context)) {
+                // If the schema is an alias we are configured to inline, we should do that and return immediately.
+                // This prevents reference registration which happens below.
+                return convertSchemaObject(
+                    context.resolveSchemaReference(schema),
+                    wrapAsOptional,
+                    wrapAsNullable,
+                    context,
+                    getBreadcrumbsFromReference(schema.$ref),
+                    encoding,
+                    source,
+                    namespace,
+                    propertiesToExclude,
+                    referencedAsRequest,
+                    fallback
+                );
+            }
+
             if (!referencedAsRequest) {
                 context.markSchemaAsReferencedByNonRequest(schemaId);
             } else {
                 context.markSchemaAsReferencedByRequest(schemaId);
             }
-            return convertReferenceObject(schema, wrapAsNullable, context, breadcrumbs, encoding, source, namespace);
+            return convertReferenceObject(
+                schema,
+                wrapAsOptional,
+                wrapAsNullable,
+                context,
+                breadcrumbs,
+                encoding,
+                source,
+                namespace
+            );
         }
         // if the schema id is null, we should convert the entire schema and inline it
         // in the OpenAPI IR
         return convertSchemaObject(
             context.resolveSchemaReference(schema),
+            wrapAsOptional,
             wrapAsNullable,
             context,
             getBreadcrumbsFromReference(schema.$ref),
@@ -87,6 +163,7 @@ export function convertSchema(
     }
     return convertSchemaObject(
         schema,
+        wrapAsOptional,
         wrapAsNullable,
         context,
         breadcrumbs,
@@ -101,6 +178,7 @@ export function convertSchema(
 
 export function convertReferenceObject(
     schema: OpenAPIV3.ReferenceObject,
+    wrapAsOptional: boolean,
     wrapAsNullable: boolean,
     context: SchemaParserContext,
     breadcrumbs: string[],
@@ -108,9 +186,10 @@ export function convertReferenceObject(
     source: Source,
     namespace: string | undefined
 ): SchemaWithExample {
-    const referenceSchema = schema.$ref.includes("properties")
+    let result: SchemaWithExample = schema.$ref.includes("properties")
         ? convertSchemaObject(
               context.resolveSchemaReference(schema),
+              wrapAsOptional,
               wrapAsNullable,
               context,
               breadcrumbs,
@@ -122,21 +201,49 @@ export function convertReferenceObject(
         : SchemaWithExample.reference(
               convertToReferencedSchema(schema, breadcrumbs, source, context.options.preserveSchemaIds)
           );
+
+    // if referenced schema would be found nullable in convertSchemaObject(),
+    // wrap it as nullable here
+    if (wrapAsNullable === false) {
+        const referencedSchema = context.resolveSchemaReference(schema);
+        if (
+            referencedSchema.nullable === true ||
+            (Array.isArray(referencedSchema.type) &&
+                referencedSchema.type.length >= 2 &&
+                referencedSchema.type.includes("null"))
+        ) {
+            wrapAsNullable = true;
+        }
+    }
+
     if (wrapAsNullable) {
-        return SchemaWithExample.nullable({
+        result = SchemaWithExample.nullable({
             title: undefined,
             nameOverride: undefined,
             generatedName: getGeneratedTypeName(breadcrumbs, context.options.preserveSchemaIds),
-            value: referenceSchema,
+            value: result,
             description: undefined,
             availability: undefined,
             namespace: undefined,
             groupName: undefined,
             inline: undefined
         });
-    } else {
-        return referenceSchema;
     }
+    if (wrapAsOptional) {
+        result = SchemaWithExample.optional({
+            title: undefined,
+            nameOverride: undefined,
+            generatedName: getGeneratedTypeName(breadcrumbs, context.options.preserveSchemaIds),
+            value: result,
+            description: undefined,
+            availability: undefined,
+            namespace: undefined,
+            groupName: undefined,
+            inline: undefined
+        });
+    }
+
+    return result;
 }
 
 // Returns a Schema Title if it's suitable as a code generated name
@@ -155,6 +262,7 @@ function getTitleAsName(title: string | undefined): string | undefined {
 
 export function convertSchemaObject(
     schema: OpenAPIV3.SchemaObject | string,
+    wrapAsOptional: boolean,
     wrapAsNullable: boolean,
     context: SchemaParserContext,
     breadcrumbs: string[],
@@ -234,21 +342,7 @@ export function convertSchemaObject(
             }
         }
 
-        // if a schema is null then we should wrap it as nullable
-        if (!wrapAsNullable && schema.nullable === true) {
-            return convertSchemaObject(
-                schema,
-                true,
-                context,
-                breadcrumbs,
-                encoding,
-                source,
-                namespace,
-                propertiesToExclude,
-                referencedAsRequest,
-                fallback
-            );
-        }
+        wrapAsNullable = wrapAsNullable || schema.nullable === true;
 
         // const
         // NOTE(patrickthornton): This is an attribute of OpenAPIV3_1.SchemaObject;
@@ -262,6 +356,9 @@ export function convertSchemaObject(
             schema.enum != null &&
             (schema.type === "string" || schema.type == null || (schema.type as string) === "enum")
         ) {
+            // Cut 'null' from enum since functionality is achieved by 'nullable'
+            schema.enum = schema.enum.filter((value) => value !== null);
+
             if (!isListOfStrings(schema.enum)) {
                 // If enum is not a list of strings, just type as a string.
                 // TODO(dsinghvi): Emit a warning we are doing this.
@@ -279,6 +376,7 @@ export function convertSchemaObject(
                     }),
                     namespace,
                     groupName,
+                    wrapAsOptional,
                     wrapAsNullable,
                     description,
                     availability
@@ -292,6 +390,7 @@ export function convertSchemaObject(
                     nameOverride,
                     generatedName,
                     title,
+                    wrapAsOptional,
                     wrapAsNullable,
                     value: schema.enum[0],
                     description,
@@ -311,6 +410,7 @@ export function convertSchemaObject(
                 _default: schema.default,
                 description,
                 availability,
+                wrapAsOptional,
                 wrapAsNullable,
                 namespace,
                 groupName,
@@ -339,6 +439,7 @@ export function convertSchemaObject(
                 breadcrumbs,
                 description,
                 availability,
+                wrapAsOptional,
                 wrapAsNullable,
                 context,
                 subtypes,
@@ -358,6 +459,7 @@ export function convertSchemaObject(
                     generatedName,
                     title,
                     literal: LiteralSchemaValue.boolean(literalValue),
+                    wrapAsOptional,
                     wrapAsNullable,
                     description,
                     availability,
@@ -373,6 +475,7 @@ export function convertSchemaObject(
                     default: getBooleanFromDefault(schema.default),
                     example: getExampleAsBoolean({ schema, logger: context.logger, fallback })
                 }),
+                wrapAsOptional,
                 wrapAsNullable,
                 description,
                 availability,
@@ -395,6 +498,7 @@ export function convertSchemaObject(
                 multipleOf: schema.multipleOf,
                 description,
                 availability,
+                wrapAsOptional,
                 wrapAsNullable,
                 example: getExampleAsNumber({ schema, logger: context.logger, fallback }),
                 namespace,
@@ -415,6 +519,7 @@ export function convertSchemaObject(
                 multipleOf: schema.multipleOf,
                 description,
                 availability,
+                wrapAsOptional,
                 wrapAsNullable,
                 example: getExampleAsNumber({ schema, logger: context.logger, fallback }),
                 namespace,
@@ -435,6 +540,7 @@ export function convertSchemaObject(
                 multipleOf: schema.multipleOf,
                 description,
                 availability,
+                wrapAsOptional,
                 wrapAsNullable,
                 example: getExampleAsNumber({ schema, logger: context.logger, fallback }),
                 namespace,
@@ -450,6 +556,7 @@ export function convertSchemaObject(
                     primitive: PrimitiveSchemaValueWithExample.datetime({
                         example: getExamplesString({ schema, logger: context.logger, fallback })
                     }),
+                    wrapAsOptional,
                     wrapAsNullable,
                     description,
                     availability,
@@ -466,6 +573,7 @@ export function convertSchemaObject(
                     primitive: PrimitiveSchemaValueWithExample.date({
                         example: getExamplesString({ schema, logger: context.logger, fallback })
                     }),
+                    wrapAsOptional,
                     wrapAsNullable,
                     description,
                     availability,
@@ -494,6 +602,7 @@ export function convertSchemaObject(
                     generatedName,
                     title,
                     literal: LiteralSchemaValue.string(maybeConstValue),
+                    wrapAsOptional,
                     wrapAsNullable,
                     description,
                     availability,
@@ -516,6 +625,7 @@ export function convertSchemaObject(
                 }),
                 namespace,
                 groupName,
+                wrapAsOptional,
                 wrapAsNullable,
                 description,
                 availability
@@ -532,6 +642,7 @@ export function convertSchemaObject(
                 item: schema.items,
                 description,
                 availability,
+                wrapAsOptional,
                 wrapAsNullable,
                 context,
                 namespace,
@@ -551,6 +662,7 @@ export function convertSchemaObject(
                 additionalProperties: schema.additionalProperties,
                 description,
                 availability,
+                wrapAsOptional,
                 wrapAsNullable,
                 context,
                 namespace,
@@ -572,6 +684,7 @@ export function convertSchemaObject(
                     breadcrumbs,
                     description,
                     availability,
+                    wrapAsOptional,
                     wrapAsNullable,
                     context,
                     subtypes: schema.oneOf,
@@ -595,6 +708,7 @@ export function convertSchemaObject(
                     discriminator: schema.discriminator,
                     properties: schema.properties ?? {},
                     required: schema.required,
+                    wrapAsOptional,
                     wrapAsNullable,
                     context,
                     namespace,
@@ -609,6 +723,7 @@ export function convertSchemaObject(
                     title,
                     description,
                     availability,
+                    wrapAsOptional,
                     wrapAsNullable,
                     context,
                     namespace,
@@ -635,6 +750,7 @@ export function convertSchemaObject(
                         title,
                         description,
                         availability,
+                        wrapAsOptional,
                         wrapAsNullable,
                         context,
                         namespace,
@@ -654,6 +770,7 @@ export function convertSchemaObject(
                         discriminator: schema.discriminator,
                         properties: schema.properties ?? {},
                         required: schema.required,
+                        wrapAsOptional,
                         wrapAsNullable,
                         context,
                         namespace,
@@ -671,6 +788,7 @@ export function convertSchemaObject(
                         breadcrumbs,
                         description,
                         availability,
+                        wrapAsOptional,
                         wrapAsNullable,
                         context,
                         subtypes: schema.oneOf.filter((schema) => {
@@ -684,6 +802,7 @@ export function convertSchemaObject(
                 }
                 const convertedSchema = convertSchema(
                     schema.oneOf[0],
+                    wrapAsOptional,
                     wrapAsNullable,
                     context,
                     breadcrumbs,
@@ -697,9 +816,9 @@ export function convertSchemaObject(
                     const firstSchema = schema.oneOf[0];
                     const secondSchema = schema.oneOf[1];
                     if (!isReferenceObject(firstSchema) && (firstSchema.type as string) === "null") {
-                        return convertSchema(secondSchema, true, context, breadcrumbs, source, namespace);
+                        return convertSchema(secondSchema, false, true, context, breadcrumbs, source, namespace);
                     } else if (!isReferenceObject(secondSchema) && (secondSchema.type as string) === "null") {
-                        return convertSchema(firstSchema, true, context, breadcrumbs, source, namespace);
+                        return convertSchema(firstSchema, false, true, context, breadcrumbs, source, namespace);
                     }
                 }
 
@@ -715,6 +834,7 @@ export function convertSchemaObject(
                         _default: schema.default,
                         description,
                         availability,
+                        wrapAsOptional,
                         wrapAsNullable,
                         namespace,
                         groupName,
@@ -735,6 +855,7 @@ export function convertSchemaObject(
                         required: schema.required,
                         description,
                         availability,
+                        wrapAsOptional,
                         wrapAsNullable,
                         discriminant: maybeDiscriminant.discriminant,
                         variants: maybeDiscriminant.schemas,
@@ -757,6 +878,7 @@ export function convertSchemaObject(
                     breadcrumbs,
                     description,
                     availability,
+                    wrapAsOptional: wrapAsOptional,
                     wrapAsNullable: wrapAsNullable || hasNullValue,
                     context,
                     subtypes: schema.oneOf.filter((schema) => {
@@ -775,6 +897,7 @@ export function convertSchemaObject(
             if (schema.anyOf.length === 1 && schema.anyOf[0] != null) {
                 const convertedSchema = convertSchema(
                     schema.anyOf[0],
+                    wrapAsOptional,
                     wrapAsNullable,
                     context,
                     breadcrumbs,
@@ -791,6 +914,7 @@ export function convertSchemaObject(
                     if (!isReferenceObject(firstSchema) && (firstSchema.type as unknown) === "null") {
                         const convertedSchema = convertSchema(
                             secondSchema,
+                            false,
                             true,
                             context,
                             breadcrumbs,
@@ -801,6 +925,7 @@ export function convertSchemaObject(
                     } else if (!isReferenceObject(secondSchema) && (secondSchema.type as unknown) === "null") {
                         const convertedSchema = convertSchema(
                             firstSchema,
+                            false,
                             true,
                             context,
                             breadcrumbs,
@@ -826,6 +951,7 @@ export function convertSchemaObject(
                     required: schema.required,
                     description,
                     availability,
+                    wrapAsOptional,
                     wrapAsNullable,
                     discriminant: maybeDiscriminant.discriminant,
                     variants: maybeDiscriminant.schemas,
@@ -848,6 +974,7 @@ export function convertSchemaObject(
                 breadcrumbs,
                 description,
                 availability,
+                wrapAsOptional,
                 wrapAsNullable: wrapAsNullable || hasNullValue,
                 context,
                 subtypes: schema.anyOf.filter((schema) => {
@@ -877,6 +1004,7 @@ export function convertSchemaObject(
                 // Note that this handles any schema type, not just objects (e.g. arrays).
                 const convertedSchema = convertSchema(
                     filteredAllOfs[0],
+                    wrapAsOptional,
                     wrapAsNullable,
                     context,
                     breadcrumbs,
@@ -905,6 +1033,7 @@ export function convertSchemaObject(
                 // Try to short-circuit again.
                 const convertedSchema = convertSchema(
                     filteredAllOfObjects[0],
+                    wrapAsOptional,
                     wrapAsNullable,
                     context,
                     breadcrumbs,
@@ -923,6 +1052,7 @@ export function convertSchemaObject(
                 properties: schema.properties ?? {},
                 description,
                 required: schema.required,
+                wrapAsOptional,
                 wrapAsNullable,
                 allOf: filteredAllOfObjects,
                 context,
@@ -945,6 +1075,7 @@ export function convertSchemaObject(
                 title,
                 description,
                 availability,
+                wrapAsOptional,
                 wrapAsNullable,
                 keySchema: {
                     nameOverride: undefined,
@@ -1152,6 +1283,7 @@ function isValidAllOfObject(allOf: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaO
 
 export function wrapLiteral({
     literal,
+    wrapAsOptional,
     wrapAsNullable,
     namespace,
     groupName,
@@ -1162,6 +1294,7 @@ export function wrapLiteral({
     title
 }: {
     literal: LiteralSchemaValue;
+    wrapAsOptional: boolean;
     wrapAsNullable: boolean;
     description: string | undefined;
     availability: Availability | undefined;
@@ -1171,29 +1304,7 @@ export function wrapLiteral({
     generatedName: string;
     title: string | undefined;
 }): SchemaWithExample {
-    if (wrapAsNullable) {
-        return SchemaWithExample.nullable({
-            nameOverride,
-            generatedName,
-            title,
-            value: SchemaWithExample.literal({
-                nameOverride,
-                generatedName,
-                title,
-                value: literal,
-                description,
-                availability,
-                namespace,
-                groupName
-            }),
-            namespace,
-            groupName,
-            description,
-            availability,
-            inline: undefined
-        });
-    }
-    return SchemaWithExample.literal({
+    let result: SchemaWithExample = SchemaWithExample.literal({
         nameOverride,
         generatedName,
         title,
@@ -1203,10 +1314,38 @@ export function wrapLiteral({
         description,
         availability
     });
+    if (wrapAsNullable) {
+        result = SchemaWithExample.nullable({
+            nameOverride,
+            generatedName,
+            title,
+            value: result,
+            namespace,
+            groupName,
+            description,
+            availability,
+            inline: undefined
+        });
+    }
+    if (wrapAsOptional) {
+        result = SchemaWithExample.optional({
+            nameOverride,
+            generatedName,
+            title,
+            value: result,
+            namespace,
+            groupName,
+            description,
+            availability,
+            inline: undefined
+        });
+    }
+    return result;
 }
 
 export function wrapPrimitive({
     primitive,
+    wrapAsOptional,
     wrapAsNullable,
     namespace,
     groupName,
@@ -1217,6 +1356,7 @@ export function wrapPrimitive({
     title
 }: {
     primitive: PrimitiveSchemaValueWithExample;
+    wrapAsOptional: boolean;
     wrapAsNullable: boolean;
     namespace: string | undefined;
     groupName: SdkGroupName | undefined;
@@ -1227,29 +1367,7 @@ export function wrapPrimitive({
     title: string | undefined;
 }): SchemaWithExample {
     groupName = typeof groupName === "string" ? [groupName] : groupName;
-    if (wrapAsNullable) {
-        return SchemaWithExample.nullable({
-            nameOverride,
-            generatedName,
-            title,
-            value: SchemaWithExample.primitive({
-                nameOverride,
-                generatedName,
-                title,
-                schema: primitive,
-                description,
-                availability,
-                namespace,
-                groupName
-            }),
-            namespace,
-            groupName,
-            description,
-            availability,
-            inline: undefined
-        });
-    }
-    return SchemaWithExample.primitive({
+    let result: SchemaWithExample = SchemaWithExample.primitive({
         nameOverride,
         generatedName,
         title,
@@ -1259,6 +1377,33 @@ export function wrapPrimitive({
         namespace,
         groupName
     });
+    if (wrapAsNullable) {
+        result = SchemaWithExample.nullable({
+            nameOverride,
+            generatedName,
+            title,
+            value: result,
+            namespace,
+            groupName,
+            description,
+            availability,
+            inline: undefined
+        });
+    }
+    if (wrapAsOptional) {
+        result = SchemaWithExample.optional({
+            nameOverride,
+            generatedName,
+            title,
+            value: result,
+            namespace,
+            groupName,
+            description,
+            availability,
+            inline: undefined
+        });
+    }
+    return result;
 }
 
 interface DiscriminantProperty {

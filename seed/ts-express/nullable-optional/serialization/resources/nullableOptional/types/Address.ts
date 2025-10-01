@@ -20,11 +20,11 @@ export const Address: core.serialization.ObjectSchema<serializers.Address.Raw, S
 export declare namespace Address {
     export interface Raw {
         street: string;
-        city: string | null;
+        city?: string | null;
         state?: string | null;
         zipCode: string;
-        country?: (string | null) | null;
-        buildingId: serializers.NullableUserId.Raw;
+        country?: (string | null | undefined) | null;
+        buildingId?: serializers.NullableUserId.Raw;
         tenantId?: serializers.OptionalUserId.Raw;
     }
 }

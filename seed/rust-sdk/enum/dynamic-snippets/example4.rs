@@ -2,7 +2,17 @@ use seed_enum::{ClientConfig, EnumClient};
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        base_url: "https://api.fern.com".to_string(),
+        ..Default::default()
+    };
     let client = EnumClient::new(config).expect("Failed to build client");
-    client.path_param_send(">", "red").await;
+    client
+        .path_param
+        .send(
+            &Operand::GreaterThan,
+            &ColorOrOperand::Color(Color::Red),
+            None,
+        )
+        .await;
 }

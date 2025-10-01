@@ -24,6 +24,7 @@
     "requirement": "ALL",
     "schemes": [
       {
+        "key": "apiKey",
         "name": {
           "name": {
             "originalName": "apiKey",
@@ -38713,6 +38714,13 @@
           },
           "displayName": "List Accounts",
           "auth": true,
+          "security": [
+            {
+              "accessToken": [
+                "banking/read"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -39315,6 +39323,13 @@
           },
           "displayName": "Get an Account",
           "auth": true,
+          "security": [
+            {
+              "accessToken": [
+                "banking/read"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -39663,6 +39678,13 @@
           },
           "displayName": "List Account Balances",
           "auth": true,
+          "security": [
+            {
+              "accessToken": [
+                "banking/read"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -40066,6 +40088,13 @@
           },
           "displayName": "List Eligible ACH Accounts",
           "auth": true,
+          "security": [
+            {
+              "accessToken": [
+                "banking/read"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -40685,6 +40714,13 @@
           },
           "displayName": "Return a collection of account joint owners",
           "auth": true,
+          "security": [
+            {
+              "accessToken": [
+                "banking/read"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -41123,6 +41159,13 @@
           },
           "displayName": "List Eligible Overdraft Accounts",
           "auth": true,
+          "security": [
+            {
+              "accessToken": [
+                "banking/read"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -41639,6 +41682,13 @@
           },
           "displayName": "Fetch a representation of the account's overdraft protection settings",
           "auth": true,
+          "security": [
+            {
+              "accessToken": [
+                "banking/read"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -41987,6 +42037,13 @@
           },
           "displayName": "Update the overdraft accounts",
           "auth": true,
+          "security": [
+            {
+              "accessToken": [
+                "banking/write"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "PATCH",
           "path": {
@@ -42570,6 +42627,13 @@
           },
           "displayName": "Invite a joint owner",
           "auth": true,
+          "security": [
+            {
+              "accessToken": [
+                "banking/write"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -43379,6 +43443,13 @@
           },
           "displayName": "Look up institution by routing number, IBAN, or SWIFT/BIC code",
           "auth": true,
+          "security": [
+            {
+              "accessToken": [
+                "data/read"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -43829,6 +43900,13 @@
           },
           "displayName": "Return this institution's list of upcoming transfer schedule dates",
           "auth": true,
+          "security": [
+            {
+              "accessToken": [
+                "data/read"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -44488,6 +44566,13 @@
           },
           "displayName": "Return the financial institution's cutoff times for products",
           "auth": true,
+          "security": [
+            {
+              "accessToken": [
+                "data/read"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -45041,6 +45126,11 @@
           },
           "displayName": "Return the financial institution's transfer dates restrictions",
           "auth": true,
+          "security": [
+            {
+              "apiKey": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -45742,6 +45832,13 @@
           },
           "displayName": "Return a collection of transactions",
           "auth": true,
+          "security": [
+            {
+              "accessToken": [
+                "banking/read"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -47007,6 +47104,13 @@
           },
           "displayName": "Return a collection of transaction categories",
           "auth": true,
+          "security": [
+            {
+              "accessToken": [
+                "banking/read"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -47376,6 +47480,13 @@
           },
           "displayName": "Return a collection of transfers",
           "auth": true,
+          "security": [
+            {
+              "accessToken": [
+                "banking/read"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -48002,6 +48113,13 @@
           },
           "displayName": "Create a new transfer",
           "auth": true,
+          "security": [
+            {
+              "accessToken": [
+                "moneyMovement/write"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -48704,6 +48822,13 @@
           },
           "displayName": "Fetch a representation of this transfer",
           "auth": true,
+          "security": [
+            {
+              "accessToken": [
+                "banking/read"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -49052,6 +49177,13 @@
           },
           "displayName": "Delete this transfer resource",
           "auth": true,
+          "security": [
+            {
+              "accessToken": [
+                "moneyMovement/write"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "DELETE",
           "path": {
@@ -49392,6 +49524,13 @@
           },
           "displayName": "Update this transfer",
           "auth": true,
+          "security": [
+            {
+              "accessToken": [
+                "moneyMovement/write"
+              ]
+            }
+          ],
           "idempotent": false,
           "method": "PATCH",
           "path": {

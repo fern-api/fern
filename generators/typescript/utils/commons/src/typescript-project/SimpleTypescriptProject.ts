@@ -33,6 +33,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
         await this.generateGitIgnore();
         await this.generateNpmIgnore();
         await this.generatePrettierRc();
+        await this.generatePrettierIgnore();
         await this.generateTsConfig();
         await this.generatePackageJson();
         if (this.outputJsr) {
@@ -90,6 +91,21 @@ export class SimpleTypescriptProject extends TypescriptProject {
         );
     }
 
+    private async generatePrettierIgnore(): Promise<void> {
+        await this.writeFileToVolume(
+            RelativeFilePath.of(TypescriptProject.PRETTIER_IGNORE_FILENAME),
+            `dist
+*.tsbuildinfo
+_tmp_*
+*.tmp
+.tmp/
+*.log
+.DS_Store
+Thumbs.db
+            `
+        );
+    }
+
     private async generateTsConfig(): Promise<void> {
         const compilerOptions: CompilerOptions = {
             extendedDiagnostics: true,
@@ -101,7 +117,9 @@ export class SimpleTypescriptProject extends TypescriptProject {
             declaration: true,
             outDir: SimpleTypescriptProject.DIST_DIRECTORY,
             rootDir: this.packagePath,
-            baseUrl: this.packagePath
+            baseUrl: this.packagePath,
+            isolatedModules: true,
+            isolatedDeclarations: true
         };
 
         if (this.useLegacyExports) {
@@ -115,7 +133,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
                             outDir: SimpleTypescriptProject.DIST_DIRECTORY
                         },
                         include: [this.packagePath],
-                        exclude: []
+                        exclude: this.testPath.startsWith(this.packagePath) ? [this.testPath] : []
                     },
                     undefined,
                     4
@@ -131,7 +149,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 {
                     compilerOptions,
                     include: [this.packagePath],
-                    exclude: []
+                    exclude: this.testPath.startsWith(this.packagePath) ? [this.testPath] : []
                 },
                 undefined,
                 4
@@ -150,7 +168,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
                     extends: `./${baseTsConfigPath}`,
                     compilerOptions: cjsCompilerOptions,
                     include: [this.packagePath],
-                    exclude: []
+                    exclude: this.testPath.startsWith(this.packagePath) ? [this.testPath] : []
                 },
                 undefined,
                 4
@@ -169,7 +187,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
                     extends: `./${baseTsConfigPath}`,
                     compilerOptions: esmCompilerOptions,
                     include: [this.packagePath],
-                    exclude: []
+                    exclude: this.testPath.startsWith(this.packagePath) ? [this.testPath] : []
                 },
                 undefined,
                 4

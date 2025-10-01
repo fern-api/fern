@@ -12,6 +12,7 @@ export type FullExample =
     | FernOpenapiIr.FullExample.Enum
     | FernOpenapiIr.FullExample.Literal
     | FernOpenapiIr.FullExample.OneOf
+    | FernOpenapiIr.FullExample.Null
     | FernOpenapiIr.FullExample.Unknown;
 
 export namespace FullExample {
@@ -49,6 +50,10 @@ export namespace FullExample {
         value: FernOpenapiIr.FullOneOfExample;
     }
 
+    export interface Null extends FernOpenapiIr.NullExample, _Utils {
+        type: "null";
+    }
+
     export interface Unknown extends _Utils {
         type: "unknown";
         value: FernOpenapiIr.FullExample;
@@ -66,6 +71,7 @@ export namespace FullExample {
         enum: (value: string) => _Result;
         literal: (value: FernOpenapiIr.LiteralExample) => _Result;
         oneOf: (value: FernOpenapiIr.FullOneOfExample) => _Result;
+        null: (value: FernOpenapiIr.NullExample) => _Result;
         unknown: (value: FernOpenapiIr.FullExample) => _Result;
         _other: (value: { type: string }) => _Result;
     }
@@ -163,6 +169,19 @@ export const FullExample = {
         };
     },
 
+    null: (value: FernOpenapiIr.NullExample): FernOpenapiIr.FullExample.Null => {
+        return {
+            ...value,
+            type: "null",
+            _visit: function <_Result>(
+                this: FernOpenapiIr.FullExample.Null,
+                visitor: FernOpenapiIr.FullExample._Visitor<_Result>,
+            ) {
+                return FernOpenapiIr.FullExample._visit(this, visitor);
+            },
+        };
+    },
+
     unknown: (value: FernOpenapiIr.FullExample): FernOpenapiIr.FullExample.Unknown => {
         return {
             value: value,
@@ -195,6 +214,8 @@ export const FullExample = {
                 return visitor.literal(value.value);
             case "oneOf":
                 return visitor.oneOf(value.value);
+            case "null":
+                return visitor.null(value);
             case "unknown":
                 return visitor.unknown(value.value);
             default:

@@ -82,7 +82,11 @@
           "base-path": "",
           "endpoints": {
             "execute-workflow-stream": {
-              "auth": true,
+              "auth": [
+                {
+                  "apiKeyAuth": [],
+                },
+              ],
               "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Executes a deployed Workflow and streams back its results.",
@@ -191,7 +195,11 @@ Executes a deployed Workflow and streams back its results.",
               "url": "Predict",
             },
             "generate": {
-              "auth": true,
+              "auth": [
+                {
+                  "apiKeyAuth": [],
+                },
+              ],
               "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
 Generate a completion using a previously defined deployment.
@@ -221,6 +229,7 @@ Generate a completion using a previously defined deployment.
                           "data": {
                             "completions": [
                               {
+                                "finish_reason": null,
                                 "id": "id",
                                 "model_version_id": "model_version_id",
                                 "text": "text",
@@ -289,7 +298,11 @@ Generate a completion using a previously defined deployment.
               "url": "Predict",
             },
             "generate-stream": {
-              "auth": true,
+              "auth": [
+                {
+                  "apiKeyAuth": [],
+                },
+              ],
               "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
 Generate a stream of completions using a previously defined deployment.
@@ -318,6 +331,7 @@ Generate a stream of completions using a previously defined deployment.
                         "delta": {
                           "data": {
                             "completion": {
+                              "finish_reason": null,
                               "id": "id",
                               "model_version_id": "model_version_id",
                               "text": "text",
@@ -387,7 +401,11 @@ Generate a stream of completions using a previously defined deployment.
               "url": "Predict",
             },
             "search": {
-              "auth": true,
+              "auth": [
+                {
+                  "apiKeyAuth": [],
+                },
+              ],
               "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
 Perform a search against a document index.
@@ -480,7 +498,11 @@ Perform a search against a document index.
               "url": "Predict",
             },
             "submit-completion-actuals": {
-              "auth": true,
+              "auth": [
+                {
+                  "apiKeyAuth": [],
+                },
+              ],
               "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
 Used to submit feedback regarding the quality of previously generated completions.
@@ -2607,7 +2629,8 @@ Used to submit feedback regarding the quality of previously generated completion
     execute-workflow-stream:
       path: /v1/execute-workflow-stream
       method: POST
-      auth: true
+      auth:
+        - apiKeyAuth: []
       docs: >-
         <strong style="background-color:#ffc107; color:white; padding:4px;
         border-radius:4px">Unstable</strong>
@@ -2681,7 +2704,8 @@ Used to submit feedback regarding the quality of previously generated completion
     generate:
       path: /v1/generate
       method: POST
-      auth: true
+      auth:
+        - apiKeyAuth: []
       docs: >-
         <strong style="background-color:#4caf50; color:white; padding:4px;
         border-radius:4px">Stable</strong>
@@ -2744,13 +2768,15 @@ Used to submit feedback regarding the quality of previously generated completion
                     completions:
                       - id: id
                         text: text
+                        finish_reason: null
                         model_version_id: model_version_id
                   error:
                     message: message
     generate-stream:
       path: /v1/generate-stream
       method: POST
-      auth: true
+      auth:
+        - apiKeyAuth: []
       docs: >-
         <strong style="background-color:#4caf50; color:white; padding:4px;
         border-radius:4px">Stable</strong>
@@ -2815,13 +2841,15 @@ Used to submit feedback regarding the quality of previously generated completion
                     completion:
                       id: id
                       text: text
+                      finish_reason: null
                       model_version_id: model_version_id
                   error:
                     message: message
     search:
       path: /v1/search
       method: POST
-      auth: true
+      auth:
+        - apiKeyAuth: []
       docs: >-
         <strong style="background-color:#4caf50; color:white; padding:4px;
         border-radius:4px">Stable</strong>
@@ -2884,7 +2912,8 @@ Used to submit feedback regarding the quality of previously generated completion
     submit-completion-actuals:
       path: /v1/submit-completion-actuals
       method: POST
-      auth: true
+      auth:
+        - apiKeyAuth: []
       docs: >-
         <strong style="background-color:#4caf50; color:white; padding:4px;
         border-radius:4px">Stable</strong>
@@ -4323,7 +4352,11 @@ types:
           "base-path": "",
           "endpoints": {
             "retrieve": {
-              "auth": true,
+              "auth": [
+                {
+                  "apiKeyAuth": [],
+                },
+              ],
               "docs": "
 <strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -4387,7 +4420,8 @@ service:
     retrieve:
       path: /v1/deployments/{id}
       method: GET
-      auth: true
+      auth:
+        - apiKeyAuth: []
       docs: >
 
         <strong style="background-color:#ffc107; color:white; padding:4px;
@@ -4437,7 +4471,11 @@ service:
           "base-path": "",
           "endpoints": {
             "create": {
-              "auth": true,
+              "auth": [
+                {
+                  "apiKeyAuth": [],
+                },
+              ],
               "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Creates a new document index.",
@@ -4635,7 +4673,8 @@ service:
     create:
       path: /v1/document-indexes
       method: POST
-      auth: true
+      auth:
+        - apiKeyAuth: []
       docs: >-
         <strong style="background-color:#ffc107; color:white; padding:4px;
         border-radius:4px">Unstable</strong>
@@ -4780,7 +4819,11 @@ service:
           "base-path": "",
           "endpoints": {
             "list": {
-              "auth": true,
+              "auth": [
+                {
+                  "apiKeyAuth": [],
+                },
+              ],
               "docs": "
 <strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
@@ -4788,6 +4831,12 @@ Used to list documents. Optionally filter on supported fields.
 ",
               "examples": [
                 {
+                  "query-parameters": {
+                    "document_index_id": "document_index_id",
+                    "limit": 1,
+                    "offset": 1,
+                    "ordering": "ordering",
+                  },
                   "response": {
                     "body": {
                       "count": 123,
@@ -4854,7 +4903,11 @@ Used to list documents. Optionally filter on supported fields.
               },
             },
             "upload": {
-              "auth": true,
+              "auth": [
+                {
+                  "apiKeyAuth": [],
+                },
+              ],
               "docs": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
 Upload a document to be indexed and used for search.
@@ -4948,7 +5001,8 @@ service:
     list:
       path: /v1/documents
       method: GET
-      auth: true
+      auth:
+        - apiKeyAuth: []
       docs: >
 
         <strong style="background-color:#4caf50; color:white; padding:4px;
@@ -4983,7 +5037,12 @@ service:
         type: root.PaginatedSlimDocumentList
         status-code: 200
       examples:
-        - response:
+        - query-parameters:
+            document_index_id: document_index_id
+            limit: 1
+            offset: 1
+            ordering: ordering
+          response:
             body:
               count: 123
               next: http://api.example.org/accounts/?offset=400&limit=100
@@ -5003,7 +5062,8 @@ service:
     upload:
       path: /v1/upload-document
       method: POST
-      auth: true
+      auth:
+        - apiKeyAuth: []
       docs: >-
         <strong style="background-color:#4caf50; color:white; padding:4px;
         border-radius:4px">Stable</strong>
@@ -5076,7 +5136,11 @@ service:
           "base-path": "",
           "endpoints": {
             "model_version_compile_prompt": {
-              "auth": true,
+              "auth": [
+                {
+                  "apiKeyAuth": [],
+                },
+              ],
               "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Compiles the prompt backing the model version using the provided input values.",
@@ -5133,7 +5197,11 @@ Compiles the prompt backing the model version using the provided input values.",
               },
             },
             "retrieve": {
-              "auth": true,
+              "auth": [
+                {
+                  "apiKeyAuth": [],
+                },
+              ],
               "docs": "
 <strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -5232,7 +5300,8 @@ service:
     retrieve:
       path: /v1/model-versions/{id}
       method: GET
-      auth: true
+      auth:
+        - apiKeyAuth: []
       docs: >
 
         <strong style="background-color:#ffc107; color:white; padding:4px;
@@ -5294,7 +5363,8 @@ service:
     model_version_compile_prompt:
       path: /v1/model-versions/{id}/compile-prompt
       method: POST
-      auth: true
+      auth:
+        - apiKeyAuth: []
       docs: >-
         <strong style="background-color:#ffc107; color:white; padding:4px;
         border-radius:4px">Unstable</strong>
@@ -5348,7 +5418,11 @@ service:
           "base-path": "",
           "endpoints": {
             "register_prompt": {
-              "auth": true,
+              "auth": [
+                {
+                  "apiKeyAuth": [],
+                },
+              ],
               "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Registers a prompt within Vellum and creates associated Vellum entities. Intended to be used by integration
@@ -5509,7 +5583,8 @@ service:
     register_prompt:
       path: /v1/registered-prompts/register
       method: POST
-      auth: true
+      auth:
+        - apiKeyAuth: []
       docs: >-
         <strong style="background-color:#ffc107; color:white; padding:4px;
         border-radius:4px">Unstable</strong>
@@ -5632,7 +5707,11 @@ service:
           "base-path": "",
           "endpoints": {
             "delete_sandbox_scenario": {
-              "auth": true,
+              "auth": [
+                {
+                  "apiKeyAuth": [],
+                },
+              ],
               "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Deletes an existing scenario from a sandbox, keying off of the provided scenario id.",
@@ -5665,7 +5744,11 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
               },
             },
             "upsert_sandbox_scenario": {
-              "auth": true,
+              "auth": [
+                {
+                  "apiKeyAuth": [],
+                },
+              ],
               "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Upserts a new scenario for a sandbox, keying off of the optionally provided scenario id.
@@ -5833,7 +5916,8 @@ service:
     upsert_sandbox_scenario:
       path: /v1/sandboxes/{id}/scenarios
       method: POST
-      auth: true
+      auth:
+        - apiKeyAuth: []
       docs: >-
         <strong style="background-color:#ffc107; color:white; padding:4px;
         border-radius:4px">Unstable</strong>
@@ -5939,7 +6023,8 @@ service:
     delete_sandbox_scenario:
       path: /v1/sandboxes/{id}/scenarios/{scenario_id}
       method: DELETE
-      auth: true
+      auth:
+        - apiKeyAuth: []
       docs: >-
         <strong style="background-color:#ffc107; color:white; padding:4px;
         border-radius:4px">Unstable</strong>
@@ -5977,7 +6062,11 @@ service:
           "base-path": "",
           "endpoints": {
             "delete_test_suite_test_case": {
-              "auth": true,
+              "auth": [
+                {
+                  "apiKeyAuth": [],
+                },
+              ],
               "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Deletes an existing test case for a test suite, keying off of the test case id.",
@@ -6010,7 +6099,11 @@ Deletes an existing test case for a test suite, keying off of the test case id."
               },
             },
             "upsert_test_suite_test_case": {
-              "auth": true,
+              "auth": [
+                {
+                  "apiKeyAuth": [],
+                },
+              ],
               "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Upserts a new test case for a test suite, keying off of the optionally provided test case id.
@@ -6110,7 +6203,8 @@ service:
     upsert_test_suite_test_case:
       path: /v1/test-suites/{id}/test-cases
       method: POST
-      auth: true
+      auth:
+        - apiKeyAuth: []
       docs: >-
         <strong style="background-color:#ffc107; color:white; padding:4px;
         border-radius:4px">Unstable</strong>
@@ -6183,7 +6277,8 @@ service:
     delete_test_suite_test_case:
       path: /v1/test-suites/{id}/test-cases/{test_case_id}
       method: DELETE
-      auth: true
+      auth:
+        - apiKeyAuth: []
       docs: >-
         <strong style="background-color:#ffc107; color:white; padding:4px;
         border-radius:4px">Unstable</strong>

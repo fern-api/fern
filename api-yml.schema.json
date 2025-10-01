@@ -383,6 +383,9 @@
         }
       ]
     },
+    "auth.AuthScope": {
+      "type": "string"
+    },
     "auth.OAuthAccessTokenRequestPropertiesSchema": {
       "type": "object",
       "properties": {
@@ -591,7 +594,7 @@
             {
               "type": "array",
               "items": {
-                "type": "string"
+                "$ref": "#/definitions/auth.AuthScope"
               }
             },
             {

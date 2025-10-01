@@ -24,6 +24,7 @@
     "requirement": "ALL",
     "schemes": [
       {
+        "key": "ApiKey",
         "name": {
           "name": {
             "originalName": "apiKey",
@@ -19801,7 +19802,7 @@
             }
           },
           "displayName": "Upload an audio or video file which can be transcribed.",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
           "method": "POST",
@@ -20173,7 +20174,7 @@
             }
           },
           "displayName": "List transcripts",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
           "method": "GET",
@@ -20912,7 +20913,7 @@
             }
           },
           "displayName": "Create a transcript from an audio file",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
           "method": "POST",
@@ -23015,7 +23016,7 @@
             }
           },
           "displayName": "Get the transcript",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
           "method": "GET",
@@ -23440,7 +23441,7 @@
             }
           },
           "displayName": "Delete the transcript",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
           "method": "DELETE",
@@ -23865,7 +23866,7 @@
             }
           },
           "displayName": "Export transcript as SRT or VTT captions.",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
           "method": "GET",
@@ -24428,7 +24429,7 @@
             }
           },
           "displayName": "Get the transcript split by sentences",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
           "method": "GET",
@@ -24853,7 +24854,7 @@
             }
           },
           "displayName": "Get the transcript split by paragraphs",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
           "method": "GET",
@@ -25278,7 +25279,7 @@
             }
           },
           "displayName": "Search the given transcript for words, numbers, or phrases",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
           "method": "GET",
@@ -25749,7 +25750,7 @@
             }
           },
           "displayName": "Retrieves the redacted audio object containing the status and URL to the redacted audio.",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
           "method": "GET",
@@ -26236,7 +26237,7 @@
             }
           },
           "displayName": "Create a temporary authentication token for real-time transcription",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
           "method": "POST",
@@ -26708,7 +26709,7 @@
             }
           },
           "displayName": "Generate a custom summary from one or more transcripts.",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
           "method": "POST",
@@ -27401,7 +27402,7 @@
             }
           },
           "displayName": "Create answers to one or more questions about one or more transcripts.",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
           "method": "POST",
@@ -28112,7 +28113,7 @@
             }
           },
           "displayName": "Extract action items from one or more meeting transcripts.",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
           "method": "POST",
@@ -28474,7 +28475,7 @@
             }
           },
           "displayName": "Ask LeMUR to use one or more transcripts with a Custom Task to handle your specialized task.",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
           "method": "POST",
@@ -29161,7 +29162,7 @@
             }
           },
           "displayName": "Delete the data for a previously submitted LeMUR request.",
-          "auth": true,
+          "auth": false,
           "idempotent": false,
           "baseUrl": "Base",
           "method": "DELETE",
@@ -30194,8 +30195,233 @@
         {
           "url": "/{userId}",
           "pathParameters": [],
-          "headers": [],
-          "queryParameters": [],
+          "headers": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "authentication",
+                  "camelCase": {
+                    "unsafeName": "authentication",
+                    "safeName": "authentication"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "authentication",
+                    "safeName": "authentication"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "AUTHENTICATION",
+                    "safeName": "AUTHENTICATION"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Authentication",
+                    "safeName": "Authentication"
+                  }
+                },
+                "wireValue": "Authentication"
+              },
+              "value": {
+                "shape": {
+                  "container": {
+                    "optional": {
+                      "shape": {
+                        "primitive": {
+                          "string": {
+                            "original": "Authentication"
+                          },
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "jsonExample": "Authentication"
+                    },
+                    "valueType": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "optional"
+                  },
+                  "type": "container"
+                },
+                "jsonExample": "Authentication"
+              }
+            }
+          ],
+          "queryParameters": [
+            {
+              "name": {
+                "name": {
+                  "originalName": "sample_rate",
+                  "camelCase": {
+                    "unsafeName": "sampleRate",
+                    "safeName": "sampleRate"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "sample_rate",
+                    "safeName": "sample_rate"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "SAMPLE_RATE",
+                    "safeName": "SAMPLE_RATE"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "SampleRate",
+                    "safeName": "SampleRate"
+                  }
+                },
+                "wireValue": "sample_rate"
+              },
+              "value": {
+                "shape": {
+                  "container": {
+                    "optional": {
+                      "shape": {
+                        "primitive": {
+                          "integer": 1,
+                          "type": "integer"
+                        },
+                        "type": "primitive"
+                      },
+                      "jsonExample": 1
+                    },
+                    "valueType": {
+                      "primitive": {
+                        "v1": "INTEGER",
+                        "v2": {
+                          "type": "integer"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "optional"
+                  },
+                  "type": "container"
+                },
+                "jsonExample": 1
+              },
+              "shape": {
+                "type": "single"
+              }
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "word_boost",
+                  "camelCase": {
+                    "unsafeName": "wordBoost",
+                    "safeName": "wordBoost"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "word_boost",
+                    "safeName": "word_boost"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "WORD_BOOST",
+                    "safeName": "WORD_BOOST"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "WordBoost",
+                    "safeName": "WordBoost"
+                  }
+                },
+                "wireValue": "word_boost"
+              },
+              "value": {
+                "shape": {
+                  "container": {
+                    "optional": {
+                      "shape": {
+                        "primitive": {
+                          "string": {
+                            "original": "word_boost"
+                          },
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "jsonExample": "word_boost"
+                    },
+                    "valueType": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "optional"
+                  },
+                  "type": "container"
+                },
+                "jsonExample": "word_boost"
+              },
+              "shape": {
+                "type": "single"
+              }
+            },
+            {
+              "name": {
+                "name": {
+                  "originalName": "token",
+                  "camelCase": {
+                    "unsafeName": "token",
+                    "safeName": "token"
+                  },
+                  "snakeCase": {
+                    "unsafeName": "token",
+                    "safeName": "token"
+                  },
+                  "screamingSnakeCase": {
+                    "unsafeName": "TOKEN",
+                    "safeName": "TOKEN"
+                  },
+                  "pascalCase": {
+                    "unsafeName": "Token",
+                    "safeName": "Token"
+                  }
+                },
+                "wireValue": "token"
+              },
+              "value": {
+                "shape": {
+                  "container": {
+                    "optional": {
+                      "shape": {
+                        "primitive": {
+                          "string": {
+                            "original": "token"
+                          },
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "jsonExample": "token"
+                    },
+                    "valueType": {
+                      "primitive": {
+                        "v1": "STRING",
+                        "v2": {
+                          "type": "string"
+                        }
+                      },
+                      "type": "primitive"
+                    },
+                    "type": "optional"
+                  },
+                  "type": "container"
+                },
+                "jsonExample": "token"
+              },
+              "shape": {
+                "type": "single"
+              }
+            }
+          ],
           "messages": [
             {
               "type": "publish",
@@ -48921,7 +49147,7 @@
     "hasEndpointsInTree": true
   },
   "sdkConfig": {
-    "isAuthMandatory": true,
+    "isAuthMandatory": false,
     "hasStreamingEndpoints": false,
     "hasPaginatedEndpoints": false,
     "hasFileDownloadEndpoints": false,

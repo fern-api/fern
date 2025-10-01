@@ -2,7 +2,7 @@ import { File, GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever, extractErrorMessage, noop } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractSwiftGeneratorCli } from "@fern-api/swift-base";
-import { swift } from "@fern-api/swift-codegen";
+import { sanitizeSelf, swift } from "@fern-api/swift-codegen";
 import { DynamicSnippetsGenerator } from "@fern-api/swift-dynamic-snippets";
 import {
     AliasGenerator,
@@ -90,9 +90,14 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
 
     private async generateReadme(context: SdkGeneratorContext): Promise<void> {
         try {
+            const endpointSnippets = this.generateSnippets(context);
+            if (endpointSnippets.length === 0) {
+                context.logger.debug("No snippets were produced; skipping README.md generation.");
+                return;
+            }
             const content = await context.generatorAgent.generateReadme({
                 context,
-                endpointSnippets: this.generateSnippets(context)
+                endpointSnippets
             });
             context.project.addRootFiles(new File("README.md", RelativeFilePath.of(""), content));
         } catch (e) {
@@ -222,6 +227,173 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                         nameCandidateWithoutExtension: `${requestsContainerSymbolName}+${struct.name}`,
                         directory: context.requestsDirectory,
                         contents: [extension]
+                    });
+                } else if (endpoint.requestBody?.type === "fileUpload") {
+                    const properties: swift.Property[] = endpoint.requestBody.properties
+                        .map((p) =>
+                            p._visit({
+                                file: (fileProperty) => {
+                                    return fileProperty._visit({
+                                        file: (property) => {
+                                            return swift.property({
+                                                unsafeName: sanitizeSelf(property.key.name.camelCase.unsafeName),
+                                                accessLevel: "public",
+                                                declarationType: "let",
+                                                type: swift.Type.custom("FormFile"),
+                                                docs: property.docs
+                                                    ? swift.docComment({ summary: property.docs })
+                                                    : undefined
+                                            });
+                                        },
+                                        fileArray: (property) => {
+                                            return swift.property({
+                                                unsafeName: sanitizeSelf(property.key.name.camelCase.unsafeName),
+                                                accessLevel: "public",
+                                                declarationType: "let",
+                                                type: swift.Type.array(swift.Type.custom("FormFile")),
+                                                docs: property.docs
+                                                    ? swift.docComment({ summary: property.docs })
+                                                    : undefined
+                                            });
+                                        },
+                                        _other: () => null
+                                    });
+                                },
+                                bodyProperty: (property) => {
+                                    return swift.property({
+                                        unsafeName: sanitizeSelf(property.name.name.camelCase.unsafeName),
+                                        accessLevel: "public",
+                                        declarationType: "let",
+                                        type: context.getSwiftTypeForTypeReference(property.valueType),
+                                        docs: property.docs ? swift.docComment({ summary: property.docs }) : undefined
+                                    });
+                                },
+                                _other: () => null
+                            })
+                        )
+                        .filter((p) => p !== null);
+
+                    const struct = swift.struct({
+                        name: context.project.symbolRegistry.getRequestTypeSymbolOrThrow(
+                            endpoint.id,
+                            endpoint.requestBody.name.pascalCase.unsafeName
+                        ),
+                        accessLevel: "public",
+                        properties,
+                        initializers: [
+                            swift.initializer({
+                                accessLevel: "public",
+                                parameters: properties.map((p) =>
+                                    swift.functionParameter({
+                                        argumentLabel: p.unsafeName,
+                                        unsafeName: p.unsafeName,
+                                        type: p.type,
+                                        defaultValue: p.type.isOptional ? swift.Expression.rawValue("nil") : undefined
+                                    })
+                                ),
+                                body: swift.CodeBlock.withStatements(
+                                    properties.map((p) =>
+                                        swift.Statement.propertyAssignment(
+                                            p.unsafeName,
+                                            swift.Expression.reference(p.unsafeName)
+                                        )
+                                    )
+                                ),
+                                multiline: true
+                            })
+                        ],
+                        docs: endpoint.requestBody.docs
+                            ? swift.docComment({ summary: endpoint.requestBody.docs })
+                            : undefined
+                    });
+                    const requestContainerExtension = swift.extension({
+                        name: requestsContainerSymbolName,
+                        nestedTypes: [struct]
+                    });
+
+                    const multipartFormFields: swift.Expression[] = endpoint.requestBody.properties
+                        .map((p) =>
+                            p._visit({
+                                file: (fileProperty) => {
+                                    return fileProperty._visit({
+                                        file: (property) => {
+                                            return swift.Expression.contextualMethodCall({
+                                                methodName: "file",
+                                                arguments_: [
+                                                    swift.functionArgument({
+                                                        value: swift.Expression.reference(
+                                                            property.key.name.camelCase.unsafeName
+                                                        )
+                                                    }),
+                                                    swift.functionArgument({
+                                                        label: "fieldName",
+                                                        value: swift.Expression.stringLiteral(property.key.wireValue)
+                                                    })
+                                                ]
+                                            });
+                                        },
+                                        fileArray: (property) => {
+                                            return swift.Expression.contextualMethodCall({
+                                                methodName: "fileArray",
+                                                arguments_: [
+                                                    swift.functionArgument({
+                                                        value: swift.Expression.reference(
+                                                            property.key.name.camelCase.unsafeName
+                                                        )
+                                                    }),
+                                                    swift.functionArgument({
+                                                        label: "fieldName",
+                                                        value: swift.Expression.stringLiteral(property.key.wireValue)
+                                                    })
+                                                ]
+                                            });
+                                        },
+                                        _other: () => null
+                                    });
+                                },
+                                bodyProperty: (property) => {
+                                    return swift.Expression.contextualMethodCall({
+                                        methodName: "field",
+                                        arguments_: [
+                                            swift.functionArgument({
+                                                value: swift.Expression.reference(
+                                                    property.name.name.camelCase.unsafeName
+                                                )
+                                            }),
+                                            swift.functionArgument({
+                                                label: "fieldName",
+                                                value: swift.Expression.stringLiteral(property.name.wireValue)
+                                            })
+                                        ]
+                                    });
+                                },
+                                _other: () => null
+                            })
+                        )
+                        .filter((p) => p !== null);
+
+                    const requestStructExtension = swift.extension({
+                        name: context.project.symbolRegistry.getFullyQualifiedRequestTypeSymbolOrThrow(
+                            endpoint.id,
+                            endpoint.requestBody.name.pascalCase.unsafeName
+                        ),
+                        conformances: [swift.Protocol.MultipartFormDataConvertible],
+                        computedProperties: [
+                            swift.computedProperty({
+                                unsafeName: "multipartFormFields",
+                                type: swift.Type.array(swift.Type.custom("MultipartFormField")),
+                                body: swift.Expression.arrayLiteral({
+                                    elements: multipartFormFields,
+                                    multiline: true
+                                })
+                            })
+                        ]
+                    });
+
+                    context.project.addSourceFile({
+                        nameCandidateWithoutExtension: `${requestsContainerSymbolName}+${struct.name}`,
+                        directory: context.requestsDirectory,
+                        contents: [requestContainerExtension, swift.LineBreak.double(), requestStructExtension]
                     });
                 }
             });

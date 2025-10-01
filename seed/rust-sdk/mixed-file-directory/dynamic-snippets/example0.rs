@@ -1,10 +1,22 @@
-use seed_mixed_file_directory::{ClientConfig, MixedFileDirectoryClient};
+use seed_mixed_file_directory::{
+    ClientConfig, CreateOrganizationRequest, MixedFileDirectoryClient,
+};
+use std::collections::HashMap;
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        base_url: "https://api.fern.com".to_string(),
+        ..Default::default()
+    };
     let client = MixedFileDirectoryClient::new(config).expect("Failed to build client");
     client
-        .organization_create(serde_json::json!({"name":"name"}))
+        .organization
+        .create(
+            &CreateOrganizationRequest {
+                name: "name".to_string(),
+            },
+            None,
+        )
         .await;
 }

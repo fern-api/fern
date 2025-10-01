@@ -24,6 +24,18 @@ export class DynamicTypeLiteralMapper {
         this.context = context;
     }
 
+    private isNopTypeLiteral(value: java.TypeLiteral): boolean {
+        const valueWithInternal = value as unknown as { internalType?: { type?: string } };
+        return valueWithInternal.internalType?.type === "nop";
+    }
+
+    private wrapInOptionalIfNotNop(value: java.TypeLiteral, useOf: boolean = false): java.TypeLiteral {
+        if (this.isNopTypeLiteral(value)) {
+            return value;
+        }
+        return java.TypeLiteral.optional({ value, useOf });
+    }
+
     public convert(args: DynamicTypeLiteralMapper.Args): java.TypeLiteral {
         // eslint-disable-next-line eqeqeq
         if (args.value === null) {
@@ -54,23 +66,41 @@ export class DynamicTypeLiteralMapper {
                 return this.convertNamed({ named, value: args.value, as: args.as });
             }
             case "nullable":
-            case "optional":
+            case "optional": {
+                if (
+                    args.value === undefined ||
+                    (typeof args.value === "object" &&
+                        args.value !== null &&
+                        Object.keys(args.value).length === 0 &&
+                        args.typeReference.value.type === "named")
+                ) {
+                    return java.TypeLiteral.reference(
+                        java.invokeMethod({
+                            on: java.classReference({
+                                name: "Optional",
+                                packageName: "java.util"
+                            }),
+                            method: "empty",
+                            arguments_: []
+                        })
+                    );
+                }
+
                 if (args.typeReference.value.type === "list") {
                     const listLiteral = this.convertList({ list: args.typeReference.value.value, value: args.value });
-                    return java.TypeLiteral.optional({
-                        value: listLiteral,
-                        useOf: true
-                    });
+                    return this.wrapInOptionalIfNotNop(listLiteral, true);
                 }
-                return java.TypeLiteral.optional({
-                    value: this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as }),
-
-                    // TODO(amckinney): The Java generator produces Map<T, Optional<U>> whenever the value is an optional.
-                    //
-                    // This is difficult to use in practice - we should update this to unbox the map values and remove this
-                    // flag.
-                    useOf: args.as === "mapValue"
+                const convertedValue = this.convert({
+                    typeReference: args.typeReference.value,
+                    value: args.value,
+                    as: args.as
                 });
+                // TODO(amckinney): The Java generator produces Map<T, Optional<U>> whenever the value is an optional.
+                //
+                // This is difficult to use in practice - we should update this to unbox the map values and remove this
+                // flag.
+                return this.wrapInOptionalIfNotNop(convertedValue, args.as === "mapValue");
+            }
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value, as: args.as });
             case "set":
@@ -99,10 +129,8 @@ export class DynamicTypeLiteralMapper {
                 this.context.errors.scope({ index });
                 try {
                     if (isItemOptional) {
-                        return java.TypeLiteral.optional({
-                            value: this.convert({ typeReference: list.value, value: v }),
-                            useOf: true
-                        });
+                        const itemValue = this.convert({ typeReference: list.value, value: v });
+                        return this.wrapInOptionalIfNotNop(itemValue, true);
                     }
                     return this.convert({ typeReference: list, value: v });
                 } finally {
@@ -374,16 +402,14 @@ export class DynamicTypeLiteralMapper {
                 })
             );
         }
-        const fieldName = this.getUndiscriminatedUnionFieldName({ typeReference: result.valueTypeReference });
-        if (fieldName == null) {
-            return java.TypeLiteral.nop();
-        }
+        // Use simple 'of' method name for consistency across all union factory methods
+        // This matches the Java SDK's generated code pattern
         return java.TypeLiteral.reference(
             java.invokeMethod({
                 on: this.context.getJavaClassReferenceFromDeclaration({
                     declaration: undiscriminatedUnion.declaration
                 }),
-                method: `of${fieldName}`,
+                method: "of",
                 arguments_: [result.typeInstantiation]
             })
         );
@@ -514,7 +540,11 @@ export class DynamicTypeLiteralMapper {
         return undefined;
     }
 
-    private getUndiscriminatedUnionFieldNameForPrimitive({ primitive }: { primitive: FernIr.PrimitiveTypeV1 }): string {
+    private getUndiscriminatedUnionFieldNameForPrimitive({
+        primitive
+    }: {
+        primitive: FernIr.dynamic.PrimitiveTypeV1;
+    }): string {
         switch (primitive) {
             case "INTEGER":
             case "UINT":
@@ -554,7 +584,7 @@ export class DynamicTypeLiteralMapper {
         value,
         as
     }: {
-        primitive: FernIr.PrimitiveTypeV1;
+        primitive: FernIr.dynamic.PrimitiveTypeV1;
         value: unknown;
         as?: DynamicTypeLiteralMapper.ConvertedAs;
     }): java.TypeLiteral {

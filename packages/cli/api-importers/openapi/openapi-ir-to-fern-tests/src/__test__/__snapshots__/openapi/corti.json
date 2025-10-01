@@ -4238,7 +4238,7 @@ navigation:
           "base-path": "",
           "endpoints": {
             "generateCodes": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Generate Codes",
               "docs": " Generate Codes.",
               "errors": [
@@ -4323,7 +4323,7 @@ navigation:
               },
             },
             "listCodes": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List Codes",
               "docs": " Get all codes associated with an interaction.",
               "errors": [
@@ -4381,7 +4381,7 @@ navigation:
               },
             },
             "selectCodes": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Select Codes",
               "docs": " Mark provided codes as selected.",
               "errors": [
@@ -4484,7 +4484,6 @@ service:
     listCodes:
       path: /interactions/{id}/codes/
       method: GET
-      auth: false
       docs: ' Get all codes associated with an interaction.'
       source:
         openapi: ../swagger.json
@@ -4523,7 +4522,6 @@ service:
     generateCodes:
       path: /interactions/{id}/codes/
       method: POST
-      auth: false
       docs: ' Generate Codes.'
       source:
         openapi: ../swagger.json
@@ -4580,7 +4578,6 @@ service:
     selectCodes:
       path: /interactions/{id}/codes/
       method: PUT
-      auth: false
       docs: ' Mark provided codes as selected.'
       source:
         openapi: ../swagger.json
@@ -4650,7 +4647,7 @@ types:
           "base-path": "",
           "endpoints": {
             "deleteDocument": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Delete Document",
               "docs": undefined,
               "errors": [
@@ -4701,7 +4698,7 @@ types:
               },
             },
             "generateDocument": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Generate Document",
               "docs": " Generate Document.",
               "errors": [
@@ -4904,7 +4901,7 @@ types:
               },
             },
             "getDocument": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Get Document",
               "docs": " Get Document.",
               "errors": [
@@ -4921,6 +4918,9 @@ types:
                   "path-parameters": {
                     "documentId": "documentId",
                     "id": "id",
+                  },
+                  "query-parameters": {
+                    "context": true,
                   },
                   "response": {
                     "body": {
@@ -4977,7 +4977,7 @@ types:
               },
             },
             "listDocuments": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List Documents",
               "docs": " List Documents",
               "errors": [
@@ -5036,7 +5036,7 @@ types:
               },
             },
             "updateDocument": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Update Document",
               "docs": undefined,
               "errors": [
@@ -5162,7 +5162,6 @@ service:
     listDocuments:
       path: /interactions/{id}/documents/
       method: GET
-      auth: false
       docs: ' List Documents'
       source:
         openapi: ../swagger.json
@@ -5204,7 +5203,6 @@ service:
     generateDocument:
       path: /interactions/{id}/documents/
       method: POST
-      auth: false
       docs: ' Generate Document.'
       source:
         openapi: ../swagger.json
@@ -5368,7 +5366,6 @@ service:
     getDocument:
       path: /interactions/{id}/documents/{documentId}
       method: GET
-      auth: false
       docs: ' Get Document.'
       source:
         openapi: ../swagger.json
@@ -5405,6 +5402,8 @@ service:
         - path-parameters:
             id: id
             documentId: documentId
+          query-parameters:
+            context: true
           headers:
             Tenant-Name: copiloteu
           response:
@@ -5426,7 +5425,6 @@ service:
     deleteDocument:
       path: /interactions/{id}/documents/{documentId}
       method: DELETE
-      auth: false
       source:
         openapi: ../swagger.json
       display-name: Delete Document
@@ -5464,7 +5462,6 @@ service:
     updateDocument:
       path: /interactions/{id}/documents/{documentId}
       method: PATCH
-      auth: false
       source:
         openapi: ../swagger.json
       display-name: Update Document
@@ -5558,7 +5555,7 @@ types:
           "base-path": "",
           "endpoints": {
             "addFacts": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Add Facts",
               "docs": " Adds new facts to an interaction.",
               "errors": [
@@ -5630,7 +5627,7 @@ types:
               },
             },
             "listFactGroups": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List Fact Groups",
               "docs": undefined,
               "errors": [
@@ -5669,7 +5666,7 @@ types:
               },
             },
             "listFacts": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List Facts",
               "docs": " Retrieves a list of facts for a given interaction.",
               "errors": [
@@ -5726,7 +5723,7 @@ types:
               },
             },
             "updateFact": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Update Fact",
               "docs": " Updates an existing fact within a specific interaction. If the interaction `status = "in progress"`, the updated fact will be sent to the client via WebSocket. To discard a fact, simply set `discarded = true`.",
               "errors": [
@@ -5808,7 +5805,7 @@ types:
               },
             },
             "updateFacts": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Update Facts",
               "docs": " Updates multiple facts associated with an interaction. If the interaction `status = "in progress"`, the updated facts will be sent to the client over WebSocket.",
               "errors": [
@@ -5942,7 +5939,6 @@ service:
     listFactGroups:
       path: /factgroups/
       method: GET
-      auth: false
       source:
         openapi: ../swagger.json
       display-name: List Fact Groups
@@ -5965,7 +5961,6 @@ service:
     listFacts:
       path: /interactions/{id}/facts/
       method: GET
-      auth: false
       docs: ' Retrieves a list of facts for a given interaction.'
       source:
         openapi: ../swagger.json
@@ -6005,7 +6000,6 @@ service:
     addFacts:
       path: /interactions/{id}/facts/
       method: POST
-      auth: false
       docs: ' Adds new facts to an interaction.'
       source:
         openapi: ../swagger.json
@@ -6054,7 +6048,6 @@ service:
     updateFacts:
       path: /interactions/{id}/facts/
       method: PATCH
-      auth: false
       docs: ' Updates multiple facts associated with an interaction. If the interaction `status = "in progress"`, the updated facts will be sent to the client over WebSocket.'
       source:
         openapi: ../swagger.json
@@ -6101,7 +6094,6 @@ service:
     updateFact:
       path: /interactions/{id}/facts/{factId}
       method: PATCH
-      auth: false
       docs: ' Updates an existing fact within a specific interaction. If the interaction `status = "in progress"`, the updated fact will be sent to the client via WebSocket. To discard a fact, simply set `discarded = true`.'
       source:
         openapi: ../swagger.json
@@ -6204,7 +6196,7 @@ types:
           "base-path": "",
           "endpoints": {
             "createInteraction": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Create Interaction",
               "docs": " Creates a new interaction.",
               "errors": [
@@ -6272,7 +6264,7 @@ types:
               },
             },
             "deleteInteraction": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Delete Interaction",
               "docs": " Deletes an existing interaction.",
               "errors": [
@@ -6316,7 +6308,7 @@ types:
               },
             },
             "getExistingInteraction": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Get Existing Interaction",
               "docs": " Retrieves a previously recorded interaction by its unique identifier (interaction ID).",
               "errors": [
@@ -6383,7 +6375,7 @@ types:
               },
             },
             "listAllInteractions": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List All Interactions",
               "docs": " Lists all existing interactions. Results can be filtered by encounter status and patient identifier.",
               "errors": [
@@ -6394,6 +6386,14 @@ types:
                 {
                   "headers": {
                     "Tenant-Name": "copiloteu",
+                  },
+                  "query-parameters": {
+                    "direction": "direction",
+                    "encounterStatus": "encounterStatus",
+                    "index": 1000000,
+                    "pageSize": 1000000,
+                    "patient": "patient",
+                    "sort": "sort",
                   },
                   "response": {
                     "body": {
@@ -6465,7 +6465,7 @@ types:
               },
             },
             "updateInteraction": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Update Interaction",
               "docs": " Modifies an existing interaction by updating specific fields without overwriting the entire record.",
               "errors": [
@@ -6566,7 +6566,6 @@ service:
     listAllInteractions:
       path: /interactions/
       method: GET
-      auth: false
       docs: ' Lists all existing interactions. Results can be filtered by encounter status and patient identifier.'
       source:
         openapi: ../swagger.json
@@ -6609,7 +6608,14 @@ service:
         - root.ForbiddenError
         - root.GatewayTimeoutError
       examples:
-        - headers:
+        - query-parameters:
+            sort: sort
+            direction: direction
+            pageSize: 1000000
+            index: 1000000
+            encounterStatus: encounterStatus
+            patient: patient
+          headers:
             Tenant-Name: copiloteu
           response:
             body:
@@ -6632,7 +6638,6 @@ service:
     createInteraction:
       path: /interactions/
       method: POST
-      auth: false
       docs: ' Creates a new interaction.'
       source:
         openapi: ../swagger.json
@@ -6681,7 +6686,6 @@ service:
     getExistingInteraction:
       path: /interactions/{id}
       method: GET
-      auth: false
       docs: ' Retrieves a previously recorded interaction by its unique identifier (interaction ID).'
       source:
         openapi: ../swagger.json
@@ -6732,7 +6736,6 @@ service:
     deleteInteraction:
       path: /interactions/{id}
       method: DELETE
-      auth: false
       docs: ' Deletes an existing interaction.'
       source:
         openapi: ../swagger.json
@@ -6765,7 +6768,6 @@ service:
     updateInteraction:
       path: /interactions/{id}
       method: PATCH
-      auth: false
       docs: ' Modifies an existing interaction by updating specific fields without overwriting the entire record.'
       source:
         openapi: ../swagger.json
@@ -6843,7 +6845,7 @@ service:
           "base-path": "",
           "endpoints": {
             "deleteRecording": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Delete Recording",
               "docs": " Delete a specific recording for a given interaction.",
               "errors": [
@@ -6894,7 +6896,7 @@ service:
               },
             },
             "getRecording": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Get Recording",
               "docs": " Retrieve a specific recording for a given interaction.",
               "errors": [
@@ -6930,7 +6932,7 @@ service:
               },
             },
             "listRecordings": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List Recordings",
               "docs": " Retrieve a list of recordings for a given interaction.",
               "errors": [
@@ -6978,7 +6980,7 @@ service:
               },
             },
             "uploadRecording": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Upload Recording",
               "docs": " Upload a recording for a given interaction. There is a maximum limit of 60 minutes in length and 150MB in size for recordings.",
               "errors": [
@@ -7025,7 +7027,6 @@ service:
     listRecordings:
       path: /interactions/{id}/recordings/
       method: GET
-      auth: false
       docs: ' Retrieve a list of recordings for a given interaction.'
       source:
         openapi: ../swagger.json
@@ -7059,7 +7060,6 @@ service:
     uploadRecording:
       path: /interactions/{id}/recordings/
       method: POST
-      auth: false
       docs: ' Upload a recording for a given interaction. There is a maximum limit of 60 minutes in length and 150MB in size for recordings.'
       source:
         openapi: ../swagger.json
@@ -7085,7 +7085,6 @@ service:
     getRecording:
       path: /interactions/{id}/recordings/{recordingId}
       method: GET
-      auth: false
       docs: ' Retrieve a specific recording for a given interaction.'
       source:
         openapi: ../swagger.json
@@ -7116,7 +7115,6 @@ service:
     deleteRecording:
       path: /interactions/{id}/recordings/{recordingId}
       method: DELETE
-      auth: false
       docs: ' Delete a specific recording for a given interaction.'
       source:
         openapi: ../swagger.json
@@ -7701,7 +7699,7 @@ imports:
           "base-path": "",
           "endpoints": {
             "getTemplate": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Get Template",
               "docs": " Retrieves template by key.",
               "errors": [
@@ -7761,7 +7759,7 @@ imports:
               },
             },
             "listTemplateSections": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List Template Sections",
               "docs": " Retrieves a list of template sections with optional filters for organization and language.",
               "errors": [
@@ -7772,6 +7770,10 @@ imports:
                 {
                   "headers": {
                     "Tenant-Name": "copiloteu",
+                  },
+                  "query-parameters": {
+                    "lang": "lang",
+                    "org": "org",
                   },
                   "response": {
                     "body": {
@@ -7820,7 +7822,7 @@ imports:
               },
             },
             "listTemplates": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List Templates",
               "docs": " Retrieves a list of templates with optional filters for organization, language, and status.",
               "errors": [
@@ -7831,6 +7833,11 @@ imports:
                 {
                   "headers": {
                     "Tenant-Name": "copiloteu",
+                  },
+                  "query-parameters": {
+                    "lang": "lang",
+                    "org": "org",
+                    "templateStatus": "templateStatus",
                   },
                   "response": {
                     "body": {
@@ -7897,7 +7904,6 @@ service:
     listTemplateSections:
       path: /templateSections/
       method: GET
-      auth: false
       docs: ' Retrieves a list of template sections with optional filters for organization and language.'
       source:
         openapi: ../swagger.json
@@ -7919,7 +7925,10 @@ service:
         - root.UnauthorizedError
         - root.InternalServerError
       examples:
-        - headers:
+        - query-parameters:
+            org: org
+            lang: lang
+          headers:
             Tenant-Name: copiloteu
           response:
             body:
@@ -7936,7 +7945,6 @@ service:
     listTemplates:
       path: /templates/
       method: GET
-      auth: false
       docs: ' Retrieves a list of templates with optional filters for organization, language, and status.'
       source:
         openapi: ../swagger.json
@@ -7961,7 +7969,11 @@ service:
         - root.UnauthorizedError
         - root.InternalServerError
       examples:
-        - headers:
+        - query-parameters:
+            org: org
+            lang: lang
+            templateStatus: templateStatus
+          headers:
             Tenant-Name: copiloteu
           response:
             body:
@@ -7978,7 +7990,6 @@ service:
     getTemplate:
       path: /templates/{key}
       method: GET
-      auth: false
       docs: ' Retrieves template by key.'
       source:
         openapi: ../swagger.json
@@ -8029,7 +8040,7 @@ service:
           "base-path": "",
           "endpoints": {
             "createTranscript": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Create Transcript",
               "docs": " Creates a new transcript for an interaction.",
               "errors": [
@@ -8131,7 +8142,7 @@ service:
               },
             },
             "deleteTranscript": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Delete Transcript",
               "docs": " Deletes a specific transcript associated with an interaction.",
               "errors": [
@@ -8183,7 +8194,7 @@ service:
               },
             },
             "getTranscript": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Get Transcript",
               "docs": " Retrieves the transcript for a specific interaction.",
               "errors": [
@@ -8250,7 +8261,7 @@ service:
               },
             },
             "listTranscripts": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "List Transcripts",
               "docs": " Retrieves a list of transcripts for a given interaction.",
               "errors": [
@@ -8267,6 +8278,13 @@ service:
                   },
                   "path-parameters": {
                     "id": "id",
+                  },
+                  "query-parameters": {
+                    "direction": "direction",
+                    "full": true,
+                    "index": 1000000,
+                    "pageSize": 1000000,
+                    "sort": "sort",
                   },
                   "response": {
                     "body": {
@@ -8354,7 +8372,6 @@ service:
     listTranscripts:
       path: /interactions/{id}/transcripts/
       method: GET
-      auth: false
       docs: ' Retrieves a list of transcripts for a given interaction.'
       source:
         openapi: ../swagger.json
@@ -8400,6 +8417,12 @@ service:
       examples:
         - path-parameters:
             id: id
+          query-parameters:
+            sort: sort
+            direction: direction
+            pageSize: 1000000
+            index: 1000000
+            full: true
           headers:
             Tenant-Name: copiloteu
           response:
@@ -8410,7 +8433,6 @@ service:
     createTranscript:
       path: /interactions/{id}/transcripts/
       method: POST
-      auth: false
       docs: ' Creates a new transcript for an interaction.'
       source:
         openapi: ../swagger.json
@@ -8496,7 +8518,6 @@ service:
     getTranscript:
       path: /interactions/{id}/transcripts/{transcriptId}
       method: GET
-      auth: false
       docs: ' Retrieves the transcript for a specific interaction.'
       source:
         openapi: ../swagger.json
@@ -8546,7 +8567,6 @@ service:
     deleteTranscript:
       path: /interactions/{id}/transcripts/{transcriptId}
       method: DELETE
-      auth: false
       docs: ' Deletes a specific transcript associated with an interaction.'
       source:
         openapi: ../swagger.json

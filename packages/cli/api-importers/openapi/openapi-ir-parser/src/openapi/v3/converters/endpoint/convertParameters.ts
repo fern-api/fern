@@ -66,11 +66,16 @@ export function convertParameters({
         const parameterBreadcrumbs = [...requestBreadcrumbs, resolvedParameter.name];
         const generatedName = getGeneratedTypeName(parameterBreadcrumbs, context.options.preserveSchemaIds);
 
+        const [isOptional, isNullable] = context.options.coerceOptionalSchemasToNullable
+            ? [false, !isRequired]
+            : [!isRequired, false];
+
         let schema =
             resolvedParameter.schema != null
                 ? convertSchema(
                       resolvedParameter.schema,
-                      !isRequired,
+                      isOptional,
+                      isNullable,
                       context,
                       parameterBreadcrumbs,
                       source,

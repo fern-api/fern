@@ -1,19 +1,12 @@
-pub mod api_client_builder;
+pub mod api;
 pub mod client;
-pub mod client_config;
+pub mod config;
+pub mod core;
 pub mod environment;
 pub mod error;
-pub mod http_client;
-pub mod pagination;
-pub mod query_parameter_builder;
-pub mod request_options;
 
-pub use api_client_builder::*;
 pub use client::*;
-pub use client_config::*;
+pub use config::*;
+pub use core::*;
 pub use environment::*;
 pub use error::ApiError;
-pub use http_client::*;
-pub use pagination::*;
-pub use query_parameter_builder::*;
-pub use request_options::*;

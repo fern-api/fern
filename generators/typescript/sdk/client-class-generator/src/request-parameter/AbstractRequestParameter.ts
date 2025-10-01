@@ -36,23 +36,13 @@ export abstract class AbstractRequestParameter implements RequestParameter {
 
     public getParameterDeclaration(context: SdkContext): OptionalKind<ParameterDeclarationStructure> {
         const typeInfo = this.getParameterType(context);
-        const typeText = getTextOfTsNode(typeInfo.type);
 
         return {
             name: this.getRequestParameterName(),
-            type: context.exportAllRequestsAtRoot ? this.getRootLevelTypeReference(typeText, context) : typeText,
+            type: getTextOfTsNode(typeInfo.type),
             hasQuestionToken: typeInfo.hasQuestionToken,
             initializer: typeInfo.initializer != null ? getTextOfTsNode(typeInfo.initializer) : undefined
         };
-    }
-
-    // if exportAllRequestsToRoot, just use the root.request style if possible
-    private getRootLevelTypeReference(typeText: string, context: SdkContext): string {
-        const namespaces = typeText.split(".");
-        if (namespaces.length <= 2 || namespaces.includes("types")) {
-            return typeText;
-        }
-        return `${namespaces[0]}.${namespaces.at(-1)}`;
     }
 
     protected getRequestParameterName(): string {

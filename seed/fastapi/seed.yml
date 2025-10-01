@@ -1,4 +1,4 @@
-irVersion: v58
+irVersion: v60
 displayName: FastAPI
 image: fernapi/fern-fastapi-server
 changelogLocation: ../../generators/python/fastapi/versions.yml
@@ -136,3 +136,12 @@ allowedFailures:
   - bytes-download
   - bytes-upload
   - request-parameters
+
+  - client-side-params
+  - multiple-request-bodies
+  - query-parameters-openapi
+  - query-parameters-openapi-as-objects
+  - inferred-auth-explicit
+  - inferred-auth-implicit
+  - inferred-auth-implicit-no-expiry
+  - websocket-inferred-auth

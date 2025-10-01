@@ -10,7 +10,7 @@ export declare namespace TypeParameter {
 
 /* A C# generic type parameter */
 export class TypeParameter extends AstNode {
-    private name: string;
+    name: string;
     public constructor({ name }: TypeParameter.Args, csharp: CSharp) {
         super(csharp);
         this.name = name;
@@ -18,5 +18,9 @@ export class TypeParameter extends AstNode {
 
     public write(writer: Writer): void {
         writer.write(this.name);
+    }
+
+    public get isAsyncEnumerable(): boolean {
+        return this.name === "IAsyncEnumerable";
     }
 }

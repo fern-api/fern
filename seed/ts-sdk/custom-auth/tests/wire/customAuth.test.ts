@@ -27,11 +27,7 @@ describe("CustomAuth", () => {
 
         await expect(async () => {
             return await client.customAuth.getWithCustomAuth();
-        }).rejects.toThrow(
-            new SeedCustomAuth.UnauthorizedRequest({
-                message: "message",
-            }),
-        );
+        }).rejects.toThrow(SeedCustomAuth.UnauthorizedRequest);
     });
 
     test("postWithCustomAuth (1)", async () => {
@@ -72,11 +68,7 @@ describe("CustomAuth", () => {
             return await client.customAuth.postWithCustomAuth({
                 key: "value",
             });
-        }).rejects.toThrow(
-            new SeedCustomAuth.UnauthorizedRequest({
-                message: "message",
-            }),
-        );
+        }).rejects.toThrow(SeedCustomAuth.UnauthorizedRequest);
     });
 
     test("postWithCustomAuth (3)", async () => {
@@ -90,6 +82,6 @@ describe("CustomAuth", () => {
             return await client.customAuth.postWithCustomAuth({
                 key: "value",
             });
-        }).rejects.toThrow(new SeedCustomAuth.BadRequest());
+        }).rejects.toThrow(SeedCustomAuth.BadRequest);
     });
 });

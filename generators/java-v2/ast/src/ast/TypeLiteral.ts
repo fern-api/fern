@@ -192,9 +192,15 @@ export class TypeLiteral extends AstNode {
             case "dateTime":
                 this.writeDateTime({ writer, dateTime: this.internalType });
                 break;
-            case "double":
-                writer.write(this.internalType.value.toString());
+            case "double": {
+                const valueStr = this.internalType.value.toString();
+                if (!valueStr.includes(".") && !valueStr.includes("e") && !valueStr.includes("E")) {
+                    writer.write(`${valueStr}.0`);
+                } else {
+                    writer.write(valueStr);
+                }
                 break;
+            }
             case "enum":
                 this.writeEnum({ writer, enum_: this.internalType });
                 break;
@@ -202,14 +208,14 @@ export class TypeLiteral extends AstNode {
                 writer.write(`${this.internalType.value}f`);
                 break;
             case "integer":
-                writer.write(this.internalType.value.toString());
+                writer.write(Math.floor(this.internalType.value).toString());
                 break;
             case "list": {
                 this.writeList({ writer, list: this.internalType });
                 break;
             }
             case "long": {
-                writer.write(`${this.internalType.value}L`);
+                writer.write(`${Math.floor(this.internalType.value)}L`);
                 break;
             }
             case "map": {

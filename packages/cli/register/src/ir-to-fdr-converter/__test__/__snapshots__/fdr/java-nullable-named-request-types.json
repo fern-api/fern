@@ -118,8 +118,11 @@
               "value": {
                 "type": "optional",
                 "itemType": {
-                  "type": "id",
-                  "value": "type_:NullableObject"
+                  "type": "nullable",
+                  "itemType": {
+                    "type": "id",
+                    "value": "type_:NullableObject"
+                  }
                 }
               }
             }
@@ -147,8 +150,10 @@
             },
             "queryParameters": {},
             "headers": {},
+            "requestBody": {},
             "requestBodyV3": {
-              "type": "json"
+              "type": "json",
+              "value": {}
             },
             "responseStatusCode": 200,
             "responseBody": {
@@ -159,8 +164,7 @@
               "value": {
                 "success": true
               }
-            },
-            "codeSamples": []
+            }
           }
         ]
       },

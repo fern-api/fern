@@ -400,7 +400,7 @@
           "base-path": "",
           "endpoints": {
             "GetAccount": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Get Account",
               "docs": "The Get Account method will return an Account object including high-level account information (e.g., name) and any children objects (e.g., Policies) associated with the Account. Please note that this method will NOT refresh the Account object.",
               "examples": [
@@ -411,6 +411,9 @@
                   },
                   "path-parameters": {
                     "id": "id",
+                  },
+                  "query-parameters": {
+                    "expand": true,
                   },
                   "response": {
                     "body": {
@@ -627,7 +630,6 @@ service:
     GetAccount:
       path: /accounts/{id}
       method: GET
-      auth: false
       docs: >-
         The Get Account method will return an Account object including
         high-level account information (e.g., name) and any children objects
@@ -657,6 +659,8 @@ service:
       examples:
         - path-parameters:
             id: id
+          query-parameters:
+            expand: true
           headers:
             x-client-id: x-client-id
             x-client-secret: x-client-secret
@@ -690,7 +694,7 @@ service:
           "base-path": "",
           "endpoints": {
             "GetCarrier": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Get Carrier",
               "docs": "The Get Carrier method returns a Carrier object that include additional details about an Axle-supported insurance carrier.",
               "examples": [
@@ -747,7 +751,7 @@ service:
               },
             },
             "GetCarriers": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Get Carriers",
               "docs": "The Get Carriers method returns an array of Carrier objects.",
               "examples": [
@@ -838,7 +842,6 @@ service:
     GetCarrier:
       path: /carriers/{id}
       method: GET
-      auth: false
       docs: >-
         The Get Carrier method returns a Carrier object that include additional
         details about an Axle-supported insurance carrier.
@@ -883,7 +886,6 @@ service:
     GetCarriers:
       path: /carriers
       method: GET
-      auth: false
       docs: The Get Carriers method returns an array of Carrier objects.
       source:
         openapi: ../openapi.yml
@@ -922,7 +924,7 @@ service:
           "base-path": "",
           "endpoints": {
             "StartIgnition": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Start Ignition",
               "docs": "Start an Ignition session. Returns the ignitionUri to direct the user to authenticate.",
               "examples": [
@@ -1049,7 +1051,6 @@ service:
     StartIgnition:
       path: /ignition
       method: POST
-      auth: false
       docs: >-
         Start an Ignition session. Returns the ignitionUri to direct the user to
         authenticate.
@@ -1111,7 +1112,7 @@ service:
           "base-path": "",
           "endpoints": {
             "GetPolicy": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Get Policy",
               "docs": "The Get Policy method returns a Policy object including high-level policy information (e.g., policy number) and any children objects (e.g., Coverages) associated with the Policy. Please note that this method will NOT refresh the Policy object.",
               "examples": [
@@ -1122,6 +1123,9 @@ service:
                   },
                   "path-parameters": {
                     "id": "id",
+                  },
+                  "query-parameters": {
+                    "expand": true,
                   },
                   "response": {
                     "body": {
@@ -1258,7 +1262,6 @@ service:
     GetPolicy:
       path: /policies/{id}
       method: GET
-      auth: false
       docs: >-
         The Get Policy method returns a Policy object including high-level
         policy information (e.g., policy number) and any children objects (e.g.,
@@ -1288,6 +1291,8 @@ service:
       examples:
         - path-parameters:
             id: id
+          query-parameters:
+            expand: true
           headers:
             x-client-id: x-client-id
             x-client-secret: x-client-secret
@@ -1358,7 +1363,7 @@ service:
           "base-path": "",
           "endpoints": {
             "ExchangeToken": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Exchange Token",
               "docs": "Exchange an authorization code for an access token. Ignition returns an authCode as a query parameter at the redirectUrl upon successful completion of the Ignition flow.
 
@@ -1494,7 +1499,6 @@ service:
     ExchangeToken:
       path: /token/exchange
       method: POST
-      auth: false
       docs: >-
         Exchange an authorization code for an access token. Ignition returns an
         authCode as a query parameter at the redirectUrl upon successful

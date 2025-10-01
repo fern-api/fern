@@ -82,7 +82,7 @@ function convertSecuritySchemeHelper(
     } catch (error) {
         taskContext.logger.debug(`Error converting security scheme: ${(error as Error)?.message}`);
     }
-    taskContext.logger.debug(
+    taskContext.logger.warn(
         `Skipping security scheme: ${JSON.stringify(securityScheme, null)} - not currently supported. Please reach out to Fern support team!`
     );
     return undefined;
@@ -114,6 +114,7 @@ function getScopes(oauthSecurityScheme: OpenAPIV3.OAuth2SecurityScheme, source: 
             description: undefined,
             availability: undefined,
             enumVarNames: undefined,
+            wrapAsOptional: false,
             wrapAsNullable: false,
             namespace: undefined,
             groupName: undefined,

@@ -54,6 +54,8 @@ export function validateObjectExample({
     const allPropertiesByWireKey = keyBy(allPropertiesForObject, (property) => property.wireKey);
 
     // ensure required properties are present, we treat unknown as optional
+    // TODO: we should not exclude nullable properties here, but that would be a breaking change
+    // we need to find a way to configure a setting for Fern Definition => IR to make this non-breaking
     const requiredProperties = allPropertiesForObject.filter(
         (property) => !property.isNullable && !property.isOptional && property.resolvedPropertyType._type !== "unknown"
     );
@@ -66,7 +68,7 @@ export function validateObjectExample({
             continue;
         }
 
-        if (example[requiredProperty.wireKey] == null) {
+        if (typeof example[requiredProperty.wireKey] === "undefined") {
             const propertyReference =
                 breadcrumbs.length > 0
                     ? `${breadcrumbs.join(".")}.${requiredProperty.wireKey}`

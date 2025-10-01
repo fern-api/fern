@@ -24,6 +24,7 @@
     "requirement": "ALL",
     "schemes": [
       {
+        "key": "x-api-key",
         "name": {
           "name": {
             "originalName": "apiKey",
@@ -46715,6 +46716,11 @@
           },
           "displayName": "Verify a Transaction",
           "auth": true,
+          "security": [
+            {
+              "x-api-key": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -47077,6 +47083,11 @@
           },
           "displayName": "Retrieve a Transaction",
           "auth": true,
+          "security": [
+            {
+              "x-api-key": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -47361,6 +47372,11 @@
           },
           "displayName": "Create a Transaction Event",
           "auth": true,
+          "security": [
+            {
+              "x-api-key": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -48009,6 +48025,11 @@
           },
           "displayName": "Create a Consumer User",
           "auth": true,
+          "security": [
+            {
+              "x-api-key": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -48258,6 +48279,11 @@
           },
           "displayName": "Retrieve a Consumer User",
           "auth": true,
+          "security": [
+            {
+              "x-api-key": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -48542,6 +48568,11 @@
           },
           "displayName": "Create a Business User",
           "auth": true,
+          "security": [
+            {
+              "x-api-key": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -48791,6 +48822,11 @@
           },
           "displayName": "Retrieve a Business User",
           "auth": true,
+          "security": [
+            {
+              "x-api-key": []
+            }
+          ],
           "idempotent": false,
           "method": "GET",
           "path": {
@@ -49075,6 +49111,11 @@
           },
           "displayName": "Create a Consumer User Event",
           "auth": true,
+          "security": [
+            {
+              "x-api-key": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {
@@ -49607,6 +49648,11 @@
           },
           "displayName": "Create a Business User Event",
           "auth": true,
+          "security": [
+            {
+              "x-api-key": []
+            }
+          ],
           "idempotent": false,
           "method": "POST",
           "path": {

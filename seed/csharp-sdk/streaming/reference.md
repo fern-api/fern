@@ -13,7 +13,7 @@
 <dd>
 
 ```csharp
-await client.Dummy.GenerateStreamAsync(new GenerateStreamRequest { Stream = true, NumEvents = 1 });
+client.Dummy.GenerateStreamAsync(new GenerateStreamRequest { Stream = true, NumEvents = 1 });
 ```
 </dd>
 </dl>

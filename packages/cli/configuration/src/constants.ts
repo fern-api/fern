@@ -8,6 +8,7 @@ export const FERN_PACKAGE_MARKER_FILENAME_NO_EXTENSION = "__package__";
 export const FERN_PACKAGE_MARKER_FILENAME = `${FERN_PACKAGE_MARKER_FILENAME_NO_EXTENSION}.yml`;
 export const DEPENDENCIES_FILENAME = "dependencies.yml";
 export const GENERATORS_CONFIGURATION_FILENAME = "generators.yml";
+export const GENERATORS_CONFIGURATION_FILENAME_ALTERNATIVE = "generators.yaml";
 export const DEPENDENCIES_CONFIGURATION_FILENAME = "dependencies.yml";
 export const DOCS_CONFIGURATION_FILENAME = "docs.yml";
 export const PROJECT_CONFIG_FILENAME = "fern.config.json";

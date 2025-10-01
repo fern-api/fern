@@ -42,9 +42,9 @@ function getPaginationValueType({
     context: SdkGeneratorContext;
     pagination: Pagination;
 }): go.Type {
-    const iterbaleType = context.maybeUnwrapIterable(pagination.results.property.valueType);
-    if (iterbaleType != null) {
-        return context.goTypeMapper.convert({ reference: iterbaleType });
+    const iterableType = context.maybeUnwrapIterable(pagination.results.property.valueType);
+    if (iterableType != null) {
+        return context.goTypeMapper.convert({ reference: iterableType });
     }
     return context.goTypeMapper.convert({ reference: pagination.results.property.valueType });
 }

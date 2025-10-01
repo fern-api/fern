@@ -7,7 +7,7 @@
         "format": "prettier . --write --ignore-unknown",
         "compile": "tsc",
         "bundle": "node build.js",
-        "build": "yarn compile && yarn bundle"
+        "build": "pnpm compile && pnpm bundle"
     },
     "files": [
         "dist",
@@ -30,12 +30,8 @@
     "devDependencies": {
         "webpack": "^5.97.1",
         "ts-loader": "^9.5.1",
-        "jest": "^29.7.0",
-        "@jest/globals": "^29.7.0",
-        "@types/jest": "^29.5.14",
-        "ts-jest": "^29.3.4",
-        "jest-environment-jsdom": "^29.7.0",
-        "msw": "^2.8.4",
+        "vitest": "^3.2.4",
+        "msw": "2.11.2",
         "@types/node": "^18.19.70",
         "esbuild": "~0.24.2",
         "prettier": "^3.4.2",
@@ -44,9 +40,10 @@
     "browser": {
         "fs": false,
         "os": false,
-        "path": false
+        "path": false,
+        "stream": false
     },
-    "packageManager": "yarn@1.22.22",
+    "packageManager": "pnpm@10.14.0",
     "engines": {
         "node": ">=18.0.0"
     },

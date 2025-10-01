@@ -23643,6 +23643,9 @@
     "typeDatesAsStrings": false,
     "preserveSingleSchemaOneOf": false,
     "inlineAllOfSchemas": false,
-    "groupMultiApiEnvironments": false
+    "resolveAliases": false,
+    "groupMultiApiEnvironments": false,
+    "wrapReferencesToNullableInOptional": true,
+    "coerceOptionalSchemasToNullable": true
   }
 }

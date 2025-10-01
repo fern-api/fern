@@ -26,7 +26,6 @@ it.skip("converts to api reference node", async () => {
         context,
         undefined,
         async (_files) => [],
-        async (_opts) => "",
         async (_opts) => ""
     );
 

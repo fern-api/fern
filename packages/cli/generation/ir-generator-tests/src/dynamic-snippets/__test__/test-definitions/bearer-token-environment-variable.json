@@ -32,7 +32,8 @@
                     "value": "1.0.0"
                 }
             },
-            "propertyAccess": null
+            "propertyAccess": null,
+            "variable": null
         }
     ],
     "endpoints": {
@@ -140,5 +141,6 @@
     },
     "pathParameters": [],
     "environments": null,
+    "variables": null,
     "generatorConfig": null
 }

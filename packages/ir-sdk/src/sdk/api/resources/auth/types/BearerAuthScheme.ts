@@ -4,7 +4,7 @@
 
 import * as FernIr from "../../../index";
 
-export interface BearerAuthScheme extends FernIr.WithDocs {
+export interface BearerAuthScheme extends FernIr.BaseAuthScheme {
     token: FernIr.Name;
     /** The environment variable the SDK should use to read the token. */
     tokenEnvVar: FernIr.EnvironmentVariable | undefined;

@@ -4,8 +4,11 @@ use seed_oauth_client_credentials_with_variables::{
 
 #[tokio::main]
 async fn main() {
-    let config = ClientConfig {};
+    let config = ClientConfig {
+        base_url: "https://api.fern.com".to_string(),
+        ..Default::default()
+    };
     let client =
         OauthClientCredentialsWithVariablesClient::new(config).expect("Failed to build client");
-    client.nested_no_auth_api_get_something().await;
+    client.nested_no_auth.api.get_something(None).await;
 }

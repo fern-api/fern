@@ -53,6 +53,10 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             ...superArgs,
             respectReadonlySchemas: specs.every((spec) => spec.settings?.respectReadonlySchemas),
             respectNullableSchemas: specs.every((spec) => spec.settings?.respectNullableSchemas),
+            wrapReferencesToNullableInOptional: specs.every(
+                (spec) => spec.settings?.wrapReferencesToNullableInOptional
+            ),
+            coerceOptionalSchemasToNullable: specs.every((spec) => spec.settings?.coerceOptionalSchemasToNullable),
             onlyIncludeReferencedSchemas: specs.every((spec) => spec.settings?.onlyIncludeReferencedSchemas),
             inlinePathParameters: specs.every((spec) => spec.settings?.inlinePathParameters),
             objectQueryParameters: specs.every((spec) => spec.settings?.objectQueryParameters),
@@ -67,6 +71,19 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 // TODO: Update this to '.every' once AsyncAPI sources are correctly recognized.
                 .some((spec) => spec.settings?.respectForwardCompatibleEnums),
             inlineAllOfSchemas: specs.every((spec) => spec.settings?.inlineAllOfSchemas),
+            resolveAliases: (() => {
+                // Require that resolveAliases is true/provided for all specs
+                const allHaveResolveAliases = specs.every((spec) => spec.settings?.resolveAliases);
+                if (!allHaveResolveAliases) {
+                    return false;
+                }
+
+                // Merge all except arrays into a single array
+                const excepts = specs.flatMap((spec) =>
+                    typeof spec.settings?.resolveAliases === "object" ? (spec.settings.resolveAliases.except ?? []) : []
+                );
+                return { except: excepts };
+            })(),
             exampleGeneration: specs[0]?.settings?.exampleGeneration
         });
         this.specs = specs;
@@ -96,6 +113,8 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 ...settings,
                 respectReadonlySchemas: settings?.respectReadonlySchemas ?? this.respectReadonlySchemas,
                 respectNullableSchemas: settings?.respectNullableSchemas ?? this.respectNullableSchemas,
+                wrapReferencesToNullableInOptional:
+                    settings?.wrapReferencesToNullableInOptional ?? this.wrapReferencesToNullableInOptional,
                 onlyIncludeReferencedSchemas:
                     settings?.onlyIncludeReferencedSchemas ?? this.onlyIncludeReferencedSchemas,
                 inlinePathParameters: settings?.inlinePathParameters ?? this.inlinePathParameters,
@@ -103,6 +122,7 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
                 exampleGeneration: settings?.exampleGeneration ?? this.exampleGeneration,
                 useBytesForBinaryResponse: settings?.useBytesForBinaryResponse ?? this.useBytesForBinaryResponse,
                 inlineAllOfSchemas: settings?.inlineAllOfSchemas ?? this.inlineAllOfSchemas,
+                resolveAliases: settings?.resolveAliases ?? this.resolveAliases,
                 groupMultiApiEnvironments:
                     settings?.groupMultiApiEnvironments ??
                     this.specs.some((spec) => spec.settings?.groupMultiApiEnvironments)

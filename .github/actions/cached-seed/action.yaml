@@ -8,6 +8,10 @@ inputs:
   generator-path:
     description: The path to the source code of the generator (e.g., generators/go, generators/ruby)
     required: true
+  fixtures-to-run:
+    description: Specific fixtures to run. If not supplied, will run all fixtures. Note - for multiple fixtures at once, separate by space, not comma.
+    required: false
+    default: ""
   validate-git-diff:
     description: Whether to validate that no git-tracked files were changed
     required: false
@@ -80,9 +84,15 @@ runs:
       env:
         FORCE_COLOR: "2"
       run: |
+        FORMATTED_FIXTURES_COMMAND=""
+        if [[ "${{ inputs.fixtures-to-run }}" != "all" ]]; then
+          FORMATTED_FIXTURES_COMMAND="--fixture ${{ inputs.fixtures-to-run }}"
+        fi
+
         pnpm seed:local test \
           --generator ${{ inputs.generator-name }} \
           --parallel 16 \
+          ${FORMATTED_FIXTURES_COMMAND} \
           ${{ inputs.skip-scripts == 'true' && '--skip-scripts' || '' }} \
           ${{ inputs.allow-unexpected-failures == 'true' && '--allow-unexpected-failures' || '' }}
 

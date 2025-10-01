@@ -10,7 +10,7 @@
           "base-path": "",
           "endpoints": {
             "createANewPet": {
-              "auth": false,
+              "auth": undefined,
               "display-name": "Create a new pet",
               "docs": undefined,
               "examples": [
@@ -85,7 +85,6 @@
     createANewPet:
       path: /pets
       method: POST
-      auth: false
       source:
         openapi: ../openapi.yml
       display-name: Create a new pet

@@ -944,7 +944,11 @@ types:
           "base-path": "",
           "endpoints": {
             "CreateApp": {
-              "auth": true,
+              "auth": [
+                {
+                  "auth0": [],
+                },
+              ],
               "docs": undefined,
               "errors": [
                 "root.UnprocessableEntityError",
@@ -992,7 +996,11 @@ types:
               },
             },
             "DeleteApp": {
-              "auth": true,
+              "auth": [
+                {
+                  "auth0": [],
+                },
+              ],
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -1019,7 +1027,11 @@ types:
               },
             },
             "GetAppInfo": {
-              "auth": true,
+              "auth": [
+                {
+                  "auth0": [],
+                },
+              ],
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -1067,7 +1079,11 @@ types:
               },
             },
             "GetApps": {
-              "auth": true,
+              "auth": [
+                {
+                  "auth0": [],
+                },
+              ],
               "docs": undefined,
               "examples": [
                 {
@@ -1124,7 +1140,11 @@ types:
               },
             },
             "UpdateApp": {
-              "auth": true,
+              "auth": [
+                {
+                  "auth0": [],
+                },
+              ],
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -1193,7 +1213,8 @@ service:
     GetApps:
       path: /apps/v1/list
       method: GET
-      auth: true
+      auth:
+        - auth0: []
       source:
         openapi: ../openapi.json
       response:
@@ -1232,7 +1253,8 @@ service:
     CreateApp:
       path: /apps/v1/create
       method: POST
-      auth: true
+      auth:
+        - auth0: []
       source:
         openapi: ../openapi.json
       request:
@@ -1265,7 +1287,8 @@ service:
     UpdateApp:
       path: /apps/v1/update/{appId}
       method: POST
-      auth: true
+      auth:
+        - auth0: []
       source:
         openapi: ../openapi.json
       request:
@@ -1303,7 +1326,8 @@ service:
     GetAppInfo:
       path: /apps/v1/info/{appId}
       method: GET
-      auth: true
+      auth:
+        - auth0: []
       source:
         openapi: ../openapi.json
       request:
@@ -1335,7 +1359,8 @@ service:
     DeleteApp:
       path: /apps/v1/delete/{appId}
       method: DELETE
-      auth: true
+      auth:
+        - auth0: []
       source:
         openapi: ../openapi.json
       request:
@@ -1363,7 +1388,7 @@ service:
           "base-path": "",
           "endpoints": {
             "LoginAnonymous": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -1399,7 +1424,7 @@ service:
               },
             },
             "LoginGoogle": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "errors": [
                 "root.UnauthorizedError",
@@ -1447,7 +1472,7 @@ service:
               },
             },
             "LoginNickname": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -1556,7 +1581,6 @@ service:
     LoginAnonymous:
       path: /auth/v1/{appId}/login/anonymous
       method: POST
-      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -1578,7 +1602,6 @@ service:
     LoginNickname:
       path: /auth/v1/{appId}/login/nickname
       method: POST
-      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -1606,7 +1629,6 @@ service:
     LoginGoogle:
       path: /auth/v1/{appId}/login/google
       method: POST
-      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -1647,7 +1669,11 @@ service:
           "base-path": "",
           "endpoints": {
             "CreateBuild": {
-              "auth": true,
+              "auth": [
+                {
+                  "auth0": [],
+                },
+              ],
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -1699,7 +1725,11 @@ service:
               },
             },
             "DeleteBuild": {
-              "auth": true,
+              "auth": [
+                {
+                  "auth0": [],
+                },
+              ],
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -1729,7 +1759,11 @@ service:
               },
             },
             "GetBuildInfo": {
-              "auth": true,
+              "auth": [
+                {
+                  "auth0": [],
+                },
+              ],
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -1781,7 +1815,11 @@ service:
               },
             },
             "GetBuilds": {
-              "auth": true,
+              "auth": [
+                {
+                  "auth0": [],
+                },
+              ],
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -1833,7 +1871,11 @@ service:
               },
             },
             "RunBuild": {
-              "auth": true,
+              "auth": [
+                {
+                  "auth0": [],
+                },
+              ],
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -1881,7 +1923,8 @@ service:
     GetBuilds:
       path: /builds/v1/{appId}/list
       method: GET
-      auth: true
+      auth:
+        - auth0: []
       source:
         openapi: ../openapi.json
       request:
@@ -1914,7 +1957,8 @@ service:
     GetBuildInfo:
       path: /builds/v1/{appId}/info/{buildId}
       method: GET
-      auth: true
+      auth:
+        - auth0: []
       source:
         openapi: ../openapi.json
       request:
@@ -1949,7 +1993,8 @@ service:
     CreateBuild:
       path: /builds/v1/{appId}/create
       method: POST
-      auth: true
+      auth:
+        - auth0: []
       source:
         openapi: ../openapi.json
       request:
@@ -1984,7 +2029,8 @@ service:
     RunBuild:
       path: /builds/v1/{appId}/run/{buildId}
       method: POST
-      auth: true
+      auth:
+        - auth0: []
       source:
         openapi: ../openapi.json
       request:
@@ -2006,7 +2052,8 @@ service:
     DeleteBuild:
       path: /builds/v1/{appId}/delete/{buildId}
       method: DELETE
-      auth: true
+      auth:
+        - auth0: []
       source:
         openapi: ../openapi.json
       request:
@@ -2037,7 +2084,11 @@ service:
           "base-path": "",
           "endpoints": {
             "CreateDeployment": {
-              "auth": true,
+              "auth": [
+                {
+                  "auth0": [],
+                },
+              ],
               "docs": undefined,
               "errors": [
                 "root.BadRequestError",
@@ -2107,7 +2158,11 @@ service:
               },
             },
             "GetDeploymentInfo": {
-              "auth": true,
+              "auth": [
+                {
+                  "auth0": [],
+                },
+              ],
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -2161,7 +2216,11 @@ service:
               },
             },
             "GetDeployments": {
-              "auth": true,
+              "auth": [
+                {
+                  "auth0": [],
+                },
+              ],
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -2229,7 +2288,8 @@ service:
     GetDeployments:
       path: /deployments/v1/{appId}/list
       method: GET
-      auth: true
+      auth:
+        - auth0: []
       source:
         openapi: ../openapi.json
       request:
@@ -2264,7 +2324,8 @@ service:
     GetDeploymentInfo:
       path: /deployments/v1/{appId}/info/{deploymentId}
       method: GET
-      auth: true
+      auth:
+        - auth0: []
       source:
         openapi: ../openapi.json
       request:
@@ -2301,7 +2362,8 @@ service:
     CreateDeployment:
       path: /deployments/v1/{appId}/create/{buildId}
       method: POST
-      auth: true
+      auth:
+        - auth0: []
       source:
         openapi: ../openapi.json
       request:
@@ -2362,7 +2424,7 @@ service:
           "base-path": "",
           "endpoints": {
             "GetPingServiceEndpoints": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
@@ -2404,7 +2466,6 @@ service:
     GetPingServiceEndpoints:
       path: /discovery/v1/ping
       method: GET
-      auth: false
       source:
         openapi: ../openapi.json
       response:
@@ -2432,7 +2493,7 @@ service:
           "base-path": "",
           "endpoints": {
             "CreatePrivateLobbyDeprecated": {
-              "auth": false,
+              "auth": undefined,
               "availability": "deprecated",
               "docs": undefined,
               "errors": [
@@ -2447,6 +2508,10 @@ service:
                   "headers": {},
                   "path-parameters": {
                     "appId": "appId",
+                  },
+                  "query-parameters": {
+                    "local": true,
+                    "region": "Seattle",
                   },
                   "response": {
                     "body": "string",
@@ -2479,7 +2544,7 @@ service:
               },
             },
             "CreatePublicLobbyDeprecated": {
-              "auth": false,
+              "auth": undefined,
               "availability": "deprecated",
               "docs": undefined,
               "errors": [
@@ -2494,6 +2559,10 @@ service:
                   "headers": {},
                   "path-parameters": {
                     "appId": "appId",
+                  },
+                  "query-parameters": {
+                    "local": true,
+                    "region": "Seattle",
                   },
                   "response": {
                     "body": "string",
@@ -2526,7 +2595,7 @@ service:
               },
             },
             "ListActivePublicLobbiesDeprecated": {
-              "auth": false,
+              "auth": undefined,
               "availability": "deprecated",
               "docs": undefined,
               "errors": [
@@ -2538,6 +2607,10 @@ service:
                   "headers": {},
                   "path-parameters": {
                     "appId": "appId",
+                  },
+                  "query-parameters": {
+                    "local": true,
+                    "region": "Seattle",
                   },
                   "response": {
                     "body": [
@@ -2600,7 +2673,6 @@ service:
     CreatePrivateLobbyDeprecated:
       path: /lobby/v1/{appId}/create/private
       method: POST
-      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -2626,13 +2698,15 @@ service:
       examples:
         - path-parameters:
             appId: appId
+          query-parameters:
+            region: Seattle
+            local: true
           headers: {}
           response:
             body: string
     CreatePublicLobbyDeprecated:
       path: /lobby/v1/{appId}/create/public
       method: POST
-      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -2658,13 +2732,15 @@ service:
       examples:
         - path-parameters:
             appId: appId
+          query-parameters:
+            region: Seattle
+            local: true
           headers: {}
           response:
             body: string
     ListActivePublicLobbiesDeprecated:
       path: /lobby/v1/{appId}/list
       method: GET
-      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -2687,6 +2763,9 @@ service:
       examples:
         - path-parameters:
             appId: appId
+          query-parameters:
+            local: true
+            region: Seattle
           headers: {}
           response:
             body:
@@ -2716,7 +2795,7 @@ service:
           "base-path": "",
           "endpoints": {
             "CreateLobby": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "errors": [
                 "root.UnauthorizedError",
@@ -2730,6 +2809,9 @@ service:
                   "headers": {},
                   "path-parameters": {
                     "appId": "appId",
+                  },
+                  "query-parameters": {
+                    "roomId": "roomId",
                   },
                   "request": {
                     "initialConfig": {
@@ -2788,7 +2870,7 @@ service:
               },
             },
             "CreateLocalLobby": {
-              "auth": false,
+              "auth": undefined,
               "availability": "deprecated",
               "docs": undefined,
               "errors": [
@@ -2803,6 +2885,9 @@ service:
                   "headers": {},
                   "path-parameters": {
                     "appId": "appId",
+                  },
+                  "query-parameters": {
+                    "roomId": "roomId",
                   },
                   "request": {
                     "initialConfig": {
@@ -2859,7 +2944,7 @@ service:
               },
             },
             "CreatePrivateLobby": {
-              "auth": false,
+              "auth": undefined,
               "availability": "deprecated",
               "docs": undefined,
               "errors": [
@@ -2874,6 +2959,9 @@ service:
                   "headers": {},
                   "path-parameters": {
                     "appId": "appId",
+                  },
+                  "query-parameters": {
+                    "roomId": "roomId",
                   },
                   "request": {
                     "initialConfig": {
@@ -2930,7 +3018,7 @@ service:
               },
             },
             "CreatePublicLobby": {
-              "auth": false,
+              "auth": undefined,
               "availability": "deprecated",
               "docs": undefined,
               "errors": [
@@ -2945,6 +3033,9 @@ service:
                   "headers": {},
                   "path-parameters": {
                     "appId": "appId",
+                  },
+                  "query-parameters": {
+                    "roomId": "roomId",
                   },
                   "request": {
                     "initialConfig": {
@@ -3001,7 +3092,7 @@ service:
               },
             },
             "GetLobbyInfo": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -3051,12 +3142,15 @@ service:
               },
             },
             "ListActivePublicLobbies": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "examples": [
                 {
                   "path-parameters": {
                     "appId": "appId",
+                  },
+                  "query-parameters": {
+                    "region": "Seattle",
                   },
                   "response": {
                     "body": [
@@ -3101,7 +3195,11 @@ service:
               },
             },
             "SetLobbyState": {
-              "auth": true,
+              "auth": [
+                {
+                  "auth0": [],
+                },
+              ],
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -3192,7 +3290,6 @@ service:
     CreatePrivateLobby:
       path: /lobby/v2/{appId}/create/private
       method: POST
-      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -3220,6 +3317,8 @@ service:
       examples:
         - path-parameters:
             appId: appId
+          query-parameters:
+            roomId: roomId
           headers: {}
           request:
             initialConfig:
@@ -3241,7 +3340,6 @@ service:
     CreatePublicLobby:
       path: /lobby/v2/{appId}/create/public
       method: POST
-      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -3269,6 +3367,8 @@ service:
       examples:
         - path-parameters:
             appId: appId
+          query-parameters:
+            roomId: roomId
           headers: {}
           request:
             initialConfig:
@@ -3290,7 +3390,6 @@ service:
     CreateLocalLobby:
       path: /lobby/v2/{appId}/create/local
       method: POST
-      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -3318,6 +3417,8 @@ service:
       examples:
         - path-parameters:
             appId: appId
+          query-parameters:
+            roomId: roomId
           headers: {}
           request:
             initialConfig:
@@ -3339,7 +3440,6 @@ service:
     CreateLobby:
       path: /lobby/v2/{appId}/create
       method: POST
-      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -3367,6 +3467,8 @@ service:
       examples:
         - path-parameters:
             appId: appId
+          query-parameters:
+            roomId: roomId
           headers: {}
           request:
             visibility: public
@@ -3389,7 +3491,6 @@ service:
     ListActivePublicLobbies:
       path: /lobby/v2/{appId}/list/public
       method: GET
-      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -3405,6 +3506,8 @@ service:
       examples:
         - path-parameters:
             appId: appId
+          query-parameters:
+            region: Seattle
           response:
             body:
               - state:
@@ -3421,7 +3524,6 @@ service:
     GetLobbyInfo:
       path: /lobby/v2/{appId}/info/{roomId}
       method: GET
-      auth: false
       source:
         openapi: ../openapi.json
       request:
@@ -3455,7 +3557,8 @@ service:
     SetLobbyState:
       path: /lobby/v2/{appId}/setState/{roomId}
       method: POST
-      auth: true
+      auth:
+        - auth0: []
       source:
         openapi: ../openapi.json
       request:
@@ -3518,7 +3621,11 @@ types:
           "base-path": "",
           "endpoints": {
             "GetLogsForApp": {
-              "auth": true,
+              "auth": [
+                {
+                  "auth0": [],
+                },
+              ],
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -3550,7 +3657,11 @@ types:
               },
             },
             "GetLogsForDeployment": {
-              "auth": true,
+              "auth": [
+                {
+                  "auth0": [],
+                },
+              ],
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -3582,7 +3693,11 @@ types:
               },
             },
             "GetLogsForProcess": {
-              "auth": true,
+              "auth": [
+                {
+                  "auth0": [],
+                },
+              ],
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -3628,7 +3743,8 @@ service:
     GetLogsForApp:
       path: /logs/v1/{appId}/all
       method: GET
-      auth: true
+      auth:
+        - auth0: []
       source:
         openapi: ../openapi.json
       request:
@@ -3650,7 +3766,8 @@ service:
     GetLogsForProcess:
       path: /logs/v1/{appId}/process/{processId}
       method: GET
-      auth: true
+      auth:
+        - auth0: []
       source:
         openapi: ../openapi.json
       request:
@@ -3672,7 +3789,8 @@ service:
     GetLogsForDeployment:
       path: /logs/v1/{appId}/deployment/{deploymentId}
       method: GET
-      auth: true
+      auth:
+        - auth0: []
       source:
         openapi: ../openapi.json
       request:
@@ -3706,7 +3824,11 @@ service:
           "base-path": "",
           "endpoints": {
             "GetMetrics": {
-              "auth": true,
+              "auth": [
+                {
+                  "auth0": [],
+                },
+              ],
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -3717,6 +3839,11 @@ service:
                   "path-parameters": {
                     "appId": "appId",
                     "processId": "processId",
+                  },
+                  "query-parameters": {
+                    "end": 1,
+                    "start": 1,
+                    "step": 1,
                   },
                   "response": {
                     "body": {
@@ -3794,7 +3921,8 @@ service:
     GetMetrics:
       path: /metrics/v1/{appId}/process/{processId}
       method: GET
-      auth: true
+      auth:
+        - auth0: []
       source:
         openapi: ../openapi.json
       request:
@@ -3822,6 +3950,10 @@ service:
         - path-parameters:
             appId: appId
             processId: processId
+          query-parameters:
+            end: 1
+            start: 1
+            step: 1
           response:
             body:
               cpu:
@@ -3851,7 +3983,11 @@ service:
           "base-path": "",
           "endpoints": {
             "GetProcessInfo": {
-              "auth": true,
+              "auth": [
+                {
+                  "auth0": [],
+                },
+              ],
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -3904,7 +4040,11 @@ service:
               },
             },
             "GetRunningProcesses": {
-              "auth": true,
+              "auth": [
+                {
+                  "auth0": [],
+                },
+              ],
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -3913,6 +4053,9 @@ service:
                 {
                   "path-parameters": {
                     "appId": "appId",
+                  },
+                  "query-parameters": {
+                    "region": "Seattle",
                   },
                   "response": {
                     "body": [
@@ -3931,6 +4074,7 @@ service:
                         "rooms": [
                           {
                             "appId": "appId",
+                            "currentAllocation": null,
                             "roomId": "roomId",
                             "status": "scheduling",
                           },
@@ -3968,7 +4112,11 @@ service:
               },
             },
             "GetStoppedProcesses": {
-              "auth": true,
+              "auth": [
+                {
+                  "auth0": [],
+                },
+              ],
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -3977,6 +4125,9 @@ service:
                 {
                   "path-parameters": {
                     "appId": "appId",
+                  },
+                  "query-parameters": {
+                    "region": "Seattle",
                   },
                   "response": {
                     "body": [
@@ -4038,7 +4189,8 @@ service:
     GetRunningProcesses:
       path: /processes/v1/{appId}/list/running
       method: GET
-      auth: true
+      auth:
+        - auth0: []
       source:
         openapi: ../openapi.json
       request:
@@ -4056,6 +4208,8 @@ service:
       examples:
         - path-parameters:
             appId: appId
+          query-parameters:
+            region: Seattle
           response:
             body:
               - egressedBytes: 1.1
@@ -4078,11 +4232,13 @@ service:
                   - appId: appId
                     roomId: roomId
                     status: scheduling
+                    currentAllocation: null
                 totalRooms: 1.1
     GetStoppedProcesses:
       path: /processes/v1/{appId}/list/stopped
       method: GET
-      auth: true
+      auth:
+        - auth0: []
       source:
         openapi: ../openapi.json
       request:
@@ -4100,6 +4256,8 @@ service:
       examples:
         - path-parameters:
             appId: appId
+          query-parameters:
+            region: Seattle
           response:
             body:
               - egressedBytes: 1.1
@@ -4121,7 +4279,8 @@ service:
     GetProcessInfo:
       path: /processes/v1/{appId}/info/{processId}
       method: GET
-      auth: true
+      auth:
+        - auth0: []
       source:
         openapi: ../openapi.json
       request:
@@ -4172,7 +4331,11 @@ service:
           "base-path": "",
           "endpoints": {
             "CreateRoom": {
-              "auth": true,
+              "auth": [
+                {
+                  "auth0": [],
+                },
+              ],
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -4218,7 +4381,11 @@ service:
               },
             },
             "DestroyRoom": {
-              "auth": true,
+              "auth": [
+                {
+                  "auth0": [],
+                },
+              ],
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -4247,7 +4414,11 @@ service:
               },
             },
             "GetActiveRoomsForProcess": {
-              "auth": true,
+              "auth": [
+                {
+                  "auth0": [],
+                },
+              ],
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -4295,7 +4466,7 @@ service:
               },
             },
             "GetConnectionInfo": {
-              "auth": false,
+              "auth": undefined,
               "docs": undefined,
               "errors": [
                 "root.BadRequestError",
@@ -4336,7 +4507,11 @@ service:
               },
             },
             "GetInactiveRoomsForProcess": {
-              "auth": true,
+              "auth": [
+                {
+                  "auth0": [],
+                },
+              ],
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -4384,7 +4559,11 @@ service:
               },
             },
             "GetRoomInfo": {
-              "auth": true,
+              "auth": [
+                {
+                  "auth0": [],
+                },
+              ],
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -4438,7 +4617,11 @@ service:
               },
             },
             "SuspendRoom": {
-              "auth": true,
+              "auth": [
+                {
+                  "auth0": [],
+                },
+              ],
               "docs": undefined,
               "errors": [
                 "root.NotFoundError",
@@ -4481,7 +4664,8 @@ service:
     CreateRoom:
       path: /rooms/v1/{appId}/create
       method: POST
-      auth: true
+      auth:
+        - auth0: []
       source:
         openapi: ../openapi.json
       request:
@@ -4509,7 +4693,8 @@ service:
     GetRoomInfo:
       path: /rooms/v1/{appId}/info/{roomId}
       method: GET
-      auth: true
+      auth:
+        - auth0: []
       source:
         openapi: ../openapi.json
       request:
@@ -4545,7 +4730,8 @@ service:
     GetActiveRoomsForProcess:
       path: /rooms/v1/{appId}/list/{processId}/active
       method: GET
-      auth: true
+      auth:
+        - auth0: []
       source:
         openapi: ../openapi.json
       request:
@@ -4576,7 +4762,8 @@ service:
     GetInactiveRoomsForProcess:
       path: /rooms/v1/{appId}/list/{processId}/inactive
       method: GET
-      auth: true
+      auth:
+        - auth0: []
       source:
         openapi: ../openapi.json
       request:
@@ -4607,7 +4794,8 @@ service:
     DestroyRoom:
       path: /rooms/v1/{appId}/destroy/{roomId}
       method: POST
-      auth: true
+      auth:
+        - auth0: []
       source:
         openapi: ../openapi.json
       request:
@@ -4625,7 +4813,8 @@ service:
     SuspendRoom:
       path: /rooms/v1/{appId}/suspend/{roomId}
       method: POST
-      auth: true
+      auth:
+        - auth0: []
       source:
         openapi: ../openapi.json
       request:
@@ -4643,7 +4832,6 @@ service:
     GetConnectionInfo:
       path: /rooms/v1/{appId}/connectioninfo/{roomId}
       method: GET
-      auth: false
       source:
         openapi: ../openapi.json
       request:
