@@ -21,7 +21,8 @@ export function convertDynamicEndpointSnippetRequest(request: dynamic.EndpointSn
  */
 export function convertExampleEndpointCallToSnippetRequest(
     example: ExampleEndpointCall,
-    endpoint: HttpEndpoint
+    endpoint: HttpEndpoint,
+    dynamicEndpoint: dynamic.Endpoint
 ): dynamic.EndpointSnippetRequest {
     // Create endpoint location from the HttpEndpoint
     let path = endpoint.fullPath.head;
@@ -51,11 +52,14 @@ export function convertExampleEndpointCallToSnippetRequest(
         headers[header.name.wireValue] = header.value.jsonExample;
     });
 
+    const baseUrlFromDynamicEndpoint = dynamicEndpoint.examples?.[0]?.baseUrl;
+    const authValuesFromDynamicEndpoint = dynamicEndpoint.examples?.[0]?.auth;
+
     return {
         endpoint: endpointLocation,
-        baseUrl: undefined,
+        baseUrl: baseUrlFromDynamicEndpoint,
         environment: undefined,
-        auth: undefined,
+        auth: authValuesFromDynamicEndpoint,
         pathParameters: Object.keys(pathParameters).length > 0 ? pathParameters : undefined,
         queryParameters: Object.keys(queryParameters).length > 0 ? queryParameters : undefined,
         headers: Object.keys(headers).length > 0 ? headers : undefined,
