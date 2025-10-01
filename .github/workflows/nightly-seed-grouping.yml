@@ -5,6 +5,7 @@ on:
   schedule:
     - cron: "0 5 * * *"
   push:
+    # CHRISM -remove
     branches:
       - mallinson/nightly-seed-packaging-testing-branch
   # Runs when triggered manually to do so
@@ -18,6 +19,8 @@ concurrency:
 jobs:
   run-seed-test:
     runs-on: ubuntu-latest
+    # CHRISM - temp
+    if: false
     strategy:
       fail-fast: false # Let all tests run and cascade errors, will only PR generator updates that passed
       matrix:
@@ -136,7 +139,7 @@ jobs:
         with:
           path: ./artifacts
           name: ${{ matrix.sdk-name }}-seed-test-log.txt
-          run-id: 18135449832 # CHRISM - temp
+          # run-id: 18135449832 # CHRISM - temp
           github-token: ${{ secrets.FERN_GITHUB_PAT }}
           repository: ${{ github.repository }}
           merge-multiple: true
@@ -201,8 +204,8 @@ jobs:
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.FERN_GITHUB_PAT }}
-          commit-message: "chore(internal): Update seed group files"
-          title: "chore(internal): Update seed group files"
+          commit-message: "chore(internal): update seed group files"
+          title: "chore(internal): update seed group files"
           branch: update-seed-group-files
           body: "Auto-generated PR, triggered by nightly-seed-grouping workflow with: ${{ github.event_name }} from branch: ${{ github.ref_name }}.\nGitHub workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           delete-branch: true
@@ -226,12 +229,13 @@ jobs:
       - name: Log PR Failure
         if: >-
           ${{
-            !(steps.cpr.outputs.pull-request-operation != 'updated' && 
-              steps.cpr.outputs.pull-request-operation != 'created')
+            steps.cpr.outputs.pull-request-operation != 'updated' && 
+            steps.cpr.outputs.pull-request-operation != 'created'
           }}
         shell: bash
         run: |
           echo "PR was not created or updated, likely due to no diff for seed group files"
+          echo "PR Operation: ${{ steps.cpr.outputs.pull-request-operation }}"
 
       #  CHRISM - add back
       # - name: Enable Pull Request Automerge
