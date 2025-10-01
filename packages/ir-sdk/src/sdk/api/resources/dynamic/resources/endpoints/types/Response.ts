@@ -60,7 +60,7 @@ export namespace Response {
 }
 
 export const Response = {
-    json: (): Response => {
+    json: (): FernIr.dynamic.Response.Json => {
         return {
             type: "json",
             _visit: function <_Result>(
@@ -72,7 +72,7 @@ export const Response = {
         };
     },
 
-    streaming: (): Response => {
+    streaming: (): FernIr.dynamic.Response.Streaming => {
         return {
             type: "streaming",
             _visit: function <_Result>(
@@ -84,7 +84,7 @@ export const Response = {
         };
     },
 
-    streamParameter: (): Response => {
+    streamParameter: (): FernIr.dynamic.Response.StreamParameter => {
         return {
             type: "streamParameter",
             _visit: function <_Result>(
@@ -96,7 +96,7 @@ export const Response = {
         };
     },
 
-    fileDownload: (): Response => {
+    fileDownload: (): FernIr.dynamic.Response.FileDownload => {
         return {
             type: "fileDownload",
             _visit: function <_Result>(
@@ -108,7 +108,7 @@ export const Response = {
         };
     },
 
-    text: (): Response => {
+    text: (): FernIr.dynamic.Response.Text => {
         return {
             type: "text",
             _visit: function <_Result>(
@@ -120,7 +120,7 @@ export const Response = {
         };
     },
 
-    bytes: (): Response => {
+    bytes: (): FernIr.dynamic.Response.Bytes => {
         return {
             type: "bytes",
             _visit: function <_Result>(
