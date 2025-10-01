@@ -5,7 +5,7 @@ import os
 import typing
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import List, Optional, Set, cast
+from typing import Dict, List, Optional, Set, cast
 
 from fern_python.codegen.ast.dependency.dependency import (
     Dependency,
@@ -124,7 +124,7 @@ class PyProjectToml:
 
         def to_string(self) -> str:
             description = ""
-            authors: List[dict] = []
+            authors: List[Dict[str, str]] = []
             keywords: List[str] = []
             project_urls: List[str] = []
             classifiers = [
