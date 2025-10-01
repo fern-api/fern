@@ -102,15 +102,16 @@ public class AsyncRawDeepCursorPathClient {
                         A nextRequest = A.builder().from(request).b(b).build();
                         List<String> result = parsedResponse.getResults();
                         future.complete(new SeedDeepCursorPathHttpResponse<>(
-                                new SyncPagingIterable<String>(startingAfter.isPresent(), result, () -> {
-                                    try {
-                                        return doThing(nextRequest, requestOptions)
-                                                .get()
-                                                .body();
-                                    } catch (InterruptedException | ExecutionException e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                }),
+                                new SyncPagingIterable<String>(
+                                        startingAfter.isPresent(), result, parsedResponse, () -> {
+                                            try {
+                                                return doThing(nextRequest, requestOptions)
+                                                        .get()
+                                                        .body();
+                                            } catch (InterruptedException | ExecutionException e) {
+                                                throw new RuntimeException(e);
+                                            }
+                                        }),
                                 response));
                         return;
                     }
@@ -186,15 +187,16 @@ public class AsyncRawDeepCursorPathClient {
                                 .build();
                         List<String> result = parsedResponse.getResults();
                         future.complete(new SeedDeepCursorPathHttpResponse<>(
-                                new SyncPagingIterable<String>(startingAfter.isPresent(), result, () -> {
-                                    try {
-                                        return doThingRequired(nextRequest, requestOptions)
-                                                .get()
-                                                .body();
-                                    } catch (InterruptedException | ExecutionException e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                }),
+                                new SyncPagingIterable<String>(
+                                        startingAfter.isPresent(), result, parsedResponse, () -> {
+                                            try {
+                                                return doThingRequired(nextRequest, requestOptions)
+                                                        .get()
+                                                        .body();
+                                            } catch (InterruptedException | ExecutionException e) {
+                                                throw new RuntimeException(e);
+                                            }
+                                        }),
                                 response));
                         return;
                     }
@@ -282,15 +284,16 @@ public class AsyncRawDeepCursorPathClient {
                                 InlineA.builder().from(request).b(b).build();
                         List<String> result = parsedResponse.getResults();
                         future.complete(new SeedDeepCursorPathHttpResponse<>(
-                                new SyncPagingIterable<String>(startingAfter.isPresent(), result, () -> {
-                                    try {
-                                        return doThingInline(nextRequest, requestOptions)
-                                                .get()
-                                                .body();
-                                    } catch (InterruptedException | ExecutionException e) {
-                                        throw new RuntimeException(e);
-                                    }
-                                }),
+                                new SyncPagingIterable<String>(
+                                        startingAfter.isPresent(), result, parsedResponse, () -> {
+                                            try {
+                                                return doThingInline(nextRequest, requestOptions)
+                                                        .get()
+                                                        .body();
+                                            } catch (InterruptedException | ExecutionException e) {
+                                                throw new RuntimeException(e);
+                                            }
+                                        }),
                                 response));
                         return;
                     }

@@ -28,6 +28,20 @@ import * as SeedExamples from "../../../index.js";
  *         },
  *         revenue: 1000000
  *     }
+ *
+ * @example
+ *     {
+ *         id: "movie-large-123",
+ *         title: "Big Budget Film",
+ *         from: "Famous Director",
+ *         rating: 4294967295,
+ *         type: "movie",
+ *         tag: "tag-wf9as23d",
+ *         metadata: {
+ *             "budget": "Very high"
+ *         },
+ *         revenue: 5000000000
+ *     }
  */
 export interface Movie {
     id: SeedExamples.MovieId;
