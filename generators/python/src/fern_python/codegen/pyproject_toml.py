@@ -290,7 +290,7 @@ httpx = "^0.24.0"
                     deps.append(f'{name} = ">={dep.version}"')
                 else:  # EXACT
                     # Check if version already contains a specifier
-                    if dep.version.startswith(('==', '>=', '<=', '~=', '!=')):
+                    if dep.version.startswith(("==", ">=", "<=", "~=", "!=")):
                         deps.append(f'{name} = "{dep.version}"')
                     else:
                         deps.append(f'{name} = "=={dep.version}"')
@@ -313,6 +313,12 @@ httpx = "^0.24.0"
                 name = dep.name.replace(".", "-")
                 if compatibility == DependencyCompatibility.GREATER_THAN_OR_EQUAL:
                     version = f">={dep.version}"
+                else:  # EXACT
+                    # Check if version already contains a specifier
+                    if dep.version.startswith(('==', '>=', '<=', '~=', '!=')):
+                        version = dep.version
+                    else:
+                        version = f"=={dep.version}"
 
                 if is_optional or has_python_version or dep.extras is not None:
                     deps += f'{name} = {{ version = "{version}"'
