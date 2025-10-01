@@ -194,7 +194,7 @@ export class TypeLiteral extends AstNode {
                 break;
             case "double": {
                 const valueStr = this.internalType.value.toString();
-                if (!valueStr.includes('.') && !valueStr.includes('e') && !valueStr.includes('E')) {
+                if (!valueStr.includes(".") && !valueStr.includes("e") && !valueStr.includes("E")) {
                     writer.write(`${valueStr}.0`);
                 } else {
                     writer.write(valueStr);
