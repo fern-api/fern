@@ -5,9 +5,6 @@ on:
   schedule:
     - cron: "0 5 * * *"
   push:
-    # CHRISM -remove
-    branches:
-      - mallinson/nightly-seed-packaging-testing-branch
   # Runs when triggered manually to do so
   workflow_dispatch:
 
@@ -19,17 +16,16 @@ concurrency:
 jobs:
   run-seed-test:
     runs-on: ubuntu-latest
-    #  CHRISM
-    if: false
     strategy:
       fail-fast: false # Let all tests run and cascade errors, will only PR generator updates that passed
       matrix:
-        sdk-name: [
+        sdk-name:
+          [
             ruby-model,
             ruby-sdk,
             ruby-sdk-v2,
             pydantic,
-            # python-sdk, CHRISM - add back
+            python-sdk,
             fastapi,
             openapi,
             postman,
@@ -84,7 +80,7 @@ jobs:
           name: ${{ matrix.sdk-name }}-seed-test-log.txt
           path: ${{ matrix.sdk-name }}-seed-test-log.txt
           if-no-files-found: error
-          retention-days: 10 # CHRISM - test
+          retention-days: 1
 
       - name: Echo Info for This Run
         run: |
@@ -98,9 +94,7 @@ jobs:
   # Failing jobs for a generator will continue to fail and won't PR any changes, but we want the changes for the passing generators.
   build-seed-groups:
     runs-on: ubuntu-latest
-    # CHRISM
-    if: always()
-    # if: needs.run-seed-test.result == 'success' || needs.run-seed-test.result == 'failure'
+    if: needs.run-seed-test.result == 'success' || needs.run-seed-test.result == 'failure'
     needs: [run-seed-test]
     strategy:
       fail-fast: false
@@ -142,14 +136,13 @@ jobs:
         with:
           path: ./artifacts
           name: ${{ matrix.sdk-name }}-seed-test-log.txt
-          run-id: 18168948457 # CHRISM - temp
           github-token: ${{ secrets.FERN_GITHUB_PAT }}
           repository: ${{ github.repository }}
           merge-multiple: true
 
       - name: Group Seed Tests
         id: group-seed-tests
-        uses: fern-api/package-seed-test@main # CHRISM TODO - set to tag
+        uses: fern-api/group-seed-tests@v1
         with:
           number-of-groups: 10
           seed-test-log-file-path: artifacts/${{ matrix.sdk-name }}-seed-test-log.txt
@@ -172,9 +165,7 @@ jobs:
   # Failing jobs for a generator will continue to fail and won't PR any changes, but we want the changes for the passing generators.
   pr-seed-group-files:
     runs-on: ubuntu-latest
-    # CHRISM
-    if: always()
-    # if: needs.build-seed-groups.result == 'success' || needs.build-seed-groups.result == 'failure'
+    if: needs.build-seed-groups.result == 'success' || needs.build-seed-groups.result == 'failure'
     needs: [build-seed-groups]
     steps:
       - name: Checkout Repo
@@ -265,18 +256,17 @@ jobs:
           echo "PR was not created or updated, likely due to no diff for seed group files"
           echo "PR Operation: ${{ steps.cpr.outputs.pull-request-operation }}. Note: if operation is blank then there were no changes and create-pull-request GitHub Action exited silently and early."
 
-      #  CHRISM - add back
-      # - name: Enable Pull Request Automerge
-      #   if: steps.cpr.outputs.pull-request-operation == 'created'
-      #   uses: peter-evans/enable-pull-request-automerge@v3
-      #   with:
-      #     token: ${{ secrets.FERN_GITHUB_PAT }}
-      #     pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
-      #     merge-method: squash
+      - name: Enable Pull Request Automerge
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: peter-evans/enable-pull-request-automerge@v3
+        with:
+          token: ${{ secrets.FERN_GITHUB_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+          merge-method: squash
 
-      # - name: Approve PR
-      #   if: steps.cpr.outputs.pull-request-operation == 'created'
-      #   uses: ./.github/actions/auto-approve
-      #   with:
-      #     approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
-      #     pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+      - name: Approve PR
+        if: steps.cpr.outputs.pull-request-operation == 'created'
+        uses: ./.github/actions/auto-approve
+        with:
+          approver-gh-token: ${{ secrets.PR_BOT_GH_PAT }}
+          pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
