@@ -3,7 +3,8 @@ name: Seed Snapshot Tests
 on:
   push:
     branches:
-      - main
+      # CHRISM - temp
+      - mallinson/debug-python
   # Note: pull request trigger will be removed once repository_dispatch trigger is verified
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
@@ -22,6 +23,8 @@ concurrency:
 jobs:
   changes:
     runs-on: ubuntu-latest
+    # CHRISM - temp
+    if: false
     strategy:
       matrix:
         generator-name: [ruby, ruby-v2, openapi, python, postman, java, typescript, go, csharp, php, swift, rust]
@@ -126,31 +129,33 @@ jobs:
     strategy:
       matrix:
         sdk-name:
-          [
-            ruby-model,
-            ruby-sdk,
-            ruby-sdk-v2,
-            pydantic,
-            python-sdk,
-            fastapi,
-            openapi,
-            postman,
-            java-sdk,
-            java-model,
-            java-spring,
-            ts-sdk,
-            ts-express,
-            go-fiber,
-            go-model,
-            go-sdk,
-            csharp-model,
-            csharp-sdk,
-            php-model,
-            php-sdk,
-            swift-sdk,
-            rust-model,
-            rust-sdk
-          ]
+          # CHRISM - temp
+          [python-sdk]
+          # [
+          #   ruby-model,
+          #   ruby-sdk,
+          #   ruby-sdk-v2,
+          #   pydantic,
+          #   python-sdk,
+          #   fastapi,
+          #   openapi,
+          #   postman,
+          #   java-sdk,
+          #   java-model,
+          #   java-spring,
+          #   ts-sdk,
+          #   ts-express,
+          #   go-fiber,
+          #   go-model,
+          #   go-sdk,
+          #   csharp-model,
+          #   csharp-sdk,
+          #   php-model,
+          #   php-sdk,
+          #   swift-sdk,
+          #   rust-model,
+          #   rust-sdk
+          # ]
     outputs:
       ruby-model: ${{ steps.set-test-matrix.outputs.ruby-model-test-matrix }}
       ruby-sdk: ${{ steps.set-test-matrix.outputs.ruby-sdk-test-matrix }}
@@ -359,11 +364,13 @@ jobs:
       max-parallel: 10 # Limit the number of runners for this job to 10
       matrix:
         include: ${{ fromJSON(needs.get-all-test-matrices.outputs.python-sdk) }}
-    if: >-
-      ${{
-        (needs.changes.outputs.python == 'true' 
-        && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
-      }}
+    # CHRISM - temp
+    if: always()
+    # if: >-
+    #   ${{
+    #     (needs.changes.outputs.python == 'true' 
+    #     && github.event.pull_request.draft == false) || github.event_name == 'workflow_dispatch'
+    #   }}
     steps:
       - name: Echo package
         run: echo '${{toJson(matrix.fixtures)}}' | jq .
