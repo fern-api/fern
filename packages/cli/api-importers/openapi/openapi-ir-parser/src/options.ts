@@ -105,8 +105,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     inlineAllOfSchemas: false,
     resolveAliases: false,
     groupMultiApiEnvironments: false,
-    wrapReferencesToNullableInOptional: true,
-    coerceOptionalSchemasToNullable: true
+    wrapReferencesToNullableInOptional: false,
+    coerceOptionalSchemasToNullable: false
 };
 
 export function getParseOptions({

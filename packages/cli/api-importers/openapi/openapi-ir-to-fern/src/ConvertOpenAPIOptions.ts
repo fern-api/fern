@@ -78,8 +78,8 @@ export const DEFAULT_CONVERT_OPENAPI_OPTIONS: ConvertOpenAPIOptions = {
     inlinePathParameters: true,
     useBytesForBinaryResponse: false,
     respectForwardCompatibleEnums: false,
-    wrapReferencesToNullableInOptional: true,
-    coerceOptionalSchemasToNullable: true
+    wrapReferencesToNullableInOptional: false,
+    coerceOptionalSchemasToNullable: false
 };
 
 export function getConvertOptions({

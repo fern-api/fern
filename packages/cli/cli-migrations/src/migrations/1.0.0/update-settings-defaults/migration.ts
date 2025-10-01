@@ -226,8 +226,10 @@ type NewSettingsDefaults = {
 };
 
 const COMMON_SETTINGS_DEFAULTS: NewSettingsDefaults = {
+    "idiomatic-request-names": [false, true],
     "respect-nullable-schemas": [false, true],
-    "idiomatic-request-names": [false, true]
+    "wrap-references-to-nullable-in-optional": [true, false],
+    "coerce-optional-schemas-to-nullable": [true, false]
 };
 
 const OPENAPI_SETTINGS_DEFAULTS: NewSettingsDefaults = {

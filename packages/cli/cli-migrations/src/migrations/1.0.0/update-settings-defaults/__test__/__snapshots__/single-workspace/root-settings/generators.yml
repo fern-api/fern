@@ -7,6 +7,8 @@ api-settings:
   use-title: true
   inline-path-parameters: true
   message-naming: v1
-  respect-nullable-schemas: false
   idiomatic-request-names: false
+  respect-nullable-schemas: false
+  wrap-references-to-nullable-in-optional: true
+  coerce-optional-schemas-to-nullable: true
 groups: {}

@@ -8,7 +8,9 @@ api:
   settings:
     message-naming: v2
     use-title: true
-    respect-nullable-schemas: false
     idiomatic-request-names: false
+    respect-nullable-schemas: false
+    wrap-references-to-nullable-in-optional: true
+    coerce-optional-schemas-to-nullable: true
     inline-path-parameters: false
 groups: {}

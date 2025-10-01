@@ -94,8 +94,8 @@ export class OpenApiIrConverterContext {
         this.respectForwardCompatibleEnums = options?.respectForwardCompatibleEnums ?? false;
         this.referencedSchemaIds = options?.onlyIncludeReferencedSchemas ? new Set() : undefined;
         this.enableUniqueErrorsPerEndpoint = options?.enableUniqueErrorsPerEndpoint ?? false;
-        this.wrapReferencesToNullableInOptional = options?.wrapReferencesToNullableInOptional ?? true;
-        this.coerceOptionalSchemasToNullable = options?.coerceOptionalSchemasToNullable ?? true;
+        this.wrapReferencesToNullableInOptional = options?.wrapReferencesToNullableInOptional ?? false;
+        this.coerceOptionalSchemasToNullable = options?.coerceOptionalSchemasToNullable ?? false;
         this.builder = new FernDefinitionBuilderImpl(this.enableUniqueErrorsPerEndpoint);
         if (ir.title != null) {
             this.builder.setDisplayName({ displayName: ir.title });

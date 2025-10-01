@@ -87,8 +87,8 @@ function parseDeprecatedApiDefinitionSettingsSchema(
         shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1",
         asyncApiMessageNaming: settings?.["message-naming"],
         respectNullableSchemas: settings?.["respect-nullable-schemas"] ?? true,
-        wrapReferencesToNullableInOptional: settings?.["wrap-references-to-nullable-in-optional"],
-        coerceOptionalSchemasToNullable: settings?.["coerce-optional-schemas-to-nullable"],
+        wrapReferencesToNullableInOptional: settings?.["wrap-references-to-nullable-in-optional"] ?? false,
+        coerceOptionalSchemasToNullable: settings?.["coerce-optional-schemas-to-nullable"] ?? false,
         onlyIncludeReferencedSchemas: settings?.["only-include-referenced-schemas"],
         inlinePathParameters: settings?.["inline-path-parameters"] ?? true,
         shouldUseIdiomaticRequestNames: settings?.["idiomatic-request-names"] ?? true
@@ -138,8 +138,8 @@ function parseBaseApiDefinitionSettingsSchema(
         shouldUseOptionalAdditionalProperties: settings?.["optional-additional-properties"] ?? true,
         coerceEnumsToLiterals: settings?.["coerce-enums-to-literals"],
         respectNullableSchemas: settings?.["respect-nullable-schemas"] ?? true,
-        wrapReferencesToNullableInOptional: settings?.["wrap-references-to-nullable-in-optional"],
-        coerceOptionalSchemasToNullable: settings?.["coerce-optional-schemas-to-nullable"]
+        wrapReferencesToNullableInOptional: settings?.["wrap-references-to-nullable-in-optional"] ?? false,
+        coerceOptionalSchemasToNullable: settings?.["coerce-optional-schemas-to-nullable"] ?? false
     };
 }
 

@@ -3,8 +3,10 @@ api:
   - path: ./openapi.yml
     settings:
       use-title: true
-      respect-nullable-schemas: false
       idiomatic-request-names: false
+      respect-nullable-schemas: false
+      wrap-references-to-nullable-in-optional: true
+      coerce-optional-schemas-to-nullable: true
       inline-path-parameters: false
   - path: ./openapi2.yml
     overrides: ./openapi2.overrides.yml
@@ -13,14 +15,18 @@ api:
     origin: dummy2
     settings:
       use-title: false
-      respect-nullable-schemas: false
       idiomatic-request-names: false
+      respect-nullable-schemas: false
+      wrap-references-to-nullable-in-optional: true
+      coerce-optional-schemas-to-nullable: true
       inline-path-parameters: false
   - path: ./asyncapi.yml
     settings:
       use-title: true
-      respect-nullable-schemas: false
       idiomatic-request-names: false
+      respect-nullable-schemas: false
+      wrap-references-to-nullable-in-optional: true
+      coerce-optional-schemas-to-nullable: true
       inline-path-parameters: false
   - path: ./asyncapi2.yml
     overrides: ./asyncapi2.overrides.yml
@@ -30,8 +36,10 @@ api:
     settings:
       message-naming: v2
       use-title: true
-      respect-nullable-schemas: false
       idiomatic-request-names: false
+      respect-nullable-schemas: false
+      wrap-references-to-nullable-in-optional: true
+      coerce-optional-schemas-to-nullable: true
       inline-path-parameters: false
   - proto:
       root: ./proto
