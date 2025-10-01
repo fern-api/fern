@@ -42,7 +42,7 @@ jobs:
             php-sdk,
             swift-sdk,
             rust-model,
-            rust-sdk,
+            rust-sdk
           ]
     steps:
       - name: Checkout Repo
@@ -122,7 +122,7 @@ jobs:
             php-sdk,
             swift-sdk,
             rust-model,
-            rust-sdk,
+            rust-sdk
           ]
     steps:
       - name: Make artifacts directory
