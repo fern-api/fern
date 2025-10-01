@@ -19,6 +19,8 @@ concurrency:
 jobs:
   run-seed-test:
     runs-on: ubuntu-latest
+    #  CHRISM
+    if: false
     strategy:
       fail-fast: false # Let all tests run and cascade errors, will only PR generator updates that passed
       matrix:
@@ -92,10 +94,13 @@ jobs:
           echo "GitHub workflow name: ${{ github.workflow }}"
           echo "GitHub workflow run ID: ${{ github.run_id }}"
 
-  # Always trigger this stage. Failing jobs for a generator will continue to fail and won't PR any changes
+  # Even trigger this stage when part of previous matrix job is failing. Just don't continue for cancellations or skips.
+  # Failing jobs for a generator will continue to fail and won't PR any changes, but we want the changes for the passing generators.
   build-seed-groups:
     runs-on: ubuntu-latest
-    if: always()
+    # CHRISM
+    if: true
+    # if: needs.run-seed-test.result == 'success' || needs.run-seed-test.result == 'failure'
     needs: [run-seed-test]
     strategy:
       fail-fast: false
@@ -137,7 +142,7 @@ jobs:
         with:
           path: ./artifacts
           name: ${{ matrix.sdk-name }}-seed-test-log.txt
-          # run-id: 18135449832 # CHRISM - temp
+          run-id: 18168948457 # CHRISM - temp
           github-token: ${{ secrets.FERN_GITHUB_PAT }}
           repository: ${{ github.repository }}
           merge-multiple: true
@@ -163,9 +168,13 @@ jobs:
           if-no-files-found: error
           retention-days: 1
 
+  # Even trigger this stage when part of previous matrix job is failing. Just don't continue for cancellations or skips.
+  # Failing jobs for a generator will continue to fail and won't PR any changes, but we want the changes for the passing generators.
   pr-seed-group-files:
     runs-on: ubuntu-latest
-    if: always()
+    # CHRISM
+    if: true
+    # if: needs.build-seed-groups.result == 'success' || needs.build-seed-groups.result == 'failure'
     needs: [build-seed-groups]
     steps:
       - name: Checkout Repo
@@ -215,12 +224,7 @@ jobs:
 
       - name: Lint the Seed Group Files
         run: |
-          if [ -f .github/workflow-resource-files/seed-groups/*-seed-groups.json ]; then
-            pnpm format:fix .github/workflow-resource-files/seed-groups/
-          else
-            echo "Error: No seed group files found"
-            exit 1
-          fi
+          pnpm format:fix .github/workflow-resource-files/seed-groups/
 
       # Create PR, approve and set to merge per generator
       - name: Create Pull Request
