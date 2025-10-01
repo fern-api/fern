@@ -3,7 +3,6 @@ import {
     FernGeneratorExec,
     GeneratorNotificationService
 } from "@fern-api/browser-compatible-base-generator";
-import { Logger } from "@fern-api/logger";
 import { RelativeFilePath } from "@fern-api/path-utils";
 import { BaseRubyCustomConfigSchema, ruby } from "@fern-api/ruby-ast";
 import { IntermediateRepresentation, TypeDeclaration, TypeId } from "@fern-fern/ir-sdk/api";
@@ -53,19 +52,19 @@ export abstract class AbstractRubyGeneratorContext<
         return this.ir.apiName.camelCase.safeName.toLowerCase();
     }
 
-    public getVersionFromConfig(logger: Logger): string {
+    public getVersionFromConfig(): string {
         return this.config.output.mode._visit<string>({
             publish: (generatorPublishConfig) => {
                 if (generatorPublishConfig.version) {
                     return generatorPublishConfig.version;
                 }
-                logger.warn(
+                this.logger.warn(
                     `Didn't define a version number as part of the publish output configuration, defaulting to ${defaultVersion}`
                 );
                 return defaultVersion;
             },
             downloadFiles: () => {
-                logger.warn(
+                this.logger.warn(
                     `File download output configuration doesn't have a configured version number, defaulting to ${defaultVersion}`
                 );
                 return defaultVersion;
@@ -74,13 +73,13 @@ export abstract class AbstractRubyGeneratorContext<
                 if (githubOutputMode.version) {
                     return githubOutputMode.version;
                 }
-                logger.warn(
+                this.logger.warn(
                     `Didn't define a version number as part of the github output configuration, defaulting to ${defaultVersion}`
                 );
                 return defaultVersion;
             },
             _other: () => {
-                logger.warn(`Unexpected output mode, defaulting version to ${defaultVersion}`);
+                this.logger.warn(`Unexpected output mode, defaulting version to ${defaultVersion}`);
                 return defaultVersion;
             }
         });
