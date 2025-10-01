@@ -28,7 +28,7 @@ client.service.post();
 <dl>
 <dd>
 
-**endpointParam:** `String` 
+**endpoint_param:** `String` 
     
 </dd>
 </dl>

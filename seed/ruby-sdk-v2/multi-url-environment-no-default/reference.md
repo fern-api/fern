@@ -69,7 +69,7 @@ client.s_3.get_presigned_url(s3Key: 's3Key');
 <dl>
 <dd>
 
-**s3Key:** `String` 
+**s_3_key:** `String` 
     
 </dd>
 </dl>

@@ -84,7 +84,7 @@ client.foo.find(
 <dl>
 <dd>
 
-**optionalString:** `String` 
+**optional_string:** `String` 
     
 </dd>
 </dl>
@@ -92,7 +92,7 @@ client.foo.find(
 <dl>
 <dd>
 
-**publicProperty:** `String` 
+**public_property:** `String` 
     
 </dd>
 </dl>
@@ -100,7 +100,7 @@ client.foo.find(
 <dl>
 <dd>
 
-**privateProperty:** `Integer` 
+**private_property:** `Integer` 
     
 </dd>
 </dl>

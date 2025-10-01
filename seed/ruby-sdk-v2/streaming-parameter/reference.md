@@ -39,7 +39,7 @@ client.dummy.generate(
 <dl>
 <dd>
 
-**numEvents:** `Integer` 
+**num_events:** `Integer` 
     
 </dd>
 </dl>

@@ -27,7 +27,7 @@ client.get_account();
 <dl>
 <dd>
 
-**accountId:** `String` 
+**account_id:** `String` 
     
 </dd>
 </dl>

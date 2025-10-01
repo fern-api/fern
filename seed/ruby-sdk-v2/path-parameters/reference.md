@@ -28,7 +28,7 @@ client.organizations.get_organization();
 <dl>
 <dd>
 
-**tenantId:** `String` 
+**tenant_id:** `String` 
     
 </dd>
 </dl>
@@ -36,7 +36,7 @@ client.organizations.get_organization();
 <dl>
 <dd>
 
-**organizationId:** `String` 
+**organization_id:** `String` 
     
 </dd>
 </dl>
@@ -79,7 +79,7 @@ client.organizations.get_organization_user(
 <dl>
 <dd>
 
-**tenantId:** `String` 
+**tenant_id:** `String` 
     
 </dd>
 </dl>
@@ -87,7 +87,7 @@ client.organizations.get_organization_user(
 <dl>
 <dd>
 
-**organizationId:** `String` 
+**organization_id:** `String` 
     
 </dd>
 </dl>
@@ -95,7 +95,7 @@ client.organizations.get_organization_user(
 <dl>
 <dd>
 
-**userId:** `String` 
+**user_id:** `String` 
     
 </dd>
 </dl>
@@ -138,7 +138,7 @@ client.organizations.search_organizations(
 <dl>
 <dd>
 
-**tenantId:** `String` 
+**tenant_id:** `String` 
     
 </dd>
 </dl>
@@ -146,7 +146,7 @@ client.organizations.search_organizations(
 <dl>
 <dd>
 
-**organizationId:** `String` 
+**organization_id:** `String` 
     
 </dd>
 </dl>
@@ -195,7 +195,7 @@ client.user.get_user(userId: 'user_id');
 <dl>
 <dd>
 
-**tenantId:** `String` 
+**tenant_id:** `String` 
     
 </dd>
 </dl>
@@ -203,7 +203,7 @@ client.user.get_user(userId: 'user_id');
 <dl>
 <dd>
 
-**userId:** `String` 
+**user_id:** `String` 
     
 </dd>
 </dl>
@@ -246,7 +246,7 @@ client.user.create_user({
 <dl>
 <dd>
 
-**tenantId:** `String` 
+**tenant_id:** `String` 
     
 </dd>
 </dl>
@@ -294,7 +294,7 @@ client.user.update_user(userId: 'user_id');
 <dl>
 <dd>
 
-**tenantId:** `String` 
+**tenant_id:** `String` 
     
 </dd>
 </dl>
@@ -302,7 +302,7 @@ client.user.update_user(userId: 'user_id');
 <dl>
 <dd>
 
-**userId:** `String` 
+**user_id:** `String` 
     
 </dd>
 </dl>
@@ -353,7 +353,7 @@ client.user.search_users(
 <dl>
 <dd>
 
-**tenantId:** `String` 
+**tenant_id:** `String` 
     
 </dd>
 </dl>
@@ -361,7 +361,7 @@ client.user.search_users(
 <dl>
 <dd>
 
-**userId:** `String` 
+**user_id:** `String` 
     
 </dd>
 </dl>

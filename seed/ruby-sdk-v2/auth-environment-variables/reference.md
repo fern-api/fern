@@ -81,7 +81,7 @@ client.service.get_with_header(xEndpointHeader: 'X-Endpoint-Header');
 <dl>
 <dd>
 
-**xEndpointHeader:** `String` — Specifies the endpoint key.
+**x_endpoint_header:** `String` — Specifies the endpoint key.
     
 </dd>
 </dl>

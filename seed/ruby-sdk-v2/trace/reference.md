@@ -54,7 +54,7 @@ client.admin.update_test_submission_status();
 <dl>
 <dd>
 
-**submissionId:** `String` 
+**submission_id:** `String` 
     
 </dd>
 </dl>
@@ -104,7 +104,7 @@ client.admin.send_test_submission_update({
 <dl>
 <dd>
 
-**submissionId:** `String` 
+**submission_id:** `String` 
     
 </dd>
 </dl>
@@ -152,7 +152,7 @@ client.admin.update_workspace_submission_status();
 <dl>
 <dd>
 
-**submissionId:** `String` 
+**submission_id:** `String` 
     
 </dd>
 </dl>
@@ -202,7 +202,7 @@ client.admin.send_workspace_submission_update({
 <dl>
 <dd>
 
-**submissionId:** `String` 
+**submission_id:** `String` 
     
 </dd>
 </dl>
@@ -300,7 +300,7 @@ client.admin.store_traced_test_case(
 <dl>
 <dd>
 
-**submissionId:** `String` 
+**submission_id:** `String` 
     
 </dd>
 </dl>
@@ -308,7 +308,7 @@ client.admin.store_traced_test_case(
 <dl>
 <dd>
 
-**testCaseId:** `String` 
+**test_case_id:** `String` 
     
 </dd>
 </dl>
@@ -324,7 +324,7 @@ client.admin.store_traced_test_case(
 <dl>
 <dd>
 
-**traceResponses:** `Internal::Types::Array[Seed::Submission::Types::TraceResponse]` 
+**trace_responses:** `Internal::Types::Array[Seed::Submission::Types::TraceResponse]` 
     
 </dd>
 </dl>
@@ -364,7 +364,7 @@ client.admin.store_traced_test_case_v_2();
 <dl>
 <dd>
 
-**submissionId:** `String` 
+**submission_id:** `String` 
     
 </dd>
 </dl>
@@ -372,7 +372,7 @@ client.admin.store_traced_test_case_v_2();
 <dl>
 <dd>
 
-**testCaseId:** `String` 
+**test_case_id:** `String` 
     
 </dd>
 </dl>
@@ -471,7 +471,7 @@ client.admin.store_traced_workspace(
 <dl>
 <dd>
 
-**submissionId:** `String` 
+**submission_id:** `String` 
     
 </dd>
 </dl>
@@ -479,7 +479,7 @@ client.admin.store_traced_workspace(
 <dl>
 <dd>
 
-**workspaceRunDetails:** `Seed::Submission::Types::WorkspaceRunDetails` 
+**workspace_run_details:** `Seed::Submission::Types::WorkspaceRunDetails` 
     
 </dd>
 </dl>
@@ -487,7 +487,7 @@ client.admin.store_traced_workspace(
 <dl>
 <dd>
 
-**traceResponses:** `Internal::Types::Array[Seed::Submission::Types::TraceResponse]` 
+**trace_responses:** `Internal::Types::Array[Seed::Submission::Types::TraceResponse]` 
     
 </dd>
 </dl>
@@ -527,7 +527,7 @@ client.admin.store_traced_workspace_v_2();
 <dl>
 <dd>
 
-**submissionId:** `String` 
+**submission_id:** `String` 
     
 </dd>
 </dl>
@@ -642,7 +642,7 @@ client.migration.get_attempted_migrations(adminKeyHeader: 'admin-key-header');
 <dl>
 <dd>
 
-**adminKeyHeader:** `String` 
+**admin_key_header:** `String` 
     
 </dd>
 </dl>
@@ -701,7 +701,7 @@ client.playlist.create_playlist(
 <dl>
 <dd>
 
-**serviceParam:** `Integer` 
+**service_param:** `Integer` 
     
 </dd>
 </dl>
@@ -717,7 +717,7 @@ client.playlist.create_playlist(
 <dl>
 <dd>
 
-**optionalDatetime:** `String` 
+**optional_datetime:** `String` 
     
 </dd>
 </dl>
@@ -786,7 +786,7 @@ client.playlist.get_playlists(
 <dl>
 <dd>
 
-**serviceParam:** `Integer` 
+**service_param:** `Integer` 
     
 </dd>
 </dl>
@@ -802,7 +802,7 @@ client.playlist.get_playlists(
 <dl>
 <dd>
 
-**otherField:** `String` — i'm another field
+**other_field:** `String` — i'm another field
     
 </dd>
 </dl>
@@ -810,7 +810,7 @@ client.playlist.get_playlists(
 <dl>
 <dd>
 
-**multiLineDocs:** `String` 
+**multi_line_docs:** `String` 
 
 I'm a multiline
 description
@@ -821,7 +821,7 @@ description
 <dl>
 <dd>
 
-**optionalMultipleField:** `String` 
+**optional_multiple_field:** `String` 
     
 </dd>
 </dl>
@@ -829,7 +829,7 @@ description
 <dl>
 <dd>
 
-**multipleField:** `String` 
+**multiple_field:** `String` 
     
 </dd>
 </dl>
@@ -883,7 +883,7 @@ client.playlist.get_playlist();
 <dl>
 <dd>
 
-**serviceParam:** `Integer` 
+**service_param:** `Integer` 
     
 </dd>
 </dl>
@@ -891,7 +891,7 @@ client.playlist.get_playlist();
 <dl>
 <dd>
 
-**playlistId:** `String` 
+**playlist_id:** `String` 
     
 </dd>
 </dl>
@@ -948,7 +948,7 @@ client.playlist.update_playlist({
 <dl>
 <dd>
 
-**serviceParam:** `Integer` 
+**service_param:** `Integer` 
     
 </dd>
 </dl>
@@ -956,7 +956,7 @@ client.playlist.update_playlist({
 <dl>
 <dd>
 
-**playlistId:** `String` 
+**playlist_id:** `String` 
     
 </dd>
 </dl>
@@ -1018,7 +1018,7 @@ client.playlist.delete_playlist();
 <dl>
 <dd>
 
-**serviceParam:** `Integer` 
+**service_param:** `Integer` 
     
 </dd>
 </dl>
@@ -1026,7 +1026,7 @@ client.playlist.delete_playlist();
 <dl>
 <dd>
 
-**playlistId:** `String` 
+**playlist_id:** `String` 
     
 </dd>
 </dl>
@@ -1181,7 +1181,7 @@ client.problem.update_problem({
 <dl>
 <dd>
 
-**problemId:** `String` 
+**problem_id:** `String` 
     
 </dd>
 </dl>
@@ -1243,7 +1243,7 @@ client.problem.delete_problem();
 <dl>
 <dd>
 
-**problemId:** `String` 
+**problem_id:** `String` 
     
 </dd>
 </dl>
@@ -1305,7 +1305,7 @@ client.problem.get_default_starter_files(
 <dl>
 <dd>
 
-**inputParams:** `Internal::Types::Array[Seed::Problem::Types::VariableTypeAndName]` 
+**input_params:** `Internal::Types::Array[Seed::Problem::Types::VariableTypeAndName]` 
     
 </dd>
 </dl>
@@ -1313,7 +1313,7 @@ client.problem.get_default_starter_files(
 <dl>
 <dd>
 
-**outputType:** `Seed::Commons::Types::VariableType` 
+**output_type:** `Seed::Commons::Types::VariableType` 
     
 </dd>
 </dl>
@@ -1321,7 +1321,7 @@ client.problem.get_default_starter_files(
 <dl>
 <dd>
 
-**methodName:** `String` 
+**method_name:** `String` 
 
 The name of the `method` that the student has to complete.
 The method name cannot include the following characters:
@@ -1437,7 +1437,7 @@ client.submission.get_execution_session();
 <dl>
 <dd>
 
-**sessionId:** `String` 
+**session_id:** `String` 
     
 </dd>
 </dl>
@@ -1491,7 +1491,7 @@ client.submission.stop_execution_session();
 <dl>
 <dd>
 
-**sessionId:** `String` 
+**session_id:** `String` 
     
 </dd>
 </dl>
@@ -1565,7 +1565,7 @@ client.sysprop.set_num_warm_instances();
 <dl>
 <dd>
 
-**numWarmInstances:** `Integer` 
+**num_warm_instances:** `Integer` 
     
 </dd>
 </dl>
@@ -1723,7 +1723,7 @@ client.v_2.problem.get_latest_problem();
 <dl>
 <dd>
 
-**problemId:** `String` 
+**problem_id:** `String` 
     
 </dd>
 </dl>
@@ -1777,7 +1777,7 @@ client.v_2.problem.get_problem_version();
 <dl>
 <dd>
 
-**problemId:** `String` 
+**problem_id:** `String` 
     
 </dd>
 </dl>
@@ -1785,7 +1785,7 @@ client.v_2.problem.get_problem_version();
 <dl>
 <dd>
 
-**problemVersion:** `Integer` 
+**problem_version:** `Integer` 
     
 </dd>
 </dl>
@@ -1918,7 +1918,7 @@ client.v_2.problem.get_latest_problem();
 <dl>
 <dd>
 
-**problemId:** `String` 
+**problem_id:** `String` 
     
 </dd>
 </dl>
@@ -1972,7 +1972,7 @@ client.v_2.problem.get_problem_version();
 <dl>
 <dd>
 
-**problemId:** `String` 
+**problem_id:** `String` 
     
 </dd>
 </dl>
@@ -1980,7 +1980,7 @@ client.v_2.problem.get_problem_version();
 <dl>
 <dd>
 
-**problemVersion:** `Integer` 
+**problem_version:** `Integer` 
     
 </dd>
 </dl>

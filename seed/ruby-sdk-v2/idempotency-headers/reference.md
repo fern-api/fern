@@ -79,7 +79,7 @@ client.payment.delete();
 <dl>
 <dd>
 
-**paymentId:** `String` 
+**payment_id:** `String` 
     
 </dd>
 </dl>

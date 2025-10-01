@@ -28,7 +28,7 @@ client.user.get_user();
 <dl>
 <dd>
 
-**userId:** `String` 
+**user_id:** `String` 
     
 </dd>
 </dl>

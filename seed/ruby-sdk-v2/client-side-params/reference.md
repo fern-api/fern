@@ -58,7 +58,7 @@ client.service.list_resources(
 <dl>
 <dd>
 
-**perPage:** `Integer` — Number of items per page
+**per_page:** `Integer` — Number of items per page
     
 </dd>
 </dl>
@@ -82,7 +82,7 @@ client.service.list_resources(
 <dl>
 <dd>
 
-**includeTotals:** `Internal::Types::Boolean` — Whether to include total count
+**include_totals:** `Internal::Types::Boolean` — Whether to include total count
     
 </dd>
 </dl>
@@ -156,7 +156,7 @@ client.service.get_resource(
 <dl>
 <dd>
 
-**resourceId:** `String` 
+**resource_id:** `String` 
     
 </dd>
 </dl>
@@ -164,7 +164,7 @@ client.service.get_resource(
 <dl>
 <dd>
 
-**includeMetadata:** `Internal::Types::Boolean` — Include metadata in response
+**include_metadata:** `Internal::Types::Boolean` — Include metadata in response
     
 </dd>
 </dl>
@@ -326,7 +326,7 @@ client.service.list_users(
 <dl>
 <dd>
 
-**perPage:** `Integer` — Number of results per page.
+**per_page:** `Integer` — Number of results per page.
     
 </dd>
 </dl>
@@ -334,7 +334,7 @@ client.service.list_users(
 <dl>
 <dd>
 
-**includeTotals:** `Internal::Types::Boolean` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+**include_totals:** `Internal::Types::Boolean` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
     
 </dd>
 </dl>
@@ -366,7 +366,7 @@ client.service.list_users(
 <dl>
 <dd>
 
-**searchEngine:** `String` — Search engine version (v1, v2, or v3)
+**search_engine:** `String` — Search engine version (v1, v2, or v3)
     
 </dd>
 </dl>
@@ -432,7 +432,7 @@ client.service.get_user_by_id(
 <dl>
 <dd>
 
-**userId:** `String` 
+**user_id:** `String` 
     
 </dd>
 </dl>
@@ -448,7 +448,7 @@ client.service.get_user_by_id(
 <dl>
 <dd>
 
-**includeFields:** `Internal::Types::Boolean` — true to include the fields specified, false to exclude them
+**include_fields:** `Internal::Types::Boolean` — true to include the fields specified, false to exclude them
     
 </dd>
 </dl>
@@ -576,7 +576,7 @@ client.service.update_user({
 <dl>
 <dd>
 
-**userId:** `String` 
+**user_id:** `String` 
     
 </dd>
 </dl>
@@ -638,7 +638,7 @@ client.service.delete_user();
 <dl>
 <dd>
 
-**userId:** `String` 
+**user_id:** `String` 
     
 </dd>
 </dl>
@@ -769,7 +769,7 @@ client.service.get_connection(
 <dl>
 <dd>
 
-**connectionId:** `String` 
+**connection_id:** `String` 
     
 </dd>
 </dl>
@@ -848,7 +848,7 @@ client.service.list_clients(
 <dl>
 <dd>
 
-**includeFields:** `Internal::Types::Boolean` — Whether specified fields are included or excluded
+**include_fields:** `Internal::Types::Boolean` — Whether specified fields are included or excluded
     
 </dd>
 </dl>
@@ -864,7 +864,7 @@ client.service.list_clients(
 <dl>
 <dd>
 
-**perPage:** `Integer` — Number of results per page
+**per_page:** `Integer` — Number of results per page
     
 </dd>
 </dl>
@@ -872,7 +872,7 @@ client.service.list_clients(
 <dl>
 <dd>
 
-**includeTotals:** `Internal::Types::Boolean` — Include total count in response
+**include_totals:** `Internal::Types::Boolean` — Include total count in response
     
 </dd>
 </dl>
@@ -880,7 +880,7 @@ client.service.list_clients(
 <dl>
 <dd>
 
-**isGlobal:** `Internal::Types::Boolean` — Filter by global clients
+**is_global:** `Internal::Types::Boolean` — Filter by global clients
     
 </dd>
 </dl>
@@ -888,7 +888,7 @@ client.service.list_clients(
 <dl>
 <dd>
 
-**isFirstParty:** `Internal::Types::Boolean` — Filter by first party clients
+**is_first_party:** `Internal::Types::Boolean` — Filter by first party clients
     
 </dd>
 </dl>
@@ -896,7 +896,7 @@ client.service.list_clients(
 <dl>
 <dd>
 
-**appType:** `Internal::Types::Array[String]` — Filter by application type (spa, native, regular_web, non_interactive)
+**app_type:** `Internal::Types::Array[String]` — Filter by application type (spa, native, regular_web, non_interactive)
     
 </dd>
 </dl>
@@ -954,7 +954,7 @@ client.service.get_client(
 <dl>
 <dd>
 
-**clientId:** `String` 
+**client_id:** `String` 
     
 </dd>
 </dl>
@@ -970,7 +970,7 @@ client.service.get_client(
 <dl>
 <dd>
 
-**includeFields:** `Internal::Types::Boolean` — Whether specified fields are included or excluded
+**include_fields:** `Internal::Types::Boolean` — Whether specified fields are included or excluded
     
 </dd>
 </dl>

@@ -39,7 +39,7 @@ client.service.patch(
 <dl>
 <dd>
 
-**requireAuth:** `Internal::Types::Boolean` 
+**require_auth:** `Internal::Types::Boolean` 
     
 </dd>
 </dl>
@@ -180,7 +180,7 @@ client.service.patch_complex(
 <dl>
 <dd>
 
-**profileImageUrl:** `String` 
+**profile_image_url:** `String` 
     
 </dd>
 </dl>
@@ -256,7 +256,7 @@ client.service.named_patch_with_mixed(
 <dl>
 <dd>
 
-**appId:** `String` 
+**app_id:** `String` 
     
 </dd>
 </dl>
@@ -335,7 +335,7 @@ client.service.optional_merge_patch_test(
 <dl>
 <dd>
 
-**requiredField:** `String` 
+**required_field:** `String` 
     
 </dd>
 </dl>
@@ -343,7 +343,7 @@ client.service.optional_merge_patch_test(
 <dl>
 <dd>
 
-**optionalString:** `String` 
+**optional_string:** `String` 
     
 </dd>
 </dl>
@@ -351,7 +351,7 @@ client.service.optional_merge_patch_test(
 <dl>
 <dd>
 
-**optionalInteger:** `Integer` 
+**optional_integer:** `Integer` 
     
 </dd>
 </dl>
@@ -359,7 +359,7 @@ client.service.optional_merge_patch_test(
 <dl>
 <dd>
 
-**optionalBoolean:** `Internal::Types::Boolean` 
+**optional_boolean:** `Internal::Types::Boolean` 
     
 </dd>
 </dl>
@@ -367,7 +367,7 @@ client.service.optional_merge_patch_test(
 <dl>
 <dd>
 
-**nullableString:** `String` 
+**nullable_string:** `String` 
     
 </dd>
 </dl>
@@ -433,7 +433,7 @@ client.service.regular_patch(
 <dl>
 <dd>
 
-**field1:** `String` 
+**field_1:** `String` 
     
 </dd>
 </dl>
@@ -441,7 +441,7 @@ client.service.regular_patch(
 <dl>
 <dd>
 
-**field2:** `Integer` 
+**field_2:** `Integer` 
     
 </dd>
 </dl>

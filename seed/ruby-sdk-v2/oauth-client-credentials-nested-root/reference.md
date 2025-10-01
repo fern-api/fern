@@ -34,7 +34,7 @@ client.auth.get_token(
 <dl>
 <dd>
 
-**clientId:** `String` 
+**client_id:** `String` 
     
 </dd>
 </dl>
@@ -42,7 +42,7 @@ client.auth.get_token(
 <dl>
 <dd>
 
-**clientSecret:** `String` 
+**client_secret:** `String` 
     
 </dd>
 </dl>
@@ -58,7 +58,7 @@ client.auth.get_token(
 <dl>
 <dd>
 
-**grantType:** `String` 
+**grant_type:** `String` 
     
 </dd>
 </dl>

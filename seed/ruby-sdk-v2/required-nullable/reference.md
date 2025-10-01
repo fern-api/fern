@@ -30,7 +30,7 @@ client.get_foo(
 <dl>
 <dd>
 
-**optionalBaz:** `String` — An optional baz
+**optional_baz:** `String` — An optional baz
     
 </dd>
 </dl>
@@ -38,7 +38,7 @@ client.get_foo(
 <dl>
 <dd>
 
-**optionalNullableBaz:** `String` — An optional baz
+**optional_nullable_baz:** `String` — An optional baz
     
 </dd>
 </dl>
@@ -46,7 +46,7 @@ client.get_foo(
 <dl>
 <dd>
 
-**requiredBaz:** `String` — A required baz
+**required_baz:** `String` — A required baz
     
 </dd>
 </dl>
@@ -54,7 +54,7 @@ client.get_foo(
 <dl>
 <dd>
 
-**requiredNullableBaz:** `String` — A required baz
+**required_nullable_baz:** `String` — A required baz
     
 </dd>
 </dl>

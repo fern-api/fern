@@ -32,7 +32,7 @@ client.headers.send_(
 <dl>
 <dd>
 
-**endpointVersion:** `String` 
+**endpoint_version:** `String` 
     
 </dd>
 </dl>
@@ -142,7 +142,7 @@ client.inlined.send_(
 <dl>
 <dd>
 
-**aliasedContext:** `String` 
+**aliased_context:** `String` 
     
 </dd>
 </dl>
@@ -150,7 +150,7 @@ client.inlined.send_(
 <dl>
 <dd>
 
-**maybeContext:** `String` 
+**maybe_context:** `String` 
     
 </dd>
 </dl>
@@ -158,7 +158,7 @@ client.inlined.send_(
 <dl>
 <dd>
 
-**objectWithLiteral:** `Seed::Inlined::Types::ATopLevelLiteral` 
+**object_with_literal:** `Seed::Inlined::Types::ATopLevelLiteral` 
     
 </dd>
 </dl>
@@ -258,7 +258,7 @@ client.query.send_(
 <dl>
 <dd>
 
-**optionalPrompt:** `String` 
+**optional_prompt:** `String` 
     
 </dd>
 </dl>
@@ -266,7 +266,7 @@ client.query.send_(
 <dl>
 <dd>
 
-**aliasPrompt:** `String` 
+**alias_prompt:** `String` 
     
 </dd>
 </dl>
@@ -274,7 +274,7 @@ client.query.send_(
 <dl>
 <dd>
 
-**aliasOptionalPrompt:** `String` 
+**alias_optional_prompt:** `String` 
     
 </dd>
 </dl>
@@ -298,7 +298,7 @@ client.query.send_(
 <dl>
 <dd>
 
-**optionalStream:** `Internal::Types::Boolean` 
+**optional_stream:** `Internal::Types::Boolean` 
     
 </dd>
 </dl>
@@ -306,7 +306,7 @@ client.query.send_(
 <dl>
 <dd>
 
-**aliasStream:** `Internal::Types::Boolean` 
+**alias_stream:** `Internal::Types::Boolean` 
     
 </dd>
 </dl>
@@ -314,7 +314,7 @@ client.query.send_(
 <dl>
 <dd>
 
-**aliasOptionalStream:** `Internal::Types::Boolean` 
+**alias_optional_stream:** `Internal::Types::Boolean` 
     
 </dd>
 </dl>

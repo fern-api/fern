@@ -42,7 +42,7 @@ client.nullable_optional.get_user();
 <dl>
 <dd>
 
-**userId:** `String` 
+**user_id:** `String` 
     
 </dd>
 </dl>
@@ -176,7 +176,7 @@ client.nullable_optional.update_user({
 <dl>
 <dd>
 
-**userId:** `String` 
+**user_id:** `String` 
     
 </dd>
 </dl>
@@ -259,7 +259,7 @@ client.nullable_optional.list_users(
 <dl>
 <dd>
 
-**includeDeleted:** `Internal::Types::Boolean` 
+**include_deleted:** `Internal::Types::Boolean` 
     
 </dd>
 </dl>
@@ -267,7 +267,7 @@ client.nullable_optional.list_users(
 <dl>
 <dd>
 
-**sortBy:** `String` 
+**sort_by:** `String` 
     
 </dd>
 </dl>
@@ -350,7 +350,7 @@ client.nullable_optional.search_users(
 <dl>
 <dd>
 
-**isActive:** `Internal::Types::Boolean` 
+**is_active:** `Internal::Types::Boolean` 
     
 </dd>
 </dl>
@@ -477,7 +477,7 @@ client.nullable_optional.get_complex_profile();
 <dl>
 <dd>
 
-**profileId:** `String` 
+**profile_id:** `String` 
     
 </dd>
 </dl>
@@ -538,7 +538,7 @@ client.nullable_optional.update_complex_profile(
 <dl>
 <dd>
 
-**profileId:** `String` 
+**profile_id:** `String` 
     
 </dd>
 </dl>
@@ -546,7 +546,7 @@ client.nullable_optional.update_complex_profile(
 <dl>
 <dd>
 
-**nullableRole:** `Seed::NullableOptional::Types::UserRole` 
+**nullable_role:** `Seed::NullableOptional::Types::UserRole` 
     
 </dd>
 </dl>
@@ -554,7 +554,7 @@ client.nullable_optional.update_complex_profile(
 <dl>
 <dd>
 
-**nullableStatus:** `Seed::NullableOptional::Types::UserStatus` 
+**nullable_status:** `Seed::NullableOptional::Types::UserStatus` 
     
 </dd>
 </dl>
@@ -562,7 +562,7 @@ client.nullable_optional.update_complex_profile(
 <dl>
 <dd>
 
-**nullableNotification:** `Seed::NullableOptional::Types::NotificationMethod` 
+**nullable_notification:** `Seed::NullableOptional::Types::NotificationMethod` 
     
 </dd>
 </dl>
@@ -570,7 +570,7 @@ client.nullable_optional.update_complex_profile(
 <dl>
 <dd>
 
-**nullableSearchResult:** `Seed::NullableOptional::Types::SearchResult` 
+**nullable_search_result:** `Seed::NullableOptional::Types::SearchResult` 
     
 </dd>
 </dl>
@@ -578,7 +578,7 @@ client.nullable_optional.update_complex_profile(
 <dl>
 <dd>
 
-**nullableArray:** `Internal::Types::Array[String]` 
+**nullable_array:** `Internal::Types::Array[String]` 
     
 </dd>
 </dl>
@@ -730,7 +730,7 @@ client.nullable_optional.filter_by_role(
 <dl>
 <dd>
 
-**secondaryRole:** `Seed::NullableOptional::Types::UserRole` 
+**secondary_role:** `Seed::NullableOptional::Types::UserRole` 
     
 </dd>
 </dl>
@@ -784,7 +784,7 @@ client.nullable_optional.get_notification_settings();
 <dl>
 <dd>
 
-**userId:** `String` 
+**user_id:** `String` 
     
 </dd>
 </dl>
@@ -843,7 +843,7 @@ client.nullable_optional.update_tags(
 <dl>
 <dd>
 
-**userId:** `String` 
+**user_id:** `String` 
     
 </dd>
 </dl>
@@ -943,7 +943,7 @@ client.nullable_optional.get_search_results(
 <dl>
 <dd>
 
-**includeTypes:** `Internal::Types::Array[String]` 
+**include_types:** `Internal::Types::Array[String]` 
     
 </dd>
 </dl>

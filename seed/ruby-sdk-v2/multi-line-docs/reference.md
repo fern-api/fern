@@ -43,7 +43,7 @@ client.user.get_user();
 <dl>
 <dd>
 
-**userId:** `String` 
+**user_id:** `String` 
 
 The ID of the user to retrieve.
 This ID is unique to each user.

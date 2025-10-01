@@ -40,7 +40,7 @@ client.headers.send_(
 <dl>
 <dd>
 
-**maybeOperand:** `Seed::Types::Operand` 
+**maybe_operand:** `Seed::Types::Operand` 
     
 </dd>
 </dl>
@@ -48,7 +48,7 @@ client.headers.send_(
 <dl>
 <dd>
 
-**operandOrColor:** `Seed::Types::ColorOrOperand` 
+**operand_or_color:** `Seed::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -56,7 +56,7 @@ client.headers.send_(
 <dl>
 <dd>
 
-**maybeOperandOrColor:** `Seed::Types::ColorOrOperand` 
+**maybe_operand_or_color:** `Seed::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -108,7 +108,7 @@ client.inlined_request.send_(
 <dl>
 <dd>
 
-**maybeOperand:** `Seed::Types::Operand` 
+**maybe_operand:** `Seed::Types::Operand` 
     
 </dd>
 </dl>
@@ -116,7 +116,7 @@ client.inlined_request.send_(
 <dl>
 <dd>
 
-**operandOrColor:** `Seed::Types::ColorOrOperand` 
+**operand_or_color:** `Seed::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -124,7 +124,7 @@ client.inlined_request.send_(
 <dl>
 <dd>
 
-**maybeOperandOrColor:** `Seed::Types::ColorOrOperand` 
+**maybe_operand_or_color:** `Seed::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -173,7 +173,7 @@ client.path_param.send_();
 <dl>
 <dd>
 
-**operandOrColor:** `Seed::Types::ColorOrOperand` 
+**operand_or_color:** `Seed::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -225,7 +225,7 @@ client.query_param.send_(
 <dl>
 <dd>
 
-**maybeOperand:** `Seed::Types::Operand` 
+**maybe_operand:** `Seed::Types::Operand` 
     
 </dd>
 </dl>
@@ -233,7 +233,7 @@ client.query_param.send_(
 <dl>
 <dd>
 
-**operandOrColor:** `Seed::Types::ColorOrOperand` 
+**operand_or_color:** `Seed::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -241,7 +241,7 @@ client.query_param.send_(
 <dl>
 <dd>
 
-**maybeOperandOrColor:** `Seed::Types::ColorOrOperand` 
+**maybe_operand_or_color:** `Seed::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -294,7 +294,7 @@ client.query_param.send_list(
 <dl>
 <dd>
 
-**maybeOperand:** `Seed::Types::Operand` 
+**maybe_operand:** `Seed::Types::Operand` 
     
 </dd>
 </dl>
@@ -302,7 +302,7 @@ client.query_param.send_list(
 <dl>
 <dd>
 
-**operandOrColor:** `Seed::Types::ColorOrOperand` 
+**operand_or_color:** `Seed::Types::ColorOrOperand` 
     
 </dd>
 </dl>
@@ -310,7 +310,7 @@ client.query_param.send_list(
 <dl>
 <dd>
 
-**maybeOperandOrColor:** `Seed::Types::ColorOrOperand` 
+**maybe_operand_or_color:** `Seed::Types::ColorOrOperand` 
     
 </dd>
 </dl>

@@ -95,7 +95,7 @@ client.inline_users.inline_users.list_with_cursor_pagination(
 <dl>
 <dd>
 
-**perPage:** `Integer` — Defaults to per page
+**per_page:** `Integer` — Defaults to per page
     
 </dd>
 </dl>
@@ -111,7 +111,7 @@ client.inline_users.inline_users.list_with_cursor_pagination(
 <dl>
 <dd>
 
-**startingAfter:** `String` 
+**starting_after:** `String` 
 
 The cursor used for pagination in order to fetch
 the next page of results.
@@ -250,7 +250,7 @@ client.inline_users.inline_users.list_with_cursor_pagination(
 <dl>
 <dd>
 
-**perPage:** `Integer` — Defaults to per page
+**per_page:** `Integer` — Defaults to per page
     
 </dd>
 </dl>
@@ -266,7 +266,7 @@ client.inline_users.inline_users.list_with_cursor_pagination(
 <dl>
 <dd>
 
-**startingAfter:** `String` 
+**starting_after:** `String` 
 
 The cursor used for pagination in order to fetch
 the next page of results.
@@ -322,7 +322,7 @@ client.inline_users.inline_users.list_with_cursor_pagination(
 <dl>
 <dd>
 
-**perPage:** `Integer` — Defaults to per page
+**per_page:** `Integer` — Defaults to per page
     
 </dd>
 </dl>
@@ -338,7 +338,7 @@ client.inline_users.inline_users.list_with_cursor_pagination(
 <dl>
 <dd>
 
-**startingAfter:** `String` 
+**starting_after:** `String` 
 
 The cursor used for pagination in order to fetch
 the next page of results.
@@ -630,7 +630,7 @@ client.inline_users.inline_users.list_with_cursor_pagination(startingAfter: 'sta
 <dl>
 <dd>
 
-**startingAfter:** `String` 
+**starting_after:** `String` 
 
 The cursor used for pagination in order to fetch
 the next page of results.
@@ -727,7 +727,7 @@ client.users.list_with_cursor_pagination(
 <dl>
 <dd>
 
-**perPage:** `Integer` — Defaults to per page
+**per_page:** `Integer` — Defaults to per page
     
 </dd>
 </dl>
@@ -743,7 +743,7 @@ client.users.list_with_cursor_pagination(
 <dl>
 <dd>
 
-**startingAfter:** `String` 
+**starting_after:** `String` 
 
 The cursor used for pagination in order to fetch
 the next page of results.
@@ -882,7 +882,7 @@ client.users.list_with_cursor_pagination(
 <dl>
 <dd>
 
-**perPage:** `Integer` — Defaults to per page
+**per_page:** `Integer` — Defaults to per page
     
 </dd>
 </dl>
@@ -898,7 +898,7 @@ client.users.list_with_cursor_pagination(
 <dl>
 <dd>
 
-**startingAfter:** `String` 
+**starting_after:** `String` 
 
 The cursor used for pagination in order to fetch
 the next page of results.
@@ -954,7 +954,7 @@ client.users.list_with_cursor_pagination(
 <dl>
 <dd>
 
-**perPage:** `Integer` — Defaults to per page
+**per_page:** `Integer` — Defaults to per page
     
 </dd>
 </dl>
@@ -970,7 +970,7 @@ client.users.list_with_cursor_pagination(
 <dl>
 <dd>
 
-**startingAfter:** `String` 
+**starting_after:** `String` 
 
 The cursor used for pagination in order to fetch
 the next page of results.
@@ -1262,7 +1262,7 @@ client.users.list_with_cursor_pagination(startingAfter: 'starting_after');
 <dl>
 <dd>
 
-**startingAfter:** `String` 
+**starting_after:** `String` 
 
 The cursor used for pagination in order to fetch
 the next page of results.

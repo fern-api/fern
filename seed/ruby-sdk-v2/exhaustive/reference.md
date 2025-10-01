@@ -2106,7 +2106,7 @@ client.inlined_requests.post_with_object_bodyand_response(
 <dl>
 <dd>
 
-**nestedObject:** `Seed::Types::Object_::Types::ObjectWithOptionalField` 
+**nested_object:** `Seed::Types::Object_::Types::ObjectWithOptionalField` 
     
 </dd>
 </dl>
@@ -2256,7 +2256,7 @@ client.req_with_headers.get_with_custom_header(
 <dl>
 <dd>
 
-**xTestEndpointHeader:** `String` 
+**x_test_endpoint_header:** `String` 
     
 </dd>
 </dl>

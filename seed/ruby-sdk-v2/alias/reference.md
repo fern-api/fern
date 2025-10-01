@@ -27,7 +27,7 @@ client.get();
 <dl>
 <dd>
 
-**typeId:** `String` 
+**type_id:** `String` 
     
 </dd>
 </dl>

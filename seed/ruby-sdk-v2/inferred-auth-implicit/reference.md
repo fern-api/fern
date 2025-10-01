@@ -35,7 +35,7 @@ client.auth.get_token_with_client_credentials(
 <dl>
 <dd>
 
-**xApiKey:** `String` 
+**x_api_key:** `String` 
     
 </dd>
 </dl>
@@ -43,7 +43,7 @@ client.auth.get_token_with_client_credentials(
 <dl>
 <dd>
 
-**clientId:** `String` 
+**client_id:** `String` 
     
 </dd>
 </dl>
@@ -51,7 +51,7 @@ client.auth.get_token_with_client_credentials(
 <dl>
 <dd>
 
-**clientSecret:** `String` 
+**client_secret:** `String` 
     
 </dd>
 </dl>
@@ -67,7 +67,7 @@ client.auth.get_token_with_client_credentials(
 <dl>
 <dd>
 
-**grantType:** `String` 
+**grant_type:** `String` 
     
 </dd>
 </dl>
@@ -123,7 +123,7 @@ client.auth.refresh_token(
 <dl>
 <dd>
 
-**xApiKey:** `String` 
+**x_api_key:** `String` 
     
 </dd>
 </dl>
@@ -131,7 +131,7 @@ client.auth.refresh_token(
 <dl>
 <dd>
 
-**clientId:** `String` 
+**client_id:** `String` 
     
 </dd>
 </dl>
@@ -139,7 +139,7 @@ client.auth.refresh_token(
 <dl>
 <dd>
 
-**clientSecret:** `String` 
+**client_secret:** `String` 
     
 </dd>
 </dl>
@@ -147,7 +147,7 @@ client.auth.refresh_token(
 <dl>
 <dd>
 
-**refreshToken:** `String` 
+**refresh_token:** `String` 
     
 </dd>
 </dl>
@@ -163,7 +163,7 @@ client.auth.refresh_token(
 <dl>
 <dd>
 
-**grantType:** `String` 
+**grant_type:** `String` 
     
 </dd>
 </dl>

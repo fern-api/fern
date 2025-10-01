@@ -28,7 +28,7 @@ client.service.get_resource();
 <dl>
 <dd>
 
-**resourceId:** `String` 
+**resource_id:** `String` 
     
 </dd>
 </dl>
@@ -71,7 +71,7 @@ client.service.list_resources(
 <dl>
 <dd>
 
-**pageLimit:** `Integer` 
+**page_limit:** `Integer` 
     
 </dd>
 </dl>
@@ -79,7 +79,7 @@ client.service.list_resources(
 <dl>
 <dd>
 
-**beforeDate:** `String` 
+**before_date:** `String` 
     
 </dd>
 </dl>

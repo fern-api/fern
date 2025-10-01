@@ -230,7 +230,7 @@ client.user.get_username(
 <dl>
 <dd>
 
-**userList:** `Internal::Types::Array[Seed::User::Types::User]` 
+**user_list:** `Internal::Types::Array[Seed::User::Types::User]` 
     
 </dd>
 </dl>
@@ -238,7 +238,7 @@ client.user.get_username(
 <dl>
 <dd>
 
-**optionalDeadline:** `String` 
+**optional_deadline:** `String` 
     
 </dd>
 </dl>
@@ -246,7 +246,7 @@ client.user.get_username(
 <dl>
 <dd>
 
-**keyValue:** `Internal::Types::Hash[String, String]` 
+**key_value:** `Internal::Types::Hash[String, String]` 
     
 </dd>
 </dl>
@@ -254,7 +254,7 @@ client.user.get_username(
 <dl>
 <dd>
 
-**optionalString:** `String` 
+**optional_string:** `String` 
     
 </dd>
 </dl>
@@ -262,7 +262,7 @@ client.user.get_username(
 <dl>
 <dd>
 
-**nestedUser:** `Seed::User::Types::NestedUser` 
+**nested_user:** `Seed::User::Types::NestedUser` 
     
 </dd>
 </dl>
@@ -270,7 +270,7 @@ client.user.get_username(
 <dl>
 <dd>
 
-**optionalUser:** `Seed::User::Types::User` 
+**optional_user:** `Seed::User::Types::User` 
     
 </dd>
 </dl>
@@ -278,7 +278,7 @@ client.user.get_username(
 <dl>
 <dd>
 
-**excludeUser:** `Seed::User::Types::User` 
+**exclude_user:** `Seed::User::Types::User` 
     
 </dd>
 </dl>
@@ -294,7 +294,7 @@ client.user.get_username(
 <dl>
 <dd>
 
-**longParam:** `Integer` 
+**long_param:** `Integer` 
     
 </dd>
 </dl>
@@ -302,7 +302,7 @@ client.user.get_username(
 <dl>
 <dd>
 
-**bigIntParam:** `String` 
+**big_int_param:** `String` 
     
 </dd>
 </dl>

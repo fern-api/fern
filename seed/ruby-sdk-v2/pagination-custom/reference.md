@@ -28,7 +28,7 @@ client.users.list_usernames_custom(startingAfter: 'starting_after');
 <dl>
 <dd>
 
-**startingAfter:** `String` 
+**starting_after:** `String` 
 
 The cursor used for pagination in order to fetch
 the next page of results.

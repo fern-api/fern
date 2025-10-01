@@ -85,7 +85,7 @@ client.imdb.get_movie();
 <dl>
 <dd>
 
-**movieId:** `String` 
+**movie_id:** `String` 
     
 </dd>
 </dl>

@@ -108,7 +108,7 @@ client.file.notification.service.get_exception();
 <dl>
 <dd>
 
-**notificationId:** `String` 
+**notification_id:** `String` 
     
 </dd>
 </dl>
@@ -301,7 +301,7 @@ client.service.get_movie();
 <dl>
 <dd>
 
-**movieId:** `String` 
+**movie_id:** `String` 
     
 </dd>
 </dl>
@@ -411,7 +411,7 @@ client.service.get_metadata(
 <dl>
 <dd>
 
-**xApiVersion:** `String` 
+**x_api_version:** `String` 
     
 </dd>
 </dl>
