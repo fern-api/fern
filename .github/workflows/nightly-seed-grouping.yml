@@ -200,7 +200,11 @@ jobs:
 
       - name: Lint the Seed Group Files
         run: |
-          pnpm format:fix ./.github/workflow-resource-files/seed-groups/
+          if [ -f artifacts/*-seed-groups.json ]; then
+            pnpm format:fix ./.github/workflow-resource-files/seed-groups/
+          else
+            echo "Warning: No seed group files found"
+          fi
 
       # Create PR, approve and set to merge per generator
       - name: Create Pull Request
