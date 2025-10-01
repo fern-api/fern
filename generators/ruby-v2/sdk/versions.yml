@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.0.0-rc28
+  createdAt: "2025-10-01"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix gem versioning when building an SDK locally.
+  irVersion: 59
+
 - version: 1.0.0-rc27
   createdAt: "2025-09-29"
   changelogEntry:
