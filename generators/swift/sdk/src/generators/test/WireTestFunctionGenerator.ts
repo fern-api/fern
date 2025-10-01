@@ -105,11 +105,7 @@ export class WireTestFunctionGenerator {
                         unsafeName: "expectedResponse",
                         value: this.generateExampleResponse(exampleTypeRef)
                     }),
-                    swift.Statement.constantDeclaration({
-                        unsafeName: "response",
-                        // TODO(kafkas): Implement this
-                        value: swift.Expression.stringLiteral("abc")
-                    }),
+                    this.generateEndpointMethodCallStatement(endpointExample),
                     swift.Statement.expressionStatement(
                         swift.Expression.try(
                             swift.Expression.functionCall({
@@ -143,6 +139,17 @@ export class WireTestFunctionGenerator {
         return this.endpointSnippetGenerator.generateRootClientInitializationStatement({
             auth: this.dynamicEndpoint.auth,
             snippet: endpointSnippetRequest
+        });
+    }
+
+    private generateEndpointMethodCallStatement(dynamicEndpointExample: dynamic.EndpointExample): swift.Statement {
+        const endpointSnippetRequest = convertDynamicEndpointSnippetRequest(dynamicEndpointExample);
+        return swift.Statement.constantDeclaration({
+            unsafeName: "response",
+            value: this.endpointSnippetGenerator.generateEndpointMethodCallExpression({
+                endpoint: this.dynamicEndpoint,
+                snippet: endpointSnippetRequest
+            })
         });
     }
 
