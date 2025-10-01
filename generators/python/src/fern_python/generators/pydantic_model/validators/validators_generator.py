@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 from typing import Sequence, Tuple
 
 from .validator_generators import ValidatorGenerator
+
 from fern_python.codegen import AST
 from fern_python.pydantic_codegen import PydanticModel
 

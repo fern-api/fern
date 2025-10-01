@@ -1,10 +1,10 @@
+import fern.ir.resources as ir_types
 from ...context import FastApiGeneratorContext
 from .convert_to_singular_type import convert_to_singular_type
 from .endpoint_parameter import EndpointParameter
+
 from fern_python.codegen import AST
 from fern_python.external_dependencies import FastAPI
-
-import fern.ir.resources as ir_types
 
 
 class HeaderEndpointParameter(EndpointParameter):

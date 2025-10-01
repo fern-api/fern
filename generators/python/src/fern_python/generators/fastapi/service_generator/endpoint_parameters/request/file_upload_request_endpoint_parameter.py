@@ -1,11 +1,11 @@
 from typing import List
 
+import fern.ir.resources as ir_types
 from ....context import FastApiGeneratorContext
 from ..endpoint_parameter import EndpointParameter
+
 from fern_python.codegen import AST
 from fern_python.external_dependencies.fastapi import FastAPI
-
-import fern.ir.resources as ir_types
 
 
 class FileUploadRequestFileParameter(EndpointParameter):

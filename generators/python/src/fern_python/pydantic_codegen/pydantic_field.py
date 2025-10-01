@@ -1,9 +1,9 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from fern_python.codegen import AST
-
 import fern.ir.resources as ir_types
+
+from fern_python.codegen import AST
 
 
 @dataclass(frozen=True)

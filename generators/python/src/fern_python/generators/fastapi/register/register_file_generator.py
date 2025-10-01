@@ -1,10 +1,10 @@
+import fern.ir.resources as ir_types
 from ..context import FastApiGeneratorContext
 from .service_initializer import ServiceInitializer
+
 from fern_python.codegen import AST, Filepath, Project
 from fern_python.external_dependencies import FastAPI, Starlette
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
-
-import fern.ir.resources as ir_types
 
 FAST_API_REGISTRATION_ARGS = [("dependencies", AST.TypeHint.optional(AST.TypeHint.sequence(FastAPI.DependsType)))]
 

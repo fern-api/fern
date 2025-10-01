@@ -1,6 +1,7 @@
 from typing import Callable, Dict, List, Optional, Tuple, Union, cast
 
 import fdr.api.v_1.read as FdrApiV1Read
+import fern.ir.resources as ir_types
 from fdr import (
     DictTemplate,
     DiscriminatedUnionTemplate,
@@ -22,6 +23,9 @@ from fdr import (
     UnionTemplateV2,
     VersionedSnippetTemplate,
 )
+from fern.generator_exec import GeneratorUpdate, LogLevel, LogUpdate
+from typing_extensions import assert_never
+
 from fern_python.codegen import AST
 from fern_python.codegen.imports_manager import ImportsManager
 from fern_python.codegen.project import Project
@@ -57,10 +61,6 @@ from fern_python.generators.sdk.client_generator.request_body_parameters.referen
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 from fern_python.snippet.snippet_writer import SnippetWriter
 from fern_python.snippet.template_utils import TEMPLATE_SENTINEL
-from typing_extensions import assert_never
-
-import fern.ir.resources as ir_types
-from fern.generator_exec import GeneratorUpdate, LogLevel, LogUpdate
 
 
 class SnippetTemplateFactory:

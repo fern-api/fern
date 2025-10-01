@@ -1,11 +1,11 @@
 from ..context import FastApiGeneratorContext
+from fern.ir.resources import NameAndWireValue
+
 from fern_python.codegen import AST, LocalClassReference, Project, SourceFile
 from fern_python.external_dependencies import FastAPI
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.fastapi.custom_config import FastAPICustomConfig
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
-
-from fern.ir.resources import NameAndWireValue
 
 
 class FernHTTPExceptionGenerator:

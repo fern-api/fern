@@ -1,15 +1,15 @@
 from typing import Optional
 
+import fern.ir.resources as ir_types
 from ....context.pydantic_generator_context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig
 from ..undiscriminated_union_generator import (
     AbstractUndiscriminatedUnionGenerator,
     AbstractUndiscriminatedUnionSnippetGenerator,
 )
+
 from fern_python.codegen import AST, SourceFile
 from fern_python.snippet.snippet_writer import SnippetWriter
-
-import fern.ir.resources as ir_types
 
 
 class TypeddictUndiscriminatedUnionGenerator(AbstractUndiscriminatedUnionGenerator):

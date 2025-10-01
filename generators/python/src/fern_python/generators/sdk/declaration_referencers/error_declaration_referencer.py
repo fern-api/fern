@@ -1,7 +1,7 @@
-from .sdk_declaration_referencer import SdkDeclarationReferencer
-from fern_python.codegen import ExportStrategy, Filepath
-
 import fern.ir.resources as ir_types
+from .sdk_declaration_referencer import SdkDeclarationReferencer
+
+from fern_python.codegen import ExportStrategy, Filepath
 
 
 class ErrorDeclarationReferencer(SdkDeclarationReferencer[ir_types.DeclaredErrorName]):

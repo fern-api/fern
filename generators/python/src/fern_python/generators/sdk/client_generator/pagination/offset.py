@@ -1,13 +1,13 @@
 from typing import Optional
 
+import fern.ir.resources as ir_types
 from .abstract_paginator import PaginationSnippetConfig, Paginator
+
 from fern_python.codegen import AST
 from fern_python.generators.sdk.client_generator.request_properties import (
     request_property_to_name,
 )
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
-
-import fern.ir.resources as ir_types
 
 
 class OffsetPagination(Paginator):

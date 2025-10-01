@@ -1,5 +1,6 @@
 from typing import List
 
+import fern.ir.resources as ir_types
 from ..context import FastApiGeneratorContext
 from ..custom_config import FastAPICustomConfig
 from .endpoint_parameters import (
@@ -11,15 +12,14 @@ from .endpoint_parameters import (
     QueryEndpointParameter,
     ReferencedRequestEndpointParameter,
 )
+from typing_extensions import Never
+
 from fern_python.codegen import AST
 from fern_python.external_dependencies import FastAPI
 from fern_python.external_dependencies.starlette import Starlette
 from fern_python.generators.fastapi.service_generator.endpoint_parameters.request.file_upload_request_endpoint_parameter import (
     FileUploadRequestEndpointParameters,
 )
-from typing_extensions import Never
-
-import fern.ir.resources as ir_types
 
 
 class EndpointGenerator:
