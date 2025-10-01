@@ -183,7 +183,7 @@ function getEndpointParameters({
 
     endpoint.allPathParameters.forEach((pathParam) => {
         parameters.push({
-            name: pathParam.name.camelCase.safeName,
+            name: pathParam.name.snakeCase.safeName,
             type: getRubyTypeString({ context, typeReference: pathParam.valueType }),
             description: pathParam.docs,
             required: true
@@ -192,7 +192,7 @@ function getEndpointParameters({
 
     endpoint.queryParameters.forEach((queryParam) => {
         parameters.push({
-            name: queryParam.name.name.camelCase.safeName,
+            name: queryParam.name.name.snakeCase.safeName,
             type: getRubyTypeString({ context, typeReference: queryParam.valueType }),
             description: queryParam.docs,
             required: !queryParam.allowMultiple
@@ -201,7 +201,7 @@ function getEndpointParameters({
 
     endpoint.headers.forEach((header) => {
         parameters.push({
-            name: header.name.name.camelCase.safeName,
+            name: header.name.name.snakeCase.safeName,
             type: getRubyTypeString({ context, typeReference: header.valueType }),
             description: header.docs,
             required: true
@@ -211,7 +211,7 @@ function getEndpointParameters({
     if (endpoint.requestBody != null && endpoint.requestBody.type === "inlinedRequestBody") {
         endpoint.requestBody.properties.forEach((property) => {
             parameters.push({
-                name: property.name.name.camelCase.safeName,
+                name: property.name.name.snakeCase.safeName,
                 type: getRubyTypeString({ context, typeReference: property.valueType }),
                 description: property.docs,
                 required: true
