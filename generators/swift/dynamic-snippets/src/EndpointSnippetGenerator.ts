@@ -91,10 +91,12 @@ export class EndpointSnippetGenerator {
 
     public generateRootClientInitializationStatement({
         auth,
-        snippet
+        snippet,
+        additionalArgs = []
     }: {
         auth: FernIr.dynamic.Auth | undefined;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
+        additionalArgs?: swift.FunctionArgument[];
     }) {
         const rootClientArgs: swift.FunctionArgument[] = [];
         const baseUrlArg = this.getRootClientBaseURLArg({ snippet });
@@ -103,6 +105,7 @@ export class EndpointSnippetGenerator {
         }
         const authArgs = auth ? this.getRootClientAuthArgs({ auth, snippet }) : [];
         rootClientArgs.push(...authArgs);
+        rootClientArgs.push(...additionalArgs);
         return swift.Statement.constantDeclaration({
             unsafeName: CLIENT_CONST_NAME,
             value: swift.Expression.classInitialization({
