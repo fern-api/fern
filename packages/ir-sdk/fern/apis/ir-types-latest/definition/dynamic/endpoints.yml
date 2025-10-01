@@ -39,6 +39,12 @@ types:
       streaming, etc).
     union:
       json: {}
+      streaming: {}
+      streamParameter: {}
+      fileDownload: {}
+      text: {}
+      bytes: {}
+
 
   BodyRequest:
     properties:

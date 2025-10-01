@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v60.6.0] - 2025-10-01
+
+- Feature: Change `Response` type in dynamic IR to support other response types (streaming, stream parameter, file download, text, bytes)
+
 ## [v60.5.0] - 2025-09-24
 
 - Feature: Add `variable` field to `NamedParameter` in dynamic IR to track which parameters reference client-level variables

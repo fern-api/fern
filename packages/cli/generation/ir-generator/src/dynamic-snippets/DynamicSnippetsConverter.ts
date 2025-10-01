@@ -140,7 +140,17 @@ export class DynamicSnippetsConverter {
             declaration: this.convertDeclaration({ name: endpoint.name, fernFilepath: endpoint.fernFilepath }),
             location,
             request: this.convertRequest({ endpoint }),
-            response: DynamicSnippets.Response.json(),
+            response: (endpoint.response?.body?._visit<DynamicSnippets.Response>({
+                json: () => DynamicSnippets.Response.json(),
+                streaming: () => DynamicSnippets.Response.streaming(),
+                streamParameter: () => DynamicSnippets.Response.streamParameter(),
+                fileDownload: () => DynamicSnippets.Response.fileDownload(),
+                text: () => DynamicSnippets.Response.text(),
+                bytes: () => DynamicSnippets.Response.bytes(),
+                _other: () => DynamicSnippets.Response.json()
+            }) ?? DynamicSnippets.Response.json()) as DynamicSnippets.Response.Json,
+            // Defaults to 'json' because response is required (and it was hardcoded to that previously).
+
             examples: !disableExamples ? this.getEndpointSnippetRequests({ endpoint, location }) : undefined
         };
     }

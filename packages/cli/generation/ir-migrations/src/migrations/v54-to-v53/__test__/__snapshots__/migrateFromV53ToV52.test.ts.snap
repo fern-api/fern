@@ -277,7 +277,8 @@ exports[`migrateFromV54ToV53 > simple 1`] = `
           "type": "inlined",
         },
         "response": {
-          "type": "json",
+          "_visit": [Function],
+          "type": "bytes",
         },
       },
     },
