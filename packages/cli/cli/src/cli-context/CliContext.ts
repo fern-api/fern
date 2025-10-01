@@ -82,8 +82,8 @@ export class CliContext {
         this.logLevel = logLevel;
     }
 
-    public logDebugInfo(): void {
-        this.logger.debug(
+    public logFernVersionInfo(): void {
+        this.logger.info(
             `Running ${chalk.bold(`${this.environment.cliName}`)} (${this.environment.packageName}@${
                 this.environment.packageVersion
             })`

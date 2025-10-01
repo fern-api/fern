@@ -32,6 +32,18 @@ export async function generateDocsWorkspace({
     }
     const isRunningOnSelfHosted = process.env["FERN_SELF_HOSTED"] === "true";
 
+    const isGithubActions = process.env["GITHUB_ACTIONS"] === "true";
+    if (!preview && !isGithubActions) {
+        const shouldContinue = await cliContext.confirmPrompt(
+            "This will affect a production deployment. Run with --preview to generate docs for a preview instance. Are you sure you want to continue?",
+            false
+        );
+        if (!shouldContinue) {
+            cliContext.logger.info("Docs generation cancelled.");
+            return;
+        }
+    }
+
     let token: FernToken | null = null;
     if (isRunningOnSelfHosted) {
         const fernToken = process.env["FERN_TOKEN"]; // token can be a dummy token
