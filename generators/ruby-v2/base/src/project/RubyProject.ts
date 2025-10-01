@@ -443,7 +443,7 @@ class VersionFile {
 
     public toString(): string {
         const seedName = this.context.getRootModuleName();
-        const version = this.context.getVersionFromConfig();
+        const version = this.context.getVersionFromConfig(this.context.logger);
 
         return dedent`
             # frozen_string_literal: true
