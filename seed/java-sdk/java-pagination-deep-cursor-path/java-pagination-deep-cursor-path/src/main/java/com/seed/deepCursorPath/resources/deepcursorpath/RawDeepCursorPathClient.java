@@ -90,9 +90,9 @@ public class RawDeepCursorPathClient {
                 A nextRequest = A.builder().from(request).b(b).build();
                 List<String> result = parsedResponse.getResults();
                 return new SeedDeepCursorPathHttpResponse<>(
-                        new SyncPagingIterable<String>(
-                                startingAfter.isPresent(), result, () -> doThing(nextRequest, requestOptions)
-                                        .body()),
+                        new SyncPagingIterable<String>(startingAfter.isPresent(), result, parsedResponse, () -> doThing(
+                                        nextRequest, requestOptions)
+                                .body()),
                         response);
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -152,7 +152,8 @@ public class RawDeepCursorPathClient {
                 List<String> result = parsedResponse.getResults();
                 return new SeedDeepCursorPathHttpResponse<>(
                         new SyncPagingIterable<String>(
-                                startingAfter.isPresent(), result, () -> doThingRequired(nextRequest, requestOptions)
+                                startingAfter.isPresent(), result, parsedResponse, () -> doThingRequired(
+                                                nextRequest, requestOptions)
                                         .body()),
                         response);
             }
@@ -222,7 +223,8 @@ public class RawDeepCursorPathClient {
                 List<String> result = parsedResponse.getResults();
                 return new SeedDeepCursorPathHttpResponse<>(
                         new SyncPagingIterable<String>(
-                                startingAfter.isPresent(), result, () -> doThingInline(nextRequest, requestOptions)
+                                startingAfter.isPresent(), result, parsedResponse, () -> doThingInline(
+                                                nextRequest, requestOptions)
                                         .body()),
                         response);
             }

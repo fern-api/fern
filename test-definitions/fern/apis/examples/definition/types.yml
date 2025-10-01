@@ -48,6 +48,17 @@ types:
               rottenTomatoes: 97
               imdb: 7.6
           revenue: 1000000
+      - name: LargeRating
+        value:
+          id: movie-large-123
+          title: Big Budget Film
+          from: Famous Director
+          rating: 4294967295
+          type: movie
+          tag: $commons.Tag.One
+          metadata:
+            budget: "Very high"
+          revenue: 5000000000
 
   CastMember:
     discriminated: false
