@@ -9,7 +9,7 @@ namespace SeedExamples.Test_;
 public class MovieTest
 {
     [NUnit.Framework.Test]
-    public void TestDeserialization()
+    public void TestDeserialization_1()
     {
         var json = """
             {
@@ -63,7 +63,7 @@ public class MovieTest
     }
 
     [NUnit.Framework.Test]
-    public void TestSerialization()
+    public void TestSerialization_1()
     {
         var expectedJson = """
             {
@@ -111,6 +111,71 @@ public class MovieTest
                 },
             },
             Revenue = 1000000,
+        };
+        var actualElement = JsonUtils.SerializeToElement(actualObj);
+        var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
+        Assert.That(actualElement, Is.EqualTo(expectedElement).UsingJsonElementComparer());
+    }
+
+    [NUnit.Framework.Test]
+    public void TestDeserialization_2()
+    {
+        var json = """
+            {
+              "id": "movie-large-123",
+              "title": "Big Budget Film",
+              "from": "Famous Director",
+              "rating": 4294967295,
+              "type": "movie",
+              "tag": "tag-wf9as23d",
+              "metadata": {
+                "budget": "Very high"
+              },
+              "revenue": 5000000000
+            }
+            """;
+        var expectedObject = new Movie
+        {
+            Id = "movie-large-123",
+            Title = "Big Budget Film",
+            From = "Famous Director",
+            Rating = 4294967295,
+            Type = "movie",
+            Tag = "tag-wf9as23d",
+            Metadata = new Dictionary<string, object>() { { "budget", "Very high" } },
+            Revenue = 5000000000,
+        };
+        var deserializedObject = JsonUtils.Deserialize<Movie>(json);
+        Assert.That(deserializedObject, Is.EqualTo(expectedObject).UsingDefaults());
+    }
+
+    [NUnit.Framework.Test]
+    public void TestSerialization_2()
+    {
+        var expectedJson = """
+            {
+              "id": "movie-large-123",
+              "title": "Big Budget Film",
+              "from": "Famous Director",
+              "rating": 4294967295,
+              "type": "movie",
+              "tag": "tag-wf9as23d",
+              "metadata": {
+                "budget": "Very high"
+              },
+              "revenue": 5000000000
+            }
+            """;
+        var actualObj = new Movie
+        {
+            Id = "movie-large-123",
+            Title = "Big Budget Film",
+            From = "Famous Director",
+            Rating = 4294967295,
+            Type = "movie",
+            Tag = "tag-wf9as23d",
+            Metadata = new Dictionary<string, object>() { { "budget", "Very high" } },
+            Revenue = 5000000000,
         };
         var actualElement = JsonUtils.SerializeToElement(actualObj);
         var expectedElement = JsonUtils.Deserialize<JsonElement>(expectedJson);
