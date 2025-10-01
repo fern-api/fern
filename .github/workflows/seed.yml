@@ -184,22 +184,13 @@ jobs:
       - name: Set test matrix for ${{ matrix.sdk-name }}
         id: set-test-matrix
         run: |
-          if [[ "${{ steps.get-test-matrix.outputs.split-tests }}" == "true" ]]; then
-              BASH_VAR='${{ steps.get-test-matrix.outputs.test-matrix }}'
-              echo "${{ matrix.sdk-name }}-test-matrix=$BASH_VAR" >> $GITHUB_OUTPUT
+          echo "Force set matrix for python test"
+          BASH_VAR='[{"fixture":"error-property"},{"fixture":"errors"},{"fixture":"examples"},{"fixture":"exhaustive"},{"fixture":"extends"},{"fixture":"extra-properties"},{"fixture":"file-download"},{"fixture":"file-upload"},{"fixture":"folders"},{"fixture":"http-head"}]'
+          echo "${{ matrix.sdk-name }}-test-matrix=$BASH_VAR" >> $GITHUB_OUTPUT
 
-              # Echo the data to command line for visibility
-              echo "Packaged data for ${{ matrix.sdk-name }}-test-matrix:"
-              echo "$BASH_VAR" | jq .
-          else
-            echo "Force set matrix for python test"
-            BASH_VAR='[{"error-property","errors","examples","exhaustive","extends","extra-properties","file-download","file-upload","folders","http-head"}]'
-            echo "${{ matrix.sdk-name }}-test-matrix=$BASH_VAR" >> $GITHUB_OUTPUT
-
-            # Echo the data to command line for visibility
-            echo "Packaged data for ${{ matrix.sdk-name }}-test-matrix:"
-            echo "$BASH_VAR" | jq .
-          fi
+          # Echo the data to command line for visibility
+          echo "Packaged data for ${{ matrix.sdk-name }}-test-matrix:"
+          echo "$BASH_VAR" | jq .
 
   python-sdk:
     runs-on: ubuntu-latest
@@ -218,13 +209,13 @@ jobs:
     #   }}
     steps:
       - name: Echo package
-        run: echo '${{toJson(matrix)}}' | jq .
+        run: echo '${{toJson(matrix.fixture)}}' | jq .
 
       # Format for seed tests
       - name: JSON to String
         id: json-to-string
         run: |
-          json_data='${{toJson(matrix)}}'
+          json_data='${{toJson(matrix.fixture)}}'
           # Convert JSON array to space-separated string
           string_result=$(echo "$json_data" | jq -r '.[]' | tr '\n' ' ' | sed 's/ $//')
           echo "Generated string: '$string_result'"
