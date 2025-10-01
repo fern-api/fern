@@ -1,2 +1,2 @@
 pub mod headers;
-pub use headers::*;
+pub use headers::HeadersClient;

@@ -1,4 +1,4 @@
-use seed_inferred_auth_explicit::{ClientConfig, InferredAuthExplicitClient};
+use seed_inferred_auth_explicit::prelude::*;
 
 #[tokio::main]
 async fn main() {

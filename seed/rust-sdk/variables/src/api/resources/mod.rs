@@ -15,4 +15,4 @@ impl VariablesClient {
     }
 }
 
-pub use service::*;
+pub use service::ServiceClient;

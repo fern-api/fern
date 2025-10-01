@@ -1,7 +1,7 @@
 use crate::types_movie::Movie;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct ExtendedMovie {
     #[serde(flatten)]
     pub movie_fields: Movie,

@@ -15,4 +15,4 @@ impl PackageYmlClient {
     }
 }
 
-pub use service::*;
+pub use service::ServiceClient;

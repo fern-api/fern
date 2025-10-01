@@ -15,4 +15,4 @@ impl PlainTextClient {
     }
 }
 
-pub use service::*;
+pub use service::ServiceClient;

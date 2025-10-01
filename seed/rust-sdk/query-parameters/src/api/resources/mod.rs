@@ -15,4 +15,4 @@ impl QueryParametersClient {
     }
 }
 
-pub use user::*;
+pub use user::UserClient;

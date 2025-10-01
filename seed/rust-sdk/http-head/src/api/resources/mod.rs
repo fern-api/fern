@@ -15,4 +15,4 @@ impl HttpHeadClient {
     }
 }
 
-pub use user::*;
+pub use user::UserClient;

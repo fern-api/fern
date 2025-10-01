@@ -5,5 +5,5 @@ use serde::{Deserialize, Serialize};
 pub struct User {
     pub id: Id,
     pub name: String,
-    pub age: i32,
+    pub age: i64,
 }

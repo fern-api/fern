@@ -1,9 +1,5 @@
 use chrono::{DateTime, NaiveDate, Utc};
-use seed_examples::{
-    Actor, Actress, BasicType, BigEntity, CastMember, ClientConfig, ComplexType, Data, Directory,
-    Entity, EventInfo, ExamplesClient, Exception, ExceptionInfo, ExtendedMovie, File, Metadata,
-    Migration, MigrationStatus, Moment, MovieId, Node, StuntDouble, Tag, Test, Tree, Type,
-};
+use seed_examples::prelude::*;
 use std::collections::{HashMap, HashSet};
 use uuid::Uuid;
 

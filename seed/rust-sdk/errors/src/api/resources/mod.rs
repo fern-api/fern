@@ -16,5 +16,5 @@ impl ErrorsClient {
     }
 }
 
-pub use commons::*;
-pub use simple::*;
+pub use commons::CommonsClient;
+pub use simple::SimpleClient;

@@ -15,4 +15,4 @@ impl CustomImdbClient {
     }
 }
 
-pub use imdb::*;
+pub use imdb::ImdbClient;

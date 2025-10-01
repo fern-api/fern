@@ -1,4 +1,4 @@
-use seed_extends::{ClientConfig, ExtendsClient, Inlined};
+use seed_extends::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]

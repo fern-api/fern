@@ -11,7 +11,7 @@ use crate::submission_stopped_response::StoppedResponse;
 use crate::submission_workspace_ran_response::WorkspaceRanResponse;
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(tag = "type")]
 pub enum CodeExecutionUpdate {
     BuildingExecutor {

@@ -1,4 +1,4 @@
-use seed_client_side_params::{ClientConfig, ClientSideParamsClient, GetClientQueryRequest};
+use seed_client_side_params::prelude::*;
 
 #[tokio::main]
 async fn main() {

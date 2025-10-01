@@ -9,5 +9,5 @@ pub struct Identity {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub access_token: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub expires_in: Option<i32>,
+    pub expires_in: Option<i64>,
 }

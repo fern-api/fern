@@ -15,4 +15,4 @@ impl MultiLineDocsClient {
     }
 }
 
-pub use user::*;
+pub use user::UserClient;

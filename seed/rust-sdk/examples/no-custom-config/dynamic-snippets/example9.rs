@@ -1,4 +1,4 @@
-use seed_examples::{ClientConfig, ExamplesClient};
+use seed_examples::prelude::*;
 
 #[tokio::main]
 async fn main() {

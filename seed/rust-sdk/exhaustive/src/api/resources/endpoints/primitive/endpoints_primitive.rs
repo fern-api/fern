@@ -1,4 +1,3 @@
-use crate::api::*;
 use crate::{ApiError, ClientConfig, HttpClient, RequestOptions};
 use reqwest::Method;
 
@@ -31,9 +30,9 @@ impl EndpointsPrimitiveClient {
 
     pub async fn get_and_return_int(
         &self,
-        request: &i32,
+        request: &i64,
         options: Option<RequestOptions>,
-    ) -> Result<i32, ApiError> {
+    ) -> Result<i64, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
@@ -127,9 +126,9 @@ impl EndpointsPrimitiveClient {
 
     pub async fn get_and_return_uuid(
         &self,
-        request: &uuid::Uuid,
+        request: &Uuid,
         options: Option<RequestOptions>,
-    ) -> Result<uuid::Uuid, ApiError> {
+    ) -> Result<Uuid, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,

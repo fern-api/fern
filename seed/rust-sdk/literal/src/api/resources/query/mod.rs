@@ -1,2 +1,2 @@
 pub mod query;
-pub use query::*;
+pub use query::QueryClient;

@@ -13,11 +13,7 @@
 <dd>
 
 ```rust
-use seed_pagination::{
-    ClientConfig, MultipleFilterSearchRequest, MultipleFilterSearchRequestOperator,
-    MultipleFilterSearchRequestValue, PaginationClient, SearchRequest, SearchRequestQuery,
-    SingleFilterSearchRequest, SingleFilterSearchRequestOperator, StartingAfterPaging,
-};
+use seed_pagination::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -86,7 +82,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_pagination::{ClientConfig, ListWithCursorPaginationQueryRequest, PaginationClient};
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -175,9 +171,7 @@ the next page of results.
 <dd>
 
 ```rust
-use seed_pagination::{
-    ClientConfig, ListWithMixedTypeCursorPaginationQueryRequest, PaginationClient,
-};
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -236,9 +230,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_pagination::{
-    ClientConfig, ListWithMixedTypeCursorPaginationQueryRequest, PaginationClient,
-};
+use seed_pagination::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -299,7 +291,7 @@ in order to fetch the next page of results.
 <dd>
 
 ```rust
-use seed_pagination::{ClientConfig, ListWithCursorPaginationQueryRequest, PaginationClient};
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -388,7 +380,7 @@ the next page of results.
 <dd>
 
 ```rust
-use seed_pagination::{ClientConfig, ListWithDoubleOffsetPaginationQueryRequest, PaginationClient};
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -477,9 +469,7 @@ the next page of results.
 <dd>
 
 ```rust
-use seed_pagination::{
-    ClientConfig, ListWithMixedTypeCursorPaginationQueryRequest, PaginationClient,
-};
+use seed_pagination::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -540,7 +530,7 @@ in order to fetch the next page of results.
 <dd>
 
 ```rust
-use seed_pagination::{ClientConfig, ListWithOffsetStepPaginationQueryRequest, PaginationClient};
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -621,7 +611,7 @@ paginated endpoint.
 <dd>
 
 ```rust
-use seed_pagination::{ClientConfig, ListWithOffsetStepPaginationQueryRequest, PaginationClient};
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -702,7 +692,7 @@ paginated endpoint.
 <dd>
 
 ```rust
-use seed_pagination::{ClientConfig, ListWithExtendedResultsQueryRequest, PaginationClient};
+use seed_pagination::prelude::*;
 use uuid::Uuid;
 
 #[tokio::main]
@@ -762,7 +752,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_pagination::{ClientConfig, ListWithExtendedResultsQueryRequest, PaginationClient};
+use seed_pagination::prelude::*;
 use uuid::Uuid;
 
 #[tokio::main]
@@ -822,7 +812,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_pagination::{ClientConfig, ListWithCursorPaginationQueryRequest, PaginationClient};
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -884,7 +874,7 @@ the next page of results.
 <dd>
 
 ```rust
-use seed_pagination::{ClientConfig, ListWithGlobalConfigQueryRequest, PaginationClient};
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -939,7 +929,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_pagination::{ClientConfig, ListWithCursorPaginationQueryRequest, PaginationClient};
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1027,9 +1017,7 @@ the next page of results.
 <dd>
 
 ```rust
-use seed_pagination::{
-    ClientConfig, ListWithMixedTypeCursorPaginationQueryRequest, PaginationClient,
-};
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1087,9 +1075,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_pagination::{
-    ClientConfig, ListWithMixedTypeCursorPaginationQueryRequest, PaginationClient,
-};
+use seed_pagination::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -1149,7 +1135,7 @@ in order to fetch the next page of results.
 <dd>
 
 ```rust
-use seed_pagination::{ClientConfig, ListWithCursorPaginationQueryRequest, PaginationClient};
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1237,7 +1223,7 @@ the next page of results.
 <dd>
 
 ```rust
-use seed_pagination::{ClientConfig, ListWithDoubleOffsetPaginationQueryRequest, PaginationClient};
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1325,9 +1311,7 @@ the next page of results.
 <dd>
 
 ```rust
-use seed_pagination::{
-    ClientConfig, ListWithMixedTypeCursorPaginationQueryRequest, PaginationClient,
-};
+use seed_pagination::prelude::*;
 use std::collections::HashMap;
 
 #[tokio::main]
@@ -1387,7 +1371,7 @@ in order to fetch the next page of results.
 <dd>
 
 ```rust
-use seed_pagination::{ClientConfig, ListWithOffsetStepPaginationQueryRequest, PaginationClient};
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1467,7 +1451,7 @@ paginated endpoint.
 <dd>
 
 ```rust
-use seed_pagination::{ClientConfig, ListWithOffsetStepPaginationQueryRequest, PaginationClient};
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1547,7 +1531,7 @@ paginated endpoint.
 <dd>
 
 ```rust
-use seed_pagination::{ClientConfig, ListWithExtendedResultsQueryRequest, PaginationClient};
+use seed_pagination::prelude::*;
 use uuid::Uuid;
 
 #[tokio::main]
@@ -1606,7 +1590,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_pagination::{ClientConfig, ListWithExtendedResultsQueryRequest, PaginationClient};
+use seed_pagination::prelude::*;
 use uuid::Uuid;
 
 #[tokio::main]
@@ -1665,7 +1649,7 @@ async fn main() {
 <dd>
 
 ```rust
-use seed_pagination::{ClientConfig, ListWithCursorPaginationQueryRequest, PaginationClient};
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {
@@ -1726,7 +1710,7 @@ the next page of results.
 <dd>
 
 ```rust
-use seed_pagination::{ClientConfig, ListWithGlobalConfigQueryRequest, PaginationClient};
+use seed_pagination::prelude::*;
 
 #[tokio::main]
 async fn main() {

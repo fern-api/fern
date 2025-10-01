@@ -19,6 +19,6 @@ impl UnionsClient {
     }
 }
 
-pub use bigunion::*;
-pub use types::*;
-pub use union_::*;
+pub use bigunion::BigunionClient;
+pub use types::TypesClient;
+pub use union_::UnionClient;
