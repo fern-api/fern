@@ -1,6 +1,18 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
-import { rust, UseStatement } from "@fern-api/rust-codegen";
+import {
+    CodeBlock,
+    Expression,
+    Field,
+    ImplBlock,
+    Method,
+    PUBLIC,
+    Reference,
+    rust,
+    Struct,
+    Type,
+    UseStatement
+} from "@fern-api/rust-codegen";
 
 import { Package, Subpackage } from "@fern-fern/ir-sdk/api";
 
@@ -390,49 +402,90 @@ export class RootClientGenerator {
             })
         ];
 
-        // Add crate::api imports if needed
-        if (subClientSubpackages.length > 0) {
-            useStatements.push(
-                new UseStatement({
-                    path: "crate::api",
-                    items: ["*"]
-                })
-            );
-        }
-
         const clientName = this.context.getUniqueClientNameForSubpackage(subpackage);
 
-        // Create basic client struct manually since we can't access private methods
-        const clientFields = clientGeneratorContext.subClients.map(
-            ({ fieldName, clientName }) => `    pub ${fieldName}: ${clientName},`
-        );
-        clientFields.unshift("    pub http_client: HttpClient,");
+        // Create struct fields using AST
+        const structFields: Field[] = [
+            new Field({
+                name: "http_client",
+                type: Type.reference(new Reference({ name: "HttpClient", module: undefined })),
+                visibility: PUBLIC
+            }),
+            ...clientGeneratorContext.subClients.map(
+                ({ fieldName, clientName }) =>
+                    new Field({
+                        name: fieldName,
+                        type: Type.reference(new Reference({ name: clientName, module: undefined })),
+                        visibility: PUBLIC
+                    })
+            )
+        ];
 
-        const clientConstructorFields = clientGeneratorContext.subClients.map(
-            ({ fieldName, clientName }) => `            ${fieldName}: ${clientName}::new(config.clone())?,`
-        );
-        clientConstructorFields.unshift("            http_client: HttpClient::new(config.clone())?,");
+        // Create the struct using AST
+        const clientStruct = new Struct({
+            name: clientName,
+            visibility: PUBLIC,
+            fields: structFields
+        });
 
-        const clientStruct = `
-pub struct ${clientName} {
-${clientFields.join("\n")}
-}
+        // Create the new method body using Expression
+        const constructorFields: Expression.FieldAssignment[] = [
+            {
+                name: "http_client",
+                value: Expression.try(
+                    Expression.functionCall("HttpClient::new", [
+                        Expression.methodCall({
+                            target: Expression.reference("config"),
+                            method: "clone",
+                            args: []
+                        })
+                    ])
+                )
+            },
+            ...clientGeneratorContext.subClients.map(({ fieldName, clientName }) => ({
+                name: fieldName,
+                value: Expression.try(
+                    Expression.functionCall(`${clientName}::new`, [
+                        Expression.methodCall({
+                            target: Expression.reference("config"),
+                            method: "clone",
+                            args: []
+                        })
+                    ])
+                )
+            }))
+        ];
 
-impl ${clientName} {
-    pub fn new(config: ClientConfig) -> Result<Self, ApiError> {
-        Ok(Self {
-${clientConstructorFields.join("\n")}
-        })
-    }
-}`;
+        const constructorExpression = Expression.ok(Expression.structConstruction("Self", constructorFields));
+        const constructorBody = CodeBlock.fromExpression(constructorExpression);
+
+        // Create the impl block with the new method
+        const implBlock = new ImplBlock({
+            targetType: Type.reference(new Reference({ name: clientName, module: undefined })),
+            methods: [
+                new Method({
+                    name: "new",
+                    visibility: PUBLIC,
+                    parameters: [
+                        {
+                            name: "config",
+                            parameterType: Type.reference(new Reference({ name: "ClientConfig", module: undefined })),
+                            isSelf: false
+                        }
+                    ],
+                    returnType: Type.result(
+                        Type.reference(new Reference({ name: "Self", module: undefined })),
+                        Type.reference(new Reference({ name: "ApiError", module: undefined }))
+                    ),
+                    isStatic: true,
+                    body: constructorBody
+                })
+            ]
+        });
 
         const module = rust.module({
             useStatements,
-            rawDeclarations: [
-                ...subModuleDeclarations,
-                "", // Empty line for readability
-                clientStruct
-            ]
+            rawDeclarations: [...subModuleDeclarations, clientStruct.toString(), implBlock.toString()]
         });
 
         return new RustFile({
