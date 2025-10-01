@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(./)",
+      "Edit(./)",
+      "MultiEdit(./)",
+      "Write(./)",
+      "Bash(mkdir:*)",
+      "Glob",
+      "Grep",
+      "Task",
+      "TodoWrite",
+      "WebFetch(domain:docs.anthropic.com)",
+      "WebFetch(domain:docs.claude.com)",
+      "WebFetch(domain:buildwithfern.com)"
+    ]
+  },
+  "env": {
+    "FERN_TOKEN": "${FERN_TOKEN}",
+    "NODE_ENV": "development",
+    "PNPM_VERSION": "9.4.0"
+  },
+  "model": "claude-sonnet-4-20250514"
+}
