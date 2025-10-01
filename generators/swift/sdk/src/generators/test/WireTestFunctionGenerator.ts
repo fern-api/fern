@@ -88,9 +88,12 @@ export class WireTestFunctionGenerator {
                                         unsafeName: "Data",
                                         arguments_: [
                                             swift.functionArgument({
-                                                value: swift.Expression.stringLiteral(
-                                                    `""\n${JSON.stringify(exampleTypeRef.jsonExample, null, 2)}\n""`
-                                                )
+                                                value: swift.Expression.memberAccess({
+                                                    target: swift.Expression.stringLiteral(
+                                                        `""\n${JSON.stringify(exampleTypeRef.jsonExample, null, 2)}\n""`
+                                                    ),
+                                                    memberName: "utf8"
+                                                })
                                             })
                                         ],
                                         multiline: true
@@ -135,7 +138,9 @@ export class WireTestFunctionGenerator {
     }
 
     private generateClientDeclaration(dynamicEndpointExample: dynamic.EndpointExample): swift.Statement {
-        const endpointSnippetRequest = convertDynamicEndpointSnippetRequest(dynamicEndpointExample);
+        const endpointSnippetRequest = convertDynamicEndpointSnippetRequest(dynamicEndpointExample, {
+            baseUrlFallback: "https://api.fern.com"
+        });
         return this.endpointSnippetGenerator.generateRootClientInitializationStatement({
             auth: this.dynamicEndpoint.auth,
             snippet: endpointSnippetRequest,
