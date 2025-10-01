@@ -185,7 +185,7 @@ jobs:
         id: set-test-matrix
         run: |
           echo "Force set matrix for python test"
-          BASH_VAR='[{"fixture":"error-property"},{"fixture":"errors"},{"fixture":"examples"},{"fixture":"exhaustive"},{"fixture":"extends"},{"fixture":"extra-properties"},{"fixture":"file-download"},{"fixture":"file-upload"},{"fixture":"folders"},{"fixture":"http-head"},{"fixture":"error-property","errors","examples","exhaustive","extends","extra-properties","file-download","file-upload","folders","http-head"}]'
+          BASH_VAR='[{"fixture":["error-property"]},{"fixture":["errors"]},{"fixture":["examples"]},{"fixture":["exhaustive"]},{"fixture":["extends"]},{"fixture":["extra-properties"]},{"fixture":["file-download"]},{"fixture":["file-upload"]},{"fixture":["folders"]},{"fixture":["http-head"]},{"fixture":["error-property","errors","examples","exhaustive","extends","extra-properties","file-download","file-upload","folders","http-head"]}]'
           echo "${{ matrix.sdk-name }}-test-matrix=$BASH_VAR" >> $GITHUB_OUTPUT
 
           # Echo the data to command line for visibility
