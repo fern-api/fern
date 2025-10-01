@@ -236,17 +236,25 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }) {
+        return swift.Statement.expressionStatement(this.generateEndpointMethodCallExpression({ endpoint, snippet }));
+    }
+
+    public generateEndpointMethodCallExpression({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }) {
         const arguments_ = this.getMethodArguments({ endpoint, snippet });
-        return swift.Statement.expressionStatement(
-            swift.Expression.try(
-                swift.Expression.await(
-                    swift.Expression.methodCall({
-                        target: swift.Expression.rawValue(CLIENT_CONST_NAME),
-                        methodName: this.getMethodName({ endpoint }),
-                        arguments_,
-                        multiline: arguments_.length > 1 ? true : undefined
-                    })
-                )
+        return swift.Expression.try(
+            swift.Expression.await(
+                swift.Expression.methodCall({
+                    target: swift.Expression.rawValue(CLIENT_CONST_NAME),
+                    methodName: this.getMethodName({ endpoint }),
+                    arguments_,
+                    multiline: arguments_.length > 1 ? true : undefined
+                })
             )
         );
     }
