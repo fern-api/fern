@@ -4,5 +4,5 @@ use serde::{Deserialize, Serialize};
 pub struct Dog {
     pub name: String,
     pub breed: String,
-    pub age: i32,
+    pub age: i64,
 }

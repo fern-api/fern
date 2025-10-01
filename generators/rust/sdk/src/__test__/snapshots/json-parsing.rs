@@ -29,8 +29,8 @@ impl ApiError {
                 if let Ok(parsed) = serde_json::from_str::<serde_json::Value>(body_str) {
                     return Self::ValidationError {
                         message: parsed.get("message").and_then(|v| v.as_str()).unwrap_or("Unknown error").to_string(),
-                        field: parsed.get("field").and_then(|v| v.as_str()).map(|s| s.to_string()),
-                        validation_error: parsed.get("validation_error").and_then(|v| v.as_str()).map(|s| s.to_string())
+                        field: parsed.get("field").and_then(|v| v.as_str().map(|s| s.to_string())),
+                        validation_error: parsed.get("validation_error").and_then(|v| v.as_str().map(|s| s.to_string()))
                     };
                 }
             }
@@ -46,7 +46,7 @@ impl ApiError {
                 if let Ok(parsed) = serde_json::from_str::<serde_json::Value>(body_str) {
                     return Self::ConflictError {
                         message: parsed.get("message").and_then(|v| v.as_str()).unwrap_or("Unknown error").to_string(),
-                        conflict_type: parsed.get("conflict_type").and_then(|v| v.as_str()).map(|s| s.to_string())
+                        conflict_type: parsed.get("conflict_type").and_then(|v| v.as_str().map(|s| s.to_string()))
                     };
                 }
             }
