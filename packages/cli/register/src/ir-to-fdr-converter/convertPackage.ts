@@ -41,13 +41,8 @@ function addPlaceholderSchemeAndHost(url: string): string {
         return `${PLACEHOLDER_BASE_URL}${url.substring(1)}`;
     }
 
-    // If the URL starts with "/", prepend placeholder base URL
-    if (url.startsWith("/")) {
-        return `${PLACEHOLDER_BASE_URL}${url}`;
-    }
-
-    // For any other case, prepend placeholder base URL with "/"
-    return `${PLACEHOLDER_BASE_URL}/${url}`;
+    // For normal paths (starting with "/" or no leading slash), return as is
+    return url;
 }
 
 export function convertPackage(
