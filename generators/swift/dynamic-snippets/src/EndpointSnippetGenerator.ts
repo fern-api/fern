@@ -89,7 +89,7 @@ export class EndpointSnippetGenerator {
         });
     }
 
-    private generateRootClientInitializationStatement({
+    public generateRootClientInitializationStatement({
         auth,
         snippet
     }: {
