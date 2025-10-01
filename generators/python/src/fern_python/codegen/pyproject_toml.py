@@ -392,4 +392,3 @@ section-order = ["future", "standard-library", "third-party", "first-party"]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 """
-# Clean encoding fix
