@@ -24,12 +24,13 @@ jobs:
     strategy:
       fail-fast: false # Let all tests run and cascade errors, will only PR generator updates that passed
       matrix:
-        sdk-name: [
+        sdk-name:
+          [
             ruby-model,
             ruby-sdk,
             ruby-sdk-v2,
             pydantic,
-            # python-sdk, CHRISM - add back
+            python-sdk,
             fastapi,
             openapi,
             postman,
@@ -149,7 +150,7 @@ jobs:
 
       - name: Group Seed Tests
         id: group-seed-tests
-        uses: fern-api/package-seed-test@main # CHRISM TODO - set to tag
+        uses: fern-api/group-seed-tests@main # CHRISM TODO - set to tag
         with:
           number-of-groups: 10
           seed-test-log-file-path: artifacts/${{ matrix.sdk-name }}-seed-test-log.txt
