@@ -40,8 +40,6 @@ export class WireTestGenerator {
     }
 
     public async generate(): Promise<void> {
-        // await this.context.project.writeSharedTestFiles();
-
         const endpointsByService = this.groupEndpointsByService();
         const filePathsByServiceName = this.getFilePathsByServiceName();
 
