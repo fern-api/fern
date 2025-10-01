@@ -5705,6 +5705,1093 @@
                         "revenue": 1000000
                     },
                     "docs": null
+                },
+                {
+                    "name": {
+                        "originalName": "LargeRating",
+                        "camelCase": {
+                            "unsafeName": "largeRating",
+                            "safeName": "largeRating"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "large_rating",
+                            "safeName": "large_rating"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "LARGE_RATING",
+                            "safeName": "LARGE_RATING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "LargeRating",
+                            "safeName": "LargeRating"
+                        }
+                    },
+                    "shape": {
+                        "type": "object",
+                        "properties": [
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "id",
+                                        "camelCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "ID",
+                                            "safeName": "ID"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "ID",
+                                            "safeName": "ID"
+                                        }
+                                    },
+                                    "wireValue": "id"
+                                },
+                                "value": {
+                                    "shape": {
+                                        "type": "named",
+                                        "typeName": {
+                                            "typeId": "type_types:MovieId",
+                                            "fernFilepath": {
+                                                "allParts": [
+                                                    {
+                                                        "originalName": "types",
+                                                        "camelCase": {
+                                                            "unsafeName": "types",
+                                                            "safeName": "types"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "types",
+                                                            "safeName": "types"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "TYPES",
+                                                            "safeName": "TYPES"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Types",
+                                                            "safeName": "Types"
+                                                        }
+                                                    }
+                                                ],
+                                                "packagePath": [],
+                                                "file": {
+                                                    "originalName": "types",
+                                                    "camelCase": {
+                                                        "unsafeName": "types",
+                                                        "safeName": "types"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "types",
+                                                        "safeName": "types"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "TYPES",
+                                                        "safeName": "TYPES"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Types",
+                                                        "safeName": "Types"
+                                                    }
+                                                }
+                                            },
+                                            "name": {
+                                                "originalName": "MovieId",
+                                                "camelCase": {
+                                                    "unsafeName": "movieID",
+                                                    "safeName": "movieID"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "movie_id",
+                                                    "safeName": "movie_id"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "MOVIE_ID",
+                                                    "safeName": "MOVIE_ID"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "MovieID",
+                                                    "safeName": "MovieID"
+                                                }
+                                            },
+                                            "displayName": null
+                                        },
+                                        "shape": {
+                                            "type": "alias",
+                                            "value": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "string",
+                                                        "string": {
+                                                            "original": "movie-large-123"
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": "movie-large-123"
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": "movie-large-123"
+                                },
+                                "originalTypeDeclaration": {
+                                    "name": {
+                                        "originalName": "Movie",
+                                        "camelCase": {
+                                            "unsafeName": "movie",
+                                            "safeName": "movie"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "movie",
+                                            "safeName": "movie"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "MOVIE",
+                                            "safeName": "MOVIE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Movie",
+                                            "safeName": "Movie"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [
+                                            {
+                                                "originalName": "types",
+                                                "camelCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "TYPES",
+                                                    "safeName": "TYPES"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Types",
+                                                    "safeName": "Types"
+                                                }
+                                            }
+                                        ],
+                                        "packagePath": [],
+                                        "file": {
+                                            "originalName": "types",
+                                            "camelCase": {
+                                                "unsafeName": "types",
+                                                "safeName": "types"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "types",
+                                                "safeName": "types"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "TYPES",
+                                                "safeName": "TYPES"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Types",
+                                                "safeName": "Types"
+                                            }
+                                        }
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_types:Movie"
+                                },
+                                "propertyAccess": null
+                            },
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "title",
+                                        "camelCase": {
+                                            "unsafeName": "title",
+                                            "safeName": "title"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "title",
+                                            "safeName": "title"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "TITLE",
+                                            "safeName": "TITLE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Title",
+                                            "safeName": "Title"
+                                        }
+                                    },
+                                    "wireValue": "title"
+                                },
+                                "value": {
+                                    "shape": {
+                                        "type": "primitive",
+                                        "primitive": {
+                                            "type": "string",
+                                            "string": {
+                                                "original": "Big Budget Film"
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": "Big Budget Film"
+                                },
+                                "originalTypeDeclaration": {
+                                    "name": {
+                                        "originalName": "Movie",
+                                        "camelCase": {
+                                            "unsafeName": "movie",
+                                            "safeName": "movie"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "movie",
+                                            "safeName": "movie"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "MOVIE",
+                                            "safeName": "MOVIE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Movie",
+                                            "safeName": "Movie"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [
+                                            {
+                                                "originalName": "types",
+                                                "camelCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "TYPES",
+                                                    "safeName": "TYPES"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Types",
+                                                    "safeName": "Types"
+                                                }
+                                            }
+                                        ],
+                                        "packagePath": [],
+                                        "file": {
+                                            "originalName": "types",
+                                            "camelCase": {
+                                                "unsafeName": "types",
+                                                "safeName": "types"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "types",
+                                                "safeName": "types"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "TYPES",
+                                                "safeName": "TYPES"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Types",
+                                                "safeName": "Types"
+                                            }
+                                        }
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_types:Movie"
+                                },
+                                "propertyAccess": null
+                            },
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "from",
+                                        "camelCase": {
+                                            "unsafeName": "from",
+                                            "safeName": "from"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "from",
+                                            "safeName": "from"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "FROM",
+                                            "safeName": "FROM"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "From",
+                                            "safeName": "From"
+                                        }
+                                    },
+                                    "wireValue": "from"
+                                },
+                                "value": {
+                                    "shape": {
+                                        "type": "primitive",
+                                        "primitive": {
+                                            "type": "string",
+                                            "string": {
+                                                "original": "Famous Director"
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": "Famous Director"
+                                },
+                                "originalTypeDeclaration": {
+                                    "name": {
+                                        "originalName": "Movie",
+                                        "camelCase": {
+                                            "unsafeName": "movie",
+                                            "safeName": "movie"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "movie",
+                                            "safeName": "movie"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "MOVIE",
+                                            "safeName": "MOVIE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Movie",
+                                            "safeName": "Movie"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [
+                                            {
+                                                "originalName": "types",
+                                                "camelCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "TYPES",
+                                                    "safeName": "TYPES"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Types",
+                                                    "safeName": "Types"
+                                                }
+                                            }
+                                        ],
+                                        "packagePath": [],
+                                        "file": {
+                                            "originalName": "types",
+                                            "camelCase": {
+                                                "unsafeName": "types",
+                                                "safeName": "types"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "types",
+                                                "safeName": "types"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "TYPES",
+                                                "safeName": "TYPES"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Types",
+                                                "safeName": "Types"
+                                            }
+                                        }
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_types:Movie"
+                                },
+                                "propertyAccess": null
+                            },
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "rating",
+                                        "camelCase": {
+                                            "unsafeName": "rating",
+                                            "safeName": "rating"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "rating",
+                                            "safeName": "rating"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "RATING",
+                                            "safeName": "RATING"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Rating",
+                                            "safeName": "Rating"
+                                        }
+                                    },
+                                    "wireValue": "rating"
+                                },
+                                "value": {
+                                    "shape": {
+                                        "type": "primitive",
+                                        "primitive": {
+                                            "type": "double",
+                                            "double": 4294967295
+                                        }
+                                    },
+                                    "jsonExample": 4294967295
+                                },
+                                "originalTypeDeclaration": {
+                                    "name": {
+                                        "originalName": "Movie",
+                                        "camelCase": {
+                                            "unsafeName": "movie",
+                                            "safeName": "movie"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "movie",
+                                            "safeName": "movie"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "MOVIE",
+                                            "safeName": "MOVIE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Movie",
+                                            "safeName": "Movie"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [
+                                            {
+                                                "originalName": "types",
+                                                "camelCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "TYPES",
+                                                    "safeName": "TYPES"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Types",
+                                                    "safeName": "Types"
+                                                }
+                                            }
+                                        ],
+                                        "packagePath": [],
+                                        "file": {
+                                            "originalName": "types",
+                                            "camelCase": {
+                                                "unsafeName": "types",
+                                                "safeName": "types"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "types",
+                                                "safeName": "types"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "TYPES",
+                                                "safeName": "TYPES"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Types",
+                                                "safeName": "Types"
+                                            }
+                                        }
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_types:Movie"
+                                },
+                                "propertyAccess": null
+                            },
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "type",
+                                        "camelCase": {
+                                            "unsafeName": "type",
+                                            "safeName": "type"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "type",
+                                            "safeName": "type"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "TYPE",
+                                            "safeName": "TYPE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Type",
+                                            "safeName": "Type"
+                                        }
+                                    },
+                                    "wireValue": "type"
+                                },
+                                "value": {
+                                    "shape": {
+                                        "type": "container",
+                                        "container": {
+                                            "type": "literal",
+                                            "literal": {
+                                                "type": "string",
+                                                "string": {
+                                                    "original": "movie"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": "movie"
+                                },
+                                "originalTypeDeclaration": {
+                                    "name": {
+                                        "originalName": "Movie",
+                                        "camelCase": {
+                                            "unsafeName": "movie",
+                                            "safeName": "movie"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "movie",
+                                            "safeName": "movie"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "MOVIE",
+                                            "safeName": "MOVIE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Movie",
+                                            "safeName": "Movie"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [
+                                            {
+                                                "originalName": "types",
+                                                "camelCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "TYPES",
+                                                    "safeName": "TYPES"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Types",
+                                                    "safeName": "Types"
+                                                }
+                                            }
+                                        ],
+                                        "packagePath": [],
+                                        "file": {
+                                            "originalName": "types",
+                                            "camelCase": {
+                                                "unsafeName": "types",
+                                                "safeName": "types"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "types",
+                                                "safeName": "types"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "TYPES",
+                                                "safeName": "TYPES"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Types",
+                                                "safeName": "Types"
+                                            }
+                                        }
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_types:Movie"
+                                },
+                                "propertyAccess": null
+                            },
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "tag",
+                                        "camelCase": {
+                                            "unsafeName": "tag",
+                                            "safeName": "tag"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "tag",
+                                            "safeName": "tag"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "TAG",
+                                            "safeName": "TAG"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Tag",
+                                            "safeName": "Tag"
+                                        }
+                                    },
+                                    "wireValue": "tag"
+                                },
+                                "value": {
+                                    "shape": {
+                                        "type": "named",
+                                        "typeName": {
+                                            "typeId": "type_commons/types:Tag",
+                                            "fernFilepath": {
+                                                "allParts": [
+                                                    {
+                                                        "originalName": "commons",
+                                                        "camelCase": {
+                                                            "unsafeName": "commons",
+                                                            "safeName": "commons"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "commons",
+                                                            "safeName": "commons"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "COMMONS",
+                                                            "safeName": "COMMONS"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Commons",
+                                                            "safeName": "Commons"
+                                                        }
+                                                    },
+                                                    {
+                                                        "originalName": "types",
+                                                        "camelCase": {
+                                                            "unsafeName": "types",
+                                                            "safeName": "types"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "types",
+                                                            "safeName": "types"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "TYPES",
+                                                            "safeName": "TYPES"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Types",
+                                                            "safeName": "Types"
+                                                        }
+                                                    }
+                                                ],
+                                                "packagePath": [
+                                                    {
+                                                        "originalName": "commons",
+                                                        "camelCase": {
+                                                            "unsafeName": "commons",
+                                                            "safeName": "commons"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "commons",
+                                                            "safeName": "commons"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "COMMONS",
+                                                            "safeName": "COMMONS"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Commons",
+                                                            "safeName": "Commons"
+                                                        }
+                                                    }
+                                                ],
+                                                "file": {
+                                                    "originalName": "types",
+                                                    "camelCase": {
+                                                        "unsafeName": "types",
+                                                        "safeName": "types"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "types",
+                                                        "safeName": "types"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "TYPES",
+                                                        "safeName": "TYPES"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Types",
+                                                        "safeName": "Types"
+                                                    }
+                                                }
+                                            },
+                                            "name": {
+                                                "originalName": "Tag",
+                                                "camelCase": {
+                                                    "unsafeName": "tag",
+                                                    "safeName": "tag"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "tag",
+                                                    "safeName": "tag"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "TAG",
+                                                    "safeName": "TAG"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Tag",
+                                                    "safeName": "Tag"
+                                                }
+                                            },
+                                            "displayName": null
+                                        },
+                                        "shape": {
+                                            "type": "alias",
+                                            "value": {
+                                                "shape": {
+                                                    "type": "primitive",
+                                                    "primitive": {
+                                                        "type": "string",
+                                                        "string": {
+                                                            "original": "tag-wf9as23d"
+                                                        }
+                                                    }
+                                                },
+                                                "jsonExample": "tag-wf9as23d"
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": "tag-wf9as23d"
+                                },
+                                "originalTypeDeclaration": {
+                                    "name": {
+                                        "originalName": "Movie",
+                                        "camelCase": {
+                                            "unsafeName": "movie",
+                                            "safeName": "movie"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "movie",
+                                            "safeName": "movie"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "MOVIE",
+                                            "safeName": "MOVIE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Movie",
+                                            "safeName": "Movie"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [
+                                            {
+                                                "originalName": "types",
+                                                "camelCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "TYPES",
+                                                    "safeName": "TYPES"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Types",
+                                                    "safeName": "Types"
+                                                }
+                                            }
+                                        ],
+                                        "packagePath": [],
+                                        "file": {
+                                            "originalName": "types",
+                                            "camelCase": {
+                                                "unsafeName": "types",
+                                                "safeName": "types"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "types",
+                                                "safeName": "types"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "TYPES",
+                                                "safeName": "TYPES"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Types",
+                                                "safeName": "Types"
+                                            }
+                                        }
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_types:Movie"
+                                },
+                                "propertyAccess": null
+                            },
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "metadata",
+                                        "camelCase": {
+                                            "unsafeName": "metadata",
+                                            "safeName": "metadata"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "metadata",
+                                            "safeName": "metadata"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "METADATA",
+                                            "safeName": "METADATA"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Metadata",
+                                            "safeName": "Metadata"
+                                        }
+                                    },
+                                    "wireValue": "metadata"
+                                },
+                                "value": {
+                                    "shape": {
+                                        "type": "container",
+                                        "container": {
+                                            "type": "map",
+                                            "map": [
+                                                {
+                                                    "key": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "string",
+                                                                "string": {
+                                                                    "original": "budget"
+                                                                }
+                                                            }
+                                                        },
+                                                        "jsonExample": "budget"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "unknown",
+                                                            "unknown": "Very high"
+                                                        },
+                                                        "jsonExample": "Very high"
+                                                    }
+                                                }
+                                            ],
+                                            "keyType": {
+                                                "_type": "primitive",
+                                                "primitive": {
+                                                    "v1": "STRING",
+                                                    "v2": {
+                                                        "type": "string",
+                                                        "default": null,
+                                                        "validation": null
+                                                    }
+                                                }
+                                            },
+                                            "valueType": {
+                                                "_type": "unknown"
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": {
+                                        "budget": "Very high"
+                                    }
+                                },
+                                "originalTypeDeclaration": {
+                                    "name": {
+                                        "originalName": "Movie",
+                                        "camelCase": {
+                                            "unsafeName": "movie",
+                                            "safeName": "movie"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "movie",
+                                            "safeName": "movie"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "MOVIE",
+                                            "safeName": "MOVIE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Movie",
+                                            "safeName": "Movie"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [
+                                            {
+                                                "originalName": "types",
+                                                "camelCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "TYPES",
+                                                    "safeName": "TYPES"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Types",
+                                                    "safeName": "Types"
+                                                }
+                                            }
+                                        ],
+                                        "packagePath": [],
+                                        "file": {
+                                            "originalName": "types",
+                                            "camelCase": {
+                                                "unsafeName": "types",
+                                                "safeName": "types"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "types",
+                                                "safeName": "types"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "TYPES",
+                                                "safeName": "TYPES"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Types",
+                                                "safeName": "Types"
+                                            }
+                                        }
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_types:Movie"
+                                },
+                                "propertyAccess": null
+                            },
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "revenue",
+                                        "camelCase": {
+                                            "unsafeName": "revenue",
+                                            "safeName": "revenue"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "revenue",
+                                            "safeName": "revenue"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "REVENUE",
+                                            "safeName": "REVENUE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Revenue",
+                                            "safeName": "Revenue"
+                                        }
+                                    },
+                                    "wireValue": "revenue"
+                                },
+                                "value": {
+                                    "shape": {
+                                        "type": "primitive",
+                                        "primitive": {
+                                            "type": "long",
+                                            "long": 5000000000
+                                        }
+                                    },
+                                    "jsonExample": 5000000000
+                                },
+                                "originalTypeDeclaration": {
+                                    "name": {
+                                        "originalName": "Movie",
+                                        "camelCase": {
+                                            "unsafeName": "movie",
+                                            "safeName": "movie"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "movie",
+                                            "safeName": "movie"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "MOVIE",
+                                            "safeName": "MOVIE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Movie",
+                                            "safeName": "Movie"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [
+                                            {
+                                                "originalName": "types",
+                                                "camelCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "TYPES",
+                                                    "safeName": "TYPES"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Types",
+                                                    "safeName": "Types"
+                                                }
+                                            }
+                                        ],
+                                        "packagePath": [],
+                                        "file": {
+                                            "originalName": "types",
+                                            "camelCase": {
+                                                "unsafeName": "types",
+                                                "safeName": "types"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "types",
+                                                "safeName": "types"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "TYPES",
+                                                "safeName": "TYPES"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Types",
+                                                "safeName": "Types"
+                                            }
+                                        }
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_types:Movie"
+                                },
+                                "propertyAccess": null
+                            }
+                        ]
+                    },
+                    "jsonExample": {
+                        "id": "movie-large-123",
+                        "title": "Big Budget Film",
+                        "from": "Famous Director",
+                        "rating": 4294967295,
+                        "type": "movie",
+                        "tag": "tag-wf9as23d",
+                        "metadata": {
+                            "budget": "Very high"
+                        },
+                        "revenue": 5000000000
+                    },
+                    "docs": null
                 }
             ],
             "autogeneratedExamples": [],
