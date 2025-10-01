@@ -577,7 +577,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
             const testSuiteGenerator = new WireTestSuiteGenerator({
                 suiteName: testSuiteName,
                 subclientName,
-                subpackage,
+                packageOrSubpackage: subpackage,
                 sdkGeneratorContext: context
             });
             const struct = testSuiteGenerator.generate();
