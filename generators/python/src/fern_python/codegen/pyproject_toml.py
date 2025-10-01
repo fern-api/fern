@@ -5,13 +5,7 @@ import os
 import typing
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import List, Optional, Set, cast
-
-from fern_python.codegen.ast.dependency.dependency import (
-    Dependency,
-    DependencyCompatibility,
-)
-from fern_python.codegen.dependency_manager import DependencyManager
+from typing import Dict, List, Optional, Set, cast
 
 from fern.generator_exec import (
     BasicLicense,
@@ -20,6 +14,12 @@ from fern.generator_exec import (
     LicenseId,
     PypiMetadata,
 )
+
+from fern_python.codegen.ast.dependency.dependency import (
+    Dependency,
+    DependencyCompatibility,
+)
+from fern_python.codegen.dependency_manager import DependencyManager
 
 
 @dataclass(frozen=True)
@@ -45,7 +45,7 @@ class PyProjectToml:
         user_defined_toml: Optional[str] = None,
     ):
         self._name = name
-        self._poetry_block = PyProjectToml.PoetryBlock(
+        self._modern_block = PyProjectToml.ModernBlock(
             name=name,
             version=version,
             package=package,
@@ -61,30 +61,27 @@ class PyProjectToml:
 
     def write(self) -> None:
         blocks: List[PyProjectToml.Block] = [
-            self._poetry_block,
-            PyProjectToml.DependenciesBlock(
+            self._modern_block,
+            PyProjectToml.LegacyBlock(
+                name=self._name,
+                version=self._modern_block.version,
+                package=self._modern_block.package,
+                pypi_metadata=self._modern_block.pypi_metadata,
+                github_output_mode=self._modern_block.github_output_mode,
+                license_=self._modern_block.license_,
+                python_version=self._python_version,
                 dependencies=self._dependency_manager.get_dependencies(),
                 dev_dependencies=self._dependency_manager.get_dev_dependencies(),
-                python_version=self._python_version,
             ),
             PyProjectToml.PluginConfigurationBlock(),
             PyProjectToml.BuildSystemBlock(),
         ]
-        content = f"""[project]
-name = "{self._name}"
-
-"""
-
+        content = ""
         for block in blocks:
             content += block.to_string()
 
-        if len(self._extras) > 0:
-            content += """
-[tool.poetry.extras]
-"""
-            for key, vals in self._extras.items():
-                stringified_vals = ", ".join([f'"{val}"' for val in vals])
-                content += f"{key}=[{stringified_vals}]\n"
+        # Handle optional dependencies (extras only - dev dependencies are in Poetry section)
+        content += self._generate_optional_dependencies()
 
         if self._user_defined_toml is not None:
             content += "\n"
@@ -93,13 +90,31 @@ name = "{self._name}"
         with open(os.path.join(self._path, "pyproject.toml"), "w") as f:
             f.write(content)
 
+    def _generate_optional_dependencies(self) -> str:
+        """Generate [project.optional-dependencies] section for extras only"""
+        optional_deps = {}
+
+        # Add extras only (dev dependencies are handled in Poetry section)
+        for key, vals in self._extras.items():
+            optional_deps[key] = vals
+
+        if not optional_deps:
+            return ""
+
+        result = "\n[project.optional-dependencies]\n"
+        for key, deps in optional_deps.items():
+            deps_str = ", ".join([f'"{dep}"' for dep in deps])
+            result += f"{key} = [{deps_str}]\n"
+
+        return result
+
     class Block(ABC):
         @abstractmethod
         def to_string(self) -> str:
             pass
 
     @dataclass(frozen=True)
-    class PoetryBlock(Block):
+    class ModernBlock(Block):
         name: str
         version: Optional[str]
         package: PyProjectTomlPackageConfig
@@ -108,13 +123,8 @@ name = "{self._name}"
         license_: Optional[LicenseConfig]
 
         def to_string(self) -> str:
-            s = f'''[tool.poetry]
-name = "{self.name}"'''
-            if self.version is not None:
-                s += "\n" + f'version = "{self.version}"'
-
             description = ""
-            authors: List[str] = []
+            authors: List[Dict[str, str]] = []
             keywords: List[str] = []
             project_urls: List[str] = []
             classifiers = [
@@ -134,16 +144,14 @@ name = "{self.name}"'''
                 "Topic :: Software Development :: Libraries :: Python Modules",
                 "Typing :: Typed",
             ]
-            license_evaluated = ""
+
             if self.pypi_metadata is not None:
                 description = (
                     self.pypi_metadata.description if self.pypi_metadata.description is not None else description
                 )
-                authors = (
-                    [f"{author.name} <{author.email}>" for author in self.pypi_metadata.authors]
-                    if self.pypi_metadata.authors is not None
-                    else authors
-                )
+                if self.pypi_metadata.authors is not None:
+                    for author in self.pypi_metadata.authors:
+                        authors.append({"name": author.name, "email": author.email})
                 keywords = self.pypi_metadata.keywords if self.pypi_metadata.keywords is not None else keywords
                 if self.pypi_metadata.documentation_link is not None:
                     project_urls.append(f"Documentation = '{self.pypi_metadata.documentation_link}'")
@@ -151,14 +159,11 @@ name = "{self.name}"'''
                     project_urls.append(f"Homepage = '{self.pypi_metadata.homepage_link}'")
 
             if self.license_ is not None:
-                # TODO(armandobelardo): verify poetry handles custom licenses on it's side
                 if self.license_.get_as_union().type == "basic":
                     license_id = cast(BasicLicense, self.license_.get_as_union()).id
                     if license_id == LicenseId.MIT:
-                        license_evaluated = 'license = "MIT"'
                         classifiers.append("License :: OSI Approved :: MIT License")
                     elif license_id == LicenseId.APACHE_2:
-                        license_evaluated = 'license = "Apache-2.0"'
                         classifiers.append("License :: OSI Approved :: Apache Software License")
 
             if self.github_output_mode is not None:
@@ -168,27 +173,128 @@ name = "{self.name}"'''
             if len(project_urls) > 0:
                 stringified_project_urls = "\n[project.urls]\n" + "\n".join(project_urls) + "\n"
 
+            s = f"""[project]
+name = "{self.name}" """
+            if self.version is not None:
+                s += f'\nversion = "{self.version}"'
+
             s += f"""
 description = "{description}"
 readme = "README.md"
-authors = {json.dumps(authors, indent=4)}
-keywords = {json.dumps(keywords, indent=4)}
-{license_evaluated}
-classifiers = {json.dumps(classifiers, indent=4)}"""
+requires-python = ">=3.8"
+"""
+
             if self.package._from is not None:
                 s += f"""
-packages = [
-    {{ include = "{self.package.include}", from = "{self.package._from}"}}
-]
+[tool.setuptools.packages.find]
+where = ["{self.package._from}"]
+include = ["{self.package.include}"]
 """
             else:
                 s += f"""
-packages = [
-    {{ include = "{self.package.include}"}}
-]
+[tool.setuptools.packages.find]
+include = ["{self.package.include}"]
 """
+
+            if authors:
+                s += f"\nauthors = {json.dumps(authors)}"
+            if keywords:
+                s += f"\nkeywords = {json.dumps(keywords)}"
+            if classifiers:
+                s += f"\nclassifiers = {json.dumps(classifiers)}"
+
             s += stringified_project_urls
             return s
+
+    @dataclass(frozen=True)
+    class LegacyBlock(Block):
+        name: str
+        version: Optional[str]
+        package: PyProjectTomlPackageConfig
+        pypi_metadata: Optional[PypiMetadata]
+        github_output_mode: Optional[GithubOutputMode]
+        license_: Optional[LicenseConfig]
+        python_version: str
+        dependencies: Set[Dependency]
+        dev_dependencies: Set[Dependency]
+
+        def to_string(self) -> str:
+            description = ""
+            if self.pypi_metadata is not None:
+                description = self.pypi_metadata.description or ""
+
+            authors = []
+            if self.pypi_metadata is not None and self.pypi_metadata.authors is not None:
+                for author in self.pypi_metadata.authors:
+                    authors.append({"name": author.name, "email": author.email})
+
+            keywords = []
+            if self.pypi_metadata is not None and self.pypi_metadata.keywords is not None:
+                keywords = self.pypi_metadata.keywords
+
+            classifiers = []
+            license_evaluated = ""
+            if self.license_ is not None:
+                if self.license_.get_as_union().type == "basic":
+                    license_id = cast(BasicLicense, self.license_.get_as_union()).id
+                    if license_id == LicenseId.MIT:
+                        license_evaluated = 'license = "MIT"'
+                        classifiers.append("License :: OSI Approved :: MIT License")
+                    elif license_id == LicenseId.APACHE_2:
+                        license_evaluated = 'license = "Apache-2.0"'
+                        classifiers.append("License :: OSI Approved :: Apache Software License")
+
+            # LegacyBlock doesn't generate project.urls - that's PEP 621 format
+
+            s = f"""[tool.poetry]
+name = "{self.name}" """
+            if self.version is not None:
+                s += f'\nversion = "{self.version}"'
+
+            if self.package._from is not None:
+                s += f"""
+packages = [{{include = "{self.package.include}", from = "{self.package._from}"}}]"""
+            else:
+                s += f"""
+packages = [{{include = "{self.package.include}"}}]"""
+
+            s += f"""
+description = "{description}"
+readme = "README.md"
+authors = {json.dumps(authors)}
+keywords = {json.dumps(keywords)}
+{license_evaluated}
+classifiers = {json.dumps(classifiers)}"""
+
+            # Add dependencies
+            deps = self.deps_to_string(self.dependencies)
+            dev_deps = self.deps_to_string(self.dev_dependencies)
+
+            s += f"""
+[tool.poetry.dependencies]
+python = "{self.python_version}"
+{deps}
+[tool.poetry.group.dev.dependencies]
+mypy = "==1.13.0"
+pytest = "^7.4.0"
+pytest-asyncio = "^0.21.0"
+httpx = "^0.24.0"
+{dev_deps}"""
+            return s
+
+        def deps_to_string(self, dependencies: Set[Dependency]) -> str:
+            deps = []
+            for dep in sorted(dependencies, key=lambda dep: dep.name):
+                name = dep.name.replace(".", "-")
+                if dep.compatibility == DependencyCompatibility.GREATER_THAN_OR_EQUAL:
+                    deps.append(f'{name} = ">={dep.version}"')
+                else:  # EXACT
+                    # Check if version already contains a specifier
+                    if dep.version.startswith(("==", ">=", "<=", "~=", "!=", "^")):
+                        deps.append(f'{name} = "{dep.version}"')
+                    else:
+                        deps.append(f'{name} = "=={dep.version}"')
+            return "\n".join(deps)
 
     @dataclass(frozen=True)
     class DependenciesBlock(Block):
@@ -207,6 +313,12 @@ packages = [
                 name = dep.name.replace(".", "-")
                 if compatibility == DependencyCompatibility.GREATER_THAN_OR_EQUAL:
                     version = f">={dep.version}"
+                else:  # EXACT
+                    # Check if version already contains a specifier
+                    if dep.version.startswith(("==", ">=", "<=", "~=", "!=", "^")):
+                        version = dep.version
+                    else:
+                        version = f"=={dep.version}"
 
                 if is_optional or has_python_version or dep.extras is not None:
                     deps += f'{name} = {{ version = "{version}"'
