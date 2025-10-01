@@ -19,18 +19,15 @@ concurrency:
 jobs:
   run-seed-test:
     runs-on: ubuntu-latest
-    # CHRISM - temp
-    if: false
     strategy:
       fail-fast: false # Let all tests run and cascade errors, will only PR generator updates that passed
       matrix:
-        sdk-name:
-          [
+        sdk-name: [
             ruby-model,
             ruby-sdk,
             ruby-sdk-v2,
             pydantic,
-            python-sdk,
+            # python-sdk, CHRISM - add back
             fastapi,
             openapi,
             postman,
@@ -53,6 +50,7 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
+
       - name: Install
         uses: ./.github/actions/install
 
@@ -84,7 +82,7 @@ jobs:
           name: ${{ matrix.sdk-name }}-seed-test-log.txt
           path: ${{ matrix.sdk-name }}-seed-test-log.txt
           if-no-files-found: error
-          retention-days: 1
+          retention-days: 10 # CHRISM - test
 
       - name: Echo Info for This Run
         run: |
