@@ -186,7 +186,14 @@ export class WireTestFunctionGenerator {
                         if (nullableContainer.nullable == null) {
                             return swift.Expression.enumCaseShorthand("null");
                         }
-                        return this.generateExampleResponse(nullableContainer.nullable);
+                        return swift.Expression.contextualMethodCall({
+                            methodName: "value",
+                            arguments_: [
+                                swift.functionArgument({
+                                    value: this.generateExampleResponse(nullableContainer.nullable)
+                                })
+                            ]
+                        });
                     },
                     optional: (optionalContainer) => {
                         return optionalContainer.optional == null
