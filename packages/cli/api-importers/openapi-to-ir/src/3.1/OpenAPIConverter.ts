@@ -97,7 +97,8 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             const securitySchemeConverter = new SecuritySchemeConverter({
                 context: this.context,
                 breadcrumbs: ["components", "securitySchemes", id],
-                securityScheme: resolvedSecurityScheme
+                securityScheme: resolvedSecurityScheme,
+                schemeId: id
             });
             const convertedScheme = securitySchemeConverter.convert();
             if (convertedScheme == null) {
